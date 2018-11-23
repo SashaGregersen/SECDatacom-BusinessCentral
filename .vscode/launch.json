@@ -2,15 +2,26 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Microsoft cloud sandbox",
             "type": "al",
             "request": "launch",
+            "startupObjectId": 22,
+            "breakOnError": true,
+            "breakOnRecordWrite": false
+        },
+        {
             "name": "BusinessCentral",
+            "type": "al",
+            "request": "launch",
             "server": "http://localhost:7079/DynamicsNAV130",
-            "serverInstance": "DynamicsNAV130",
+            "serverInstance": "BC130",
             "authentication": "Windows",
-            //"breakOnError": true,
+            "startupObjectId": 22,
+            "breakOnError": true,
+            "breakOnRecordWrite": false,
             "port": 7079,
-            "schemaUpdateMode": "Recreate"
-        }
+            "schemaUpdateMode": "Synchronize",
+        },
+
     ]
 }
