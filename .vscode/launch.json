@@ -1,0 +1,18 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "al",
+            "request": "launch",
+            "name": "BusinessCentral",
+            "server": "http://localhost:7079/DynamicsNAV130",
+            "serverInstance": "DynamicsNAV130",
+            "authentication": "Windows",
+            //"breakOnError": true,
+            "startupObjectId": 22,
+            "startupObjectType": "Page",
+            "port": 7079,
+            "schemaUpdateMode": "Synchronize"
+        }
+    ]
+}

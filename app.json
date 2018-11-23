@@ -1,0 +1,23 @@
+{
+  "id": "4daa5f0a-adb0-42d7-bbd9-e9e04871252c",
+  "name": "SECDatacom",
+  "publisher": "Netcompany",
+  "brief": "",
+  "description": "",
+  "version": "1.0.0.0",
+  //"compatibilityId": "1.0.0.0",
+  "privacyStatement": "",
+  "EULA": "",
+  "help": "",
+  "url": "",
+  "logo": "",
+  "capabilities": [],
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "13.0.0.0",
+  "application": "13.0.0.0",
+  "idRange": {
+    "from": 50000,
+    "to": 50099
+  }
+}
