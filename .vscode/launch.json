@@ -9,8 +9,6 @@
             "serverInstance": "DynamicsNAV130",
             "authentication": "Windows",
             //"breakOnError": true,
-            "startupObjectId": 22,
-            "startupObjectType": "Page",
             "port": 7079,
             "schemaUpdateMode": "Synchronize"
         }
