@@ -5,7 +5,6 @@
             "name": "Microsoft cloud sandbox",
             "type": "al",
             "request": "launch",
-            "startupObjectId": 22,
             "breakOnError": true,
             "breakOnRecordWrite": false
         },
@@ -14,9 +13,8 @@
             "type": "al",
             "request": "launch",
             "server": "http://localhost:7079/DynamicsNAV130",
-            "serverInstance": "BC130",
+            "serverInstance": "DynamicsNAV130",
             "authentication": "Windows",
-            "startupObjectId": 22,
             "breakOnError": true,
             "breakOnRecordWrite": false,
             "port": 7079,
