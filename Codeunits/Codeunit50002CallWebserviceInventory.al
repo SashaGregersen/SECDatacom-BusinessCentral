@@ -12,7 +12,8 @@ codeunit 50002 "Call Webservice Inventory"
                                      PurchLine."Location Code" := Location.code;
                                      Item.ChangeCompany('CRONUS Danmark A/S');
                                      Item.GET(PurchLine."No.");
-                                     AvailableInv := AvailableInv - PurchInfoPaneManage.CalcAvailability(PurchLine);
+                                     Item.CALCFIELDS(Inventory, "Reserved Qty. on Inventory");
+                                     AvailableInv := Item.Inventory - Item."Reserved Qty. on Inventory";
             until Location.Next = 0;
         exit(AvailableInv);
 
@@ -21,7 +22,6 @@ codeunit 50002 "Call Webservice Inventory"
     var
         Location: Record Location;
         AvailableInv: Decimal;
-        PurchInfoPaneManage: Codeunit "Purchases Info-Pane Management";
         Item: Record Item;
 
 

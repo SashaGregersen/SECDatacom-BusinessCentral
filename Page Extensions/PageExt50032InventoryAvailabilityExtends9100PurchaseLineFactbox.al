@@ -6,7 +6,7 @@ pageextension 50032 "Inventory Availability" extends "Purchase Line FactBox"
         {
             field("Curr. Invt"; CurrentAvailability)
             {
-                Editable = FALSE;
+                ToolTip = 'Shows the current available inventory in SEC Denmark';
             }
         }
     }
@@ -25,7 +25,6 @@ pageextension 50032 "Inventory Availability" extends "Purchase Line FactBox"
     trigger OnAfterGetCurrRecord();
     var
         CalcAvailInv: Codeunit 5790;
-        Item: Record Item;
     begin
         CurrentAvailability := StrSubstNo('%1', CallWebservice.CallWebserviceInventory(Rec));
     end;
