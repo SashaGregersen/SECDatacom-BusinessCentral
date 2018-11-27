@@ -20,6 +20,7 @@
     "from": 50000,
     "to": 50099
   },
-  "target": "Internal"
+  "target": "Internal",
+  "runtime": "2.0"
   
 }

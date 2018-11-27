@@ -2,7 +2,7 @@ codeunit 50003 "Calculate Available Inventory"
 {
     trigger OnRun();
     begin
-        //test
+        //test sdg
     end;
 
     procedure FindAvailableInventory(VAR PurchLine: Record "Purchase Line"): Decimal
