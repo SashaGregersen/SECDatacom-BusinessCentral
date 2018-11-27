@@ -23,4 +23,9 @@ codeunit 50002 "Call Webservice Inventory"
         Location: Record Location;
         AvailableInv: Decimal;
         Item: Record Item;
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> d394ca3bc7f4c103a416f31017da740848a0128b
 }
