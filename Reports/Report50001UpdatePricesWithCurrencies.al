@@ -14,8 +14,8 @@ report 50001 "Update Prices with Currencies"
                 IF Get("Sales Type", "Item No.", "Unit Price") then repeat
                                                                         SetRange("Item No.", Item."No.");
                                                                         If Item.FindFirst() then begin
-                                                                            IF "Currency Code" <> item."Vendor Currency" then
-                                                                                ;
+                                                                            if ("Currency Code" <> Item."Vendor Currency") then
+                                                                                UpdateUnitPricesWithCurrency;
                                                                         End;
                     until next = 0;
             end;
@@ -23,7 +23,10 @@ report 50001 "Update Prices with Currencies"
         }
     }
 
+    local procedure UpdateUnitPricesWithCurrency()
+    begin
 
+    end;
 }
 
 
