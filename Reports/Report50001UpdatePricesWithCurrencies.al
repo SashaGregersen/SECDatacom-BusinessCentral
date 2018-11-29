@@ -4,29 +4,37 @@ report 50001 "Update Prices with Currencies"
 
     dataset
     {
-        dataitem(DataItemName; "Sales Price")
+        dataitem(DataItemName; "Item")
         {
-            MaxIteration = 1;
+            trigger OnPreDataItem();
+            var
+                CreatePurchaseDiscounts: codeunit "Advanced Price Management";
+                Salesprice: record "Sales Price";
+                ExceptThisOne: code[20];
+                CurrencyTemp: Record Currency temporary;
+
+            begin
+                Salesprice.SetRange("Item No.", "No.");
+                If Salesprice.FindSet() then begin
+                    ExceptThisOne := "Vendor Currency";
+                    CreatePurchaseDiscounts.FindPriceCurrencies(ExceptThisOne, CurrencyTemp);
+                end;
+
+            end;
+
             trigger OnAfterGetRecord();
             var
-                Item: Record Item;
+
             begin
-                IF Get("Sales Type", "Item No.", "Unit Price") then repeat
-                                                                        SetRange("Item No.", Item."No.");
-                                                                        If Item.FindFirst() then begin
-                                                                            if ("Currency Code" <> Item."Vendor Currency") then
-                                                                                UpdateUnitPricesWithCurrency;
-                                                                        End;
-                    until next = 0;
+
             end;
+
 
         }
     }
+    var
 
-    local procedure UpdateUnitPricesWithCurrency()
-    begin
 
-    end;
 }
 
 
