@@ -271,7 +271,7 @@ codeunit 50000 "Advanced Price Management"
             exit(false);
     end;
 
-    local procedure FindPriceCurrencies(ExceptThisOne: code[20]; var CurrencyTemp: Record Currency temporary);
+    procedure FindPriceCurrencies(ExceptThisOne: code[20]; var CurrencyTemp: Record Currency temporary);
     var
         Currency: Record Currency;
     begin
