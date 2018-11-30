@@ -28,8 +28,8 @@ codeunit 50000 "Advanced Price Management"
             exit;
         SalesPrice.SetRecFilter;
         if SalesPriceWorksheet."Currency Code" <> '' then begin
-            Suggestprices.InitializeRequest(SalesPrice."Sales Type"::"All Customers", '', SalesPriceWorksheet."Starting Date", SalesPriceWorksheet."Ending Date",
-                                            '', '', true);
+            Suggestprices.InitializeRequest2(SalesPrice."Sales Type"::"All Customers", '', SalesPriceWorksheet."Starting Date", SalesPriceWorksheet."Ending Date",
+                                            '', '', true, 0, 1, '');
             Suggestprices.SetTableView(SalesPrice);
             Suggestprices.UseRequestPage(false);
             Suggestprices.Run;
@@ -46,8 +46,8 @@ codeunit 50000 "Advanced Price Management"
         if CurrencyTemp.FindFirst then begin
             repeat
                 Clear(Suggestprices);
-                Suggestprices.InitializeRequest(SalesPrice."Sales Type"::"All Customers", '', SalesPriceWorksheet."Starting Date", SalesPriceWorksheet."Ending Date",
-                                                CurrencyTemp.Code, '', true);
+                Suggestprices.InitializeRequest2(SalesPrice."Sales Type"::"All Customers", '', SalesPriceWorksheet."Starting Date", SalesPriceWorksheet."Ending Date",
+                                                CurrencyTemp.Code, '', true, 0, 1, '');
                 Suggestprices.SetTableView(SalesPrice);
                 Suggestprices.UseRequestPage(false);
                 Suggestprices.Run;
@@ -103,6 +103,7 @@ codeunit 50000 "Advanced Price Management"
                                 PurchaseLineDiscount."Variant Code", PurchaseLineDiscount."Unit of Measure Code", PurchaseLineDiscount."Minimum Quantity") then begin
             PurchasePrice.Init;
             PurchasePrice.TransferFields(PurchaseLineDiscount);
+            PurchasePrice.validate("Starting Date", ListPrice."Starting Date");
             PurchasePrice.Validate("Minimum Quantity", PurchaseLineDiscount."Minimum Quantity");
             PurchasePrice.Validate("Direct Unit Cost", ListPrice."Unit Price" * ((100 - PurchaseLineDiscount."Line Discount %") / 100));
             PurchasePrice.Insert(true);
@@ -155,8 +156,8 @@ codeunit 50000 "Advanced Price Management"
                     ItemTemp.FindFirst;
                     repeat    //local Currency
                         if FindListPriceForitem(ItemTemp."No.", '', ItemListPrice) then begin
-                            if SalesDiscountGroup."Starting Date" = 0D then
-                                SalesDiscountGroup."Starting Date" := ItemListPrice."Starting Date";
+                            //if SalesDiscountGroup."Starting Date" = 0D then
+                            SalesDiscountGroup."Starting Date" := ItemListPrice."Starting Date";
                             SalesPriceWorksheet.validate("Item No.", ItemTemp."No.");
                             SalesPriceWorksheet.Validate("Currency Code", ItemListPrice."Currency Code");
                             CreateWorksheetLineFromDiscountGroup(SalesDiscountGroup, SalesPriceWorksheet);
@@ -173,8 +174,8 @@ codeunit 50000 "Advanced Price Management"
                         if CurrencyTemp.FindFirst then begin
                             repeat
                                 if FindListPriceForitem(ItemTemp."No.", CurrencyTemp.Code, ItemListPrice) then begin
-                                    if SalesDiscountGroup."Starting Date" = 0D then
-                                        SalesDiscountGroup."Starting Date" := ItemListPrice."Starting Date";
+                                    //if SalesDiscountGroup."Starting Date" = 0D then
+                                    SalesDiscountGroup."Starting Date" := ItemListPrice."Starting Date";
                                     SalesPriceWorksheet.validate("Item No.", ItemTemp."No.");
                                     SalesPriceWorksheet.Validate("Currency Code", ItemListPrice."Currency Code");
                                     CreateWorksheetLineFromDiscountGroup(SalesDiscountGroup, SalesPriceWorksheet);

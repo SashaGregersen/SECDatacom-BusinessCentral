@@ -1,13 +1,7 @@
 {
     "version": "0.2.0",
     "configurations": [
-        {
-            "name": "Microsoft cloud sandbox",
-            "type": "al",
-            "request": "launch",
-            "breakOnError": true,
-            "breakOnRecordWrite": false
-        },
+
         {
             "name": "BusinessCentral",
             "type": "al",
