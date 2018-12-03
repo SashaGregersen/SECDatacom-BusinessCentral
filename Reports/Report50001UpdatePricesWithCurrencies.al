@@ -17,7 +17,7 @@ report 50001 "Update Prices with Currencies"
                 Salesprice.SetRange("Item No.", "No.");
                 If Salesprice.FindSet() then begin
                     ExceptThisOne := "Vendor Currency";
-                    CreatePurchaseDiscounts.FindPriceCurrencies(ExceptThisOne, CurrencyTemp);
+                    CreatePurchaseDiscounts.FindPriceCurrencies(ExceptThisOne, false, CurrencyTemp);
                 end;
 
             end;
