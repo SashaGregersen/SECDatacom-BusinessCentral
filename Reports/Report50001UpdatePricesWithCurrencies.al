@@ -11,17 +11,12 @@ report 50001 "Update Prices with Currencies"
                 CreatePurchaseDiscounts: codeunit "Advanced Price Management";
 
             begin
-<<<<<<< HEAD
                 Salesprice.SetRange("Item No.", "No.");
                 If Salesprice.FindSet() then begin
                     ExceptThisOne := "Vendor Currency";
                     CreatePurchaseDiscounts.FindPriceCurrencies(ExceptThisOne, false, CurrencyTemp);
                 end;
 
-=======
-                ExceptThisOne := "Vendor Currency";
-                CreatePurchaseDiscounts.FindPriceCurrencies(ExceptThisOne, CurrencyTemp);
->>>>>>> 057c378de0d94700baa62b43a0eea2d41cf7ed98
             end;
 
             trigger OnAfterGetRecord();
