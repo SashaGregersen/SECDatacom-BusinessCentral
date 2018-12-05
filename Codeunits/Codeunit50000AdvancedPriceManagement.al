@@ -281,6 +281,33 @@ codeunit 50000 "Advanced Price Management"
         end;
     end;
 
+    procedure ExchangeAmtFCYToLCY(SalesPrice: record "Sales Price"; CurrTemp: record Currency temporary)
+    var
+        CurrencyExcRate: Record "Currency Exchange Rate";
+    begin
+        Salesprice."Unit Price" := CurrencyExcRate.ExchangeAmtFCYToLCY(Salesprice."Starting Date", Salesprice."Currency Code", Salesprice."Unit Price", CurrTemp."Currency Factor");
+        Salesprice."Starting Date" := Today;
+        Salesprice.Modify(true);
+    end;
+
+    procedure ExchangeAmtFCYToFCY(SalesPrice: record "Sales Price"; FromCurrency: Code[10])
+    var
+        CurrencyExcRate: Record "Currency Exchange Rate";
+    begin
+        Salesprice."Unit Price" := CurrencyExcRate.ExchangeAmtFCYToFCY(Salesprice."Starting Date", FromCurrency, Salesprice."Currency Code", Salesprice."Unit Price");
+        Salesprice."Starting Date" := Today;
+        Salesprice.Modify(true);
+    end;
+
+    procedure ExchangeAmtLCYToFCY(SalesPrice: record "Sales Price"; CurrTemp: record Currency temporary)
+    var
+        CurrencyExcRate: Record "Currency Exchange Rate";
+    begin
+        Salesprice."Unit Price" := CurrencyExcRate.ExchangeAmtLCYToFCY(Salesprice."Starting Date", Salesprice."Currency Code", Salesprice."Unit Price", CurrTemp."Currency Factor");
+        Salesprice."Starting Date" := Today;
+        Salesprice.Modify(true);
+    end;
+
     [EventSubscriber(ObjectType::Table, database::"Sales Line", 'OnAfterUpdateAmounts', '', true, true)]
     local procedure SalesLineOnAfterUpdateAmounts(var SalesLine: Record "Sales Line")
     begin

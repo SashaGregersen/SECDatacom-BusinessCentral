@@ -10,48 +10,42 @@ report 50001 "Update Prices with Currencies"
             trigger OnPreDataItem();
             var
                 CreatePurchaseDiscounts: codeunit "Advanced Price Management";
-
             begin
                 if not GLSetup.get then
                     exit;
-                SetRange("No.", Salesprice."Item No.");
-                If findset then begin
-                    IF "Vendor Currency" = GLSetup."LCY Code" then
-                        ExceptThisOne := GLSetup."LCY Code"
-                    else
-                        ExceptThisOne := "Vendor Currency";
-                    CreatePurchaseDiscounts.FindPriceCurrencies(ExceptThisOne, false, CurrencyTemp);
-                end;
+                CreatePurchaseDiscounts.FindPriceCurrencies(ExceptThisOne, true, CurrencyTemp);
             end;
 
             trigger OnAfterGetRecord();
             var
-
+                AdvancedPriceManage: Codeunit "Advanced Price Management";
+                VendCurr: Code[10];
             begin
-                Salesprice.SetRange("Item No.", '70061');
-                If Salesprice.FindSet() then
+                SetRange("No.", '70061');
+                if findfirst then
                     repeat
-                        IF GLSetup."LCY Code" <> ExceptThisOne then begin
-                            if Salesprice."Currency Code" = GLSetup."LCY Code" then begin
-                                Salesprice."Unit Price" := CurrencyExcRate.ExchangeAmtFCYToLCY(Salesprice."Starting Date", Salesprice."Currency Code", Salesprice."Unit Price", CurrencyTemp."Currency Factor");
-                                Salesprice."Starting Date" := Today;
-                                Salesprice.Modify(true);
-                            end;
-                        end else begin
-                            if Salesprice."Currency Code" <> GLSetup."LCY Code" then begin
-                                Salesprice."Unit Price" := CurrencyExcRate.ExchangeAmtFCYToFCY(Salesprice."Starting Date", ExceptThisOne, Salesprice."Currency Code", Salesprice."Unit Price");
-                                Salesprice."Starting Date" := Today;
-                                Salesprice.Modify(true);
-                            end;
-                        end;
+                        Salesprice.SetRange("Item No.", "No.");
+                        If Salesprice.FindSet() then
+                            repeat
+                                if Salesprice."Currency Code" = "Vendor Currency" then
+                                    exit;
+                                /* 
+                                                                IF GLSetup."LCY Code" <> "Vendor Currency" then begin
+                                                                    if Salesprice."Currency Code" = GLSetup."LCY Code" then
+                                                                        AdvancedPriceManage.ExchangeAmtFCYToLCY(Salesprice, CurrencyTemp);
+                                                                end else begin
+                                                                    if Salesprice."Currency Code" <> GLSetup."LCY Code" then begin
+                                                                        VendCurr := "Vendor Currency";
+                                                                        AdvancedPriceManage.ExchangeAmtFCYToFCY(Salesprice, VendCurr);
+                                                                    end;
+                                                                end;
 
-                        IF GLSetup."LCY Code" = ExceptThisOne then begin
-                            Salesprice."Unit Price" := CurrencyExcRate.ExchangeAmtLCYToFCY(Salesprice."Starting Date", Salesprice."Currency Code", Salesprice."Unit Price", CurrencyTemp."Currency Factor");
-                            Salesprice."Starting Date" := Today;
-                            Salesprice.Modify(true);
-                        end;
+                                                                IF GLSetup."LCY Code" = "Vendor Currency" then begin
+                                                                    AdvancedPriceManage.ExchangeAmtLCYToFCY(Salesprice, CurrencyTemp);
+                                                                end; */
 
-                    until Salesprice.next = 0;
+                            until Salesprice.next = 0;
+                    until next = 0;
             end;
 
 
@@ -61,9 +55,8 @@ report 50001 "Update Prices with Currencies"
         CurrencyTemp: Record Currency temporary;
         Salesprice: record "Sales Price";
         ExceptThisOne: code[20];
-        Currency: Record Currency;
         GLSetup: Record "General Ledger Setup";
-        CurrencyExcRate: Record "Currency Exchange Rate";
+
 
 }
 
