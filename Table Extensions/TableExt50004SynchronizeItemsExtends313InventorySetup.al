@@ -6,6 +6,11 @@ tableextension 50004 "Synchronize Item" extends "Inventory Setup"
         {
 
         }
+
+        field(50001; "Receive Synchronized Items"; Boolean)
+        {
+
+        }
     }
 
     var

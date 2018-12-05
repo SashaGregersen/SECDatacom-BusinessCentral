@@ -18,7 +18,7 @@ pageextension 50032 "Inventory Availability" extends "Purchase Line FactBox"
 
     var
         CurrentAvailability: Text;
-        CallWebservice: Codeunit 50002;
+        UpdateInventory: Codeunit 50002;
         Location: Record Location;
 
 
@@ -26,7 +26,7 @@ pageextension 50032 "Inventory Availability" extends "Purchase Line FactBox"
     var
         CalcAvailInv: Codeunit 5790;
     begin
-        CurrentAvailability := StrSubstNo('%1', CallWebservice.CallWebserviceInventory(Rec));
+        CurrentAvailability := StrSubstNo('%1', UpdateInventory.UpdateInventoryFromLocation(Rec));
     end;
 
 }

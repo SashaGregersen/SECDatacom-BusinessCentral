@@ -9,6 +9,13 @@ pageextension 50004 "Synchronize items" extends "Inventory Setup"
 
             }
         }
+        addafter("Synchronize Item")
+        {
+            field("Receive Synchronized Items"; "Receive Synchronized Items")
+            {
+
+            }
+        }
     }
 
     actions

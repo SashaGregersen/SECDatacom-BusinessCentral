@@ -8,39 +8,31 @@ codeunit 50050 "Event handler"
     var
 
     [EventSubscriber(ObjectType::table, database::"Item", 'OnAfterInsertEvent', '', true, true)]
-    local procedure ItemOnAfterInsert(var Rec: Record "Item")
+    local procedure ItemOnAfterInsert(var Rec: Record "Item"; runtrigger: Boolean)
     var
         InventorySetup: Record "Inventory Setup";
-        Company: Record Company;
-        DKrec: Record Item;
+        UpdateInventory: Codeunit "Update Inventory";
     begin
-        IF InventorySetup."Synchronize Item" = TRUE then begin
-            DKrec := rec;
-            IF Company.FindSet() then
-                repeat
-                    Rec.ChangeCompany(Company.Name);
-                    Rec.TransferFields(DKrec);
-                    Rec.Insert(true);
-                until Company.next = 0;
-        end;
+        If not runtrigger then
+            EXIT;
+        InventorySetup.get;
+        IF InventorySetup."Synchronize Item" = FALSE then
+            Exit;
+        UpdateInventory.SynchronizeInventoryToCompany(rec);
     end;
 
     [EventSubscriber(ObjectType::table, database::"Item", 'OnAfterModifyEvent', '', true, true)]
-    local procedure ItemOnAfterModify(var Rec: Record "Item")
+    local procedure ItemOnAfterModify(var Rec: Record "Item"; runtrigger: Boolean)
     var
         InventorySetup: Record "Inventory Setup";
-        Company: Record Company;
-        DKrec: Record Item;
+        UpdateInventory: Codeunit "Update Inventory";
     begin
-        IF InventorySetup."Synchronize Item" = TRUE then begin
-            DKrec := rec;
-            IF Company.FindSet() then
-                repeat
-                    Rec.ChangeCompany(Company.Name);
-                    Rec.TransferFields(DKrec);
-                    Rec.Modify(true);
-                until Company.next = 0;
-        end;
+        If not runtrigger then
+            EXIT;
+        InventorySetup.get;
+        IF InventorySetup."Synchronize Item" = FALSE then
+            Exit;
+        UpdateInventory.SynchronizeInventoryToCompany(rec);
     end;
 }
 
