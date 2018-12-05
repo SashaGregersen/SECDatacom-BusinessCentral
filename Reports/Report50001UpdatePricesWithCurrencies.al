@@ -12,14 +12,6 @@ report 50001 "Update Prices with Currencies"
                 CreatePurchaseDiscounts: codeunit "Advanced Price Management";
 
             begin
-<<<<<<< HEAD
-                Salesprice.SetRange("Item No.", "No.");
-                If Salesprice.FindSet() then begin
-                    ExceptThisOne := "Vendor Currency";
-                    CreatePurchaseDiscounts.FindPriceCurrencies(ExceptThisOne, false, CurrencyTemp);
-                end;
-
-=======
                 if not GLSetup.get then
                     exit;
                 SetRange("No.", Salesprice."Item No.");
@@ -30,7 +22,6 @@ report 50001 "Update Prices with Currencies"
                         ExceptThisOne := "Vendor Currency";
                     CreatePurchaseDiscounts.FindPriceCurrencies(ExceptThisOne, false, CurrencyTemp);
                 end;
->>>>>>> bcffdf89a7ef45832fe2e9484819f863cfa248bf
             end;
 
             trigger OnAfterGetRecord();

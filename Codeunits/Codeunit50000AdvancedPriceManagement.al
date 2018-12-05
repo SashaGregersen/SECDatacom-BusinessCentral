@@ -9,9 +9,30 @@ codeunit 50000 "Advanced Price Management"
 
     end;
 
+    procedure UpdatePricesfromWorksheet()
+    var
+        SalesPriceWorksheet: Record "Sales Price Worksheet";
+        Item: Record Item;
+        ItemDiscGroupTemp: Record "Item Discount Group" temporary;
+    begin
+        If SalesPriceWorksheet.FindSet() then
+            repeat
+                CreateListprices(SalesPriceWorksheet);
+                if Item.Get(SalesPriceWorksheet."Item No.") then begin
+                    if Item."Item Disc. Group" <> '' then begin
+                        ItemDiscGroupTemp.Code := item."Item Disc. Group";
+                        if not ItemDiscGroupTemp.Insert() then;
+                    end;
+                end;
+            until SalesPriceWorksheet.Next() = 0;
+        if ItemDiscGroupTemp.FindSet() then
+            repeat
+                CalcSalesPricesForItemDiscGroup(ItemDiscGroupTemp.Code);
+            until ItemDiscGroupTemp.Next() = 0;
+    end;
+
     procedure CreateListprices(SalesPriceWorksheet: Record "Sales Price Worksheet");
     var
-        DiscontGroupFilters: Record "Sales Line Discount";
         SalesPrice: Record "Sales Price";
         ImplementPrices: Report "Implement Price Change";
         Suggestprices: report "Suggest Sales Price on Wksh.";
@@ -190,6 +211,7 @@ codeunit 50000 "Advanced Price Management"
         ListPrice.SetRange("Sales Type", ListPrice."Sales Type"::"All Customers");
         ListPrice.SetRange("Currency Code", CurrencyCode);
         exit(listprice.FindLast);
+        //bør denne have et filter på, at den ikke må finde en der er efter WORKDATE?
     end;
 
     local procedure FindItemsInItemDiscGroup(var ItemTemp: Record Item temporary; ItemDiscGroupCode: Code[20]): Boolean;
