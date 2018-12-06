@@ -89,7 +89,7 @@ codeunit 50000 "Advanced Price Management"
         end;
     end;
 
-    procedure UpdatePurchaseDicountsForItemDiscGroup(itemDiscGroup: Code[20]; DiscPct: Decimal; VendorNo: Code[20]);
+    procedure UpdatePurchaseDicountsForItemDiscGroup(itemDiscGroup: Code[20]; DiscPct: Decimal; CustomerMarkup: Decimal; StartingDate: Date; VendorNo: Code[20]);
     var
         ItemTemp: Record Item temporary;
         PurchaseDiscount: Record "Purchase Line Discount";
@@ -105,10 +105,11 @@ codeunit 50000 "Advanced Price Management"
                     PurchaseDiscount."Vendor No." := VendorNo;
                     PurchaseDiscount."Minimum Quantity" := 1;           //Note: should be changed to a var!
                     PurchaseDiscount."Unit of Measure Code" := 'STK';   //Note: should be changed to a var!
-                    PurchaseDiscount."Starting Date" := WorkDate;
+                    PurchaseDiscount."Starting Date" := StartingDate;
                     PurchaseDiscount."Currency Code" := Vendor."Currency Code";
                     //PurchaseDiscount."Variant Code" := ?              Does not support variants at the moment - SEC does not use variants
                     PurchaseDiscount."Line Discount %" := DiscPct;
+                    PurchaseDiscount."Customer Markup" := CustomerMarkup;
                     if not PurchaseDiscount.Insert(true) then
                         PurchaseDiscount.Modify(true);
                 until ItemTemp.next = 0;
@@ -120,8 +121,7 @@ codeunit 50000 "Advanced Price Management"
     var
         PurchasePrice: Record "Purchase Price";
     begin
-        if not PurchasePrice.Get(PurchaseLineDiscount."Item No.", PurchaseLineDiscount."Vendor No.", PurchaseLineDiscount."Starting Date", PurchaseLineDiscount."Currency Code",
-                                PurchaseLineDiscount."Variant Code", PurchaseLineDiscount."Unit of Measure Code", PurchaseLineDiscount."Minimum Quantity") then begin
+        if not FindLatestPurchasePrice(PurchaseLineDiscount."Item No.", PurchaseLineDiscount."Vendor No.", PurchaseLineDiscount."Currency Code", PurchasePrice) then begin
             PurchasePrice.Init;
             PurchasePrice.TransferFields(PurchaseLineDiscount);
             PurchasePrice.validate("Starting Date", ListPrice."Starting Date");
@@ -131,6 +131,37 @@ codeunit 50000 "Advanced Price Management"
         end else begin
             PurchasePrice.Validate("Direct Unit Cost", ListPrice."Unit Price" * ((100 - PurchaseLineDiscount."Line Discount %") / 100));
             PurchasePrice.Modify(true);
+        end;
+    end;
+
+    local procedure FindLatestPurchasePrice(ItemNo: code[20]; VendorNo: code[20]; CurrCode: code[20]; var PurchasePrice: Record "Purchase Price"): Boolean
+    begin
+        PurchasePrice.SetRange("Item No.", ItemNo);
+        PurchasePrice.SetRange("Vendor No.", VendorNo);
+        PurchasePrice.SetRange("Currency Code", CurrCode);
+        exit(PurchasePrice.FindLast());
+    end;
+
+    procedure CreateUpdateSalesMarkupPrices(PurchaseLineDiscount: Record "Purchase Line Discount")
+    var
+        PurchasePrice: Record "Purchase Price";
+        Salesprice: Record "Sales Price";
+        SalesPriceWorksheet: Record "Sales Price Worksheet";
+        ImplementPrices: Report "Implement Price Change";
+        Suggestprices: report "Suggest Sales Price on Wksh.";
+        CurrencyTemp: Record Currency temporary;
+    begin
+        if FindLatestPurchasePrice(PurchaseLineDiscount."Item No.", PurchaseLineDiscount."Vendor No.", PurchaseLineDiscount."Currency Code", PurchasePrice) then begin
+            Salesprice.Init();
+            Salesprice."Sales Type" := Salesprice."Sales Type"::"All Customers";
+            Salesprice."Currency Code" := PurchasePrice."Currency Code";
+            Salesprice."Starting Date" := PurchasePrice."Starting Date";
+            Salesprice."Ending Date" := PurchasePrice."Ending Date";
+            Salesprice."Item No." := PurchasePrice."Item No.";
+            Salesprice."Unit of Measure Code" := PurchasePrice."Unit of Measure Code";
+            Salesprice."Unit Price" := PurchasePrice."Direct Unit Cost" / ((100 - PurchaseLineDiscount."Customer Markup") / 100);
+            if not Salesprice.Insert(false) then
+                Salesprice.Modify(false);
         end;
     end;
 

@@ -78,11 +78,15 @@ codeunit 50051 "Price Event Handler"
         PurchasePrice: Record "Purchase Price";
         ListPrice: Record "Sales Price";
     begin
-        if Rec."Line Discount %" = xRec."Line Discount %" then
+        if Rec."Line Discount %" <> xRec."Line Discount %" then begin
+            if AdvPriceMgt.FindListPriceForitem(Rec."Item No.", Rec."Currency Code", ListPrice) then
+                AdvPriceMgt.CreateUpdatePurchasePrices(Rec, ListPrice);
+            if rec."Customer Markup" <> 0 then
+                AdvPriceMgt.CreateUpdateSalesMarkupPrices(Rec);
             exit;
-        if not AdvPriceMgt.FindListPriceForitem(Rec."Item No.", Rec."Currency Code", ListPrice) then
-            exit;
-        AdvPriceMgt.CreateUpdatePurchasePrices(Rec, ListPrice);
+        end;
+        if rec."Customer Markup" <> xRec."Customer Markup" then
+            AdvPriceMgt.CreateUpdateSalesMarkupPrices(Rec);
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Purchase Line Discount", 'OnAfterInsertEvent', '', true, true)]
