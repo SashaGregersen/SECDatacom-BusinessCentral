@@ -8,13 +8,14 @@ pageextension 50005 "Price Wrksh. Adv. Pricing" extends "Sales Price Worksheet"
             {
                 Image = ItemGroup;
                 trigger OnAction();
-                var 
-                    AdvpricingMgt : Codeunit "Advanced Price Management";
+                var
+                    AdvpricingMgt: Codeunit "Advanced Price Management";
                 begin
-                    AdvpricingMgt.CreateListprices(Rec);
+                    //AdvpricingMgt.CreateListprices(Rec);
+                    AdvpricingMgt.UpdatePricesfromWorksheet();
                 end;
             }
-        }    
+        }
     }
-    
+
 }
