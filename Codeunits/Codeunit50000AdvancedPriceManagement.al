@@ -338,11 +338,13 @@ codeunit 50000 "Advanced Price Management"
         end;
     end;
 
-    procedure ExchangeAmtFCYToLCY(SalesPrice: record "Sales Price"; CurrTemp: record Currency temporary)
+    procedure ExchangeAmtFCYToLCY(SalesPrice: record "Sales Price"; CurrTemp: record Currency temporary; CurrFactor: code[10])
     var
         CurrencyExcRate: Record "Currency Exchange Rate";
+        Factor: Decimal;
     begin
-        Salesprice."Unit Price" := CurrencyExcRate.ExchangeAmtFCYToLCY(Salesprice."Starting Date", Salesprice."Currency Code", Salesprice."Unit Price", CurrTemp."Currency Factor");
+        Factor := FindCurrencyFactor(CurrFactor, CurrTemp);
+        Salesprice."Unit Price" := CurrencyExcRate.ExchangeAmtFCYToLCY(Salesprice."Starting Date", Salesprice."Currency Code", Salesprice."Unit Price", Factor);
         Salesprice."Starting Date" := Today;
         Salesprice.Modify(true);
     end;
@@ -359,10 +361,21 @@ codeunit 50000 "Advanced Price Management"
     procedure ExchangeAmtLCYToFCY(SalesPrice: record "Sales Price"; CurrTemp: record Currency temporary)
     var
         CurrencyExcRate: Record "Currency Exchange Rate";
+        Factor: Decimal;
     begin
-        Salesprice."Unit Price" := CurrencyExcRate.ExchangeAmtLCYToFCY(Salesprice."Starting Date", Salesprice."Currency Code", Salesprice."Unit Price", CurrTemp."Currency Factor");
+        Factor := FindCurrencyFactor(SalesPrice."Currency Code", CurrTemp);
+        Salesprice."Unit Price" := CurrencyExcRate.ExchangeAmtLCYToFCY(Salesprice."Starting Date", Salesprice."Currency Code", Salesprice."Unit Price", Factor);
         Salesprice."Starting Date" := Today;
         Salesprice.Modify(true);
+    end;
+
+    procedure FindCurrencyFactor(Currency: code[10]; CurrTemp: Record Currency temporary): Decimal
+    var
+
+    begin
+        CurrTemp.SetRange(Code, Currency);
+        If CurrTemp.FindFirst() then
+            exit(CurrTemp."Currency Factor");
     end;
 
     procedure CreateListPriceVariant(Item: Record Item)
