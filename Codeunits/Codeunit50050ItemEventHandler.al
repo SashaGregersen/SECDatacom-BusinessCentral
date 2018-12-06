@@ -1,5 +1,7 @@
-codeunit 50050 "Event handler"
+codeunit 50050 "Item Event handler"
 {
+    SingleInstance = true;
+
     trigger OnRun()
     begin
 
