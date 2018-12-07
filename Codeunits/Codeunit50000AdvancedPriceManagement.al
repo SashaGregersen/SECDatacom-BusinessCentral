@@ -303,23 +303,23 @@ codeunit 50000 "Advanced Price Management"
         end;
     end;
 
-    procedure ExchangeAmtFCYToLCY(SalesPrice: record "Sales Price"; CurrTemp: record Currency temporary; CurrFactor: code[10])
+    procedure ExchangeAmtLCYToFCYAndFCYToLCY(SalesPrice: record "Sales Price"; CurrTemp: record Currency temporary; CurrFactorCode: code[10])
     var
         CurrencyExcRate: Record "Currency Exchange Rate";
         Factor: Decimal;
+        FromLCYToFCY: Decimal;
     begin
-        Factor := FindCurrencyFactor(CurrFactor, CurrTemp);
-        Salesprice."Unit Price" := CurrencyExcRate.ExchangeAmtFCYToLCY(Salesprice."Starting Date", Salesprice."Currency Code", Salesprice."Unit Price", Factor);
-        Salesprice."Starting Date" := Today;
+        Factor := CurrencyExcRate.GetCurrentCurrencyFactor(CurrFactorCode);
+        FromLCYToFCY := CurrencyExcRate.ExchangeAmtLCYToFCY(Today(), CurrFactorCode, Salesprice."Unit Price", Factor);
+        Salesprice.Validate("Unit Price", CurrencyExcRate.ExchangeAmtFCYToLCY(Today(), CurrFactorCode, FromLCYToFCY, Factor));
         Salesprice.Modify(true);
     end;
 
-    procedure ExchangeAmtFCYToFCY(SalesPrice: record "Sales Price"; FromCurrency: Code[10])
+    procedure ExchangeAmtFCYToFCY(SalesPrice: Record "Sales Price"; FromCurrency: Code[10])
     var
         CurrencyExcRate: Record "Currency Exchange Rate";
     begin
-        Salesprice."Unit Price" := CurrencyExcRate.ExchangeAmtFCYToFCY(Salesprice."Starting Date", FromCurrency, Salesprice."Currency Code", Salesprice."Unit Price");
-        Salesprice."Starting Date" := Today;
+        Salesprice."Unit Price" := CurrencyExcRate.ExchangeAmtFCYToFCY(Today(), Salesprice."Currency Code", FromCurrency, Salesprice."Unit Price");
         Salesprice.Modify(true);
     end;
 
@@ -328,19 +328,9 @@ codeunit 50000 "Advanced Price Management"
         CurrencyExcRate: Record "Currency Exchange Rate";
         Factor: Decimal;
     begin
-        Factor := FindCurrencyFactor(SalesPrice."Currency Code", CurrTemp);
-        Salesprice."Unit Price" := CurrencyExcRate.ExchangeAmtLCYToFCY(Salesprice."Starting Date", Salesprice."Currency Code", Salesprice."Unit Price", Factor);
-        Salesprice."Starting Date" := Today;
+        Factor := CurrencyExcRate.GetCurrentCurrencyFactor(SalesPrice."Currency Code");
+        Salesprice.Validate("Unit Price", CurrencyExcRate.ExchangeAmtLCYToFCY(Today(), Salesprice."Currency Code", Salesprice."Unit Price", Factor));
         Salesprice.Modify(true);
-    end;
-
-    procedure FindCurrencyFactor(Currency: code[10]; CurrTemp: Record Currency temporary): Decimal
-    var
-
-    begin
-        CurrTemp.SetRange(Code, Currency);
-        If CurrTemp.FindFirst() then
-            exit(CurrTemp."Currency Factor");
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Sales Line", 'OnAfterUpdateAmounts', '', true, true)]

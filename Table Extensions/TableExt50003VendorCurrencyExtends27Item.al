@@ -9,6 +9,7 @@ tableextension 50003 "Vendor Currency" extends Item
             DataClassification = ToBeClassified;
 
         }
+
     }
 
     var
