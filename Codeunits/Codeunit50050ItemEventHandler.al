@@ -1,6 +1,7 @@
 codeunit 50050 "Item Event handler"
 {
     SingleInstance = true;
+    EventSubscriberInstance = StaticAutomatic;
 
     trigger OnRun()
     begin
@@ -14,9 +15,11 @@ codeunit 50050 "Item Event handler"
     var
         InventorySetup: Record "Inventory Setup";
         UpdateInventory: Codeunit "Update Inventory";
+        AdvPriceMgt: Codeunit "Advanced Price Management";
     begin
         If not runtrigger then
             EXIT;
+        AdvPriceMgt.CreateListPriceVariant(Rec);
         InventorySetup.get;
         IF InventorySetup."Synchronize Item" = FALSE then
             Exit;

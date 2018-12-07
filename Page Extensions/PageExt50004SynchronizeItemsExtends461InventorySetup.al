@@ -20,7 +20,19 @@ pageextension 50004 "Synchronize items" extends "Inventory Setup"
 
     actions
     {
+        addafter("Item Discount Groups")
+        {
+            action(CreateVariant)
+            {
+                Caption = 'Create Variants';
+                Image = ItemVariant;
+                trigger OnAction();
+                begin
+                    Report.RunModal(50099, true, false);
+                end;
 
+            }
+        }
     }
 
     var

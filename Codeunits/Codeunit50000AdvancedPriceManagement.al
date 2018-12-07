@@ -89,7 +89,7 @@ codeunit 50000 "Advanced Price Management"
         end;
     end;
 
-    procedure UpdatePurchaseDicountsForItemDiscGroup(itemDiscGroup: Code[20]; DiscPct: Decimal; VendorNo: Code[20]);
+    procedure UpdatePurchaseDicountsForItemDiscGroup(itemDiscGroup: Code[20]; DiscPct: Decimal; CustomerMarkup: Decimal; StartingDate: Date; VendorNo: Code[20]);
     var
         ItemTemp: Record Item temporary;
         PurchaseDiscount: Record "Purchase Line Discount";
@@ -105,10 +105,11 @@ codeunit 50000 "Advanced Price Management"
                     PurchaseDiscount."Vendor No." := VendorNo;
                     PurchaseDiscount."Minimum Quantity" := 1;           //Note: should be changed to a var!
                     PurchaseDiscount."Unit of Measure Code" := 'STK';   //Note: should be changed to a var!
-                    PurchaseDiscount."Starting Date" := WorkDate;
+                    PurchaseDiscount."Starting Date" := StartingDate;
                     PurchaseDiscount."Currency Code" := Vendor."Currency Code";
                     //PurchaseDiscount."Variant Code" := ?              Does not support variants at the moment - SEC does not use variants
                     PurchaseDiscount."Line Discount %" := DiscPct;
+                    PurchaseDiscount."Customer Markup" := CustomerMarkup;
                     if not PurchaseDiscount.Insert(true) then
                         PurchaseDiscount.Modify(true);
                 until ItemTemp.next = 0;
@@ -120,8 +121,7 @@ codeunit 50000 "Advanced Price Management"
     var
         PurchasePrice: Record "Purchase Price";
     begin
-        if not PurchasePrice.Get(PurchaseLineDiscount."Item No.", PurchaseLineDiscount."Vendor No.", PurchaseLineDiscount."Starting Date", PurchaseLineDiscount."Currency Code",
-                                PurchaseLineDiscount."Variant Code", PurchaseLineDiscount."Unit of Measure Code", PurchaseLineDiscount."Minimum Quantity") then begin
+        if not FindLatestPurchasePrice(PurchaseLineDiscount."Item No.", PurchaseLineDiscount."Vendor No.", PurchaseLineDiscount."Currency Code", PurchasePrice) then begin
             PurchasePrice.Init;
             PurchasePrice.TransferFields(PurchaseLineDiscount);
             PurchasePrice.validate("Starting Date", ListPrice."Starting Date");
@@ -131,6 +131,37 @@ codeunit 50000 "Advanced Price Management"
         end else begin
             PurchasePrice.Validate("Direct Unit Cost", ListPrice."Unit Price" * ((100 - PurchaseLineDiscount."Line Discount %") / 100));
             PurchasePrice.Modify(true);
+        end;
+    end;
+
+    local procedure FindLatestPurchasePrice(ItemNo: code[20]; VendorNo: code[20]; CurrCode: code[20]; var PurchasePrice: Record "Purchase Price"): Boolean
+    begin
+        PurchasePrice.SetRange("Item No.", ItemNo);
+        PurchasePrice.SetRange("Vendor No.", VendorNo);
+        PurchasePrice.SetRange("Currency Code", CurrCode);
+        exit(PurchasePrice.FindLast());
+    end;
+
+    procedure CreateUpdateSalesMarkupPrices(PurchaseLineDiscount: Record "Purchase Line Discount")
+    var
+        PurchasePrice: Record "Purchase Price";
+        Salesprice: Record "Sales Price";
+        SalesPriceWorksheet: Record "Sales Price Worksheet";
+        ImplementPrices: Report "Implement Price Change";
+        Suggestprices: report "Suggest Sales Price on Wksh.";
+        CurrencyTemp: Record Currency temporary;
+    begin
+        if FindLatestPurchasePrice(PurchaseLineDiscount."Item No.", PurchaseLineDiscount."Vendor No.", PurchaseLineDiscount."Currency Code", PurchasePrice) then begin
+            Salesprice.Init();
+            Salesprice."Sales Type" := Salesprice."Sales Type"::"All Customers";
+            Salesprice."Currency Code" := PurchasePrice."Currency Code";
+            Salesprice."Starting Date" := PurchasePrice."Starting Date";
+            Salesprice."Ending Date" := PurchasePrice."Ending Date";
+            Salesprice."Item No." := PurchasePrice."Item No.";
+            Salesprice."Unit of Measure Code" := PurchasePrice."Unit of Measure Code";
+            Salesprice."Unit Price" := PurchasePrice."Direct Unit Cost" / ((100 - PurchaseLineDiscount."Customer Markup") / 100);
+            if not Salesprice.Insert(false) then
+                Salesprice.Modify(false);
         end;
     end;
 
@@ -168,12 +199,14 @@ codeunit 50000 "Advanced Price Management"
     begin
         FindPriceCurrencies('', true, CurrencyTemp);
         SalesDiscountGroup.CopyFilters(DiscontGroupFilters);
-        if SalesDiscountGroup.FindSet then repeat
-                                               if FindItemsInItemDiscGroup(ItemTemp, SalesDiscountGroup.Code) then begin
-                                                   if ItemTemp.FindFirst then repeat
-                                                                                  CreatePricesForItem(ItemTemp."No.", SalesDiscountGroup, CurrencyTemp);
-                                                       until ItemTemp.next = 0;
-                                               end;
+        if SalesDiscountGroup.FindSet then
+            repeat
+                if FindItemsInItemDiscGroup(ItemTemp, SalesDiscountGroup.Code) then begin
+                    if ItemTemp.FindFirst then
+                        repeat
+                            CreatePricesForItem(ItemTemp."No.", SalesDiscountGroup, CurrencyTemp);
+                        until ItemTemp.next = 0;
+                end;
             until SalesDiscountGroup.next = 0;
     end;
 
@@ -181,9 +214,10 @@ codeunit 50000 "Advanced Price Management"
     var
         ItemListPrice: Record "Sales Price";
     begin
-        if CurrencyTemp.FindFirst then repeat
-                                           if FindListPriceForitem(ItemNo, CurrencyTemp.Code, ItemListPrice) then
-                                               InsertSalesPriceWorkSheetLine(SalesDiscountGroup, ItemListPrice);
+        if CurrencyTemp.FindFirst then
+            repeat
+                if FindListPriceForitem(ItemNo, CurrencyTemp.Code, ItemListPrice) then
+                    InsertSalesPriceWorkSheetLine(SalesDiscountGroup, ItemListPrice);
             until CurrencyTemp.next = 0;
     end;
 
@@ -203,13 +237,14 @@ codeunit 50000 "Advanced Price Management"
             SalesPriceWorksheet.Modify(true);
     end;
 
-    local procedure FindListPriceForitem(ItemNo: code[20]; CurrencyCode: Code[20]; var ListPrice: record "sales price"): Boolean;
+    procedure FindListPriceForitem(ItemNo: code[20]; CurrencyCode: Code[20]; var ListPrice: record "sales price"): Boolean;
     var
         Test: Integer;
     begin
         ListPrice.SetRange("Item No.", ItemNo);
         ListPrice.SetRange("Sales Type", ListPrice."Sales Type"::"All Customers");
         ListPrice.SetRange("Currency Code", CurrencyCode);
+        ListPrice.SetRange("Variant Code", 'LISTPRICE');
         exit(listprice.FindLast);
         //bør denne have et filter på, at den ikke må finde en der er efter WORKDATE?
     end;
@@ -243,7 +278,7 @@ codeunit 50000 "Advanced Price Management"
         WorkSheet.Validate("Variant Code", DiscountGroup."Variant Code");
     end;
 
-    local procedure UpdateSalesLineWithPurchPrice(var SalesLine: Record "Sales Line");
+    procedure UpdateSalesLineWithPurchPrice(var SalesLine: Record "Sales Line");
     var
         Item: Record Item;
         PurchPrice: Record "Purchase Price";
@@ -263,7 +298,7 @@ codeunit 50000 "Advanced Price Management"
         //Need to add currency and UOM and bids...
     end;
 
-    local procedure FindPriceGroupsFromItem(Item: Record Item; var SalesLineDiscountTemp: Record "Sales Line Discount" temporary) FoundSome: boolean;
+    procedure FindPriceGroupsFromItem(Item: Record Item; var SalesLineDiscountTemp: Record "Sales Line Discount" temporary) FoundSome: boolean;
     var
         ItemDiscGroup: Record "Item Discount Group";
         SalesLineDiscount: Record "Sales Line Discount";
@@ -333,6 +368,7 @@ codeunit 50000 "Advanced Price Management"
         Salesprice.Modify(true);
     end;
 
+<<<<<<< HEAD
     [EventSubscriber(ObjectType::Table, database::"Sales Line", 'OnAfterUpdateAmounts', '', true, true)]
     local procedure SalesLineOnAfterUpdateAmounts(var SalesLine: Record "Sales Line")
     begin
@@ -343,84 +379,25 @@ codeunit 50000 "Advanced Price Management"
 
     [EventSubscriber(ObjectType::Table, database::"Sales Line", 'OnAfterAssignItemValues', '', true, true)]
     local procedure SalesLineOnAfterAssignItemValues(var SalesLine: Record "Sales Line"; Item: Record Item)
+=======
+    procedure FindCurrencyFactor(Currency: code[10]; CurrTemp: Record Currency temporary): Decimal
     var
-        SalesLineDiscountTemp: Record "Sales Line Discount" temporary;
-        PriceGroupLink: Record "Price Group Link";
-        FoundGroup: Boolean;
+
     begin
-        if FindPriceGroupsFromItem(Item, SalesLineDiscountTemp) then begin
-            PriceGroupLink.SetRange("Customer No.", SalesLine."Sell-to Customer No.");
-            if PriceGroupLink.FindSet then begin
-                repeat
-                    SalesLineDiscountTemp.SetRange("Sales Code", PriceGroupLink."Customer Discount Group Code");
-                    if SalesLineDiscountTemp.FindFirst then begin
-                        SalesLine."Customer Disc. Group" := SalesLineDiscountTemp."Sales Code";
-                        SalesLine."Customer Price Group" := SalesLine."Customer Disc. Group";
-                        FoundGroup := true;
-                    end;
-                until (PriceGroupLink.Next = 0) or (FoundGroup);
-            end;
-        end;
+        CurrTemp.SetRange(Code, Currency);
+        If CurrTemp.FindFirst() then
+            exit(CurrTemp."Currency Factor");
     end;
 
-    [EventSubscriber(ObjectType::Codeunit, codeunit::"Release Sales Document", 'OnBeforeReleaseSalesDoc', '', true, true)]
-    local procedure SalesHeaderOnBeforeReleaseSalesDoc(var SalesHeader: Record "Sales Header"; PreviewMode: Boolean)
+    procedure CreateListPriceVariant(Item: Record Item)
+>>>>>>> 887ac5129d37cbf3009a5050b890783f0031a4b5
     var
-        SalesLine: Record "Sales Line";
+        ItemVariant: Record "Item Variant";
     begin
-        SalesLine.SetRange("Document No.", SalesHeader."No.");
-        if SalesLine.FindSet then begin
-            repeat
-                if SalesLine."Bid Unit Sales Price" <> 0 then
-                    SalesLine.TestField("Bid No.");
-                if SalesLine."Bid Unit Purchase Price" <> 0 then
-                    SalesLine.TestField("Bid No.");
-            until SalesLine.Next = 0;
-        end;
+        ItemVariant.Init();
+        ItemVariant.Code := 'LISTPRICE';
+        ItemVariant."Item No." := Item."No.";
+        ItemVariant.Description := 'List Price of item';
+        if not ItemVariant.Insert(false) then;
     end;
-
-    [EventSubscriber(ObjectType::Table, database::"Sales Line Discount", 'OnAfterModifyEvent', '', true, true)]
-    local procedure SalesLineDiscountOnAfterModify(var Rec: Record "Sales Line Discount")
-    var
-        DiscontGroupFilters: Record "Sales Line Discount";
-        SalesPriceWorksheet: Record "Sales Price Worksheet";
-        ImplementPrices: Report "Implement Price Change";
-    begin
-        DiscontGroupFilters.SetRange(Type, DiscontGroupFilters.type::"Item Disc. Group");
-        DiscontGroupFilters.SetRange(Code, Rec.Code);
-        DiscontGroupFilters.SetRange("Sales Type", rec."Sales Type");
-        DiscontGroupFilters.SetRange("Sales Code", Rec."Sales Code");
-        CalcGroupPricesFromGroupDiscounts(DiscontGroupFilters);
-        SalesPriceWorksheet.SetRange("Sales Type", rec."Sales Type");
-        SalesPriceWorksheet.SetRange("Sales Code", Rec."Sales Code");
-        ImplementPrices.InitializeRequest(true);
-        ImplementPrices.SetTableView(SalesPriceWorksheet);
-        ImplementPrices.UseRequestPage(false);
-        ImplementPrices.Run();
-    end;
-
-    [EventSubscriber(ObjectType::Table, database::"Purchase Line Discount", 'OnAfterModifyEvent', '', true, true)]
-    local procedure PurchaseLineDiscountOnAfterModify(var Rec: Record "Purchase Line Discount"; xRec: Record "Purchase Line Discount")
-    var
-        PurchasePrice: Record "Purchase Price";
-        ListPrice: Record "Sales Price";
-    begin
-        if Rec."Line Discount %" = xRec."Line Discount %" then
-            exit;
-        if not FindListPriceForitem(Rec."Item No.", Rec."Currency Code", ListPrice) then
-            exit;
-        CreateUpdatePurchasePrices(Rec, ListPrice);
-    end;
-
-    [EventSubscriber(ObjectType::Table, database::"Purchase Line Discount", 'OnAfterInsertEvent', '', true, true)]
-    local procedure PurchaseLineDiscountOnAfterInsert(var Rec: Record "Purchase Line Discount")
-    var
-        PurchasePrice: Record "Purchase Price";
-        ListPrice: Record "Sales Price";
-    begin
-        if not FindListPriceForitem(Rec."Item No.", Rec."Currency Code", ListPrice) then
-            exit;
-        CreateUpdatePurchasePrices(Rec, ListPrice);
-    end;
-
 }
