@@ -29,6 +29,7 @@ pageextension 50003 "Customer Card Advanced Pricing" extends "Customer Card"
             action("Customer Kickback Percentages")
             {
                 ApplicationArea = All;
+                Image = CustomerRating;
 
                 trigger OnAction()
                 var
