@@ -359,7 +359,7 @@ codeunit 50000 "Advanced Price Management"
     begin
         Factor := CurrencyExcRate.GetCurrentCurrencyFactor(FromCurrency);
         FromLCYToFCY := CurrencyExcRate.ExchangeAmtLCYToFCY(Today(), FromCurrency, Salesprice."Unit Price", Factor);
-        Salesprice.Validate("Unit Price", CurrencyExcRate.ExchangeAmtFCYToFCY(Today(), FromCurrency, Salesprice."Currency Code", FromLCYToFCY));
+        Salesprice.Validate("Unit Price", CurrencyExcRate.ExchangeAmtFCYToFCY(Today(), Salesprice."Currency Code", FromCurrency, FromLCYToFCY));
         Salesprice.Modify(true);
     end;
 
