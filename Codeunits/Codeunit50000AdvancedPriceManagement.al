@@ -355,7 +355,7 @@ codeunit 50000 "Advanced Price Management"
     var
         CurrencyExcRate: Record "Currency Exchange Rate";
     begin
-        Salesprice."Unit Price" := CurrencyExcRate.ExchangeAmtFCYToFCY(Today(), Salesprice."Currency Code", FromCurrency, Salesprice."Unit Price");
+        Salesprice.Validate("Unit Price", CurrencyExcRate.ExchangeAmtFCYToFCY(Today(), Salesprice."Currency Code", FromCurrency, Salesprice."Unit Price"));
         Salesprice.Modify(true);
     end;
 

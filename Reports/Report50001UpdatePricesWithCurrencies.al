@@ -11,10 +11,6 @@ report 50001 "Update Prices with Currencies"
             var
 
             begin
-                if not GLSetup.get then
-                    exit;
-                If GLSetup."LCY Code" = '' then
-                    exit;
                 LocalCurrency := '';
                 AdvancedPriceManage.FindPriceCurrencies('', false, CurrencyTemp);
 
@@ -41,14 +37,14 @@ report 50001 "Update Prices with Currencies"
                                 salesprice2 := Salesprice;
                                 salesprice2.SetRecFilter();
                                 salesprice2.SetFilter("Currency Code", '<>%1', salesprice."Currency Code");
-                                /*  IF LocalCurrency <> VendCurr then
-                                     if Salesprice."Currency Code" = LocalCurrency then
-                                         AdvancedPriceManage.ExchangeAmtLCYToFCYAndFCYToLCY(Salesprice, CurrencyTemp, VendCurr)
-                                     else
-                                         AdvancedPriceManage.ExchangeAmtFCYToFCY(Salesprice, VendCurr);
+                                IF LocalCurrency <> VendCurr then
+                                    if salesprice2."Currency Code" = LocalCurrency then
+                                        AdvancedPriceManage.ExchangeAmtLCYToFCYAndFCYToLCY(salesprice2, CurrencyTemp, VendCurr)
+                                    else
+                                        AdvancedPriceManage.ExchangeAmtFCYToFCY(Salesprice2, VendCurr);
 
-                                 IF LocalCurrency = VendCurr then
-                                     AdvancedPriceManage.ExchangeAmtLCYToFCY(Salesprice, CurrencyTemp); */
+                                IF LocalCurrency = VendCurr then
+                                    AdvancedPriceManage.ExchangeAmtLCYToFCY(Salesprice2, CurrencyTemp);
                             until Salesprice.Next() = 0;
                     until next = 0;
             end;
