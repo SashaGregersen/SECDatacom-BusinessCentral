@@ -368,18 +368,6 @@ codeunit 50000 "Advanced Price Management"
         Salesprice.Modify(true);
     end;
 
-<<<<<<< HEAD
-    [EventSubscriber(ObjectType::Table, database::"Sales Line", 'OnAfterUpdateAmounts', '', true, true)]
-    local procedure SalesLineOnAfterUpdateAmounts(var SalesLine: Record "Sales Line")
-    begin
-        if SalesLine."Unit Purchase Price" = 0 then
-            UpdateSalesLineWithPurchPrice(SalesLine);
-        SalesLine.CalcAdvancedPrices;
-    end;
-
-    [EventSubscriber(ObjectType::Table, database::"Sales Line", 'OnAfterAssignItemValues', '', true, true)]
-    local procedure SalesLineOnAfterAssignItemValues(var SalesLine: Record "Sales Line"; Item: Record Item)
-=======
     procedure FindCurrencyFactor(Currency: code[10]; CurrTemp: Record Currency temporary): Decimal
     var
 
@@ -390,7 +378,6 @@ codeunit 50000 "Advanced Price Management"
     end;
 
     procedure CreateListPriceVariant(Item: Record Item)
->>>>>>> 887ac5129d37cbf3009a5050b890783f0031a4b5
     var
         ItemVariant: Record "Item Variant";
     begin
