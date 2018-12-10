@@ -10,13 +10,15 @@ pageextension 50009 "Item Adv. Pricing" extends "Item Card"
             }
         }
 
-        /*         addafter("Profit %")
-                {
-                    field("Transfer Price %"; "Transfer Price %")
-                    {
-                        ApplicationArea = All;
-                    }
-                } */
+        addafter("Profit %")
+        {
+            field("Transfer Price %"; "Transfer Price %")
+            {
+                ApplicationArea = All;
+            }
+        }
+
+
     }
 
     actions
