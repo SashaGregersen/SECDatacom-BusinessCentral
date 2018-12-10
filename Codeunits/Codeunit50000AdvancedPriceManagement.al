@@ -351,16 +351,14 @@ codeunit 50000 "Advanced Price Management"
         Salesprice.Modify(true);
     end;
 
-    procedure ExchangeAmtFCYToFCY(SalesPrice: Record "Sales Price"; FromCurrency: Code[10])
+    procedure ExchangeAmtFCYToFCY(SalesPrice: Record "Sales Price"; SalesPrice2: Record "Sales Price")
     var
         CurrencyExcRate: Record "Currency Exchange Rate";
         Factor: Decimal;
         FromLCYToFCY: Decimal;
     begin
-        Factor := CurrencyExcRate.GetCurrentCurrencyFactor(FromCurrency);
-        FromLCYToFCY := CurrencyExcRate.ExchangeAmtLCYToFCY(Today(), FromCurrency, Salesprice."Unit Price", Factor);
-        Salesprice.Validate("Unit Price", CurrencyExcRate.ExchangeAmtFCYToFCY(Today(), Salesprice."Currency Code", FromCurrency, FromLCYToFCY));
-        Salesprice.Modify(true);
+        Salesprice2.Validate("Unit Price", CurrencyExcRate.ExchangeAmtFCYToFCY(Today(), SalesPrice."Currency Code", SalesPrice2."Currency Code", SalesPrice."Unit Price"));
+        SalesPrice2.Modify(true);
     end;
 
     procedure ExchangeAmtLCYToFCY(SalesPrice: record "Sales Price"; CurrencyFactorCode: code[10])
