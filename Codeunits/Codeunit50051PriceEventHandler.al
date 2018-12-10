@@ -20,6 +20,7 @@ codeunit 50051 "Price Event Handler"
         SalesLineDiscountTemp: Record "Sales Line Discount" temporary;
         PriceGroupLink: Record "Price Group Link";
         FoundGroup: Boolean;
+        CustKickbackPct: Record "Customer Kickback Percentage";
     begin
         if AdvPriceMgt.FindPriceGroupsFromItem(Item, SalesLineDiscountTemp) then begin
             PriceGroupLink.SetRange("Customer No.", SalesLine."Sell-to Customer No.");
@@ -34,6 +35,8 @@ codeunit 50051 "Price Event Handler"
                 until (PriceGroupLink.Next = 0) or (FoundGroup);
             end;
         end;
+        if AdvPriceMgt.FindCustomerKickbackPct(item."No.", SalesLine."Sell-to Customer No.", CustKickbackPct) then
+            SalesLine.Validate("KickBack Percentage", CustKickbackPct."Kickback Percentage");
     end;
 
     [EventSubscriber(ObjectType::Codeunit, codeunit::"Release Sales Document", 'OnBeforeReleaseSalesDoc', '', true, true)]
