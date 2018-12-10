@@ -339,33 +339,37 @@ codeunit 50000 "Advanced Price Management"
         end;
     end;
 
-    procedure ExchangeAmtLCYToFCYAndFCYToLCY(SalesPrice: record "Sales Price"; CurrTemp: record Currency temporary; CurrFactorCode: code[10])
+    procedure ExchangeAmtLCYToFCYAndFCYToLCY(SalesPrice: record "Sales Price"; CurrencyFactorCode: code[10])
     var
         CurrencyExcRate: Record "Currency Exchange Rate";
         Factor: Decimal;
         FromLCYToFCY: Decimal;
     begin
-        Factor := CurrencyExcRate.GetCurrentCurrencyFactor(CurrFactorCode);
-        FromLCYToFCY := CurrencyExcRate.ExchangeAmtLCYToFCY(Today(), CurrFactorCode, Salesprice."Unit Price", Factor);
-        Salesprice.Validate("Unit Price", CurrencyExcRate.ExchangeAmtFCYToLCY(Today(), CurrFactorCode, FromLCYToFCY, Factor));
+        Factor := CurrencyExcRate.GetCurrentCurrencyFactor(CurrencyFactorCode);
+        FromLCYToFCY := CurrencyExcRate.ExchangeAmtLCYToFCY(Today(), CurrencyFactorCode, Salesprice."Unit Price", Factor);
+        Salesprice.Validate("Unit Price", CurrencyExcRate.ExchangeAmtFCYToLCY(Today(), CurrencyFactorCode, FromLCYToFCY, Factor));
         Salesprice.Modify(true);
     end;
 
     procedure ExchangeAmtFCYToFCY(SalesPrice: Record "Sales Price"; FromCurrency: Code[10])
     var
         CurrencyExcRate: Record "Currency Exchange Rate";
+        Factor: Decimal;
+        FromLCYToFCY: Decimal;
     begin
-        Salesprice.Validate("Unit Price", CurrencyExcRate.ExchangeAmtFCYToFCY(Today(), Salesprice."Currency Code", FromCurrency, Salesprice."Unit Price"));
+        Factor := CurrencyExcRate.GetCurrentCurrencyFactor(FromCurrency);
+        FromLCYToFCY := CurrencyExcRate.ExchangeAmtLCYToFCY(Today(), FromCurrency, Salesprice."Unit Price", Factor);
+        Salesprice.Validate("Unit Price", CurrencyExcRate.ExchangeAmtFCYToFCY(Today(), FromCurrency, Salesprice."Currency Code", FromLCYToFCY));
         Salesprice.Modify(true);
     end;
 
-    procedure ExchangeAmtLCYToFCY(SalesPrice: record "Sales Price"; CurrTemp: record Currency temporary)
+    procedure ExchangeAmtLCYToFCY(SalesPrice: record "Sales Price"; CurrencyFactorCode: code[10])
     var
         CurrencyExcRate: Record "Currency Exchange Rate";
         Factor: Decimal;
     begin
-        Factor := CurrencyExcRate.GetCurrentCurrencyFactor(SalesPrice."Currency Code");
-        Salesprice.Validate("Unit Price", CurrencyExcRate.ExchangeAmtLCYToFCY(Today(), Salesprice."Currency Code", Salesprice."Unit Price", Factor));
+        Factor := CurrencyExcRate.GetCurrentCurrencyFactor(CurrencyFactorCode);
+        Salesprice.Validate("Unit Price", CurrencyExcRate.ExchangeAmtLCYToFCY(Today(), CurrencyFactorCode, Salesprice."Unit Price", Factor));
         Salesprice.Modify(true);
     end;
 
