@@ -37,14 +37,17 @@ report 50001 "Update Prices with Currencies"
                                 salesprice2 := Salesprice;
                                 salesprice2.SetRecFilter();
                                 salesprice2.SetFilter("Currency Code", '<>%1', salesprice."Currency Code");
-                                IF LocalCurrency <> VendCurr then
-                                    if salesprice2."Currency Code" = LocalCurrency then
-                                        AdvancedPriceManage.ExchangeAmtLCYToFCYAndFCYToLCY(salesprice2, CurrencyTemp, VendCurr)
-                                    else
-                                        AdvancedPriceManage.ExchangeAmtFCYToFCY(Salesprice2, VendCurr);
+                                if salesprice2.FindSet() then
+                                    repeat
+                                        IF LocalCurrency <> VendCurr then
+                                            if salesprice2."Currency Code" = LocalCurrency then
+                                                AdvancedPriceManage.ExchangeAmtLCYToFCYAndFCYToLCY(salesprice2, VendCurr)
+                                            else
+                                                AdvancedPriceManage.ExchangeAmtFCYToFCY(Salesprice2, VendCurr);
 
-                                IF LocalCurrency = VendCurr then
-                                    AdvancedPriceManage.ExchangeAmtLCYToFCY(Salesprice2, CurrencyTemp);
+                                        IF LocalCurrency = VendCurr then
+                                            AdvancedPriceManage.ExchangeAmtLCYToFCY(Salesprice2, VendCurr);
+                                    until salesprice2.Next() = 0;
                             until Salesprice.Next() = 0;
                     until next = 0;
             end;
