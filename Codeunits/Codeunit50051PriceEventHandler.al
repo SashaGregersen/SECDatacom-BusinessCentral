@@ -101,6 +101,4 @@ codeunit 50051 "Price Event Handler"
         AdvPriceMgt.CreateUpdateSalesMarkupPrices(Rec);
     end;
 
-    var
-        myInt: Integer;
 }
