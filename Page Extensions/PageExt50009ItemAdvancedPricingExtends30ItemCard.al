@@ -1,10 +1,14 @@
-pageextension 50009 "Vendor Currency" extends "item card"
+pageextension 50009 "Item Adv. Pricing" extends "Item Card"
 {
     layout
     {
         addafter("Vendor Item No.")
         {
             field("Vendor Currency"; "Vendor Currency")
+            {
+                ApplicationArea = All;
+            }
+            field("Transfer Price %"; "Transfer Price %")
             {
                 ApplicationArea = All;
             }
