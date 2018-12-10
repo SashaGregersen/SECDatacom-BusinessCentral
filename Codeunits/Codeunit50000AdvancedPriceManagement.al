@@ -159,6 +159,7 @@ codeunit 50000 "Advanced Price Management"
             Salesprice."Ending Date" := PurchasePrice."Ending Date";
             Salesprice."Item No." := PurchasePrice."Item No.";
             Salesprice."Unit of Measure Code" := PurchasePrice."Unit of Measure Code";
+            Salesprice."Minimum Quantity" := PurchasePrice."Minimum Quantity";
             Salesprice."Unit Price" := PurchasePrice."Direct Unit Cost" / ((100 - PurchaseLineDiscount."Customer Markup") / 100);
             if not Salesprice.Insert(false) then
                 Salesprice.Modify(false);

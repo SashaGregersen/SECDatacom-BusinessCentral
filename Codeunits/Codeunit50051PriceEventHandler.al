@@ -98,6 +98,7 @@ codeunit 50051 "Price Event Handler"
         if not AdvPriceMgt.FindListPriceForitem(Rec."Item No.", Rec."Currency Code", ListPrice) then
             exit;
         AdvPriceMgt.CreateUpdatePurchasePrices(Rec, ListPrice);
+        AdvPriceMgt.CreateUpdateSalesMarkupPrices(Rec);
     end;
 
     var
