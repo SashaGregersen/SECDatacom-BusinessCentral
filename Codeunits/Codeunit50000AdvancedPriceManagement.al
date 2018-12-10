@@ -392,4 +392,15 @@ codeunit 50000 "Advanced Price Management"
         ItemVariant.Description := 'List Price of item';
         if not ItemVariant.Insert(false) then;
     end;
+
+    procedure FindCustomerKickbackPct(itemNo: code[20]; CustomerNo: code[20]; var CustKickbackPct: Record "Customer Kickback Percentage"): Boolean
+    var
+        Item: Record Item;
+    begin
+        if Item.get(itemNo) then begin
+            CustKickbackPct.SetRange("Customer No.", CustomerNo);
+            CustKickbackPct.SetRange("Item Disc. Group Code", Item."Item Disc. Group");
+            exit(CustKickbackPct.FindLast());
+        end;
+    end;
 }
