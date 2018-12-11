@@ -30,19 +30,16 @@ report 50003 "Price File Export"
                 {
                     field("Item No"; Item."No.")
                     {
-                        AssistEdit = true;
                         TableRelation = item;
                     }
                     field(Customer; Customer."No.")
                     {
-                        AssistEdit = true;
                         TableRelation = customer;
                     }
 
                     field("Default Dimension"; DefaultDim."Dimension Value Code")
                     {
-                        AssistEdit = true;
-                        TableRelation = "Default Dimension";
+                        TableRelation = "Default Dimension"."Dimension Value Code" where ("Table ID" = CONST (27));
                     }
                 }
             }
@@ -52,9 +49,10 @@ report 50003 "Price File Export"
         {
             area(processing)
             {
-                action(ActionName)
+                action(x)
                 {
                     ApplicationArea = All;
+
 
                 }
             }
