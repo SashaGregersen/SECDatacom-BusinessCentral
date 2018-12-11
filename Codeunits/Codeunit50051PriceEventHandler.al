@@ -55,6 +55,13 @@ codeunit 50051 "Price Event Handler"
         end;
     end;
 
+    [EventSubscriber(ObjectType::Table, database::"Sales Price", 'OnAfterInsertEvent', '', true, true)]
+    local procedure SalesPriceOnAfterinsert(var Rec: Record "Sales Price")
+    begin
+        Rec."Allow Line Disc." := false;
+        Rec.Modify(false);
+    end;
+
     [EventSubscriber(ObjectType::Table, database::"Sales Line Discount", 'OnAfterModifyEvent', '', true, true)]
     local procedure SalesLineDiscountOnAfterModify(var Rec: Record "Sales Line Discount")
     var
