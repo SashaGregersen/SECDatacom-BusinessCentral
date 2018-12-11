@@ -17,6 +17,13 @@ pageextension 50009 "Item Adv. Pricing" extends "Item Card"
                 ApplicationArea = All;
             }
         }
+        addafter("Automatic Ext. Texts")
+        {
+            field("Use on Website"; "Use on Website")
+            {
+                ApplicationArea = all;
+            }
+        }
 
 
     }

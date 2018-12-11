@@ -12,6 +12,11 @@ tableextension 50003 "Item Adv. Pricing" extends Item
         {
             DataClassification = ToBeClassified;
         }
+
+        field(50002; "Use on Website"; Boolean)
+        {
+            DataClassification = ToBeClassified;
+        }
     }
 
     var
