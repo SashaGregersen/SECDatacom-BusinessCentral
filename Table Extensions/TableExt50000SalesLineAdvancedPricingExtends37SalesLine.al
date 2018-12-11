@@ -19,11 +19,12 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
                     BidPrices.setrange("Customer No.", "Sell-to Customer No.");
                     if not BidPrices.FindFirst then
                         BidPrices.SetRange("Customer No.");
-                    if BidPrices.FindSet then repeat
-                                                  if Bid.Get(BidPrices."Bid No.") then begin
-                                                      TempBid := Bid;
-                                                      if not TempBid.Insert then;
-                                                  end;
+                    if BidPrices.FindSet then
+                        repeat
+                            if Bid.Get(BidPrices."Bid No.") then begin
+                                TempBid := Bid;
+                                if not TempBid.Insert then;
+                            end;
                         Until BidPrices.Next = 0;
                     if Page.RunModal(50000, TempBid) = "Action"::LookupOK then
                         validate("Bid No.", TempBid."Bid No.");
