@@ -2,6 +2,7 @@ report 50003 "Price File Export"
 {
     UsageCategory = Administration;
     ApplicationArea = All;
+    ProcessingOnly = true;
 
     dataset
     {
@@ -9,11 +10,34 @@ report 50003 "Price File Export"
         {
             trigger OnPreDataItem()
             var
+                XmlStream: OutStream;
+                PriceXmlFile: file;
+                PriceExport: XmlPort "Price File Export";
 
             begin
                 repeat
-                    XMLport.run(50000, false, false, Item)
+                    if item.GetFilters() <> '' then begin
+                        PriceExport.SetTableView(Item);
+                    end;
+                    if customer.GetFilters() <> '' then
+                        PriceExport.SetCustomerFilter(customer.GetFilters());
+                    if DefaultDim.GetFilters() <> '' then
+                        PriceExport.SetDimFilter(DefaultDim.GetFilters());
+
+                    Filelocation := 'C:\XmlData\Pricelist.xml';
+                    PriceXmlFile.CREATE(Filelocation);
+                    PriceXmlFile.CREATEOUTSTREAM(XmlStream);
+                    PriceExport.SetDestination(XmlStream);
+                    PriceExport.export;
+                    PriceXmlFile.CLOSE;
                 until item.next = 0;
+
+            end;
+
+            trigger OnPostDataItem()
+            var
+            begin
+                Message('Price File Exported to %1', Filelocation);
             end;
 
 
@@ -62,4 +86,5 @@ report 50003 "Price File Export"
     var
         customer: record customer;
         DefaultDim: record "Default Dimension";
+        Filelocation: text;
 }
