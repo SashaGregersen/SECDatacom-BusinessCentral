@@ -4,14 +4,14 @@ pageextension 50021 "End Customer and Reseller" extends 42
     {
         addbefore("Sell-to Customer No.")
         {
-            field("End Customer";"End Customer")
+            field("End Customer"; "End Customer")
             {
-                ApplicationArea = all;                
+                ApplicationArea = all;
             }
         }
         addafter("End Customer")
         {
-            field(Reseller;Reseller)
+            field(Reseller; Reseller)
             {
                 ApplicationArea = all;
             }
@@ -20,9 +20,16 @@ pageextension 50021 "End Customer and Reseller" extends 42
 
     actions
     {
-        
+
     }
-    
+
+    trigger OnAfterGetCurrRecord()
     var
-        myInt : Integer;
+
+    begin
+
+    end;
+
+    var
+
 }
