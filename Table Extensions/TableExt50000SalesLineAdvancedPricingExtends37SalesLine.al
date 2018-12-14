@@ -144,17 +144,15 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
         {
             DataClassification = ToBeClassified;
             Editable = false;
-
-            trigger Onvalidate();
-            var
-                myInt: Integer;
-            begin
-                //the price calculation goes here? or perhaps in a function that updates this field?
-            end;
         }
         field(50021; "Claimable"; Boolean)
         {
             DataClassification = ToBeClassified;
+
+            trigger Onvalidate();
+            begin
+                CalcAdvancedPrices();
+            end;
         }
         field(50022; "Claim Amount"; Decimal)
         {
@@ -205,7 +203,10 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
 
         If "Bid Unit Purchase Price" <> 0 then begin
             "Calculated Purchase Price" := ("Bid Unit Purchase Price" * Quantity) + TransferPriceAmount;
-            "Purchase Price on Purchase Order" := "Bid Unit Purchase Price";
+            if not Claimable then
+                "Purchase Price on Purchase Order" := "Bid Unit Purchase Price"
+            else
+                "Purchase Price on Purchase Order" := "Unit Purchase Price";
             "Claim Amount" := ("Unit Purchase Price" * Quantity) - ("Bid Unit Purchase Price" * Quantity);
         end else begin
             "Calculated Purchase Price" := ("unit Purchase Price" * Quantity) + TransferPriceAmount;
