@@ -31,10 +31,10 @@ tableextension 50021 "End Customer and Reseller" extends 36
         field(50002; "Prefered Shipment Address"; code[20])
         {
             DataClassification = ToBeClassified;
-            TableRelation = "Ship-to Address";
+            TableRelation = "Ship-to Address".code;
         }
     }
 
     var
-        myInt: Integer;
+
 }
