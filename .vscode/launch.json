@@ -6,14 +6,14 @@
             "name": "BusinessCentral",
             "type": "al",
             "request": "launch",
-            "server": "http://localhost:7089/NAVDEVBC",
+            "server": "http://NAV-APP01-TEST:7089/NAVDEVBC",
             "serverInstance": "NAVDEVBC",
             "authentication": "Windows",
             "breakOnError": true,
             "breakOnRecordWrite": false,
             "port": 7089,
             "schemaUpdateMode": "Synchronize",
-        },
+        }
 
     ]
 }
