@@ -34,18 +34,39 @@ table 50001 "Bid Prices"
         field(50001; "Bid Unit Sales Price"; Decimal)
         {
             DataClassification = ToBeClassified;
+
+            trigger Onvalidate()
+            begin
+                if "Unit List Price" <> 0 then
+                    "Bid Sales Discount Pct." := 100 - (("Bid Unit Sales Price" / "Unit List Price") * 100);
+            end;
         }
-        field(50002; "Bid Sales Discount"; Decimal)
+        field(50002; "Bid Sales Discount Pct."; Decimal)
         {
             DataClassification = ToBeClassified;
+            trigger Onvalidate()
+            begin
+                if "Unit List Price" <> 0 then
+                    "Bid Unit Sales Price" := ((100 - "Bid Sales Discount Pct.") / 100) * "Unit List Price";
+            end;
         }
         field(50011; "Bid Unit Purchase Price"; Decimal)
         {
             DataClassification = ToBeClassified;
+            trigger Onvalidate()
+            begin
+                if "Unit List Price" <> 0 then
+                    "Bid Purchase Discount Pct." := 100 - (("Bid Unit purchase Price" / "Unit List Price") * 100);
+            end;
         }
-        field(50012; "Bid Purchase Discount"; Decimal)
+        field(50012; "Bid Purchase Discount Pct."; Decimal)
         {
             DataClassification = ToBeClassified;
+            trigger Onvalidate()
+            begin
+                if "Unit List Price" <> 0 then
+                    "Bid Unit purchase Price" := ((100 - "Bid Purchase Discount Pct.") / 100) * "Unit List Price";
+            end;
         }
         field(50021; "Claimable"; Boolean)
         {

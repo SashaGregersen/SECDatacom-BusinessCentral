@@ -29,7 +29,7 @@ page 50001 "Bid Prices"
                 {
                     ApplicationArea = all;
                 }
-                field("Bid Sales Discount"; "Bid Sales Discount")
+                field("Bid Sales Discount %"; "Bid Sales Discount Pct.")
                 {
                     ApplicationArea = all;
                 }
@@ -37,7 +37,7 @@ page 50001 "Bid Prices"
                 {
                     ApplicationArea = all;
                 }
-                field("Bid Purchase Discount"; "Bid Purchase Discount")
+                field("Bid Purchase Discount %"; "Bid Purchase Discount Pct.")
                 {
                     ApplicationArea = all;
                 }
