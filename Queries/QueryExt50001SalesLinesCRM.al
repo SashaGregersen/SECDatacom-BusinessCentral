@@ -29,17 +29,20 @@ query 50001 "Power BI Sales Lines CRM"
                 dataitem(Customer; Customer)
                 {
                     DataItemLink = "No." = Sales_Invoice_Header."End Customer";
-                    column(Id; Id)
+                    column(End_Customer_Id; Id)
                     {
                     }
+
                     dataitem(CRM_Integration_Record; "CRM Integration Record")
                     {
                         DataItemLink = "Integration ID" = "Customer".Id;
                         column(End_Customer_CRM_ID; "CRM ID")
-                        {
 
+                        {
                         }
                     }
+
+
                 }
             }
 
