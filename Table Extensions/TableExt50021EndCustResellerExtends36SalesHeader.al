@@ -12,7 +12,7 @@ tableextension 50021 "End Customer and Reseller" extends 36
             begin
                 If customer.get(Rec."Sell-to Customer No.") then
                     If customer."Customer Type" = customer."Customer Type"::"End Customer" then begin
-                        validate("End Customer", customer.Name);
+                        validate("End Customer", customer."No.");
                     end;
             end;
 
@@ -22,7 +22,7 @@ tableextension 50021 "End Customer and Reseller" extends 36
             begin
                 Customer.SetRange("Customer Type", customer."Customer Type"::"End Customer");
                 IF page.RunModal(page::"Customer List", Customer, customer.Name) = Action::LookupOK then
-                    Validate("End Customer", customer."Name");
+                    Validate("End Customer", customer."No.");
             end;
         }
         field(50001; "Reseller"; Text[50])
@@ -35,7 +35,7 @@ tableextension 50021 "End Customer and Reseller" extends 36
             begin
                 If customer.get(Rec."Sell-to Customer No.") then
                     if customer."Customer Type" = customer."Customer Type"::Reseller then begin
-                        validate("reseller", customer.Name);
+                        validate("reseller", customer."No.");
                     end;
             end;
 
@@ -44,8 +44,8 @@ tableextension 50021 "End Customer and Reseller" extends 36
                 Customer: Record Customer;
             begin
                 Customer.SetRange("Customer Type", customer."Customer Type"::Reseller);
-                IF page.RunModal(page::"Customer List", Customer, customer.Name) = Action::LookupOK then
-                    Validate("Reseller", Customer.Name);
+                IF page.RunModal(page::"Customer List", Customer, customer."No.") = Action::LookupOK then
+                    Validate("Reseller", Customer."No.");
             end;
 
         }
@@ -65,7 +65,7 @@ tableextension 50021 "End Customer and Reseller" extends 36
             begin
                 If customer.get(Rec."Sell-to Customer No.") then
                     if ICPartner.get(customer."IC Partner Code") then
-                        validate(Subsidiary, ICPartner.Name);
+                        validate(Subsidiary, ICPartner.Code);
             end;
 
             trigger Onlookup();
@@ -75,8 +75,8 @@ tableextension 50021 "End Customer and Reseller" extends 36
             begin
                 Customer.get("Sell-to Customer No.");
                 ICpartner.SetRange(code, Customer."IC Partner Code");
-                IF page.RunModal(page::"IC Partner List", icpartner, icpartner.name) = Action::LookupOK then
-                    Validate("subsidiary", ICpartner.Name);
+                IF page.RunModal(page::"IC Partner List", icpartner, icpartner.Code) = Action::LookupOK then
+                    Validate("subsidiary", ICpartner.Code);
             end;
         }
 
@@ -90,7 +90,7 @@ tableextension 50021 "End Customer and Reseller" extends 36
             begin
                 If customer.get(Rec."Sell-to Customer No.") then
                     if customer."Customer Type" = customer."Customer Type"::"Financing Partner" then begin
-                        validate("Financing Partner", customer.Name);
+                        validate("Financing Partner", customer."No.");
                     end;
             end;
 
@@ -99,14 +99,14 @@ tableextension 50021 "End Customer and Reseller" extends 36
                 Customer: Record Customer;
             begin
                 Customer.SetRange("Customer Type", customer."Customer Type"::"Financing Partner");
-                IF page.RunModal(page::"Customer List", Customer, customer.Name) = Action::LookupOK then
-                    Validate("Financing Partner", Customer.Name);
+                IF page.RunModal(page::"Customer List", Customer, customer."No.") = Action::LookupOK then
+                    Validate("Financing Partner", Customer."No.");
             end;
 
         }
         field(50005; "Drop-Shipment"; boolean)
         {
-
+            DataClassification = ToBeClassified;
         }
     }
 

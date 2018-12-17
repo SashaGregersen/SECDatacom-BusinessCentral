@@ -13,6 +13,21 @@ tableextension 50024 "End Customer and Reseller 4" extends 114
             Editable = false;
 
         }
+        field(50003; "Subsidiary"; Text[50])
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
+        field(50004; "Financing Partner"; text[50])
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
+        field(50005; "Drop-Shipment"; boolean)
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
     }
 
     var

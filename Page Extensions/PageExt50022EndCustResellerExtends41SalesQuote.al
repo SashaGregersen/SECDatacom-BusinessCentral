@@ -16,6 +16,27 @@ pageextension 50022 "End Customer and Reseller 2" extends 41
                 ApplicationArea = all;
             }
         }
+        addafter("reseller")
+        {
+            field(Subsidiary; Subsidiary)
+            {
+                ApplicationArea = all;
+            }
+        }
+        addafter(Subsidiary)
+        {
+            field("Financing Partner"; "Financing Partner")
+            {
+
+            }
+        }
+        addafter("Financing Partner")
+        {
+            field("Drop-Shipment"; "Drop-Shipment")
+            {
+
+            }
+        }
         modify(ShippingOptions)
         {
             Visible = false;

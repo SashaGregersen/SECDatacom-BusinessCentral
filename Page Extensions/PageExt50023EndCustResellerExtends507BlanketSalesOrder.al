@@ -16,6 +16,27 @@ pageextension 50023 "End Customer and Reseller 3" extends 507
                 ApplicationArea = all;
             }
         }
+        addafter("reseller")
+        {
+            field(Subsidiary; Subsidiary)
+            {
+                ApplicationArea = all;
+            }
+        }
+        addafter(Subsidiary)
+        {
+            field("Financing Partner"; "Financing Partner")
+            {
+
+            }
+        }
+        addafter("External Document No.")
+        {
+            field("Drop-Shipment"; "Drop-Shipment")
+            {
+
+            }
+        }
         modify(ShippingOptions)
         {
             Visible = false;
