@@ -1,4 +1,4 @@
-table 50001 "Bid Prices"
+table 50001 "Bid Item Price"
 {
     DataClassification = ToBeClassified;
     // The fields with 50000's numbers have those because then we can use transferfields to get them on the Sales Line
@@ -7,7 +7,7 @@ table 50001 "Bid Prices"
         field(1; "Bid No."; code[20])
         {
             DataClassification = ToBeClassified;
-            TableRelation = Bid."Bid No.";
+            TableRelation = Bid."No.";
             NotBlank = true;
         }
         field(2; "item No."; code[20])

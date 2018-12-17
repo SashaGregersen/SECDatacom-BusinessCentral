@@ -5,14 +5,14 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
         field(50000; "Bid No."; code[20])
         {
             DataClassification = ToBeClassified;
-            TableRelation = Bid."Bid No.";
+            TableRelation = Bid."No.";
 
             trigger OnLookUp();
             var
                 Item: Record Item;
                 Bid: Record Bid;
                 TempBid: Record Bid temporary;
-                BidPrices: Record "Bid Prices";
+                BidPrices: Record "Bid Item Price";
             begin
                 if item.Get("No.") then begin
                     BidPrices.SetRange("item No.", "No.");
@@ -27,14 +27,14 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
                             end;
                         Until BidPrices.Next = 0;
                     if Page.RunModal(50000, TempBid) = "Action"::LookupOK then
-                        validate("Bid No.", TempBid."Bid No.");
+                        validate("Bid No.", TempBid."No.");
                 end
             end;
 
             trigger Onvalidate();
             var
                 Bid: Record Bid;
-                BidPrices: Record "Bid Prices";
+                BidPrices: Record "Bid Item Price";
             begin
                 if Bid.Get("Bid No.") then begin
                     BidPrices.SetRange("Bid No.", "Bid No.");

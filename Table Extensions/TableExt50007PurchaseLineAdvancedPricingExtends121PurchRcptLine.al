@@ -5,7 +5,7 @@ tableextension 50007 "Purch. Rcpt. Line Bid" extends "Purch. Rcpt. Line"
         field(50000; "Bid No."; code[20])
         {
             DataClassification = ToBeClassified;
-            TableRelation = Bid."Bid No.";
+            TableRelation = Bid."No.";
         }
         field(50021; "Claimable"; Boolean)
         {
