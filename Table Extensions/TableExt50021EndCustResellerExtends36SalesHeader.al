@@ -27,6 +27,7 @@ tableextension 50021 "End Customer and Reseller" extends 36
                 IF page.RunModal(page::"Customer List", Customer) = Action::LookupOK then
                     Validate("Reseller", Customer."No.");
             end;
+
         }
         field(50002; "Prefered Shipment Address"; code[20])
         {
