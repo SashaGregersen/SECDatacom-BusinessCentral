@@ -35,7 +35,7 @@ query 50001 "Power BI Sales Lines CRM"
                     dataitem(CRM_Integration_Record; "CRM Integration Record")
                     {
                         DataItemLink = "Integration ID" = "Customer".Id;
-                        column(CRM_ID; "CRM ID")
+                        column(End_Customer_CRM_ID; "CRM ID")
                         {
 
                         }
