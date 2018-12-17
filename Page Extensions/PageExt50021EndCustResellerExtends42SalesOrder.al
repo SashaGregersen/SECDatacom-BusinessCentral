@@ -23,11 +23,16 @@ pageextension 50021 "End Customer and Reseller" extends 42
 
     }
 
-    trigger OnAfterGetCurrRecord()
+    trigger OnInsertRecord(rec: Boolean): Boolean
     var
-
+        customer: record Customer;
     begin
-
+        If customer.get("No.") then
+            If customer."Customer Type" = customer."Customer Type"::"End Customer" then begin
+                validate("End Customer", customer."No.");
+            end else
+                if customer."Customer Type" = customer."Customer Type"::Reseller then
+                    validate("End Customer", customer."No.");
     end;
 
     var
