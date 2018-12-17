@@ -16,6 +16,31 @@ pageextension 50021 "End Customer and Reseller" extends 42
                 ApplicationArea = all;
             }
         }
+        addafter("reseller")
+        {
+            field(Subsidiary; Subsidiary)
+            {
+                ApplicationArea = all;
+            }
+        }
+        addafter(Subsidiary)
+        {
+            field("Financing Partner"; "Financing Partner")
+            {
+
+            }
+        }
+        addafter("External Document No.")
+        {
+            field("Drop-Shipment"; "Drop-Shipment")
+            {
+
+            }
+        }
+        modify(ShippingOptions)
+        {
+            Visible = false;
+        }
     }
 
     actions
@@ -23,20 +48,6 @@ pageextension 50021 "End Customer and Reseller" extends 42
 
     }
 
-    trigger OnAfterGetRecord()
-    var
-        customer: record Customer;
-    begin
-        If customer.get(Rec."Sell-to Customer No.") then
-            If customer."Customer Type" = customer."Customer Type"::"End Customer" then begin
-                validate("End Customer", customer."No.");
-                Modify(true);
-            end else
-                if customer."Customer Type" = customer."Customer Type"::Reseller then begin
-                    validate("reseller", customer."No.");
-                    Modify(true);
-                end;
-    end;
 
     var
 
