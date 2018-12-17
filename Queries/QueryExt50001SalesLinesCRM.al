@@ -9,11 +9,11 @@ query 50001 "Power BI Sales Lines CRM"
             column(End_Customer; "End Customer")
             {
             }
-            
+
             dataitem(Sales_Invoice_Line; "Sales Invoice Line")
             {
                 DataItemLink = "Document No." = Sales_Invoice_Header."No.";
-                column(; "Amount")
+                column(Amount; "Amount")
                 {
 
                 }
