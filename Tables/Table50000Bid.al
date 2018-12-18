@@ -8,7 +8,7 @@ table 50000 "Bid"
 
     fields
     {
-        field(1; "Bid No."; Code[20])
+        field(1; "No."; Code[20])
         {
             DataClassification = ToBeClassified;
         }
@@ -43,7 +43,7 @@ table 50000 "Bid"
 
     keys
     {
-        key(PK; "Bid No.")
+        key(PK; "No.")
         {
             Clustered = true;
         }
@@ -51,13 +51,13 @@ table 50000 "Bid"
 
     fieldgroups
     {
-        fieldgroup(DropDown; "Bid No.", "Vendor no.", "Vendor Bid No.", "Expiry Date")
+        fieldgroup(DropDown; "No.", "Vendor no.", "Vendor Bid No.", "Expiry Date")
         {
 
         }
     }
     var
-        BidPrices: Record "Bid Prices";
+        BidPrices: Record "Bid Item Price";
 
     trigger OnInsert();
     begin
@@ -69,13 +69,54 @@ table 50000 "Bid"
 
     trigger OnDelete();
     begin
-        BidPrices.SetRange("Bid No.", "Bid No.");
+        BidPrices.SetRange("Bid No.", "No.");
         if BidPrices.Count > 0 then
-            Error('You cannot delete the bid as there is prices assoicated with it.')
+            Error('You cannot delete the bid as there are prices assoicated with it.')
     end;
 
     trigger OnRename();
     begin
+    end;
+
+    procedure AddItemtoBid(itemNo: code[20]; SalesDiscPct: Decimal; PurchaseDiscPct: Decimal)
+    var
+        Item: Record Item;
+        ListPrice: Record "Sales Price";
+        BidItemPrice: Record "Bid Item Price";
+        AdvPricemgt: Codeunit "Advanced Price Management";
+        CurrencyTemp: Record Currency temporary;
+    begin
+        If not Item.Get(itemNo) then
+            exit;
+        if not AdvPricemgt.FindListPriceForitem(Item."No.", Item."Vendor Currency", ListPrice) then
+            exit;
+        BidItemPrice.Init();
+        BidItemPrice."Bid No." := Rec."No.";
+        BidItemPrice."item No." := Item."No.";
+        BidItemPrice."Currency Code" := item."Vendor Currency";
+        BidItemPrice."Unit List Price" := ListPrice."Unit Price";
+        if SalesDiscPct <> 0 then
+            BidItemPrice.validate("Bid Sales Discount Pct.", SalesDiscPct);
+        if PurchaseDiscPct <> 0 then
+            BidItemPrice.Validate("Bid Purchase Discount Pct.", PurchaseDiscPct);
+        BidItemPrice.Insert(true);
+
+        AdvPricemgt.FindPriceCurrencies(Item."Vendor Currency", item."Vendor Currency" <> '', CurrencyTemp);
+        if CurrencyTemp.FindSet() then
+            repeat
+                if AdvPricemgt.FindListPriceForitem(Item."No.", CurrencyTemp.Code, ListPrice) then begin
+                    BidItemPrice.Init();
+                    BidItemPrice."Bid No." := Rec."No.";
+                    BidItemPrice."item No." := Item."No.";
+                    BidItemPrice."Currency Code" := CurrencyTemp.Code;
+                    BidItemPrice."Unit List Price" := ListPrice."Unit Price";
+                    if SalesDiscPct <> 0 then
+                        BidItemPrice.validate("Bid Sales Discount Pct.", SalesDiscPct);
+                    if PurchaseDiscPct <> 0 then
+                        BidItemPrice.Validate("Bid Purchase Discount Pct.", PurchaseDiscPct);
+                    BidItemPrice.Insert(true);
+                end;
+            until CurrencyTemp.Next() = 0;
     end;
 
 }

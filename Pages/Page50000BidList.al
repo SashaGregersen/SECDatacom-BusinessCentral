@@ -2,7 +2,7 @@ page 50000 "Bid List"
 {
     PageType = List;
     SourceTable = Bid;
-    DataCaptionFields = "Bid No.","Vendor no.","Vendor Bid No.","Expiry Date";
+    DataCaptionFields = "No.", "Vendor no.", "Vendor Bid No.", "Expiry Date";
 
     layout
     {
@@ -10,27 +10,27 @@ page 50000 "Bid List"
         {
             repeater(Group)
             {
-                field("Bid No.";"Bid No.")
+                field("No."; "No.")
                 {
                     ApplicationArea = All;
                 }
-                field("Vendor No.";"Vendor No.")
+                field("Vendor No."; "Vendor No.")
                 {
                     ApplicationArea = All;
                 }
-                field("Vendor Bid No.";"Vendor Bid No.")
+                field("Vendor Bid No."; "Vendor Bid No.")
                 {
                     ApplicationArea = All;
                 }
-                field(Description;Description)
+                field(Description; Description)
                 {
                     ApplicationArea = All;
                 }
-                field("Expiry Date";"Expiry Date")
+                field("Expiry Date"; "Expiry Date")
                 {
                     ApplicationArea = All;
                 }
-                field("One Time Bid";"One Time Bid")
+                field("One Time Bid"; "One Time Bid")
                 {
                     ApplicationArea = All;
                 }
@@ -49,11 +49,11 @@ page 50000 "Bid List"
             action("Show Prices")
             {
                 trigger OnAction();
-                var 
-                    BidPrices : Record "Bid Prices";
+                var
+                    BidPrices: Record "Bid item Price";
                 begin
-                    BidPrices.SetRange("Bid No.","Bid No.");
-                    page.RunModal(50001,BidPrices);
+                    BidPrices.SetRange("Bid No.", "No.");
+                    page.RunModal(50001, BidPrices);
                 end;
             }
         }

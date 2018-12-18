@@ -1,7 +1,7 @@
 page 50001 "Bid Prices"
 {
     PageType = List;
-    SourceTable = "Bid Prices";
+    SourceTable = "Bid Item Price";
 
     layout
     {
