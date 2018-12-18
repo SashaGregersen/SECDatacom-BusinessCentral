@@ -41,6 +41,9 @@ codeunit 50052 "Customer Event Handler"
             if ShipToAddress.findfirst then begin
                 SalesHeader."Prefered Shipment Address" := SellToCustomer."Prefered Shipment Address";
             end;
-        End;
+        end;
     end;
+
+
+
 }
