@@ -27,19 +27,21 @@ pageextension 50022 "End Customer and Reseller 2" extends 41
         {
             field("Financing Partner"; "Financing Partner")
             {
-
+                ApplicationArea = all;
             }
         }
-        addafter("Financing Partner")
-        {
-            field("Drop-Shipment"; "Drop-Shipment")
-            {
 
-            }
-        }
         modify(ShippingOptions)
         {
             Visible = false;
+        }
+
+        addbefore("Ship-to Code")
+        {
+            field("Ship-To-Code"; "Ship-To-Code")
+            {
+                ApplicationArea = all;
+            }
         }
     }
 

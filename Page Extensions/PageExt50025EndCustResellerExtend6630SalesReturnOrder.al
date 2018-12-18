@@ -27,16 +27,18 @@ pageextension 50025 "End Customer and Reseller 5" extends 6630
         {
             field("Financing Partner"; "Financing Partner")
             {
-
+                ApplicationArea = all;
             }
         }
         addafter("External Document No.")
         {
             field("Drop-Shipment"; "Drop-Shipment")
             {
-
+                ApplicationArea = all;
             }
         }
+
+
 
     }
 

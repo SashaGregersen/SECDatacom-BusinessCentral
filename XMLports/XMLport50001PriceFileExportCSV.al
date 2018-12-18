@@ -1,5 +1,11 @@
-xmlport 50000 "Price File Export"
+xmlport 50001 "Price File Export CSV"
 {
+    Direction = export;
+    TextEncoding = WINDOWS;
+    Format = VariableText;
+    FieldDelimiter = '';
+    FieldSeparator = ';';
+
     schema
     {
         textelement(Root)
@@ -73,7 +79,7 @@ xmlport 50000 "Price File Export"
                 }
                 trigger OnAfterGetRecord()
                 var
-                    myInt: Integer;
+
                 begin
                     //currXMLport.Skip();
                 end;

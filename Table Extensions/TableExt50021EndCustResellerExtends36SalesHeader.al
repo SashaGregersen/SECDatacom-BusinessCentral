@@ -2,19 +2,22 @@ tableextension 50021 "End Customer and Reseller" extends 36
 {
     fields
     {
-        field(50000; "End Customer"; Text[50])
+        field(50000; "End Customer"; code[20])
         {
             DataClassification = ToBeClassified;
             TableRelation = Customer."No.";
             trigger OnValidate();
             var
                 customer: record customer;
+                shiptoadress: record "Ship-to Address";
             begin
-                if rec."Drop-Shipment" = true then
-                    If customer.get(Rec."End Customer") then
-                        validate("Ship-to Code", customer."No.") //update ship-to felter
-                    else
-                        error('Not an end-customer');
+                If not customer.get(Rec."End Customer") then
+                    error('Not an end-customer')
+                else begin
+                    shiptoadress.setrange("Customer No.", "End Customer");
+                    if shiptoadress.FindFirst() then
+                        SetShipToAddress(ShipToAdress.Name, ShipToAdress."Name 2", ShipToAdress.Address, ShipToAdress."Address 2", ShipToAdress.City, ShipToAdress."Post Code", shiptoadress.County, shiptoadress."Country/Region Code");
+                end;
             end;
 
             trigger Onlookup();
@@ -26,7 +29,7 @@ tableextension 50021 "End Customer and Reseller" extends 36
                     Validate("End Customer", customer."No.");
             end;
         }
-        field(50001; "Reseller"; Text[50])
+        field(50001; "Reseller"; code[20])
         {
             DataClassification = ToBeClassified;
             TableRelation = Customer."No.";
@@ -34,10 +37,13 @@ tableextension 50021 "End Customer and Reseller" extends 36
             var
                 customer: record customer;
             begin
-                If customer.get(Rec.Reseller) then
-                    validate("Sell-to Customer No.", customer."No.")
+
+                If not customer.get(Rec.Reseller) then
+                    error('Not a reseller')
                 else
-                    error('Not a reseller');
+                    if Subsidiary = '' then
+                        validate("Sell-to Customer No.", customer."No.");
+
             end;
 
             trigger Onlookup();
@@ -82,7 +88,7 @@ tableextension 50021 "End Customer and Reseller" extends 36
             end;
         }
 
-        field(50004; "Financing Partner"; text[50])
+        field(50004; "Financing Partner"; code[20])
         {
             DataClassification = ToBeClassified;
             TableRelation = customer."No.";
@@ -91,9 +97,9 @@ tableextension 50021 "End Customer and Reseller" extends 36
                 customer: record customer;
             begin
                 If customer.get(Rec."Financing Partner") then
-                    if customer."Customer Type" = customer."Customer Type"::"Financing Partner" then begin
-                        validate("Bill-to Customer No.", customer."No.");
-                    end else
+                    if customer."Customer Type" = customer."Customer Type"::"Financing Partner" then
+                        validate("Bill-to Customer No.", customer."No.")
+                    else
                         error('Not a Financing Partner');
             end;
 
@@ -110,6 +116,44 @@ tableextension 50021 "End Customer and Reseller" extends 36
         field(50005; "Drop-Shipment"; boolean)
         {
             DataClassification = ToBeClassified;
+
+        }
+
+        field(50006; "Ship-To-Code"; code[10])
+        {
+            DataClassification = ToBeClassified;
+
+            trigger OnLookup()
+            var
+                ShipToAdress: record "Ship-to Address";
+            begin
+                if "Drop-Shipment" = true then begin
+                    ShipToAdress.SetRange("Customer No.", "End Customer");
+                    IF page.RunModal(page::"Ship-to Address List", ShipToAdress) = Action::LookupOK then
+                        SetShipToAddress(ShipToAdress.Name, ShipToAdress."Name 2", ShipToAdress.Address, ShipToAdress."Address 2", ShipToAdress.City, ShipToAdress."Post Code", shiptoadress.County, shiptoadress."Country/Region Code");
+                end else begin
+                    ShipToAdress.SetRange("Customer No.", "Sell-to Customer No.");
+                    IF page.RunModal(page::"Ship-to Address List", ShipToAdress) = Action::LookupOK then
+                        SetShipToAddress(ShipToAdress.Name, ShipToAdress."Name 2", ShipToAdress.Address, ShipToAdress."Address 2", ShipToAdress.City, ShipToAdress."Post Code", shiptoadress.County, shiptoadress."Country/Region Code");
+                end;
+            end;
+        }
+
+        field(50007; "sell-to-Customer-Name"; code[20])
+        {
+            DataClassification = ToBeClassified;
+
+            trigger Onvalidate()
+            var
+                customer: record customer;
+            begin
+                if "Sell-to Customer No." <> '' then begin
+                    customer.SetRange("No.", "Sell-to Customer No.");
+                    if customer.findfirst then
+                        validate("sell-to-Customer-Name", customer.Name);
+                end;
+
+            end;
         }
     }
 

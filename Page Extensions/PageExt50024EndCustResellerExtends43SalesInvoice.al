@@ -27,19 +27,30 @@ pageextension 50024 "End Customer and Reseller 4" extends 43
         {
             field("Financing Partner"; "Financing Partner")
             {
-
+                ApplicationArea = all;
             }
         }
         addafter("External Document No.")
         {
             field("Drop-Shipment"; "Drop-Shipment")
             {
-
+                ApplicationArea = all;
             }
         }
         modify(ShippingOptions)
         {
             Visible = false;
+        }
+        modify(Control202)
+        {
+            Visible = true;
+        }
+        addbefore("Ship-to Code")
+        {
+            field("Ship-To-Code"; "Ship-To-Code")
+            {
+                ApplicationArea = all;
+            }
         }
     }
 

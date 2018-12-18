@@ -12,24 +12,39 @@ report 50003 "Price File Export"
             var
                 XmlStream: OutStream;
                 PriceXmlFile: file;
-                PriceExport: XmlPort "Price File Export";
+                PriceExportCSV: XmlPort "Price File Export CSV";
+                PriceExportXML: XmlPort "Price File Export XML";
 
             begin
                 repeat
                     if item.GetFilters() <> '' then begin
-                        PriceExport.SetTableView(Item);
+                        PriceExportCSV.SetTableView(Item);
+                        PriceExportXML.SetTableView(Item);
                     end;
-                    if customer.GetFilters() <> '' then
-                        PriceExport.SetCustomerFilter(customer.GetFilters());
-                    if DefaultDim.GetFilters() <> '' then
-                        PriceExport.SetDimFilter(DefaultDim.GetFilters());
+                    if customer.GetFilters() <> '' then begin
+                        PriceExportCSV.SetCustomerFilter(customer.GetFilters());
+                        PriceExportXML.SetCustomerFilter(customer.GetFilters());
+                    end;
+                    if DefaultDim.GetFilters() <> '' then begin
+                        PriceExportCSV.SetDimFilter(DefaultDim.GetFilters());
+                        PriceExportXML.SetDimFilter(DefaultDim.GetFilters());
+                    end;
 
-                    Filelocation := 'C:\XmlData\Pricelist.xml';
-                    PriceXmlFile.CREATE(Filelocation);
-                    PriceXmlFile.CREATEOUTSTREAM(XmlStream);
-                    PriceExport.SetDestination(XmlStream);
-                    PriceExport.export;
-                    PriceXmlFile.CLOSE;
+                    IF ExportCSV = true then begin
+                        Filelocation := 'C:\XmlData\Pricelist.csv';
+                        PriceXmlFile.CREATE(Filelocation);
+                        PriceXmlFile.CREATEOUTSTREAM(XmlStream);
+                        PriceExportCSV.SetDestination(XmlStream);
+                        PriceExportCSV.export;
+                        PriceXmlFile.CLOSE;
+                    end else begin
+                        Filelocation := 'C:\XmlData\Pricelist.xml';
+                        PriceXmlFile.CREATE(Filelocation);
+                        PriceXmlFile.CREATEOUTSTREAM(XmlStream);
+                        PriceExportXML.SetDestination(XmlStream);
+                        PriceExportXML.export;
+                        PriceXmlFile.CLOSE;
+                    end;
                 until item.next = 0;
 
             end;
@@ -65,6 +80,12 @@ report 50003 "Price File Export"
                     {
                         TableRelation = "Default Dimension"."Dimension Value Code" where ("Table ID" = CONST (27));
                     }
+
+                    field("Export CSV"; ExportCSV)
+                    {
+                        ToolTip = 'If not selected, then the export is in XML format';
+                    }
+
                 }
             }
         }
@@ -75,7 +96,7 @@ report 50003 "Price File Export"
             {
                 action(x)
                 {
-                    ApplicationArea = All;
+
 
 
                 }
@@ -87,4 +108,5 @@ report 50003 "Price File Export"
         customer: record customer;
         DefaultDim: record "Default Dimension";
         Filelocation: text;
+        ExportCSV: Boolean;
 }

@@ -27,26 +27,55 @@ pageextension 50021 "End Customer and Reseller" extends 42
         {
             field("Financing Partner"; "Financing Partner")
             {
-
+                ApplicationArea = all;
             }
         }
         addafter("External Document No.")
         {
             field("Drop-Shipment"; "Drop-Shipment")
             {
-
+                ApplicationArea = all;
             }
         }
         modify(ShippingOptions)
         {
             Visible = false;
         }
+        modify(Control4)
+        {
+            Visible = true;
+        }
+        addbefore("Ship-to Code")
+        {
+            field("Ship-To-Code"; "Ship-To-Code")
+            {
+                ApplicationArea = all;
+            }
+        }
+        modify("Sell-to Customer No.")
+        {
+            Visible = false;
+        }
+        modify("Sell-to Customer Name")
+        {
+            Visible = false;
+        }
+        addafter("Sell-to Customer No.")
+        {
+            field("sell-to-Customer-Name"; "sell-to-Customer-Name")
+            {
+                ApplicationArea = all;
+            }
+        }
+
     }
 
     actions
     {
 
     }
+
+
 
 
     var
