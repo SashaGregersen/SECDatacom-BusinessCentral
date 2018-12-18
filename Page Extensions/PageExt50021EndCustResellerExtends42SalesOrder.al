@@ -62,7 +62,7 @@ pageextension 50021 "End Customer and Reseller" extends 42
         }
         addafter("Sell-to Customer No.")
         {
-            field("sell-to-Customer-Name"; "sell-to-Customer-Name")
+            field("Sell-to-Customer-Name"; "Sell-to-Customer-Name")
             {
                 ApplicationArea = all;
             }
