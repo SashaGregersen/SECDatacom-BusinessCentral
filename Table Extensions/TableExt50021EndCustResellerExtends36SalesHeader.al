@@ -127,10 +127,12 @@ tableextension 50021 "End Customer and Reseller" extends 36
                 ShipToAdress: record "Ship-to Address";
             begin
                 if "Drop-Shipment" = true then begin
-                    if ShipToAdress.get("End Customer") then
+                    ShipToAdress.SetRange("Customer No.", "End Customer");
+                    if ShipToAdress.FindFirst() then
                         SetShipToAddress(ShipToAdress.Name, ShipToAdress."Name 2", ShipToAdress.Address, ShipToAdress."Address 2", ShipToAdress.City, ShipToAdress."Post Code", shiptoadress.County, shiptoadress."Country/Region Code");
                 end else begin
-                    if ShipToAdress.get("Sell-to Customer No.") then
+                    ShipToAdress.setrange("Customer No.", "Sell-to Customer No.");
+                    if ShipToAdress.FindFirst() then
                         SetShipToAddress(ShipToAdress.Name, ShipToAdress."Name 2", ShipToAdress.Address, ShipToAdress."Address 2", ShipToAdress.City, ShipToAdress."Post Code", shiptoadress.County, shiptoadress."Country/Region Code");
                 end;
             end;
@@ -156,9 +158,10 @@ tableextension 50021 "End Customer and Reseller" extends 36
             end;
         }
 
-        field(50007; "Sell-to-Customer-Name"; code[20])
+        field(50007; "Sell-to-Customer-Name"; text[50])
         {
             DataClassification = ToBeClassified;
+            Editable = false;
         }
     }
 

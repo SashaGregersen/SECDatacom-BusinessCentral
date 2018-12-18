@@ -35,6 +35,7 @@ pageextension 50021 "End Customer and Reseller" extends 42
             field("Drop-Shipment"; "Drop-Shipment")
             {
                 ApplicationArea = all;
+
             }
         }
         modify(ShippingOptions)

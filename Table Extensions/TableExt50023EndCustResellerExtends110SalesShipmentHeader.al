@@ -32,6 +32,11 @@ tableextension 50023 "End Customer and Reseller 3" extends 110
             DataClassification = ToBeClassified;
             Editable = false;
         }
+        field(50007; "Sell-to-Customer-Name"; text[50])
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
     }
 
     var
