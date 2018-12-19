@@ -44,6 +44,30 @@ codeunit 50052 "Customer Event Handler"
         end;
     end;
 
+    [EventSubscriber(ObjectType::table, database::"Customer", 'OnAfterInsertEvent', '', true, true)]
+    local procedure CustomerOnAfterInsert(var Rec: Record "Customer"; runtrigger: Boolean)
+    var
+        CompanyInfo: Record "Company Information";
+        SyncMasterData: codeunit "Synchronize Master Data";
+    begin
+        If not runtrigger then
+            EXIT;
+        if CompanyName() <> 'SECDenmark' then
+            SyncMasterData.SynchronizeCustomerToSECDK(Rec);
+    end;
+
+    [EventSubscriber(ObjectType::table, database::"Customer", 'OnAfterModifyEvent', '', true, true)]
+    local procedure CustomerOnAfterModify(var Rec: Record "Customer"; runtrigger: Boolean)
+    var
+        CompanyInfo: Record "Company Information";
+        SyncMasterData: codeunit "Synchronize Master Data";
+    begin
+        If not runtrigger then
+            EXIT;
+        if CompanyName() <> 'SECDenmark' then
+            SyncMasterData.SynchronizeCustomerToSECDK(Rec);
+    end;
+
 
 
 }
