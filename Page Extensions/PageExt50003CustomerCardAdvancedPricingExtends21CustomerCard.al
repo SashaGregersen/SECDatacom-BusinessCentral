@@ -9,6 +9,13 @@ pageextension 50003 "Customer Card Advanced Pricing" extends "Customer Card"
                 ApplicationArea = all;
             }
         }
+        addafter("Copy Sell-to Addr. to Qte From")
+        {
+            field("Prefered Shipment Address"; "Prefered Shipment Address")
+            {
+                ApplicationArea = all;
+            }
+        }
     }
     actions
     {

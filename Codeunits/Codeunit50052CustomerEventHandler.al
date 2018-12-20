@@ -29,4 +29,45 @@ codeunit 50052 "Customer Event Handler"
             CustomerPriceGroup.Insert(false);
         end;
     end;
+
+    [EventSubscriber(ObjectType::Table, database::"Sales Header", 'OnAfterCopySellToCustomerAddressFieldsFromCustomer', '', true, true)]
+    local procedure OnAfterCopySellToCustomerAddressFieldsFromCustomer(var SalesHeader: Record "Sales Header"; SellToCustomer: record customer)
+    var
+        ShipToAddress: record "Ship-to Address";
+    begin
+        if SellToCustomer."Prefered Shipment Address" <> '' then begin
+            ShipToAddress.SetRange("Customer No.", SellToCustomer."No.");
+            ShipToAddress.SetRange(Code, SellToCustomer."Prefered Shipment Address");
+            if ShipToAddress.findfirst then begin
+                SalesHeader."Prefered Shipment Address" := SellToCustomer."Prefered Shipment Address";
+            end;
+        end;
+    end;
+
+    [EventSubscriber(ObjectType::table, database::"Customer", 'OnAfterInsertEvent', '', true, true)]
+    local procedure CustomerOnAfterInsert(var Rec: Record "Customer"; runtrigger: Boolean)
+    var
+        CompanyInfo: Record "Company Information";
+        SyncMasterData: codeunit "Synchronize Master Data";
+    begin
+        If not runtrigger then
+            EXIT;
+        if CompanyName() <> 'SECDenmark' then
+            SyncMasterData.SynchronizeCustomerToSECDK(Rec);
+    end;
+
+    [EventSubscriber(ObjectType::table, database::"Customer", 'OnAfterModifyEvent', '', true, true)]
+    local procedure CustomerOnAfterModify(var Rec: Record "Customer"; runtrigger: Boolean)
+    var
+        CompanyInfo: Record "Company Information";
+        SyncMasterData: codeunit "Synchronize Master Data";
+    begin
+        If not runtrigger then
+            EXIT;
+        if CompanyName() <> 'SECDenmark' then
+            SyncMasterData.SynchronizeCustomerToSECDK(Rec);
+    end;
+
+
+
 }

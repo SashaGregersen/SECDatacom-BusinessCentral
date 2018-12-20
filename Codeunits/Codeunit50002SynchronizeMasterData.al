@@ -1,4 +1,4 @@
-codeunit 50002 "Update Inventory"
+codeunit 50002 "Synchronize Master Data"
 {
     trigger OnRun();
     begin
@@ -10,11 +10,11 @@ codeunit 50002 "Update Inventory"
         AvailableInv: Decimal;
         Item: Record Item;
     begin
-        Location.ChangeCompany('CRONUS Danmark A/S');
+        Location.ChangeCompany('SECDenmark');
         Location.SetFilter(Location.Code, '%1|%2', 'GRØN', 'RØD');
         if Location.FindSet then repeat
                                      PurchLine."Location Code" := Location.code;
-                                     Item.ChangeCompany('CRONUS Danmark A/S');
+                                     Item.ChangeCompany('SECDenmark');
                                      Item.GET(PurchLine."No.");
                                      Item.CALCFIELDS(Inventory, "Reserved Qty. on Inventory");
                                      AvailableInv := Item.Inventory - Item."Reserved Qty. on Inventory";
@@ -46,6 +46,22 @@ codeunit 50002 "Update Inventory"
             until Company.next = 0;
     End;
 
+    procedure SynchronizeCustomerToSECDK(customer: record Customer)
+    var
+        Company: record company;
+        Customer2: record customer;
+    begin
+
+        Company.SetRange(Company.Name, 'SECDenmark');
+        IF Company.FindFirst() then begin
+            Customer2.ChangeCompany(Company.Name);
+            Customer2.Init();
+            Customer2.TransferFields(customer);
+            IF not Customer2.Insert(false) then
+                Customer2.Modify(false);
+        end;
+
+    end;
 
 
 }

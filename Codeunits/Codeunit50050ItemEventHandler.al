@@ -14,7 +14,7 @@ codeunit 50050 "Item Event handler"
     local procedure ItemOnAfterInsert(var Rec: Record "Item"; runtrigger: Boolean)
     var
         InventorySetup: Record "Inventory Setup";
-        UpdateInventory: Codeunit "Update Inventory";
+        SyncMasterData: Codeunit "Synchronize Master Data";
         AdvPriceMgt: Codeunit "Advanced Price Management";
     begin
         If not runtrigger then
@@ -23,21 +23,21 @@ codeunit 50050 "Item Event handler"
         InventorySetup.get;
         IF InventorySetup."Synchronize Item" = FALSE then
             Exit;
-        UpdateInventory.SynchronizeInventoryToCompany(rec);
+        SyncMasterData.SynchronizeInventoryToCompany(rec);
     end;
 
     [EventSubscriber(ObjectType::table, database::"Item", 'OnAfterModifyEvent', '', true, true)]
     local procedure ItemOnAfterModify(var Rec: Record "Item"; runtrigger: Boolean)
     var
         InventorySetup: Record "Inventory Setup";
-        UpdateInventory: Codeunit "Update Inventory";
+        SyncMasterData: Codeunit "Synchronize Master Data";
     begin
         If not runtrigger then
             EXIT;
         InventorySetup.get;
         IF InventorySetup."Synchronize Item" = FALSE then
             Exit;
-        UpdateInventory.SynchronizeInventoryToCompany(rec);
+        SyncMasterData.SynchronizeInventoryToCompany(rec);
     end;
 }
 
