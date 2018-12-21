@@ -1,6 +1,6 @@
-query 50001 "Power BI Sales Lines CRM"
+query 50001 "PowerBISalesInvoiceHeaderCRM"
 {
-    Caption = 'Power BI Sales Lines CRM';
+    Caption = 'PowerBISalesInvoiceHeaderCRM';
 
     elements
     {
