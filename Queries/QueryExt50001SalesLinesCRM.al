@@ -9,15 +9,12 @@ query 50001 "Power BI Sales Lines CRM"
             column(End_Customer; "End Customer")
             {
             }
-
-            column(Reseller; Reseller)
+            column(Reseller; "Reseller")
             {
             }
-
             column(Posting_Date; "Posting Date")
             {
             }
-
 
             dataitem(Cust__Ledger_Entry; "Cust. Ledger Entry")
             {
@@ -26,26 +23,7 @@ query 50001 "Power BI Sales Lines CRM"
                 {
                 }
 
-                dataitem(Customer; Customer)
-                {
-                    DataItemLink = "No." = Sales_Invoice_Header."End Customer";
-                    column(End_Customer_Id; Id)
-                    {
-                    }
-
-                    dataitem(CRM_Integration_Record; "CRM Integration Record")
-                    {
-                        DataItemLink = "Integration ID" = "Customer".Id;
-                        column(End_Customer_CRM_ID; "CRM ID")
-
-                        {
-                        }
-                    }
-
-
-                }
             }
-
         }
     }
 }
