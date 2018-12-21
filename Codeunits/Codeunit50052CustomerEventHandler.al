@@ -49,11 +49,17 @@ codeunit 50052 "Customer Event Handler"
     var
         CompanyInfo: Record "Company Information";
         SyncMasterData: codeunit "Synchronize Master Data";
+        SalesSetup: record "Sales & Receivables Setup";
     begin
         If not runtrigger then
             EXIT;
-        if CompanyName() <> 'SECDenmark' then
+
+        if CompanyName() <> 'SECDenmark' then begin
+            SalesSetup.get;
+            IF SalesSetup."Synchronize Customer" = FALSE then
+                Exit;
             SyncMasterData.SynchronizeCustomerToSECDK(Rec);
+        end;
     end;
 
     [EventSubscriber(ObjectType::table, database::"Customer", 'OnAfterModifyEvent', '', true, true)]
@@ -61,13 +67,26 @@ codeunit 50052 "Customer Event Handler"
     var
         CompanyInfo: Record "Company Information";
         SyncMasterData: codeunit "Synchronize Master Data";
+        SalesSetup: record "Sales & Receivables Setup";
     begin
         If not runtrigger then
             EXIT;
-        if CompanyName() <> 'SECDenmark' then
+
+        if CompanyName() <> 'SECDenmark' then begin
+            SalesSetup.get;
+            IF SalesSetup."Synchronize Customer" = FALSE then
+                Exit;
             SyncMasterData.SynchronizeCustomerToSECDK(Rec);
+        end;
     end;
 
+    [EventSubscriber(ObjectType::Page, page::"Customer card", 'OnInsertRecordEvent', '', true, true)]
 
+    local procedure UpdateOwningCompany(var rec: Record Customer)
+    var
+
+    begin
+        rec.validate("Owning Company", CompanyName());
+    end;
 
 }
