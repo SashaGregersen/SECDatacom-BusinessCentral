@@ -16,7 +16,7 @@ query 50003 "CRMIntegrationRecord"
             dataitem(CRM_Integration_Record; "CRM Integration Record")
             {
                 DataItemLink = "Integration ID" = "Customer".Id;
-                column(End_Customer_CRM_ID; "CRM ID")
+                column(CRM_ID; "CRM ID")
 
                 {
 
