@@ -283,6 +283,7 @@ codeunit 50000 "Advanced Price Management"
     var
         Item: Record Item;
         PurchPrice: Record "Purchase Price";
+        CurrExchRate: Record "Currency Exchange Rate";
     begin
         if SalesLine.Type <> SalesLine.Type::Item then
             Exit;
@@ -293,11 +294,19 @@ codeunit 50000 "Advanced Price Management"
         if SalesLine."Variant Code" <> '' then
             PurchPrice.SetRange("Variant Code", SalesLine."Variant Code");
         PurchPrice.SetFilter("Ending Date", '..%1', WorkDate);
-        if PurchPrice.FindLast then
-            SalesLine.validate("Unit Purchase Price", PurchPrice."Direct Unit Cost")
-        else
-            SalesLine.validate("Unit Purchase Price", item."Unit Cost");
-        //Need to add currency and UOM and bids...
+        PurchPrice.SetRange("Currency Code", SalesLine."Currency Code");
+        if PurchPrice.FindLast then begin
+            SalesLine.validate("Unit Purchase Price", PurchPrice."Direct Unit Cost");
+            exit;
+        end;
+        PurchPrice.SetRange("Currency Code");
+        if PurchPrice.FindLast then begin
+            SalesLine.validate("Unit Purchase Price", CurrExchRate.ExchangeAmount(PurchPrice."Direct Unit Cost", PurchPrice."Currency Code", SalesLine."Currency Code", SalesLine."Posting Date"));
+            exit;
+        end;
+        SalesLine.validate("Unit Purchase Price", item."Unit Cost");
+
+        //Need to add UOM (and bids?)
     end;
 
     procedure FindPriceGroupsFromItem(Item: Record Item; var SalesLineDiscountTemp: Record "Sales Line Discount" temporary) FoundSome: boolean;
