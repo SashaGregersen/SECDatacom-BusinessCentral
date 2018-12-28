@@ -6,6 +6,7 @@ codeunit 50050 "Item Event handler"
     trigger OnRun()
     begin
 
+
     end;
 
     var
@@ -38,6 +39,15 @@ codeunit 50050 "Item Event handler"
         IF InventorySetup."Synchronize Item" = FALSE then
             Exit;
         SyncMasterData.SynchronizeInventoryToCompany(rec);
+    end;
+
+    [EventSubscriber(ObjectType::table, database::"Item", 'OnAfterValidateEvent', 'Vendor No.', true, true)]
+    local procedure ItemOnAfterModifyVendorNo(var Rec: Record "Item")
+    var
+        Vendor: Record Vendor;
+    begin
+        if Vendor.get(rec."Vendor No.") then
+            Rec.Validate("Vendor Currency", Vendor."Currency Code");
     end;
 }
 

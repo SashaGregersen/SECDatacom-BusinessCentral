@@ -9,6 +9,10 @@ page 50001 "Bid Prices"
         {
             repeater(Group)
             {
+                field("Bid No."; "Bid No.")
+                {
+                    ApplicationArea = all;
+                }
                 field("item No."; "item No.")
                 {
                     ApplicationArea = all;

@@ -12,7 +12,12 @@ pageextension 50000 SECNavigationArea extends "Order Processor Role Center"
                     RunObject = page "Bid List";
                     ApplicationArea = All;
                 }
-                 
+                action("Bid Prices")
+                {
+                    RunObject = page "Bid Prices";
+                    ApplicationArea = All;
+                }
+
             }
         }
     }

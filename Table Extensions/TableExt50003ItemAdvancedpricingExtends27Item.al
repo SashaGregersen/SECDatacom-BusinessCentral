@@ -7,6 +7,7 @@ tableextension 50003 "Item Adv. Pricing" extends Item
         {
             Editable = false;
             DataClassification = ToBeClassified;
+
         }
         field(50001; "Transfer Price %"; Decimal)
         {
