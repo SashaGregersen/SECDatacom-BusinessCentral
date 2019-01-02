@@ -9,6 +9,21 @@ table 50001 "Bid Item Price"
             DataClassification = ToBeClassified;
             TableRelation = Bid."No.";
             NotBlank = true;
+
+            trigger OnLookUp()
+            var
+                ItemFilter: Text;
+                Item: Record Item;
+                Bid: Record Bid;
+            begin
+                ItemFilter := GetFilter("item No.");
+                if ItemFilter <> '' then begin
+                    Item.Get(ItemFilter);
+                    Bid.SetRange("Vendor No.", Item."Vendor No.");
+                end;
+                if Page.RunModal(50000, Bid) = Action::LookupOK then
+                    Validate("Bid No.", Bid."No.");
+            end;
         }
         field(2; "item No."; code[20])
         {
@@ -92,6 +107,7 @@ table 50001 "Bid Item Price"
         Item: Record Item;
 
     begin
+        TestField("Bid No.");
         If Bid.Get("Bid No.") then
             Claimable := Bid.Claimable;
         if Item.get("item No.") then begin
@@ -102,7 +118,17 @@ table 50001 "Bid Item Price"
     end;
 
     trigger OnModify();
+    var
+        ListPrice: Record "Sales Price";
+        Item: Record Item;
     begin
+        if "item No." <> xRec."item No." then begin
+            if Item.get("item No.") then begin
+                "Currency Code" := Item."Vendor Currency";
+                if Advpricemgt.FindListPriceForitem("item No.", "Currency Code", ListPrice) then
+                    "Unit List Price" := ListPrice."Unit Price";
+            end;
+        End;
     end;
 
     trigger OnDelete();

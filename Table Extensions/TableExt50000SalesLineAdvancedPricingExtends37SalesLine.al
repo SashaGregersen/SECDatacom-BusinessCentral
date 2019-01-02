@@ -10,24 +10,18 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
             trigger OnLookUp();
             var
                 Item: Record Item;
-                Bid: Record Bid;
-                TempBid: Record Bid temporary;
                 BidPrices: Record "Bid Item Price";
             begin
                 if item.Get("No.") then begin
                     BidPrices.SetRange("item No.", "No.");
+                    BidPrices.SetRange("Currency Code", rec."Currency Code");
+                    if not BidPrices.FindFirst() then
+                        BidPrices.SetRange("Currency Code");
                     BidPrices.setrange("Customer No.", "Sell-to Customer No.");
                     if not BidPrices.FindFirst then
                         BidPrices.SetRange("Customer No.");
-                    if BidPrices.FindSet then
-                        repeat
-                            if Bid.Get(BidPrices."Bid No.") then begin
-                                TempBid := Bid;
-                                if not TempBid.Insert then;
-                            end;
-                        Until BidPrices.Next = 0;
-                    if Page.RunModal(50000, TempBid) = "Action"::LookupOK then
-                        validate("Bid No.", TempBid."No.");
+                    if Page.RunModal(50001, BidPrices) = "Action"::LookupOK then
+                        validate("Bid No.", BidPrices."Bid No.");
                 end
             end;
 
@@ -35,26 +29,31 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
             var
                 Bid: Record Bid;
                 BidPrices: Record "Bid Item Price";
+                CurrExchRate: Record "Currency Exchange Rate";
             begin
                 if Bid.Get("Bid No.") then begin
                     BidPrices.SetRange("Bid No.", "Bid No.");
                     BidPrices.SetRange("item No.", "No.");
                     BidPrices.SetRange("Customer No.", "Sell-to Customer No.");
+                    BidPrices.SetRange("Currency Code", "Currency Code");
                     if BidPrices.FindFirst then begin
-                        if BidPrices."Bid Unit Sales Price" <> 0 then
-                            validate("Bid Unit Sales Price", BidPrices."Bid Unit Sales Price");
-                        If BidPrices."Bid Unit Purchase Price" <> 0 then
-                            Validate("Bid Unit Purchase Price", BidPrices."Bid Unit Purchase Price");
-                        Claimable := BidPrices.Claimable;
+                        updateBidPrices(BidPrices."Bid Unit Sales Price", BidPrices."Bid Unit Purchase Price", BidPrices.Claimable);
                     end else begin
                         BidPrices.SetRange("Customer No.");
                         if BidPrices.FindFirst then begin
-                            if BidPrices."Bid Unit Sales Price" <> 0 then
-                                validate("Bid Unit Sales Price", BidPrices."Bid Unit Sales Price");
-                            If BidPrices."Bid Unit Purchase Price" <> 0 then
-                                Validate("Bid Unit Purchase Price", BidPrices."Bid Unit Purchase Price");
-                            Claimable := BidPrices.Claimable;
-                        end
+                            updateBidPrices(BidPrices."Bid Unit Sales Price", BidPrices."Bid Unit Purchase Price", BidPrices.Claimable);
+                        end else begin
+                            BidPrices.SetRange("Currency Code");
+                            if BidPrices.FindFirst then begin
+                                if ("Currency Code" = BidPrices."Currency Code") then begin
+                                    updateBidPrices(BidPrices."Bid Unit Sales Price", BidPrices."Bid Unit Purchase Price", BidPrices.Claimable);
+                                    exit;
+                                end;
+                                updateBidPrices(CurrExchRate.ExchangeAmount(BidPrices."Bid Unit Sales Price", BidPrices."Currency Code", "Currency Code", "Posting Date"),
+                                                CurrExchRate.ExchangeAmount(BidPrices."Bid Unit Purchase Price", BidPrices."Currency Code", "Currency Code", "Posting Date"),
+                                                BidPrices.Claimable);
+                            end
+                        end;
                     end;
                 end else begin
                     Validate("Bid Unit Sales Price", 0);
@@ -172,6 +171,14 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
         }
 
     }
+    local procedure updateBidPrices(SalesPrice: Decimal; PurchPrice: Decimal; NewClaimableValue: Boolean)
+    begin
+        if SalesPrice <> 0 then
+            validate("Bid Unit Sales Price", SalesPrice);
+        If PurchPrice <> 0 then
+            Validate("Bid Unit Purchase Price", PurchPrice);
+        Claimable := NewClaimableValue;
+    end;
 
 
     procedure CalcAdvancedPrices();

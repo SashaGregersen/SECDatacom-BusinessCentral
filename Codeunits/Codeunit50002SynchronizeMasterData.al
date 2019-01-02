@@ -10,11 +10,11 @@ codeunit 50002 "Synchronize Master Data"
         AvailableInv: Decimal;
         Item: Record Item;
     begin
-        Location.ChangeCompany('SECDenmark');
+        Location.ChangeCompany('CRONUS Denmark A/S');
         Location.SetFilter(Location.Code, '%1|%2', 'GRØN', 'RØD');
         if Location.FindSet then repeat
                                      PurchLine."Location Code" := Location.code;
-                                     Item.ChangeCompany('SECDenmark');
+                                     Item.ChangeCompany('CRONUS Denmark A/S');
                                      Item.GET(PurchLine."No.");
                                      Item.CALCFIELDS(Inventory, "Reserved Qty. on Inventory");
                                      AvailableInv := Item.Inventory - Item."Reserved Qty. on Inventory";
@@ -22,8 +22,6 @@ codeunit 50002 "Synchronize Master Data"
         exit(AvailableInv);
 
     end;
-
-
 
     procedure SynchronizeInventoryToCompany(Item: Record Item)
     var
@@ -62,6 +60,5 @@ codeunit 50002 "Synchronize Master Data"
         end;
 
     end;
-
 
 }

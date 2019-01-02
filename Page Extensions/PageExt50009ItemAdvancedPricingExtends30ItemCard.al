@@ -33,17 +33,5 @@ pageextension 50009 "Item Adv. Pricing" extends "Item Card"
 
     }
 
-    var
-
-    trigger OnAfterGetCurrRecord()
-    var
-        Vendor: Record Vendor;
-    begin
-        if Vendor.get(rec."Vendor No.") then begin
-            Rec.Validate("Vendor Currency", Vendor."Currency Code");
-            Rec."Vendor Currency" := Vendor."Currency Code";
-            Rec.modify;
-        end;
-    end;
 
 }
