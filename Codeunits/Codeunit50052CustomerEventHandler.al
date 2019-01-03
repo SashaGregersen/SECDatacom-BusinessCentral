@@ -54,6 +54,8 @@ codeunit 50052 "Customer Event Handler"
         If not runtrigger then
             EXIT;
 
+        rec.validate("Owning Company", CompanyName());
+
         if CompanyName() <> 'SECDenmark' then begin
             SalesSetup.get;
             IF SalesSetup."Synchronize Customer" = FALSE then
@@ -80,15 +82,6 @@ codeunit 50052 "Customer Event Handler"
         end;
     end;
 
-    [EventSubscriber(ObjectType::Page, page::"Customer card", 'OnInsertRecordEvent', '', true, true)]
-
-    local procedure UpdateOwningCompany(var rec: Record Customer)
-    var
-
-    begin
-        rec.validate("Owning Company", CompanyName());
-    end;
-
     [EventSubscriber(ObjectType::Table, database::"Sales Header", 'OnAfterInsertEvent', '', true, true)]
 
     local procedure UpdateSellToCustomerInRelatedFields(var rec: Record "Sales Header")
@@ -97,16 +90,19 @@ codeunit 50052 "Customer Event Handler"
     begin
         If rec."Sell-to Customer No." <> '' then begin
             IF Customer.GET(rec."Sell-to Customer No.") then begin
-                if customer."Customer Type" = Customer."Customer Type"::Reseller then
-                    rec.Reseller := Customer."No."
+                if Customer."IC Partner Code" <> '' then
+                    rec.validate(Subsidiary, Customer."No.")
                 else
-                    if customer."Customer Type" = customer."Customer Type"::"End Customer" then
-                        rec."End Customer" := customer."No."
+                    if customer."Customer Type" = Customer."Customer Type"::Reseller then
+                        rec.Validate(Reseller, Customer."No.")
                     else
-                        if customer."Customer Type" = customer."Customer Type"::"Financing Partner" then
-                            rec."Financing Partner" := Customer."No."
+                        if customer."Customer Type" = customer."Customer Type"::"End Customer" then
+                            rec.Validate("End Customer", customer."No.")
                         else
-                            rec.Subsidiary := customer."No.";
+                            if customer."Customer Type" = customer."Customer Type"::"Financing Partner" then
+                                rec.Validate("Financing Partner", Customer."No.");
+
+                rec.Modify(true);
             end;
         end;
     end;
