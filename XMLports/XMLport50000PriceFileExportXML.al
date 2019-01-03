@@ -75,8 +75,20 @@ xmlport 50000 "Price File Export XML"
                 }
                 trigger OnAfterGetRecord()
                 var
-                    myInt: Integer;
+
                 begin
+                    If CustomerFilter <> '' then begin
+                        SalesPrice.SetRange("Sales Code", CustomerFilter);
+                        If SalesPrice.FindSet() then
+                            Item.SetRange("No.", SalesPrice."Item No.");
+                    end;
+                    If DimFilter <> '' then
+                        if ItemHasDim(Dimfilter, Item."No.") = true then begin
+                            DefaultDimension.SetRange("Table ID", database::Item);
+                            DefaultDimension.SetRange("No.", Item."No.");
+                            if DefaultDimension.FindSet() then
+                                Item.SetRange("No.", DefaultDimension."No.");
+                        end;
                     //currXMLport.Skip();
                 end;
             }
