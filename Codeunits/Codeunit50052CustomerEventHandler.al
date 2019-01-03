@@ -89,4 +89,26 @@ codeunit 50052 "Customer Event Handler"
         rec.validate("Owning Company", CompanyName());
     end;
 
+    [EventSubscriber(ObjectType::Table, database::"Sales Header", 'OnAfterInsertEvent', '', true, true)]
+
+    local procedure UpdateSellToCustomerInRelatedFields(var rec: Record "Sales Header")
+    var
+        Customer: record Customer;
+    begin
+        If rec."Sell-to Customer No." <> '' then begin
+            IF Customer.GET(rec."Sell-to Customer No.") then begin
+                if customer."Customer Type" = Customer."Customer Type"::Reseller then
+                    rec.Reseller := Customer."No."
+                else
+                    if customer."Customer Type" = customer."Customer Type"::"End Customer" then
+                        rec."End Customer" := customer."No."
+                    else
+                        if customer."Customer Type" = customer."Customer Type"::"Financing Partner" then
+                            rec."Financing Partner" := Customer."No."
+                        else
+                            rec.Subsidiary := customer."No.";
+            end;
+        end;
+    end;
+
 }
