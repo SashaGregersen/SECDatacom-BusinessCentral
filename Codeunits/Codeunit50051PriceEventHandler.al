@@ -17,15 +17,34 @@ codeunit 50051 "Price Event Handler"
             AdvPriceMgt.UpdateSalesLineWithPurchPrice(SalesLine);
         SalesLine.CalcAdvancedPrices;
 
-        Salesheader.get(SalesLine."Document No.", SalesLine."Document Type");
+        Salesheader.get(SalesLine."Document Type", SalesLine."Document No.");
         if salesheader."Currency Code" <> '' then begin
             Factor := CurrencyExcRate.GetCurrentCurrencyFactor(salesheader."Currency Code");
-            SalesLine.validate("Line Amount Excl. VAT (LCY)", CurrencyExcRate.ExchangeAmtLCYToFCY(Today(), salesheader."Currency Code", SalesLine.Amount, Factor));
+            SalesLine.validate("Line Amount Excl. VAT (LCY)", CurrencyExcRate.ExchangeAmtFCYToLCY(Today(), salesheader."Currency Code", SalesLine.Amount, Factor));
+            SalesLine.Modify(true);
         end else begin
             SalesLine.validate("Line Amount Excl. VAT (LCY)", salesheader.Amount);
+            SalesLine.Modify(true);
         end;
-
     end;
+    /* 
+        [EventSubscriber(ObjectType::Table, database::"Sales Line", 'OnAfterValidateEvent', 'amount', true, true)]
+        local procedure SalesLineOnAfterValidateAmounts()
+        var
+            CurrencyExcRate: record "Currency Exchange Rate";
+            Factor: decimal;
+            salesheader: record "Sales Header";
+            salesline: record "Sales Line";
+        begin
+            Salesheader.get(SalesLine."Document Type", SalesLine."Document No.");
+            if salesheader."Currency Code" <> '' then begin
+                Factor := CurrencyExcRate.GetCurrentCurrencyFactor(salesheader."Currency Code");
+                SalesLine.validate("Line Amount Excl. VAT (LCY)", CurrencyExcRate.ExchangeAmtLCYToFCY(Today(), salesheader."Currency Code", SalesLine.Amount, Factor));
+            end else begin
+                SalesLine.validate("Line Amount Excl. VAT (LCY)", salesheader.Amount);
+            end;
+
+        end; */
 
     [EventSubscriber(ObjectType::Table, database::"Sales Line", 'OnAfterAssignItemValues', '', true, true)]
     local procedure SalesLineOnAfterAssignItemValues(var SalesLine: Record "Sales Line"; Item: Record Item)
