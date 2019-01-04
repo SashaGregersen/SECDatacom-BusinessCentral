@@ -169,6 +169,24 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
         {
             DataClassification = ToBeClassified;
         }
+        field(50026; "Line Amount Excl. VAT (LCY)"; Decimal)
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+            trigger OnValidate()
+            var
+                GLsetup: record "General Ledger Setup";
+                CurrencyExcRate: record "Currency Exchange Rate";
+                Factor: decimal;
+            begin
+                if "Currency Code" <> '' then begin
+                    Factor := CurrencyExcRate.GetCurrentCurrencyFactor(rec."Currency Code");
+                    rec.validate("Line Amount Excl. VAT (LCY)", CurrencyExcRate.ExchangeAmtLCYToFCY(Today(), rec."Currency Code", rec.Amount, Factor));
+                end else begin
+                    rec.validate("Line Amount Excl. VAT (LCY)", rec.Amount);
+                end;
+            end;
+        }
 
     }
     local procedure updateBidPrices(SalesPrice: Decimal; PurchPrice: Decimal; NewClaimableValue: Boolean)
