@@ -43,6 +43,21 @@ pageextension 50022 "End Customer and Reseller 2" extends 41
                 ApplicationArea = all;
             }
         }
+        modify("Sell-to Customer No.")
+        {
+            Visible = false;
+        }
+        modify("Sell-to Customer Name")
+        {
+            Visible = false;
+        }
+        addafter("Sell-to Customer No.")
+        {
+            field("Sell-to-Customer-Name"; "Sell-to-Customer-Name")
+            {
+                ApplicationArea = all;
+            }
+        }
     }
 
     actions

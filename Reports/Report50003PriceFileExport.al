@@ -29,6 +29,12 @@ report 50003 "Price File Export"
                         PriceExportCSV.SetDimFilter(DefaultDim.GetFilters());
                         PriceExportXML.SetDimFilter(DefaultDim.GetFilters());
                     end;
+                    if WebsiteItems = true then begin
+                        Item.SetCurrentKey("No.", "Use on Website");
+                        Item.Setrange("Use on Website", true);
+                        PriceExportCSV.SetTableView(Item);
+                        PriceExportXML.SetTableView(Item);
+                    end;
 
                     IF ExportCSV = true then begin
                         Filelocation := 'C:\XmlData\Pricelist.csv';
@@ -85,6 +91,10 @@ report 50003 "Price File Export"
                     {
                         ToolTip = 'If not selected, then the export is in XML format';
                     }
+                    field("Web Site Items"; WebSiteItems)
+                    {
+
+                    }
 
                 }
             }
@@ -109,4 +119,5 @@ report 50003 "Price File Export"
         DefaultDim: record "Default Dimension";
         Filelocation: text;
         ExportCSV: Boolean;
+        WebsiteItems: boolean;
 }
