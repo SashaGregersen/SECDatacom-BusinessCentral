@@ -394,6 +394,21 @@ End Function
         <Field Name="VATClause_Lbl">
           <DataField>VATClause_Lbl</DataField>
         </Field>
+        <Field Name="EndCustName">
+          <DataField>EndCustName</DataField>
+        </Field>
+        <Field Name="EndCustAddress">
+          <DataField>EndCustAddress</DataField>
+        </Field>
+        <Field Name="EndCustPostcode">
+          <DataField>EndCustPostcode</DataField>
+        </Field>
+        <Field Name="EndCustCity">
+          <DataField>EndCustCity</DataField>
+        </Field>
+        <Field Name="EndCustCountry">
+          <DataField>EndCustCountry</DataField>
+        </Field>
         <Field Name="LineNo_Line">
           <DataField>LineNo_Line</DataField>
         </Field>
