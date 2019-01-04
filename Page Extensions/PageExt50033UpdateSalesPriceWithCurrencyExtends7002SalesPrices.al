@@ -1,4 +1,4 @@
-pageextension 50033 "Update Sales Prices" extends "Sales Prices" //Lavet for at test function
+pageextension 50033 "Update Sales Prices" extends "Sales Prices" //Lavet for at teste function
 {
     actions
     {

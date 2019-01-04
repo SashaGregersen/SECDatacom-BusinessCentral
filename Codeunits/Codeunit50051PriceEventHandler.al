@@ -8,10 +8,23 @@ codeunit 50051 "Price Event Handler"
 
     [EventSubscriber(ObjectType::Table, database::"Sales Line", 'OnAfterUpdateAmounts', '', true, true)]
     local procedure SalesLineOnAfterUpdateAmounts(var SalesLine: Record "Sales Line")
+    var
+        CurrencyExcRate: record "Currency Exchange Rate";
+        Factor: decimal;
+        salesheader: record "Sales Header";
     begin
         if SalesLine."Unit Purchase Price" = 0 then
             AdvPriceMgt.UpdateSalesLineWithPurchPrice(SalesLine);
         SalesLine.CalcAdvancedPrices;
+
+        Salesheader.get(SalesLine."Document No.", SalesLine."Document Type");
+        if salesheader."Currency Code" <> '' then begin
+            Factor := CurrencyExcRate.GetCurrentCurrencyFactor(salesheader."Currency Code");
+            SalesLine.validate("Line Amount Excl. VAT (LCY)", CurrencyExcRate.ExchangeAmtLCYToFCY(Today(), salesheader."Currency Code", SalesLine.Amount, Factor));
+        end else begin
+            SalesLine.validate("Line Amount Excl. VAT (LCY)", salesheader.Amount);
+        end;
+
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Sales Line", 'OnAfterAssignItemValues', '', true, true)]

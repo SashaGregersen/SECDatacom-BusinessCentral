@@ -169,6 +169,11 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
         {
             DataClassification = ToBeClassified;
         }
+        field(50026; "Line Amount Excl. VAT (LCY)"; Decimal)
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
 
     }
     local procedure updateBidPrices(SalesPrice: Decimal; PurchPrice: Decimal; NewClaimableValue: Boolean)
