@@ -163,6 +163,19 @@ tableextension 50021 "End Customer and Reseller" extends 36
             DataClassification = ToBeClassified;
             Editable = false;
         }
+
+        field(50008; "Line Amount Excl. VAT (LCY)"; Decimal)
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+            trigger OnValidate()
+            var
+                GLsetup: record "General Ledger Setup";
+            begin
+                if "Currency Code" = GLsetup."LCY Code" then
+                    ;
+            end;
+        }
     }
 
 
