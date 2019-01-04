@@ -2,7 +2,7 @@ report 50004 "SEC Sales - Quote"
 {
     // version NAVW113.00
 
-    RDLCLayout = './Standard Sales - Quote.rdl';
+    RDLCLayout = './Standard Sales - Quote.rdlc';
     WordLayout = './Standard Sales - Quote.docx';
     Caption = 'Sales - Quote';
     DefaultLayout = RDLC;
