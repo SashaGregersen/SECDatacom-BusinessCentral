@@ -37,6 +37,7 @@ tableextension 50022 "End Customer and Reseller 2" extends 112
             DataClassification = ToBeClassified;
             Editable = false;
         }
+
     }
 
     var

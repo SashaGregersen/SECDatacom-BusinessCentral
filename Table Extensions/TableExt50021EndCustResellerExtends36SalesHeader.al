@@ -163,6 +163,7 @@ tableextension 50021 "End Customer and Reseller" extends 36
             DataClassification = ToBeClassified;
             Editable = false;
         }
+
     }
 
 

@@ -37,6 +37,21 @@ pageextension 50026 "End Customer and Reseller 6" extends 44
                 ApplicationArea = all;
             }
         }
+        modify("Sell-to Customer No.")
+        {
+            Visible = false;
+        }
+        modify("Sell-to Customer Name")
+        {
+            Visible = false;
+        }
+        addafter("Sell-to Customer No.")
+        {
+            field("Sell-to-Customer-Name"; "Sell-to-Customer-Name")
+            {
+                ApplicationArea = all;
+            }
+        }
 
 
     }

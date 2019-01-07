@@ -54,6 +54,8 @@ codeunit 50052 "Customer Event Handler"
         If not runtrigger then
             EXIT;
 
+        rec.validate("Owning Company", CompanyName());
+
         if CompanyName() <> 'SECDenmark' then begin
             SalesSetup.get;
             IF SalesSetup."Synchronize Customer" = FALSE then
@@ -80,13 +82,29 @@ codeunit 50052 "Customer Event Handler"
         end;
     end;
 
-    [EventSubscriber(ObjectType::Page, page::"Customer card", 'OnInsertRecordEvent', '', true, true)]
+    [EventSubscriber(ObjectType::Table, database::"Sales Header", 'OnAfterInsertEvent', '', true, true)]
 
-    local procedure UpdateOwningCompany(var rec: Record Customer)
+    local procedure UpdateSellToCustomerInRelatedFields(var rec: Record "Sales Header")
     var
-
+        Customer: record Customer;
     begin
-        rec.validate("Owning Company", CompanyName());
+        If rec."Sell-to Customer No." <> '' then begin
+            IF Customer.GET(rec."Sell-to Customer No.") then begin
+                if Customer."IC Partner Code" <> '' then
+                    rec.validate(Subsidiary, Customer."No.")
+                else
+                    if customer."Customer Type" = Customer."Customer Type"::Reseller then
+                        rec.Validate(Reseller, Customer."No.")
+                    else
+                        if customer."Customer Type" = customer."Customer Type"::"End Customer" then
+                            rec.Validate("End Customer", customer."No.")
+                        else
+                            if customer."Customer Type" = customer."Customer Type"::"Financing Partner" then
+                                rec.Validate("Financing Partner", Customer."No.");
+
+                rec.Modify(true);
+            end;
+        end;
     end;
 
 }
