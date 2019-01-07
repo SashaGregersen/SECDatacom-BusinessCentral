@@ -3,7 +3,7 @@ report 50017 SECReminder
     // version NAVW113.00
 
     DefaultLayout = RDLC;
-    RDLCLayout = './Reminder.rdlc';
+    RDLCLayout = './Reminder.rdl';
     Caption = 'Reminder';
 
     dataset

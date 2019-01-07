@@ -2,7 +2,7 @@ report 50006 "SEC Sales - Invoice"
 {
     // version NAVW113.00
 
-    RDLCLayout = './Standard Sales - Invoice.rdlc';
+    RDLCLayout = './Standard Sales - Invoice.rdl';
     WordLayout = './Standard Sales - Invoice.docx';
     Caption = 'Sales - Invoice';
     DefaultLayout = RDLC;
