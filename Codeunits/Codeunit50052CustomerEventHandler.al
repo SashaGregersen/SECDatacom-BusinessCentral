@@ -107,4 +107,26 @@ codeunit 50052 "Customer Event Handler"
         end;
     end;
 
+    [EventSubscriber(ObjectType::table, database::"Customer", 'OnAfterValidateEvent', 'Customer Price Group', true, true)]
+    local procedure CustomerPriceGroupOnAfterValidate(var Rec: Record "Customer")
+    begin
+        if rec."Customer Price Group" <> Rec."Customer Disc. Group" then
+            Rec.Validate("Customer Disc. Group", Rec."Customer Price Group");
+    end;
+
+    [EventSubscriber(ObjectType::table, database::"Customer", 'OnAfterValidateEvent', 'Customer Disc. Group', true, true)]
+    local procedure CustomerDiscGroupOnAfterValidate(var Rec: Record "Customer")
+    var
+        PriceGroupLink: Record "Price Group Link";
+    begin
+        if rec."Customer Disc. Group" <> Rec."Customer Price Group" then
+            Rec.Validate(Rec."Customer Price Group", rec."Customer Disc. Group");
+        if not PriceGroupLink.Get(rec."No.", Rec."Customer Disc. Group") then begin
+            PriceGroupLink.Init();
+            PriceGroupLink."Customer No." := Rec."No.";
+            PriceGroupLink."Customer Discount Group Code" := Rec."Customer Disc. Group";
+            PriceGroupLink.Insert(true);
+        end;
+    end;
+
 }
