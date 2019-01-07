@@ -199,9 +199,6 @@ End Function
         <Field Name="CompanyAddr1">
           <DataField>CompanyAddr1</DataField>
         </Field>
-        <Field Name="CurrReportPageNo">
-          <DataField>CurrReportPageNo</DataField>
-        </Field>
         <Field Name="TextPage">
           <DataField>TextPage</DataField>
         </Field>

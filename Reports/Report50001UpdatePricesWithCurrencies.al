@@ -25,7 +25,7 @@ report 50001 "Update Prices with Currencies"
                 DiffrFromVendorCurr: Code[10];
                 salesprice2: record "Sales Price";
             begin
-                SetRange("No.", '70061');
+                SetRange("No.", '70061'); //husk at fjerne denne linje efter test
                 repeat
                     CurrencyTemp.SetRange(Code, "Vendor Currency");
                     if not CurrencyTemp.Find() then
@@ -47,7 +47,7 @@ report 50001 "Update Prices with Currencies"
                                             AdvancedPriceManage.ExchangeAmtFCYToFCY(Salesprice, salesprice2);
 
                                     IF LocalCurrency = VendCurr then
-                                        AdvancedPriceManage.ExchangeAmtFCYToLCY(Salesprice2);
+                                        AdvancedPriceManage.ExchangeAmtLCYToFCY(salesprice, Salesprice2);
                                 until salesprice2.Next() = 0;
                         until Salesprice.Next() = 0;
                 until next = 0;
@@ -59,7 +59,6 @@ report 50001 "Update Prices with Currencies"
     var
         CurrencyTemp: Record Currency temporary;
         Salesprice: record "Sales Price";
-        GLSetup: Record "General Ledger Setup";
         LocalCurrency: code[10];
         AdvancedPriceManage: Codeunit "Advanced Price Management";
 }
