@@ -8,367 +8,367 @@ report 50017 SECReminder
 
     dataset
     {
-        dataitem("Issued Reminder Header";"Issued Reminder Header")
+        dataitem("Issued Reminder Header"; "Issued Reminder Header")
         {
-            DataItemTableView = SORTING("No.");
+            DataItemTableView = SORTING ("No.");
             RequestFilterFields = "No.";
             RequestFilterHeading = 'Reminder';
-            column(No_IssuedReminderHeader;"No.")
+            column(No_IssuedReminderHeader; "No.")
             {
             }
-            column(DueDateCaption;DueDateCaptionLbl)
+            column(DueDateCaption; DueDateCaptionLbl)
             {
             }
-            column(VATAmountCaption;VATAmountCaptionLbl)
+            column(VATAmountCaption; VATAmountCaptionLbl)
             {
             }
-            column(VATBaseCaption;VATBaseCaptionLbl)
+            column(VATBaseCaption; VATBaseCaptionLbl)
             {
             }
-            column(VATPercentCaption;VATPercentCaptionLbl)
+            column(VATPercentCaption; VATPercentCaptionLbl)
             {
             }
-            column(TotalCaption;TotalCaptionLbl)
+            column(TotalCaption; TotalCaptionLbl)
             {
             }
-            column(PageCaption;PageCaptionLbl)
+            column(PageCaption; PageCaptionLbl)
             {
             }
-            column(DocDateCaption;DocDateCaptionLbl)
+            column(DocDateCaption; DocDateCaptionLbl)
             {
             }
-            column(HomePageCaption;HomePageCaptionLbl)
+            column(HomePageCaption; HomePageCaptionLbl)
             {
             }
-            column(EMailCaption;EMailCaptionLbl)
+            column(EMailCaption; EMailCaptionLbl)
             {
             }
-            column(ShowMIRLines;ShowMIRLines)
+            column(ShowMIRLines; ShowMIRLines)
             {
             }
-            dataitem("Integer";"Integer")
+            dataitem("Integer"; "Integer")
             {
-                DataItemTableView = SORTING(Number) WHERE(Number=CONST(1));
-                column(CompanyInfo1Picture;CompanyInfo1.Picture)
+                DataItemTableView = SORTING (Number) WHERE (Number = CONST (1));
+                column(CompanyInfo1Picture; CompanyInfo1.Picture)
                 {
                 }
-                column(CompanyInfo2Picture;CompanyInfo2.Picture)
+                column(CompanyInfo2Picture; CompanyInfo2.Picture)
                 {
                 }
-                column(CompanyInfo3Picture;CompanyInfo3.Picture)
+                column(CompanyInfo3Picture; CompanyInfo3.Picture)
                 {
                 }
-                column(DueDate_IssuedReminderHdr;Format("Issued Reminder Header"."Due Date"))
+                column(DueDate_IssuedReminderHdr; Format("Issued Reminder Header"."Due Date"))
                 {
                 }
-                column(PostDate_IssuedReminderHdr;Format("Issued Reminder Header"."Posting Date"))
+                column(PostDate_IssuedReminderHdr; Format("Issued Reminder Header"."Posting Date"))
                 {
                 }
-                column(No1_IssuedReminderHdr;"Issued Reminder Header"."No.")
+                column(No1_IssuedReminderHdr; "Issued Reminder Header"."No.")
                 {
                 }
-                column(YourRef_IssueReminderHdr;"Issued Reminder Header"."Your Reference")
+                column(YourRef_IssueReminderHdr; "Issued Reminder Header"."Your Reference")
                 {
                 }
-                column(Contact_IssuedReminderHdr;"Issued Reminder Header".Contact)
+                column(Contact_IssuedReminderHdr; "Issued Reminder Header".Contact)
                 {
                 }
-                column(ReferenceText;ReferenceText)
+                column(ReferenceText; ReferenceText)
                 {
                 }
-                column(VatRegNo_IssueReminderHdr;"Issued Reminder Header"."VAT Registration No.")
+                column(VatRegNo_IssueReminderHdr; "Issued Reminder Header"."VAT Registration No.")
                 {
                 }
-                column(VATNoText;VATNoText)
+                column(VATNoText; VATNoText)
                 {
                 }
-                column(DocDate_IssueReminderHdr;Format("Issued Reminder Header"."Document Date"))
+                column(DocDate_IssueReminderHdr; Format("Issued Reminder Header"."Document Date"))
                 {
                 }
-                column(CustNo_IssueReminderHdr;"Issued Reminder Header"."Customer No.")
+                column(CustNo_IssueReminderHdr; "Issued Reminder Header"."Customer No.")
                 {
                 }
-                column(CompanyInfoBankAccNo;CompanyInfo."Bank Account No.")
+                column(CompanyInfoBankAccNo; CompanyInfo."Bank Account No.")
                 {
                 }
-                column(CompanyInfoBankName;CompanyInfo."Bank Name")
+                column(CompanyInfoBankName; CompanyInfo."Bank Name")
                 {
                 }
-                column(CompanyInfoGiroNo;CompanyInfo."Giro No.")
+                column(CompanyInfoGiroNo; CompanyInfo."Giro No.")
                 {
                 }
-                column(CompanyInfoVATRegNo;CompanyInfo."VAT Registration No.")
+                column(CompanyInfoVATRegNo; CompanyInfo."VAT Registration No.")
                 {
                 }
-                column(CompanyInfoHomePage;CompanyInfo."Home Page")
+                column(CompanyInfoHomePage; CompanyInfo."Home Page")
                 {
                 }
-                column(CompanyInfoEMail;CompanyInfo."E-Mail")
+                column(CompanyInfoEMail; CompanyInfo."E-Mail")
                 {
                 }
-                column(CustAddr8;CustAddr[8])
+                column(CustAddr8; CustAddr[8])
                 {
                 }
-                column(CompanyInfoPhoneNo;CompanyInfo."Phone No.")
+                column(CompanyInfoPhoneNo; CompanyInfo."Phone No.")
                 {
                 }
-                column(CustAddr7;CustAddr[7])
+                column(CustAddr7; CustAddr[7])
                 {
                 }
-                column(CustAddr6;CustAddr[6])
+                column(CustAddr6; CustAddr[6])
                 {
                 }
-                column(CompanyAddr6;CompanyAddr[6])
+                column(CompanyAddr6; CompanyAddr[6])
                 {
                 }
-                column(CustAddr5;CustAddr[5])
+                column(CustAddr5; CustAddr[5])
                 {
                 }
-                column(CompanyAddr5;CompanyAddr[5])
+                column(CompanyAddr5; CompanyAddr[5])
                 {
                 }
-                column(CustAddr4;CustAddr[4])
+                column(CustAddr4; CustAddr[4])
                 {
                 }
-                column(CompanyAddr4;CompanyAddr[4])
+                column(CompanyAddr4; CompanyAddr[4])
                 {
                 }
-                column(CustAddr3;CustAddr[3])
+                column(CustAddr3; CustAddr[3])
                 {
                 }
-                column(CompanyAddr3;CompanyAddr[3])
+                column(CompanyAddr3; CompanyAddr[3])
                 {
                 }
-                column(CustAddr2;CustAddr[2])
+                column(CustAddr2; CustAddr[2])
                 {
                 }
-                column(CompanyAddr2;CompanyAddr[2])
+                column(CompanyAddr2; CompanyAddr[2])
                 {
                 }
-                column(CustAddr1;CustAddr[1])
+                column(CustAddr1; CustAddr[1])
                 {
                 }
-                column(CompanyAddr1;CompanyAddr[1])
+                column(CompanyAddr1; CompanyAddr[1])
                 {
                 }
-                column(CurrReportPageNo;StrSubstNo(Text002,CurrReport.PageNo))
+                /*                 column(CurrReportPageNo;StrSubstNo(Text002,CurrReport.PageNo))
+                                {
+                                } */
+                column(TextPage; TextPageLbl)
                 {
                 }
-                column(TextPage;TextPageLbl)
+                column(PostingDateCaption; PostingDateCaptionLbl)
                 {
                 }
-                column(PostingDateCaption;PostingDateCaptionLbl)
+                column(ReminderNoCaption; ReminderNoCaptionLbl)
                 {
                 }
-                column(ReminderNoCaption;ReminderNoCaptionLbl)
+                column(BankAccNoCaption; BankAccNoCaptionLbl)
                 {
                 }
-                column(BankAccNoCaption;BankAccNoCaptionLbl)
+                column(BankNameCaption; BankNameCaptionLbl)
                 {
                 }
-                column(BankNameCaption;BankNameCaptionLbl)
+                column(GiroNoCaption; GiroNoCaptionLbl)
                 {
                 }
-                column(GiroNoCaption;GiroNoCaptionLbl)
+                column(VATRegNoCaption; VATRegNoCaptionLbl)
                 {
                 }
-                column(VATRegNoCaption;VATRegNoCaptionLbl)
+                column(PhoneNoCaption; PhoneNoCaptionLbl)
                 {
                 }
-                column(PhoneNoCaption;PhoneNoCaptionLbl)
+                column(ReminderCaption; ReminderCaptionLbl)
                 {
                 }
-                column(ReminderCaption;ReminderCaptionLbl)
+                column(CustNo_IssueReminderHdrCaption; "Issued Reminder Header".FieldCaption("Customer No."))
                 {
                 }
-                column(CustNo_IssueReminderHdrCaption;"Issued Reminder Header".FieldCaption("Customer No."))
-                {
-                }
-                dataitem(DimensionLoop;"Integer")
+                dataitem(DimensionLoop; "Integer")
                 {
                     DataItemLinkReference = "Issued Reminder Header";
-                    DataItemTableView = SORTING(Number) WHERE(Number=FILTER(1..));
-                    column(DimText;DimText)
+                    DataItemTableView = SORTING (Number) WHERE (Number = FILTER (1 ..));
+                    column(DimText; DimText)
                     {
                     }
-                    column(Number_IntegerLine;Number)
+                    column(Number_IntegerLine; Number)
                     {
                     }
-                    column(HeaderDimensionsCaption;HeaderDimensionsCaptionLbl)
+                    column(HeaderDimensionsCaption; HeaderDimensionsCaptionLbl)
                     {
                     }
 
                     trigger OnAfterGetRecord()
                     begin
                         if Number = 1 then begin
-                          if not DimSetEntry.FindSet then
-                            CurrReport.Break;
+                            if not DimSetEntry.FindSet then
+                                CurrReport.Break;
                         end else
-                          if not Continue then
-                            CurrReport.Break;
+                            if not Continue then
+                                CurrReport.Break;
 
                         Clear(DimText);
                         Continue := false;
                         repeat
-                          OldDimText := DimText;
-                          if DimText = '' then
-                            DimText := StrSubstNo('%1 - %2',DimSetEntry."Dimension Code",DimSetEntry."Dimension Value Code")
-                          else
-                            DimText :=
-                              StrSubstNo(
-                                '%1; %2 - %3',DimText,
-                                DimSetEntry."Dimension Code",DimSetEntry."Dimension Value Code");
-                          if StrLen(DimText) > MaxStrLen(OldDimText) then begin
-                            DimText := OldDimText;
-                            Continue := true;
-                            exit;
-                          end;
+                            OldDimText := DimText;
+                            if DimText = '' then
+                                DimText := StrSubstNo('%1 - %2', DimSetEntry."Dimension Code", DimSetEntry."Dimension Value Code")
+                            else
+                                DimText :=
+                                  StrSubstNo(
+                                    '%1; %2 - %3', DimText,
+                                    DimSetEntry."Dimension Code", DimSetEntry."Dimension Value Code");
+                            if StrLen(DimText) > MaxStrLen(OldDimText) then begin
+                                DimText := OldDimText;
+                                Continue := true;
+                                exit;
+                            end;
                         until DimSetEntry.Next = 0;
                     end;
 
                     trigger OnPreDataItem()
                     begin
                         if not ShowInternalInfo then
-                          CurrReport.Break;
+                            CurrReport.Break;
                     end;
                 }
-                dataitem("Issued Reminder Line";"Issued Reminder Line")
+                dataitem("Issued Reminder Line"; "Issued Reminder Line")
                 {
-                    DataItemLink = "Reminder No."=FIELD("No.");
+                    DataItemLink = "Reminder No." = FIELD ("No.");
                     DataItemLinkReference = "Issued Reminder Header";
-                    DataItemTableView = SORTING("Reminder No.","Line No.");
-                    column(RemAmt_IssuedReminderLine;"Remaining Amount")
+                    DataItemTableView = SORTING ("Reminder No.", "Line No.");
+                    column(RemAmt_IssuedReminderLine; "Remaining Amount")
                     {
                         AutoFormatExpression = GetCurrencyCodeFromHeader;
                         AutoFormatType = 1;
                     }
-                    column(Desc_IssuedReminderLine;Description)
+                    column(Desc_IssuedReminderLine; Description)
                     {
                     }
-                    column(Type_IssuedReminderLine;Format(Type,0,2))
+                    column(Type_IssuedReminderLine; Format(Type, 0, 2))
                     {
                     }
-                    column(DocDate_IssuedReminderLine;Format("Document Date"))
+                    column(DocDate_IssuedReminderLine; Format("Document Date"))
                     {
                     }
-                    column(DocNo_IssuedReminderLine;"Document No.")
+                    column(DocNo_IssuedReminderLine; "Document No.")
                     {
                     }
-                    column(DocNoCaption_IssuedReminderLine;FieldCaption("Document No."))
+                    column(DocNoCaption_IssuedReminderLine; FieldCaption("Document No."))
                     {
                     }
-                    column(DueDate_IssuedReminderLine;Format("Due Date"))
+                    column(DueDate_IssuedReminderLine; Format("Due Date"))
                     {
                     }
-                    column(OriginalAmt_IssuedReminderLine;"Original Amount")
+                    column(OriginalAmt_IssuedReminderLine; "Original Amount")
                     {
                         AutoFormatExpression = GetCurrencyCodeFromHeader;
                         AutoFormatType = 1;
                     }
-                    column(DocType_IssuedReminderLine;"Document Type")
+                    column(DocType_IssuedReminderLine; "Document Type")
                     {
                     }
-                    column(LineNo_IssuedReminderLine;"No.")
+                    column(LineNo_IssuedReminderLine; "No.")
                     {
                     }
-                    column(ShowInternalInfo;ShowInternalInfo)
+                    column(ShowInternalInfo; ShowInternalInfo)
                     {
                     }
-                    column(NNCInterestAmt;NNC_InterestAmount)
+                    column(NNCInterestAmt; NNC_InterestAmount)
                     {
                     }
-                    column(TotalText;TotalText)
+                    column(TotalText; TotalText)
                     {
                     }
-                    column(MIREntry_IssuedReminderLine;"Detailed Interest Rates Entry")
+                    column(MIREntry_IssuedReminderLine; "Detailed Interest Rates Entry")
                     {
                     }
-                    column(NNCTotal;NNC_Total)
+                    column(NNCTotal; NNC_Total)
                     {
                     }
-                    column(TotalInclVATText;TotalInclVATText)
+                    column(TotalInclVATText; TotalInclVATText)
                     {
                     }
-                    column(NNCVATAmt;NNC_VATAmount)
+                    column(NNCVATAmt; NNC_VATAmount)
                     {
                     }
-                    column(NNCTotalInclVAT;NNC_TotalInclVAT)
+                    column(NNCTotalInclVAT; NNC_TotalInclVAT)
                     {
                     }
-                    column(TotalVATAmt;TotalVATAmount)
+                    column(TotalVATAmt; TotalVATAmount)
                     {
                     }
-                    column(RemNo_IssuedReminderLine;"Reminder No.")
+                    column(RemNo_IssuedReminderLine; "Reminder No.")
                     {
                     }
-                    column(DocumentDateCaption1;DocumentDateCaption1Lbl)
+                    column(DocumentDateCaption1; DocumentDateCaption1Lbl)
                     {
                     }
-                    column(InterestAmountCaption;InterestAmountCaptionLbl)
+                    column(InterestAmountCaption; InterestAmountCaptionLbl)
                     {
                     }
-                    column(RemAmt_IssuedReminderLineCaption;FieldCaption("Remaining Amount"))
+                    column(RemAmt_IssuedReminderLineCaption; FieldCaption("Remaining Amount"))
                     {
                     }
-                    column(DocNo_IssuedReminderLineCaption;FieldCaption("Document No."))
+                    column(DocNo_IssuedReminderLineCaption; FieldCaption("Document No."))
                     {
                     }
-                    column(OriginalAmt_IssuedReminderLineCaption;FieldCaption("Original Amount"))
+                    column(OriginalAmt_IssuedReminderLineCaption; FieldCaption("Original Amount"))
                     {
                     }
-                    column(DocType_IssuedReminderLineCaption;FieldCaption("Document Type"))
+                    column(DocType_IssuedReminderLineCaption; FieldCaption("Document Type"))
                     {
                     }
-                    column(Interest;Interest)
+                    column(Interest; Interest)
                     {
                     }
-                    column(RemainingAmountText;RemainingAmt)
+                    column(RemainingAmountText; RemainingAmt)
                     {
                     }
 
                     trigger OnAfterGetRecord()
                     begin
                         if not "Detailed Interest Rates Entry" then begin
-                          VATAmountLine.Init;
-                          VATAmountLine."VAT Identifier" := "VAT Identifier";
-                          VATAmountLine."VAT Calculation Type" := "VAT Calculation Type";
-                          VATAmountLine."Tax Group Code" := "Tax Group Code";
-                          VATAmountLine."VAT %" := "VAT %";
-                          VATAmountLine."VAT Base" := Amount;
-                          VATAmountLine."VAT Amount" := "VAT Amount";
-                          VATAmountLine."Amount Including VAT" := Amount + "VAT Amount";
-                          VATAmountLine."VAT Clause Code" := "VAT Clause Code";
-                          VATAmountLine.InsertLine;
+                            VATAmountLine.Init;
+                            VATAmountLine."VAT Identifier" := "VAT Identifier";
+                            VATAmountLine."VAT Calculation Type" := "VAT Calculation Type";
+                            VATAmountLine."Tax Group Code" := "Tax Group Code";
+                            VATAmountLine."VAT %" := "VAT %";
+                            VATAmountLine."VAT Base" := Amount;
+                            VATAmountLine."VAT Amount" := "VAT Amount";
+                            VATAmountLine."Amount Including VAT" := Amount + "VAT Amount";
+                            VATAmountLine."VAT Clause Code" := "VAT Clause Code";
+                            VATAmountLine.InsertLine;
 
-                          case Type of
-                            Type::"G/L Account":
-                              "Remaining Amount" := Amount;
-                            Type::"Line Fee":
-                              "Remaining Amount" := Amount;
-                            Type::"Customer Ledger Entry":
-                              ReminderInterestAmount := Amount;
-                          end;
+                            case Type of
+                                Type::"G/L Account":
+                                    "Remaining Amount" := Amount;
+                                Type::"Line Fee":
+                                    "Remaining Amount" := Amount;
+                                Type::"Customer Ledger Entry":
+                                    ReminderInterestAmount := Amount;
+                            end;
 
-                          NNC_InterestAmountTotal += ReminderInterestAmount;
-                          NNC_RemainingAmountTotal += "Remaining Amount";
-                          NNC_VATAmountTotal += "VAT Amount";
+                            NNC_InterestAmountTotal += ReminderInterestAmount;
+                            NNC_RemainingAmountTotal += "Remaining Amount";
+                            NNC_VATAmountTotal += "VAT Amount";
 
-                          NNC_InterestAmount := (NNC_InterestAmountTotal + NNC_VATAmountTotal + "Issued Reminder Header"."Additional Fee" -
-                                                 AddFeeInclVAT + "Issued Reminder Header"."Add. Fee per Line" - AddFeePerLineInclVAT) /
-                            (VATInterest / 100 + 1);
-                          NNC_Total := NNC_RemainingAmountTotal + NNC_InterestAmountTotal;
-                          NNC_VATAmount := NNC_VATAmountTotal;
-                          NNC_TotalInclVAT := NNC_RemainingAmountTotal + NNC_InterestAmountTotal + NNC_VATAmountTotal;
+                            NNC_InterestAmount := (NNC_InterestAmountTotal + NNC_VATAmountTotal + "Issued Reminder Header"."Additional Fee" -
+                                                   AddFeeInclVAT + "Issued Reminder Header"."Add. Fee per Line" - AddFeePerLineInclVAT) /
+                              (VATInterest / 100 + 1);
+                            NNC_Total := NNC_RemainingAmountTotal + NNC_InterestAmountTotal;
+                            NNC_VATAmount := NNC_VATAmountTotal;
+                            NNC_TotalInclVAT := NNC_RemainingAmountTotal + NNC_InterestAmountTotal + NNC_VATAmountTotal;
 
-                          TotalRemAmt += "Remaining Amount";
+                            TotalRemAmt += "Remaining Amount";
                         end;
 
                         RemainingAmt := '';
 
                         if ("Remaining Amount" = 0) and ("Due Date" = 0D) then
-                          RemainingAmt := ''
+                            RemainingAmt := ''
                         else
-                          RemainingAmt := Format("Remaining Amount");
+                            RemainingAmt := Format("Remaining Amount");
                     end;
 
                     trigger OnPreDataItem()
@@ -379,83 +379,83 @@ report 50017 SECReminder
                         Clear(CompanyInfo3.Picture);
 
                         if FindLast then begin
-                          EndLineNo := "Line No." + 1;
-                          repeat
-                            Continue :=
-                              not ShowNotDueAmounts and
-                              ("No. of Reminders" = 0) and
-                              (((Type = Type::"Customer Ledger Entry") or (Type = Type::"Line Fee")) or (Type = Type::" ")) or
-                              "Detailed Interest Rates Entry" and not ShowMIRLines;
-                            if Continue then
-                              EndLineNo := "Line No.";
-                          until (Next(-1) = 0) or not Continue;
+                            EndLineNo := "Line No." + 1;
+                            repeat
+                                Continue :=
+                                  not ShowNotDueAmounts and
+                                  ("No. of Reminders" = 0) and
+                                  (((Type = Type::"Customer Ledger Entry") or (Type = Type::"Line Fee")) or (Type = Type::" ")) or
+                                  "Detailed Interest Rates Entry" and not ShowMIRLines;
+                                if Continue then
+                                    EndLineNo := "Line No.";
+                            until (Next(-1) = 0) or not Continue;
                         end;
 
                         VATAmountLine.DeleteAll;
-                        SetFilter("Line No.",'<%1',EndLineNo);
+                        SetFilter("Line No.", '<%1', EndLineNo);
                     end;
                 }
-                dataitem(IssuedReminderLine2;"Issued Reminder Line")
+                dataitem(IssuedReminderLine2; "Issued Reminder Line")
                 {
-                    DataItemLink = "Reminder No."=FIELD("No.");
+                    DataItemLink = "Reminder No." = FIELD ("No.");
                     DataItemLinkReference = "Issued Reminder Header";
-                    DataItemTableView = SORTING("Reminder No.","Line No.");
-                    column(Desc1_IssuedReminderLine;Description)
+                    DataItemTableView = SORTING ("Reminder No.", "Line No.");
+                    column(Desc1_IssuedReminderLine; Description)
                     {
                     }
-                    column(LineNo1_IssuedReminderLine;"Line No.")
+                    column(LineNo1_IssuedReminderLine; "Line No.")
                     {
                     }
 
                     trigger OnPreDataItem()
                     begin
-                        SetFilter("Line No.",'>=%1',EndLineNo);
+                        SetFilter("Line No.", '>=%1', EndLineNo);
                         if not ShowNotDueAmounts then begin
-                          SetFilter(Type,'<>%1',Type::" ");
-                          if FindFirst then
-                            if "Line No." > EndLineNo then begin
-                              SetRange(Type);
-                              SetRange("Line No.",EndLineNo,"Line No." - 1); // find "Open Entries Not Due" line
-                              if FindLast then
-                                SetRange("Line No.",EndLineNo,"Line No." - 1);
-                            end;
-                          SetRange(Type);
+                            SetFilter(Type, '<>%1', Type::" ");
+                            if FindFirst then
+                                if "Line No." > EndLineNo then begin
+                                    SetRange(Type);
+                                    SetRange("Line No.", EndLineNo, "Line No." - 1); // find "Open Entries Not Due" line
+                                    if FindLast then
+                                        SetRange("Line No.", EndLineNo, "Line No." - 1);
+                                end;
+                            SetRange(Type);
                         end;
                     end;
                 }
-                dataitem(VATCounter;"Integer")
+                dataitem(VATCounter; "Integer")
                 {
-                    DataItemTableView = SORTING(Number);
-                    column(VATAmtLineAmtIncludVAT;VATAmountLine."Amount Including VAT")
+                    DataItemTableView = SORTING (Number);
+                    column(VATAmtLineAmtIncludVAT; VATAmountLine."Amount Including VAT")
                     {
                         AutoFormatExpression = "Issued Reminder Line".GetCurrencyCodeFromHeader;
                         AutoFormatType = 1;
                     }
-                    column(VALVATAmount;VALVATAmount)
+                    column(VALVATAmount; VALVATAmount)
                     {
                         AutoFormatExpression = "Issued Reminder Line".GetCurrencyCodeFromHeader;
                         AutoFormatType = 1;
                     }
-                    column(VALVATBase;VALVATBase)
+                    column(VALVATBase; VALVATBase)
                     {
                         AutoFormatExpression = "Issued Reminder Line".GetCurrencyCodeFromHeader;
                         AutoFormatType = 1;
                     }
-                    column(VALVATBaseVALVATAmt;VALVATBase + VALVATAmount)
+                    column(VALVATBaseVALVATAmt; VALVATBase + VALVATAmount)
                     {
                         AutoFormatExpression = "Issued Reminder Line".GetCurrencyCodeFromHeader;
                         AutoFormatType = 1;
                     }
-                    column(VATAmtLineVAT;VATAmountLine."VAT %")
+                    column(VATAmtLineVAT; VATAmountLine."VAT %")
                     {
                     }
-                    column(AmountIncVATCaption;AmountIncVATCaptionLbl)
+                    column(AmountIncVATCaption; AmountIncVATCaptionLbl)
                     {
                     }
-                    column(VATAmtSpecCaption;VATAmtSpecCaptionLbl)
+                    column(VATAmtSpecCaption; VATAmtSpecCaptionLbl)
                     {
                     }
-                    column(ContinuedCaption;ContinuedCaptionLbl)
+                    column(ContinuedCaption; ContinuedCaptionLbl)
                     {
                     }
 
@@ -469,41 +469,41 @@ report 50017 SECReminder
                     trigger OnPreDataItem()
                     begin
                         if VATAmountLine.GetTotalVATAmount = 0 then
-                          CurrReport.Break;
+                            CurrReport.Break;
 
-                        SetRange(Number,1,VATAmountLine.Count);
+                        SetRange(Number, 1, VATAmountLine.Count);
 
                         VALVATBase := 0;
                         VALVATAmount := 0;
                     end;
                 }
-                dataitem(VATClauseEntryCounter;"Integer")
+                dataitem(VATClauseEntryCounter; "Integer")
                 {
-                    DataItemTableView = SORTING(Number);
-                    column(VATClauseVATIdentifier;VATAmountLine."VAT Identifier")
+                    DataItemTableView = SORTING (Number);
+                    column(VATClauseVATIdentifier; VATAmountLine."VAT Identifier")
                     {
                     }
-                    column(VATClauseCode;VATAmountLine."VAT Clause Code")
+                    column(VATClauseCode; VATAmountLine."VAT Clause Code")
                     {
                     }
-                    column(VATClauseDescription;VATClause.Description)
+                    column(VATClauseDescription; VATClause.Description)
                     {
                     }
-                    column(VATClauseDescription2;VATClause."Description 2")
+                    column(VATClauseDescription2; VATClause."Description 2")
                     {
                     }
-                    column(VATClauseAmount;VATAmountLine."VAT Amount")
+                    column(VATClauseAmount; VATAmountLine."VAT Amount")
                     {
                         AutoFormatExpression = "Issued Reminder Header"."Currency Code";
                         AutoFormatType = 1;
                     }
-                    column(VATClausesCaption;VATClausesCap)
+                    column(VATClausesCaption; VATClausesCap)
                     {
                     }
-                    column(VATClauseVATIdentifierCaption;VATIdentifierLbl)
+                    column(VATClauseVATIdentifierCaption; VATIdentifierLbl)
                     {
                     }
-                    column(VATClauseVATAmtCaption;VATAmountCaptionLbl)
+                    column(VATClauseVATAmtCaption; VATAmountCaptionLbl)
                     {
                     }
 
@@ -511,38 +511,38 @@ report 50017 SECReminder
                     begin
                         VATAmountLine.GetLine(Number);
                         if not VATClause.Get(VATAmountLine."VAT Clause Code") then
-                          CurrReport.Skip;
+                            CurrReport.Skip;
                         VATClause.TranslateDescription("Issued Reminder Header"."Language Code");
                     end;
 
                     trigger OnPreDataItem()
                     begin
                         Clear(VATClause);
-                        SetRange(Number,1,VATAmountLine.Count);
+                        SetRange(Number, 1, VATAmountLine.Count);
                     end;
                 }
-                dataitem(VATCounterLCY;"Integer")
+                dataitem(VATCounterLCY; "Integer")
                 {
-                    DataItemTableView = SORTING(Number);
-                    column(VALExchRate;VALExchRate)
+                    DataItemTableView = SORTING (Number);
+                    column(VALExchRate; VALExchRate)
                     {
                     }
-                    column(VALSpecLCYHeader;VALSpecLCYHeader)
+                    column(VALSpecLCYHeader; VALSpecLCYHeader)
                     {
                     }
-                    column(VALVATAmountLCY;VALVATAmountLCY)
-                    {
-                        AutoFormatType = 1;
-                    }
-                    column(VALVATBaseLCY;VALVATBaseLCY)
+                    column(VALVATAmountLCY; VALVATAmountLCY)
                     {
                         AutoFormatType = 1;
                     }
-                    column(VATAmtLineVATCtrl107;VATAmountLine."VAT %")
+                    column(VALVATBaseLCY; VALVATBaseLCY)
                     {
-                        DecimalPlaces = 0:5;
+                        AutoFormatType = 1;
                     }
-                    column(ContinuedCaption1;ContinuedCaption1Lbl)
+                    column(VATAmtLineVATCtrl107; VATAmountLine."VAT %")
+                    {
+                        DecimalPlaces = 0 : 5;
+                    }
+                    column(ContinuedCaption1; ContinuedCaption1Lbl)
                     {
                     }
 
@@ -560,51 +560,51 @@ report 50017 SECReminder
                            ("Issued Reminder Header"."Currency Code" = '') or
                            (VATAmountLine.GetTotalVATAmount = 0)
                         then
-                          CurrReport.Break;
+                            CurrReport.Break;
 
-                        SetRange(Number,1,VATAmountLine.Count);
+                        SetRange(Number, 1, VATAmountLine.Count);
 
                         VALVATBaseLCY := 0;
                         VALVATAmountLCY := 0;
 
                         if GLSetup."LCY Code" = '' then
-                          VALSpecLCYHeader := Text011 + Text012
+                            VALSpecLCYHeader := Text011 + Text012
                         else
-                          VALSpecLCYHeader := Text011 + Format(GLSetup."LCY Code");
+                            VALSpecLCYHeader := Text011 + Format(GLSetup."LCY Code");
 
-                        CurrExchRate.FindCurrency("Issued Reminder Header"."Posting Date","Issued Reminder Header"."Currency Code",1);
-                        CustEntry.SetRange("Customer No.","Issued Reminder Header"."Customer No.");
-                        CustEntry.SetRange("Document Type",CustEntry."Document Type"::Reminder);
-                        CustEntry.SetRange("Document No.","Issued Reminder Header"."No.");
+                        CurrExchRate.FindCurrency("Issued Reminder Header"."Posting Date", "Issued Reminder Header"."Currency Code", 1);
+                        CustEntry.SetRange("Customer No.", "Issued Reminder Header"."Customer No.");
+                        CustEntry.SetRange("Document Type", CustEntry."Document Type"::Reminder);
+                        CustEntry.SetRange("Document No.", "Issued Reminder Header"."No.");
                         if CustEntry.FindFirst then begin
-                          CustEntry.CalcFields("Amount (LCY)",Amount);
-                          CurrFactor := 1 / (CustEntry."Amount (LCY)" / CustEntry.Amount);
-                          VALExchRate := StrSubstNo(Text013,Round(1 / CurrFactor * 100,0.000001),CurrExchRate."Exchange Rate Amount");
+                            CustEntry.CalcFields("Amount (LCY)", Amount);
+                            CurrFactor := 1 / (CustEntry."Amount (LCY)" / CustEntry.Amount);
+                            VALExchRate := StrSubstNo(Text013, Round(1 / CurrFactor * 100, 0.000001), CurrExchRate."Exchange Rate Amount");
                         end else begin
-                          CurrFactor := CurrExchRate.ExchangeRate("Issued Reminder Header"."Posting Date","Issued Reminder Header"."Currency Code");
-                          VALExchRate := StrSubstNo(Text013,CurrExchRate."Relational Exch. Rate Amount",CurrExchRate."Exchange Rate Amount");
+                            CurrFactor := CurrExchRate.ExchangeRate("Issued Reminder Header"."Posting Date", "Issued Reminder Header"."Currency Code");
+                            VALExchRate := StrSubstNo(Text013, CurrExchRate."Relational Exch. Rate Amount", CurrExchRate."Exchange Rate Amount");
                         end;
                     end;
                 }
-                dataitem(LetterText;"Integer")
+                dataitem(LetterText; "Integer")
                 {
-                    DataItemTableView = SORTING(Number) WHERE(Number=CONST(1));
-                    column(GreetingText;GreetingLbl)
+                    DataItemTableView = SORTING (Number) WHERE (Number = CONST (1));
+                    column(GreetingText; GreetingLbl)
                     {
                     }
-                    column(AmtDueText;AmtDueTxt)
+                    column(AmtDueText; AmtDueTxt)
                     {
                     }
-                    column(BodyText;BodyLbl)
+                    column(BodyText; BodyLbl)
                     {
                     }
-                    column(ClosingText;ClosingLbl)
+                    column(ClosingText; ClosingLbl)
                     {
                     }
-                    column(DescriptionText;DescriptionLbl)
+                    column(DescriptionText; DescriptionLbl)
                     {
                     }
-                    column(TotalRemAmt_IssuedReminderLine;TotalRemAmt)
+                    column(TotalRemAmt_IssuedReminderLine; TotalRemAmt)
                     {
                     }
 
@@ -612,7 +612,7 @@ report 50017 SECReminder
                     begin
                         AmtDueTxt := '';
                         if Format("Issued Reminder Header"."Due Date") <> '' then
-                          AmtDueTxt := StrSubstNo(AmtDueLbl,"Issued Reminder Header"."Due Date");
+                            AmtDueTxt := StrSubstNo(AmtDueLbl, "Issued Reminder Header"."Due Date");
                     end;
                 }
             }
@@ -625,51 +625,51 @@ report 50017 SECReminder
             begin
                 CurrReport.Language := Language.GetLanguageID("Language Code");
 
-                DimSetEntry.SetRange("Dimension Set ID","Dimension Set ID");
+                DimSetEntry.SetRange("Dimension Set ID", "Dimension Set ID");
 
-                FormatAddr.IssuedReminder(CustAddr,"Issued Reminder Header");
+                FormatAddr.IssuedReminder(CustAddr, "Issued Reminder Header");
                 if "Your Reference" = '' then
-                  ReferenceText := ''
+                    ReferenceText := ''
                 else
-                  ReferenceText := FieldCaption("Your Reference");
+                    ReferenceText := FieldCaption("Your Reference");
                 if "VAT Registration No." = '' then
-                  VATNoText := ''
+                    VATNoText := ''
                 else
-                  VATNoText := FieldCaption("VAT Registration No.");
+                    VATNoText := FieldCaption("VAT Registration No.");
                 if "Currency Code" = '' then begin
-                  GLSetup.TestField("LCY Code");
-                  TotalText := StrSubstNo(Text000,GLSetup."LCY Code");
-                  TotalInclVATText := StrSubstNo(Text001,GLSetup."LCY Code");
+                    GLSetup.TestField("LCY Code");
+                    TotalText := StrSubstNo(Text000, GLSetup."LCY Code");
+                    TotalInclVATText := StrSubstNo(Text001, GLSetup."LCY Code");
                 end else begin
-                  TotalText := StrSubstNo(Text000,"Currency Code");
-                  TotalInclVATText := StrSubstNo(Text001,"Currency Code");
+                    TotalText := StrSubstNo(Text000, "Currency Code");
+                    TotalInclVATText := StrSubstNo(Text001, "Currency Code");
                 end;
-                CurrReport.PageNo := 1;
+                // CurrReport.PageNo := 1;
                 if not IsReportInPreviewMode then
-                  IncrNoPrinted;
+                    IncrNoPrinted;
 
                 CalcFields("Additional Fee");
                 CustPostingGroup.Get("Customer Posting Group");
                 if GLAcc.Get(CustPostingGroup."Additional Fee Account") then begin
-                  VATPostingSetup.Get("VAT Bus. Posting Group",GLAcc."VAT Prod. Posting Group");
-                  AddFeeInclVAT := "Additional Fee" * (1 + VATPostingSetup."VAT %" / 100);
+                    VATPostingSetup.Get("VAT Bus. Posting Group", GLAcc."VAT Prod. Posting Group");
+                    AddFeeInclVAT := "Additional Fee" * (1 + VATPostingSetup."VAT %" / 100);
                 end else
-                  AddFeeInclVAT := "Additional Fee";
+                    AddFeeInclVAT := "Additional Fee";
 
                 CalcFields("Add. Fee per Line");
                 AddFeePerLineInclVAT := "Add. Fee per Line" + CalculateLineFeeVATAmount;
 
-                CalcFields("Interest Amount","VAT Amount");
+                CalcFields("Interest Amount", "VAT Amount");
                 if ("Interest Amount" <> 0) and ("VAT Amount" <> 0) then begin
-                  GLAcc.Get(CustPostingGroup."Interest Account");
-                  VATPostingSetup.Get("VAT Bus. Posting Group",GLAcc."VAT Prod. Posting Group");
-                  VATInterest := VATPostingSetup."VAT %";
-                  Interest :=
-                    ("Interest Amount" +
-                     "VAT Amount" + "Additional Fee" - AddFeeInclVAT + "Add. Fee per Line" - AddFeePerLineInclVAT) / (VATInterest / 100 + 1);
+                    GLAcc.Get(CustPostingGroup."Interest Account");
+                    VATPostingSetup.Get("VAT Bus. Posting Group", GLAcc."VAT Prod. Posting Group");
+                    VATInterest := VATPostingSetup."VAT %";
+                    Interest :=
+                      ("Interest Amount" +
+                       "VAT Amount" + "Additional Fee" - AddFeeInclVAT + "Add. Fee per Line" - AddFeePerLineInclVAT) / (VATInterest / 100 + 1);
                 end else begin
-                  Interest := "Interest Amount";
-                  VATInterest := 0;
+                    Interest := "Interest Amount";
+                    VATInterest := 0;
                 end;
 
                 TotalVATAmount := "VAT Amount";
@@ -686,7 +686,7 @@ report 50017 SECReminder
             trigger OnPreDataItem()
             begin
                 CompanyInfo.Get;
-                FormatAddr.Company(CompanyAddr,CompanyInfo);
+                FormatAddr.Company(CompanyAddr, CompanyInfo);
             end;
         }
     }
@@ -702,28 +702,28 @@ report 50017 SECReminder
                 group(Options)
                 {
                     Caption = 'Options';
-                    field(ShowInternalInfo;ShowInternalInfo)
+                    field(ShowInternalInfo; ShowInternalInfo)
                     {
-                        ApplicationArea = Basic,Suite;
+                        ApplicationArea = Basic, Suite;
                         Caption = 'Show Internal Information';
                         ToolTip = 'Specifies if you want the printed report to show information that is only for internal use.';
                     }
-                    field(LogInteraction;LogInteraction)
+                    field(LogInteraction; LogInteraction)
                     {
-                        ApplicationArea = Basic,Suite;
+                        ApplicationArea = Basic, Suite;
                         Caption = 'Log Interaction';
                         Enabled = LogInteractionEnable;
                         ToolTip = 'Specifies if you want the reminder that you print to be recorded as interaction, and to be added to the Interaction Log Entry table.';
                     }
-                    field(ShowNotDueAmounts;ShowNotDueAmounts)
+                    field(ShowNotDueAmounts; ShowNotDueAmounts)
                     {
-                        ApplicationArea = Basic,Suite;
+                        ApplicationArea = Basic, Suite;
                         Caption = 'Show Not Due Amounts';
                         ToolTip = 'Specifies if you want to show amounts that are not due from customers.';
                     }
-                    field(ShowMIR;ShowMIRLines)
+                    field(ShowMIR; ShowMIRLines)
                     {
-                        ApplicationArea = Basic,Suite;
+                        ApplicationArea = Basic, Suite;
                         Caption = 'Show MIR Detail';
                         ToolTip = 'Specifies if you want multiple interest rate details for the journal lines to be included in the report.';
                     }
@@ -757,35 +757,35 @@ report 50017 SECReminder
         SalesSetup.Get;
 
         case SalesSetup."Logo Position on Documents" of
-          SalesSetup."Logo Position on Documents"::"No Logo":
-            ;
-          SalesSetup."Logo Position on Documents"::Left:
-            begin
-              CompanyInfo1.Get;
-              CompanyInfo1.CalcFields(Picture);
-            end;
-          SalesSetup."Logo Position on Documents"::Center:
-            begin
-              CompanyInfo2.Get;
-              CompanyInfo2.CalcFields(Picture);
-            end;
-          SalesSetup."Logo Position on Documents"::Right:
-            begin
-              CompanyInfo3.Get;
-              CompanyInfo3.CalcFields(Picture);
-            end;
+            SalesSetup."Logo Position on Documents"::"No Logo":
+                ;
+            SalesSetup."Logo Position on Documents"::Left:
+                begin
+                    CompanyInfo1.Get;
+                    CompanyInfo1.CalcFields(Picture);
+                end;
+            SalesSetup."Logo Position on Documents"::Center:
+                begin
+                    CompanyInfo2.Get;
+                    CompanyInfo2.CalcFields(Picture);
+                end;
+            SalesSetup."Logo Position on Documents"::Right:
+                begin
+                    CompanyInfo3.Get;
+                    CompanyInfo3.CalcFields(Picture);
+                end;
         end;
     end;
 
     trigger OnPostReport()
     begin
         if LogInteraction and not IsReportInPreviewMode then
-          if "Issued Reminder Header".FindSet then
-            repeat
-              SegManagement.LogDocument(
-                8,"Issued Reminder Header"."No.",0,0,DATABASE::Customer,"Issued Reminder Header"."Customer No.",
-                '','',"Issued Reminder Header"."Posting Description",'');
-            until "Issued Reminder Header".Next = 0;
+            if "Issued Reminder Header".FindSet then
+                repeat
+                    SegManagement.LogDocument(
+                      8, "Issued Reminder Header"."No.", 0, 0, DATABASE::Customer, "Issued Reminder Header"."Customer No.",
+                      '', '', "Issued Reminder Header"."Posting Description", '');
+                until "Issued Reminder Header".Next = 0;
     end;
 
     var
@@ -806,8 +806,8 @@ report 50017 SECReminder
         CurrExchRate: Record "Currency Exchange Rate";
         FormatAddr: Codeunit "Format Address";
         SegManagement: Codeunit SegManagement;
-        CustAddr: array [8] of Text[50];
-        CompanyAddr: array [8] of Text[50];
+        CustAddr: array[8] of Text[50];
+        CompanyAddr: array[8] of Text[50];
         VATNoText: Text[30];
         ReferenceText: Text[35];
         TotalText: Text[50];
@@ -872,7 +872,7 @@ report 50017 SECReminder
         HomePageCaptionLbl: Label 'Home Page';
         EMailCaptionLbl: Label 'Email';
         GreetingLbl: Label 'Hello';
-        AmtDueLbl: Label 'You are receiving this email to formally notify you that payment owed by you is past due. The payment was due on %1. Enclosed is a copy of invoice with the details of remaining amount.', Comment='%1 = A due date';
+        AmtDueLbl: Label 'You are receiving this email to formally notify you that payment owed by you is past due. The payment was due on %1. Enclosed is a copy of invoice with the details of remaining amount.', Comment = '%1 = A due date';
         BodyLbl: Label 'If you have already made the payment, please disregard this email. Thank you for your business.';
         ClosingLbl: Label 'Sincerely';
         DescriptionLbl: Label 'Description';
