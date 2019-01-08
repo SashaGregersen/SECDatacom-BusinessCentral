@@ -2,8 +2,8 @@ report 50005 "SEC Sales - Order Conf."
 {
     // version NAVW113.00
 
-    RDLCLayout = './Standard Sales - Order Conf..rdlc';
-    WordLayout = './Standard Sales - Order Conf..docx';
+    RDLCLayout = './Layouts/Standard Sales - Order Conf..rdlc';
+    WordLayout = './Layouts/Standard Sales - Order Conf..docx';
     Caption = 'Sales - Confirmation';
     DefaultLayout = Word;
     PreviewMode = PrintLayout;
