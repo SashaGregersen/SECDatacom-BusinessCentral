@@ -30,6 +30,10 @@ page 50000 "Bid List"
                 {
                     ApplicationArea = All;
                 }
+                field(Claimable; Claimable)
+                {
+                    ApplicationArea = All;
+                }
                 field("One Time Bid"; "One Time Bid")
                 {
                     ApplicationArea = All;
