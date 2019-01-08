@@ -11,7 +11,7 @@ pageextension 50053 "Insert RecordID in Job Queue" extends 672
         {
             action("Insert RecordID")
             {
-                RunObject = codeunit 50053;
+                RunObject = codeunit 50097;
                 Promoted = true;
                 Image = AddAction;
 
