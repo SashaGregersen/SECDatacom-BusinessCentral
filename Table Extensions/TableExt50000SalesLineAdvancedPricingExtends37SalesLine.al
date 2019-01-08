@@ -232,4 +232,6 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
 
     end;
 
+
+
 }
