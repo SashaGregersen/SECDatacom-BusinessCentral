@@ -1,4 +1,4 @@
-report 208 "Sales - Shipment"
+report 50208 "SEC Sales - Shipment"
 {
     // version NAVW113.00
 
