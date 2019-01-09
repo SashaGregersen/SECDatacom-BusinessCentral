@@ -86,6 +86,7 @@ codeunit 50000 "Advanced Price Management"
         if PurchaseLineDiscount.FindLast() then begin
             FindListPriceForitem(SalesPriceWorksheet."Item No.", SalesPriceWorksheet."Currency Code", SalesPrice);
             CreateUpdatePurchasePrices(PurchaseLineDiscount, SalesPrice);
+            CreateUpdateSalesMarkupPrices(PurchaseLineDiscount);
         end;
     end;
 
@@ -163,7 +164,29 @@ codeunit 50000 "Advanced Price Management"
             Salesprice."Unit Price" := PurchasePrice."Direct Unit Cost" / ((100 - PurchaseLineDiscount."Customer Markup") / 100);
             if not Salesprice.Insert(false) then
                 Salesprice.Modify(false);
+
+            clear(Salesprice);
+            Salesprice.SetRange("Item No.", PurchasePrice."Item No.");
+            Salesprice.SetFilter("Variant Code", '<>LISTPRICE');
+            FindPriceCurrencies(PurchaseLineDiscount."Currency Code", PurchaseLineDiscount."Currency Code" <> '', CurrencyTemp);
+            if CurrencyTemp.FindFirst then begin
+                repeat
+                    Clear(Suggestprices);
+                    Suggestprices.InitializeRequest2(SalesPrice."Sales Type"::"All Customers", '', PurchasePrice."Starting Date", PurchasePrice."Ending Date",
+                                                    CurrencyTemp.Code, PurchasePrice."Unit of Measure Code", true, 0, 1, '');
+                    Suggestprices.SetTableView(SalesPrice);
+                    Suggestprices.UseRequestPage(false);
+                    Suggestprices.Run;
+                until CurrencyTemp.next = 0;
+            end;
+            SalesPriceWorksheet.SetRange("Item No.", PurchasePrice."Item No.");
+            Clear(ImplementPrices);
+            ImplementPrices.SetTableView(SalesPriceWorksheet);
+            ImplementPrices.InitializeRequest(true);
+            ImplementPrices.UseRequestPage(false);
+            ImplementPrices.Run();
         end;
+
     end;
 
     procedure CalcSalesPricesForItemDiscGroup(itemDiscGroup: Code[20]);
@@ -371,23 +394,14 @@ codeunit 50000 "Advanced Price Management"
         SalesPrice2.Modify(true);
     end;
 
-    procedure ExchangeAmtLCYToFCY(SalesPrice: record "Sales Price"; CurrencyFactorCode: code[10])
+    procedure ExchangeAmtLCYToFCY(SalesPriceLCY: record "Sales Price"; SalesPriceFCY: Record "Sales Price")
     var
         CurrencyExcRate: Record "Currency Exchange Rate";
         Factor: Decimal;
     begin
-        Factor := CurrencyExcRate.GetCurrentCurrencyFactor(CurrencyFactorCode);
-        Salesprice.Validate("Unit Price", CurrencyExcRate.ExchangeAmtLCYToFCY(Today(), CurrencyFactorCode, Salesprice."Unit Price", Factor));
-        Salesprice.Modify(true);
-    end;
-
-    procedure FindCurrencyFactor(Currency: code[10]; CurrTemp: Record Currency temporary): Decimal
-    var
-
-    begin
-        CurrTemp.SetRange(Code, Currency);
-        If CurrTemp.FindFirst() then
-            exit(CurrTemp."Currency Factor");
+        Factor := CurrencyExcRate.GetCurrentCurrencyFactor(SalesPriceFCY."Currency Code");
+        SalesPriceFCY.Validate("Unit Price", CurrencyExcRate.ExchangeAmtLCYToFCY(Today(), SalesPriceFCY."Currency Code", SalesPriceLCY."Unit Price", Factor));
+        SalesPriceFCY.Modify(true);
     end;
 
     procedure CreateListPriceVariant(Item: Record Item)

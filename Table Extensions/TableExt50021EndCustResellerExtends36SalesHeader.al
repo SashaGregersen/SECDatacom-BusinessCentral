@@ -11,13 +11,14 @@ tableextension 50021 "End Customer and Reseller" extends 36
                 customer: record customer;
                 shiptoadress: record "Ship-to Address";
             begin
-                If not customer.get(Rec."End Customer") then
-                    error('Not an end-customer')
-                else begin
-                    shiptoadress.setrange("Customer No.", "End Customer");
-                    if shiptoadress.FindFirst() then
-                        SetShipToAddress(ShipToAdress.Name, ShipToAdress."Name 2", ShipToAdress.Address, ShipToAdress."Address 2", ShipToAdress.City, ShipToAdress."Post Code", shiptoadress.County, shiptoadress."Country/Region Code");
-                end;
+                If customer.get(Rec."End Customer") then
+                    if customer."Customer Type" <> customer."Customer Type"::"End Customer" then
+                        error('Not an end-customer')
+                    else begin
+                        shiptoadress.setrange("Customer No.", "End Customer");
+                        if shiptoadress.FindFirst() then
+                            SetShipToAddress(ShipToAdress.Name, ShipToAdress."Name 2", ShipToAdress.Address, ShipToAdress."Address 2", ShipToAdress.City, ShipToAdress."Post Code", shiptoadress.County, shiptoadress."Country/Region Code");
+                    end;
             end;
 
             trigger Onlookup();
@@ -38,13 +39,14 @@ tableextension 50021 "End Customer and Reseller" extends 36
                 customer: record customer;
             begin
 
-                If not customer.get(Rec.Reseller) then
-                    error('Not a reseller')
-                else
-                    if Subsidiary = '' then begin
-                        validate("Sell-to Customer No.", customer."No.");
-                        validate("Sell-to-Customer-Name", customer.Name);
-                    end;
+                If customer.get(Rec.Reseller) then
+                    if customer."Customer Type" <> customer."Customer Type"::Reseller then
+                        error('Not a reseller')
+                    else
+                        if Subsidiary = '' then begin
+                            validate("Sell-to Customer No.", customer."No.");
+                            validate("Sell-to-Customer-Name", customer.Name);
+                        end;
 
             end;
 

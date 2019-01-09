@@ -71,9 +71,9 @@ pageextension 50023 "End Customer and Reseller 3" extends 507
 
     actions
     {
-        // Add changes to page actions here
+
     }
 
     var
-        myInt: Integer;
+
 }

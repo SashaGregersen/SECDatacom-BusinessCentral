@@ -9,18 +9,25 @@ codeunit 50051 "Price Event Handler"
     [EventSubscriber(ObjectType::Table, database::"Sales Line", 'OnAfterUpdateAmounts', '', true, true)]
     local procedure SalesLineOnAfterUpdateAmounts(var SalesLine: Record "Sales Line")
     var
-        CurrencyExcRate: record "Currency Exchange Rate";
-        Factor: decimal;
-        salesheader: record "Sales Header";
+
     begin
         if SalesLine."Unit Purchase Price" = 0 then
             AdvPriceMgt.UpdateSalesLineWithPurchPrice(SalesLine);
         SalesLine.CalcAdvancedPrices;
 
-        Salesheader.get(SalesLine."Document No.", SalesLine."Document Type");
+    end;
+
+    [EventSubscriber(ObjectType::Table, database::"Sales Line", 'OnAfterUpdateUnitPrice', '', true, true)]
+    local procedure OnAfterUpdateUnitPrice(VAR SalesLine: Record "Sales Line"; xSalesLine: Record "Sales Line"; CalledByFieldNo: Integer; CurrFieldNo: Integer)
+    var
+        CurrencyExcRate: record "Currency Exchange Rate";
+        Factor: decimal;
+        salesheader: record "Sales Header";
+    begin
+        Salesheader.get(SalesLine."Document Type", SalesLine."Document No.");
         if salesheader."Currency Code" <> '' then begin
             Factor := CurrencyExcRate.GetCurrentCurrencyFactor(salesheader."Currency Code");
-            SalesLine.validate("Line Amount Excl. VAT (LCY)", CurrencyExcRate.ExchangeAmtLCYToFCY(Today(), salesheader."Currency Code", SalesLine.Amount, Factor));
+            SalesLine.validate("Line Amount Excl. VAT (LCY)", CurrencyExcRate.ExchangeAmtFCYToLCY(Today(), salesheader."Currency Code", SalesLine.Amount, Factor));
         end else begin
             SalesLine.validate("Line Amount Excl. VAT (LCY)", salesheader.Amount);
         end;

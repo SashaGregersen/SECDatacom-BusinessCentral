@@ -30,6 +30,10 @@ page 50000 "Bid List"
                 {
                     ApplicationArea = All;
                 }
+                field(Claimable; Claimable)
+                {
+                    ApplicationArea = All;
+                }
                 field("One Time Bid"; "One Time Bid")
                 {
                     ApplicationArea = All;
@@ -56,6 +60,39 @@ page 50000 "Bid List"
                     page.RunModal(50001, BidPrices);
                 end;
             }
+            action("Show Only Active Bids")
+            {
+                Visible = not ShowingAll;
+
+                trigger OnAction();
+                begin
+                    if GetFilter("Expiry Date") = '' then begin
+                        SetFilter("Expiry Date", '>%1', WorkDate());
+                        ShowingAll := true;
+                    end ELSE begin
+                        SetRange("Expiry Date");
+                        ShowingAll := false;
+                    end;
+                    CurrPage.Update(true);
+                end;
+            }
+            action("Show All Bids")
+            {
+                Visible = ShowingAll;
+                trigger OnAction();
+                begin
+                    if GetFilter("Expiry Date") = '' then begin
+                        SetFilter("Expiry Date", '>%1', WorkDate());
+                        ShowingAll := true;
+                    end ELSE begin
+                        SetRange("Expiry Date");
+                        ShowingAll := false;
+                    end;
+                    CurrPage.Update(true);
+                end;
+            }
         }
     }
+    var
+        ShowingAll: Boolean;
 }

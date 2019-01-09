@@ -151,6 +151,7 @@ report 50017 SECReminder
                 column(CompanyAddr1; CompanyAddr[1])
                 {
                 }
+<<<<<<< HEAD
                 column(CurrReportPageNo; StrSubstNo(Text002, CurrReport.PageNo))
                 {
                 }
@@ -184,6 +185,41 @@ report 50017 SECReminder
                 column(CustNo_IssueReminderHdrCaption; "Issued Reminder Header".FieldCaption("Customer No."))
                 {
                 }
+=======
+                /*                 column(CurrReportPageNo;StrSubstNo(Text002,CurrReport.PageNo))
+                                {
+                                } */
+                column(TextPage; TextPageLbl)
+                {
+                }
+                column(PostingDateCaption; PostingDateCaptionLbl)
+                {
+                }
+                column(ReminderNoCaption; ReminderNoCaptionLbl)
+                {
+                }
+                column(BankAccNoCaption; BankAccNoCaptionLbl)
+                {
+                }
+                column(BankNameCaption; BankNameCaptionLbl)
+                {
+                }
+                column(GiroNoCaption; GiroNoCaptionLbl)
+                {
+                }
+                column(VATRegNoCaption; VATRegNoCaptionLbl)
+                {
+                }
+                column(PhoneNoCaption; PhoneNoCaptionLbl)
+                {
+                }
+                column(ReminderCaption; ReminderCaptionLbl)
+                {
+                }
+                column(CustNo_IssueReminderHdrCaption; "Issued Reminder Header".FieldCaption("Customer No."))
+                {
+                }
+>>>>>>> c4a5ee1fe315b3a5b6f89d0be07dcb5336dba2b8
                 dataitem(DimensionLoop; "Integer")
                 {
                     DataItemLinkReference = "Issued Reminder Header";
@@ -644,7 +680,7 @@ report 50017 SECReminder
                     TotalText := StrSubstNo(Text000, "Currency Code");
                     TotalInclVATText := StrSubstNo(Text001, "Currency Code");
                 end;
-                CurrReport.PageNo := 1;
+                // CurrReport.PageNo := 1;
                 if not IsReportInPreviewMode then
                     IncrNoPrinted;
 

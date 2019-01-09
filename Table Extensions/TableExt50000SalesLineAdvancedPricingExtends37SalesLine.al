@@ -115,7 +115,7 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
         field(50013; "Transfer Price Markup"; Decimal)
         {
             DataClassification = ToBeClassified;
-            //Editable = false;
+            Editable = false;
             trigger Onvalidate()
             begin
                 if "Transfer Price Markup" <> xRec."Transfer Price Markup" then
@@ -125,7 +125,7 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
         field(50014; "KickBack Percentage"; Decimal)
         {
             DataClassification = ToBeClassified;
-            //Editable = false;
+            Editable = false;
             trigger Onvalidate()
             begin
                 If "KickBack Percentage" = 0 then
@@ -156,18 +156,22 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
         field(50022; "Claim Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
+            Editable = false;
         }
         field(500023; "Profit Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
+            Editable = false;
         }
         field(50024; "Profit Margin"; decimal)
         {
             DataClassification = ToBeClassified;
+            Editable = false;
         }
         field(50025; "Purchase Price on Purchase Order"; Decimal)
         {
             DataClassification = ToBeClassified;
+            Editable = false;
         }
         field(50026; "Line Amount Excl. VAT (LCY)"; Decimal)
         {
@@ -231,5 +235,7 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
             "Profit Margin" := ("Profit Amount" / "Line Amount") * 100;
 
     end;
+
+
 
 }
