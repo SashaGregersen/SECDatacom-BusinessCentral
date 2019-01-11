@@ -993,9 +993,9 @@ report 50004 "SEC Sales - Quote"
         RespCenter: Record "Responsibility Center";
         Language: Record Language;
         VATClause: Record "VAT Clause";
-        FormatAddr: Codeunit "Format Address";
+        FormatAddr: Codeunit 365;  //Format Address
         FormatDocument: Codeunit "Format Document";
-        SegManagement: Codeunit SegManagement;
+        SegManagement: Codeunit 5051; //SegManagement
         IdentityManagement: Codeunit "Identity Management";
         WorkDescriptionLine: Text;
         CustAddr: array[8] of Text[90];
@@ -1068,7 +1068,7 @@ report 50004 "SEC Sales - Quote"
 
     local procedure IsReportInPreviewMode(): Boolean
     var
-        MailManagement: Codeunit "Mail Management";
+        MailManagement: Codeunit 9520; //Mail Management
     begin
         exit(CurrReport.Preview or MailManagement.IsHandlingGetEmailBody);
     end;
