@@ -2,10 +2,10 @@ report 50004 "SEC Sales - Quote"
 {
     // version NAVW113.00
 
-    RDLCLayout = './Standard Sales - Quote.rdlc';
-    WordLayout = './Standard Sales - Quote.docx';
+    RDLCLayout = './Layouts/Standard Sales - Quote.rdl';
+    WordLayout = './Layouts/Standard Sales - Quote.docx';
     Caption = 'Sales - Quote';
-    DefaultLayout = Word;
+    DefaultLayout = RDLC;
     PreviewMode = PrintLayout;
     WordMergeDataItem = Header;
 
@@ -398,8 +398,6 @@ report 50004 "SEC Sales - Quote"
                 {
                 }
             }
-
-
             dataitem(Line; "Sales Line")
             {
                 DataItemLink = "Document No." = FIELD ("No.");

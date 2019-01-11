@@ -21,9 +21,20 @@ pageextension 50028 "End Customer and Reseller 8" extends 132
 
     actions
     {
-        // Add changes to page actions here
+        addlast(Processing)
+        {
+            action(ShowMyReport)
+            {
+                Image = ItemGroup;
+                trigger OnAction();
+                begin
+                    SalesInvoice.Run();
+                end;
+            }
+
+        }
     }
 
     var
-        myInt: Integer;
+        SalesInvoice: report "SEC Sales - Invoice";
 }
