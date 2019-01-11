@@ -8,51 +8,51 @@ report 50003 "Price File Export"
     {
         dataitem(Item; Item)
         {
+            RequestFilterFields = "No.", "Use on Website";
             trigger OnPreDataItem()
             var
                 XmlStream: OutStream;
                 PriceXmlFile: file;
                 PriceExportCSV: XmlPort "Price File Export CSV";
                 PriceExportXML: XmlPort "Price File Export XML";
+                ItemNo: code[20];
+            begin
+
+                if customer."No." = '' then
+                    Error('You cannot run the report without selecting a customer')
+                else begin
+                    PriceExportCSV.SetCustomerFilter(customer);
+                    PriceExportXML.SetCustomerFilter(customer);
+                end;
+
+                PriceExportCSV.SetCurrencyFilter(currency.Code);
+                PriceExportXML.SetCurrencyFilter(currency.Code);
+
+                IF ExportCSV = true then begin
+                    Filelocation := createfilelocationpath(true);
+                    PriceExportCSV.SetTableView(Item);
+                    PriceXmlFile.CREATE(Filelocation);
+                    PriceXmlFile.CREATEOUTSTREAM(XmlStream);
+                    PriceExportCSV.SetDestination(XmlStream);
+                    PriceExportCSV.export;
+                    PriceXmlFile.CLOSE;
+                end else begin
+                    Filelocation := createfilelocationpath(false);
+                    PriceExportxml.SetTableView(Item);
+                    PriceXmlFile.CREATE(Filelocation);
+                    PriceXmlFile.CREATEOUTSTREAM(XmlStream);
+                    PriceExportXML.SetDestination(XmlStream);
+                    PriceExportXML.export;
+                    PriceXmlFile.CLOSE;
+                end;
+
+            end;
+
+            trigger OnAfterGetRecord()
+            var
 
             begin
-                repeat
-                    if item.GetFilters() <> '' then begin
-                        PriceExportCSV.SetTableView(Item);
-                        PriceExportXML.SetTableView(Item);
-                    end;
-                    if customer.GetFilters() <> '' then begin
-                        PriceExportCSV.SetCustomerFilter(customer.GetFilters());
-                        PriceExportXML.SetCustomerFilter(customer.GetFilters());
-                    end;
-                    if DefaultDim.GetFilters() <> '' then begin
-                        PriceExportCSV.SetDimFilter(DefaultDim.GetFilters());
-                        PriceExportXML.SetDimFilter(DefaultDim.GetFilters());
-                    end;
-                    if WebsiteItems = true then begin
-                        Item.SetCurrentKey("No.", "Use on Website");
-                        Item.Setrange("Use on Website", true);
-                        PriceExportCSV.SetTableView(Item);
-                        PriceExportXML.SetTableView(Item);
-                    end;
-
-                    IF ExportCSV = true then begin
-                        Filelocation := 'C:\XmlData\Pricelist.csv';
-                        PriceXmlFile.CREATE(Filelocation);
-                        PriceXmlFile.CREATEOUTSTREAM(XmlStream);
-                        PriceExportCSV.SetDestination(XmlStream);
-                        PriceExportCSV.export;
-                        PriceXmlFile.CLOSE;
-                    end else begin
-                        Filelocation := 'C:\XmlData\Pricelist.xml';
-                        PriceXmlFile.CREATE(Filelocation);
-                        PriceXmlFile.CREATEOUTSTREAM(XmlStream);
-                        PriceExportXML.SetDestination(XmlStream);
-                        PriceExportXML.export;
-                        PriceXmlFile.CLOSE;
-                    end;
-                until item.next = 0;
-
+                CurrReport.Break();
             end;
 
             trigger OnPostDataItem()
@@ -60,8 +60,6 @@ report 50003 "Price File Export"
             begin
                 Message('Price File Exported to %1', Filelocation);
             end;
-
-
         }
     }
 
@@ -73,41 +71,18 @@ report 50003 "Price File Export"
             {
                 group(GroupName)
                 {
-                    field("Item No"; Item."No.")
-                    {
-                        TableRelation = item;
-                    }
                     field(Customer; Customer."No.")
                     {
                         TableRelation = customer;
                     }
-
-                    field("Default Dimension"; DefaultDim."Dimension Value Code")
+                    field("Currency code"; currency.Code)
                     {
-                        TableRelation = "Default Dimension"."Dimension Value Code" where ("Table ID" = CONST (27));
+                        TableRelation = Currency.Code;
                     }
-
                     field("Export CSV"; ExportCSV)
                     {
                         ToolTip = 'If not selected, then the export is in XML format';
                     }
-                    field("Web Site Items"; WebSiteItems)
-                    {
-
-                    }
-
-                }
-            }
-        }
-
-        actions
-        {
-            area(processing)
-            {
-                action(x)
-                {
-
-
 
                 }
             }
@@ -116,8 +91,28 @@ report 50003 "Price File Export"
 
     var
         customer: record customer;
-        DefaultDim: record "Default Dimension";
         Filelocation: text;
         ExportCSV: Boolean;
-        WebsiteItems: boolean;
+        currency: record Currency;
+
+    procedure CreateFileLocationPath(FormatCSV: Boolean) Filelocation: Text
+    var
+        CurrDateTime: text;
+    begin
+        if FormatCSV = true then begin
+            FormatCurrentDateTime(CurrDateTime);
+            Filelocation := 'C:\XmlData\Pricelist_' + customer."No." + '_' + CurrDateTime + '.csv'
+        end else begin
+            FormatCurrentDateTime(CurrDateTime);
+            Filelocation := 'C:\XmlData\Pricelist_' + customer."No." + '_' + CurrDateTime + '.xml';
+        end;
+    end;
+
+    local procedure FormatCurrentDateTime(var CurrDateTime: Text)
+    var
+        CurrDateTime2: text;
+    begin
+        CurrDateTime2 := ConvertStr(format(CurrentDateTime()), '/', '-');
+        CurrDateTime := ConvertStr(Format(CurrentDateTime()), ':', '.');
+    end;
 }
