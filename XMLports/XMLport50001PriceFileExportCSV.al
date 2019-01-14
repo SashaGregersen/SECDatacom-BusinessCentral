@@ -44,27 +44,25 @@ xmlport 50001 "Price File Export CSV"
 
                 }
 
-                tableelement(SalesPrice; "Sales Price")
+                textelement(SalesPriceUnitPrice)
                 {
-                    XmlName = 'SalesPrice';
-                    LinkTable = Item;
-                    LinkFields = "Item No." = field ("No."), "Currency code" = field ("Vendor Currency");
-                    fieldelement(SalesPriceItemNo; SalesPrice."Item No.")
-                    {
 
-                    }
-                    fieldelement(SalesPriceCode; SalesPrice."Sales Code")
-                    {
+                    trigger OnBeforePassVariable()
+                    var
 
-                    }
-                    fieldelement(SalesPriceType; SalesPrice."Sales Type")
-                    {
+                    begin
+                        SalesPriceUnitPrice := Format(FindCheapestPrice(salesprice));
+                    end;
 
-                    }
-                    fieldelement(SalesPriceUnitPrice; SalesPrice."Unit Price")
-                    {
+                }
+                textelement(CurrencyCode)
+                {
+                    trigger OnAfterAssignVariable()
+                    var
 
-                    }
+                    begin
+                        CurrencyCode := CurrencyFilter;
+                    end;
                 }
                 tableelement(DefaultDimension; "Default Dimension")
                 {
@@ -81,36 +79,64 @@ xmlport 50001 "Price File Export CSV"
                 var
 
                 begin
-                    //currXMLport.Skip();
+                    SalesPrice.SetRange("Item No.", Item."No.");
+                    if not salesprice.FindSet() then
+                        currXMLport.Skip();
                 end;
             }
+
         }
     }
 
+    trigger OnPreXmlPort()
     var
-        CustomerFilter: text;
-        DimFilter: text;
-
-    procedure SetCustomerFilter(NewCustomerFilter: Text)
-    var
-
+        salesprice: Record "Sales Price";
     begin
-        CustomerFilter := NewCustomerFilter;
+        if CustomerNo = '' then
+            currXMLport.Skip();
     end;
 
-    procedure SetDimFilter(NewDimFilter: Text)
+
+    var
+        CustomerNo: code[20];
+        CurrencyFilter: text;
+        UnitPrice: decimal;
+        salesprice: record "Sales Price";
+
+    procedure SetCurrencyFilter(NewCurrencyFilter: Text)
     var
 
     begin
-        DimFilter := NewDimFilter;
+        CurrencyFilter := NewCurrencyFilter;
+
     end;
 
-    local procedure ItemHasDim(DimValCode: code[20]; ItemNo: code[20]): Boolean
+    procedure SetCustomerFilter(Customer: Record Customer)
     var
-        DefaultDim: Record "Default Dimension";
+
     begin
-        DefaultDimension.SetRange("Table ID", database::Item);
-        DefaultDimension.SetRange("No.", ItemNo);
-        exit(DefaultDimension.findfirst);
+
+        CustomerNo := customer."No.";
+    end;
+
+
+    procedure FindCheapestPrice(SalesPrice: record "Sales Price"): Decimal
+    var
+
+    begin
+        SalesPrice.SetRange("Item No.", Item."No.");
+        SalesPrice.SetRange("Sales Code", FindSalesCodeFromCustomerNo());
+        SalesPrice.SetRange("Currency Code", CurrencyFilter);
+        if salesprice.FindLast() then
+            exit(salesprice."Unit Price");
+    end;
+
+    local procedure FindSalesCodeFromCustomerNo(): code[20]
+    var
+        customer: record Customer;
+    begin
+        Customer.setrange("No.", CustomerNo);
+        if customer.findfirst then
+            exit(customer."Customer Disc. Group");
     end;
 }
