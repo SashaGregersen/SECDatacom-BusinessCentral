@@ -115,8 +115,6 @@ xmlport 50000 "Price File Export XML"
     var
 
     begin
-        //find hvilken gruppe kunden er medlem af --> hvis finddiscountgroup = '' --> sales type = ALL Customers
-
         SalesPrice.SetRange("Item No.", Item."No.");
         SalesPrice.SetRange("Sales Type", SalesPrice."Sales Type"::Customer);
         SalesPrice.SetRange("Sales Code", FindDiscountGroup());
@@ -137,38 +135,20 @@ xmlport 50000 "Price File Export XML"
     var
         PriceGroupLink: record "Price Group Link";
         SalesLineDiscountTemp: Record "Sales Line Discount" temporary;
+        AdvancedPriceManage: Codeunit "Advanced Price Management";
     begin
-        //sæt en temporary tabel på sales line discount med rigtige filtre         
-
-        PriceGroupLink.SetRange("Customer No.", CustomerNo);
-        if PriceGroupLink.FindSet then begin
-            SalesLineDiscountTemp.SetRange("Sales Code", PriceGroupLink."Customer Discount Group Code");
-            if SalesLineDiscountTemp.FindFirst() then
-                exit(SalesLineDiscountTemp."Sales Code");
-        end;
+        If AdvancedPriceManage.FindPriceGroupsFromItem(Item, SalesLineDiscountTemp) then begin
+            PriceGroupLink.SetRange("Customer No.", CustomerNo);
+            if PriceGroupLink.FindSet then begin
+                SalesLineDiscountTemp.SetRange("Sales Code", PriceGroupLink."Customer Discount Group Code");
+                if SalesLineDiscountTemp.FindFirst() then
+                    exit(SalesLineDiscountTemp."Sales Code");
+            end;
+        end else
+            exit('');
 
 
     end;
-    /* 
-    
-    if AdvPriceMgt.FindPriceGroupsFromItem(Item, SalesLineDiscountTemp) then begin
-            PriceGroupLink.SetRange("Customer No.", SalesLine."Sell-to Customer No.");
-            if PriceGroupLink.FindSet then begin
-                repeat
-                    SalesLineDiscountTemp.SetRange("Sales Code", PriceGroupLink."Customer Discount Group Code");
-                    if SalesLineDiscountTemp.FindFirst then begin
-                        SalesLine."Customer Disc. Group" := SalesLineDiscountTemp."Sales Code";
-                        SalesLine."Customer Price Group" := SalesLine."Customer Disc. Group";
-                        FoundGroup := true;
-                    end;
-                    
-                    SalesLineDiscount.SetRange(Type, SalesLineDiscount.Type::"Item Disc. Group");
-        SalesLineDiscount.SetRange(Code, item."Item Disc. Group");
-        SalesLineDiscount.SetRange("Sales Type", SalesLineDiscount."Sales Type"::"Customer Disc. Group");
-        if SalesLineDiscount.FindSet then begin
-            repeat
-                SalesLineDiscountTemp := SalesLineDiscount;
-                if not SalesLineDiscountTemp.Insert then;
-            until SalesLineDiscount.next = 0;*/
+
     // vi vælger altid en kunde når vi kører rapporten - hvis ikke kunden er sat op til en discount gruppe skal den altid sætte sales type til all customers
 }
