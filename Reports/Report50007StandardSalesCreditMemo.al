@@ -3,7 +3,7 @@ report 50007 "SEC Sales - Credit Memo"
     // version NAVW113.00
 
     RDLCLayout = './Layouts/Standard Sales - Credit Memo.rdl';
-    WordLayout = './Layout/Standard Sales - Credit Memo.docx';
+    WordLayout = './Layouts/Standard Sales - Credit Memo.docx';
     Caption = 'Sales - Credit Memo';
     DefaultLayout = Word;
     Permissions = TableData "Sales Shipment Buffer" = rimd;
