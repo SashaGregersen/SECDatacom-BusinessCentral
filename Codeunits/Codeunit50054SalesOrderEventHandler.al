@@ -8,7 +8,7 @@ codeunit 50054 "Sales Order Event Handler"
     var
         salesheader: record "sales header";
     begin
-        if CompanyName() <> 'CRONUS Danmark A/S' then //change the company name to SECDenmark in TEST
+        if CompanyName() <> 'SECDenmark' then
             exit;
 
         salesheader.setrange("No.", rec."Document No.");
@@ -28,7 +28,7 @@ codeunit 50054 "Sales Order Event Handler"
     var
         salesheader: record "sales header";
     begin
-        if CompanyName() <> 'CRONUS Danmark A/S' then //change the company name to SECDenmark in TEST
+        if CompanyName() <> 'SECDenmark' then
             exit;
 
         salesheader.setrange("No.", rec."Document No.");
@@ -48,7 +48,7 @@ codeunit 50054 "Sales Order Event Handler"
     var
         salesheader: record "sales header";
     begin
-        if CompanyName() <> 'CRONUS Danmark A/S' then //change the company name to SECDenmark in TEST
+        if CompanyName() <> 'SECDenmark' then
             exit;
 
         salesheader.setrange("No.", rec."Document No.");
@@ -68,7 +68,7 @@ codeunit 50054 "Sales Order Event Handler"
     var
         salesheader: record "sales header";
     begin
-        if CompanyName() <> 'CRONUS Danmark A/S' then //change the company name to SECDenmark in TEST
+        if CompanyName() <> 'SECDenmark' then
             exit;
 
         salesheader.setrange("No.", rec."Document No.");
@@ -88,7 +88,7 @@ codeunit 50054 "Sales Order Event Handler"
     var
         salesheader: record "sales header";
     begin
-        if CompanyName() <> 'CRONUS Danmark A/S' then //change the company name to SECDenmark in TEST
+        if CompanyName() <> 'SECDenmark' then
             exit;
 
         salesheader.setrange("No.", rec."Document No.");
@@ -108,7 +108,7 @@ codeunit 50054 "Sales Order Event Handler"
     var
         salesheader: record "sales header";
     begin
-        if CompanyName() <> 'CRONUS Danmark A/S' then //change the company name to SECDenmark in TEST
+        if CompanyName() <> 'SECDenmark' then
             exit;
 
         salesheader.setrange("No.", rec."Document No.");
@@ -128,7 +128,7 @@ codeunit 50054 "Sales Order Event Handler"
     var
         salesheader: record "sales header";
     begin
-        if CompanyName() <> 'CRONUS Danmark A/S' then //change the company name to SECDenmark in TEST
+        if CompanyName() <> 'SECDenmark' then
             exit;
 
         salesheader.setrange("No.", rec."Document No.");
@@ -148,7 +148,7 @@ codeunit 50054 "Sales Order Event Handler"
     var
         salesheader: record "sales header";
     begin
-        if CompanyName() <> 'CRONUS Danmark A/S' then //change the company name to SECDenmark in TEST
+        if CompanyName() <> 'SECDenmark' then
             exit;
 
         salesheader.setrange("No.", rec."Document No.");
@@ -168,7 +168,7 @@ codeunit 50054 "Sales Order Event Handler"
     var
         salesheader: record "sales header";
     begin
-        if CompanyName() <> 'CRONUS Danmark A/S' then //change the company name to SECDenmark in TEST
+        if CompanyName() <> 'SECDenmark' then
             exit;
 
         salesheader.setrange("No.", rec."Document No.");
@@ -188,7 +188,7 @@ codeunit 50054 "Sales Order Event Handler"
     var
         salesheader: record "sales header";
     begin
-        if CompanyName() <> 'CRONUS Danmark A/S' then //change the company name to SECDenmark in TEST
+        if CompanyName() <> 'SECDenmark' then
             exit;
 
         salesheader.setrange("No.", rec."Document No.");
@@ -208,7 +208,7 @@ codeunit 50054 "Sales Order Event Handler"
     var
         salesheader: record "sales header";
     begin
-        if CompanyName() <> 'CRONUS Danmark A/S' then //change the company name to SECDenmark in TEST
+        if CompanyName() <> 'SECDenmark' then
             exit;
 
         salesheader.setrange("No.", rec."Document No.");
@@ -228,7 +228,7 @@ codeunit 50054 "Sales Order Event Handler"
     var
         salesheader: record "sales header";
     begin
-        if CompanyName() <> 'CRONUS Danmark A/S' then //change the company name to SECDenmark in TEST
+        if CompanyName() <> 'SECDenmark' then
             exit;
 
         salesheader.setrange("No.", rec."Document No.");
@@ -248,7 +248,7 @@ codeunit 50054 "Sales Order Event Handler"
     var
         salesheader: record "sales header";
     begin
-        if CompanyName() <> 'CRONUS Danmark A/S' then //change the company name to SECDenmark in TEST
+        if CompanyName() <> 'SECDenmark' then
             exit;
 
         salesheader.setrange("No.", rec."Document No.");
@@ -268,7 +268,7 @@ codeunit 50054 "Sales Order Event Handler"
     var
         salesheader: record "sales header";
     begin
-        if CompanyName() <> 'CRONUS Danmark A/S' then //change the company name to SECDenmark in TEST
+        if CompanyName() <> 'SECDenmark' then
             exit;
 
         salesheader.setrange("No.", rec."Document No.");
@@ -288,7 +288,7 @@ codeunit 50054 "Sales Order Event Handler"
     var
         salesline: record "Sales Line";
     begin
-        if CompanyName() <> 'CRONUS Danmark A/S' then //change the company name to SECDenmark in TEST
+        if CompanyName() <> 'SECDenmark' then
             exit;
 
         if rec.Subsidiary <> '' then
@@ -301,7 +301,7 @@ codeunit 50054 "Sales Order Event Handler"
     var
         salesline: record "Sales Line";
     begin
-        if CompanyName() <> 'CRONUS Danmark A/S' then //change the company name to SECDenmark in TEST
+        if CompanyName() <> 'SECDenmark' then
             exit;
 
         if rec.Subsidiary <> '' then
@@ -314,7 +314,7 @@ codeunit 50054 "Sales Order Event Handler"
     var
         salesline: record "Sales Line";
     begin
-        if CompanyName() <> 'CRONUS Danmark A/S' then //change the company name to SECDenmark in TEST
+        if CompanyName() <> 'SECDenmark' then
             exit;
 
         if rec.Subsidiary <> '' then
@@ -327,7 +327,7 @@ codeunit 50054 "Sales Order Event Handler"
     var
         salesline: record "Sales Line";
     begin
-        if CompanyName() <> 'CRONUS Danmark A/S' then //change the company name to SECDenmark in TEST
+        if CompanyName() <> 'SECDenmark' then
             exit;
 
         if rec.Subsidiary <> '' then

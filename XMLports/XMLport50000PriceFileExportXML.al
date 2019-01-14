@@ -146,9 +146,5 @@ xmlport 50000 "Price File Export XML"
             end;
         end else
             exit('');
-
-
     end;
-
-    // vi vælger altid en kunde når vi kører rapporten - hvis ikke kunden er sat op til en discount gruppe skal den altid sætte sales type til all customers
 }

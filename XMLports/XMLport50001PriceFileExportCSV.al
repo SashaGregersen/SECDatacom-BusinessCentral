@@ -43,7 +43,6 @@ xmlport 50001 "Price File Export CSV"
                 {
 
                 }
-
                 textelement(SalesPriceUnitPrice)
                 {
 
@@ -125,18 +124,35 @@ xmlport 50001 "Price File Export CSV"
 
     begin
         SalesPrice.SetRange("Item No.", Item."No.");
-        SalesPrice.SetRange("Sales Code", FindSalesCodeFromCustomerNo());
+        SalesPrice.SetRange("Sales Type", SalesPrice."Sales Type"::Customer);
+        SalesPrice.SetRange("Sales Code", FindDiscountGroup());
         SalesPrice.SetRange("Currency Code", CurrencyFilter);
         if salesprice.FindLast() then
-            exit(salesprice."Unit Price");
+            exit(salesprice."Unit Price")
+        else
+            SalesPrice.SetRange("Sales Type", SalesPrice."Sales Type"::"Customer Price Group");
+        if SalesPrice.FindLast() then
+            exit(SalesPrice."Unit Price")
+        else
+            SalesPrice.SetRange("Sales Type", SalesPrice."Sales Type"::"All Customers");
+        if SalesPrice.FindLast() then
+            exit(SalesPrice."Unit Price");
     end;
 
-    local procedure FindSalesCodeFromCustomerNo(): code[20]
+    procedure FindDiscountGroup(): code[20]
     var
-        customer: record Customer;
+        PriceGroupLink: record "Price Group Link";
+        SalesLineDiscountTemp: Record "Sales Line Discount" temporary;
+        AdvancedPriceManage: Codeunit "Advanced Price Management";
     begin
-        Customer.setrange("No.", CustomerNo);
-        if customer.findfirst then
-            exit(customer."Customer Disc. Group");
+        If AdvancedPriceManage.FindPriceGroupsFromItem(Item, SalesLineDiscountTemp) then begin
+            PriceGroupLink.SetRange("Customer No.", CustomerNo);
+            if PriceGroupLink.FindSet then begin
+                SalesLineDiscountTemp.SetRange("Sales Code", PriceGroupLink."Customer Discount Group Code");
+                if SalesLineDiscountTemp.FindFirst() then
+                    exit(SalesLineDiscountTemp."Sales Code")
+            end;
+        end else
+            exit('');
     end;
 }
