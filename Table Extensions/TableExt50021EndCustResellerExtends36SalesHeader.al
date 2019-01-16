@@ -103,10 +103,18 @@ tableextension 50021 "End Customer and Reseller" extends 36
             var
                 customer: record customer;
             begin
+                if Reseller = '' then
+                    Error('You have to select a Reseller before a Financing Partner');
                 If customer.get(Rec."Financing Partner") then
-                    if customer."Customer Type" = customer."Customer Type"::"Financing Partner" then
-                        validate("Bill-to Customer No.", customer."No.")
-                    else
+                    if customer."Customer Type" = customer."Customer Type"::"Financing Partner" then begin
+                        validate("Bill-to Customer No.", customer."No.");
+                        validate("Bill-to Address", Customer.Address);
+                        validate("Bill-to Address 2", Customer."Address 2");
+                        validate("Bill-to City", Customer.City);
+                        Validate("Bill-to Country/Region Code", customer."Country/Region Code");
+                        validate("Bill-to Post Code", customer."Post Code");
+                        validate("Bill-to County", customer.County);
+                    end else
                         error('Not a Financing Partner');
             end;
 

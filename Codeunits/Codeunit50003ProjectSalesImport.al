@@ -2,15 +2,14 @@ codeunit 50003 "Project Sales Import"
 {
     trigger OnRun()
     begin
-        ImportSalesOrderFromCSV();
+
     end;
 
     var
 
-    Local procedure ImportSalesOrderFromCSV()
+    procedure ImportSalesOrderFromCSV(SalesHeader: record "Sales Header")
     var
         TempCSVBuffer: record "CSV Buffer" temporary;
-        SalesHeader: record "Sales Header";
     begin
         TempCSVBuffer.Init();
         TempCSVBuffer.LoadData('C:\Project-Sales\Projektsalg.csv', ';');
@@ -24,12 +23,8 @@ codeunit 50003 "Project Sales Import"
     local procedure CreateSalesHeaderFromCSV(var TempCSVBuffer: record "CSV Buffer" temporary; var SalesHeader: record "Sales Header")
     var
         Dropship: Boolean;
+        Customer: record Customer;
     begin
-        SalesHeader.init;
-        SalesHeader."No." := '';
-        SalesHeader."Document Type" := SalesHeader."Document Type"::Order;
-        SalesHeader.Insert(true);
-
         TempCSVBuffer.SetRange("Line No.", 2);
         if TempCSVBuffer.FindSet() then
             repeat
@@ -38,11 +33,16 @@ codeunit 50003 "Project Sales Import"
                         SalesHeader.Validate("End Customer", TempCSVBuffer.Value);
                     2:
                         begin
-                            SalesHeader.Validate("Financing Partner", TempCSVBuffer.Value);
-                            SalesHeader.Modify(true);
+                            SalesHeader.Validate(Reseller, TempCSVBuffer.Value);
                         end;
                     3:
-                        SalesHeader.Validate(Reseller, TempCSVBuffer.Value);
+                        begin
+                            if (salesheader.reseller <> '') and (TempCSVBuffer.Value <> '') then begin
+                                SalesHeader."Bill-to Customer No." := '';
+                                SalesHeader."Bill-to Contact No." := '';
+                                SalesHeader.Validate("Financing Partner", TempCSVBuffer.Value);
+                            end;
+                        end;
                     4:
                         SalesHeader.Validate("External Document No.", TempCSVBuffer.Value);
                     5:
@@ -64,6 +64,8 @@ codeunit 50003 "Project Sales Import"
         UnitPriceBuy: decimal;
         Qty: Integer;
         Quantity: Integer;
+        GlobalCounter: Integer;
+        Claim: Boolean;
     begin
         TempCSVBuffer.SetFilter("Line No.", '<>%1', 1);
         if TempCSVBuffer.FindSet() then
@@ -80,7 +82,7 @@ codeunit 50003 "Project Sales Import"
 
                 end;
                 case TempCSVBuffer."Field No." of
-                    3:
+                    2:
                         begin
                             BidPrices.Validate("Customer No.", TempCSVBuffer.Value); // er dette reseller nummer?                       
                         end;
@@ -110,17 +112,22 @@ codeunit 50003 "Project Sales Import"
                     11:
                         begin
                             Bid.Validate("Vendor Bid No.", TempCSVBuffer.Value);
+                        end;
+                    12:
+                        begin
+                            Evaluate(Claim, TempCSVBuffer.Value);
+                            Bid.Validate(Claimable, Claim);
                             Bid.Modify(true);
                             BidPrices.Insert(true);
-                            CreateSalesLines(Salesheader, BidPrices, Quantity);
+                            CreateSalesLines(Salesheader, BidPrices, Quantity, GlobalCounter);
                         end;
                 end;
 
             until TempCSVBuffer.next = 0;
-
+        Message('Sales order %1 created with %2 lines', SalesHeader."No.", GlobalCounter);
     end;
 
-    local procedure CreateSalesLines(SalesHeader: record "Sales Header"; BidPrices: record "Bid Item Price"; Qty: Integer)
+    local procedure CreateSalesLines(SalesHeader: record "Sales Header"; BidPrices: record "Bid Item Price"; Qty: Integer; var GlobalCounter: Integer)
     var
         SalesLine: record "Sales Line";
         NextLineNo: Integer;
@@ -138,6 +145,7 @@ codeunit 50003 "Project Sales Import"
             SalesLine.Insert(true);
             SalesLine.Validate("Bid No.", BidPrices."Bid No.");
             SalesLine.Modify(true);
+            GlobalCounter := 1;
         end else begin
             NextLineNo := SalesLine."Line No." + 10000;
             SalesLine.init;
@@ -150,6 +158,7 @@ codeunit 50003 "Project Sales Import"
             SalesLine.Insert(true);
             SalesLine.Validate("Bid No.", BidPrices."Bid No.");
             SalesLine.Modify(true);
+            GlobalCounter := GlobalCounter + 1;
         end;
     end;
 }

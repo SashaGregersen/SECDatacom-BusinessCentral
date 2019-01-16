@@ -34,6 +34,23 @@ codeunit 50051 "Price Event Handler"
 
     end;
 
+    [EventSubscriber(ObjectType::Table, database::"Sales Line", 'OnAfterValidateEvent', 'Unit price', true, true)]
+
+    local procedure OnAfterValidateUnitPriceEvent(Var rec: record "Sales Line")
+    var
+        CurrencyExcRate: record "Currency Exchange Rate";
+        Factor: decimal;
+        salesheader: record "Sales Header";
+    begin
+        Salesheader.get(rec."Document Type", rec."Document No.");
+        if salesheader."Currency Code" <> '' then begin
+            Factor := CurrencyExcRate.GetCurrentCurrencyFactor(salesheader."Currency Code");
+            rec.validate("Line Amount Excl. VAT (LCY)", CurrencyExcRate.ExchangeAmtFCYToLCY(Today(), salesheader."Currency Code", rec.Amount, Factor));
+        end else begin
+            rec.validate("Line Amount Excl. VAT (LCY)", salesheader.Amount);
+        end;
+    end;
+
     [EventSubscriber(ObjectType::Table, database::"Sales Line", 'OnAfterAssignItemValues', '', true, true)]
     local procedure SalesLineOnAfterAssignItemValues(var SalesLine: Record "Sales Line"; Item: Record Item)
     var
