@@ -77,8 +77,15 @@ pageextension 50021 "End Customer and Reseller" extends 42
         {
             action("Import Project Sale")
             {
-                RunObject = codeunit 50003;
                 Image = ImportExcel;
+
+                trigger OnAction()
+                var
+                    ProjectSalesImport: Codeunit "Project Sales Import";
+                begin
+                    ProjectSalesImport.ImportSalesOrderFromCSV(Rec);
+                    CurrPage.Update();
+                end;
             }
         }
     }
