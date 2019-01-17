@@ -146,4 +146,42 @@ codeunit 50051 "Price Event Handler"
         AdvPriceMgt.CreateUpdateSalesMarkupPrices(Rec);
     end;
 
+    [EventSubscriber(ObjectType::Table, database::"Purchase Price", 'OnAfterInsertEvent', '', true, true)]
+    local procedure PurchasePriceOnAfterInsert(var Rec: Record "Purchase Price")
+    var
+        PurchaseDisc: Record "Purchase Line Discount";
+    begin
+        PurchaseDisc.SetRange("Item No.", Rec."Item No.");
+        PurchaseDisc.SetRange("Vendor No.", rec."Vendor No.");
+        PurchaseDisc.SetRange("Unit of Measure Code", Rec."Unit of Measure Code");
+        PurchaseDisc.SetRange("Currency Code", Rec."Currency Code");
+        if PurchaseDisc.FindLast() then begin
+            AdvPriceMgt.CreateUpdateSalesMarkupPrices(PurchaseDisc);
+            exit;
+        end;
+        PurchaseDisc.SetRange("Currency Code");
+        if PurchaseDisc.FindLast() then
+            AdvPriceMgt.CreateUpdateSalesMarkupPrices(PurchaseDisc);
+    end;
+
+    [EventSubscriber(ObjectType::Table, database::"Purchase Price", 'OnAfterValidateEvent', 'Direct Unit Cost', true, true)]
+    local procedure PurchasePriceOnAfterValidateUnitCost(var Rec: Record "Purchase Price"; var xrec: Record "Purchase Price")
+    var
+        PurchaseDisc: Record "Purchase Line Discount";
+    begin
+        if Rec."Direct Unit Cost" = xrec."Direct Unit Cost" then
+            exit;
+        PurchaseDisc.SetRange("Item No.", Rec."Item No.");
+        PurchaseDisc.SetRange("Vendor No.", rec."Vendor No.");
+        PurchaseDisc.SetRange("Currency Code", Rec."Currency Code");
+        PurchaseDisc.SetRange("Unit of Measure Code", Rec."Unit of Measure Code");
+        if PurchaseDisc.FindLast() then begin
+            AdvPriceMgt.CreateUpdateSalesMarkupPrices(PurchaseDisc);
+            exit;
+        end;
+        PurchaseDisc.SetRange("Currency Code");
+        if PurchaseDisc.FindLast() then
+            AdvPriceMgt.CreateUpdateSalesMarkupPrices(PurchaseDisc);
+    end;
+
 }
