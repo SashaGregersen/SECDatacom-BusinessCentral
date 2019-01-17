@@ -21,7 +21,6 @@ codeunit 50002 "Synchronize Master Data"
                 AvailableInv := Item.Inventory - Item."Reserved Qty. on Inventory";
             until Location.Next = 0;
         exit(AvailableInv);
-
     end;
 
     procedure SynchronizeInventoryToCompany(Item: Record Item)

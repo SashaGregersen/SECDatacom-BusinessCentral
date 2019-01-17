@@ -10,29 +10,41 @@ codeunit 50003 "Project Sales Import"
     procedure ImportSalesOrderFromCSV(SalesHeader: record "Sales Header")
     var
         TempCSVBuffer: record "CSV Buffer" temporary;
+        Bid: record Bid;
     begin
         TempCSVBuffer.Init();
         TempCSVBuffer.LoadData('C:\Project-Sales\Projektsalg.csv', ';');
 
-        CreateSalesHeaderFromCSV(TempCSVBuffer, SalesHeader);
-        CreateSalesLineFromBid(TempCSVBuffer, SalesHeader);
+        CreateSalesHeaderFromCSV(TempCSVBuffer, SalesHeader, Bid);
+        CreateSalesLineFromBid(TempCSVBuffer, SalesHeader, Bid);
 
         TempCSVBuffer.DeleteAll();        //delete TempCSVbuffer when finish            
     end;
 
-    local procedure CreateSalesHeaderFromCSV(var TempCSVBuffer: record "CSV Buffer" temporary; var SalesHeader: record "Sales Header")
+    local procedure CreateSalesHeaderFromCSV(var TempCSVBuffer: record "CSV Buffer" temporary; var SalesHeader: record "Sales Header"; var Bid: record Bid)
     var
         Dropship: Boolean;
         Customer: record Customer;
+        Claim: Boolean;
     begin
         TempCSVBuffer.SetRange("Line No.", 2);
         if TempCSVBuffer.FindSet() then
             repeat
                 case TempCSVBuffer."Field No." of
                     1:
-                        SalesHeader.Validate("End Customer", TempCSVBuffer.Value);
+                        begin
+                            Bid.Init();
+                            Bid.Validate(Description, 'Project Sale');
+                            Bid.Validate("Project Sale", true);
+                            Bid.Insert(true);
+                            // expiry date? 
+                            if TempCSVBuffer.value <> '' then
+                                SalesHeader.Validate("End Customer", TempCSVBuffer.Value);
+                        end;
                     2:
                         begin
+                            if TempCSVBuffer.value = '' then
+                                Error('%1 is missing on line %2', TempCSVBuffer."Field No.", TempCSVBuffer."Line No.");
                             SalesHeader.Validate(Reseller, TempCSVBuffer.Value);
                         end;
                     3:
@@ -44,80 +56,97 @@ codeunit 50003 "Project Sales Import"
                             end;
                         end;
                     4:
-                        SalesHeader.Validate("External Document No.", TempCSVBuffer.Value);
+                        begin
+                            if TempCSVBuffer.value = '' then
+                                Error('%1 is missing on line %2', TempCSVBuffer."Field No.", TempCSVBuffer."Line No.");
+                            SalesHeader.Validate("External Document No.", TempCSVBuffer.Value);
+                        end;
                     5:
                         begin
-                            Evaluate(Dropship, TempCSVBuffer.Value);
-                            SalesHeader.Validate("Drop-Shipment", Dropship);
+                            if TempCSVBuffer.value <> '' then begin
+                                Evaluate(Dropship, TempCSVBuffer.Value);
+                                SalesHeader.Validate("Drop-Shipment", Dropship);
+                            end;
+                        end;
+                    11:
+                        begin
+                            if TempCSVBuffer.value = '' then
+                                Error('%1 is missing on line %2', TempCSVBuffer."Field No.", TempCSVBuffer."Line No.");
+                            Bid.Validate("Vendor No.", TempCSVBuffer.value);
+                        end;
+                    12:
+                        begin
+                            if TempCSVBuffer.value = '' then
+                                Error('%1 is missing on line %2', TempCSVBuffer."Field No.", TempCSVBuffer."Line No.");
+                            Bid.Validate("Vendor Bid No.", TempCSVBuffer.Value);
+                        end;
+                    13:
+                        begin
+                            if TempCSVBuffer.value <> '' then begin
+                                Evaluate(Claim, TempCSVBuffer.Value);
+                                Bid.Validate(Claimable, Claim);
+                            end;
                         end;
                 end;
+                Bid.Modify(true);
                 SalesHeader.Modify(true);
             until TempCSVBuffer.next = 0;
     end;
 
-    local procedure CreateSalesLineFromBid(var TempCSVBuffer: record "CSV Buffer" temporary; Salesheader: record "Sales Header")
+    local procedure CreateSalesLineFromBid(var TempCSVBuffer: record "CSV Buffer" temporary; Salesheader: record "Sales Header"; var Bid: record Bid)
     var
         BidPrices: record "Bid Item Price";
-        Bid: record Bid;
         NoseriesManage: Codeunit NoSeriesManagement;
         UnitPriceSell: Decimal;
         UnitPriceBuy: decimal;
         Qty: Integer;
         Quantity: Integer;
         GlobalCounter: Integer;
-        Claim: Boolean;
     begin
         TempCSVBuffer.SetFilter("Line No.", '<>%1', 1);
         if TempCSVBuffer.FindSet() then
             repeat
                 if TempCSVBuffer."Field No." = 1 then begin
-                    Bid.Init();
-                    Bid.Validate("No.", NoseriesManage.GetNextNo('Bid', today, true));
-                    Bid.Validate(Description, 'Project Sale');
-                    Bid.Insert(true);
-                    // expiry date? 
-
                     BidPrices.init;
                     BidPrices.Validate("Bid No.", bid."No.");
-
                 end;
                 case TempCSVBuffer."Field No." of
                     2:
                         begin
-                            BidPrices.Validate("Customer No.", TempCSVBuffer.Value); // er dette reseller nummer?                       
+                            BidPrices.Validate("Customer No.", TempCSVBuffer.Value);
                         end;
                     6:
                         begin
+                            if TempCSVBuffer.value = '' then
+                                Error('%1 is missing on line %2', TempCSVBuffer."Field No.", TempCSVBuffer."Line No.");
                             BidPrices.Validate("item No.", TempCSVBuffer.Value);
                         end;
                     7:
                         begin
+                            if TempCSVBuffer.value = '' then
+                                Error('%1 is missing on line %2', TempCSVBuffer."Field No.", TempCSVBuffer."Line No.");
                             Evaluate(Qty, TempCSVBuffer.Value);
                             Quantity := qty;
                         end;
                     8:
                         begin
+                            if TempCSVBuffer.value = '' then
+                                Error('%1 is missing on line %2', TempCSVBuffer."Field No.", TempCSVBuffer."Line No.");
                             Evaluate(UnitPriceSell, TempCSVBuffer.Value);
                             BidPrices.Validate("Bid Unit Sales Price", UnitPriceSell);
                         end;
                     9:
                         begin
+                            if TempCSVBuffer.value = '' then
+                                Error('%1 is missing on line %2', TempCSVBuffer."Field No.", TempCSVBuffer."Line No.");
                             Evaluate(UnitPriceBuy, TempCSVBuffer.Value);
                             BidPrices.Validate("Bid Unit Purchase Price", UnitPriceBuy);
                         end;
                     10:
                         begin
-                            Bid.Validate("Vendor No.", TempCSVBuffer.value);
-                        end;
-                    11:
-                        begin
-                            Bid.Validate("Vendor Bid No.", TempCSVBuffer.Value);
-                        end;
-                    12:
-                        begin
-                            Evaluate(Claim, TempCSVBuffer.Value);
-                            Bid.Validate(Claimable, Claim);
-                            Bid.Modify(true);
+                            if TempCSVBuffer.value = '' then
+                                Error('%1 is missing on line %2', TempCSVBuffer."Field No.", TempCSVBuffer."Line No.");
+                            BidPrices.Validate("Currency Code", TempCSVBuffer.Value);
                             BidPrices.Insert(true);
                             CreateSalesLines(Salesheader, BidPrices, Quantity, GlobalCounter);
                         end;
@@ -161,4 +190,7 @@ codeunit 50003 "Project Sales Import"
             GlobalCounter := GlobalCounter + 1;
         end;
     end;
+
+    var
+
 }

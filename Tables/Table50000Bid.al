@@ -11,6 +11,7 @@ table 50000 "Bid"
         field(1; "No."; Code[20])
         {
             DataClassification = ToBeClassified;
+            Editable = false;
         }
 
         field(2; "Vendor No."; code[20])
@@ -38,6 +39,11 @@ table 50000 "Bid"
         {
             DataClassification = ToBeClassified;
         }
+        field(8; "Project Sale"; Boolean)
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
 
     }
 
@@ -58,9 +64,16 @@ table 50000 "Bid"
     }
     var
         BidPrices: Record "Bid Item Price";
+        SalesSetup: record "Sales & Receivables Setup";
+        NoSeriesManage: Codeunit NoSeriesManagement;
 
     trigger OnInsert();
     begin
+        IF "No." = '' then begin
+            SalesSetup.Get();
+            SalesSetup.TestField("Bid No. Series");
+            Validate("No.", NoseriesManage.GetNextNo('Bid', today, true));
+        end;
     end;
 
     trigger OnModify();
