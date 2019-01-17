@@ -17,6 +17,7 @@ codeunit 50003 "Project Sales Import"
 
         CreateSalesHeaderFromCSV(TempCSVBuffer, SalesHeader, Bid);
         CreateSalesLineFromBid(TempCSVBuffer, SalesHeader, Bid);
+        CreatePurchaseOrder(TempCSVBuffer, SalesHeader);
 
         TempCSVBuffer.DeleteAll();        //delete TempCSVbuffer when finish            
     end;
@@ -189,6 +190,25 @@ codeunit 50003 "Project Sales Import"
             SalesLine.Modify(true);
             GlobalCounter := GlobalCounter + 1;
         end;
+    end;
+
+    local procedure CreatePurchaseOrder(TempCSVBuffer: record "CSV Buffer" temporary; SalesHeader: record "Sales Header")
+    var
+
+    begin
+        TempCSVBuffer.SetRange("Line No.", 2);
+        if TempCSVBuffer.FindSet() then
+            repeat
+                case TempCSVBuffer."Field No." of
+                    14:
+                        begin
+                            //if TempCSVBuffer.Value <> '' then
+                            //Kald funktion der opretter købsordre baseret på salgsordre med købsordre nummer fra excelark
+                            //kald funktion der opretter ny købsordre
+                        end;
+                end;
+
+            until TempCSVBuffer.next = 0;
     end;
 
 }

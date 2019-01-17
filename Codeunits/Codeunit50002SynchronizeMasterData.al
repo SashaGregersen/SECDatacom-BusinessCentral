@@ -18,7 +18,7 @@ codeunit 50002 "Synchronize Master Data"
                 Item.ChangeCompany('SECDenmark');
                 Item.GET(PurchLine."No.");
                 Item.CALCFIELDS(Inventory, "Reserved Qty. on Inventory");
-                AvailableInv := Item.Inventory - Item."Reserved Qty. on Inventory";
+                AvailableInv := Item.Inventory - Item."Reserved Qty. on Inventory" - Item."Reserved Qty. on Purch. Orders";
             until Location.Next = 0;
         exit(AvailableInv);
     end;
