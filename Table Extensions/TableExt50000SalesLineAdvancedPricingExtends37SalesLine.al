@@ -37,21 +37,21 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
                     BidPrices.SetRange("Customer No.", "Sell-to Customer No.");
                     BidPrices.SetRange("Currency Code", "Currency Code");
                     if BidPrices.FindFirst then begin
-                        updateBidPrices(BidPrices."Bid Unit Sales Price", BidPrices."Bid Unit Purchase Price", BidPrices.Claimable);
+                        updateBidPrices(BidPrices."Bid Unit Sales Price", BidPrices."Bid Unit Purchase Price", BidPrices.Claimable, Bid."Project Sale");
                     end else begin
                         BidPrices.SetRange("Customer No.");
                         if BidPrices.FindFirst then begin
-                            updateBidPrices(BidPrices."Bid Unit Sales Price", BidPrices."Bid Unit Purchase Price", BidPrices.Claimable);
+                            updateBidPrices(BidPrices."Bid Unit Sales Price", BidPrices."Bid Unit Purchase Price", BidPrices.Claimable, Bid."Project Sale");
                         end else begin
                             BidPrices.SetRange("Currency Code");
                             if BidPrices.FindFirst then begin
                                 if ("Currency Code" = BidPrices."Currency Code") then begin
-                                    updateBidPrices(BidPrices."Bid Unit Sales Price", BidPrices."Bid Unit Purchase Price", BidPrices.Claimable);
+                                    updateBidPrices(BidPrices."Bid Unit Sales Price", BidPrices."Bid Unit Purchase Price", BidPrices.Claimable, Bid."Project Sale");
                                     exit;
                                 end;
                                 updateBidPrices(CurrExchRate.ExchangeAmount(BidPrices."Bid Unit Sales Price", BidPrices."Currency Code", "Currency Code", "Posting Date"),
                                                 CurrExchRate.ExchangeAmount(BidPrices."Bid Unit Purchase Price", BidPrices."Currency Code", "Currency Code", "Posting Date"),
-                                                BidPrices.Claimable);
+                                                BidPrices.Claimable, Bid."Project Sale");
                             end
                         end;
                     end;
@@ -180,10 +180,14 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
         }
 
     }
-    local procedure updateBidPrices(SalesPrice: Decimal; PurchPrice: Decimal; NewClaimableValue: Boolean)
+    local procedure updateBidPrices(SalesPrice: Decimal; PurchPrice: Decimal; NewClaimableValue: Boolean; IsProjectSales: Boolean)
     begin
         if SalesPrice <> 0 then
             validate("Bid Unit Sales Price", SalesPrice);
+        If IsProjectSales and (SalesPrice = 0) then begin
+            validate("Bid Unit Sales Price", 0);
+            Validate("Unit Price", 0);
+        end;
         If PurchPrice <> 0 then
             Validate("Bid Unit Purchase Price", PurchPrice);
         Claimable := NewClaimableValue;
