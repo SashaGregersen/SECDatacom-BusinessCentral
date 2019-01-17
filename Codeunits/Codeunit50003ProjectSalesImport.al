@@ -191,6 +191,4 @@ codeunit 50003 "Project Sales Import"
         end;
     end;
 
-    var
-
 }
