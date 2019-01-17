@@ -73,7 +73,21 @@ pageextension 50021 "End Customer and Reseller" extends 42
 
     actions
     {
+        addafter("Create Purchase Document")
+        {
+            action("Import Project Sale")
+            {
+                Image = ImportExcel;
 
+                trigger OnAction()
+                var
+                    ProjectSalesImport: Codeunit "Project Sales Import";
+                begin
+                    ProjectSalesImport.ImportSalesOrderFromCSV(Rec);
+                    CurrPage.Update();
+                end;
+            }
+        }
     }
 
 
