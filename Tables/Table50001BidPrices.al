@@ -74,7 +74,7 @@ table 50001 "Bid Item Price"
 
             trigger Onvalidate()
             begin
-                if "Unit List Price" <> 0 then
+                if ("Unit List Price" <> 0) and ("Bid Unit Sales Price" <> 0) then
                     "Bid Sales Discount Pct." := (("Bid Unit Sales Price" / "Unit List Price") * 100) - 100
                 else
                     "Bid Sales Discount Pct." := 0;
@@ -99,7 +99,7 @@ table 50001 "Bid Item Price"
 
             trigger Onvalidate()
             begin
-                if "Unit List Price" <> 0 then
+                if ("Unit List Price" <> 0) and ("Bid Unit Purchase Price" <> 0) then
                     "Bid Purchase Discount Pct." := (("Bid Unit purchase Price" / "Unit List Price") * 100) - 100
                 else
                     "Bid Purchase Discount Pct." := 0;
