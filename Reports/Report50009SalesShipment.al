@@ -518,7 +518,7 @@ report 50009 "SEC Sales - Shipment"
                         begin
                             if TrackingSpecCount = 0 then
                                 CurrReport.Break;
-                            CurrReport.NewPage;
+                            //CurrReport.NewPage;
                             SetRange(Number, 1, TrackingSpecCount);
                             TrackingSpecBuffer.SetCurrentKey("Source ID", "Source Type", "Source Subtype", "Source Batch Name",
                               "Source Prod. Order Line", "Source Ref. No.");
@@ -542,7 +542,7 @@ report 50009 "SEC Sales - Shipment"
                         CopyText := FormatDocument.GetCOPYText;
                         OutputNo += 1;
                     end;
-                    CurrReport.PageNo := 1;
+                    //CurrReport.PageNo := 1;
                     TotalQty := 0;           // Item Tracking
                 end;
 
