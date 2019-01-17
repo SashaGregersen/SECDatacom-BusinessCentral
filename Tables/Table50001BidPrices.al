@@ -49,6 +49,13 @@ table 50001 "Bid Item Price"
         {
             DataClassification = ToBeClassified;
             Editable = false;
+            trigger OnValidate()
+            begin
+                if "Unit List Price" <> xRec."Unit List Price" then begin
+                    Validate("Bid Unit Sales Price");
+                    Validate("Bid Unit Purchase Price");
+                end;
+            end;
         }
         field(11; "Currency Code"; code[20])
         {
@@ -68,7 +75,9 @@ table 50001 "Bid Item Price"
             trigger Onvalidate()
             begin
                 if "Unit List Price" <> 0 then
-                    "Bid Sales Discount Pct." := 100 - (("Bid Unit Sales Price" / "Unit List Price") * 100);
+                    "Bid Sales Discount Pct." := (("Bid Unit Sales Price" / "Unit List Price") * 100) - 100
+                else
+                    "Bid Sales Discount Pct." := 0;
             end;
         }
         field(50002; "Bid Sales Discount Pct."; Decimal)
@@ -91,7 +100,9 @@ table 50001 "Bid Item Price"
             trigger Onvalidate()
             begin
                 if "Unit List Price" <> 0 then
-                    "Bid Purchase Discount Pct." := 100 - (("Bid Unit purchase Price" / "Unit List Price") * 100);
+                    "Bid Purchase Discount Pct." := (("Bid Unit purchase Price" / "Unit List Price") * 100) - 100
+                else
+                    "Bid Purchase Discount Pct." := 0;
             end;
         }
         field(50012; "Bid Purchase Discount Pct."; Decimal)
@@ -152,9 +163,9 @@ table 50001 "Bid Item Price"
         Advpricemgt: Codeunit "Advanced Price Management";
     begin
         if Advpricemgt.FindListPriceForitem("item No.", "Currency Code", ListPrice) then
-            "Unit List Price" := ListPrice."Unit Price"
+            validate("Unit List Price", ListPrice."Unit Price")
         else
-            "Unit List Price" := 0;
+            validate("Unit List Price", 0);
     end;
 
 }
