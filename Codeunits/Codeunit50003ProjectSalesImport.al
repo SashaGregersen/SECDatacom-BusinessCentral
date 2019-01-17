@@ -10,23 +10,32 @@ codeunit 50003 "Project Sales Import"
     procedure ImportSalesOrderFromCSV(SalesHeader: record "Sales Header")
     var
         TempCSVBuffer: record "CSV Buffer" temporary;
-        Bid: record Bid;
+        BidNo: code[20];
+        Salesline: Record "Sales Line";
     begin
         TempCSVBuffer.Init();
         TempCSVBuffer.LoadData('C:\Project-Sales\Projektsalg.csv', ';');
 
-        CreateSalesHeaderFromCSV(TempCSVBuffer, SalesHeader, Bid);
-        CreateSalesLineFromBid(TempCSVBuffer, SalesHeader, Bid);
-        CreatePurchaseOrder(TempCSVBuffer, SalesHeader);
+        Salesline.setrange("Document No.", SalesHeader."No.");
+        Salesline.SetRange("Document Type", SalesHeader."Document Type");
+        if Salesline.FindFirst() then
+            CreateSalesLineFromBid(TempCSVBuffer, SalesHeader, Salesline."Bid No.")
+        //createPurchaselinefromsalesorder(TempCSVBuffer)
+        else begin
+            CreateSalesHeaderFromCSV(TempCSVBuffer, SalesHeader, BidNo);
+            CreateSalesLineFromBid(TempCSVBuffer, SalesHeader, BidNo);
+            CreatePurchaseHeaderFromSalesOrder(TempCSVBuffer, SalesHeader);
+        end;
 
         TempCSVBuffer.DeleteAll();        //delete TempCSVbuffer when finish            
     end;
 
-    local procedure CreateSalesHeaderFromCSV(var TempCSVBuffer: record "CSV Buffer" temporary; var SalesHeader: record "Sales Header"; var Bid: record Bid)
+    local procedure CreateSalesHeaderFromCSV(var TempCSVBuffer: record "CSV Buffer" temporary; var SalesHeader: record "Sales Header"; var BidNo: code[20])
     var
         Dropship: Boolean;
         Customer: record Customer;
         Claim: Boolean;
+        Bid: record bid;
     begin
         TempCSVBuffer.SetRange("Line No.", 2);
         if TempCSVBuffer.FindSet() then
@@ -91,10 +100,11 @@ codeunit 50003 "Project Sales Import"
                 end;
                 Bid.Modify(true);
                 SalesHeader.Modify(true);
+                BidNo := Bid."No.";
             until TempCSVBuffer.next = 0;
     end;
 
-    local procedure CreateSalesLineFromBid(var TempCSVBuffer: record "CSV Buffer" temporary; Salesheader: record "Sales Header"; var Bid: record Bid)
+    local procedure CreateSalesLineFromBid(var TempCSVBuffer: record "CSV Buffer" temporary; Salesheader: record "Sales Header"; var BidNo: code[20])
     var
         BidPrices: record "Bid Item Price";
         NoseriesManage: Codeunit NoSeriesManagement;
@@ -109,7 +119,7 @@ codeunit 50003 "Project Sales Import"
             repeat
                 if TempCSVBuffer."Field No." = 1 then begin
                     BidPrices.init;
-                    BidPrices.Validate("Bid No.", bid."No.");
+                    BidPrices.Validate("Bid No.", BidNo);
                 end;
                 case TempCSVBuffer."Field No." of
                     2:
@@ -192,7 +202,7 @@ codeunit 50003 "Project Sales Import"
         end;
     end;
 
-    local procedure CreatePurchaseOrder(TempCSVBuffer: record "CSV Buffer" temporary; SalesHeader: record "Sales Header")
+    local procedure CreatePurchaseHeaderFromSalesOrder(Var TempCSVBuffer: record "CSV Buffer" temporary; SalesHeader: record "Sales Header")
     var
 
     begin
