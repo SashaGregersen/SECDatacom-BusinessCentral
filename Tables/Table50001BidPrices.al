@@ -70,12 +70,11 @@ table 50001 "Bid Item Price"
         field(50001; "Bid Unit Sales Price"; Decimal)
         {
             DataClassification = ToBeClassified;
-            MinValue = 0;
 
             trigger Onvalidate()
             begin
-                if ("Unit List Price" <> 0) and ("Bid Unit Sales Price" <> 0) then
-                    "Bid Sales Discount Pct." := (("Bid Unit Sales Price" / "Unit List Price") * 100) - 100
+                if "Unit List Price" <> 0 then
+                    "Bid Sales Discount Pct." := ("Bid Unit Sales Price" - "Unit List Price") / "Unit List Price" * 100
                 else
                     "Bid Sales Discount Pct." := 0;
             end;
@@ -83,24 +82,28 @@ table 50001 "Bid Item Price"
         field(50002; "Bid Sales Discount Pct."; Decimal)
         {
             DataClassification = ToBeClassified;
-            MinValue = 0;
-            MaxValue = 100;
 
             trigger Onvalidate()
             begin
-                if "Unit List Price" <> 0 then
-                    "Bid Unit Sales Price" := ((100 - "Bid Sales Discount Pct.") / 100) * "Unit List Price";
+                if "Unit List Price" = 0 then begin
+                    "Bid Sales Discount Pct." := 0;
+                    exit;
+                end;
+
+                if "Bid Sales Discount Pct." <> 0 then
+                    "Bid Unit Sales Price" := "Unit List Price" * ((100 + "Bid Sales Discount Pct.") / 100)
+                else
+                    "Bid Unit Sales Price" := "Unit List Price";
             end;
         }
         field(50011; "Bid Unit Purchase Price"; Decimal)
         {
             DataClassification = ToBeClassified;
-            MinValue = 0;
 
             trigger Onvalidate()
             begin
                 if ("Unit List Price" <> 0) and ("Bid Unit Purchase Price" <> 0) then
-                    "Bid Purchase Discount Pct." := (("Bid Unit purchase Price" / "Unit List Price") * 100) - 100
+                    "Bid Purchase Discount Pct." := (1 - ("Bid Unit purchase Price" / "Unit List Price")) * 100
                 else
                     "Bid Purchase Discount Pct." := 0;
             end;
@@ -108,13 +111,13 @@ table 50001 "Bid Item Price"
         field(50012; "Bid Purchase Discount Pct."; Decimal)
         {
             DataClassification = ToBeClassified;
-            MinValue = 0;
-            MaxValue = 100;
 
             trigger Onvalidate()
             begin
                 if "Unit List Price" <> 0 then
-                    "Bid Unit purchase Price" := ((100 - "Bid Purchase Discount Pct.") / 100) * "Unit List Price";
+                    "Bid Unit purchase Price" := (1 - ("Bid Purchase Discount Pct." / 100)) * "Unit List Price"
+                else
+                    "Bid Purchase Discount Pct." := 0;
             end;
         }
         field(50021; "Claimable"; Boolean)
