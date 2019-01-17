@@ -30,6 +30,15 @@ table 50001 "Bid Item Price"
             DataClassification = ToBeClassified;
             TableRelation = Item."No.";
             NotBlank = true;
+
+            trigger OnValidate()
+            var
+                Item: Record Item;
+            begin
+                If Item.Get("item No.") then
+                    "Currency Code" := Item."Vendor Currency";
+                UpdateListprice();
+            end;
         }
         field(3; "Customer No."; code[20])
         {
@@ -44,7 +53,12 @@ table 50001 "Bid Item Price"
         field(11; "Currency Code"; code[20])
         {
             DataClassification = ToBeClassified;
-            Editable = false;
+
+            trigger OnValidate()
+            begin
+                if "Currency Code" <> xRec."Currency Code" then
+                    UpdateListprice();
+            end;
         }
         field(50001; "Bid Unit Sales Price"; Decimal)
         {
@@ -107,37 +121,21 @@ table 50001 "Bid Item Price"
     }
 
     var
-        Bid: Record Bid;
-        Advpricemgt: Codeunit "Advanced Price Management";
+
+
 
     trigger OnInsert();
     var
-        ListPrice: Record "Sales Price";
-        Item: Record Item;
+        Bid: Record Bid;
 
     begin
         TestField("Bid No.");
         If Bid.Get("Bid No.") then
             Claimable := Bid.Claimable;
-        if Item.get("item No.") then begin
-            "Currency Code" := Item."Vendor Currency";
-            if Advpricemgt.FindListPriceForitem("item No.", "Currency Code", ListPrice) then
-                "Unit List Price" := ListPrice."Unit Price";
-        end;
     end;
 
     trigger OnModify();
-    var
-        ListPrice: Record "Sales Price";
-        Item: Record Item;
     begin
-        if "item No." <> xRec."item No." then begin
-            if Item.get("item No.") then begin
-                "Currency Code" := Item."Vendor Currency";
-                if Advpricemgt.FindListPriceForitem("item No.", "Currency Code", ListPrice) then
-                    "Unit List Price" := ListPrice."Unit Price";
-            end;
-        End;
     end;
 
     trigger OnDelete();
@@ -146,6 +144,17 @@ table 50001 "Bid Item Price"
 
     trigger OnRename();
     begin
+    end;
+
+    local procedure UpdateListprice()
+    var
+        ListPrice: Record "Sales Price";
+        Advpricemgt: Codeunit "Advanced Price Management";
+    begin
+        if Advpricemgt.FindListPriceForitem("item No.", "Currency Code", ListPrice) then
+            "Unit List Price" := ListPrice."Unit Price"
+        else
+            "Unit List Price" := 0;
     end;
 
 }

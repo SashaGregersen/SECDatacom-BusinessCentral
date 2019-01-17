@@ -14,7 +14,6 @@ codeunit 50051 "Price Event Handler"
         if SalesLine."Unit Purchase Price" = 0 then
             AdvPriceMgt.UpdateSalesLineWithPurchPrice(SalesLine);
         SalesLine.CalcAdvancedPrices;
-
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Sales Line", 'OnAfterUpdateUnitPrice', '', true, true)]
@@ -26,10 +25,9 @@ codeunit 50051 "Price Event Handler"
     begin
         Salesheader.get(SalesLine."Document Type", SalesLine."Document No.");
         if salesheader."Currency Code" <> '' then begin
-            Factor := CurrencyExcRate.GetCurrentCurrencyFactor(salesheader."Currency Code");
-            SalesLine.validate("Line Amount Excl. VAT (LCY)", CurrencyExcRate.ExchangeAmtFCYToLCY(Today(), salesheader."Currency Code", SalesLine.Amount, Factor));
+            SalesLine.validate("Line Amount Excl. VAT (LCY)", CurrencyExcRate.ExchangeAmtFCYToLCY(salesheader."Posting Date", salesheader."Currency Code", SalesLine.Amount, salesheader."Currency Factor"));
         end else begin
-            SalesLine.validate("Line Amount Excl. VAT (LCY)", salesheader.Amount);
+            SalesLine.validate("Line Amount Excl. VAT (LCY)", SalesLine."Line Amount");
         end;
 
     end;
