@@ -101,10 +101,10 @@ report 50003 "Price File Export"
     begin
         if FormatCSV = true then begin
             FormatCurrentDateTime(CurrDateTime);
-            Filelocation := 'C:\XmlData\Pricelist_' + customer."No." + '_' + CurrDateTime + '.csv'
+            Filelocation := 'C:\Price Files\Pricelist_' + customer."No." + '_' + CurrDateTime + '.csv'
         end else begin
             FormatCurrentDateTime(CurrDateTime);
-            Filelocation := 'C:\XmlData\Pricelist_' + customer."No." + '_' + CurrDateTime + '.xml';
+            Filelocation := 'C:\Price Files\Pricelist_' + customer."No." + '_' + CurrDateTime + '.xml';
         end;
     end;
 
