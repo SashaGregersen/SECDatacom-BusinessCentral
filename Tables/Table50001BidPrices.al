@@ -171,4 +171,27 @@ table 50001 "Bid Item Price"
             validate("Unit List Price", 0);
     end;
 
+    procedure AlreadyUsed(CalledFromSalesHeaderNo: Code[20]): Boolean
+    var
+        Bid: Record Bid;
+        SalesLine: Record "Sales Line";
+        PostedSalesLine: Record "Sales Invoice Line";
+    begin
+        Bid.Get(Rec."Bid No.");
+        if not Bid."One Time Bid" then
+            exit(false);
+        SalesLine.SetRange(Type, SalesLine.Type::Item);
+        SalesLine.SetRange("No.", rec."item No.");
+        SalesLine.SetRange("Bid No.", Rec."Bid No.");
+        SalesLine.SetFilter("Document No.", '<>%1', CalledFromSalesHeaderNo);
+        if SalesLine.FindFirst() then
+            exit(true);
+        PostedSalesLine.SetRange(Type, SalesLine.Type::Item);
+        PostedSalesLine.SetRange("No.", rec."item No.");
+        PostedSalesLine.SetRange("Bid No.", Rec."Bid No.");
+        if PostedSalesLine.FindFirst() then
+            exit(true);
+        exit(false);
+    end;
+
 }
