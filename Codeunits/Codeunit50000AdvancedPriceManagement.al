@@ -425,4 +425,22 @@ codeunit 50000 "Advanced Price Management"
             exit(CustKickbackPct.FindLast());
         end;
     end;
+
+    procedure CreateSalesPriceFromPurchasePriceMarkup(PurchasePrice: Record "Purchase Price")
+    var
+        PurchaseDisc: Record "Purchase Line Discount";
+    begin
+        PurchaseDisc.SetRange("Item No.", PurchasePrice."Item No.");
+        PurchaseDisc.SetRange("Vendor No.", PurchasePrice."Vendor No.");
+        PurchaseDisc.SetRange("Unit of Measure Code", PurchasePrice."Unit of Measure Code");
+        PurchaseDisc.SetRange("Currency Code", PurchasePrice."Currency Code");
+        if PurchaseDisc.FindLast() then begin
+            CreateUpdateSalesMarkupPrices(PurchaseDisc);
+            exit;
+        end;
+        PurchaseDisc.SetRange("Currency Code");
+        if PurchaseDisc.FindLast() then
+            CreateUpdateSalesMarkupPrices(PurchaseDisc);
+    end;
+
 }
