@@ -36,5 +36,5 @@ pageextension 50028 "End Customer and Reseller 8" extends 132
     }
 
     var
-        SalesInvoice: report "SEC Sales - Invoice";
+        SalesInvoice: report "Invoice PM w/FI-Card";
 }
