@@ -18,13 +18,13 @@ codeunit 50003 "Project Sales Import"
 
         Salesline.setrange("Document No.", SalesHeader."No.");
         Salesline.SetRange("Document Type", SalesHeader."Document Type");
-        if Salesline.FindFirst() then
-            CreateSalesLineFromBid(TempCSVBuffer, SalesHeader, Salesline."Bid No.")
-        //createPurchaselinefromsalesorder(TempCSVBuffer)
-        else begin
+        if Salesline.FindFirst() then begin
+            CreateSalesLineFromBid(TempCSVBuffer, SalesHeader, Salesline."Bid No.");
+            CreatePurchaseOrderFromSalesOrder(TempCSVBuffer, SalesHeader);
+        end else begin
             CreateSalesHeaderFromCSV(TempCSVBuffer, SalesHeader, BidNo);
             CreateSalesLineFromBid(TempCSVBuffer, SalesHeader, BidNo);
-            CreatePurchaseHeaderFromSalesOrder(TempCSVBuffer, SalesHeader);
+            CreatePurchaseOrderFromSalesOrder(TempCSVBuffer, SalesHeader);
         end;
 
         TempCSVBuffer.DeleteAll();        //delete TempCSVbuffer when finish            
@@ -185,6 +185,7 @@ codeunit 50003 "Project Sales Import"
             SalesLine.Insert(true);
             SalesLine.Validate("Bid No.", BidPrices."Bid No.");
             SalesLine.Modify(true);
+            //sørg for at der ikke reserveres linjer automatisk 
             GlobalCounter := 1;
         end else begin
             NextLineNo := SalesLine."Line No." + 10000;
@@ -198,23 +199,66 @@ codeunit 50003 "Project Sales Import"
             SalesLine.Insert(true);
             SalesLine.Validate("Bid No.", BidPrices."Bid No.");
             SalesLine.Modify(true);
+            //sørg for at der ikke reserveres linjer automatisk 
             GlobalCounter := GlobalCounter + 1;
         end;
     end;
 
-    local procedure CreatePurchaseHeaderFromSalesOrder(Var TempCSVBuffer: record "CSV Buffer" temporary; SalesHeader: record "Sales Header")
+    local procedure CreatePurchaseOrderFromSalesOrder(Var TempCSVBuffer: record "CSV Buffer" temporary; SalesHeader: record "Sales Header")
     var
-
+        PurchOrder: record "Purchase Header";
+        PurchFromSales: codeunit "Create Purchase Order";
+        PurchLine: record "Purchase Line";
+        VendorNo: code[20];
+        VendorBidNo: Code[20];
+        CurrencyCode: code[20];
+        SalesLine: record "Sales Line";
+        GlobalCounter: Integer;
     begin
         TempCSVBuffer.SetRange("Line No.", 2);
         if TempCSVBuffer.FindSet() then
             repeat
                 case TempCSVBuffer."Field No." of
+                    10:
+                        begin
+                            CurrencyCode := TempCSVBuffer.value;
+                        end;
+                    11:
+                        begin
+                            VendorNo := TempCSVBuffer.Value;
+                        end;
+                    12:
+                        begin
+                            VendorBidNo := TempCSVBuffer.value;
+                        end;
                     14:
                         begin
-                            //if TempCSVBuffer.Value <> '' then
-                            //Kald funktion der opretter købsordre baseret på salgsordre med købsordre nummer fra excelark
-                            //kald funktion der opretter ny købsordre
+                            if TempCSVBuffer.Value = '' then begin
+                                PurchFromSales.CreatePurchHeader(SalesHeader, VendorNo, CurrencyCode, VendorBidNo, PurchOrder);
+                                SalesLine.SetRange("Document No.", SalesHeader."No.");
+                                SalesLine.SetRange("Document Type", SalesHeader."Document Type");
+                                if SalesLine.findset then
+                                    repeat
+                                        PurchFromSales.CreatePurchLine(PurchOrder, SalesHeader, SalesLine, PurchLine);
+                                        PurchFromSales.ReserveItemOnPurchOrder(PurchLine);
+                                        GlobalCounter := GlobalCounter + 1;
+                                    until SalesLine.next = 0;
+                                Message('Purchase Order %1 created with %2 lines', PurchOrder."No.", GlobalCounter);
+                            end else begin
+                                PurchOrder.get(TempCSVBuffer.Value, PurchOrder."Document Type"::Order);
+                                PurchOrder.validate("Buy-from Vendor No.", VendorNo);
+                                PurchOrder.Validate("Currency Code", CurrencyCode);
+                                PurchOrder.Modify(true);
+                                SalesLine.SetRange("Document No.", SalesHeader."No.");
+                                SalesLine.SetRange("Document Type", SalesHeader."Document Type");
+                                if SalesLine.findset then
+                                    repeat
+                                        PurchFromSales.CreatePurchLine(PurchOrder, SalesHeader, SalesLine, PurchLine);
+                                        PurchFromSales.ReserveItemOnPurchOrder(PurchLine);
+                                        GlobalCounter := GlobalCounter + 1;
+                                    until SalesLine.next = 0;
+                                Message('Purchase order %1 created with %2 lines', PurchOrder."No.", GlobalCounter);
+                            end;
                         end;
                 end;
 

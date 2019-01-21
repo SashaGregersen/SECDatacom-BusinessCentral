@@ -87,6 +87,17 @@ pageextension 50021 "End Customer and Reseller" extends 42
                     CurrPage.Update();
                 end;
             }
+            action("Create Purchase Order")
+            {
+                Image = NewDocument;
+
+                trigger OnAction()
+                var
+                    CreatePurchOrder: Codeunit "Create Purchase Order";
+                begin
+                    CreatePurchOrder.CreatePurchOrderFromSalesOrder(Rec);
+                end;
+            }
         }
     }
 

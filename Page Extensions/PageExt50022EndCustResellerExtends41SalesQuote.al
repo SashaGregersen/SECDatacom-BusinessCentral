@@ -62,12 +62,20 @@ pageextension 50022 "End Customer and Reseller 2" extends 41
 
     actions
     {
+        addlast(Processing)
+        {
+            action(ShowMyReport)
+            {
+                Image = ItemGroup;
+                trigger OnAction();
+                begin
+                    SalesQuote.Run();
+                end;
+            }
 
-
-
-
+        }
     }
 
     var
-
+        SalesQuote: report 50004;
 }
