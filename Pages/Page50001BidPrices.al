@@ -45,6 +45,10 @@ page 50001 "Bid Prices"
                 {
                     ApplicationArea = all;
                 }
+                field("Expiry Date"; "Expiry Date")
+                {
+                    ApplicationArea = all;
+                }
             }
         }
     }
@@ -61,4 +65,9 @@ page 50001 "Bid Prices"
             }
         }
     }
+
+    trigger OnInsertRecord(Belowxrec: Boolean): Boolean
+    begin
+        rec.Mark();
+    end;
 }

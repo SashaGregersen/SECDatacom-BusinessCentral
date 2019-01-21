@@ -9,20 +9,23 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
 
             trigger OnLookUp();
             var
-                Item: Record Item;
                 BidPrices: Record "Bid Item Price";
+                Bid: Record Bid;
+                CurrExchRate: Record "Currency Exchange Rate";
             begin
-                if item.Get("No.") then begin
-                    BidPrices.SetRange("item No.", "No.");
-                    BidPrices.SetRange("Currency Code", rec."Currency Code");
-                    if not BidPrices.FindFirst() then
-                        BidPrices.SetRange("Currency Code");
-                    BidPrices.setrange("Customer No.", "Sell-to Customer No.");
-                    if not BidPrices.FindFirst then
-                        BidPrices.SetRange("Customer No.");
-                    if Page.RunModal(50001, BidPrices) = "Action"::LookupOK then
-                        validate("Bid No.", BidPrices."Bid No.");
-                end
+                CalcFields("Posting Date");
+                BidPrices.GetPricesForItem("Document No.", "No.", "Currency Code", "Sell-to Customer No.", "Posting Date", BidPrices);
+                if Page.RunModal(50001, BidPrices) = "Action"::LookupOK then begin
+                    Bid.Get(BidPrices."Bid No.");
+                    "Bid No." := Bid."No.";
+                    if ("Currency Code" = BidPrices."Currency Code") then
+                        updateBidPrices(BidPrices, Bid.Claimable, Bid."Project Sale")
+                    else begin
+                        BidPrices."Bid Unit Sales Price" := CurrExchRate.ExchangeAmount(BidPrices."Bid Unit Sales Price", BidPrices."Currency Code", "Currency Code", "Posting Date");
+                        BidPrices."Bid Unit Purchase Price" := CurrExchRate.ExchangeAmount(BidPrices."Bid Unit Purchase Price", BidPrices."Currency Code", "Currency Code", "Posting Date");
+                        updateBidPrices(BidPrices, Bid.Claimable, Bid."Project Sale");
+                    end;
+                end;
             end;
 
             trigger Onvalidate();
@@ -211,10 +214,10 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
         end;
 
         if "KickBack Percentage" <> 0 then
-            If "Bid Unit Purchase Price" <> 0 then
-                "Kickback Amount" := ("Bid Unit Purchase Price" * Quantity) * ("KickBack Percentage" / 100)
+            If "Bid Unit Sales Price" <> 0 then
+                "Kickback Amount" := ("Bid Unit Sales Price" * Quantity) * ("KickBack Percentage" / 100)
             else
-                "Kickback Amount" := ("Unit Purchase Price" * Quantity) * ("kickback percentage" / 100);
+                "Kickback Amount" := ("Unit Price" * Quantity) * ("kickback percentage" / 100);
 
         if "Transfer Price Markup" <> 0 then
             If "Bid Unit Purchase Price" <> 0 then
