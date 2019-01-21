@@ -185,6 +185,7 @@ codeunit 50003 "Project Sales Import"
             SalesLine.Insert(true);
             SalesLine.Validate("Bid No.", BidPrices."Bid No.");
             SalesLine.Modify(true);
+            //sørg for at der ikke reserveres linjer automatisk 
             GlobalCounter := 1;
         end else begin
             NextLineNo := SalesLine."Line No." + 10000;
@@ -198,6 +199,7 @@ codeunit 50003 "Project Sales Import"
             SalesLine.Insert(true);
             SalesLine.Validate("Bid No.", BidPrices."Bid No.");
             SalesLine.Modify(true);
+            //sørg for at der ikke reserveres linjer automatisk 
             GlobalCounter := GlobalCounter + 1;
         end;
     end;
@@ -206,7 +208,9 @@ codeunit 50003 "Project Sales Import"
     var
         PurchOrder: record "Purchase Header";
         PurchFromSales: codeunit "Create Purchase Order";
+        PurchLine: record "Purchase Line";
         VendorNo: code[20];
+        VendorBidNo: Code[20];
         CurrencyCode: code[20];
         SalesLine: record "Sales Line";
         GlobalCounter: Integer;
@@ -223,18 +227,23 @@ codeunit 50003 "Project Sales Import"
                         begin
                             VendorNo := TempCSVBuffer.Value;
                         end;
+                    12:
+                        begin
+                            VendorBidNo := TempCSVBuffer.value;
+                        end;
                     14:
                         begin
                             if TempCSVBuffer.Value = '' then begin
-                                PurchFromSales.CreatePurchHeader(SalesHeader, VendorNo, CurrencyCode, PurchOrder);
+                                PurchFromSales.CreatePurchHeader(SalesHeader, VendorNo, CurrencyCode, VendorBidNo, PurchOrder);
                                 SalesLine.SetRange("Document No.", SalesHeader."No.");
                                 SalesLine.SetRange("Document Type", SalesHeader."Document Type");
                                 if SalesLine.findset then
                                     repeat
-                                        PurchFromSales.CreatePurchLine(PurchOrder, SalesHeader, SalesLine);
+                                        PurchFromSales.CreatePurchLine(PurchOrder, SalesHeader, SalesLine, PurchLine);
+                                        PurchFromSales.ReserveItemOnPurchOrder(PurchLine);
                                         GlobalCounter := GlobalCounter + 1;
                                     until SalesLine.next = 0;
-                                Message('Purchase Order %1 created with %2 lines', SalesHeader."No.", GlobalCounter);
+                                Message('Purchase Order %1 created with %2 lines', PurchOrder."No.", GlobalCounter);
                             end else begin
                                 PurchOrder.get(TempCSVBuffer.Value, PurchOrder."Document Type"::Order);
                                 PurchOrder.validate("Buy-from Vendor No.", VendorNo);
@@ -244,10 +253,11 @@ codeunit 50003 "Project Sales Import"
                                 SalesLine.SetRange("Document Type", SalesHeader."Document Type");
                                 if SalesLine.findset then
                                     repeat
-                                        PurchFromSales.CreatePurchLine(PurchOrder, SalesHeader, SalesLine);
+                                        PurchFromSales.CreatePurchLine(PurchOrder, SalesHeader, SalesLine, PurchLine);
+                                        PurchFromSales.ReserveItemOnPurchOrder(PurchLine);
                                         GlobalCounter := GlobalCounter + 1;
                                     until SalesLine.next = 0;
-                                Message('Sales Purchase %1 created with %2 lines', SalesHeader."No.", GlobalCounter);
+                                Message('Purchase order %1 created with %2 lines', PurchOrder."No.", GlobalCounter);
                             end;
                         end;
                 end;
