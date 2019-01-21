@@ -45,6 +45,11 @@ table 50001 "Bid Item Price"
             DataClassification = ToBeClassified;
             TableRelation = Customer."No.";
         }
+        field(4; "Expiry Date"; date)
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
         field(10; "Unit List Price"; Decimal)
         {
             DataClassification = ToBeClassified;
@@ -128,7 +133,7 @@ table 50001 "Bid Item Price"
 
     keys
     {
-        key(PK; "Bid No.", "item No.", "Customer No.")
+        key(PK; "Bid No.", "item No.", "Customer No.", "Currency Code")
         {
             Clustered = true;
         }
@@ -144,8 +149,10 @@ table 50001 "Bid Item Price"
 
     begin
         TestField("Bid No.");
-        If Bid.Get("Bid No.") then
+        If Bid.Get("Bid No.") then begin
+            "Expiry Date" := Bid."Expiry Date";
             Claimable := Bid.Claimable;
+        end;
     end;
 
     trigger OnModify();
@@ -192,6 +199,42 @@ table 50001 "Bid Item Price"
         if PostedSalesLine.FindFirst() then
             exit(true);
         exit(false);
+    end;
+
+    procedure HasExpired(OnDate: Date): Boolean
+    begin
+        if "Expiry Date" = 0D then
+            exit(false);
+        exit("Expiry Date" < OnDate)
+    end;
+
+    procedure GetPricesForItem(SalesHeaderNo: code[20]; ItemNo: code[20]; CurrCode: Code[20]; CustNo: code[20]; OnDate: Date; var BidPrices: Record "Bid Item Price")
+    begin
+        Clear(BidPrices);
+        BidPrices.SetRange("item No.", ItemNo);
+        BidPrices.SetRange("Currency Code", currcode);
+        BidPrices.setrange("Customer No.", CustNo);
+        if BidPrices.FindFirst() then
+            repeat
+                if (not BidPrices.AlreadyUsed(SalesHeaderNo)) and (not BidPrices.HasExpired(OnDate)) then
+                    BidPrices.Mark(true);
+            until BidPrices.Next() = 0;
+        BidPrices.setrange("Customer No.");
+        if BidPrices.FindFirst() then
+            repeat
+                if (not BidPrices.AlreadyUsed(SalesHeaderNo)) and (not BidPrices.HasExpired(OnDate)) then
+                    BidPrices.Mark(true);
+            until BidPrices.Next() = 0;
+        if BidPrices.IsEmpty() then begin
+            BidPrices.SetRange("Currency Code");
+            if BidPrices.FindFirst() then
+                repeat
+                    if (not BidPrices.AlreadyUsed(SalesHeaderNo)) and (not BidPrices.HasExpired(OnDate)) then
+                        BidPrices.Mark(true);
+                until BidPrices.Next() = 0;
+        end;
+        BidPrices.SetRange("Currency Code");
+        BidPrices.MarkedOnly(true);
     end;
 
 }

@@ -26,6 +26,14 @@ table 50000 "Bid"
         field(4; "Expiry Date"; date)
         {
             DataClassification = ToBeClassified;
+
+            trigger OnValidate()
+            var
+                BidPrices: Record "Bid Item Price";
+            begin
+                BidPrices.SetRange("Bid No.", "No.");
+                BidPrices.ModifyAll("Expiry Date", "Expiry Date");
+            end;
         }
         field(5; "One Time Bid"; boolean)
         {
