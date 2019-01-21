@@ -14,6 +14,7 @@ codeunit 50000 "Advanced Price Management"
         SalesPriceWorksheet: Record "Sales Price Worksheet";
         Item: Record Item;
         ItemDiscGroupTemp: Record "Item Discount Group" temporary;
+        ICPartner: Record "IC Partner";
     begin
         If SalesPriceWorksheet.FindSet() then
             repeat
@@ -23,12 +24,20 @@ codeunit 50000 "Advanced Price Management"
                         ItemDiscGroupTemp.Code := item."Item Disc. Group";
                         if not ItemDiscGroupTemp.Insert() then;
                     end;
+                    if Item."Vendor No." <> '' then begin
+                        CreatePricesForICPartners(Item."No.", Item."Vendor No.");
+                    end;
                 end;
             until SalesPriceWorksheet.Next() = 0;
         if ItemDiscGroupTemp.FindSet() then
             repeat
                 CalcSalesPricesForItemDiscGroup(ItemDiscGroupTemp.Code);
             until ItemDiscGroupTemp.Next() = 0;
+        if ICPartner.FindSet() then
+            repeat
+
+            until ICPartner.Next() = 0;
+
     end;
 
     procedure CreateListprices(SalesPriceWorksheet: Record "Sales Price Worksheet");
@@ -167,6 +176,7 @@ codeunit 50000 "Advanced Price Management"
 
             clear(Salesprice);
             Salesprice.SetRange("Item No.", PurchasePrice."Item No.");
+            Salesprice.SetRange("Sales Type", Salesprice."Sales Type"::"All Customers");
             Salesprice.SetFilter("Variant Code", '<>LISTPRICE');
             FindPriceCurrencies(PurchaseLineDiscount."Currency Code", PurchaseLineDiscount."Currency Code" <> '', CurrencyTemp);
             if CurrencyTemp.FindFirst then begin
@@ -232,6 +242,63 @@ codeunit 50000 "Advanced Price Management"
                         until ItemTemp.next = 0;
                 end;
             until SalesDiscountGroup.next = 0;
+    end;
+
+    procedure CreatePricesForICPartners(ItemNo: Code[20]; VendorNo: Code[20])
+    //contains some code reduse from CreateUpdateSalesMarkupPrices - should be refactored
+    var
+        CurrencyTemp: Record Currency temporary;
+        PurchasePrice: Record "Purchase Price";
+        Item: Record Item;
+        ICPartner: Record "IC Partner";
+        SalesPrice: Record "Sales Price";
+        SalesPriceWorksheet: Record "Sales Price Worksheet";
+        ImplementPrices: Report "Implement Price Change";
+        Suggestprices: report "Suggest Sales Price on Wksh.";
+    begin
+
+        Item.Get(ItemNo);
+        if ICPartner.FindSet() then
+            repeat
+                if ICPartner."Customer No." <> '' then begin
+                    if FindLatestPurchasePrice(ItemNo, VendorNo, Item."Vendor Currency", PurchasePrice) then begin
+                        Salesprice.Init();
+                        Salesprice."Sales Type" := Salesprice."Sales Type"::Customer;
+                        SalesPrice."Sales Code" := ICPartner."Customer No.";
+                        Salesprice."Currency Code" := PurchasePrice."Currency Code";
+                        Salesprice."Starting Date" := PurchasePrice."Starting Date";
+                        Salesprice."Ending Date" := PurchasePrice."Ending Date";
+                        Salesprice."Item No." := PurchasePrice."Item No.";
+                        Salesprice."Unit of Measure Code" := PurchasePrice."Unit of Measure Code";
+                        Salesprice."Minimum Quantity" := PurchasePrice."Minimum Quantity";
+                        Salesprice."Unit Price" := PurchasePrice."Direct Unit Cost" / ((100 - Item."Transfer Price %") / 100);
+                        if not Salesprice.Insert(false) then
+                            Salesprice.Modify(false);
+
+                        clear(Salesprice);
+                        Salesprice.SetRange("Item No.", PurchasePrice."Item No.");
+                        Salesprice.SetRange("Sales Type", Salesprice."Sales Type"::Customer);
+                        SalesPrice.SetRange("Sales Code", ICPartner."Customer No.");
+                        FindPriceCurrencies(Item."Vendor Currency", Item."Vendor Currency" <> '', CurrencyTemp);
+                        if CurrencyTemp.FindFirst then begin
+                            repeat
+                                Clear(Suggestprices);
+                                Suggestprices.InitializeRequest2(SalesPrice."Sales Type"::Customer, ICPartner."Customer No.", PurchasePrice."Starting Date", PurchasePrice."Ending Date",
+                                                                CurrencyTemp.Code, PurchasePrice."Unit of Measure Code", true, 0, 1, '');
+                                Suggestprices.SetTableView(SalesPrice);
+                                Suggestprices.UseRequestPage(false);
+                                Suggestprices.Run;
+                            until CurrencyTemp.next = 0;
+                        end;
+                        SalesPriceWorksheet.SetRange("Item No.", PurchasePrice."Item No.");
+                        Clear(ImplementPrices);
+                        ImplementPrices.SetTableView(SalesPriceWorksheet);
+                        ImplementPrices.InitializeRequest(true);
+                        ImplementPrices.UseRequestPage(false);
+                        ImplementPrices.Run();
+                    end;
+                end;
+            until ICPartner.Next() = 0;
     end;
 
     local procedure CreatePricesForItem(ItemNo: Code[20]; SalesDiscountGroup: Record "Sales Line Discount"; var CurrencyTemp: Record Currency temporary)

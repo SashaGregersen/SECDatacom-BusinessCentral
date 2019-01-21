@@ -30,7 +30,21 @@ pageextension 50009 "Item Adv. Pricing" extends "Item Card"
 
     actions
     {
-
+        addafter("Set Special Discounts")
+        {
+            action(CreateICPrices)
+            {
+                Caption = 'CreateICPrices';
+                Image = UpdateUnitCost;
+                ApplicationArea = All;
+                trigger OnAction()
+                var
+                    AdvPriceMgt: Codeunit "Advanced Price Management";
+                begin
+                    AdvPriceMgt.CreatePricesForICPartners("No.", "Vendor No.");
+                end;
+            }
+        }
     }
 
 
