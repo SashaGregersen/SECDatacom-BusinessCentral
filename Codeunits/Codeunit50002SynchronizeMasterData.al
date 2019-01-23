@@ -61,4 +61,15 @@ codeunit 50002 "Synchronize Master Data"
 
     end;
 
+    Procedure SetItemDefaults(var rec: record Item)
+    var
+        Location: record Location;
+    begin
+        Rec.validate(Reserve, rec.Reserve::Always);
+        Rec.Validate("Prevent Negative Inventory", rec."Prevent Negative Inventory"::Yes);
+        Location.SetRange(Default, true);
+        if Location.FindFirst() then
+            rec.Validate("Default Location", Location.Code);
+    end;
+
 }

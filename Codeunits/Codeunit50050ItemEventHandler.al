@@ -21,6 +21,8 @@ codeunit 50050 "Item Event handler"
         If not runtrigger then
             EXIT;
         AdvPriceMgt.CreateListPriceVariant(Rec);
+        SyncMasterData.SetItemDefaults(Rec);
+
         InventorySetup.get;
         IF InventorySetup."Synchronize Item" = FALSE then
             Exit;
@@ -35,6 +37,7 @@ codeunit 50050 "Item Event handler"
     begin
         If not runtrigger then
             EXIT;
+        SyncMasterData.SetItemDefaults(Rec);
         InventorySetup.get;
         IF InventorySetup."Synchronize Item" = FALSE then
             Exit;

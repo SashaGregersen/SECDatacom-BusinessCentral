@@ -10,9 +10,10 @@ codeunit 50004 "Create Purchase Order"
         SalesLine: record "Sales Line";
         Item: record Item;
         PurchLine: record "Purchase Line";
-        PurchHeader: record "Purchase Header";
         VendorNo: code[20];
+        PurchHeader: record "Purchase Header";
         GlobalLineCounter: Integer;
+        PurchaseOrder: page "Purchase Order";
     begin
         SalesLine.SetRange("Document No.", SalesHeader."No.");
         SalesLine.SetRange("Document Type", SalesHeader."Document Type");
@@ -73,12 +74,10 @@ codeunit 50004 "Create Purchase Order"
         PurchLine.Validate(Type, SalesLine.Type);
         PurchLine.Validate("No.", SalesLine."No.");
         PurchLine.Validate(Quantity, SalesLine.Quantity);
-        PurchLine.Validate("Expected Receipt Date", SalesLine."Shipment Date"); //vend med SEC 
+        PurchLine.Validate("Expected Receipt Date", SalesLine."Shipment Date"); //vend med SEC         
         PurchLine.Insert(true);
-        if SalesLine."Bid No." <> '' then begin
-            PurchLine.Validate("Bid No.", SalesLine."Bid No.");
-            PurchLine.Validate("Direct Unit Cost", SalesLine."Purchase Price on Purchase Order");
-        end;
+        PurchLine.Validate("Direct Unit Cost", SalesLine."Purchase Price on Purchase Order");
+        PurchLine.Validate("Bid No.", SalesLine."Bid No.");
         PurchLine.Modify(true);
     end;
 

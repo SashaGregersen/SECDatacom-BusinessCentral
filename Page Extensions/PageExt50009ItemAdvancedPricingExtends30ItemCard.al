@@ -24,6 +24,13 @@ pageextension 50009 "Item Adv. Pricing" extends "Item Card"
                 ApplicationArea = all;
             }
         }
+        addafter("Shelf No.")
+        {
+            field("Default Location"; "Default Location")
+            {
+                ApplicationArea = all;
+            }
+        }
 
 
     }

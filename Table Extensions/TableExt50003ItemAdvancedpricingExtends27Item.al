@@ -18,6 +18,11 @@ tableextension 50003 "Item Adv. Pricing" extends Item
         {
             DataClassification = ToBeClassified;
         }
+        field(50003; "Default Location"; code[10])
+        {
+            DataClassification = ToBeClassified;
+            TableRelation = Location;
+        }
     }
 
     var

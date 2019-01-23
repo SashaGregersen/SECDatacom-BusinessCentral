@@ -28,7 +28,7 @@ pageextension 50028 "End Customer and Reseller 8" extends 132
                 Image = ItemGroup;
                 trigger OnAction();
                 begin
-                    SalesInvoice.Run();
+                    //SalesInvoice.Run();
                 end;
             }
 
@@ -36,5 +36,5 @@ pageextension 50028 "End Customer and Reseller 8" extends 132
     }
 
     var
-        SalesInvoice: report "Invoice PM w/FI-Card";
+    //SalesInvoice: report "Invoice PM w/FI-Card";
 }

@@ -94,6 +94,7 @@ pageextension 50021 "End Customer and Reseller" extends 42
                 trigger OnAction()
                 var
                     CreatePurchOrder: Codeunit "Create Purchase Order";
+                    PurchHeader: record "Purchase Header";
                 begin
                     CreatePurchOrder.CreatePurchOrderFromSalesOrder(Rec);
                 end;
