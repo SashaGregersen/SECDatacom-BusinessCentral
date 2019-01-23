@@ -78,10 +78,10 @@ table 50001 "Bid Item Price"
 
             trigger Onvalidate()
             begin
-                if "Unit List Price" <> 0 then
-                    "Bid Sales Discount Pct." := ("Bid Unit Sales Price" - "Unit List Price") / "Unit List Price" * 100
+                if ("Unit List Price" <> 0) and ("Bid Unit Sales Price" <> 0) then
+                    "Bid sales Discount Pct." := (1 - ("Bid Unit Sales Price" / "Unit List Price")) * 100
                 else
-                    "Bid Sales Discount Pct." := 0;
+                    "Bid sales Discount Pct." := 0;
             end;
         }
         field(50002; "Bid Sales Discount Pct."; Decimal)
@@ -90,15 +90,10 @@ table 50001 "Bid Item Price"
 
             trigger Onvalidate()
             begin
-                if "Unit List Price" = 0 then begin
-                    "Bid Sales Discount Pct." := 0;
-                    exit;
-                end;
-
-                if "Bid Sales Discount Pct." <> 0 then
-                    "Bid Unit Sales Price" := "Unit List Price" * ((100 + "Bid Sales Discount Pct.") / 100)
+                if "Unit List Price" <> 0 then
+                    "Bid Unit sales Price" := (1 - ("Bid sales Discount Pct." / 100)) * "Unit List Price"
                 else
-                    "Bid Unit Sales Price" := "Unit List Price";
+                    "Bid sales Discount Pct." := 0;
             end;
         }
         field(50011; "Bid Unit Purchase Price"; Decimal)
