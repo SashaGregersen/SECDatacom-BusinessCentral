@@ -107,15 +107,6 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
         {
             DataClassification = ToBeClassified;
             Editable = false;
-
-            /*             trigger Onvalidate()
-                        begin
-                            if "Bid Purchase Discount" <> xRec."Bid Purchase Discount" then
-                                CalcAdvancedPrices;
-                            if "Bid Purchase Discount" <> 0 then
-                                Claimable := true;
-                        end; */
-
         }
         field(50013; "Transfer Price Markup"; Decimal)
         {
@@ -155,6 +146,8 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
 
             trigger Onvalidate();
             begin
+                if ("Unit Purchase Price" = 0) and Claimable then
+                    Error('You cannot claim when the Unit Purchase Price is zero (0)');
                 CalcAdvancedPrices();
             end;
         }
@@ -231,7 +224,10 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
                 "Purchase Price on Purchase Order" := "Bid Unit Purchase Price"
             else
                 "Purchase Price on Purchase Order" := "Unit Purchase Price";
-            "Claim Amount" := ("Unit Purchase Price" * Quantity) - ("Bid Unit Purchase Price" * Quantity);
+            if ("Unit Purchase Price" <> 0) and Claimable then
+                "Claim Amount" := ("Unit Purchase Price" * Quantity) - ("Bid Unit Purchase Price" * Quantity)
+            else
+                "Claim Amount" := 0;
         end else begin
             "Calculated Purchase Price" := ("unit Purchase Price" * Quantity) + TransferPriceAmount;
             "Purchase Price on Purchase Order" := "Unit Purchase Price";
