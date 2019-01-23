@@ -13,7 +13,7 @@ tableextension 50020 CustomerType extends 18
             DataClassification = ToBeClassified;
             TableRelation = "Ship-to Address".code;
         }
-        field(50003; "Owning Company"; Code[35])
+        field(50003; "Owning Company"; Text[35])
         {
             DataClassification = ToBeClassified;
             TableRelation = Company.Name;

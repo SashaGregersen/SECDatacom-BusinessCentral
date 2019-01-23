@@ -12,7 +12,7 @@
             "breakOnError": true,
             "breakOnRecordWrite": false,
             "port": 7089,
-            "schemaUpdateMode": "Synchronize"
+            "schemaUpdateMode": "Recreate"
         }
 
     ]

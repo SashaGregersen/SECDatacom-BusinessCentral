@@ -56,12 +56,13 @@ codeunit 50052 "Customer Event Handler"
 
         rec.validate("Owning Company", CompanyName());
 
-        if CompanyName() <> 'SECDenmark' then begin
+        if CompanyName() = rec."Owning Company" then begin
             SalesSetup.get;
             IF SalesSetup."Synchronize Customer" = FALSE then
                 Exit;
             SyncMasterData.SynchronizeCustomerToSECDK(Rec);
-        end;
+        end else
+            error('You must modify this customer in %1', rec."Owning Company");
     end;
 
     [EventSubscriber(ObjectType::table, database::"Customer", 'OnAfterModifyEvent', '', true, true)]
@@ -74,12 +75,13 @@ codeunit 50052 "Customer Event Handler"
         If not runtrigger then
             EXIT;
 
-        if CompanyName() <> 'SECDenmark' then begin
+        if CompanyName() = rec."Owning Company" then begin
             SalesSetup.get;
             IF SalesSetup."Synchronize Customer" = FALSE then
                 Exit;
             SyncMasterData.SynchronizeCustomerToSECDK(Rec);
-        end;
+        end else
+            Error('You must modify this customer in %1', rec."Owning Company");
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Sales Header", 'OnAfterInsertEvent', '', true, true)]

@@ -9,13 +9,15 @@ codeunit 50002 "Synchronize Master Data"
         Location: Record Location;
         AvailableInv: Decimal;
         Item: Record Item;
+        GlSetup: record "General Ledger Setup";
     begin
-        Location.ChangeCompany('SECDenmark');
+        GlSetup.Get;
+        Location.ChangeCompany(GlSetup."Master Company");
         Location.SetRange("Calculate Available Stock", true);
         if Location.FindSet then
             repeat
                 PurchLine."Location Code" := Location.code;
-                Item.ChangeCompany('SECDenmark');
+                Item.ChangeCompany(GlSetup."Master Company");
                 Item.GET(PurchLine."No.");
                 Item.CALCFIELDS(Inventory, "Reserved Qty. on Inventory");
                 AvailableInv := Item.Inventory - Item."Reserved Qty. on Inventory" - Item."Reserved Qty. on Purch. Orders";
@@ -48,9 +50,10 @@ codeunit 50002 "Synchronize Master Data"
     var
         Company: record company;
         Customer2: record customer;
+        GlSetup: record "General Ledger Setup";
     begin
-
-        Company.SetRange(Company.Name, 'SECDenmark');
+        GlSetup.Get;
+        Company.SetRange(Company.Name, GlSetup."Master Company");
         IF Company.FindFirst() then begin
             Customer2.ChangeCompany(Company.Name);
             Customer2.Init();
