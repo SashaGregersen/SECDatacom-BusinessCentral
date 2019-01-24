@@ -240,7 +240,7 @@ codeunit 50003 "Project Sales Import"
                                 if SalesLine.findset then
                                     repeat
                                         PurchFromSales.CreatePurchLine(PurchOrder, SalesHeader, SalesLine, PurchLine);
-                                        PurchFromSales.ReserveItemOnPurchOrder(PurchLine);
+                                        PurchFromSales.ReserveItemOnPurchOrder(SalesLine, PurchLine);
                                         GlobalCounter := GlobalCounter + 1;
                                     until SalesLine.next = 0;
                                 Message('Purchase Order %1 created with %2 lines', PurchOrder."No.", GlobalCounter);
@@ -254,7 +254,7 @@ codeunit 50003 "Project Sales Import"
                                 if SalesLine.findset then
                                     repeat
                                         PurchFromSales.CreatePurchLine(PurchOrder, SalesHeader, SalesLine, PurchLine);
-                                        PurchFromSales.ReserveItemOnPurchOrder(PurchLine);
+                                        PurchFromSales.ReserveItemOnPurchOrder(Salesline, PurchLine);
                                         GlobalCounter := GlobalCounter + 1;
                                     until SalesLine.next = 0;
                                 Message('Purchase order %1 created with %2 lines', PurchOrder."No.", GlobalCounter);

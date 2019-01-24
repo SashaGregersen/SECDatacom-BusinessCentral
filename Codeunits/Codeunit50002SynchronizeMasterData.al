@@ -70,9 +70,6 @@ codeunit 50002 "Synchronize Master Data"
     begin
         Rec.validate(Reserve, rec.Reserve::Always);
         Rec.Validate("Prevent Negative Inventory", rec."Prevent Negative Inventory"::Yes);
-        Location.SetRange(Default, true);
-        if Location.FindFirst() then
-            rec.Validate("Default Location", Location.Code);
     end;
 
 }
