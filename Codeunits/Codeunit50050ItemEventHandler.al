@@ -45,7 +45,7 @@ codeunit 50050 "Item Event handler"
     end;
 
     [EventSubscriber(ObjectType::table, database::"Item", 'OnAfterValidateEvent', 'Vendor No.', true, true)]
-    local procedure ItemOnAfterModifyVendorNo(var Rec: Record "Item")
+    local procedure ItemOnAfterValidateVendorNo(var Rec: Record "Item")
     var
         Vendor: Record Vendor;
     begin

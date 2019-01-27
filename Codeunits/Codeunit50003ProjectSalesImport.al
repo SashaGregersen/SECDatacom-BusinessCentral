@@ -19,6 +19,13 @@ codeunit 50003 "Project Sales Import"
         Salesline.setrange("Document No.", SalesHeader."No.");
         Salesline.SetRange("Document Type", SalesHeader."Document Type");
         if Salesline.FindFirst() then begin
+            case TempCSVBuffer."Field No." of
+                14:
+                    begin
+                        if TempCSVBuffer.value = '' then
+                            error('Purchase order number is missing in Excel sheet');
+                    end;
+            end;
             CreateSalesLineFromBid(TempCSVBuffer, SalesHeader, Salesline."Bid No.");
             CreatePurchaseOrderFromSalesOrder(TempCSVBuffer, SalesHeader);
         end else begin
@@ -164,7 +171,7 @@ codeunit 50003 "Project Sales Import"
                 end;
 
             until TempCSVBuffer.next = 0;
-        Message('Sales order %1 created with %2 lines', SalesHeader."No.", GlobalCounter);
+        Message('%1 lines inserted on sales order %2', GlobalCounter, SalesHeader."No.");
     end;
 
     local procedure CreateSalesLines(SalesHeader: record "Sales Header"; BidPrices: record "Bid Item Price"; Qty: Integer; var GlobalCounter: Integer)
@@ -185,7 +192,6 @@ codeunit 50003 "Project Sales Import"
             SalesLine.Insert(true);
             SalesLine.Validate("Bid No.", BidPrices."Bid No.");
             SalesLine.Modify(true);
-            //sørg for at der ikke reserveres linjer automatisk 
             GlobalCounter := 1;
         end else begin
             NextLineNo := SalesLine."Line No." + 10000;
@@ -199,7 +205,6 @@ codeunit 50003 "Project Sales Import"
             SalesLine.Insert(true);
             SalesLine.Validate("Bid No.", BidPrices."Bid No.");
             SalesLine.Modify(true);
-            //sørg for at der ikke reserveres linjer automatisk 
             GlobalCounter := GlobalCounter + 1;
         end;
     end;
@@ -243,21 +248,28 @@ codeunit 50003 "Project Sales Import"
                                         PurchFromSales.ReserveItemOnPurchOrder(SalesLine, PurchLine);
                                         GlobalCounter := GlobalCounter + 1;
                                     until SalesLine.next = 0;
-                                Message('Purchase Order %1 created with %2 lines', PurchOrder."No.", GlobalCounter);
+                                Message('%1 lines inserted on purchase order %2', GlobalCounter, PurchOrder."No.");
                             end else begin
-                                PurchOrder.get(TempCSVBuffer.Value, PurchOrder."Document Type"::Order);
-                                PurchOrder.validate("Buy-from Vendor No.", VendorNo);
-                                PurchOrder.Validate("Currency Code", CurrencyCode);
+                                PurchOrder.get(PurchOrder."Document Type"::Order, TempCSVBuffer.Value);
+                                if PurchOrder."Buy-from Vendor No." = '' then
+                                    PurchOrder.validate("Buy-from Vendor No.", VendorNo);
+                                if PurchOrder."Currency Code" = '' then
+                                    PurchOrder.Validate("Currency Code", CurrencyCode);
+                                if PurchOrder."Vendor Invoice No." = '' then
+                                    PurchOrder.validate("Vendor Invoice No.", VendorBidNo);
                                 PurchOrder.Modify(true);
                                 SalesLine.SetRange("Document No.", SalesHeader."No.");
                                 SalesLine.SetRange("Document Type", SalesHeader."Document Type");
                                 if SalesLine.findset then
                                     repeat
-                                        PurchFromSales.CreatePurchLine(PurchOrder, SalesHeader, SalesLine, PurchLine);
-                                        PurchFromSales.ReserveItemOnPurchOrder(Salesline, PurchLine);
-                                        GlobalCounter := GlobalCounter + 1;
+                                        SalesLine.CalcFields("Reserved Quantity");
+                                        if SalesLine."Reserved Quantity" = 0 then begin
+                                            PurchFromSales.CreatePurchLine(PurchOrder, SalesHeader, SalesLine, PurchLine);
+                                            PurchFromSales.ReserveItemOnPurchOrder(Salesline, PurchLine);
+                                            GlobalCounter := GlobalCounter + 1;
+                                        end;
                                     until SalesLine.next = 0;
-                                Message('Purchase order %1 created with %2 lines', PurchOrder."No.", GlobalCounter);
+                                Message('%1 lines inserted on purchase order %2', GlobalCounter, PurchOrder."No.");
                             end;
                         end;
                 end;
