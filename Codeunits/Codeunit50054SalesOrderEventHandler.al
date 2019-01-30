@@ -18,6 +18,22 @@ codeunit 50054 "Sales Order Event Handler"
         end;
     end;
 
+    [EventSubscriber(ObjectType::table, database::"Sales Line", 'OnAfterModifyEvent', '', true, true)]
+
+    local procedure OnAfterModifySalesLineEvent(var rec: record "Sales Line"; runtrigger: Boolean)
+    var
+        Item: record item;
+    begin
+        If not runtrigger then
+            EXIT;
+        if rec.Type = rec.type::Item then begin
+            Item.Get(rec."No.");
+            Item.TestField("Default Location");
+            rec.validate("Location Code", item."Default Location");
+            rec.Modify(false);
+        end;
+    end;
+
     [EventSubscriber(ObjectType::Table, database::"Sales Line", 'OnAfterValidateEvent', 'Type', true, true)]
     local procedure SalesLineOnAfterValidateType(Var rec: record "Sales Line")
     var

@@ -72,6 +72,11 @@ pageextension 50002 "Sales Line Bid" extends "Sales Order Subform"
 
             }
         }
+
+        modify("Drop Shipment")
+        {
+            Visible = false;
+        }
     }
 
     actions

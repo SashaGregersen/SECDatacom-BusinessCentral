@@ -12,6 +12,11 @@ tableextension 50006 "Purchase Line Bid" extends "Purchase Line"
             DataClassification = ToBeClassified;
         }
 
+        field(50001; "Vendor-Item-No"; text[60])
+        {
+            DataClassification = ToBeClassified;
+        }
+
     }
 
 }

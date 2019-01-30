@@ -32,7 +32,6 @@ pageextension 50009 "Item Adv. Pricing" extends "Item Card"
             }
         }
 
-
     }
 
     actions
