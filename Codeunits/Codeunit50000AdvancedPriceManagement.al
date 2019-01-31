@@ -15,7 +15,7 @@ codeunit 50000 "Advanced Price Management"
         Item: Record Item;
         ItemDiscGroupTemp: Record "Item Discount Group" temporary;
         ICPartner: Record "IC Partner";
-        SyncPricesIC: Codeunit "Sync Prices IC";
+        ICSyncMgt: Codeunit "IC Sync Management";
     begin
         If SalesPriceWorksheet.FindSet() then
             repeat
@@ -29,7 +29,7 @@ codeunit 50000 "Advanced Price Management"
                         CreatePricesForICPartners(Item."No.", Item."Vendor No.");
                     end;
                 end;
-                SyncPricesIC.UpdatePricesInOtherCompanies(SalesPriceWorksheet);
+                ICSyncMgt.UpdatePricesInOtherCompanies(SalesPriceWorksheet);
             until SalesPriceWorksheet.Next() = 0;
         if ItemDiscGroupTemp.FindSet() then
             repeat
@@ -37,7 +37,7 @@ codeunit 50000 "Advanced Price Management"
             until ItemDiscGroupTemp.Next() = 0;
         if ICPartner.FindSet() then
             repeat
-                SyncPricesIC.SyncPurchasePricesToOtherCompanies();
+                ICSyncMgt.SyncPurchasePricesToOtherCompanies();
             until ICPartner.Next() = 0;
 
     end;
