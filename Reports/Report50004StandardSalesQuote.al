@@ -376,7 +376,9 @@ report 50004 "SEC Sales - Quote"
             column(End_Customer; "End Customer")
             {
             }
-
+            column(Reseller; Reseller)
+            {
+            }
             dataitem(EndCustomer; Customer)
             {
                 DataItemLink = "No." = FIELD ("End Customer");
