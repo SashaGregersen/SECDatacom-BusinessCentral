@@ -5,7 +5,8 @@ codeunit 50097 "Insert Record ID In Job Queue"
         intMapTable: Record "Integration Table Mapping";
         JobQueueEntry: record "Job Queue Entry";
     begin
-        intMapTable.SetFilter(name, '%1|%2|%3', 'RESELLER', 'MANUFACTURER', 'FINANCEPARTNER');
+        //intMapTable.SetFilter(name, '%1|%2|%3', 'RESELLER', 'MANUFACTURER', 'FINANCEPARTNER');
+        intMapTable.SetFilter(name, '%1', 'OPPORTUNITY');
         if intMapTable.FindSet() then
             repeat
                 JobQueueEntry.Init;

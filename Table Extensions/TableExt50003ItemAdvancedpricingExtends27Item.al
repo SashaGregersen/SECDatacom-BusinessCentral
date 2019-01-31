@@ -23,6 +23,11 @@ tableextension 50003 "Item Adv. Pricing" extends Item
             DataClassification = ToBeClassified;
             TableRelation = Location;
         }
+
+        field(50004; "Vendor-Item-No."; Text[60])
+        {
+            DataClassification = ToBeClassified;
+        }
     }
 
     var

@@ -12,6 +12,11 @@ tableextension 50009 "Purch. Cr. Memo Line Bid" extends "Purch. Cr. Memo Line"
             DataClassification = ToBeClassified;
         }
 
+        field(50001; "Vendor-Item-No"; text[60])
+        {
+            DataClassification = ToBeClassified;
+        }
+
     }
 
 }

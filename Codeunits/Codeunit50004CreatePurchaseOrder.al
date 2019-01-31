@@ -9,13 +9,12 @@ codeunit 50004 "Create Purchase Order"
     var
         SalesLine: record "Sales Line";
         Item: record Item;
-        PurchLine: record "Purchase Line";
-        VendorNo: code[20];
         PurchHeader: record "Purchase Header";
         GlobalLineCounter: Integer;
-        PurchaseOrder: page "Purchase Order";
-        ReserveQty: Decimal;
+        PurchLine: record "Purchase Line";
     begin
+        SalesHeader.CalcFields("Amount Including VAT");
+        SalesHeader.TestField("Amount Including VAT");
         SalesLine.SetRange("Document No.", SalesHeader."No.");
         SalesLine.SetRange("Document Type", SalesHeader."Document Type");
         SalesLine.SetRange(type, SalesLine.type::Item);
@@ -27,24 +26,17 @@ codeunit 50004 "Create Purchase Order"
                 PurchHeader.SetRange("Document Type", PurchHeader."Document Type");
                 PurchHeader.SetRange("Buy-from Vendor No.", item."Vendor No.");
                 if not PurchHeader.FindFirst() then begin
-                    SalesLine.CalcFields("Reserved Quantity");
-                    if (SalesLine."Quantity" - SalesLine."Reserved Quantity") <> 0 then begin
-                        CreatePurchHeader(SalesHeader, Item."Vendor No.", '', '', PurchHeader);
-                        CreatePurchLine(PurchHeader, SalesHeader, SalesLine, PurchLine);
-                        ReserveItemOnPurchOrder(SalesLine, PurchLine);
-                        GlobalLineCounter := GlobalLineCounter + 1;
-                    end;
+                    GlobalLineCounter := 0;
+                    If CheckSalesLineForBidNo(SalesLine) = true then
+                        NewPurchOrder(SalesLine, SalesHeader, Item."Vendor No.", PurchHeader, GlobalLineCounter)
                 end else begin
-                    SalesLine.CalcFields("Reserved Quantity");
-                    if (SalesLine."Quantity" - SalesLine."Reserved Quantity") <> 0 then begin
-                        CreatePurchLine(PurchHeader, SalesHeader, SalesLine, PurchLine);
-                        ReserveItemOnPurchOrder(SalesLine, PurchLine);
-                        GlobalLineCounter := GlobalLineCounter + 1;
-                    end;
+                    if CheckSalesLineForBidNo(SalesLine) = true then
+                        UpdateExistingPurchOrder(SalesLine, PurchHeader, SalesHeader, GlobalLineCounter);
                 end;
             until SalesLine.next = 0;
-        if GlobalLineCounter <> 0 then
-            Message('Purchase Order %1 created with %2 lines', PurchHeader."No.", GlobalLineCounter);
+
+        if GlobalLineCounter = 0 then
+            Message('Every item is reserved');
     end;
 
     procedure CreatePurchHeader(SalesHeader: record "Sales Header"; VendorNo: code[20]; CurrencyCode: code[10]; VendorBidNo: code[20]; var PurchHeader: record "Purchase Header")
@@ -54,6 +46,7 @@ codeunit 50004 "Create Purchase Order"
         PurchHeader.SetRange("No.", PurchHeader."No.");
         if not PurchHeader.FindFirst() then begin
             PurchHeader.Init;
+            PurchHeader."No." := '';
             PurchHeader."Document Type" := PurchHeader."Document Type"::Order;
             PurchHeader.Validate("Buy-from Vendor No.", VendorNo);
             if CurrencyCode <> '' then
@@ -67,6 +60,7 @@ codeunit 50004 "Create Purchase Order"
                 SalesHeader."Ship-to Country/Region Code", SalesHeader."Ship-to Country/Region Code");
                 PurchHeader.Modify(true);
             end;
+            Message('Purchase Order %1 created', PurchHeader."No.");
         end;
     end;
 
@@ -97,7 +91,6 @@ codeunit 50004 "Create Purchase Order"
         EntryNo := 0;
         ReservationEntry.FindLast();
         EntryNo := ReservationEntry."Entry No." + 1;
-        // cancel reservation if project sale or bid 
         InsertReservationSalesLine(SalesLine, EntryNo);
         InsertReservationPurchLine(PurchLine, EntryNo);
     end;
@@ -118,8 +111,8 @@ codeunit 50004 "Create Purchase Order"
         ReservationEntry.Validate("Source Subtype", 1);
         ReservationEntry.Validate("Source ID", SalesLine."Document No.");
         ReservationEntry.Validate("Created By", UserId());
-        ReservationEntry.Validate("Creation Date", Today());
-        ReservationEntry.Validate("Source Ref. No.", 10000);
+        ReservationEntry.Validate("Creation Date", WorkDate());
+        ReservationEntry.Validate("Source Ref. No.", SalesLine."Line No.");
         ReservationEntry.Validate("Expected Receipt Date", SalesLine."Planned Shipment Date");
         ReservationEntry.Validate("Shipment Date", SalesLine."Shipment Date");
         ReservationEntry.Insert(true);
@@ -141,10 +134,46 @@ codeunit 50004 "Create Purchase Order"
         ReservationEntry.Validate("Source Subtype", 1);
         ReservationEntry.Validate("Source ID", PurchLine."Document No.");
         ReservationEntry.Validate("Created By", UserId());
-        ReservationEntry.Validate("Creation Date", Today());
-        ReservationEntry.Validate("Source Ref. No.", 20000);
+        ReservationEntry.Validate("Creation Date", WorkDate());
+        ReservationEntry.Validate("Source Ref. No.", PurchLine."Line No.");
         ReservationEntry.Validate("Expected Receipt Date", PurchLine."Expected Receipt Date");
         ReservationEntry.Validate("Shipment Date", purchLine."Planned Receipt Date");
         ReservationEntry.Insert(true);
+    end;
+
+    Local procedure NewPurchOrder(SalesLine: record "Sales Line"; SalesHeader: record "Sales Header"; ItemVendorNo: code[20]; var PurchHeader: record "Purchase Header"; var GlobalLineCount: Integer)
+    var
+        PurchLine: record "Purchase Line";
+    begin
+        SalesLine.CalcFields("Reserved Quantity");
+        if (SalesLine."Quantity" - SalesLine."Reserved Quantity") <> 0 then begin
+            CreatePurchHeader(SalesHeader, ItemVendorNo, '', '', PurchHeader);
+            CreatePurchLine(PurchHeader, SalesHeader, SalesLine, PurchLine);
+            ReserveItemOnPurchOrder(SalesLine, PurchLine);
+            GlobalLineCount := GlobalLineCount + 1;
+        end;
+    end;
+
+
+    Local procedure UpdateExistingPurchOrder(Salesline: record "Sales Line"; PurchHeader: record "Purchase Header"; SalesHeader: record "Sales Header"; var GlobalLineCount: Integer)
+    var
+        PurchLine: record "Purchase Line";
+    begin
+        SalesLine.CalcFields("Reserved Quantity");
+        if (SalesLine."Quantity" - SalesLine."Reserved Quantity") <> 0 then begin
+            CreatePurchLine(PurchHeader, SalesHeader, SalesLine, PurchLine);
+            ReserveItemOnPurchOrder(SalesLine, PurchLine);
+            GlobalLineCount := GlobalLineCount + 1;
+        end;
+    end;
+
+    Local procedure CheckSalesLineForBidNo(SalesLine: record "Sales Line"): Boolean
+    var
+
+    begin
+        if SalesLine."Bid No." <> '' then
+            Exit(Confirm('Sales Line %1 has a Bid no. with reserved item\Do you wish to continue?', false, SalesLine."Line No."))
+        else
+            exit(true);
     end;
 }
