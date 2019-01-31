@@ -100,6 +100,11 @@ pageextension 50021 "End Customer and Reseller" extends 42
                 end;
             }
         }
+
+        modify("Create Purchase Document")
+        {
+            Visible = false;
+        }
     }
 
 

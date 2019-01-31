@@ -12,6 +12,11 @@ tableextension 50007 "Purch. Rcpt. Line Bid" extends "Purch. Rcpt. Line"
             DataClassification = ToBeClassified;
         }
 
+        field(50001; "Vendor-Item-No"; text[60])
+        {
+            DataClassification = ToBeClassified;
+        }
+
     }
 
 }
