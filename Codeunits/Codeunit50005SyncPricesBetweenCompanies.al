@@ -46,12 +46,16 @@ codeunit 50005 "Sync Prices IC"
 
     end;
 
-    procedure UpdatePricesInOtherCompanies()
+    procedure UpdatePricesInOtherCompanies(SalesPriceWorkSheet: Record "Sales Price Worksheet")
 
     var
-        myInt: Integer;
+        CompanyTemp: Record Company temporary;
     begin
-
+        GetCompaniesToSyncTo(CompanyTemp);
+        if CompanyTemp.Count() = 0 then
+            exit;
+        CopySPWToOtherCompanies(SalesPriceWorkSheet, CompanyTemp);
+        StartSessionInOtherCompany(50005, CompanyTemp);
     end;
 
     local procedure StartSessionInOtherCompany(CodeunitNo: Integer; var CompanyTemp: Record Company temporary)
@@ -63,7 +67,7 @@ codeunit 50005 "Sync Prices IC"
     begin
         if CompanyTemp.FindSet() then
             repeat
-                ok := StartSession(SessionID, CodeunitNo, CompanyTemp.Name);
+                OK := StartSession(SessionID, CodeunitNo, CompanyTemp.Name);
                 if not OK then
                     Error(GetLastErrorText());
                 Commit();
@@ -71,7 +75,7 @@ codeunit 50005 "Sync Prices IC"
                     StopSession(SessionID, StrSubstNo('Session timed out in company %', CompanyTemp.Name));
                 SessionEventComment := GetSessionEventComment(SessionID);
                 if SessionEventComment <> '' then
-                    Error('Session ended with an error: %1', SessionEventComment);
+                    Error('Session in company %1 ended with an error: %2', CompanyTemp.Name, SessionEventComment);
             until CompanyTemp.Next() = 0;
     end;
 
@@ -112,10 +116,23 @@ codeunit 50005 "Sync Prices IC"
 
     local procedure GetSessionEventComment(SessionID: Integer): Text
     var
-        myInt: Integer;
+        ErrorFound: Boolean;
+        SessionEvent: Record "Session Event";
     begin
-
-    end;
+        // check session event for errors
+        ErrorFound := FALSE;
+        SessionEvent.SETCURRENTKEY("Event Datetime");
+        SessionEvent.SETRANGE("User SID", USERSECURITYID);
+        SessionEvent.SETRANGE("Server Instance ID", SERVICEINSTANCEID);
+        SessionEvent.SETRANGE("Session ID", SessionID);
+        SessionEvent.SETRANGE("Event Type", SessionEvent."Event Type"::Logoff);
+        SessionEvent.SETRANGE("Client Type", SessionEvent."Client Type"::Background);
+        SessionEvent.SETRANGE("User ID", USERID);
+        IF SessionEvent.FINDLAST then
+            exit(SessionEvent.Comment)
+        else
+            exit('');
+    END;
 
     var
         AdvPriceMgt: Codeunit "Advanced Price Management";
