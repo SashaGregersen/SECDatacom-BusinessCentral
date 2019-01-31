@@ -376,11 +376,30 @@ report 50004 "SEC Sales - Quote"
             column(End_Customer; "End Customer")
             {
             }
-            column(Reseller; Reseller)
+            column(Reseller; "Reseller")
             {
             }
-
-
+            dataitem(Reseller; Customer)
+            {
+                DataItemLink = "No." = FIELD ("Reseller");
+                DataItemLinkReference = Header;
+                UseTemporary = true;
+                column(ResellerName; Name)
+                {
+                }
+                column(ResellerAddress; Address)
+                {
+                }
+                column(ResellerPostcode; "Post code")
+                {
+                }
+                column(ResellerCity; City)
+                {
+                }
+                column(ResellerCountry; "Country/Region Code")
+                {
+                }
+            }
             dataitem(EndCustomer; Customer)
             {
                 DataItemLink = "No." = FIELD ("End Customer");
