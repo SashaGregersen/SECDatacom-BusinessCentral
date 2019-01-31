@@ -379,6 +379,8 @@ report 50004 "SEC Sales - Quote"
             column(Reseller; Reseller)
             {
             }
+
+
             dataitem(EndCustomer; Customer)
             {
                 DataItemLink = "No." = FIELD ("End Customer");
@@ -516,7 +518,7 @@ report 50004 "SEC Sales - Quote"
                     DataItemLink = "No." = FIELD ("No.");
                     DataItemLinkReference = Line;
                     UseTemporary = true;
-                    column(Vendor_Item_No_; "Vendor Item No.")
+                    column(Vendor_Item_No_; "Vendor-Item-No.")
                     {
                     }
                 }
