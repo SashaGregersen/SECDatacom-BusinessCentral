@@ -478,6 +478,7 @@ report 50005 "SEC Sales - Order Conf."
                 column(CrossReferenceNo_Lbl; FieldCaption("Cross-Reference No."))
                 {
                 }
+
                 dataitem(AssemblyLine; "Assembly Line")
                 {
                     DataItemTableView = SORTING ("Document No.", "Line No.");
