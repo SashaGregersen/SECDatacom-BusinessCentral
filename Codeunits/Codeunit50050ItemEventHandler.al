@@ -52,6 +52,27 @@ codeunit 50050 "Item Event handler"
         if Vendor.get(rec."Vendor No.") then
             Rec.Validate("Vendor Currency", Vendor."Currency Code");
     end;
+
+    [EventSubscriber(ObjectType::table, database::"Item Discount Group", 'OnAfterinsertEvent', '', true, true)]
+    local procedure ItemDiscountOnAfterInsertEvent(var Rec: Record "Item Discount Group")
+    var
+        SyncMasterData: Codeunit "Synchronize Master Data";
+    begin
+        if rec.IsTemporary() then
+            exit;
+        SyncMasterData.SynchronizeItemDiscGroupToCompany(Rec);
+    end;
+
+    [EventSubscriber(ObjectType::table, database::"Item Discount Group", 'OnAfterModifyEvent', '', true, true)]
+    local procedure ItemDiscountOnAfterModifyEvent(var Rec: Record "Item Discount Group")
+    var
+        SyncMasterData: Codeunit "Synchronize Master Data";
+    begin
+        if rec.IsTemporary() then
+            exit;
+        SyncMasterData.SynchronizeItemDiscGroupToCompany(Rec);
+    end;
+
 }
 
 

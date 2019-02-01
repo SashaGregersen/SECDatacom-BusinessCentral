@@ -60,6 +60,38 @@ codeunit 50005 "IC Sync Management"
             until CompanyTemp.Next() = 0;
     end;
 
+    procedure InsertModifyItemInOtherCompanies(Item: Record Item)
+
+    var
+        CompanyTemp: Record Company temporary;
+        SessionID: Integer;
+    begin
+        GetCompaniesToSyncTo(CompanyTemp);
+        if CompanyTemp.Count() = 0 then
+            exit;
+        if CompanyTemp.FindSet() then
+            repeat
+                SessionID := RunInsertModifyItemInOtherCompany(item, CompanyTemp.Name);
+                CheckSessionForTimeoutAndError(SessionID, 5, CompanyTemp.Name);
+            until CompanyTemp.Next() = 0;
+    end;
+
+    procedure InsertModifyItemDiscGroupInOtherCompanies(ItemDiscGroup: Record "Item Discount Group")
+
+    var
+        CompanyTemp: Record Company temporary;
+        SessionID: Integer;
+    begin
+        GetCompaniesToSyncTo(CompanyTemp);
+        if CompanyTemp.Count() = 0 then
+            exit;
+        if CompanyTemp.FindSet() then
+            repeat
+                SessionID := RunInsertModifyItemDiscGroupInOtherCompany(ItemDiscGroup, CompanyTemp.Name);
+                CheckSessionForTimeoutAndError(SessionID, 5, CompanyTemp.Name);
+            until CompanyTemp.Next() = 0;
+    end;
+
     local procedure CheckSessionForTimeoutAndError(SessionID: Integer; SessionTimerSeconds: Integer; RunningInCompany: Text)
     var
         OK: Boolean;
@@ -77,6 +109,28 @@ codeunit 50005 "IC Sync Management"
         SessionEventComment: Text;
     begin
         OK := StartSession(SessionID, 50006, RunInCompany);
+        if not OK then
+            Error(GetLastErrorText());
+        Commit();
+    end;
+
+    local procedure RunInsertModifyItemInOtherCompany(Item: record item; RunInCompany: Text) SessionID: Integer
+    var
+        OK: Boolean;
+        SessionEventComment: Text;
+    begin
+        OK := StartSession(SessionID, 50007, RunInCompany, Item);
+        if not OK then
+            Error(GetLastErrorText());
+        Commit();
+    end;
+
+    local procedure RunInsertModifyItemDiscGroupInOtherCompany(ItemDiscGroup: record "Item Discount Group"; RunInCompany: Text) SessionID: Integer
+    var
+        OK: Boolean;
+        SessionEventComment: Text;
+    begin
+        OK := StartSession(SessionID, 50008, RunInCompany, ItemDiscGroup);
         if not OK then
             Error(GetLastErrorText());
         Commit();
