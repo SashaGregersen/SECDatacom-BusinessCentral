@@ -8,7 +8,16 @@ codeunit 50005 "IC Sync Management"
     local procedure CopySPWToOtherCompanies(SalesPriceWorkSheet: Record "Sales Price Worksheet"; CompanyToCopyTo: Text)
     var
         LocalSalesPricWorksheet: Record "Sales Price Worksheet";
+        LocalGLSetup: Record "General Ledger Setup";
+        ForeignGLSetup: Record "General Ledger Setup";
     begin
+        if SalesPriceWorkSheet."Currency Code" = '' then begin
+            LocalGLSetup.Get();
+            ForeignGLSetup.ChangeCompany(CompanyToCopyTo);
+            ForeignGLSetup.Get();
+            if LocalGLSetup."LCY Code" <> ForeignGLSetup."LCY Code" then
+                SalesPriceWorkSheet."Currency Code" := LocalGLSetup."LCY Code";
+        end;
         LocalSalesPricWorksheet.ChangeCompany(CompanyToCopyTo);
         LocalSalesPricWorksheet := SalesPriceWorkSheet;
         if not LocalSalesPricWorksheet.Insert(false) then
@@ -48,6 +57,7 @@ codeunit 50005 "IC Sync Management"
     var
         CompanyTemp: Record Company temporary;
         SessionID: Integer;
+
     begin
         GetCompaniesToSyncTo(CompanyTemp);
         if CompanyTemp.Count() = 0 then
