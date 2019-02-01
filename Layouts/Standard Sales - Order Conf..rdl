@@ -316,6 +316,21 @@ End Function
         <Field Name="SelltoCustomerNo_Lbl">
           <DataField>SelltoCustomerNo_Lbl</DataField>
         </Field>
+        <Field Name="Sell_to_Customer_Name">
+          <DataField>Sell_to_Customer_Name</DataField>
+        </Field>
+        <Field Name="Sell_to_Address">
+          <DataField>Sell_to_Address</DataField>
+        </Field>
+        <Field Name="Sell_to_Address_2">
+          <DataField>Sell_to_Address_2</DataField>
+        </Field>
+        <Field Name="Sell_to_City">
+          <DataField>Sell_to_City</DataField>
+        </Field>
+        <Field Name="Sell_to_Country_Region_Code">
+          <DataField>Sell_to_Country_Region_Code</DataField>
+        </Field>
         <Field Name="VATRegistrationNo">
           <DataField>VATRegistrationNo</DataField>
         </Field>

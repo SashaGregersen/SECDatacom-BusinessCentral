@@ -268,6 +268,21 @@ report 50005 "SEC Sales - Order Conf."
             column(SelltoCustomerNo_Lbl; FieldCaption("Sell-to Customer No."))
             {
             }
+            column(Sell_to_Customer_Name; "Sell-to Customer Name")
+            {
+            }
+            column(Sell_to_Address; "Sell-to address")
+            {
+            }
+            column(Sell_to_Address_2; "Sell-to Address 2")
+            {
+            }
+            column(Sell_to_City; "Sell-to City")
+            {
+            }
+            column(Sell_to_Country_Region_Code; "Sell-to Country/Region Code")
+            {
+            }
             column(VATRegistrationNo; GetCustomerVATRegistrationNumber)
             {
             }
@@ -478,6 +493,7 @@ report 50005 "SEC Sales - Order Conf."
                 column(CrossReferenceNo_Lbl; FieldCaption("Cross-Reference No."))
                 {
                 }
+
                 dataitem(AssemblyLine; "Assembly Line")
                 {
                     DataItemTableView = SORTING ("Document No.", "Line No.");
