@@ -27,23 +27,16 @@ codeunit 50002 "Synchronize Master Data"
 
     procedure SynchronizeInventoryToCompany(Item: Record Item)
     var
-        Company: Record Company;
-        InventorySetup: Record "Inventory Setup";
-        Newrec: Record Item;
+        ICSyncMgt: Codeunit "IC Sync Management";
     begin
-        Company.SetFilter(Company.Name, '<>%1', CompanyName());
-        IF Company.FindSet() then
-            repeat
-                InventorySetup.ChangeCompany(Company.Name);
-                IF InventorySetup.Get() then
-                    If InventorySetup."Receive Synchronized Items" = TRUE then begin
-                        Newrec.ChangeCompany(Company.Name);
-                        Newrec.Init();
-                        Newrec.TransferFields(Item);
-                        IF not Newrec.Insert(false) then
-                            Newrec.Modify(false);
-                    end;
-            until Company.next = 0;
+        ICSyncMgt.InsertModifyItemInOtherCompanies(Item);
+    End;
+
+    procedure SynchronizeItemDiscGroupToCompany(ItemDiscGroup: Record "Item Discount Group")
+    var
+        ICSyncMgt: Codeunit "IC Sync Management";
+    begin
+        ICSyncMgt.InsertModifyItemDiscGroupInOtherCompanies(ItemDiscGroup);
     End;
 
     procedure SynchronizeCustomerToSECDK(customer: record Customer)
