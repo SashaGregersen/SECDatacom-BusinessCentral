@@ -268,6 +268,21 @@ report 50004 "SEC Sales - Quote"
             column(SelltoCustomerNo_Lbl; FieldCaption("Sell-to Customer No."))
             {
             }
+            column(Sell_to_Customer_Name; "Sell-to Customer Name")
+            {
+            }
+            column(Sell_to_Address; "Sell-to address")
+            {
+            }
+            column(Sell_to_Address_2; "Sell-to Address 2")
+            {
+            }
+            column(Sell_to_City; "Sell-to City")
+            {
+            }
+            column(Sell_to_Country_Region_Code; "Sell-to Country/Region Code")
+            {
+            }
             column(VATRegistrationNo; GetCustomerVATRegistrationNumber)
             {
             }
@@ -378,27 +393,6 @@ report 50004 "SEC Sales - Quote"
             }
             column(Reseller; "Reseller")
             {
-            }
-            dataitem(Reseller; Customer)
-            {
-                DataItemLink = "No." = FIELD ("Reseller");
-                DataItemLinkReference = Header;
-                UseTemporary = true;
-                column(ResellerName; Name)
-                {
-                }
-                column(ResellerAddress; Address)
-                {
-                }
-                column(ResellerPostcode; "Post code")
-                {
-                }
-                column(ResellerCity; City)
-                {
-                }
-                column(ResellerCountry; "Country/Region Code")
-                {
-                }
             }
             dataitem(EndCustomer; Customer)
             {
