@@ -93,6 +93,8 @@ codeunit 50051 "Price Event Handler"
     [EventSubscriber(ObjectType::Table, database::"Sales Price", 'OnAfterInsertEvent', '', true, true)]
     local procedure SalesPriceOnAfterinsert(var Rec: Record "Sales Price")
     begin
+        if Rec.IsTemporary() then
+            exit;
         Rec."Allow Line Disc." := false;
         Rec.Modify(false);
     end;
@@ -104,6 +106,8 @@ codeunit 50051 "Price Event Handler"
         SalesPriceWorksheet: Record "Sales Price Worksheet";
         ImplementPrices: Report "Implement Price Change";
     begin
+        if Rec.IsTemporary() then
+            exit;
         DiscontGroupFilters.SetRange(Type, DiscontGroupFilters.type::"Item Disc. Group");
         DiscontGroupFilters.SetRange(Code, Rec.Code);
         DiscontGroupFilters.SetRange("Sales Type", rec."Sales Type");
@@ -123,6 +127,8 @@ codeunit 50051 "Price Event Handler"
         PurchasePrice: Record "Purchase Price";
         ListPrice: Record "Sales Price";
     begin
+        if Rec.IsTemporary() then
+            exit;
         if Rec."Line Discount %" <> xRec."Line Discount %" then begin
             if AdvPriceMgt.FindListPriceForitem(Rec."Item No.", Rec."Currency Code", ListPrice) then
                 AdvPriceMgt.CreateUpdatePurchasePrices(Rec, ListPrice);
@@ -140,6 +146,8 @@ codeunit 50051 "Price Event Handler"
         PurchasePrice: Record "Purchase Price";
         ListPrice: Record "Sales Price";
     begin
+        if Rec.IsTemporary() then
+            exit;
         if not AdvPriceMgt.FindListPriceForitem(Rec."Item No.", Rec."Currency Code", ListPrice) then
             exit;
         AdvPriceMgt.CreateUpdatePurchasePrices(Rec, ListPrice);
@@ -151,6 +159,8 @@ codeunit 50051 "Price Event Handler"
     var
         PurchaseDisc: Record "Purchase Line Discount";
     begin
+        if Rec.IsTemporary() then
+            exit;
         AdvPriceMgt.CreateSalesPriceFromPurchasePriceMarkup(Rec);
     end;
 
@@ -159,6 +169,8 @@ codeunit 50051 "Price Event Handler"
     var
         PurchaseDisc: Record "Purchase Line Discount";
     begin
+        if Rec.IsTemporary() then
+            exit;
         if Rec."Direct Unit Cost" = xrec."Direct Unit Cost" then
             exit;
         AdvPriceMgt.CreateSalesPriceFromPurchasePriceMarkup(Rec);
