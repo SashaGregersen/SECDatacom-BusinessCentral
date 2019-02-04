@@ -5562,7 +5562,6 @@
                             </Border>
                           </Style>
                         </Rectangle>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -5641,36 +5640,21 @@
                     </Border>
                   </Style>
                 </Line>
-                <Textbox Name="CompanyPicture">
-                  <CanGrow>true</CanGrow>
-                  <KeepTogether>true</KeepTogether>
-                  <Paragraphs>
-                    <Paragraph>
-                      <TextRuns>
-                        <TextRun>
-                          <Value>=First(Fields!CompanyPicture.Value, "DataSet_Result")</Value>
-                          <Style />
-                        </TextRun>
-                      </TextRuns>
-                      <Style />
-                    </Paragraph>
-                  </Paragraphs>
-                  <rd:DefaultName>CompanyPicture</rd:DefaultName>
-                  <Top>1.74307cm</Top>
-                  <Left>2.51037cm</Left>
-                  <Height>0.6cm</Height>
-                  <Width>2.5cm</Width>
+                <Image Name="CompanyInfoPicture1">
+                  <Source>Database</Source>
+                  <Value>=Convert.ToBase64String(Fields!CompanyInfoPicture.Value)</Value>
+                  <MIMEType>image/bmp</MIMEType>
+                  <Sizing>FitProportional</Sizing>
+                  <Top>1.4cm</Top>
+                  <Height>1.29558cm</Height>
+                  <Width>2.80141cm</Width>
                   <ZIndex>2</ZIndex>
                   <Style>
                     <Border>
                       <Style>None</Style>
                     </Border>
-                    <PaddingLeft>2pt</PaddingLeft>
-                    <PaddingRight>2pt</PaddingRight>
-                    <PaddingTop>2pt</PaddingTop>
-                    <PaddingBottom>2pt</PaddingBottom>
                   </Style>
-                </Textbox>
+                </Image>
               </ReportItems>
               <KeepTogether>true</KeepTogether>
               <Height>3cm</Height>
