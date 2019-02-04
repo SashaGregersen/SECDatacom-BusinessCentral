@@ -388,7 +388,7 @@ report 50004 "SEC Sales - Quote"
             column(VATClause_Lbl; VATClause.TableCaption)
             {
             }
-            column(End_Customer; "End Customer")
+            column(Endcustomer_Lbl; FieldCaption("End Customer"))
             {
             }
             column(EndCustName; Endcustomer.Name)
