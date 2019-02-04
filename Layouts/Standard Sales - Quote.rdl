@@ -393,9 +393,6 @@
         <Field Name="End_Customer">
           <DataField>End_Customer</DataField>
         </Field>
-        <Field Name="Reseller">
-          <DataField>Reseller</DataField>
-        </Field>
         <Field Name="EndCustName">
           <DataField>EndCustName</DataField>
         </Field>
@@ -513,11 +510,11 @@
         <Field Name="Price_Lbl">
           <DataField>Price_Lbl</DataField>
         </Field>
+        <Field Name="Item">
+          <DataField>Item</DataField>
+        </Field>
         <Field Name="PricePer_Lbl">
           <DataField>PricePer_Lbl</DataField>
-        </Field>
-        <Field Name="Vendor_Item_No_">
-          <DataField>Vendor_Item_No_</DataField>
         </Field>
         <Field Name="WorkDescriptionLineNumber">
           <DataField>WorkDescriptionLineNumber</DataField>
@@ -4442,14 +4439,14 @@
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="Vendor_Item_No_">
+                                          <Textbox Name="Item">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!Vendor_Item_No_.Value</Value>
+                                                    <Value>=Fields!Item.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -4459,7 +4456,7 @@
                                                 <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>Vendor_Item_No_</rd:DefaultName>
+                                            <rd:DefaultName>Item</rd:DefaultName>
                                             <Style>
                                               <Border>
                                                 <Color>LightGrey</Color>
