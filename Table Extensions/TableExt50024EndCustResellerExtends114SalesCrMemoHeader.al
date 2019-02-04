@@ -33,6 +33,10 @@ tableextension 50024 "End Customer and Reseller 4" extends 114
             DataClassification = ToBeClassified;
             Editable = false;
         }
+        field(50008; "Suppress Prices on Printouts"; Boolean)
+        {
+            DataClassification = ToBeClassified;
+        }
     }
 
     var

@@ -3,7 +3,7 @@ report 50005 "SEC Sales - Order Conf."
     // version NAVW113.00
 
     RDLCLayout = './Layouts/Standard Sales - Order Conf..rdl';
-    WordLayout = './Layouts/Standard Sales - Order Conf..docx';
+    //WordLayout = './Layouts/Standard Sales - Order Conf..docx';
     Caption = 'Sales - Confirmation';
     DefaultLayout = Word;
     PreviewMode = PrintLayout;
@@ -367,26 +367,23 @@ report 50005 "SEC Sales - Order Conf."
             column(ShowWorkDescription; ShowWorkDescription)
             {
             }
-            dataitem(EndCustomer; Customer)
+            column(Endcustomer_Lbl; FieldCaption("End Customer"))
             {
-                DataItemLink = "No." = FIELD ("End Customer");
-                DataItemLinkReference = Header;
-                UseTemporary = true;
-                column(EndCustName; Name)
-                {
-                }
-                column(EndCustAddress; Address)
-                {
-                }
-                column(EndCustPostcode; "Post code")
-                {
-                }
-                column(EndCustCity; City)
-                {
-                }
-                column(EndCustCountry; "Country/Region Code")
-                {
-                }
+            }
+            column(EndCustName; Endcustomer.Name)
+            {
+            }
+            column(EndCustAddress; Endcustomer.Address)
+            {
+            }
+            column(EndCustPostcode; Endcustomer."Post code")
+            {
+            }
+            column(EndCustCity; Endcustomer.City)
+            {
+            }
+            column(EndCustCountry; Endcustomer."Country/Region Code")
+            {
             }
             dataitem(Line; "Sales Line")
             {
@@ -493,6 +490,9 @@ report 50005 "SEC Sales - Order Conf."
                 column(CrossReferenceNo_Lbl; FieldCaption("Cross-Reference No."))
                 {
                 }
+                column(Item; Item."Vendor Item No.")
+                {
+                }
                 dataitem(AssemblyLine; "Assembly Line")
                 {
                     DataItemTableView = SORTING ("Document No.", "Line No.");
@@ -529,6 +529,10 @@ report 50005 "SEC Sales - Order Conf."
                     if Type = Type::"G/L Account" then
                         "No." := '';
 
+                    if Type = Type::Item then
+                        Item.Get("No.")
+                    else
+                        Clear(Item);
                     if "Line Discount %" = 0 then
                         LineDiscountPctText := ''
                     else
@@ -850,6 +854,11 @@ report 50005 "SEC Sales - Order Conf."
                 Line.CalcVATAmountLines(0, Header, Line, VATAmountLine);
                 Line.UpdateVATOnLines(0, Header, Line, VATAmountLine);
 
+                if "End Customer" <> '' then
+                    Endcustomer.Get("End Customer")
+                else
+                    clear(Endcustomer);
+
                 if not IsReportInPreviewMode then
                     CODEUNIT.Run(CODEUNIT::"Sales-Printed", Header);
 
@@ -1088,6 +1097,8 @@ report 50005 "SEC Sales - Order Conf."
         BodyLbl: Label 'Thank you for your business. Your order confirmation is attached to this message.';
         PmtDiscText: Text;
         ShowWorkDescription: Boolean;
+        Item: Record Item;
+        Endcustomer: Record Customer;
         WorkDescriptionLine: Text;
 
     local procedure InitLogInteraction()
