@@ -388,30 +388,25 @@ report 50004 "SEC Sales - Quote"
             column(VATClause_Lbl; VATClause.TableCaption)
             {
             }
-            column(End_Customer; "End Customer")
+            column(Endcustomer_Lbl; FieldCaption("End Customer"))
             {
             }
-            dataitem(EndCustomer; "Customer")
+            column(EndCustName; Endcustomer.Name)
             {
-                DataItemLink = "No." = field ("End customer");
-                DataItemLinkReference = Header;
-                UseTemporary = true;
-                column(EndCustName; Name)
-                {
-                }
-                column(EndCustAddress; Address)
-                {
-                }
-                column(EndCustPostcode; "Post code")
-                {
-                }
-                column(EndCustCity; City)
-                {
-                }
-                column(EndCustCountry; "Country/Region Code")
-                {
-                }
             }
+            column(EndCustAddress; Endcustomer.Address)
+            {
+            }
+            column(EndCustPostcode; Endcustomer."Post code")
+            {
+            }
+            column(EndCustCity; Endcustomer.City)
+            {
+            }
+            column(EndCustCountry; Endcustomer."Country/Region Code")
+            {
+            }
+
             dataitem(Line; "Sales Line")
             {
                 DataItemLink = "Document No." = FIELD ("No.");
@@ -520,7 +515,7 @@ report 50004 "SEC Sales - Quote"
                 column(Price_Lbl; PriceLbl)
                 {
                 }
-                column(Item_vendor_no; item."vendor item no.")
+                column(Item; Item."Vendor Item No.")
                 {
                 }
                 column(PricePer_Lbl; PricePerLbl)
@@ -531,6 +526,7 @@ report 50004 "SEC Sales - Quote"
                 begin
                     if Type = Type::"G/L Account" then
                         "No." := '';
+
                     if Type = Type::Item then
                         Item.Get("No.")
                     else
@@ -811,6 +807,11 @@ report 50004 "SEC Sales - Quote"
                 Line.CalcVATAmountLines(0, Header, Line, VATAmountLine);
                 Line.UpdateVATOnLines(0, Header, Line, VATAmountLine);
 
+                if "End Customer" <> '' then
+                    Endcustomer.Get("End Customer")
+                else
+                    clear(Endcustomer);
+
                 if IdentityManagement.IsInvAppId then
                     "Language Code" := Language.GetUserLanguage;
 
@@ -1060,8 +1061,9 @@ report 50004 "SEC Sales - Quote"
         EstimateBodyLbl: Label 'As promised, here''s our estimate. Please see the attached estimate for details.';
         QuoteValidToDateLbl: Label 'Valid until';
         QtyLbl: Label 'Qty', Comment = 'Short form of Quantity';
-        Item: Record Item;
         PriceLbl: Label 'Price';
+        Item: record Item;
+        Endcustomer: Record Customer;
         PricePerLbl: Label 'Price per';
 
     local procedure InitLogInteraction()
