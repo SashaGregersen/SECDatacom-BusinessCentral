@@ -14,7 +14,8 @@ codeunit 50054 "Sales Order Event Handler"
         if rec.Type = rec.type::Item then begin
             Item.Get(rec."No.");
             Item.TestField("Default Location");
-            rec.validate("Location Code", item."Default Location");
+            if item."Default Location" <> '' then
+                rec.validate("Location Code", item."Default Location");
         end;
     end;
 
@@ -29,7 +30,8 @@ codeunit 50054 "Sales Order Event Handler"
         if rec.Type = rec.type::Item then begin
             Item.Get(rec."No.");
             Item.TestField("Default Location");
-            rec.validate("Location Code", item."Default Location");
+            if Item."Default Location" <> '' then
+                rec.validate("Location Code", item."Default Location");
             rec.Modify(false);
         end;
     end;
