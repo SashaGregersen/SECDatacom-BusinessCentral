@@ -19,7 +19,7 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>18.5994cm</Width>
+                  <Width>19.62645cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -2907,7 +2907,7 @@
                               </TablixRowHierarchy>
                               <DataSetName>DataSet_Result</DataSetName>
                               <Top>0.40942cm</Top>
-                              <Left>0.07455cm</Left>
+                              <Left>0.17395cm</Left>
                               <Height>8.47126cm</Height>
                               <Width>18.5cm</Width>
                               <Style>
@@ -2922,10 +2922,10 @@
                               <TablixBody>
                                 <TablixColumns>
                                   <TablixColumn>
-                                    <Width>2cm</Width>
+                                    <Width>3.18461cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>4.97515cm</Width>
+                                    <Width>4.02265cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
                                     <Width>2cm</Width>
@@ -2943,12 +2943,12 @@
                                     <Width>1.46729cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>2.79214cm</Width>
+                                    <Width>2.59274cm</Width>
                                   </TablixColumn>
                                 </TablixColumns>
                                 <TablixRows>
                                   <TablixRow>
-                                    <Height>0.6cm</Height>
+                                    <Height>0.83813cm</Height>
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
@@ -2975,6 +2975,11 @@
                                               <Border>
                                                 <Style>None</Style>
                                               </Border>
+                                              <TopBorder>
+                                                <Color>Black</Color>
+                                                <Style>Solid</Style>
+                                                <Width>1pt</Width>
+                                              </TopBorder>
                                               <BottomBorder>
                                                 <Style>Solid</Style>
                                               </BottomBorder>
@@ -3010,6 +3015,11 @@
                                               <Border>
                                                 <Style>None</Style>
                                               </Border>
+                                              <TopBorder>
+                                                <Color>Black</Color>
+                                                <Style>Solid</Style>
+                                                <Width>1pt</Width>
+                                              </TopBorder>
                                               <BottomBorder>
                                                 <Style>Solid</Style>
                                               </BottomBorder>
@@ -3047,6 +3057,11 @@
                                               <Border>
                                                 <Style>None</Style>
                                               </Border>
+                                              <TopBorder>
+                                                <Color>Black</Color>
+                                                <Style>Solid</Style>
+                                                <Width>1pt</Width>
+                                              </TopBorder>
                                               <BottomBorder>
                                                 <Style>Solid</Style>
                                               </BottomBorder>
@@ -3082,6 +3097,11 @@
                                               <Border>
                                                 <Style>None</Style>
                                               </Border>
+                                              <TopBorder>
+                                                <Color>Black</Color>
+                                                <Style>Solid</Style>
+                                                <Width>1pt</Width>
+                                              </TopBorder>
                                               <BottomBorder>
                                                 <Style>Solid</Style>
                                               </BottomBorder>
@@ -3119,6 +3139,11 @@
                                               <Border>
                                                 <Style>None</Style>
                                               </Border>
+                                              <TopBorder>
+                                                <Color>Black</Color>
+                                                <Style>Solid</Style>
+                                                <Width>1pt</Width>
+                                              </TopBorder>
                                               <BottomBorder>
                                                 <Style>Solid</Style>
                                               </BottomBorder>
@@ -3154,6 +3179,11 @@
                                               <Border>
                                                 <Style>None</Style>
                                               </Border>
+                                              <TopBorder>
+                                                <Color>Black</Color>
+                                                <Style>Solid</Style>
+                                                <Width>1pt</Width>
+                                              </TopBorder>
                                               <BottomBorder>
                                                 <Style>Solid</Style>
                                               </BottomBorder>
@@ -3191,6 +3221,11 @@
                                               <Border>
                                                 <Style>None</Style>
                                               </Border>
+                                              <TopBorder>
+                                                <Color>Black</Color>
+                                                <Style>Solid</Style>
+                                                <Width>1pt</Width>
+                                              </TopBorder>
                                               <BottomBorder>
                                                 <Style>Solid</Style>
                                               </BottomBorder>
@@ -3228,6 +3263,11 @@
                                               <Border>
                                                 <Style>None</Style>
                                               </Border>
+                                              <TopBorder>
+                                                <Color>Black</Color>
+                                                <Style>Solid</Style>
+                                                <Width>1pt</Width>
+                                              </TopBorder>
                                               <BottomBorder>
                                                 <Style>Solid</Style>
                                               </BottomBorder>
@@ -3416,7 +3456,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!Vendor_Item_No_.Value</Value>
+                                                    <Value>=Fields!ItemNo_Line.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -3728,9 +3768,9 @@
                               <RepeatRowHeaders>true</RepeatRowHeaders>
                               <DataSetName>DataSet_Result</DataSetName>
                               <Top>9.63346cm</Top>
-                              <Left>0.0497cm</Left>
-                              <Height>1.37612cm</Height>
-                              <Width>18.49214cm</Width>
+                              <Left>0.1491cm</Left>
+                              <Height>1.61425cm</Height>
+                              <Width>18.52485cm</Width>
                               <ZIndex>1</ZIndex>
                               <Style>
                                 <Border>
@@ -4459,7 +4499,7 @@
                               <KeepTogether>true</KeepTogether>
                               <DataSetName>DataSet_Result</DataSetName>
                               <Top>11.39055cm</Top>
-                              <Left>11.5497cm</Left>
+                              <Left>11.6491cm</Left>
                               <Height>2.946cm</Height>
                               <Width>7cm</Width>
                               <ZIndex>2</ZIndex>
@@ -4543,7 +4583,7 @@
                               </TablixRowHierarchy>
                               <DataSetName>DataSet_Result</DataSetName>
                               <Top>9.05707cm</Top>
-                              <Left>0.09398cm</Left>
+                              <Left>0.19338cm</Left>
                               <Height>0.4cm</Height>
                               <Width>18.30602cm</Width>
                               <ZIndex>3</ZIndex>
@@ -4553,17 +4593,6 @@
                                 </Border>
                               </Style>
                             </Tablix>
-                            <Line Name="Line4">
-                              <Top>9.57592cm</Top>
-                              <Height>0cm</Height>
-                              <Width>18.5994cm</Width>
-                              <ZIndex>4</ZIndex>
-                              <Style>
-                                <Border>
-                                  <Style>Solid</Style>
-                                </Border>
-                              </Style>
-                            </Line>
                           </ReportItems>
                           <KeepTogether>true</KeepTogether>
                           <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
@@ -4603,7 +4632,7 @@
             <DataSetName>DataSet_Result</DataSetName>
             <Top>0.22049cm</Top>
             <Height>21.59908cm</Height>
-            <Width>18.5994cm</Width>
+            <Width>19.62645cm</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -4614,7 +4643,7 @@
         <Height>21.97832cm</Height>
         <Style />
       </Body>
-      <Width>18.5994cm</Width>
+      <Width>19.62645cm</Width>
       <Page>
         <PageHeader>
           <Height>3.8cm</Height>
@@ -5279,9 +5308,6 @@ End Function
         <Field Name="End_Customer">
           <DataField>End_Customer</DataField>
         </Field>
-        <Field Name="Reseller">
-          <DataField>Reseller</DataField>
-        </Field>
         <Field Name="EndCustName">
           <DataField>EndCustName</DataField>
         </Field>
@@ -5399,11 +5425,11 @@ End Function
         <Field Name="Price_Lbl">
           <DataField>Price_Lbl</DataField>
         </Field>
+        <Field Name="Item_vendor_no">
+          <DataField>Item_vendor_no</DataField>
+        </Field>
         <Field Name="PricePer_Lbl">
           <DataField>PricePer_Lbl</DataField>
-        </Field>
-        <Field Name="Vendor_Item_No_">
-          <DataField>Vendor_Item_No_</DataField>
         </Field>
         <Field Name="WorkDescriptionLineNumber">
           <DataField>WorkDescriptionLineNumber</DataField>

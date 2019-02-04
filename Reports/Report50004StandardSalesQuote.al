@@ -391,12 +391,9 @@ report 50004 "SEC Sales - Quote"
             column(End_Customer; "End Customer")
             {
             }
-            column(Reseller; "Reseller")
+            dataitem(EndCustomer; "Customer")
             {
-            }
-            dataitem(EndCustomer; Customer)
-            {
-                DataItemLink = "No." = FIELD ("End Customer");
+                DataItemLink = "No." = field ("End customer");
                 DataItemLinkReference = Header;
                 UseTemporary = true;
                 column(EndCustName; Name)
@@ -523,23 +520,21 @@ report 50004 "SEC Sales - Quote"
                 column(Price_Lbl; PriceLbl)
                 {
                 }
-                column(PricePer_Lbl; PricePerLbl)
+                column(Item_vendor_no; item."vendor item no.")
                 {
                 }
-                dataitem(Item; Item)
+                column(PricePer_Lbl; PricePerLbl)
                 {
-                    DataItemLink = "No." = FIELD ("No.");
-                    DataItemLinkReference = Line;
-                    UseTemporary = true;
-                    column(Vendor_Item_No_; "Vendor-Item-No.")
-                    {
-                    }
                 }
 
                 trigger OnAfterGetRecord()
                 begin
                     if Type = Type::"G/L Account" then
                         "No." := '';
+                    if Type = Type::Item then
+                        Item.Get("No.")
+                    else
+                        Clear(Item);
 
                     if "Line Discount %" = 0 then
                         LineDiscountPctText := ''
@@ -1065,6 +1060,7 @@ report 50004 "SEC Sales - Quote"
         EstimateBodyLbl: Label 'As promised, here''s our estimate. Please see the attached estimate for details.';
         QuoteValidToDateLbl: Label 'Valid until';
         QtyLbl: Label 'Qty', Comment = 'Short form of Quantity';
+        Item: Record Item;
         PriceLbl: Label 'Price';
         PricePerLbl: Label 'Price per';
 
