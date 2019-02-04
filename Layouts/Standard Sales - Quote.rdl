@@ -4449,6 +4449,13 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
+                                                    <Value>Vendor item no. </Value>
+                                                    <Style>
+                                                      <FontFamily>Segoe UI</FontFamily>
+                                                      <FontSize>8pt</FontSize>
+                                                    </Style>
+                                                  </TextRun>
+                                                  <TextRun>
                                                     <Value>=Fields!Vendor_Item_No_.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
@@ -5565,7 +5572,6 @@
                             </Border>
                           </Style>
                         </Rectangle>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>

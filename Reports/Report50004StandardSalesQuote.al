@@ -520,22 +520,24 @@ report 50004 "SEC Sales - Quote"
                 column(Price_Lbl; PriceLbl)
                 {
                 }
-                column(Item; Item."Vendor Item No.")
-                {
-                }
+
                 column(PricePer_Lbl; PricePerLbl)
                 {
+                }
+                dataitem(Item; Item)
+                {
+                    DataItemLink = "No." = FIELD ("No.");
+                    DataItemLinkReference = Line;
+                    UseTemporary = true;
+                    column(Vendor_Item_No_; "Vendor-Item-No.")
+                    {
+                    }
                 }
 
                 trigger OnAfterGetRecord()
                 begin
                     if Type = Type::"G/L Account" then
                         "No." := '';
-
-                    if Type = Type::Item then
-                        Item.Get("No.")
-                    else
-                        Clear(item);
 
                     if "Line Discount %" = 0 then
                         LineDiscountPctText := ''
@@ -1062,7 +1064,6 @@ report 50004 "SEC Sales - Quote"
         QuoteValidToDateLbl: Label 'Valid until';
         QtyLbl: Label 'Qty', Comment = 'Short form of Quantity';
         PriceLbl: Label 'Price';
-        Item: Record Item;
         PricePerLbl: Label 'Price per';
 
     local procedure InitLogInteraction()
