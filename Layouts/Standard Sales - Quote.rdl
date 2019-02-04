@@ -715,7 +715,7 @@
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>21.59908cm</Height>
+                  <Height>21.36096cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -5562,6 +5562,7 @@
                             </Border>
                           </Style>
                         </Rectangle>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -5590,7 +5591,7 @@
             </TablixRowHierarchy>
             <DataSetName>DataSet_Result</DataSetName>
             <Top>0.22049cm</Top>
-            <Height>21.59908cm</Height>
+            <Height>21.36096cm</Height>
             <Width>19.62645cm</Width>
             <Style>
               <Border>
@@ -5640,21 +5641,6 @@
                     </Border>
                   </Style>
                 </Line>
-                <Image Name="CompanyInfoPicture1">
-                  <Source>Database</Source>
-                  <Value>=Convert.ToBase64String(Fields!CompanyInfoPicture.Value)</Value>
-                  <MIMEType>image/bmp</MIMEType>
-                  <Sizing>FitProportional</Sizing>
-                  <Top>1.4cm</Top>
-                  <Height>1.29558cm</Height>
-                  <Width>2.80141cm</Width>
-                  <ZIndex>2</ZIndex>
-                  <Style>
-                    <Border>
-                      <Style>None</Style>
-                    </Border>
-                  </Style>
-                </Image>
               </ReportItems>
               <KeepTogether>true</KeepTogether>
               <Height>3cm</Height>

@@ -493,10 +493,6 @@ report 50005 "SEC Sales - Order Conf."
                 column(CrossReferenceNo_Lbl; FieldCaption("Cross-Reference No."))
                 {
                 }
-                column(Vendor_item_no; item."Vendor Item No.")
-                {
-                }
-
                 dataitem(AssemblyLine; "Assembly Line")
                 {
                     DataItemTableView = SORTING ("Document No.", "Line No.");
@@ -532,11 +528,6 @@ report 50005 "SEC Sales - Order Conf."
                 begin
                     if Type = Type::"G/L Account" then
                         "No." := '';
-
-                    if Type = Type::Item then
-                        Item.Get("No.")
-                    else
-                        Clear(Item);
 
                     if "Line Discount %" = 0 then
                         LineDiscountPctText := ''
@@ -1097,7 +1088,6 @@ report 50005 "SEC Sales - Order Conf."
         BodyLbl: Label 'Thank you for your business. Your order confirmation is attached to this message.';
         PmtDiscText: Text;
         ShowWorkDescription: Boolean;
-        Item: Record Item;
         WorkDescriptionLine: Text;
 
     local procedure InitLogInteraction()

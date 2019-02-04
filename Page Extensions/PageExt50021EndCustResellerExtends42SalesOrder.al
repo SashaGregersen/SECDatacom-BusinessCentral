@@ -105,11 +105,19 @@ pageextension 50021 "End Customer and Reseller" extends 42
         {
             Visible = false;
         }
+        /*
+        addlast(Processing)
+        {
+            action(ShowMyReport)
+            {
+                Image = ItemGroup;
+                trigger OnAction();
+                begin
+                    SalesOrder.Run();
+                end;
+            }
+        }*/
     }
-
-
-
-
     var
-
+    // SalesOrder: report 50005;
 }
