@@ -45,25 +45,26 @@ codeunit 50056 "Req Worksheet Event Handler"
         Salesline: Record "Sales Line";
         EntryNo: integer;
     begin
-        /* EntryNo := 0;
-        ReservationEntry.FindLast();
-        EntryNo := ReservationEntry."Entry No." + 1;
-        ReservationEntry.SetRange("Entry No.", EntryNo); */ // hvordan finder vi entry no?
         ReservationEntry.SetRange("Source ID", PurchOrderLine."Document No.");
         ReservationEntry.SetRange("Source Ref. No.", PurchOrderLine."Line No.");
         ReservationEntry.SetRange("Source Type", 39);
         ReservationEntry.SetRange("Source Subtype", PurchOrderLine."Document Type");
         ReservationEntry.SetRange("Reservation Status", ReservationEntry."Reservation Status"::Reservation);
         ReservationEntry.SetRange(Binding, ReservationEntry.Binding::"Order-to-Order");
-        if ReservationEntry.FindLast() then begin
-            if Salesline.Get(PurchOrderLine."Document Type", ReservationEntry."Source ID", ReservationEntry."Source Ref. No.") then begin // source ID er her købsordrenummer
-                if Salesline."Purchase Price on Purchase Order" <> PurchOrderLine."Direct Unit Cost" then
-                    PurchOrderLine.Validate("Direct Unit Cost", Salesline."Purchase Price on Purchase Order");
-                if PurchOrderLine."Vendor Item No." <> '' then
-                    PurchOrderLine.Validate("Vendor-Item-No", PurchOrderLine."Vendor-Item-No");
-                if Salesline."Bid No." <> '' then
-                    PurchOrderLine.Validate("Bid No.", Salesline."Bid No.");
-                PurchOrderLine.Modify(true);
+        if ReservationEntry.FindFirst() then begin
+            ReservationEntry.init;
+            ReservationEntry.SetRange(Positive, false);
+            ReservationEntry.SetRange("Source Type", 37);
+            if ReservationEntry.FindFirst() then begin
+                if Salesline.Get(PurchOrderLine."Document Type", ReservationEntry."Source ID", ReservationEntry."Source Ref. No.") then begin // source ID er her købsordrenummer
+                    if Salesline."Purchase Price on Purchase Order" <> PurchOrderLine."Direct Unit Cost" then
+                        PurchOrderLine.Validate("Direct Unit Cost", Salesline."Purchase Price on Purchase Order");
+                    if PurchOrderLine."Vendor Item No." <> '' then
+                        PurchOrderLine.Validate("Vendor-Item-No", PurchOrderLine."Vendor-Item-No");
+                    if Salesline."Bid No." <> '' then
+                        PurchOrderLine.Validate("Bid No.", Salesline."Bid No.");
+                    PurchOrderLine.Modify(true);
+                end;
             end;
         end;
     end;
