@@ -2,6 +2,7 @@ codeunit 50002 "Synchronize Master Data"
 {
     trigger OnRun();
     begin
+
     end;
 
     procedure UpdateInventoryFromLocation(PurchLine: record "Purchase Line"): Decimal

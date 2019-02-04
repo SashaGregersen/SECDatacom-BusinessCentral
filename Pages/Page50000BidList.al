@@ -91,6 +91,17 @@ page 50000 "Bid List"
                     CurrPage.Update(true);
                 end;
             }
+            action("Copy To Other Companies")
+            {
+                ApplicationArea = All;
+
+                trigger OnAction()
+                var
+                    BidMgt: Codeunit "Bid Management";
+                begin
+                    BidMgt.CopyBidToOtherCompanies(Rec);
+                end;
+            }
         }
     }
     var

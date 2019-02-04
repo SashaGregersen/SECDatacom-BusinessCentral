@@ -8,7 +8,16 @@ codeunit 50005 "IC Sync Management"
     local procedure CopySPWToOtherCompanies(SalesPriceWorkSheet: Record "Sales Price Worksheet"; CompanyToCopyTo: Text)
     var
         LocalSalesPricWorksheet: Record "Sales Price Worksheet";
+        LocalGLSetup: Record "General Ledger Setup";
+        ForeignGLSetup: Record "General Ledger Setup";
     begin
+        if SalesPriceWorkSheet."Currency Code" = '' then begin
+            LocalGLSetup.Get();
+            ForeignGLSetup.ChangeCompany(CompanyToCopyTo);
+            ForeignGLSetup.Get();
+            if LocalGLSetup."LCY Code" <> ForeignGLSetup."LCY Code" then
+                SalesPriceWorkSheet."Currency Code" := LocalGLSetup."LCY Code";
+        end;
         LocalSalesPricWorksheet.ChangeCompany(CompanyToCopyTo);
         LocalSalesPricWorksheet := SalesPriceWorkSheet;
         if not LocalSalesPricWorksheet.Insert(false) then
@@ -34,9 +43,47 @@ codeunit 50005 "IC Sync Management"
             until CompanyRec.Next() = 0;
     end;
 
-    procedure SyncPurchasePricesToOtherCompanies()
-    //Add the specific sales prices form parent company as specific purchase prices in the child company
+    procedure CopyPurchasePricesToOtherCompanies(ItemNo: code[20])
+    //Add the specific sales prices from parent company as specific purchase prices in the child company
 
+    var
+        ICPartner: Record "IC Partner";
+        ICPartnerInOtherCompany: Record "IC Partner";
+        SalesPrice: Record "Sales Price";
+        PurchasePrice: Record "Purchase Price";
+    begin
+        ICPartner.SetFilter("Inbox Details", '<>%1', '');
+        if ICPartner.FindSet() then
+            repeat
+                SalesPrice.SetRange("Item No.", ItemNo);
+                SalesPrice.SetRange("Sales Type", SalesPrice."Sales Type"::Customer);
+                SalesPrice.SetRange("Sales Code", ICPartner."Customer No.");
+                if SalesPrice.FindSet() then
+                    repeat
+                        ICPartnerInOtherCompany.ChangeCompany(ICPartner."Inbox Details");
+                        ICPartnerInOtherCompany.SetRange("Inbox Details", CompanyName());
+                        if ICPartnerInOtherCompany.FindFirst() then begin
+                            PurchasePrice.ChangeCompany(ICPartner."Inbox Details");
+                            PurchasePrice.Init();
+                            PurchasePrice."Item No." := SalesPrice."Item No.";
+                            PurchasePrice."Vendor No." := ICPartnerInOtherCompany."Vendor No.";
+                            PurchasePrice."Unit of Measure Code" := SalesPrice."Unit of Measure Code";
+                            if SalesPrice."Currency Code" <> '' then
+                                PurchasePrice."Currency Code" := SalesPrice."Currency Code"
+                            else
+                                PurchasePrice."Currency Code" := ICPartnerInOtherCompany."Currency Code";
+                            PurchasePrice."Starting Date" := SalesPrice."Starting Date";
+                            PurchasePrice."Ending Date" := SalesPrice."Ending Date";
+                            PurchasePrice."Minimum Quantity" := SalesPrice."Minimum Quantity";
+                            PurchasePrice."Direct Unit Cost" := SalesPrice."Unit Price";
+                            if not PurchasePrice.Insert(false) then
+                                PurchasePrice.Modify(false);
+                        end;
+                    until SalesPrice.Next() = 0;
+            until ICPartner.Next() = 0;
+    end;
+
+    procedure CopyBidsToOtherCompanies()
     var
         myInt: Integer;
     begin
@@ -46,14 +93,20 @@ codeunit 50005 "IC Sync Management"
     procedure UpdatePricesInOtherCompanies(SalesPriceWorkSheet: Record "Sales Price Worksheet")
 
     var
+        InventorySetup: Record "Inventory Setup";
         CompanyTemp: Record Company temporary;
         SessionID: Integer;
+
     begin
+        InventorySetup.Get();
+        if not InventorySetup."Synchronize Item" then
+            exit;
         GetCompaniesToSyncTo(CompanyTemp);
         if CompanyTemp.Count() = 0 then
             exit;
         if CompanyTemp.FindSet() then
             repeat
+                CopyPurchasePricesToOtherCompanies(SalesPriceWorkSheet."Item No.");
                 CopySPWToOtherCompanies(SalesPriceWorkSheet, CompanyTemp.Name);
                 SessionID := RunUpdateListPricesInOtherCompany(CompanyTemp.Name);
                 CheckSessionForTimeoutAndError(SessionID, 30, CompanyTemp.Name);
