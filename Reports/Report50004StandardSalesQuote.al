@@ -520,7 +520,7 @@ report 50004 "SEC Sales - Quote"
                 column(Price_Lbl; PriceLbl)
                 {
                 }
-                column(Item_vendor_no; item."vendor item no.")
+                column(Item; Item."Vendor Item No.")
                 {
                 }
                 column(PricePer_Lbl; PricePerLbl)
@@ -531,10 +531,11 @@ report 50004 "SEC Sales - Quote"
                 begin
                     if Type = Type::"G/L Account" then
                         "No." := '';
+
                     if Type = Type::Item then
                         Item.Get("No.")
                     else
-                        Clear(Item);
+                        Clear(item);
 
                     if "Line Discount %" = 0 then
                         LineDiscountPctText := ''
@@ -1060,8 +1061,8 @@ report 50004 "SEC Sales - Quote"
         EstimateBodyLbl: Label 'As promised, here''s our estimate. Please see the attached estimate for details.';
         QuoteValidToDateLbl: Label 'Valid until';
         QtyLbl: Label 'Qty', Comment = 'Short form of Quantity';
-        Item: Record Item;
         PriceLbl: Label 'Price';
+        Item: Record Item;
         PricePerLbl: Label 'Price per';
 
     local procedure InitLogInteraction()
