@@ -37,7 +37,7 @@ codeunit 50000 "Advanced Price Management"
             until ItemDiscGroupTemp.Next() = 0;
         if ICPartner.FindSet() then
             repeat
-                ICSyncMgt.SyncPurchasePricesToOtherCompanies();
+                ICSyncMgt.CopyPurchasePricesToOtherCompanies(SalesPriceWorksheet."Item No.");
             until ICPartner.Next() = 0;
 
     end;
@@ -257,6 +257,7 @@ codeunit 50000 "Advanced Price Management"
         SalesPriceWorksheet: Record "Sales Price Worksheet";
         ImplementPrices: Report "Implement Price Change";
         Suggestprices: report "Suggest Sales Price on Wksh.";
+        ICSyncMgt: Codeunit "IC Sync Management";
     begin
 
         Item.Get(ItemNo);
@@ -301,6 +302,7 @@ codeunit 50000 "Advanced Price Management"
                     end;
                 end;
             until ICPartner.Next() = 0;
+        ICSyncMgt.CopyPurchasePricesToOtherCompanies(Item."No.");
     end;
 
     local procedure CreatePricesForItem(ItemNo: Code[20]; SalesDiscountGroup: Record "Sales Line Discount"; var CurrencyTemp: Record Currency temporary)

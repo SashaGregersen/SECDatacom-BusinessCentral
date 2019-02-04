@@ -2,6 +2,7 @@ codeunit 50002 "Synchronize Master Data"
 {
     trigger OnRun();
     begin
+
     end;
 
     procedure UpdateInventoryFromLocation(PurchLine: record "Purchase Line"): Decimal
@@ -63,6 +64,8 @@ codeunit 50002 "Synchronize Master Data"
     begin
         Rec.validate(Reserve, rec.Reserve::Always);
         Rec.Validate("Prevent Negative Inventory", rec."Prevent Negative Inventory"::Yes);
+        Rec.Validate("Order Tracking Policy", rec."Order Tracking Policy"::"Tracking Only"); // Bruges til at indsætte købsprisen fra salgsordren ud fra req worksheet
+        rec.Validate("Reordering Policy", rec."Reordering Policy"::Order);
     end;
 
 }

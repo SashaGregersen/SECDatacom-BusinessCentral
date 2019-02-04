@@ -7,4 +7,5 @@ codeunit 50006 "IC Sync Sales Price Worksheet"
 
     var
         AdvPriceMgt: Codeunit "Advanced Price Management";
+
 }
