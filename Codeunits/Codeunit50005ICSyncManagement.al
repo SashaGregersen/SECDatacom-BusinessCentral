@@ -83,13 +83,6 @@ codeunit 50005 "IC Sync Management"
             until ICPartner.Next() = 0;
     end;
 
-    procedure CopyBidsToOtherCompanies()
-    var
-        myInt: Integer;
-    begin
-
-    end;
-
     procedure UpdatePricesInOtherCompanies(SalesPriceWorkSheet: Record "Sales Price Worksheet")
 
     var
