@@ -139,6 +139,7 @@ codeunit 50005 "IC Sync Management"
     end;
 
     local procedure CheckSessionForTimeoutAndError(SessionID: Integer; SessionTimerSeconds: Integer; RunningInCompany: Text)
+    //needs to be refactored so the error message is returned to the calling procedure - then the calling procedure can take corrective measures before making the error
     var
         OK: Boolean;
         SessionEventComment: Text;
