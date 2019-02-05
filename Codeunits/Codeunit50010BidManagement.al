@@ -23,8 +23,11 @@ codeunit 50010 "Bid Management"
         BidPrice: Record "Bid Item Price";
         BidPriceToCopyTo: Record "Bid Item Price";
         GLSetup: Record "General Ledger Setup";
+        GLSetupInOtherCompany: Record "General Ledger Setup";
     begin
         GLSetup.Get();
+        GLSetupInOtherCompany.ChangeCompany(CompanyNameToCopyTo);
+        GLSetupInOtherCompany.Get();
         BidToCopyTo.ChangeCompany(CompanyNameToCopyTo);
         BidToCopyTo := BidToCopy;
         if not BidToCopyTo.Insert(false) then
@@ -32,10 +35,11 @@ codeunit 50010 "Bid Management"
         BidPrice.SetRange("Bid No.", BidToCopy."No.");
         if BidPrice.FindSet() then
             repeat
+                if (BidPrice."Currency Code" = '') and (GLSetup."LCY Code" <> GLSetupInOtherCompany."LCY Code") then
+                    BidPrice."Currency Code" := GLSetup."LCY Code";
                 BidPriceToCopyTo.ChangeCompany(CompanyNameToCopyTo);
                 BidPriceToCopyTo := BidPrice;
-                if BidPrice."Currency Code" = '' then
-                    BidPriceToCopyTo."Currency Code" := GLSetup."LCY Code";
+
                 if not BidPriceToCopyTo.Insert(false) then
                     BidPriceToCopyTo.Modify(false);
             until BidPrice.Next() = 0;
