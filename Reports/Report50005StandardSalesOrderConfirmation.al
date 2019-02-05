@@ -2,7 +2,7 @@ report 50005 "SEC Sales - Order Conf."
 {
     // version NAVW113.00
 
-    RDLCLayout = './Layouts/Standard Sales - Order Conf..rdl';
+    RDLCLayout = './Layouts/Standard Sales - Order Conf.rdl';
     //WordLayout = './Layouts/Standard Sales - Order Conf..docx';
     Caption = 'Sales - Confirmation';
     DefaultLayout = Word;
@@ -490,7 +490,7 @@ report 50005 "SEC Sales - Order Conf."
                 column(CrossReferenceNo_Lbl; FieldCaption("Cross-Reference No."))
                 {
                 }
-                column(Item; Item."Vendor Item No.")
+                column(Vendor_Item_No; Item."Vendor Item No.")
                 {
                 }
                 dataitem(AssemblyLine; "Assembly Line")
@@ -533,6 +533,7 @@ report 50005 "SEC Sales - Order Conf."
                         Item.Get("No.")
                     else
                         Clear(Item);
+
                     if "Line Discount %" = 0 then
                         LineDiscountPctText := ''
                     else
