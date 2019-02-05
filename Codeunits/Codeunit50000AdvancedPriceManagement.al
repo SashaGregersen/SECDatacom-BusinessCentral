@@ -173,8 +173,8 @@ codeunit 50000 "Advanced Price Management"
             Salesprice."Unit of Measure Code" := PurchasePrice."Unit of Measure Code";
             Salesprice."Minimum Quantity" := PurchasePrice."Minimum Quantity";
             Salesprice."Unit Price" := PurchasePrice."Direct Unit Cost" / ((100 - PurchaseLineDiscount."Customer Markup") / 100);
-            if not Salesprice.Insert(false) then
-                Salesprice.Modify(false);
+            if not Salesprice.Insert(true) then
+                Salesprice.Modify(true);
 
             clear(Salesprice);
             Salesprice.SetRange("Item No.", PurchasePrice."Item No.");
@@ -277,8 +277,8 @@ codeunit 50000 "Advanced Price Management"
                         Salesprice."Unit of Measure Code" := PurchasePrice."Unit of Measure Code";
                         Salesprice."Minimum Quantity" := PurchasePrice."Minimum Quantity";
                         Salesprice."Unit Price" := round(PurchasePrice."Direct Unit Cost" / ((100 - Item."Transfer Price %") / 100));
-                        if not Salesprice.Insert(false) then
-                            Salesprice.Modify(false);
+                        if not Salesprice.Insert(true) then
+                            Salesprice.Modify(true);
 
                         clear(Salesprice);
                         Salesprice.SetRange("Item No.", PurchasePrice."Item No.");
