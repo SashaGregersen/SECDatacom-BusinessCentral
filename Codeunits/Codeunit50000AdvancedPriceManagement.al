@@ -261,6 +261,8 @@ codeunit 50000 "Advanced Price Management"
     begin
 
         Item.Get(ItemNo);
+        if Item."Transfer Price %" = 0 then
+            exit;
         if ICPartner.FindSet() then
             repeat
                 if ICPartner."Customer No." <> '' then begin
@@ -274,7 +276,7 @@ codeunit 50000 "Advanced Price Management"
                         Salesprice."Item No." := PurchasePrice."Item No.";
                         Salesprice."Unit of Measure Code" := PurchasePrice."Unit of Measure Code";
                         Salesprice."Minimum Quantity" := PurchasePrice."Minimum Quantity";
-                        Salesprice."Unit Price" := PurchasePrice."Direct Unit Cost" / ((100 - Item."Transfer Price %") / 100);
+                        Salesprice."Unit Price" := round(PurchasePrice."Direct Unit Cost" / ((100 - Item."Transfer Price %") / 100));
                         if not Salesprice.Insert(false) then
                             Salesprice.Modify(false);
 
