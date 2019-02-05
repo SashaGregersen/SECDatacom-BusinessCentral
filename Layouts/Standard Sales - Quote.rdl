@@ -3760,14 +3760,14 @@
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="Item">
+                                          <Textbox Name="Vendor_Item_No">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!Item.Value</Value>
+                                                    <Value>=Fields!Vendor_Item_No.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -3777,7 +3777,7 @@
                                                 <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>Item</rd:DefaultName>
+                                            <rd:DefaultName>Vendor_Item_No</rd:DefaultName>
                                             <Style>
                                               <Border>
                                                 <Color>LightGrey</Color>
@@ -3788,6 +3788,7 @@
                                             </Style>
                                           </Textbox>
                                           <ColSpan>5</ColSpan>
+                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell />
@@ -5812,8 +5813,8 @@ End Function
         <Field Name="Price_Lbl">
           <DataField>Price_Lbl</DataField>
         </Field>
-        <Field Name="Item">
-          <DataField>Item</DataField>
+        <Field Name="Vendor_Item_No">
+          <DataField>Vendor_Item_No</DataField>
         </Field>
         <Field Name="PricePer_Lbl">
           <DataField>PricePer_Lbl</DataField>

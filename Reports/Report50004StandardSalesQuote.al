@@ -515,7 +515,7 @@ report 50004 "SEC Sales - Quote"
                 column(Price_Lbl; PriceLbl)
                 {
                 }
-                column(Item; Item."Vendor Item No.")
+                column(Vendor_Item_No; Item."Vendor Item No.")
                 {
                 }
                 column(PricePer_Lbl; PricePerLbl)
