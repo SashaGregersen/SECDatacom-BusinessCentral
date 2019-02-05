@@ -3,7 +3,7 @@ report 50004 "SEC Sales - Quote"
     // version NAVW113.00
 
     RDLCLayout = './Layouts/Standard Sales - Quote.rdl';
-    WordLayout = './Layouts/Standard Sales - Quote.docx';
+    //WordLayout = './Layouts/Standard Sales - Quote.docx';
     Caption = 'Sales - Quote';
     DefaultLayout = RDLC;
     PreviewMode = PrintLayout;
@@ -388,33 +388,25 @@ report 50004 "SEC Sales - Quote"
             column(VATClause_Lbl; VATClause.TableCaption)
             {
             }
-            column(End_Customer; "End Customer")
+            column(Endcustomer_Lbl; FieldCaption("End Customer"))
             {
             }
-            column(Reseller; "Reseller")
+            column(EndCustName; Endcustomer.Name)
             {
             }
-            dataitem(EndCustomer; Customer)
+            column(EndCustAddress; Endcustomer.Address)
             {
-                DataItemLink = "No." = FIELD ("End Customer");
-                DataItemLinkReference = Header;
-                UseTemporary = true;
-                column(EndCustName; Name)
-                {
-                }
-                column(EndCustAddress; Address)
-                {
-                }
-                column(EndCustPostcode; "Post code")
-                {
-                }
-                column(EndCustCity; City)
-                {
-                }
-                column(EndCustCountry; "Country/Region Code")
-                {
-                }
             }
+            column(EndCustPostcode; Endcustomer."Post code")
+            {
+            }
+            column(EndCustCity; Endcustomer.City)
+            {
+            }
+            column(EndCustCountry; Endcustomer."Country/Region Code")
+            {
+            }
+
             dataitem(Line; "Sales Line")
             {
                 DataItemLink = "Document No." = FIELD ("No.");
@@ -523,23 +515,22 @@ report 50004 "SEC Sales - Quote"
                 column(Price_Lbl; PriceLbl)
                 {
                 }
-                column(PricePer_Lbl; PricePerLbl)
+                column(Item; Item."Vendor Item No.")
                 {
                 }
-                dataitem(Item; Item)
+                column(PricePer_Lbl; PricePerLbl)
                 {
-                    DataItemLink = "No." = FIELD ("No.");
-                    DataItemLinkReference = Line;
-                    UseTemporary = true;
-                    column(Vendor_Item_No_; "Vendor-Item-No.")
-                    {
-                    }
                 }
 
                 trigger OnAfterGetRecord()
                 begin
                     if Type = Type::"G/L Account" then
                         "No." := '';
+
+                    if Type = Type::Item then
+                        Item.Get("No.")
+                    else
+                        Clear(Item);
 
                     if "Line Discount %" = 0 then
                         LineDiscountPctText := ''
@@ -816,6 +807,11 @@ report 50004 "SEC Sales - Quote"
                 Line.CalcVATAmountLines(0, Header, Line, VATAmountLine);
                 Line.UpdateVATOnLines(0, Header, Line, VATAmountLine);
 
+                if "End Customer" <> '' then
+                    Endcustomer.Get("End Customer")
+                else
+                    clear(Endcustomer);
+
                 if IdentityManagement.IsInvAppId then
                     "Language Code" := Language.GetUserLanguage;
 
@@ -1066,6 +1062,8 @@ report 50004 "SEC Sales - Quote"
         QuoteValidToDateLbl: Label 'Valid until';
         QtyLbl: Label 'Qty', Comment = 'Short form of Quantity';
         PriceLbl: Label 'Price';
+        Item: record Item;
+        Endcustomer: Record Customer;
         PricePerLbl: Label 'Price per';
 
     local procedure InitLogInteraction()
