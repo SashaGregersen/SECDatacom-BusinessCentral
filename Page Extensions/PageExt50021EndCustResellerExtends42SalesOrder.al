@@ -116,7 +116,7 @@ pageextension 50021 "End Customer and Reseller" extends 42
 
         addlast(Processing)
         {
-            action(ShowMyReport)
+            action(ShowMyOrder)
             {
                 Image = ItemGroup;
                 trigger OnAction();
