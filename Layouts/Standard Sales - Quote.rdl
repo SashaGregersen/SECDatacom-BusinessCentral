@@ -282,6 +282,9 @@
         <Field Name="Sell_to_City">
           <DataField>Sell_to_City</DataField>
         </Field>
+        <Field Name="Sell_to_Post_Code">
+          <DataField>Sell_to_Post_Code</DataField>
+        </Field>
         <Field Name="Sell_to_Country_Region_Code">
           <DataField>Sell_to_Country_Region_Code</DataField>
         </Field>
@@ -1185,6 +1188,20 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
+                                                    <Value>=Fields!Sell_to_Post_Code.Value</Value>
+                                                    <Style>
+                                                      <FontFamily>Segoe UI</FontFamily>
+                                                      <FontSize>9pt</FontSize>
+                                                    </Style>
+                                                  </TextRun>
+                                                  <TextRun>
+                                                    <Value xml:space="preserve"> </Value>
+                                                    <Style>
+                                                      <FontFamily>Segoe UI</FontFamily>
+                                                      <FontSize>9pt</FontSize>
+                                                    </Style>
+                                                  </TextRun>
+                                                  <TextRun>
                                                     <Value>=Fields!Sell_to_City.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
@@ -1375,6 +1392,7 @@
                                             </Style>
                                           </Textbox>
                                           <ColSpan>2</ColSpan>
+                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell />
@@ -1385,14 +1403,14 @@
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="CustomerAddress6">
+                                          <Textbox Name="Sell_to_Post_Code">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value xml:space="preserve"> </Value>
+                                                    <Value />
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>9pt</FontSize>
@@ -1402,7 +1420,7 @@
                                                 <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>CustomerAddress6</rd:DefaultName>
+                                            <rd:DefaultName>Sell_to_Post_Code</rd:DefaultName>
                                             <Style>
                                               <Border>
                                                 <Color>LightGrey</Color>
