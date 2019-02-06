@@ -9,7 +9,7 @@ pageextension 50021 "End Customer and Reseller" extends 42
                 ApplicationArea = all;
             }
         }
-        addafter("End Customer")
+        addbefore("End Customer")
         {
             field(Reseller; Reseller)
             {

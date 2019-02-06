@@ -4,14 +4,14 @@ pageextension 50029 "End Customer and Reseller 9" extends 6660
     {
         addbefore("No.")
         {
-            field("End Customer";"End Customer")
+            field("End Customer"; "End Customer")
             {
                 ApplicationArea = all;
             }
         }
-        addafter("End Customer")
+        addbefore("End Customer")
         {
-            field(Reseller;Reseller)
+            field(Reseller; Reseller)
             {
                 ApplicationArea = all;
             }
@@ -22,7 +22,7 @@ pageextension 50029 "End Customer and Reseller 9" extends 6660
     {
         // Add changes to page actions here
     }
-    
+
     var
-        myInt : Integer;
+        myInt: Integer;
 }
