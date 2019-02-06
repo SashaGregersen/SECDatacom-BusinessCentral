@@ -148,12 +148,12 @@ report 50005 "SEC Sales - Order Conf."
             column(CustomerPostalBarCode; FormatAddr.PostalBarCode(1))
             {
             }
-            column(YourReference; "External Document No.")
+            /*column(YourReference; "External Document No.")
             {
             }
-            column(YourReference_Lbl; FieldCaption("Your Reference"))
+            column(YourReference_Lbl; FieldCaption("External Document No."))
             {
-            }
+            }*/
             column(ShipmentMethodDescription; ShipmentMethod.Description)
             {
             }
