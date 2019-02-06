@@ -28,8 +28,12 @@ tableextension 50003 "Item Adv. Pricing" extends Item
         {
             DataClassification = ToBeClassified;
         }
-    }
 
-    var
+        field(50005; "Blocked from purchase"; boolean)
+        {
+
+        }
+
+    }
 
 }
