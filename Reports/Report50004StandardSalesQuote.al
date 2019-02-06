@@ -283,7 +283,7 @@ report 50004 "SEC Sales - Quote"
             column(Sell_to_Post_Code; "Sell-to Post Code")
             {
             }
-            column(Sell_to_Country_Region_Code; "Sell-to Country/Region Code")
+            column(Sell_to_Country_Region_Code; CountryRegion.Name)
             {
             }
             column(VATRegistrationNo; GetCustomerVATRegistrationNumber)
@@ -815,6 +815,11 @@ report 50004 "SEC Sales - Quote"
                 else
                     clear(Endcustomer);
 
+                if "Sell-to Country/Region Code" <> '' then
+                    CountryRegion.get("Sell-to Country/Region Code")
+                else
+                    Clear("Sell-to Country/Region Code");
+
                 if IdentityManagement.IsInvAppId then
                     "Language Code" := Language.GetUserLanguage;
 
@@ -1067,6 +1072,7 @@ report 50004 "SEC Sales - Quote"
         PriceLbl: Label 'Price';
         Item: record Item;
         Endcustomer: Record Customer;
+        CountryRegion: Record "Country/Region";
         PricePerLbl: Label 'Price per';
 
     local procedure InitLogInteraction()
