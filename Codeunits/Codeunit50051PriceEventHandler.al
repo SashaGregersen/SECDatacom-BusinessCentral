@@ -91,8 +91,19 @@ codeunit 50051 "Price Event Handler"
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Sales Price", 'OnAfterInsertEvent', '', true, true)]
-    local procedure SalesPriceOnAfterinsert(var Rec: Record "Sales Price")
+    local procedure SalesPriceOnAfterInsert(var Rec: Record "Sales Price")
     begin
+        if Rec.IsTemporary() then
+            exit;
+        Rec."Allow Line Disc." := false;
+        Rec.Modify(false);
+    end;
+
+    [EventSubscriber(ObjectType::Table, database::"Sales Price", 'OnAfterModifyEvent', '', true, true)]
+    local procedure SalesPriceOnAfterModify(var Rec: Record "Sales Price"; Runtrigger: Boolean)
+    begin
+        if not Runtrigger then
+            exit;
         if Rec.IsTemporary() then
             exit;
         Rec."Allow Line Disc." := false;

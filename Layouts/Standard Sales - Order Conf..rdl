@@ -415,6 +415,9 @@ End Function
         <Field Name="ShowWorkDescription">
           <DataField>ShowWorkDescription</DataField>
         </Field>
+        <Field Name="Endcustomer_Lbl">
+          <DataField>Endcustomer_Lbl</DataField>
+        </Field>
         <Field Name="EndCustName">
           <DataField>EndCustName</DataField>
         </Field>
@@ -528,6 +531,9 @@ End Function
         </Field>
         <Field Name="CrossReferenceNo_Lbl">
           <DataField>CrossReferenceNo_Lbl</DataField>
+        </Field>
+        <Field Name="Item">
+          <DataField>Item</DataField>
         </Field>
         <Field Name="LineNo_AssemblyLine">
           <DataField>LineNo_AssemblyLine</DataField>

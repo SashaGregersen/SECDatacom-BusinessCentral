@@ -3,7 +3,7 @@ report 50004 "SEC Sales - Quote"
     // version NAVW113.00
 
     RDLCLayout = './Layouts/Standard Sales - Quote.rdl';
-    WordLayout = './Layouts/Standard Sales - Quote.docx';
+    //WordLayout = './Layouts/Standard Sales - Quote.docx';
     Caption = 'Sales - Quote';
     DefaultLayout = RDLC;
     PreviewMode = PrintLayout;
@@ -515,7 +515,7 @@ report 50004 "SEC Sales - Quote"
                 column(Price_Lbl; PriceLbl)
                 {
                 }
-                column(Item; Item."Vendor Item No.")
+                column(Vendor_Item_No; Item."Vendor Item No.")
                 {
                 }
                 column(PricePer_Lbl; PricePerLbl)

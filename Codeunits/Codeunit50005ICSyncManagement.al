@@ -83,13 +83,6 @@ codeunit 50005 "IC Sync Management"
             until ICPartner.Next() = 0;
     end;
 
-    procedure CopyBidsToOtherCompanies()
-    var
-        myInt: Integer;
-    begin
-
-    end;
-
     procedure UpdatePricesInOtherCompanies(SalesPriceWorkSheet: Record "Sales Price Worksheet")
 
     var
@@ -152,8 +145,10 @@ codeunit 50005 "IC Sync Management"
     begin
         if SessionTimedOut(SessionID, SessionTimerSeconds, SessionEventComment) then
             StopSession(SessionID, StrSubstNo('Session timed out in company %', RunningInCompany));
-        if SessionEventComment <> '' then
-            Error('Session in company %1 ended with an error: %2', RunningInCompany, SessionEventComment);
+        if SessionEventComment <> '' then begin
+            if CopyStr(SessionEventComment, 1, 14) <> 'Scheduled task' then
+                Error('Session in company %1 ended with an error: %2', RunningInCompany, SessionEventComment);
+        end;
     end;
 
     local procedure RunUpdateListPricesInOtherCompany(RunInCompany: Text) SessionID: Integer
@@ -189,7 +184,7 @@ codeunit 50005 "IC Sync Management"
         Commit();
     end;
 
-    local procedure SessionTimedOut(SessionID: Integer; SessionTimerSeconds: Integer; SessionEventComment: Text): Boolean
+    local procedure SessionTimedOut(SessionID: Integer; SessionTimerSeconds: Integer; var SessionEventComment: Text): Boolean
     var
         Timedout: Boolean;
         SessionEnded: Boolean;

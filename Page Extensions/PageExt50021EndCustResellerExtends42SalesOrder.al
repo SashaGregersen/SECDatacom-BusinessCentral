@@ -38,6 +38,14 @@ pageextension 50021 "End Customer and Reseller" extends 42
 
             }
         }
+        addafter("Drop-Shipment")
+        {
+            field("Suppress Prices on Printouts"; "Suppress Prices on Printouts")
+            {
+                ApplicationArea = all;
+
+            }
+        }
         modify(ShippingOptions)
         {
             Visible = false;
@@ -105,10 +113,10 @@ pageextension 50021 "End Customer and Reseller" extends 42
         {
             Visible = false;
         }
-        /*
+
         addlast(Processing)
         {
-            action(ShowMyReport)
+            action(ShowMyOrder)
             {
                 Image = ItemGroup;
                 trigger OnAction();
@@ -116,8 +124,8 @@ pageextension 50021 "End Customer and Reseller" extends 42
                     SalesOrder.Run();
                 end;
             }
-        }*/
+        }
     }
     var
-    // SalesOrder: report 50005;
+        SalesOrder: report 50005;
 }
