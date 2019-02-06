@@ -199,6 +199,12 @@ report 50004 "SEC Sales - Quote"
             column(ShipToAddress8; ShipToAddr[8])
             {
             }
+            column(Ship_to_Post_Code; "Ship-to Post Code")
+            {
+            }
+            Column(Ship_to_City; "Ship-to City")
+            {
+            }
             column(PaymentTermsDescription; PaymentTerms.Description)
             {
             }
