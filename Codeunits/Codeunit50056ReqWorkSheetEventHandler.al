@@ -60,7 +60,7 @@ codeunit 50056 "Req Worksheet Event Handler"
                     end else begin
                         If not Confirm('Item %1 is blocked from purchase and no substitute item exists\Do you wish to purchase the item?', false, Item."No.") then begin
                             Rec."Action Message" := Rec."Action Message"::Cancel;
-                            Rec.Modify(true);
+                            //Rec.Modify(true);
                         end;
                     end;
                 end;
