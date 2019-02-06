@@ -148,17 +148,17 @@ codeunit 50003 "Project Sales Import"
                         end;
                     8:
                         begin
-                            if TempCSVBuffer.value = '' then
-                                Error('%1 is missing on line %2', TempCSVBuffer."Field No.", TempCSVBuffer."Line No.");
-                            Evaluate(UnitPriceSell, TempCSVBuffer.Value);
-                            BidPrices.Validate("Bid Unit Sales Price", UnitPriceSell);
+                            if TempCSVBuffer.Value <> '' then begin
+                                Evaluate(UnitPriceSell, TempCSVBuffer.Value);
+                                BidPrices.Validate("Bid Unit Sales Price", UnitPriceSell);
+                            end;
                         end;
                     9:
                         begin
-                            if TempCSVBuffer.value = '' then
-                                Error('%1 is missing on line %2', TempCSVBuffer."Field No.", TempCSVBuffer."Line No.");
-                            Evaluate(UnitPriceBuy, TempCSVBuffer.Value);
-                            BidPrices.Validate("Bid Unit Purchase Price", UnitPriceBuy);
+                            if TempCSVBuffer.value <> '' then begin
+                                Evaluate(UnitPriceBuy, TempCSVBuffer.Value);
+                                BidPrices.Validate("Bid Unit Purchase Price", UnitPriceBuy);
+                            end;
                         end;
                     10:
                         begin
