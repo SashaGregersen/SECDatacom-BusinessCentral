@@ -20,7 +20,6 @@ codeunit 50003 "Project Sales Import"
         Filename := FileMgt.OpenFileDialog(WindowTitle, '', '');
         TempCSVBuffer.Init();
         TempCSVBuffer.LoadData(FileName, ';');
-        //TempCSVBuffer.LoadData('C:\Project-Sales\Projektsalg.csv', ';');
 
         Salesline.setrange("Document No.", SalesHeader."No.");
         Salesline.SetRange("Document Type", SalesHeader."Document Type");
