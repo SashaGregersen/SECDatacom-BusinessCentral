@@ -280,6 +280,9 @@ report 50004 "SEC Sales - Quote"
             column(Sell_to_City; "Sell-to City")
             {
             }
+            column(Sell_to_Post_Code; "Sell-to Post Code")
+            {
+            }
             column(Sell_to_Country_Region_Code; "Sell-to Country/Region Code")
             {
             }
