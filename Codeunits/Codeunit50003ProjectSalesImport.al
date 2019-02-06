@@ -148,13 +148,17 @@ codeunit 50003 "Project Sales Import"
                         end;
                     8:
                         begin
-                            Evaluate(UnitPriceSell, TempCSVBuffer.Value);
-                            BidPrices.Validate("Bid Unit Sales Price", UnitPriceSell);
+                            if TempCSVBuffer.Value <> '' then begin
+                                Evaluate(UnitPriceSell, TempCSVBuffer.Value);
+                                BidPrices.Validate("Bid Unit Sales Price", UnitPriceSell);
+                            end;
                         end;
                     9:
                         begin
-                            Evaluate(UnitPriceBuy, TempCSVBuffer.Value);
-                            BidPrices.Validate("Bid Unit Purchase Price", UnitPriceBuy);
+                            if TempCSVBuffer.value <> '' then begin
+                                Evaluate(UnitPriceBuy, TempCSVBuffer.Value);
+                                BidPrices.Validate("Bid Unit Purchase Price", UnitPriceBuy);
+                            end;
                         end;
                     10:
                         begin

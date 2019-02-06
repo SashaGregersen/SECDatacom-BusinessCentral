@@ -5813,13 +5813,8 @@ End Function
         <Field Name="Price_Lbl">
           <DataField>Price_Lbl</DataField>
         </Field>
-<<<<<<< HEAD
-        <Field Name="Item">
-          <DataField>Item</DataField>
-=======
         <Field Name="Vendor_Item_No">
           <DataField>Vendor_Item_No</DataField>
->>>>>>> 23648d243f8f6c3cc0b44d4428ab5f06c6427c26
         </Field>
         <Field Name="PricePer_Lbl">
           <DataField>PricePer_Lbl</DataField>
