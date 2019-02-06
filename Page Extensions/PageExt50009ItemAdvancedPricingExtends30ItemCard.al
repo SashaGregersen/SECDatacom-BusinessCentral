@@ -31,6 +31,13 @@ pageextension 50009 "Item Adv. Pricing" extends "Item Card"
                 ApplicationArea = all;
             }
         }
+        addafter(Blocked)
+        {
+            field("Blocked from purchase"; "Blocked from purchase")
+            {
+                ApplicationArea = all;
+            }
+        }
 
     }
 

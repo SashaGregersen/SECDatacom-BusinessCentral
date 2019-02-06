@@ -58,8 +58,7 @@ codeunit 50056 "Req Worksheet Event Handler"
                                 Error('There is no substitute items available');
                         end;
                     end else begin
-                        Item.CalcFields(Inventory);
-                        if (Item.Inventory <= 0) then begin
+                        If not Confirm('Item %1 is blocked from purchase and no substitute item exists\Do you wish to purchase the item?', false) then begin
                             rec."Action Message" := rec."Action Message"::Cancel;
                             rec.Modify(true);
                         end;
