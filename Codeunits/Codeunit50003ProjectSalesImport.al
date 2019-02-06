@@ -12,9 +12,14 @@ codeunit 50003 "Project Sales Import"
         TempCSVBuffer: record "CSV Buffer" temporary;
         BidNo: code[20];
         Salesline: Record "Sales Line";
+        FileMgt: Codeunit "File Management";
+        WindowTitle: text;
+        FileName: text;
     begin
+        WindowTitle := 'Select file';
+        Filename := FileMgt.OpenFileDialog(WindowTitle, '', '');
         TempCSVBuffer.Init();
-        TempCSVBuffer.LoadData('C:\Project-Sales\Projektsalg.csv', ';');
+        TempCSVBuffer.LoadData(FileName, ';');
 
         Salesline.setrange("Document No.", SalesHeader."No.");
         Salesline.SetRange("Document Type", SalesHeader."Document Type");
@@ -54,14 +59,14 @@ codeunit 50003 "Project Sales Import"
                             Bid.Validate(Description, 'Project Sale');
                             Bid.Validate("Project Sale", true);
                             Bid.Insert(true);
-                            // expiry date? 
+
                             if TempCSVBuffer.value <> '' then
                                 SalesHeader.Validate("End Customer", TempCSVBuffer.Value);
                         end;
                     2:
                         begin
                             if TempCSVBuffer.value = '' then
-                                Error('%1 is missing on line %2', TempCSVBuffer."Field No.", TempCSVBuffer."Line No.");
+                                Error('Reseller is missing on line %1', TempCSVBuffer."Line No.");
                             SalesHeader.Validate(Reseller, TempCSVBuffer.Value);
                         end;
                     3:
@@ -75,7 +80,7 @@ codeunit 50003 "Project Sales Import"
                     4:
                         begin
                             if TempCSVBuffer.value = '' then
-                                Error('%1 is missing on line %2', TempCSVBuffer."Field No.", TempCSVBuffer."Line No.");
+                                Error('External Document No. is missing on line %1', TempCSVBuffer."Line No.");
                             SalesHeader.Validate("External Document No.", TempCSVBuffer.Value);
                         end;
                     5:
@@ -88,13 +93,13 @@ codeunit 50003 "Project Sales Import"
                     11:
                         begin
                             if TempCSVBuffer.value = '' then
-                                Error('%1 is missing on line %2', TempCSVBuffer."Field No.", TempCSVBuffer."Line No.");
+                                Error('Vendor No. is missing on line %1', TempCSVBuffer."Line No.");
                             Bid.Validate("Vendor No.", TempCSVBuffer.value);
                         end;
                     12:
                         begin
                             if TempCSVBuffer.value = '' then
-                                Error('%1 is missing on line %2', TempCSVBuffer."Field No.", TempCSVBuffer."Line No.");
+                                Error('Vendor Bid No. is missing on line %1', TempCSVBuffer."Line No.");
                             Bid.Validate("Vendor Bid No.", TempCSVBuffer.Value);
                         end;
                     13:
@@ -136,13 +141,13 @@ codeunit 50003 "Project Sales Import"
                     6:
                         begin
                             if TempCSVBuffer.value = '' then
-                                Error('%1 is missing on line %2', TempCSVBuffer."Field No.", TempCSVBuffer."Line No.");
+                                Error('Item No. is missing on line %1', TempCSVBuffer."Line No.");
                             BidPrices.Validate("item No.", TempCSVBuffer.Value);
                         end;
                     7:
                         begin
                             if TempCSVBuffer.value = '' then
-                                Error('%1 is missing on line %2', TempCSVBuffer."Field No.", TempCSVBuffer."Line No.");
+                                Error('Quantity is missing on line %1', TempCSVBuffer."Line No.");
                             Evaluate(Qty, TempCSVBuffer.Value);
                             Quantity := qty;
                         end;
@@ -163,7 +168,7 @@ codeunit 50003 "Project Sales Import"
                     10:
                         begin
                             if TempCSVBuffer.value = '' then
-                                Error('%1 is missing on line %2', TempCSVBuffer."Field No.", TempCSVBuffer."Line No.");
+                                Error('Currency code is missing on line %1', TempCSVBuffer."Line No.");
                             BidPrices.Validate("Currency Code", TempCSVBuffer.Value);
                             BidPrices.Insert(true);
                             CreateSalesLines(Salesheader, BidPrices, Quantity, GlobalCounter);
@@ -182,31 +187,23 @@ codeunit 50003 "Project Sales Import"
         SalesLine.SetRange("Document No.", Salesheader."No.");
         SalesLine.SetRange("Document Type", Salesheader."Document Type");
         if not SalesLine.FindLast() then begin
+            NextLineNo := 10000;
             SalesLine.init;
-            SalesLine."Document No." := Salesheader."No.";
-            SalesLine."Document Type" := Salesheader."Document Type";
-            SalesLine."Line No." := 10000;
-            SalesLine.Type := SalesLine.type::Item;
-            SalesLine.Validate("No.", BidPrices."item No.");
-            SalesLine.Validate(Quantity, Qty);
-            SalesLine.Insert(true);
-            SalesLine.Validate("Bid No.", BidPrices."Bid No.");
-            SalesLine.Modify(true);
-            GlobalCounter := 1;
-        end else begin
+        end else
             NextLineNo := SalesLine."Line No." + 10000;
-            SalesLine.init;
-            SalesLine."Document No." := Salesheader."No.";
-            SalesLine."Document Type" := Salesheader."Document Type";
-            SalesLine."Line No." := NextLineNo;
-            SalesLine.Type := SalesLine.type::Item;
-            SalesLine.Validate("No.", BidPrices."item No.");
-            SalesLine.Validate(Quantity, Qty);
-            SalesLine.Insert(true);
-            SalesLine.Validate("Bid No.", BidPrices."Bid No.");
-            SalesLine.Modify(true);
-            GlobalCounter := GlobalCounter + 1;
-        end;
+
+        SalesLine."Document No." := Salesheader."No.";
+        SalesLine."Document Type" := Salesheader."Document Type";
+        SalesLine."Line No." := NextLineNo;
+        SalesLine.Type := SalesLine.type::Item;
+        SalesLine.Validate("No.", BidPrices."item No.");
+        SalesLine.Validate(Quantity, Qty);
+        SalesLine.Insert(true);
+        SalesLine.Validate("Bid No.", BidPrices."Bid No.");
+        if BidPrices."Bid Unit Purchase Price" = 0 then
+            SalesLine.Validate("Unit Purchase Price", 0);
+        SalesLine.Modify(true);
+        GlobalCounter := GlobalCounter + 1;
     end;
 
     local procedure CreatePurchaseOrderFromSalesOrder(Var TempCSVBuffer: record "CSV Buffer" temporary; SalesHeader: record "Sales Header")
@@ -246,9 +243,7 @@ codeunit 50003 "Project Sales Import"
                                     repeat
                                         PurchFromSales.CreatePurchLine(PurchOrder, SalesHeader, SalesLine, PurchLine);
                                         PurchFromSales.ReserveItemOnPurchOrder(SalesLine, PurchLine);
-                                        GlobalCounter := GlobalCounter + 1;
                                     until SalesLine.next = 0;
-                                Message('%1 lines inserted on purchase order %2', GlobalCounter, PurchOrder."No.");
                             end else begin
                                 PurchOrder.get(PurchOrder."Document Type"::Order, TempCSVBuffer.Value);
                                 if PurchOrder."Buy-from Vendor No." = '' then
