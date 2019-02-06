@@ -38,4 +38,33 @@ codeunit 50056 "Req Worksheet Event Handler"
             end;
         end;
     end;
+
+    [EventSubscriber(ObjectType::Table, database::"Requisition Line", 'OnAfterValidateEvent', 'No.', true, true)]
+    local procedure OnAfterValidateEvent(var Rec: record "Requisition Line")
+    var
+        Item: record Item;
+        SubItem: record "Item Substitution";
+    begin
+        if rec.Type = rec.type::Item then begin
+            if Item.Get(rec."No.") then
+                if Item.Blocked = true then begin
+                    SubItem.SetRange("No.", Item."No.");
+                    if not SubItem.IsEmpty() then begin
+                        If Confirm('Item %1 is blocked from purchase\Do you wish to select a substitute item?', false) then begin
+                            if page.RunModal(page::"Item Substitutions", SubItem) = action::LookupOK then begin
+                                rec.Validate("No.", SubItem."Sub. Item No.");
+                                Rec.Modify(true);
+                            end else
+                                Error('There is no substitute items available');
+                        end;
+                    end else begin
+                        Item.CalcFields(Inventory);
+                        if (Item.Inventory <= 0) then begin
+                            rec."Action Message" := rec."Action Message"::Cancel;
+                            rec.Modify(true);
+                        end;
+                    end;
+                end;
+        end;
+    end;
 }
