@@ -283,7 +283,7 @@ report 50004 "SEC Sales - Quote"
             column(Sell_to_Post_Code; "Sell-to Post Code")
             {
             }
-            column(Sell_to_Country_Region_Code; CountryRegion.Name)
+            column(Sell_to_Country_Region_Code; ResellerCountryRegion.Name)
             {
             }
             column(VATRegistrationNo; GetCustomerVATRegistrationNumber)
@@ -810,15 +810,24 @@ report 50004 "SEC Sales - Quote"
                 Line.CalcVATAmountLines(0, Header, Line, VATAmountLine);
                 Line.UpdateVATOnLines(0, Header, Line, VATAmountLine);
 
-                if "End Customer" <> '' then
-                    Endcustomer.Get("End Customer")
-                else
+                if "End Customer" <> '' then begin
+                    Endcustomer.Get("End Customer");
+                    if Endcustomer."Country/Region Code" <> '' then
+                        EndcustomerCountryRegion.get(Endcustomer."Country/Region Code")
+                    else
+                        Clear(EndcustomerCountryRegion);
+                End else begin
                     clear(Endcustomer);
+                    Clear(EndcustomerCountryRegion);
+                end;
+
 
                 if "Sell-to Country/Region Code" <> '' then
-                    CountryRegion.get("Sell-to Country/Region Code")
+                    ResellerCountryRegion.get("Sell-to Country/Region Code")
                 else
-                    Clear("Sell-to Country/Region Code");
+                    Clear(ResellerCountryRegion);
+
+
 
                 if IdentityManagement.IsInvAppId then
                     "Language Code" := Language.GetUserLanguage;
@@ -1072,7 +1081,8 @@ report 50004 "SEC Sales - Quote"
         PriceLbl: Label 'Price';
         Item: record Item;
         Endcustomer: Record Customer;
-        CountryRegion: Record "Country/Region";
+        ResellerCountryRegion: Record "Country/Region";
+        EndcustomerCountryRegion: Record "Country/Region";
         PricePerLbl: Label 'Price per';
 
     local procedure InitLogInteraction()
@@ -1122,4 +1132,3 @@ report 50004 "SEC Sales - Quote"
             ReportTotalsLine.Add(VATAmountLine.VATAmountText, TotalAmountVAT, false, true, false);
     end;
 }
-
