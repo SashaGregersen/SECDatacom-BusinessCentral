@@ -39,28 +39,28 @@ codeunit 50056 "Req Worksheet Event Handler"
         end;
     end;
 
-    [EventSubscriber(ObjectType::Table, database::"Requisition Line", 'OnAfterValidateEvent', 'No.', true, true)]
+    [EventSubscriber(ObjectType::table, database::"Requisition Line", 'OnAfterValidateEvent', 'No.', true, true)]
     local procedure OnAfterValidateEvent(var Rec: record "Requisition Line")
     var
         Item: record Item;
         SubItem: record "Item Substitution";
     begin
-        if rec.Type = rec.type::Item then begin
-            if Item.Get(rec."No.") then
-                if Item.Blocked = true then begin
+        if Rec.Type = Rec.type::Item then begin
+            if Item.Get(Rec."No.") then
+                if Item."Blocked from purchase" = true then begin
                     SubItem.SetRange("No.", Item."No.");
                     if not SubItem.IsEmpty() then begin
                         If Confirm('Item %1 is blocked from purchase\Do you wish to select a substitute item?', false) then begin
                             if page.RunModal(page::"Item Substitutions", SubItem) = action::LookupOK then begin
-                                rec.Validate("No.", SubItem."Sub. Item No.");
+                                Rec.Validate("No.", SubItem."Sub. Item No.");
                                 Rec.Modify(true);
                             end else
                                 Error('There is no substitute items available');
                         end;
                     end else begin
-                        If not Confirm('Item %1 is blocked from purchase and no substitute item exists\Do you wish to purchase the item?', false) then begin
-                            rec."Action Message" := rec."Action Message"::Cancel;
-                            rec.Modify(true);
+                        If not Confirm('Item %1 is blocked from purchase and no substitute item exists\Do you wish to purchase the item?', false, Item."No.") then begin
+                            Rec."Action Message" := Rec."Action Message"::Cancel;
+                            //Rec.Modify(true);
                         end;
                     end;
                 end;
