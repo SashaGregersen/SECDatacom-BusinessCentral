@@ -19,7 +19,7 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>19.62645cm</Width>
+                  <Width>18.85916cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -3788,7 +3788,6 @@
                                             </Style>
                                           </Textbox>
                                           <ColSpan>5</ColSpan>
-                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell />
@@ -5050,7 +5049,7 @@
             <DataSetName>DataSet_Result</DataSetName>
             <Top>0.22049cm</Top>
             <Height>21.36096cm</Height>
-            <Width>19.62645cm</Width>
+            <Width>18.85916cm</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -5061,7 +5060,7 @@
         <Height>21.97832cm</Height>
         <Style />
       </Body>
-      <Width>19.62645cm</Width>
+      <Width>18.93854cm</Width>
       <Page>
         <PageHeader>
           <Height>3.8cm</Height>
