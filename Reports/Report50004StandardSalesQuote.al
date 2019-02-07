@@ -199,6 +199,12 @@ report 50004 "SEC Sales - Quote"
             column(ShipToAddress8; ShipToAddr[8])
             {
             }
+            column(Ship_to_Post_Code; "Ship-to Post Code")
+            {
+            }
+            Column(Ship_to_City; "Ship-to City")
+            {
+            }
             column(PaymentTermsDescription; PaymentTerms.Description)
             {
             }
@@ -280,7 +286,10 @@ report 50004 "SEC Sales - Quote"
             column(Sell_to_City; "Sell-to City")
             {
             }
-            column(Sell_to_Country_Region_Code; "Sell-to Country/Region Code")
+            column(Sell_to_Post_Code; "Sell-to Post Code")
+            {
+            }
+            column(Sell_to_Country_Region_Code; ResellerCountryRegion.Name)
             {
             }
             column(VATRegistrationNo; GetCustomerVATRegistrationNumber)
@@ -807,10 +816,24 @@ report 50004 "SEC Sales - Quote"
                 Line.CalcVATAmountLines(0, Header, Line, VATAmountLine);
                 Line.UpdateVATOnLines(0, Header, Line, VATAmountLine);
 
-                if "End Customer" <> '' then
-                    Endcustomer.Get("End Customer")
-                else
+                if "End Customer" <> '' then begin
+                    Endcustomer.Get("End Customer");
+                    if Endcustomer."Country/Region Code" <> '' then
+                        EndcustomerCountryRegion.get(Endcustomer."Country/Region Code")
+                    else
+                        Clear(EndcustomerCountryRegion);
+                End else begin
                     clear(Endcustomer);
+                    Clear(EndcustomerCountryRegion);
+                end;
+
+
+                if "Sell-to Country/Region Code" <> '' then
+                    ResellerCountryRegion.get("Sell-to Country/Region Code")
+                else
+                    Clear(ResellerCountryRegion);
+
+
 
                 if IdentityManagement.IsInvAppId then
                     "Language Code" := Language.GetUserLanguage;
@@ -1064,6 +1087,8 @@ report 50004 "SEC Sales - Quote"
         PriceLbl: Label 'Price';
         Item: record Item;
         Endcustomer: Record Customer;
+        ResellerCountryRegion: Record "Country/Region";
+        EndcustomerCountryRegion: Record "Country/Region";
         PricePerLbl: Label 'Price per';
 
     local procedure InitLogInteraction()
@@ -1113,4 +1138,3 @@ report 50004 "SEC Sales - Quote"
             ReportTotalsLine.Add(VATAmountLine.VATAmountText, TotalAmountVAT, false, true, false);
     end;
 }
-
