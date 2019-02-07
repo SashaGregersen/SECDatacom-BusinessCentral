@@ -148,12 +148,12 @@ report 50005 "SEC Sales - Order Conf."
             column(CustomerPostalBarCode; FormatAddr.PostalBarCode(1))
             {
             }
-            /*column(YourReference; "External Document No.")
+            column(YourReference; "External Document No.")
             {
             }
             column(YourReference_Lbl; FieldCaption("External Document No."))
             {
-            }*/
+            }
             /*column(YourReference; "Your Reference")
             {
             }
@@ -560,13 +560,6 @@ report 50005 "SEC Sales - Order Conf."
                     else
                         Clear(Item);
 
-                    if Header."Suppress Prices on Printouts" = true then begin
-                        Line.SetRange("Document No.", header."No.");
-                        line.SetRange("Document Type", header."Document Type");
-                        if line.FindSet() then
-                            HideLineAmount := true;
-                    end;
-
                     if "Line Discount %" = 0 then
                         LineDiscountPctText := ''
                     else
@@ -889,6 +882,8 @@ report 50005 "SEC Sales - Order Conf."
                 Line.CalcVATAmountLines(0, Header, Line, VATAmountLine);
                 Line.UpdateVATOnLines(0, Header, Line, VATAmountLine);
 
+
+
                 //Getting Endcustomer info    
                 if "End Customer" <> '' then begin
                     Endcustomer.Get("End Customer");
@@ -1012,6 +1007,7 @@ report 50005 "SEC Sales - Order Conf."
         TempBlobCompanyLogo.Blob := CompanyInfo.Picture;
         TempBlobCompanyLogo.Insert;
     end;
+
 
     trigger OnPostReport()
     begin
@@ -1143,7 +1139,6 @@ report 50005 "SEC Sales - Order Conf."
         Endcustomer: Record Customer;
         ResellerCountryRegion: Record "Country/Region";
         EndcustomerCountryRegion: Record "Country/Region";
-        HideLineAmount: Boolean;
         WorkDescriptionLine: Text;
 
     local procedure InitLogInteraction()
