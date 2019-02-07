@@ -386,7 +386,7 @@ report 50005 "SEC Sales - Order Conf."
             column(EndCustCountry; Endcustomer."Country/Region Code")
             {
             }
-            //Custom additions to default columms
+            //Custom additions to columms
             column(Sell_to_City; "Sell-to City")
             {
             }
@@ -400,6 +400,9 @@ report 50005 "SEC Sales - Order Conf."
             {
             }
             Column(Ship_to_City; "Ship-to City")
+            {
+            }
+            column(Suppress_Prices_on_Printouts; "Suppress Prices on Printouts")
             {
             }
             dataitem(Line; "Sales Line")
