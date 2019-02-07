@@ -548,15 +548,25 @@ report 50005 "SEC Sales - Order Conf."
 
                 trigger OnAfterGetRecord()
                 var
+                    //Boolean for Suppression of Price Details
+                    HideLineAmount: Boolean;
 
                 begin
                     if Type = Type::"G/L Account" then
                         "No." := '';
+
                     //Getting Vendor item no from the Item 
                     if Type = Type::Item then
                         Item.Get("No.")
                     else
                         Clear(Item);
+
+                    if Header."Suppress Prices on Printouts" = true then begin
+                        Line.SetRange("Document No.", header."No.");
+                        line.SetRange("Document Type", header."Document Type");
+                        if line.FindSet() then
+                            HideLineAmount := true;
+                    end;
 
                     if "Line Discount %" = 0 then
                         LineDiscountPctText := ''
@@ -869,8 +879,7 @@ report 50005 "SEC Sales - Order Conf."
                 CurrencyExchangeRate: Record "Currency Exchange Rate";
                 ArchiveManagement: Codeunit ArchiveManagement;
                 SalesPost: Codeunit "Sales-Post";
-                //Boolean for Suppression of Price Details
-                HideLineAmount: Boolean;
+
             begin
                 FirstLineHasBeenOutput := false;
                 Clear(Line);
@@ -891,14 +900,6 @@ report 50005 "SEC Sales - Order Conf."
                 End else begin
                     clear(Endcustomer);
                     Clear(EndcustomerCountryRegion);
-                end;
-
-                //Setting value of HideLineAmount based on Sales header button
-                if Header."Suppress Prices on Printouts" = true then begin
-                    Line.SetRange("Document No.", header."No.");
-                    line.SetRange("Document Type", header."Document Type");
-                    if line.FindSet() then
-                        HideLineAmount := true;
                 end;
 
                 if not IsReportInPreviewMode then
