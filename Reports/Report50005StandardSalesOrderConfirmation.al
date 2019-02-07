@@ -154,12 +154,13 @@ report 50005 "SEC Sales - Order Conf."
             column(YourReference_Lbl; FieldCaption("External Document No."))
             {
             }*/
-            column(YourReference; "Your Reference")
+            /*column(YourReference; "Your Reference")
             {
             }
-            column(YourReference_Lbl; FieldCaption("Your Reference"))
+            column(YourReference__Lbl; FieldCaption("Your Reference"))
             {
             }
+            */
             column(ShipmentMethodDescription; ShipmentMethod.Description)
             {
             }
