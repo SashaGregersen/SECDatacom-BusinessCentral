@@ -548,8 +548,7 @@ report 50005 "SEC Sales - Order Conf."
 
                 trigger OnAfterGetRecord()
                 var
-                    //Boolean for Suppression of Price Details
-                    HideLineAmount: Boolean;
+
 
                 begin
                     if Type = Type::"G/L Account" then
@@ -1144,6 +1143,7 @@ report 50005 "SEC Sales - Order Conf."
         Endcustomer: Record Customer;
         ResellerCountryRegion: Record "Country/Region";
         EndcustomerCountryRegion: Record "Country/Region";
+        HideLineAmount: Boolean;
         WorkDescriptionLine: Text;
 
     local procedure InitLogInteraction()
