@@ -151,9 +151,10 @@ report 50008 "SEC Reminder"
                 column(CompanyAddr1; CompanyAddr[1])
                 {
                 }
+                /*
                 column(CurrReportPageNo; StrSubstNo(Text002, CurrReport.PageNo))
                 {
-                }
+                }*/
                 column(TextPage; TextPageLbl)
                 {
                 }
@@ -393,7 +394,7 @@ report 50008 "SEC Reminder"
 
                         VATAmountLine.DeleteAll;
                         SetFilter("Line No.", '<%1', EndLineNo);
-                        CurrReport.CreateTotals("Remaining Amount", "VAT Amount", ReminderInterestAmount);
+                        //CurrReport.CreateTotals("Remaining Amount", "VAT Amount", ReminderInterestAmount);
                     end;
                 }
                 dataitem(IssuedReminderLine2; "Issued Reminder Line")
@@ -520,7 +521,7 @@ report 50008 "SEC Reminder"
                     begin
                         Clear(VATClause);
                         SetRange(Number, 1, VATAmountLine.Count);
-                        CurrReport.CreateTotals(VATAmountLine."VAT Amount");
+                        //CurrReport.CreateTotals(VATAmountLine."VAT Amount");
                     end;
                 }
                 dataitem(VATCounterLCY; "Integer")
@@ -646,7 +647,7 @@ report 50008 "SEC Reminder"
                     TotalText := StrSubstNo(Text000, "Currency Code");
                     TotalInclVATText := StrSubstNo(Text001, "Currency Code");
                 end;
-                CurrReport.PageNo := 1;
+                //CurrReport.PageNo := 1;
                 if not IsReportInPreviewMode then
                     IncrNoPrinted;
 
