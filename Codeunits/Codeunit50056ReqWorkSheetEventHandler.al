@@ -39,31 +39,60 @@ codeunit 50056 "Req Worksheet Event Handler"
         end;
     end;
 
-    [EventSubscriber(ObjectType::table, database::"Requisition Line", 'OnAfterValidateEvent', 'No.', true, true)]
-    local procedure OnAfterValidateEvent(var Rec: record "Requisition Line")
+    [EventSubscriber(ObjectType::Table, database::"Requisition Line", 'OnAfterValidateEvent', 'No.', true, true)]
+    local procedure OnAfterValidateNoEvent(var rec: Record "Requisition Line")
     var
         Item: record Item;
         SubItem: record "Item Substitution";
     begin
-        if Rec.Type = Rec.type::Item then begin
-            if Item.Get(Rec."No.") then
+        if rec.Type = rec.type::Item then
+            if item.get(rec."No.") then begin
+                SubItem.SetRange("No.", Item."No.");
+                if not SubItem.IsEmpty() then begin
+                    rec.Validate("Substitute Item Exists", true);
+                end;
+            end;
+    end;
+
+    [EventSubscriber(ObjectType::Table, database::"Requisition Line", 'OnAfterInsertEvent', '', true, true)]
+    local procedure OnAfterInsertEvent(var rec: Record "Requisition Line")
+    var
+        Item: record Item;
+        SubItem: record "Item Substitution";
+        ItemSub: Codeunit "Item Substitution";
+    begin
+        if (rec."Substitute Item Exists" = true) and (rec."Action Message" = rec."Action Message"::New) then
+            if item.get(rec."No.") then
+                if item."Blocked from purchase" = true then
+                    Message('Item %1 is blocked from purchase and substitute items exist, please select a substitute item', item."No.");
+
+    end;
+
+    [EventSubscriber(ObjectType::codeunit, codeunit::"Req. Wksh.-Make Order", 'OnBeforeCarryOutReqLineAction', '', true, true)]
+    local procedure OnAfterValidateEvent(var Requisitionline: record "Requisition Line"; var Failed: Boolean)
+    var
+        Item: record Item;
+        SubItem: record "Item Substitution";
+    begin
+        if Requisitionline."Action Message" = requisitionline."Action Message"::New then begin
+            if item.get(Requisitionline."No.") then begin
                 if Item."Blocked from purchase" = true then begin
                     SubItem.SetRange("No.", Item."No.");
                     if not SubItem.IsEmpty() then begin
-                        If Confirm('Item %1 is blocked from purchase\Do you wish to select a substitute item?', false) then begin
-                            if page.RunModal(page::"Item Substitutions", SubItem) = action::LookupOK then begin
-                                Rec.Validate("No.", SubItem."Sub. Item No.");
-                                Rec.Modify(true);
-                            end else
-                                Error('There is no substitute items available');
+                        If not Confirm('Item %1 in line no. %2 is blocked from purchase and substitute items exist.\Do you wish to purchase the item?', false, item."No.", Requisitionline."Line No.") then begin
+                            failed := true;
+                            Requisitionline."Action Message" := Requisitionline."Action Message"::Cancel;
+                            Requisitionline.Modify(true);
                         end;
                     end else begin
-                        If not Confirm('Item %1 is blocked from purchase and no substitute item exists\Do you wish to purchase the item?', false, Item."No.") then begin
-                            Rec."Action Message" := Rec."Action Message"::Cancel;
-                            //Rec.Modify(true);
+                        If not Confirm('Item %1 in line %2 is blocked from purchase and no substitute item exists\Do you wish to purchase the item?', false, Item."No.", Requisitionline."Line No.") then begin
+                            failed := true;
+                            Requisitionline."Action Message" := Requisitionline."Action Message"::Cancel;
+                            Requisitionline.Modify(true);
                         end;
                     end;
                 end;
+            end;
         end;
     end;
 }

@@ -6,6 +6,11 @@ tableextension 50029 "Vendor Item No Req Line" extends "Requisition Line"
         {
             DataClassification = ToBeClassified;
         }
+
+        field(50001; "Substitute Item Exists"; Boolean)
+        {
+            DataClassification = ToBeClassified;
+        }
     }
 
 
