@@ -148,19 +148,19 @@ report 50005 "SEC Sales - Order Conf."
             column(CustomerPostalBarCode; FormatAddr.PostalBarCode(1))
             {
             }
-            column(YourReference; "External Document No.")
+            /*column(YourReference; "External Document No.")
             {
             }
             column(YourReference_Lbl; FieldCaption("External Document No."))
             {
-            }
-            /*column(YourReference; "Your Reference")
+            }*/
+            column(YourReference; "Your Reference")
             {
             }
-            column(YourReference__Lbl; FieldCaption("Your Reference"))
+            column(YourReference_Lbl; FieldCaption("Your Reference"))
             {
             }
-            */
+
             column(ShipmentMethodDescription; ShipmentMethod.Description)
             {
             }
@@ -1042,7 +1042,7 @@ report 50005 "SEC Sales - Order Conf."
 
     var
         SalesConfirmationLbl: Label 'Order Confirmation';
-        SalespersonLbl: Label 'Sales person';
+        SalespersonLbl: Label 'Our Ref.';
         CompanyInfoBankAccNoLbl: Label 'Account No.';
         CompanyInfoBankNameLbl: Label 'Bank';
         CompanyInfoGiroNoLbl: Label 'Giro No.';
