@@ -283,12 +283,6 @@ report 50005 "SEC Sales - Order Conf."
             column(Sell_to_Address_2; "Sell-to Address 2")
             {
             }
-            column(Sell_to_City; "Sell-to City")
-            {
-            }
-            column(Sell_to_Country_Region_Code; "Sell-to Country/Region Code")
-            {
-            }
             column(VATRegistrationNo; GetCustomerVATRegistrationNumber)
             {
             }
@@ -373,6 +367,7 @@ report 50005 "SEC Sales - Order Conf."
             column(ShowWorkDescription; ShowWorkDescription)
             {
             }
+            //Endcustomer columns
             column(Endcustomer_Lbl; FieldCaption("End Customer"))
             {
             }
@@ -389,6 +384,22 @@ report 50005 "SEC Sales - Order Conf."
             {
             }
             column(EndCustCountry; Endcustomer."Country/Region Code")
+            {
+            }
+            //Custom additions to default columms
+            column(Sell_to_City; "Sell-to City")
+            {
+            }
+            column(Sell_to_Post_Code; "Sell-to Post Code")
+            {
+            }
+            column(Sell_to_Country_Region_Code; ResellerCountryRegion.Name)
+            {
+            }
+            column(Ship_to_Post_Code; "Ship-to Post Code")
+            {
+            }
+            Column(Ship_to_City; "Ship-to City")
             {
             }
             dataitem(Line; "Sales Line")
@@ -496,6 +507,7 @@ report 50005 "SEC Sales - Order Conf."
                 column(CrossReferenceNo_Lbl; FieldCaption("Cross-Reference No."))
                 {
                 }
+                //Adding vendor item no column to the sales line
                 column(Vendor_Item_No; Item."Vendor Item No.")
                 {
                 }
@@ -531,10 +543,12 @@ report 50005 "SEC Sales - Order Conf."
                 }
 
                 trigger OnAfterGetRecord()
+                var
+
                 begin
                     if Type = Type::"G/L Account" then
                         "No." := '';
-
+                    //Getting Vendor item no from the Item 
                     if Type = Type::Item then
                         Item.Get("No.")
                     else
@@ -851,6 +865,8 @@ report 50005 "SEC Sales - Order Conf."
                 CurrencyExchangeRate: Record "Currency Exchange Rate";
                 ArchiveManagement: Codeunit ArchiveManagement;
                 SalesPost: Codeunit "Sales-Post";
+                //Boolean for Suppression of Price Details
+                HideLineAmount: Boolean;
             begin
                 FirstLineHasBeenOutput := false;
                 Clear(Line);
@@ -861,10 +877,25 @@ report 50005 "SEC Sales - Order Conf."
                 Line.CalcVATAmountLines(0, Header, Line, VATAmountLine);
                 Line.UpdateVATOnLines(0, Header, Line, VATAmountLine);
 
-                if "End Customer" <> '' then
-                    Endcustomer.Get("End Customer")
-                else
+                //Getting Endcustomer info    
+                if "End Customer" <> '' then begin
+                    Endcustomer.Get("End Customer");
+                    if Endcustomer."Country/Region Code" <> '' then
+                        EndcustomerCountryRegion.get(Endcustomer."Country/Region Code")
+                    else
+                        Clear(EndcustomerCountryRegion);
+                End else begin
                     clear(Endcustomer);
+                    Clear(EndcustomerCountryRegion);
+                end;
+
+                //Setting value of HideLineAmount based on Sales header button
+                if Header."Suppress Prices on Printouts" = true then begin
+                    Line.SetRange("Document No.", header."No.");
+                    line.SetRange("Document Type", header."Document Type");
+                    if line.FindSet() then
+                        HideLineAmount := true;
+                end;
 
                 if not IsReportInPreviewMode then
                     CODEUNIT.Run(CODEUNIT::"Sales-Printed", Header);
@@ -1106,6 +1137,8 @@ report 50005 "SEC Sales - Order Conf."
         ShowWorkDescription: Boolean;
         Item: Record Item;
         Endcustomer: Record Customer;
+        ResellerCountryRegion: Record "Country/Region";
+        EndcustomerCountryRegion: Record "Country/Region";
         WorkDescriptionLine: Text;
 
     local procedure InitLogInteraction()
