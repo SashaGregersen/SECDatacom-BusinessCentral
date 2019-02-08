@@ -89,7 +89,7 @@ pageextension 50024 "End Customer and Reseller 4" extends 43
                     SalesInvoice.Run();
                 end;
             }
-        }// Add changes to page actions here
+        }
     }
 
     var
