@@ -206,6 +206,12 @@ report 50005 "SEC Sales - Order Conf."
             column(ShipToAddress8; ShipToAddr[8])
             {
             }
+            column(Ship_to_Post_Code; "Ship-to Post Code")
+            {
+            }
+            Column(Ship_to_City; "Ship-to City")
+            {
+            }
             column(PaymentTermsDescription; PaymentTerms.Description)
             {
             }
@@ -282,6 +288,15 @@ report 50005 "SEC Sales - Order Conf."
             {
             }
             column(Sell_to_Address_2; "Sell-to Address 2")
+            {
+            }
+            column(Sell_to_City; "Sell-to City")
+            {
+            }
+            column(Sell_to_Post_Code; "Sell-to Post Code")
+            {
+            }
+            column(Sell_to_Country; ResellerCountryRegion.Name)
             {
             }
             column(VATRegistrationNo; GetCustomerVATRegistrationNumber)
@@ -385,22 +400,6 @@ report 50005 "SEC Sales - Order Conf."
             {
             }
             column(EndCustCountry; Endcustomer."Country/Region Code")
-            {
-            }
-            //Custom additions to columms
-            column(Sell_to_City; "Sell-to City")
-            {
-            }
-            column(Sell_to_Post_Code; "Sell-to Post Code")
-            {
-            }
-            column(Sell_to_Country_Region_Code; ResellerCountryRegion.Name)
-            {
-            }
-            column(Ship_to_Post_Code; "Ship-to Post Code")
-            {
-            }
-            Column(Ship_to_City; "Ship-to City")
             {
             }
             column(Suppress_Prices_on_Printouts; "Suppress Prices on Printouts")
