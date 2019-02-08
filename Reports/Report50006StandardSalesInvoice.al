@@ -5,7 +5,7 @@ report 50006 "SEC - Sales Invoice"
     RDLCLayout = './Layouts/Standard Sales - Invoice.rdl';
     //WordLayout = './Standard Sales - Invoice.docx';
     Caption = 'Sales - Invoice';
-    DefaultLayout = Word;
+    DefaultLayout = RDLC;
     EnableHyperlinks = true;
     Permissions = TableData "Sales Shipment Buffer" = rimd;
     PreviewMode = PrintLayout;
@@ -210,6 +210,12 @@ report 50006 "SEC - Sales Invoice"
             column(ShipToAddress8; ShipToAddr[8])
             {
             }
+            column(Ship_to_Post_Code; "Ship-to Post Code")
+            {
+            }
+            Column(Ship_to_City; "Ship-to City")
+            {
+            }
             column(PaymentTermsDescription; PaymentTerms.Description)
             {
             }
@@ -274,6 +280,15 @@ report 50006 "SEC - Sales Invoice"
             {
             }
             column(SelltoCustomerNo_Lbl; FieldCaption("Sell-to Customer No."))
+            {
+            }
+            column(Sell_to_City; "Sell-to City")
+            {
+            }
+            column(Sell_to_Post_Code; "Sell-to Post Code")
+            {
+            }
+            column(Sell_to_Country_Region_Code; ResellerCountryRegion.Name)
             {
             }
             column(VATRegistrationNo; GetCustomerVATRegistrationNumber)
@@ -405,6 +420,28 @@ report 50006 "SEC - Sales Invoice"
             column(PaymentInstructions_Txt; PaymentInstructionsTxt)
             {
             }
+            //Endcustomer columns
+            column(Endcustomer_Lbl; FieldCaption("End Customer"))
+            {
+            }
+            column(EndCustName; Endcustomer.Name)
+            {
+            }
+            column(EndCustAddress; Endcustomer.Address)
+            {
+            }
+            column(EndCustPostcode; Endcustomer."Post code")
+            {
+            }
+            column(EndCustCity; Endcustomer.City)
+            {
+            }
+            column(EndCustCountry; Endcustomer."Country/Region Code")
+            {
+            }
+            column(Suppress_Prices_on_Printouts; "Suppress Prices on Printouts")
+            {
+            }
             dataitem(Line; "Sales Invoice Line")
             {
                 DataItemLink = "Document No." = FIELD ("No.");
@@ -533,6 +570,9 @@ report 50006 "SEC - Sales Invoice"
                 column(PricePer_Lbl; PricePerLbl)
                 {
                 }
+                column(Item; Item."Vendor Item No.")
+                {
+                }
                 dataitem(ShipmentLine; "Sales Shipment Buffer")
                 {
                     DataItemTableView = SORTING ("Document No.", "Line No.", "Entry No.");
@@ -599,6 +639,11 @@ report 50006 "SEC - Sales Invoice"
                     InitializeShipmentLine;
                     if Type = Type::"G/L Account" then
                         "No." := '';
+
+                    if Type = Type::Item then
+                        Item.Get("No.")
+                    else
+                        Clear(Item);
 
                     OnBeforeLineOnAfterGetRecord(Header, Line);
 
@@ -1048,6 +1093,18 @@ report 50006 "SEC - Sales Invoice"
                     CurrReport.Language := Language.GetLanguageID("Language Code");
                 end;
 
+                //Getting Endcustomer info  
+                if "End Customer" <> '' then begin
+                    Endcustomer.Get("End Customer");
+                    if Endcustomer."Country/Region Code" <> '' then
+                        EndcustomerCountryRegion.get(Endcustomer."Country/Region Code")
+                    else
+                        Clear(EndcustomerCountryRegion);
+                End else begin
+                    clear(Endcustomer);
+                    Clear(EndcustomerCountryRegion);
+                end;
+
                 if not IdentityManagement.IsInvAppId then
                     CurrReport.Language := Language.GetLanguageID("Language Code");
 
@@ -1325,6 +1382,10 @@ report 50006 "SEC - Sales Invoice"
         UnitLbl: Label 'Unit';
         VATClausesText: Text;
         QtyLbl: Label 'Qty', Comment = 'Short form of Quantity';
+        Endcustomer: Record Customer;
+        Item: Record Item;
+        ResellerCountryRegion: Record "Country/Region";
+        EndcustomerCountryRegion: Record "Country/Region";
         PriceLbl: Label 'Price';
         PricePerLbl: Label 'Price per';
 

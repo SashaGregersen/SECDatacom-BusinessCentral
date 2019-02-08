@@ -7541,6 +7541,12 @@ End Function
         <Field Name="ShipToAddress8">
           <DataField>ShipToAddress8</DataField>
         </Field>
+        <Field Name="Ship_to_Post_Code">
+          <DataField>Ship_to_Post_Code</DataField>
+        </Field>
+        <Field Name="Ship_to_City">
+          <DataField>Ship_to_City</DataField>
+        </Field>
         <Field Name="PaymentTermsDescription">
           <DataField>PaymentTermsDescription</DataField>
         </Field>
@@ -7606,6 +7612,15 @@ End Function
         </Field>
         <Field Name="SelltoCustomerNo_Lbl">
           <DataField>SelltoCustomerNo_Lbl</DataField>
+        </Field>
+        <Field Name="Sell_to_City">
+          <DataField>Sell_to_City</DataField>
+        </Field>
+        <Field Name="Sell_to_Post_Code">
+          <DataField>Sell_to_Post_Code</DataField>
+        </Field>
+        <Field Name="Sell_to_Country_Region_Code">
+          <DataField>Sell_to_Country_Region_Code</DataField>
         </Field>
         <Field Name="VATRegistrationNo">
           <DataField>VATRegistrationNo</DataField>
@@ -7739,6 +7754,27 @@ End Function
         <Field Name="PaymentInstructions_Txt">
           <DataField>PaymentInstructions_Txt</DataField>
         </Field>
+        <Field Name="Endcustomer_Lbl">
+          <DataField>Endcustomer_Lbl</DataField>
+        </Field>
+        <Field Name="EndCustName">
+          <DataField>EndCustName</DataField>
+        </Field>
+        <Field Name="EndCustAddress">
+          <DataField>EndCustAddress</DataField>
+        </Field>
+        <Field Name="EndCustPostcode">
+          <DataField>EndCustPostcode</DataField>
+        </Field>
+        <Field Name="EndCustCity">
+          <DataField>EndCustCity</DataField>
+        </Field>
+        <Field Name="EndCustCountry">
+          <DataField>EndCustCountry</DataField>
+        </Field>
+        <Field Name="Suppress_Prices_on_Printouts">
+          <DataField>Suppress_Prices_on_Printouts</DataField>
+        </Field>
         <Field Name="LineNo_Line">
           <DataField>LineNo_Line</DataField>
         </Field>
@@ -7861,6 +7897,9 @@ End Function
         </Field>
         <Field Name="PricePer_Lbl">
           <DataField>PricePer_Lbl</DataField>
+        </Field>
+        <Field Name="Item">
+          <DataField>Item</DataField>
         </Field>
         <Field Name="DocumentNo_ShipmentLine">
           <DataField>DocumentNo_ShipmentLine</DataField>

@@ -2920,6 +2920,7 @@
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
+                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                     </TablixCells>
@@ -5079,7 +5080,6 @@
                             </Border>
                           </Style>
                         </Rectangle>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -5584,8 +5584,8 @@ End Function
         <Field Name="DocumentCopyText">
           <DataField>DocumentCopyText</DataField>
         </Field>
-        <Field Name="BilltoCustumerNo">
-          <DataField>BilltoCustumerNo</DataField>
+        <Field Name="BilltoCustomerNo">
+          <DataField>BilltoCustomerNo</DataField>
         </Field>
         <Field Name="BilltoCustomerNo_Lbl">
           <DataField>BilltoCustomerNo_Lbl</DataField>
