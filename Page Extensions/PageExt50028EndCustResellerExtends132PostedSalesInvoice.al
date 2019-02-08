@@ -21,7 +21,7 @@ pageextension 50028 "End Customer and Reseller 8" extends 132
     }
 
     actions
-    {
+    {/*
         addlast(Processing)
         {
             action(ShowMyReport)
@@ -33,9 +33,9 @@ pageextension 50028 "End Customer and Reseller 8" extends 132
                 end;
             }
 
-        }
+        }*/
     }
 
     var
-        SalesInvoice: report 50006;
+    //SalesInvoice: report 50006;
 }
