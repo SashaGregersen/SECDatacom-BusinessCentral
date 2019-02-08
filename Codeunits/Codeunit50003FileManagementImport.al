@@ -1,4 +1,4 @@
-codeunit 50003 "Project Sales Import"
+codeunit 50003 "File Management Import"
 {
     trigger OnRun()
     begin
@@ -12,25 +12,14 @@ codeunit 50003 "Project Sales Import"
         TempCSVBuffer: record "CSV Buffer" temporary;
         BidNo: code[20];
         Salesline: Record "Sales Line";
-        FileMgt: Codeunit "File Management";
-        WindowTitle: text;
-        FileName: text;
     begin
-        WindowTitle := 'Select file';
-        Filename := FileMgt.OpenFileDialog(WindowTitle, '', '');
-        TempCSVBuffer.Init();
-        TempCSVBuffer.LoadData(FileName, ';');
+        TempCSVBuffer.init;
+        SelectFileFromFileShare(TempCSVBuffer);
 
         Salesline.setrange("Document No.", SalesHeader."No.");
         Salesline.SetRange("Document Type", SalesHeader."Document Type");
         if Salesline.FindFirst() then begin
-            case TempCSVBuffer."Field No." of
-                14:
-                    begin
-                        if TempCSVBuffer.value = '' then
-                            error('Purchase order number is missing in Excel sheet');
-                    end;
-            end;
+            TestCSVBufferFields(TempCSVBuffer);
             CreateSalesLineFromBid(TempCSVBuffer, SalesHeader, Salesline."Bid No.");
             CreatePurchaseOrderFromSalesOrder(TempCSVBuffer, SalesHeader);
         end else begin
@@ -270,6 +259,31 @@ codeunit 50003 "Project Sales Import"
                 end;
 
             until TempCSVBuffer.next = 0;
+    end;
+
+    procedure SelectFileFromFileShare(Var TempCSVBUffer: record "CSV Buffer" temporary)
+    var
+        WindowTitle: text;
+        FileName: text;
+        FileMgt: Codeunit "File Management";
+    begin
+        WindowTitle := 'Select file';
+        Filename := FileMgt.OpenFileDialog(WindowTitle, '', '');
+        TempCSVBuffer.Init();
+        TempCSVBuffer.LoadData(FileName, ';');
+    end;
+
+    procedure TestCSVBufferFields(TempCSVBuffer: record "CSV Buffer" temporary)
+    var
+
+    begin
+        case TempCSVBuffer."Field No." of
+            14:
+                begin
+                    if TempCSVBuffer.value = '' then
+                        error('Purchase order number is missing in Excel sheet');
+                end;
+        end;
     end;
 
 }

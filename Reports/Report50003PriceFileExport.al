@@ -17,7 +17,6 @@ report 50003 "Price File Export"
                 PriceExportXML: XmlPort "Price File Export XML";
                 ItemNo: code[20];
             begin
-
                 if customer."No." = '' then
                     Error('You cannot run the report without selecting a customer')
                 else begin
@@ -98,13 +97,15 @@ report 50003 "Price File Export"
     procedure CreateFileLocationPath(FormatCSV: Boolean) Filelocation: Text
     var
         CurrDateTime: text;
+        InvtSetup: record "Inventory Setup";
     begin
+        InvtSetup.Get();
         if FormatCSV = true then begin
             FormatCurrentDateTime(CurrDateTime);
-            Filelocation := 'C:\Price Files\Pricelist_' + customer."No." + '_' + CurrDateTime + '.csv'
+            Filelocation := InvtSetup."Price file location" + '\Pricelist_' + customer."No." + '_' + CurrDateTime + '.csv'
         end else begin
             FormatCurrentDateTime(CurrDateTime);
-            Filelocation := 'C:\Price Files\Pricelist_' + customer."No." + '_' + CurrDateTime + '.xml';
+            Filelocation := InvtSetup."Price file location" + '\Pricelist_' + customer."No." + '_' + CurrDateTime + '.xml';
         end;
     end;
 

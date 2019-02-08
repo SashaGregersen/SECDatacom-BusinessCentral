@@ -64,7 +64,7 @@ codeunit 50056 "Req Worksheet Event Handler"
         if (rec."Substitute Item Exists" = true) and (rec."Action Message" = rec."Action Message"::New) then
             if item.get(rec."No.") then
                 if item."Blocked from purchase" = true then
-                    Message('Item %1 is blocked from purchase and substitute items exist, please select a substitute item', item."No.");
+                    Message('Item %1 in line no. %2 is blocked from purchase and substitute items exist, please select a substitute item', item."No.", rec."Line No.");
 
     end;
 
