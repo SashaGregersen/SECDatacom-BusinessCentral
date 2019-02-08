@@ -58,10 +58,10 @@ codeunit 50004 "Create Purchase Order"
                 PurchHeader.SetShipToAddress(SalesHeader."Ship-to Name", SalesHeader."Ship-to Name 2", SalesHeader."Ship-to Address",
                 SalesHeader."Ship-to Address 2", SalesHeader."Ship-to City", SalesHeader."Ship-to Post Code",
                 SalesHeader."Ship-to Country/Region Code", SalesHeader."Ship-to Country/Region Code");
-                PurchHeader.Modify(true);
             end;
             PurchHeader."End Customer" := SalesHeader."End Customer";
             PurchHeader.Reseller := SalesHeader.Reseller;
+            PurchHeader.Modify(true);
             Message('Purchase Order %1 created', PurchHeader."No.");
         end;
     end;
