@@ -4,10 +4,10 @@ pageextension 50011 "Substitute Items" extends "Req. Worksheet"
     {
         addafter("Action Message")
         {
-            field("Substitute Item Exist"; "Substitute Item Exists")
+            /*field("Substitute Item Exist"; "Substitute Item Exists")
             {
                 ApplicationArea = all;
-            }
+            }*/
         }
     }
 
