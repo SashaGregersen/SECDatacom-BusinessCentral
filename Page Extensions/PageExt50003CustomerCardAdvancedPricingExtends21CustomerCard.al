@@ -16,6 +16,13 @@ pageextension 50003 "Customer Card Advanced Pricing" extends "Customer Card"
                 ApplicationArea = all;
             }
         }
+        addafter("Prefered Shipment Address")
+        {
+            field("Prefered Sender Address"; "Prefered Sender Address")
+            {
+                ApplicationArea = all;
+            }
+        }
     }
     actions
     {

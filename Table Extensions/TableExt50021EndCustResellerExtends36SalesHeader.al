@@ -37,6 +37,7 @@ tableextension 50021 "End Customer and Reseller" extends 36
             trigger OnValidate();
             var
                 customer: record customer;
+                shiptoadress: record "Ship-to Address";
             begin
 
                 If customer.get(Rec.Reseller) then
@@ -46,6 +47,11 @@ tableextension 50021 "End Customer and Reseller" extends 36
                         if Subsidiary = '' then begin
                             validate("Sell-to Customer No.", customer."No.");
                             validate("Sell-to-Customer-Name", customer.Name);
+                            if customer."Prefered Shipment Address" <> '' then begin
+                                shiptoadress.setrange("Customer No.", "End Customer");
+                                if shiptoadress.FindFirst() then
+                                    SetShipToAddress(ShipToAdress.Name, ShipToAdress."Name 2", ShipToAdress.Address, ShipToAdress."Address 2", ShipToAdress.City, ShipToAdress."Post Code", shiptoadress.County, shiptoadress."Country/Region Code");
+                            end;
                         end;
 
             end;
