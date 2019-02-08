@@ -220,7 +220,7 @@ report 50004 "SEC Sales - Quote"
             column(DocumentCopyText; StrSubstNo(DocumentCaption, CopyText))
             {
             }
-            column(BilltoCustumerNo; "Bill-to Customer No.")
+            column(BilltoCustomerNo; "Bill-to Customer No.")
             {
             }
             column(BilltoCustomerNo_Lbl; FieldCaption("Bill-to Customer No."))
