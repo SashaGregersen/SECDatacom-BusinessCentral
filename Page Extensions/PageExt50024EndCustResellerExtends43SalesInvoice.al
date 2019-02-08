@@ -37,6 +37,14 @@ pageextension 50024 "End Customer and Reseller 4" extends 43
                 ApplicationArea = all;
             }
         }
+        addafter("Drop-Shipment")
+        {
+            field("Suppress Prices on Printouts"; "Suppress Prices on Printouts")
+            {
+                ApplicationArea = all;
+
+            }
+        }
         modify(ShippingOptions)
         {
             Visible = false;
@@ -71,9 +79,19 @@ pageextension 50024 "End Customer and Reseller 4" extends 43
 
     actions
     {
-        // Add changes to page actions here
+        addlast(Processing)
+        {
+            action(ShowMyReport)
+            {
+                Image = ItemGroup;
+                trigger OnAction();
+                begin
+                    SalesInvoice.Run();
+                end;
+            }
+        }
     }
 
     var
-
+        SalesInvoice: report 50006;
 }
