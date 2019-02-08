@@ -5,7 +5,10 @@ codeunit 50007 "IC Sync Item"
     trigger OnRun()
     var
         ItemUOM: Record "Item Unit of Measure";
+        ICpartner: Record "IC Partner";
     begin
+        if ICpartner.FindFirst() then
+            Rec.Validate("Vendor No.", ICpartner."Vendor No.");
         if not rec.Insert(true) then
             rec.Modify(true);
         if Rec."Base Unit of Measure" <> '' then begin
