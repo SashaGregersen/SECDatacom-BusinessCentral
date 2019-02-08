@@ -60,6 +60,8 @@ codeunit 50004 "Create Purchase Order"
                 SalesHeader."Ship-to Country/Region Code", SalesHeader."Ship-to Country/Region Code");
                 PurchHeader.Modify(true);
             end;
+            PurchHeader."End Customer" := SalesHeader."End Customer";
+            PurchHeader.Reseller := SalesHeader.Reseller;
             Message('Purchase Order %1 created', PurchHeader."No.");
         end;
     end;
