@@ -1519,29 +1519,19 @@ report 50006 "SEC - Sales Invoice"
         FillNameValueTable(LeftHeader, Header.FieldCaption("Bill-to Customer No."), Header."Bill-to Customer No.");
         FillNameValueTable(LeftHeader, Header.GetCustomerVATRegistrationNumberLbl, Header.GetCustomerVATRegistrationNumber);
         FillNameValueTable(LeftHeader, Header.GetCustomerGlobalLocationNumberLbl, Header.GetCustomerGlobalLocationNumber);
-        FillNameValueTable(LeftHeader, InvNoLbl, Header."No.");
-        FillNameValueTable(LeftHeader, Header.FieldCaption("Order No."), Header."Order No.");
-        FillNameValueTable(LeftHeader, Header.FieldCaption("Document Date"), Format(Header."Document Date", 0, 4));
-        FillNameValueTable(LeftHeader, Header.FieldCaption("Due Date"), Format(Header."Due Date", 0, 4));
         FillNameValueTable(LeftHeader, PaymentTermsDescLbl, PaymentTerms.Description);
         FillNameValueTable(LeftHeader, PaymentMethodDescLbl, PaymentMethod.Description);
-        FillNameValueTable(LeftHeader, Cust.GetLegalEntityTypeLbl, Cust.GetLegalEntityType);
         FillNameValueTable(LeftHeader, ShptMethodDescLbl, ShipmentMethod.Description);
     end;
 
     local procedure FillRightHeader()
     begin
         RightHeader.DeleteAll;
-
-        FillNameValueTable(RightHeader, EMailLbl, CompanyInfo."E-Mail");
-        FillNameValueTable(RightHeader, HomePageLbl, CompanyInfo."Home Page");
-        FillNameValueTable(RightHeader, CompanyInfoPhoneNoLbl, CompanyInfo."Phone No.");
-        FillNameValueTable(RightHeader, CompanyInfo.GetRegistrationNumberLbl, CompanyInfo.GetRegistrationNumber);
-        FillNameValueTable(RightHeader, CompanyInfoBankNameLbl, CompanyInfo."Bank Name");
-        FillNameValueTable(RightHeader, CompanyInfoGiroNoLbl, CompanyInfo."Giro No.");
-        FillNameValueTable(RightHeader, CompanyInfo.FieldCaption(IBAN), CompanyInfo.IBAN);
-        FillNameValueTable(RightHeader, CompanyInfo.FieldCaption("SWIFT Code"), CompanyInfo."SWIFT Code");
-        FillNameValueTable(RightHeader, Header.GetPaymentReferenceLbl, Header.GetPaymentReference);
+        FillNameValueTable(RightHeader, InvNoLbl, Header."No.");
+        FillNameValueTable(RightHeader, Header.FieldCaption("Order No."), Header."Order No.");
+        FillNameValueTable(RightHeader, Header.FieldCaption("Document Date"), Format(Header."Document Date", 0, 4));
+        FillNameValueTable(RightHeader, Header.FieldCaption("Due Date"), Format(Header."Due Date", 0, 4));
+        FillNameValueTable(RightHeader, Header.FieldCaption("Bill-to Customer No."), Header."Bill-to Customer No.");
     end;
 
     local procedure FillNameValueTable(var NameValueBuffer: Record "Name/Value Buffer"; Name: Text; Value: Text)
