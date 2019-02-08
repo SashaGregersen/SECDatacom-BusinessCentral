@@ -6,6 +6,14 @@ tableextension 50006 "Purchase Line Bid" extends "Purchase Line"
         {
             DataClassification = ToBeClassified;
             TableRelation = Bid."No.";
+
+            trigger OnValidate()
+            var
+                Bid: Record Bid;
+            begin
+                if Bid.Get("Bid No.") then
+                    Claimable := Bid.Claimable;
+            end;
         }
         field(50021; "Claimable"; Boolean)
         {
