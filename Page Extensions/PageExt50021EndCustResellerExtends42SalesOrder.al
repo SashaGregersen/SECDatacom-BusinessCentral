@@ -89,7 +89,7 @@ pageextension 50021 "End Customer and Reseller" extends 42
 
                 trigger OnAction()
                 var
-                    ProjectSalesImport: Codeunit "Project Sales Import";
+                    ProjectSalesImport: Codeunit "File Management Import";
                 begin
                     ProjectSalesImport.ImportSalesOrderFromCSV(Rec);
                     CurrPage.Update();

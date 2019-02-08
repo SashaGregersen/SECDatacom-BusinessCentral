@@ -7069,12 +7069,15 @@ End Function
         <Field Name="ShipToAddress8">
           <DataField>ShipToAddress8</DataField>
         </Field>
+<<<<<<< HEAD
+=======
         <Field Name="Ship_to_Post_Code">
           <DataField>Ship_to_Post_Code</DataField>
         </Field>
         <Field Name="Ship_to_City">
           <DataField>Ship_to_City</DataField>
         </Field>
+>>>>>>> be67b564a3f57d84e9a11c5f23ffabf9e9268632
         <Field Name="PaymentTermsDescription">
           <DataField>PaymentTermsDescription</DataField>
         </Field>
@@ -7153,6 +7156,8 @@ End Function
         <Field Name="Sell_to_Address_2">
           <DataField>Sell_to_Address_2</DataField>
         </Field>
+<<<<<<< HEAD
+=======
         <Field Name="Sell_to_City">
           <DataField>Sell_to_City</DataField>
         </Field>
@@ -7162,6 +7167,7 @@ End Function
         <Field Name="Sell_to_Country">
           <DataField>Sell_to_Country</DataField>
         </Field>
+>>>>>>> be67b564a3f57d84e9a11c5f23ffabf9e9268632
         <Field Name="VATRegistrationNo">
           <DataField>VATRegistrationNo</DataField>
         </Field>
@@ -7264,6 +7270,24 @@ End Function
         <Field Name="EndCustCountry">
           <DataField>EndCustCountry</DataField>
         </Field>
+<<<<<<< HEAD
+        <Field Name="Sell_to_City">
+          <DataField>Sell_to_City</DataField>
+        </Field>
+        <Field Name="Sell_to_Post_Code">
+          <DataField>Sell_to_Post_Code</DataField>
+        </Field>
+        <Field Name="Sell_to_Country_Region_Code">
+          <DataField>Sell_to_Country_Region_Code</DataField>
+        </Field>
+        <Field Name="Ship_to_Post_Code">
+          <DataField>Ship_to_Post_Code</DataField>
+        </Field>
+        <Field Name="Ship_to_City">
+          <DataField>Ship_to_City</DataField>
+        </Field>
+=======
+>>>>>>> be67b564a3f57d84e9a11c5f23ffabf9e9268632
         <Field Name="Suppress_Prices_on_Printouts">
           <DataField>Suppress_Prices_on_Printouts</DataField>
         </Field>

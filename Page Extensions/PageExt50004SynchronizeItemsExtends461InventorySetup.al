@@ -6,14 +6,22 @@ pageextension 50004 "Synchronize items" extends "Inventory Setup"
         {
             field("Synchronize Item"; "Synchronize Item")
             {
-
+                ApplicationArea = all;
             }
         }
         addafter("Synchronize Item")
         {
             field("Receive Synchronized Items"; "Receive Synchronized Items")
             {
+                ApplicationArea = all;
+            }
+        }
 
+        addafter("Default Costing Method")
+        {
+            field("Price file location"; "Price file location")
+            {
+                ApplicationArea = all;
             }
         }
     }
