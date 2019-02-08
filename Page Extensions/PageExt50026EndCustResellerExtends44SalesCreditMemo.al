@@ -58,10 +58,21 @@ pageextension 50026 "End Customer and Reseller 6" extends 44
 
     actions
     {
+        addlast(Processing)
+        {
+            action(ShowMyReport)
+            {
+                Image = ItemGroup;
+                trigger OnAction();
+                begin
+                    SalesCrMemo.Run();
+                end;
+            }
 
+        }
     }
 
 
     var
-
+        SalesCrMemo: report 50007;
 }

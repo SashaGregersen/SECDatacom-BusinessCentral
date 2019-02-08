@@ -28,11 +28,27 @@ codeunit 50054 "Sales Order Event Handler"
     var
         salesheader: record "sales header";
         Item: record item;
+        SubItem: record "Item Substitution";
     begin
         if rec.Type = rec.type::Item then begin
             Item.Get(rec."No.");
             if item."Default Location" <> '' then
                 rec.validate("Location Code", item."Default Location");
+            if Item."Blocked from purchase" = true then begin
+                SubItem.SetRange("No.", Item."No.");
+                if not SubItem.IsEmpty() then begin
+                    If Confirm('Item %1 is blocked from purchase.\Do you wish to select a substitute item?', false, item."No.") then begin
+                        if page.RunModal(page::"Item Substitutions", SubItem) = action::LookupOK then begin
+                            rec.Validate("No.", SubItem."Substitute No.");
+                        end else
+                            Error('There is no substitute items available');
+                    end;
+                end else begin
+                    If not Confirm('Item %1 is blocked from purchase and no substitute item exists.\\Do you wish to sell the item?', false, Item."No.") then begin
+                        Error('The Item cannot be sold, please select another item');
+                    end;
+                end;
+            end;
         end;
 
         if CompanyName() <> 'SECDenmark' then
