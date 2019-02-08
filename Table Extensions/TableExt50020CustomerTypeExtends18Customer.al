@@ -13,6 +13,11 @@ tableextension 50020 CustomerType extends 18
             DataClassification = ToBeClassified;
             TableRelation = "Ship-to Address".code;
         }
+        field(50002; "Prefered Sender Address"; code[20])
+        {
+            DataClassification = ToBeClassified;
+            TableRelation = "Ship-to Address".Code;
+        }
         field(50003; "Owning Company"; Text[35])
         {
             DataClassification = ToBeClassified;
