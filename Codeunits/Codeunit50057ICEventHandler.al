@@ -21,7 +21,8 @@ codeunit 50057 "IC Event Handler"
         SalesLineOtherCompany: Record "Sales Line";
         SalesHeaderOtherCompany: Record "Sales Header";
     begin
-        GetPurchaseLineFromOtherCompany(ICInboxSalesLine, PurchaseLineOtherCompany, ICPartner."Inbox Details");
+        if not GetPurchaseLineFromOtherCompany(ICInboxSalesLine, PurchaseLineOtherCompany, ICPartner."Inbox Details") then
+            exit;
         GetSalesLineFromOtherCompany(PurchaseLineOtherCompany, SalesLineOtherCompany, ICPartner."Inbox Details");
         if LocalSalesHeader.Subsidiary = '' then begin
             GetSalesHeaderFromOtherCompany(SalesLineOtherCompany, SalesHeaderOtherCompany, ICPartner."Inbox Details");
@@ -32,8 +33,8 @@ codeunit 50057 "IC Event Handler"
 
     local procedure CopyAdvPricingHeaderFields(LocalSalesHeader: Record "Sales Header"; SalesHeaderOtherCompany: Record "Sales Header"; SubsidiaryCustomerNo: code[20])
     begin
-        LocalSalesHeader.Validate(Subsidiary, SubsidiaryCustomerNo);
-        LocalSalesHeader.Validate(Reseller, SalesHeaderOtherCompany.Reseller);
+        LocalSalesHeader.Subsidiary := SubsidiaryCustomerNo;
+        LocalSalesHeader.Reseller := SalesHeaderOtherCompany.Reseller;
         if SalesHeaderOtherCompany."End Customer" <> '' then
             LocalSalesHeader.Validate("End Customer", SalesHeaderOtherCompany."End Customer");
         if SalesHeaderOtherCompany."Drop-Shipment" then begin
@@ -47,7 +48,7 @@ codeunit 50057 "IC Event Handler"
             LocalSalesHeader."Ship-to Name 2" := SalesHeaderOtherCompany."Ship-to Name 2";
             LocalSalesHeader."Ship-to Post Code" := SalesHeaderOtherCompany."Ship-to Post Code";
         end;
-        LocalSalesHeader.Modify(true);
+        LocalSalesHeader.Modify(false);
     end;
 
     local procedure CopyAdvPricingLineFields(LocalSalesLine: Record "Sales Line"; SalesLineOtherCompany: Record "Sales Line")
@@ -60,11 +61,10 @@ codeunit 50057 "IC Event Handler"
         LocalSalesLine."Bid Unit Purchase Price" := SalesLineOtherCompany."Bid Unit Purchase Price";
     end;
 
-    local procedure GetPurchaseLineFromOtherCompany(ICInboxSalesLine: Record "IC Inbox Sales Line"; var PurchaseLineOtherCompany: Record "Purchase Line"; OtherCompanyName: text[30])
+    local procedure GetPurchaseLineFromOtherCompany(ICInboxSalesLine: Record "IC Inbox Sales Line"; var PurchaseLineOtherCompany: Record "Purchase Line"; OtherCompanyName: text[30]): Boolean
     begin
         PurchaseLineOtherCompany.ChangeCompany(OtherCompanyName);
-        if not PurchaseLineOtherCompany.Get(ICInboxSalesLine."Document Type", ICInboxSalesLine."Document No.", ICInboxSalesLine."Line No.") then
-            Clear(PurchaseLineOtherCompany);
+        exit(PurchaseLineOtherCompany.Get(ICInboxSalesLine."Document Type" + 1, ICInboxSalesLine."Document No.", ICInboxSalesLine."Line No."));
     end;
 
     local procedure GetSalesLineFromOtherCompany(PurchaseLineOtherCompany: Record "Purchase Line"; var SalesLineOtherCompany: Record "Sales Line"; OtherCompanyName: text[30])
@@ -76,7 +76,7 @@ codeunit 50057 "IC Event Handler"
         PurchaseReservationEntry.SetRange("Source Subtype", PurchaseLineOtherCompany."Document Type");
         PurchaseReservationEntry.SetRange("Source ID", PurchaseLineOtherCompany."Document No.");
         PurchaseReservationEntry.SetRange("Source Ref. No.", PurchaseLineOtherCompany."Line No.");
-        PurchaseReservationEntry.SetRange("Source Subtype", 39);
+        PurchaseReservationEntry.SetRange("Source type", 39);
         if not PurchaseReservationEntry.FindFirst() then begin
             Clear(SalesLineOtherCompany);
             exit;
