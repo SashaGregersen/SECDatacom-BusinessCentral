@@ -489,6 +489,20 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
+                                                    <Value>=Fields!Sell_to_Post_Code.Value</Value>
+                                                    <Style>
+                                                      <FontFamily>Segoe UI</FontFamily>
+                                                      <FontSize>9pt</FontSize>
+                                                    </Style>
+                                                  </TextRun>
+                                                  <TextRun>
+                                                    <Value xml:space="preserve"> </Value>
+                                                    <Style>
+                                                      <FontFamily>Segoe UI</FontFamily>
+                                                      <FontSize>9pt</FontSize>
+                                                    </Style>
+                                                  </TextRun>
+                                                  <TextRun>
                                                     <Value>=Fields!Sell_to_City.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
@@ -584,14 +598,14 @@
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="CustomerAddress13">
+                                          <Textbox Name="Sell_to_Country">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!Sell_to_Country_Region_Code.Value</Value>
+                                                    <Value>=Fields!Sell_to_Country.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>9pt</FontSize>
@@ -601,7 +615,7 @@
                                                 <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>CustomerAddress5</rd:DefaultName>
+                                            <rd:DefaultName>Sell_to_Country</rd:DefaultName>
                                             <Style>
                                               <Border>
                                                 <Color>LightGrey</Color>
@@ -693,7 +707,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value xml:space="preserve"> </Value>
+                                                    <Value />
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>9pt</FontSize>
@@ -714,7 +728,6 @@
                                             </Style>
                                           </Textbox>
                                           <ColSpan>2</ColSpan>
-                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell />
@@ -860,7 +873,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value />
+                                                    <Value>=Fields!Ship_to_Post_Code.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -884,14 +897,14 @@
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="Textbox158">
+                                          <Textbox Name="Ship_to_City">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value />
+                                                    <Value>=Fields!Ship_to_City.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -903,7 +916,7 @@
                                                 </Style>
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>Textbox158</rd:DefaultName>
+                                            <rd:DefaultName>Ship_to_City</rd:DefaultName>
                                             <Style>
                                               <Border>
                                                 <Color>LightGrey</Color>
@@ -1878,14 +1891,14 @@
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="DocumentNo_Lbl">
+                                          <Textbox Name="Textbox13">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>Your order</Value>
+                                                    <Value />
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -1895,7 +1908,7 @@
                                                 <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>DocumentNo_Lbl</rd:DefaultName>
+                                            <rd:DefaultName>Textbox13</rd:DefaultName>
                                             <Style>
                                               <Border>
                                                 <Color>LightGrey</Color>
@@ -1909,14 +1922,14 @@
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="ExtDocNo_SalesHeader">
+                                          <Textbox Name="Textbox14">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!ExtDocNo_SalesHeader.Value</Value>
+                                                    <Value />
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -1928,7 +1941,7 @@
                                                 </Style>
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>ExtDocNo_SalesHeader</rd:DefaultName>
+                                            <rd:DefaultName>Textbox14</rd:DefaultName>
                                             <Style>
                                               <Border>
                                                 <Color>LightGrey</Color>
@@ -2044,14 +2057,14 @@
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="YourReference_Lbl">
+                                          <Textbox Name="DocumentNo_Lbl">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!YourReference_Lbl.Value</Value>
+                                                    <Value>Your order</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -2061,7 +2074,7 @@
                                                 <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>YourReference_Lbl</rd:DefaultName>
+                                            <rd:DefaultName>DocumentNo_Lbl</rd:DefaultName>
                                             <Style>
                                               <Border>
                                                 <Color>LightGrey</Color>
@@ -2071,18 +2084,19 @@
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
+                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="YourReference">
+                                          <Textbox Name="ExtDocNo_SalesHeader">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!YourReference.Value</Value>
+                                                    <Value>=Fields!ExtDocNo_SalesHeader.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -2094,7 +2108,7 @@
                                                 </Style>
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>YourReference</rd:DefaultName>
+                                            <rd:DefaultName>ExtDocNo_SalesHeader</rd:DefaultName>
                                             <Style>
                                               <Border>
                                                 <Color>LightGrey</Color>
@@ -2208,14 +2222,14 @@
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="SalesPerson_Lbl">
+                                          <Textbox Name="YourReference_Lbl">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!SalesPerson_Lbl.Value</Value>
+                                                    <Value>=Fields!YourReference_Lbl.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -2225,7 +2239,7 @@
                                                 <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>SalesPerson_Lbl</rd:DefaultName>
+                                            <rd:DefaultName>YourReference_Lbl</rd:DefaultName>
                                             <Style>
                                               <Border>
                                                 <Color>LightGrey</Color>
@@ -2239,14 +2253,14 @@
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="SalesPersonName2">
+                                          <Textbox Name="YourReference">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!SalesPersonName.Value</Value>
+                                                    <Value>=Fields!YourReference.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -2258,7 +2272,7 @@
                                                 </Style>
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>SalesPersonName</rd:DefaultName>
+                                            <rd:DefaultName>YourReference</rd:DefaultName>
                                             <Style>
                                               <Border>
                                                 <Color>LightGrey</Color>
@@ -2371,14 +2385,14 @@
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="PaymentTermsDescription_Lbl1">
+                                          <Textbox Name="SalesPerson_Lbl">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!PaymentTermsDescription_Lbl.Value</Value>
+                                                    <Value>=Fields!SalesPerson_Lbl.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -2388,7 +2402,7 @@
                                                 <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>PaymentTermsDescription_Lbl1</rd:DefaultName>
+                                            <rd:DefaultName>SalesPerson_Lbl</rd:DefaultName>
                                             <Style>
                                               <Border>
                                                 <Color>LightGrey</Color>
@@ -2402,14 +2416,14 @@
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="PaymentTermsDescription1">
+                                          <Textbox Name="SalesPersonName2">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!PaymentTermsDescription.Value</Value>
+                                                    <Value>=Fields!SalesPersonName.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -2421,7 +2435,7 @@
                                                 </Style>
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>PaymentTermsDescription1</rd:DefaultName>
+                                            <rd:DefaultName>SalesPersonName</rd:DefaultName>
                                             <Style>
                                               <Border>
                                                 <Color>LightGrey</Color>
@@ -2535,16 +2549,16 @@
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="PaymentMethodDescription_Lbl2">
+                                          <Textbox Name="PaymentTermsDescription_Lbl1">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!PaymentMethodDescription_Lbl.Value</Value>
+                                                    <Value>=Fields!PaymentTermsDescription_Lbl.Value</Value>
                                                     <Style>
-                                                      <FontFamily>segoe uI</FontFamily>
+                                                      <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
                                                     </Style>
                                                   </TextRun>
@@ -2552,9 +2566,10 @@
                                                 <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>PaymentMethodDescription_Lbl</rd:DefaultName>
+                                            <rd:DefaultName>PaymentTermsDescription_Lbl1</rd:DefaultName>
                                             <Style>
                                               <Border>
+                                                <Color>LightGrey</Color>
                                                 <Style>None</Style>
                                               </Border>
                                               <PaddingLeft>5pt</PaddingLeft>
@@ -2565,16 +2580,16 @@
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="PaymentMethodDescription2">
+                                          <Textbox Name="PaymentTermsDescription1">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!PaymentMethodDescription.Value</Value>
+                                                    <Value>=Fields!PaymentTermsDescription.Value</Value>
                                                     <Style>
-                                                      <FontFamily>segoe uI</FontFamily>
+                                                      <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
                                                     </Style>
                                                   </TextRun>
@@ -2584,9 +2599,10 @@
                                                 </Style>
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>PaymentMethodDescription</rd:DefaultName>
+                                            <rd:DefaultName>PaymentTermsDescription1</rd:DefaultName>
                                             <Style>
                                               <Border>
+                                                <Color>LightGrey</Color>
                                                 <Style>None</Style>
                                               </Border>
                                               <PaddingLeft>5pt</PaddingLeft>
@@ -2695,16 +2711,16 @@
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="ShipmentMethodDescription_Lbl1">
+                                          <Textbox Name="PaymentMethodDescription_Lbl2">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!ShipmentMethodDescription_Lbl.Value</Value>
+                                                    <Value>=Fields!PaymentMethodDescription_Lbl.Value</Value>
                                                     <Style>
-                                                      <FontFamily>Segoe UI</FontFamily>
+                                                      <FontFamily>segoe uI</FontFamily>
                                                       <FontSize>8pt</FontSize>
                                                     </Style>
                                                   </TextRun>
@@ -2712,10 +2728,9 @@
                                                 <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>ShipmentMethodDescription_Lbl1</rd:DefaultName>
+                                            <rd:DefaultName>PaymentMethodDescription_Lbl</rd:DefaultName>
                                             <Style>
                                               <Border>
-                                                <Color>LightGrey</Color>
                                                 <Style>None</Style>
                                               </Border>
                                               <PaddingLeft>5pt</PaddingLeft>
@@ -2726,16 +2741,16 @@
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="ShipmentMethodDescription1">
+                                          <Textbox Name="PaymentMethodDescription2">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!ShipmentMethodDescription.Value</Value>
+                                                    <Value>=Fields!PaymentMethodDescription.Value</Value>
                                                     <Style>
-                                                      <FontFamily>Segoe UI</FontFamily>
+                                                      <FontFamily>segoe uI</FontFamily>
                                                       <FontSize>8pt</FontSize>
                                                     </Style>
                                                   </TextRun>
@@ -2745,10 +2760,9 @@
                                                 </Style>
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>ShipmentMethodDescription1</rd:DefaultName>
+                                            <rd:DefaultName>PaymentMethodDescription</rd:DefaultName>
                                             <Style>
                                               <Border>
-                                                <Color>LightGrey</Color>
                                                 <Style>None</Style>
                                               </Border>
                                               <PaddingLeft>5pt</PaddingLeft>
@@ -2857,7 +2871,7 @@
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="ShipmentMethodDescription_Lbl">
+                                          <Textbox Name="ShipmentMethodDescription_Lbl1">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
@@ -2866,7 +2880,7 @@
                                                   <TextRun>
                                                     <Value>=Fields!ShipmentMethodDescription_Lbl.Value</Value>
                                                     <Style>
-                                                      <FontFamily>segoe uI</FontFamily>
+                                                      <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
                                                     </Style>
                                                   </TextRun>
@@ -2874,9 +2888,10 @@
                                                 <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>ShipmentMethodDescription_Lbl</rd:DefaultName>
+                                            <rd:DefaultName>ShipmentMethodDescription_Lbl1</rd:DefaultName>
                                             <Style>
                                               <Border>
+                                                <Color>LightGrey</Color>
                                                 <Style>None</Style>
                                               </Border>
                                               <PaddingLeft>5pt</PaddingLeft>
@@ -2887,7 +2902,7 @@
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="ShipmentMethodDescription">
+                                          <Textbox Name="ShipmentMethodDescription1">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
@@ -2896,7 +2911,7 @@
                                                   <TextRun>
                                                     <Value>=Fields!ShipmentMethodDescription.Value</Value>
                                                     <Style>
-                                                      <FontFamily>segoe uI</FontFamily>
+                                                      <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
                                                     </Style>
                                                   </TextRun>
@@ -2906,9 +2921,10 @@
                                                 </Style>
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>ShipmentMethodDescription</rd:DefaultName>
+                                            <rd:DefaultName>ShipmentMethodDescription1</rd:DefaultName>
                                             <Style>
                                               <Border>
+                                                <Color>LightGrey</Color>
                                                 <Style>None</Style>
                                               </Border>
                                               <PaddingLeft>5pt</PaddingLeft>
