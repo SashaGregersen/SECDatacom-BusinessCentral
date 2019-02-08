@@ -7668,7 +7668,6 @@
                                               </Border>
                                             </Style>
                                           </Image>
-                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                     </TablixCells>
@@ -7948,7 +7947,7 @@
         <Height>22.1353cm</Height>
         <Style />
       </Body>
-      <Width>18.81301cm</Width>
+      <Width>18.99822cm</Width>
       <Page>
         <PageHeader>
           <Height>3.8cm</Height>
@@ -8157,8 +8156,8 @@
         </PageHeader>
         <PageHeight>29.7cm</PageHeight>
         <PageWidth>21cm</PageWidth>
-        <LeftMargin>1.9cm</LeftMargin>
-        <RightMargin>0.4cm</RightMargin>
+        <LeftMargin>1cm</LeftMargin>
+        <RightMargin>1cm</RightMargin>
         <TopMargin>0.4cm</TopMargin>
         <BottomMargin>1cm</BottomMargin>
         <ColumnSpacing>1.27cm</ColumnSpacing>
