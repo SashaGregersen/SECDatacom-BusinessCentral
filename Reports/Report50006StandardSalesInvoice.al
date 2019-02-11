@@ -570,7 +570,7 @@ report 50006 "SEC - Sales Invoice"
                 column(PricePer_Lbl; PricePerLbl)
                 {
                 }
-                column(Item; Item."Vendor Item No.")
+                column(Vendor_Item_No; Item."Vendor Item No.")
                 {
                 }
                 dataitem(ShipmentLine; "Sales Shipment Buffer")
