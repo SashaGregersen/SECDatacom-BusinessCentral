@@ -56,6 +56,7 @@ report 50003 "Price File Export"
 
             trigger OnPostDataItem()
             var
+
             begin
                 Message('Price File Exported to %1', Filelocation);
             end;
@@ -100,6 +101,8 @@ report 50003 "Price File Export"
         InvtSetup: record "Inventory Setup";
     begin
         InvtSetup.Get();
+        if InvtSetup."Price file location" = '' then
+            Error('File Location is missing in Inventory Setup');
         if FormatCSV = true then begin
             FormatCurrentDateTime(CurrDateTime);
             Filelocation := InvtSetup."Price file location" + '\Pricelist_' + customer."No." + '_' + CurrDateTime + '.csv'

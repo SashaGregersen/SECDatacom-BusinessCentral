@@ -78,6 +78,11 @@ xmlport 50001 "Price File Export CSV"
                 var
 
                 begin
+                    Item.ChangeCompany(GLSetup."Master Company");
+                    if item."Blocked from purchase" then begin
+                        if Item.Inventory <= 0 then
+                            currXMLport.skip
+                    end;
                     SalesPrice.SetRange("Item No.", Item."No.");
                     if not salesprice.FindSet() then
                         currXMLport.Skip();
@@ -91,6 +96,8 @@ xmlport 50001 "Price File Export CSV"
     var
         salesprice: Record "Sales Price";
     begin
+        GLSetup.get;
+
         if CustomerNo = '' then
             currXMLport.Skip();
     end;
@@ -101,6 +108,7 @@ xmlport 50001 "Price File Export CSV"
         CurrencyFilter: text;
         UnitPrice: decimal;
         salesprice: record "Sales Price";
+        GLSetup: record "General Ledger Setup";
 
     procedure SetCurrencyFilter(NewCurrencyFilter: Text)
     var
