@@ -1108,8 +1108,8 @@ report 50006 "SEC - Sales Invoice"
                 if not IdentityManagement.IsInvAppId then
                     CurrReport.Language := Language.GetLanguageID("Language Code");
 
-                //FillLeftHeader;
-                //FillRightHeader;
+                FillLeftHeader;
+                FillRightHeader;
 
                 if not IsReportInPreviewMode then
                     CODEUNIT.Run(CODEUNIT::"Sales Inv.-Printed", Header);
@@ -1511,7 +1511,7 @@ report 50006 "SEC - Sales Invoice"
         end;
     end;
 
-    /*local procedure FillLeftHeader()
+    local procedure FillLeftHeader()
     begin
         LeftHeader.DeleteAll;
 
@@ -1521,9 +1521,9 @@ report 50006 "SEC - Sales Invoice"
         FillNameValueTable(LeftHeader, PaymentTermsDescLbl, PaymentTerms.Description);
         FillNameValueTable(LeftHeader, PaymentMethodDescLbl, PaymentMethod.Description);
         FillNameValueTable(LeftHeader, ShptMethodDescLbl, ShipmentMethod.Description);
-    end; */
+    end;
 
-    /*local procedure FillRightHeader()
+    local procedure FillRightHeader()
     begin
         RightHeader.DeleteAll;
         FillNameValueTable(RightHeader, InvNoLbl, Header."No.");
@@ -1531,7 +1531,7 @@ report 50006 "SEC - Sales Invoice"
         FillNameValueTable(RightHeader, Header.FieldCaption("Document Date"), Format(Header."Document Date", 0, 4));
         FillNameValueTable(RightHeader, Header.FieldCaption("Due Date"), Format(Header."Due Date", 0, 4));
         FillNameValueTable(RightHeader, Header.FieldCaption("Bill-to Customer No."), Header."Bill-to Customer No.");
-    end; */
+    end;
 
     local procedure FillNameValueTable(var NameValueBuffer: Record "Name/Value Buffer"; Name: Text; Value: Text)
     var
