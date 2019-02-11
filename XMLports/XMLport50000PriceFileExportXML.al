@@ -13,7 +13,6 @@ xmlport 50000 "Price File Export XML"
 
                 fieldelement(No; Item."No.")
                 {
-
                 }
                 fieldelement(Descip; item.Description)
                 {
@@ -70,6 +69,11 @@ xmlport 50000 "Price File Export XML"
                 var
 
                 begin
+                    Item.ChangeCompany(GLSetup."Master Company");
+                    if item."Blocked from purchase" then begin
+                        if Item.Inventory <= 0 then
+                            currXMLport.skip;
+                    end;
                     SalesPrice.SetRange("Item No.", Item."No.");
                     if not salesprice.FindSet() then
                         currXMLport.Skip();
@@ -83,16 +87,18 @@ xmlport 50000 "Price File Export XML"
     var
         salesprice: Record "Sales Price";
     begin
+        GLSetup.get;
+
         if CustomerNo = '' then
             currXMLport.Skip();
     end;
-
 
     var
         CustomerNo: code[20];
         CurrencyFilter: text;
         UnitPrice: decimal;
         salesprice: record "Sales Price";
+        GLSetup: record "General Ledger Setup";
 
     procedure SetCurrencyFilter(NewCurrencyFilter: Text)
     var
@@ -109,7 +115,6 @@ xmlport 50000 "Price File Export XML"
 
         CustomerNo := customer."No.";
     end;
-
 
     procedure FindCheapestPrice(SalesPrice: record "Sales Price"): Decimal
     var
