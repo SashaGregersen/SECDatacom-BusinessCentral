@@ -866,12 +866,12 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>18.9314cm</Width>
+                  <Width>18.70972cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>21.78252cm</Height>
+                  <Height>21.82662cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -2137,7 +2137,6 @@
                                                             <PaddingRight>5pt</PaddingRight>
                                                           </Style>
                                                         </Textbox>
-                                                        <rd:Selected>true</rd:Selected>
                                                       </CellContents>
                                                     </TablixCell>
                                                     <TablixCell>
@@ -7292,151 +7291,6 @@
                                 </Border>
                               </Style>
                             </Tablix>
-                            <Tablix Name="Tablix3">
-                              <TablixBody>
-                                <TablixColumns>
-                                  <TablixColumn>
-                                    <Width>3.3782cm</Width>
-                                  </TablixColumn>
-                                </TablixColumns>
-                                <TablixRows>
-                                  <TablixRow>
-                                    <Height>0.8636cm</Height>
-                                    <TablixCells>
-                                      <TablixCell>
-                                        <CellContents>
-                                          <Image Name="Image1">
-                                            <Source>Database</Source>
-                                            <Value>=Fields!PaymentServiceLogo.Value</Value>
-                                            <MIMEType>image/png</MIMEType>
-                                            <Sizing>FitProportional</Sizing>
-                                            <ActionInfo>
-                                              <Actions>
-                                                <Action>
-                                                  <Hyperlink>=Fields!PaymentServiceLogo_Url.Value</Hyperlink>
-                                                </Action>
-                                              </Actions>
-                                            </ActionInfo>
-                                            <Style>
-                                              <Border>
-                                                <Color>White</Color>
-                                                <Style>None</Style>
-                                              </Border>
-                                            </Style>
-                                          </Image>
-                                        </CellContents>
-                                      </TablixCell>
-                                    </TablixCells>
-                                  </TablixRow>
-                                  <TablixRow>
-                                    <Height>0.6cm</Height>
-                                    <TablixCells>
-                                      <TablixCell>
-                                        <CellContents>
-                                          <Textbox Name="PaymentServiceURLText">
-                                            <CanGrow>true</CanGrow>
-                                            <KeepTogether>true</KeepTogether>
-                                            <Paragraphs>
-                                              <Paragraph>
-                                                <TextRuns>
-                                                  <TextRun>
-                                                    <Value>=Fields!PaymentServiceLogo_UrlText.Value</Value>
-                                                    <ActionInfo>
-                                                      <Actions>
-                                                        <Action>
-                                                          <Hyperlink>=Fields!PaymentServiceLogo_Url.Value</Hyperlink>
-                                                        </Action>
-                                                      </Actions>
-                                                    </ActionInfo>
-                                                    <Style>
-                                                      <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>8pt</FontSize>
-                                                      <Color>#0066dd</Color>
-                                                    </Style>
-                                                  </TextRun>
-                                                </TextRuns>
-                                                <Style>
-                                                  <TextAlign>Center</TextAlign>
-                                                </Style>
-                                              </Paragraph>
-                                            </Paragraphs>
-                                            <rd:DefaultName>PaymentServiceURLText</rd:DefaultName>
-                                            <ActionInfo>
-                                              <Actions>
-                                                <Action>
-                                                  <Hyperlink>=Fields!PaymentServiceLogo_Url.Value</Hyperlink>
-                                                </Action>
-                                              </Actions>
-                                            </ActionInfo>
-                                            <Style>
-                                              <Border>
-                                                <Color>LightGrey</Color>
-                                                <Style>None</Style>
-                                              </Border>
-                                              <PaddingLeft>2pt</PaddingLeft>
-                                              <PaddingRight>2pt</PaddingRight>
-                                              <PaddingTop>2pt</PaddingTop>
-                                              <PaddingBottom>2pt</PaddingBottom>
-                                            </Style>
-                                          </Textbox>
-                                        </CellContents>
-                                      </TablixCell>
-                                    </TablixCells>
-                                  </TablixRow>
-                                </TablixRows>
-                              </TablixBody>
-                              <TablixColumnHierarchy>
-                                <TablixMembers>
-                                  <TablixMember />
-                                </TablixMembers>
-                              </TablixColumnHierarchy>
-                              <TablixRowHierarchy>
-                                <TablixMembers>
-                                  <TablixMember>
-                                    <Group Name="PaymentServiceURLText">
-                                      <GroupExpressions>
-                                        <GroupExpression>=Fields!PaymentServiceLogo_UrlText.Value</GroupExpression>
-                                      </GroupExpressions>
-                                    </Group>
-                                    <SortExpressions>
-                                      <SortExpression>
-                                        <Value>=Fields!PaymentServiceLogo_UrlText.Value</Value>
-                                      </SortExpression>
-                                    </SortExpressions>
-                                    <TablixMembers>
-                                      <TablixMember>
-                                        <Group Name="Details3">
-                                          <Filters>
-                                            <Filter>
-                                              <FilterExpression>=Len(Fields!PaymentServiceLogo_Url.Value)</FilterExpression>
-                                              <Operator>GreaterThan</Operator>
-                                              <FilterValues>
-                                                <FilterValue DataType="Integer">0</FilterValue>
-                                              </FilterValues>
-                                            </Filter>
-                                          </Filters>
-                                        </Group>
-                                        <TablixMembers>
-                                          <TablixMember />
-                                          <TablixMember />
-                                        </TablixMembers>
-                                      </TablixMember>
-                                    </TablixMembers>
-                                  </TablixMember>
-                                </TablixMembers>
-                              </TablixRowHierarchy>
-                              <DataSetName>DataSet_Result</DataSetName>
-                              <Top>10.24373cm</Top>
-                              <Left>0.21398cm</Left>
-                              <Height>1.4636cm</Height>
-                              <Width>3.3782cm</Width>
-                              <ZIndex>7</ZIndex>
-                              <Style>
-                                <Border>
-                                  <Style>None</Style>
-                                </Border>
-                              </Style>
-                            </Tablix>
                             <Textbox Name="PaidStatus">
                               <CanGrow>true</CanGrow>
                               <KeepTogether>true</KeepTogether>
@@ -7461,7 +7315,7 @@
                               <Left>2.05161cm</Left>
                               <Height>0.5cm</Height>
                               <Width>16.44839cm</Width>
-                              <ZIndex>8</ZIndex>
+                              <ZIndex>7</ZIndex>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -7506,9 +7360,9 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>DataSet_Result</DataSetName>
-            <Top>0.22049cm</Top>
-            <Height>21.78252cm</Height>
-            <Width>18.9314cm</Width>
+            <Top>0.17639cm</Top>
+            <Height>21.82662cm</Height>
+            <Width>18.70972cm</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -7516,10 +7370,10 @@
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>22.1353cm</Height>
+        <Height>24.59593cm</Height>
         <Style />
       </Body>
-      <Width>19.05114cm</Width>
+      <Width>18.97176cm</Width>
       <Page>
         <PageHeader>
           <Height>3.74084cm</Height>
