@@ -2518,7 +2518,6 @@
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
-                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                     </TablixCells>
@@ -2811,6 +2810,11 @@
                                               <Border>
                                                 <Style>None</Style>
                                               </Border>
+                                              <TopBorder>
+                                                <Color>Black</Color>
+                                                <Style>Solid</Style>
+                                                <Width>1pt</Width>
+                                              </TopBorder>
                                               <BottomBorder>
                                                 <Style>Solid</Style>
                                               </BottomBorder>
@@ -2846,6 +2850,11 @@
                                               <Border>
                                                 <Style>None</Style>
                                               </Border>
+                                              <TopBorder>
+                                                <Color>Black</Color>
+                                                <Style>Solid</Style>
+                                                <Width>1pt</Width>
+                                              </TopBorder>
                                               <BottomBorder>
                                                 <Style>Solid</Style>
                                               </BottomBorder>
@@ -2881,6 +2890,11 @@
                                               <Border>
                                                 <Style>None</Style>
                                               </Border>
+                                              <TopBorder>
+                                                <Color>Black</Color>
+                                                <Style>Solid</Style>
+                                                <Width>1pt</Width>
+                                              </TopBorder>
                                               <BottomBorder>
                                                 <Style>Solid</Style>
                                               </BottomBorder>
@@ -2918,6 +2932,11 @@
                                               <Border>
                                                 <Style>None</Style>
                                               </Border>
+                                              <TopBorder>
+                                                <Color>Black</Color>
+                                                <Style>Solid</Style>
+                                                <Width>1pt</Width>
+                                              </TopBorder>
                                               <BottomBorder>
                                                 <Style>Solid</Style>
                                               </BottomBorder>
@@ -2953,6 +2972,11 @@
                                               <Border>
                                                 <Style>None</Style>
                                               </Border>
+                                              <TopBorder>
+                                                <Color>Black</Color>
+                                                <Style>Solid</Style>
+                                                <Width>1pt</Width>
+                                              </TopBorder>
                                               <BottomBorder>
                                                 <Style>Solid</Style>
                                               </BottomBorder>
@@ -2990,6 +3014,11 @@
                                               <Border>
                                                 <Style>None</Style>
                                               </Border>
+                                              <TopBorder>
+                                                <Color>Black</Color>
+                                                <Style>Solid</Style>
+                                                <Width>1pt</Width>
+                                              </TopBorder>
                                               <BottomBorder>
                                                 <Style>Solid</Style>
                                               </BottomBorder>
@@ -3025,6 +3054,11 @@
                                               <Border>
                                                 <Style>None</Style>
                                               </Border>
+                                              <TopBorder>
+                                                <Color>Black</Color>
+                                                <Style>Solid</Style>
+                                                <Width>1pt</Width>
+                                              </TopBorder>
                                               <BottomBorder>
                                                 <Style>Solid</Style>
                                               </BottomBorder>
@@ -3062,6 +3096,11 @@
                                               <Border>
                                                 <Style>None</Style>
                                               </Border>
+                                              <TopBorder>
+                                                <Color>Black</Color>
+                                                <Style>Solid</Style>
+                                                <Width>1pt</Width>
+                                              </TopBorder>
                                               <BottomBorder>
                                                 <Style>Solid</Style>
                                               </BottomBorder>
@@ -3099,6 +3138,11 @@
                                               <Border>
                                                 <Style>None</Style>
                                               </Border>
+                                              <TopBorder>
+                                                <Color>Black</Color>
+                                                <Style>Solid</Style>
+                                                <Width>1pt</Width>
+                                              </TopBorder>
                                               <BottomBorder>
                                                 <Style>Solid</Style>
                                               </BottomBorder>
@@ -6371,6 +6415,7 @@
                             </Border>
                           </Style>
                         </Rectangle>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
