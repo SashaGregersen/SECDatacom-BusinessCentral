@@ -5,7 +5,7 @@ report 50007 "SEC Sales - Credit Memo"
     RDLCLayout = './Layouts/Standard Sales - Credit Memo.rdl';
     //WordLayout = './Layouts/Standard Sales - Credit Memo.docx';
     Caption = 'Sales - Credit Memo';
-    DefaultLayout = Word;
+    DefaultLayout = RDLC;
     Permissions = TableData "Sales Shipment Buffer" = rimd;
     PreviewMode = PrintLayout;
     WordMergeDataItem = Header;
