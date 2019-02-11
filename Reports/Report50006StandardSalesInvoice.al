@@ -1108,7 +1108,7 @@ report 50006 "SEC - Sales Invoice"
                 if not IdentityManagement.IsInvAppId then
                     CurrReport.Language := Language.GetLanguageID("Language Code");
 
-                FillLeftHeader;
+                //FillLeftHeader;
                 FillRightHeader;
 
                 if not IsReportInPreviewMode then
@@ -1511,7 +1511,7 @@ report 50006 "SEC - Sales Invoice"
         end;
     end;
 
-    local procedure FillLeftHeader()
+    /*local procedure FillLeftHeader()
     begin
         LeftHeader.DeleteAll;
 
@@ -1521,7 +1521,7 @@ report 50006 "SEC - Sales Invoice"
         FillNameValueTable(LeftHeader, PaymentTermsDescLbl, PaymentTerms.Description);
         FillNameValueTable(LeftHeader, PaymentMethodDescLbl, PaymentMethod.Description);
         FillNameValueTable(LeftHeader, ShptMethodDescLbl, ShipmentMethod.Description);
-    end;
+    end; */
 
     local procedure FillRightHeader()
     begin
