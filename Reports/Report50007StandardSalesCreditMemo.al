@@ -1018,6 +1018,7 @@ report 50007 "SEC Sales - Credit Memo"
         NoFilterSetErr: Label 'You must specify one or more filters to avoid accidently printing all documents.';
         GreetingLbl: Label 'Hello';
         ClosingLbl: Label 'Sincerely';
+        ExternalDocumentNo: Text;
         BodyLbl: Label 'Thank you for your business. Your credit memo is attached to this message.';
 
     local procedure InitLogInteraction()

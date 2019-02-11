@@ -348,20 +348,11 @@
         <Field Name="VATClause_Lbl">
           <DataField>VATClause_Lbl</DataField>
         </Field>
-        <Field Name="EndCustName">
-          <DataField>EndCustName</DataField>
+        <Field Name="External_Document_No_Lbl">
+          <DataField>External_Document_No_Lbl</DataField>
         </Field>
-        <Field Name="EndCustAddress">
-          <DataField>EndCustAddress</DataField>
-        </Field>
-        <Field Name="EndCustPostcode">
-          <DataField>EndCustPostcode</DataField>
-        </Field>
-        <Field Name="EndCustCity">
-          <DataField>EndCustCity</DataField>
-        </Field>
-        <Field Name="EndCustCountry">
-          <DataField>EndCustCountry</DataField>
+        <Field Name="External_Document_No_">
+          <DataField>External_Document_No_</DataField>
         </Field>
         <Field Name="LineNo_Line">
           <DataField>LineNo_Line</DataField>
@@ -2396,7 +2387,7 @@
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="Textbox906">
+                                          <Textbox Name="Textbox20">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
@@ -2413,7 +2404,7 @@
                                                 <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>Textbox906</rd:DefaultName>
+                                            <rd:DefaultName>Textbox20</rd:DefaultName>
                                             <Style>
                                               <Border>
                                                 <Color>LightGrey</Color>
@@ -2427,7 +2418,7 @@
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="Textbox907">
+                                          <Textbox Name="Textbox19">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
@@ -2446,7 +2437,7 @@
                                                 </Style>
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>Textbox907</rd:DefaultName>
+                                            <rd:DefaultName>Textbox19</rd:DefaultName>
                                             <Style>
                                               <Border>
                                                 <Color>LightGrey</Color>
@@ -2560,14 +2551,14 @@
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="Textbox1072">
+                                          <Textbox Name="External_Document_No_Lbl">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value />
+                                                    <Value>=Fields!External_Document_No_Lbl.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -2577,7 +2568,7 @@
                                                 <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>Textbox1072</rd:DefaultName>
+                                            <rd:DefaultName>External_Document_No_Lbl</rd:DefaultName>
                                             <Style>
                                               <Border>
                                                 <Color>LightGrey</Color>
@@ -2587,19 +2578,18 @@
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
-                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="Textbox1073">
+                                          <Textbox Name="External_Document_No_">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value />
+                                                    <Value>=Fields!External_Document_No_.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -2611,7 +2601,7 @@
                                                 </Style>
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>Textbox1073</rd:DefaultName>
+                                            <rd:DefaultName>External_Document_No_</rd:DefaultName>
                                             <Style>
                                               <Border>
                                                 <Color>LightGrey</Color>
@@ -3201,6 +3191,7 @@
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
+                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                     </TablixCells>
