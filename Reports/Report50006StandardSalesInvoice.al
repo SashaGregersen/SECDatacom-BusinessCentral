@@ -1516,10 +1516,8 @@ report 50006 "SEC - Sales Invoice"
         LeftHeader.DeleteAll;
 
         FillNameValueTable(LeftHeader, Header.FieldCaption("External Document No."), Header."External Document No.");
-        FillNameValueTable(LeftHeader, Header.FieldCaption("Bill-to Customer No."), Header."Bill-to Customer No.");
         FillNameValueTable(LeftHeader, Header.GetCustomerVATRegistrationNumberLbl, Header.GetCustomerVATRegistrationNumber);
         FillNameValueTable(LeftHeader, Header.GetCustomerGlobalLocationNumberLbl, Header.GetCustomerGlobalLocationNumber);
-        FillNameValueTable(leftHeader, SalespersonLbl, SalespersonPurchaser.Name);
         FillNameValueTable(LeftHeader, PaymentTermsDescLbl, PaymentTerms.Description);
         FillNameValueTable(LeftHeader, PaymentMethodDescLbl, PaymentMethod.Description);
         FillNameValueTable(LeftHeader, ShptMethodDescLbl, ShipmentMethod.Description);
