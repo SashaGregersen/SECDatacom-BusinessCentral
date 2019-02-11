@@ -347,26 +347,11 @@ report 50007 "SEC Sales - Credit Memo"
             column(VATClause_Lbl; VATClause.TableCaption)
             {
             }
-            dataitem(EndCustomer; Customer)
+            Column(External_Document_No_Lbl; FieldCaption("External Document No."))
             {
-                DataItemLink = "No." = FIELD ("End Customer");
-                DataItemLinkReference = Header;
-                UseTemporary = true;
-                column(EndCustName; Name)
-                {
-                }
-                column(EndCustAddress; Address)
-                {
-                }
-                column(EndCustPostcode; "Post code")
-                {
-                }
-                column(EndCustCity; City)
-                {
-                }
-                column(EndCustCountry; "Country/Region Code")
-                {
-                }
+            }
+            column(External_Document_No_; "External Document No.")
+            {
             }
             dataitem(Line; "Sales Cr.Memo Line")
             {
