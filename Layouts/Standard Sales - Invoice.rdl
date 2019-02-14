@@ -1562,7 +1562,6 @@
                                             </Style>
                                           </Textbox>
                                           <ColSpan>5</ColSpan>
-                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell />
@@ -4797,6 +4796,7 @@
                             </Border>
                           </Style>
                         </Rectangle>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -7210,10 +7210,10 @@
         <Height>24.59593cm</Height>
         <Style />
       </Body>
-      <Width>19.13175cm</Width>
+      <Width>18.973cm</Width>
       <Page>
         <PageHeader>
-          <Height>3.74084cm</Height>
+          <Height>4.05834cm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>

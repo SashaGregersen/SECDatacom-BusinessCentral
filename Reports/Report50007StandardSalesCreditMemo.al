@@ -5,7 +5,7 @@ report 50007 "SEC Sales - Credit Memo"
     RDLCLayout = './Layouts/Standard Sales - Credit Memo.rdl';
     //WordLayout = './Layouts/Standard Sales - Credit Memo.docx';
     Caption = 'Sales - Credit Memo';
-    DefaultLayout = Word;
+    DefaultLayout = RDLC;
     Permissions = TableData "Sales Shipment Buffer" = rimd;
     PreviewMode = PrintLayout;
     WordMergeDataItem = Header;
@@ -347,26 +347,11 @@ report 50007 "SEC Sales - Credit Memo"
             column(VATClause_Lbl; VATClause.TableCaption)
             {
             }
-            dataitem(EndCustomer; Customer)
+            Column(External_Document_No_Lbl; FieldCaption("External Document No."))
             {
-                DataItemLink = "No." = FIELD ("End Customer");
-                DataItemLinkReference = Header;
-                UseTemporary = true;
-                column(EndCustName; Name)
-                {
-                }
-                column(EndCustAddress; Address)
-                {
-                }
-                column(EndCustPostcode; "Post code")
-                {
-                }
-                column(EndCustCity; City)
-                {
-                }
-                column(EndCustCountry; "Country/Region Code")
-                {
-                }
+            }
+            column(External_Document_No_; "External Document No.")
+            {
             }
             dataitem(Line; "Sales Cr.Memo Line")
             {
@@ -1033,6 +1018,7 @@ report 50007 "SEC Sales - Credit Memo"
         NoFilterSetErr: Label 'You must specify one or more filters to avoid accidently printing all documents.';
         GreetingLbl: Label 'Hello';
         ClosingLbl: Label 'Sincerely';
+        ExternalDocumentNo: Text;
         BodyLbl: Label 'Thank you for your business. Your credit memo is attached to this message.';
 
     local procedure InitLogInteraction()
