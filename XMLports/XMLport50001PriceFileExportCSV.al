@@ -47,8 +47,6 @@ xmlport 50001 "Price File Export CSV"
                 {
 
                     trigger OnBeforePassVariable()
-                    var
-
                     begin
                         SalesPriceUnitPrice := Format(FindCheapestPrice(salesprice));
                     end;
@@ -57,8 +55,6 @@ xmlport 50001 "Price File Export CSV"
                 textelement(CurrencyCode)
                 {
                     trigger OnAfterAssignVariable()
-                    var
-
                     begin
                         CurrencyCode := CurrencyFilter;
                     end;
@@ -75,8 +71,6 @@ xmlport 50001 "Price File Export CSV"
                     }
                 }
                 trigger OnAfterGetRecord()
-                var
-
                 begin
                     Item.ChangeCompany(GLSetup."Master Company");
                     if item."Blocked from purchase" then begin
@@ -93,15 +87,12 @@ xmlport 50001 "Price File Export CSV"
     }
 
     trigger OnPreXmlPort()
-    var
-        salesprice: Record "Sales Price";
     begin
         GLSetup.get;
 
         if CustomerNo = '' then
             currXMLport.Skip();
     end;
-
 
     var
         CustomerNo: code[20];
@@ -125,7 +116,6 @@ xmlport 50001 "Price File Export CSV"
 
         CustomerNo := customer."No.";
     end;
-
 
     procedure FindCheapestPrice(SalesPrice: record "Sales Price"): Decimal
     var

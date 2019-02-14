@@ -308,7 +308,7 @@ codeunit 50054 "Sales Order Event Handler"
     [EventSubscriber(ObjectType::Table, database::"Sales Header", 'OnAfterValidateEvent', 'end customer', true, true)]
     local procedure SalesHeaderOnAfterValidateEndCustomer(var rec: record "Sales Header")
     var
-        salesline: record "Sales Line";
+
     begin
         if CompanyName() <> 'SECDenmark' then
             exit;
@@ -321,7 +321,7 @@ codeunit 50054 "Sales Order Event Handler"
     [EventSubscriber(ObjectType::Table, database::"Sales Header", 'OnAfterValidateEvent', 'Reseller', true, true)]
     local procedure SalesHeaderOnAfterValidateReseller(var rec: record "Sales Header")
     var
-        salesline: record "Sales Line";
+
     begin
         if CompanyName() <> 'SECDenmark' then
             exit;
@@ -334,7 +334,7 @@ codeunit 50054 "Sales Order Event Handler"
     [EventSubscriber(ObjectType::Table, database::"Sales Header", 'OnAfterValidateEvent', 'subsidiary', true, true)]
     local procedure SalesHeaderOnAfterValidateSubsidiary(var rec: record "Sales Header")
     var
-        salesline: record "Sales Line";
+
     begin
         if CompanyName() <> 'SECDenmark' then
             exit;
@@ -347,7 +347,7 @@ codeunit 50054 "Sales Order Event Handler"
     [EventSubscriber(ObjectType::Table, database::"Sales Header", 'OnAfterValidateEvent', 'financing partner', true, true)]
     local procedure SalesHeaderOnAfterValidateFinancingPartner(var rec: record "Sales Header")
     var
-        salesline: record "Sales Line";
+
     begin
         if CompanyName() <> 'SECDenmark' then
             exit;
@@ -355,6 +355,30 @@ codeunit 50054 "Sales Order Event Handler"
         if rec.Subsidiary <> '' then
             Error('You cannot change an intercompany order');
 
+    end;
+
+    [EventSubscriber(ObjectType::Table, database::"Sales Header", 'OnAfterValidateEvent', 'Status', true, true)]
+    local procedure SalesHeaderOnAfterValidateStatus(var rec: record "Sales Header")
+    var
+
+    begin
+        if rec.Status = rec.Status::Released then begin
+            rec.TestField("Sell-to Contact");
+            rec.TestField("OIOUBL-Sell-to Contact E-Mail");
+            rec.TestField("OIOUBL-Sell-to Contact Phone No.");
+        end;
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, codeunit::"Release Sales Document", 'OnAfterUpdateSalesDocLines', '', true, true)]
+    local procedure SalesDocumentOnBeforeManualReleaseSalesDoc(var SalesHeader: record "Sales Header")
+    var
+
+    begin
+        if SalesHeader.Status = SalesHeader.Status::Released then begin
+            SalesHeader.TestField("Sell-to Contact");
+            SalesHeader.TestField("OIOUBL-Sell-to Contact E-Mail");
+            SalesHeader.TestField("OIOUBL-Sell-to Contact Phone No.");
+        end;
     end;
 
 }
