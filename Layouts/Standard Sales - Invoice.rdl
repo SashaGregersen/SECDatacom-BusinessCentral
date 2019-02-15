@@ -3354,7 +3354,7 @@
                               </TablixRowHierarchy>
                               <RepeatRowHeaders>true</RepeatRowHeaders>
                               <DataSetName>DataSet_Result</DataSetName>
-                              <Top>8.14934cm</Top>
+                              <Top>8.78434cm</Top>
                               <Left>0.03615cm</Left>
                               <Height>4.29464cm</Height>
                               <Width>18.5cm</Width>
@@ -8466,7 +8466,7 @@
         <LeftMargin>1cm</LeftMargin>
         <RightMargin>1cm</RightMargin>
         <TopMargin>0.4cm</TopMargin>
-        <BottomMargin>1cm</BottomMargin>
+        <BottomMargin>4cm</BottomMargin>
         <ColumnSpacing>1.27cm</ColumnSpacing>
         <Style />
       </Page>
