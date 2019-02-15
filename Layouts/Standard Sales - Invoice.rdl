@@ -8096,6 +8096,18 @@ End Function
         <Field Name="EUCustLbl">
           <DataField>EUCustLbl</DataField>
         </Field>
+        <Field Name="External_Document_No_">
+          <DataField>External_Document_No_</DataField>
+        </Field>
+        <Field Name="External_Document_No_Lbl">
+          <DataField>External_Document_No_Lbl</DataField>
+        </Field>
+        <Field Name="VAT_Registration_No_">
+          <DataField>VAT_Registration_No_</DataField>
+        </Field>
+        <Field Name="VAT_Registration_No_Lbl">
+          <DataField>VAT_Registration_No_Lbl</DataField>
+        </Field>
         <Field Name="LineNo_Line">
           <DataField>LineNo_Line</DataField>
         </Field>
