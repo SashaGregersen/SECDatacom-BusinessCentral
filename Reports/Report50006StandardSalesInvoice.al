@@ -1298,7 +1298,7 @@ report 50006 "SEC - Sales Invoice"
     end;
 
     var
-        SalespersonLbl: Label 'Our Ref.';
+        SalespersonLbl: Label 'Our ref.';
         CompanyInfoBankAccNoLbl: Label 'Account No.';
         CompanyInfoBankNameLbl: Label 'Bank';
         CompanyInfoGiroNoLbl: Label 'Giro No.';
