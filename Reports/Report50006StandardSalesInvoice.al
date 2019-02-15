@@ -1147,10 +1147,10 @@ report 50006 "SEC - Sales Invoice"
 
                 if not IdentityManagement.IsInvAppId then
                     CurrReport.Language := Language.GetLanguageID("Language Code");
-
+                /*
                 FillLeftHeader;
                 FillRightHeader;
-
+                */
                 if not IsReportInPreviewMode then
                     CODEUNIT.Run(CODEUNIT::"Sales Inv.-Printed", Header);
 
@@ -1304,7 +1304,7 @@ report 50006 "SEC - Sales Invoice"
     end;
 
     var
-        SalespersonLbl: Label 'Salesperson';
+        SalespersonLbl: Label 'Our Ref.';
         CompanyInfoBankAccNoLbl: Label 'Account No.';
         CompanyInfoBankNameLbl: Label 'Bank';
         CompanyInfoGiroNoLbl: Label 'Giro No.';
@@ -1560,44 +1560,44 @@ report 50006 "SEC - Sales Invoice"
         end;
     end;
 
-    local procedure FillLeftHeader()
-    begin
-        LeftHeader.DeleteAll;
+    /*    local procedure FillLeftHeader()
+        begin
+            LeftHeader.DeleteAll;
 
-        FillNameValueTable(LeftHeader, Header.FieldCaption("External Document No."), Header."External Document No.");
-        FillNameValueTable(LeftHeader, Header.GetCustomerVATRegistrationNumberLbl, Header.GetCustomerVATRegistrationNumber);
-        FillNameValueTable(LeftHeader, Header.GetCustomerGlobalLocationNumberLbl, Header.GetCustomerGlobalLocationNumber);
-        FillNameValueTable(LeftHeader, PaymentTermsDescLbl, PaymentTerms.Description);
-        FillNameValueTable(LeftHeader, PaymentMethodDescLbl, PaymentMethod.Description);
-        FillNameValueTable(LeftHeader, ShptMethodDescLbl, ShipmentMethod.Description);
-    end;
-
-    local procedure FillRightHeader()
-    begin
-        RightHeader.DeleteAll;
-        FillNameValueTable(RightHeader, InvNoLbl, Header."No.");
-        FillNameValueTable(RightHeader, Header.FieldCaption("Order No."), Header."Order No.");
-        FillNameValueTable(RightHeader, Header.FieldCaption("Document Date"), Format(Header."Document Date", 0, 4));
-        FillNameValueTable(RightHeader, Header.FieldCaption("Due Date"), Format(Header."Due Date", 0, 4));
-        FillNameValueTable(RightHeader, Header.FieldCaption("Bill-to Customer No."), Header."Bill-to Customer No.");
-    end;
-
-    local procedure FillNameValueTable(var NameValueBuffer: Record "Name/Value Buffer"; Name: Text; Value: Text)
-    var
-        KeyIndex: Integer;
-    begin
-        if Value <> '' then begin
-            Clear(NameValueBuffer);
-            if NameValueBuffer.FindLast then
-                KeyIndex := NameValueBuffer.ID + 1;
-
-            NameValueBuffer.Init;
-            NameValueBuffer.ID := KeyIndex;
-            NameValueBuffer.Name := CopyStr(Name, 1, MaxStrLen(NameValueBuffer.Name));
-            NameValueBuffer.Value := CopyStr(Value, 1, MaxStrLen(NameValueBuffer.Value));
-            NameValueBuffer.Insert;
+            FillNameValueTable(LeftHeader, Header.FieldCaption("External Document No."), Header."External Document No.");
+            FillNameValueTable(LeftHeader, Header.GetCustomerVATRegistrationNumberLbl, Header.GetCustomerVATRegistrationNumber);
+            FillNameValueTable(LeftHeader, Header.GetCustomerGlobalLocationNumberLbl, Header.GetCustomerGlobalLocationNumber);
+            FillNameValueTable(LeftHeader, PaymentTermsDescLbl, PaymentTerms.Description);
+            FillNameValueTable(LeftHeader, PaymentMethodDescLbl, PaymentMethod.Description);
+            FillNameValueTable(LeftHeader, ShptMethodDescLbl, ShipmentMethod.Description);
         end;
-    end;
+
+        local procedure FillRightHeader()
+        begin
+            RightHeader.DeleteAll;
+            FillNameValueTable(RightHeader, InvNoLbl, Header."No.");
+            FillNameValueTable(RightHeader, Header.FieldCaption("Order No."), Header."Order No.");
+            FillNameValueTable(RightHeader, Header.FieldCaption("Document Date"), Format(Header."Document Date", 0, 4));
+            FillNameValueTable(RightHeader, Header.FieldCaption("Due Date"), Format(Header."Due Date", 0, 4));
+            FillNameValueTable(RightHeader, Header.FieldCaption("Bill-to Customer No."), Header."Bill-to Customer No.");
+        end; 
+
+        local procedure FillNameValueTable(var NameValueBuffer: Record "Name/Value Buffer"; Name: Text; Value: Text)
+        var
+            KeyIndex: Integer;
+        begin
+            if Value <> '' then begin
+                Clear(NameValueBuffer);
+                if NameValueBuffer.FindLast then
+                    KeyIndex := NameValueBuffer.ID + 1;
+
+                NameValueBuffer.Init;
+                NameValueBuffer.ID := KeyIndex;
+                NameValueBuffer.Name := CopyStr(Name, 1, MaxStrLen(NameValueBuffer.Name));
+                NameValueBuffer.Value := CopyStr(Value, 1, MaxStrLen(NameValueBuffer.Value));
+                NameValueBuffer.Insert;
+            end;
+        end; */
 
     local procedure FormatAddressFields(var SalesInvoiceHeader: Record "Sales Invoice Header")
     begin
