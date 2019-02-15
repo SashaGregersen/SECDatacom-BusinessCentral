@@ -7896,6 +7896,12 @@ End Function
         <Field Name="Suppress_Prices_on_Printouts">
           <DataField>Suppress_Prices_on_Printouts</DataField>
         </Field>
+        <Field Name="IsCustEU">
+          <DataField>IsCustEU</DataField>
+        </Field>
+        <Field Name="EUCustLbl">
+          <DataField>EUCustLbl</DataField>
+        </Field>
         <Field Name="LineNo_Line">
           <DataField>LineNo_Line</DataField>
         </Field>

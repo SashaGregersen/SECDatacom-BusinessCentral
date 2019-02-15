@@ -420,7 +420,9 @@ report 50006 "SEC - Sales Invoice"
             column(PaymentInstructions_Txt; PaymentInstructionsTxt)
             {
             }
-            //Endcustomer columns
+            //>> NC columns
+
+            //>>Endcustomer columns
             column(Endcustomer_Lbl; FieldCaption("End Customer"))
             {
             }
@@ -442,6 +444,16 @@ report 50006 "SEC - Sales Invoice"
             column(Suppress_Prices_on_Printouts; "Suppress Prices on Printouts")
             {
             }
+            //<<Encustomer columns
+
+            column(IsCustEU; IsCustEU)
+            {
+            }
+            column(EUCustLbl; EUCustLbl)
+            {
+            }
+
+            //<< NC columns
             dataitem(Line; "Sales Invoice Line")
             {
                 DataItemLink = "Document No." = FIELD ("No.");
@@ -1155,6 +1167,10 @@ report 50006 "SEC - Sales Invoice"
                 TotalAmountVAT := 0;
                 TotalAmountInclVAT := 0;
                 TotalPaymentDiscOnVAT := 0;
+
+                //<<NC
+                IsCustEU := True;
+                //>>NC
             end;
 
             trigger OnPreDataItem()
@@ -1387,6 +1403,12 @@ report 50006 "SEC - Sales Invoice"
         ResellerCountryRegion: Record "Country/Region";
         EndcustomerCountryRegion: Record "Country/Region";
         PriceLbl: Label 'Price';
+        //>>NC variables
+        IsCustEU: Boolean;
+
+        EUCustLbl: label 'The invoice is subject to reverse charge on VAT';
+
+        //<<NC variables
         PricePerLbl: Label 'Price per';
 
     local procedure InitLogInteraction()
