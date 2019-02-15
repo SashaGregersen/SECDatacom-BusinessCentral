@@ -1124,7 +1124,7 @@ report 50006 "SEC - Sales Invoice"
                     if VATBusPostingGroup."code" = 'EU' then
                         IsCustEU := true
                     else
-                        IsCustEU := false;
+                        IsCustEU := false
                 End else begin
                     Clear(VatBusPostingGroup);
                 end;
@@ -1181,9 +1181,6 @@ report 50006 "SEC - Sales Invoice"
                 TotalAmountInclVAT := 0;
                 TotalPaymentDiscOnVAT := 0;
 
-                //<<NC
-                IsCustEU := True;
-                //>>NC
             end;
 
             trigger OnPreDataItem()
