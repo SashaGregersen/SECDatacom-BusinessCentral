@@ -581,6 +581,9 @@ report 50006 "SEC - Sales Invoice"
                 column(PricePer_Lbl; PricePerLbl)
                 {
                 }
+                column(Vendor_Item_No_Lbl; VendorItemNoLbl)
+                {
+                }
                 column(Vendor_Item_No; Item."Vendor Item No.")
                 {
                 }
@@ -1416,7 +1419,7 @@ report 50006 "SEC - Sales Invoice"
         //>>NC variables
         VatBusPostingGroup: Record "VAT Business Posting Group";
         IsCustEU: Boolean;
-
+        VendorItemNoLbl: Label 'Vendor Item No.';
         EUCustLbl: label 'The invoice is subject to reverse charge on VAT';
 
         //<<NC variables
