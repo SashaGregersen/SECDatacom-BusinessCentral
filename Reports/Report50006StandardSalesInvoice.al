@@ -423,7 +423,7 @@ report 50006 "SEC - Sales Invoice"
             //>> NC columns
 
             //>>Endcustomer columns
-            column(Endcustomer_Lbl; FieldCaption("End Customer"))
+            column(Endcustomer_Lbl; EndcustomerLbl)
             {
             }
             column(EndCustName; Endcustomer.Name)
@@ -441,8 +441,8 @@ report 50006 "SEC - Sales Invoice"
             column(EndCustCountry; Endcustomer."Country/Region Code")
             {
             }
-
             //<<Encustomer columns
+
             column(Suppress_Prices_on_Printouts; "Suppress Prices on Printouts")
             {
             }
@@ -450,6 +450,18 @@ report 50006 "SEC - Sales Invoice"
             {
             }
             column(EUCustLbl; EUCustLbl)
+            {
+            }
+            column(External_Document_No_; "External Document No.")
+            {
+            }
+            Column(External_Document_No_Lbl; Fieldcaption("External Document No."))
+            {
+            }
+            column(VAT_Registration_No_; "VAT Registration No.")
+            {
+            }
+            column(VAT_Registration_No_Lbl; Fieldcaption("VAT Registration No."))
             {
             }
             //<< NC columns
@@ -1412,6 +1424,7 @@ report 50006 "SEC - Sales Invoice"
         VATClausesText: Text;
         QtyLbl: Label 'Qty', Comment = 'Short form of Quantity';
         Endcustomer: Record Customer;
+        EndcustomerLbl: Label 'End Customer';
         Item: Record Item;
         ResellerCountryRegion: Record "Country/Region";
         EndcustomerCountryRegion: Record "Country/Region";
