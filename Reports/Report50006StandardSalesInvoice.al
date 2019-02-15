@@ -441,18 +441,17 @@ report 50006 "SEC - Sales Invoice"
             column(EndCustCountry; Endcustomer."Country/Region Code")
             {
             }
+
+            //<<Encustomer columns
             column(Suppress_Prices_on_Printouts; "Suppress Prices on Printouts")
             {
             }
-            //<<Encustomer columns
-
             column(IsCustEU; IsCustEU)
             {
             }
             column(EUCustLbl; EUCustLbl)
             {
             }
-
             //<< NC columns
             dataitem(Line; "Sales Invoice Line")
             {
@@ -1105,7 +1104,7 @@ report 50006 "SEC - Sales Invoice"
                     CurrReport.Language := Language.GetLanguageID("Language Code");
                 end;
 
-                //Getting Endcustomer info  
+                //>>Getting Endcustomer info  
                 if "End Customer" <> '' then begin
                     Endcustomer.Get("End Customer");
                     if Endcustomer."Country/Region Code" <> '' then
@@ -1116,6 +1115,20 @@ report 50006 "SEC - Sales Invoice"
                     clear(Endcustomer);
                     Clear(EndcustomerCountryRegion);
                 end;
+                //<<Getting Endcustomer info
+
+                //>>Determining EU Customers for special VAT text
+                if
+                    "VAT Bus. Posting Group" <> '' then begin
+                    VATBusPostingGroup.Get("VAT Bus. Posting Group");
+                    if VATBusPostingGroup."code" = 'EU' then
+                        IsCustEU := true
+                    else
+                        IsCustEU := false;
+                End else begin
+                    Clear(VatBusPostingGroup);
+                end;
+                //<<Determining EU Customers for special VAT text
 
                 if not IdentityManagement.IsInvAppId then
                     CurrReport.Language := Language.GetLanguageID("Language Code");
@@ -1404,6 +1417,7 @@ report 50006 "SEC - Sales Invoice"
         EndcustomerCountryRegion: Record "Country/Region";
         PriceLbl: Label 'Price';
         //>>NC variables
+        VatBusPostingGroup: Record "VAT Business Posting Group";
         IsCustEU: Boolean;
 
         EUCustLbl: label 'The invoice is subject to reverse charge on VAT';
