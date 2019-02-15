@@ -458,12 +458,6 @@ report 50006 "SEC - Sales Invoice"
             Column(External_Document_No_Lbl; Fieldcaption("External Document No."))
             {
             }
-            column(VAT_Registration_No_; "VAT Registration No.")
-            {
-            }
-            column(VAT_Registration_No_Lbl; Fieldcaption("VAT Registration No."))
-            {
-            }
             //<< NC columns
             dataitem(Line; "Sales Invoice Line")
             {
