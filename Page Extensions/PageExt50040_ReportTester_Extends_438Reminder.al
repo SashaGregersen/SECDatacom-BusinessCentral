@@ -1,4 +1,4 @@
-pageextension 50040 "report tester" extends 434
+pageextension 50040 "report tester" extends 438
 {
     actions
     {
