@@ -22,9 +22,21 @@ pageextension 50027 "End Customer and Reseller 7" extends 130
 
     actions
     {
-        // Add changes to page actions here
+        addlast(Processing)
+        {
+            action(ShowMyReport)
+            {
+                Image = ItemGroup;
+                trigger OnAction();
+                begin
+                    SalesShipment.Run();
+                end;
+            }
+
+        }
     }
 
     var
         myInt: Integer;
+        SalesShipment: report 50009;
 }
