@@ -389,11 +389,12 @@ codeunit 50054 "Sales Order Event Handler"
                 SalesLine.SetRange("Document Type", SalesHeader."Document Type");
                 if SalesLine.FindLast() then begin
                     InsertSalesLine.init;
-                    InsertSalesLine.validate("Document No.", SalesHeader."No.");
-                    InsertSalesLine.validate("Document Type", SalesHeader."Document Type");
+                    InsertSalesLine."Document No." := SalesHeader."No.";
+                    InsertSalesLine."Document Type" := SalesHeader."Document Type";
                     InsertSalesLine.Validate("Line No.", SalesLine."Line No." + 10000);
-                    InsertSalesLine.Validate("No.", SalesReceiveSetup."Freight Item");
                     InsertSalesLine.Validate(Type, InsertSalesLine.type::Item);
+                    InsertSalesLine.Validate("No.", SalesReceiveSetup."Freight Item");
+                    InsertSalesLine.Validate(Quantity, 1);
                     InsertSalesLine.Insert(true);
                 end;
             end;

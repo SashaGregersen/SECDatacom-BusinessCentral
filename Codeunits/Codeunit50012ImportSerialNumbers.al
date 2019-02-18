@@ -86,10 +86,10 @@ codeunit 50012 "Import Serial Numbers"
                             end;
                         until ReservationEntry.next = 0;
                         InsertReservationEntryWithSerialNumber(TempReservationEntry, Salesline2, ItemNo, SerialNo);
-                    end else
-                        Error('You cannot import serial numbers to Item %1,/because it is not on stock', ItemNo);
-                end else begin
-                    Error('There are no reserved items for sales line no. %1./Please reserve items before importing serial numbers', Salesline2."Line No.")
+                    end; //else
+                         //Error('You cannot import serial numbers to Item %1,/because it is not on stock', ItemNo);
+                         //end else begin
+                         //Error('There are no reserved items for sales line no. %1./Please reserve items before importing serial numbers', Salesline2."Line No.")
                 end;
             until Salesline2.next = 0;
         end;
