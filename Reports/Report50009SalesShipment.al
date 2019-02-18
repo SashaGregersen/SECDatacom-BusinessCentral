@@ -176,6 +176,9 @@ report 50009 "SEC Sales - Shipment"
                     column(ExternalDocumentNo_SalesShptHeader; "Sales Shipment Header"."External Document No.")
                     {
                     }
+                    Column(Pref_Shipment_Address; "Sales Shipment Header"."Prefered Shipment Address")
+                    {
+                    }
                     dataitem(DimensionLoop1; "Integer")
                     {
                         DataItemLinkReference = "Sales Shipment Header";
