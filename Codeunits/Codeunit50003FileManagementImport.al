@@ -114,6 +114,8 @@ codeunit 50003 "File Management Import"
         Qty: Integer;
         Quantity: Integer;
         GlobalCounter: Integer;
+        Item: record item;
+        bid: record bid;
     begin
         TempCSVBuffer.SetFilter("Line No.", '<>%1', 1);
         if TempCSVBuffer.FindSet() then
@@ -130,8 +132,14 @@ codeunit 50003 "File Management Import"
                     6:
                         begin
                             if TempCSVBuffer.value = '' then
-                                Error('Item No. is missing on line %1', TempCSVBuffer."Line No.");
-                            BidPrices.Validate("item No.", TempCSVBuffer.Value);
+                                Error('Vendor Item No. is missing on line %1', TempCSVBuffer."Line No.");
+                            Bid.Get(BidNo);
+                            item.SetRange("Vendor No.", bid."Vendor No.");
+                            Item.Setrange("Vendor Item No.", TempCSVBuffer.Value);
+                            if Item.FindFirst() then
+                                BidPrices.Validate("item No.", Item."No.")
+                            else
+                                error('Item does not exists for vendor item no %1 or vendor no. %2', TempCSVBuffer.Value, bid."Vendor No.");
                         end;
                     7:
                         begin
@@ -192,6 +200,10 @@ codeunit 50003 "File Management Import"
         if BidPrices."Bid Unit Purchase Price" = 0 then
             SalesLine.Validate("Unit Purchase Price", 0);
         SalesLine.Modify(true);
+        if SalesLine."Line Discount %" <> 0 then begin
+            SalesLine."Line Discount %" := 0;
+            SalesLine.Modify(true);
+        end;
         GlobalCounter := GlobalCounter + 1;
     end;
 
@@ -235,16 +247,21 @@ codeunit 50003 "File Management Import"
                                     until SalesLine.next = 0;
                             end else begin
                                 PurchOrder.get(PurchOrder."Document Type"::Order, TempCSVBuffer.Value);
-                                if PurchOrder."Buy-from Vendor No." = '' then
+                                if PurchOrder."Buy-from Vendor No." = '' then begin
                                     PurchOrder.validate("Buy-from Vendor No.", VendorNo);
-                                if PurchOrder."Currency Code" = '' then
+                                    PurchOrder.Modify(true);
+                                end;
+                                if PurchOrder."Currency Code" = '' then begin
                                     PurchOrder.Validate("Currency Code", CurrencyCode);
-                                if PurchOrder."Vendor Invoice No." = '' then
-                                    PurchOrder.validate("Vendor Invoice No.", VendorBidNo);
-                                PurchOrder.Modify(true);
+                                    PurchOrder.Modify(true);
+                                end;
+                                if PurchOrder."Vendor Shipment No." = '' then begin
+                                    PurchOrder.validate("Vendor Shipment No.", VendorBidNo);
+                                    PurchOrder.Modify(true);
+                                end;
                                 SalesLine.SetRange("Document No.", SalesHeader."No.");
                                 SalesLine.SetRange("Document Type", SalesHeader."Document Type");
-                                if SalesLine.findset then
+                                if SalesLine.findset then begin
                                     repeat
                                         SalesLine.CalcFields("Reserved Quantity");
                                         if SalesLine."Reserved Quantity" = 0 then begin
@@ -253,7 +270,8 @@ codeunit 50003 "File Management Import"
                                             GlobalCounter := GlobalCounter + 1;
                                         end;
                                     until SalesLine.next = 0;
-                                Message('%1 lines inserted on purchase order %2', GlobalCounter, PurchOrder."No.");
+                                    Message('%1 lines inserted on purchase order %2', GlobalCounter, PurchOrder."No.");
+                                end;
                             end;
                         end;
                 end;

@@ -370,15 +370,36 @@ codeunit 50054 "Sales Order Event Handler"
     end;
 
     [EventSubscriber(ObjectType::Codeunit, codeunit::"Release Sales Document", 'OnAfterUpdateSalesDocLines', '', true, true)]
-    local procedure SalesDocumentOnBeforeManualReleaseSalesDoc(var SalesHeader: record "Sales Header")
+    local procedure OnAfterUpdateSalesDocLinesOnBeforeReleaseSalesDoc(var SalesHeader: record "Sales Header")
     var
-
+        SalesReceiveSetup: record "Sales & Receivables Setup";
+        SalesLine: record "Sales Line";
+        InsertSalesLine: record "Sales Line";
     begin
         if SalesHeader.Status = SalesHeader.Status::Released then begin
             SalesHeader.TestField("Sell-to Contact");
             SalesHeader.TestField("OIOUBL-Sell-to Contact E-Mail");
             SalesHeader.TestField("OIOUBL-Sell-to Contact Phone No.");
         end;
+
+        SalesReceiveSetup.Get();
+        if SalesReceiveSetup."Freight Item" <> '' then begin
+            if confirm('Do you want to add freight to the order?', true) then begin
+                SalesLine.SetRange("Document No.", SalesHeader."No.");
+                SalesLine.SetRange("Document Type", SalesHeader."Document Type");
+                if SalesLine.FindLast() then begin
+                    InsertSalesLine.init;
+                    InsertSalesLine.validate("Document No.", SalesHeader."No.");
+                    InsertSalesLine.validate("Document Type", SalesHeader."Document Type");
+                    InsertSalesLine.Validate("Line No.", SalesLine."Line No." + 10000);
+                    InsertSalesLine.Validate("No.", SalesReceiveSetup."Freight Item");
+                    InsertSalesLine.Validate(Type, InsertSalesLine.type::Item);
+                    InsertSalesLine.Insert(true);
+                end;
+            end;
+
+        end;
+
     end;
 
 }
