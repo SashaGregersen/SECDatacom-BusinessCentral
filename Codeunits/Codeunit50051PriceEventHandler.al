@@ -97,6 +97,7 @@ codeunit 50051 "Price Event Handler"
             exit;
         Rec."Allow Line Disc." := false;
         Rec.Modify(false);
+        AdvPriceMgt.CloseOldSalesPrices(Rec);
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Sales Price", 'OnAfterModifyEvent', '', true, true)]

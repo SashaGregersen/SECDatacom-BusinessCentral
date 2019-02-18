@@ -516,4 +516,21 @@ codeunit 50000 "Advanced Price Management"
             CreateUpdateSalesMarkupPrices(PurchaseDisc);
     end;
 
+    procedure CloseOldSalesPrices(SalesPrice: Record "Sales Price")
+    var
+        OldSalesPrice: Record "Sales Price";
+        EndDate: Date;
+    begin
+        EndDate := CalcDate('<-1D>', SalesPrice."Starting Date");
+        OldSalesPrice := SalesPrice;
+        OldSalesPrice.SetRecFilter();
+        OldSalesPrice.SetRange("Starting Date", 0D, EndDate);
+        OldSalesPrice.SetFilter("Ending Date", '=%1', 0D);
+        if OldSalesPrice.FindSet(true, false) then
+            repeat
+                OldSalesPrice."Ending Date" := EndDate;
+                OldSalesPrice.Modify(true);
+            until OldSalesPrice.Next() = 0;
+    end;
+
 }

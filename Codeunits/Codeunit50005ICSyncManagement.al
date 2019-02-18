@@ -11,13 +11,15 @@ codeunit 50005 "IC Sync Management"
         LocalGLSetup: Record "General Ledger Setup";
         ForeignGLSetup: Record "General Ledger Setup";
     begin
+        LocalGLSetup.Get();
+        ForeignGLSetup.ChangeCompany(CompanyToCopyTo);
+        ForeignGLSetup.Get();
         if SalesPriceWorkSheet."Currency Code" = '' then begin
-            LocalGLSetup.Get();
-            ForeignGLSetup.ChangeCompany(CompanyToCopyTo);
-            ForeignGLSetup.Get();
             if LocalGLSetup."LCY Code" <> ForeignGLSetup."LCY Code" then
                 SalesPriceWorkSheet."Currency Code" := LocalGLSetup."LCY Code";
         end;
+        If SalesPriceWorkSheet."Currency Code" = ForeignGLSetup."LCY Code" then
+            SalesPriceWorkSheet."Currency Code" := '';
         LocalSalesPricWorksheet.ChangeCompany(CompanyToCopyTo);
         LocalSalesPricWorksheet := SalesPriceWorkSheet;
         if not LocalSalesPricWorksheet.Insert(false) then
@@ -30,6 +32,9 @@ codeunit 50005 "IC Sync Management"
         InventorySetup: Record "Inventory Setup";
 
     begin
+        InventorySetup.Get();
+        if not InventorySetup."Synchronize Item" then
+            exit;
         CompanyRec.SetFilter(Name, '<>%1', CompanyName());
         if CompanyRec.FindSet() then
             repeat
