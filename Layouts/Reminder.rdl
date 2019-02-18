@@ -11,6 +11,418 @@
       <rd:DataSourceID>d56a4d20-e547-49b8-bb8d-f3c0b8b8dab8</rd:DataSourceID>
     </DataSource>
   </DataSources>
+  <DataSets>
+    <DataSet Name="DataSet_Result">
+      <Query>
+        <DataSourceName>DataSource</DataSourceName>
+        <CommandText />
+      </Query>
+      <Fields>
+        <Field Name="No_IssuedReminderHeader">
+          <DataField>No_IssuedReminderHeader</DataField>
+        </Field>
+        <Field Name="DueDateCaption">
+          <DataField>DueDateCaption</DataField>
+        </Field>
+        <Field Name="VATAmountCaption">
+          <DataField>VATAmountCaption</DataField>
+        </Field>
+        <Field Name="VATBaseCaption">
+          <DataField>VATBaseCaption</DataField>
+        </Field>
+        <Field Name="VATPercentCaption">
+          <DataField>VATPercentCaption</DataField>
+        </Field>
+        <Field Name="TotalCaption">
+          <DataField>TotalCaption</DataField>
+        </Field>
+        <Field Name="PageCaption">
+          <DataField>PageCaption</DataField>
+        </Field>
+        <Field Name="DocDateCaption">
+          <DataField>DocDateCaption</DataField>
+        </Field>
+        <Field Name="HomePageCaption">
+          <DataField>HomePageCaption</DataField>
+        </Field>
+        <Field Name="EMailCaption">
+          <DataField>EMailCaption</DataField>
+        </Field>
+        <Field Name="ShowMIRLines">
+          <DataField>ShowMIRLines</DataField>
+        </Field>
+        <Field Name="CompanyInfo1Picture">
+          <DataField>CompanyInfo1Picture</DataField>
+        </Field>
+        <Field Name="CompanyInfo2Picture">
+          <DataField>CompanyInfo2Picture</DataField>
+        </Field>
+        <Field Name="CompanyInfo3Picture">
+          <DataField>CompanyInfo3Picture</DataField>
+        </Field>
+        <Field Name="DueDate_IssuedReminderHdr">
+          <DataField>DueDate_IssuedReminderHdr</DataField>
+        </Field>
+        <Field Name="PostDate_IssuedReminderHdr">
+          <DataField>PostDate_IssuedReminderHdr</DataField>
+        </Field>
+        <Field Name="No1_IssuedReminderHdr">
+          <DataField>No1_IssuedReminderHdr</DataField>
+        </Field>
+        <Field Name="YourRef_IssueReminderHdr">
+          <DataField>YourRef_IssueReminderHdr</DataField>
+        </Field>
+        <Field Name="Contact_IssuedReminderHdr">
+          <DataField>Contact_IssuedReminderHdr</DataField>
+        </Field>
+        <Field Name="ReferenceText">
+          <DataField>ReferenceText</DataField>
+        </Field>
+        <Field Name="VatRegNo_IssueReminderHdr">
+          <DataField>VatRegNo_IssueReminderHdr</DataField>
+        </Field>
+        <Field Name="VATNoText">
+          <DataField>VATNoText</DataField>
+        </Field>
+        <Field Name="DocDate_IssueReminderHdr">
+          <DataField>DocDate_IssueReminderHdr</DataField>
+        </Field>
+        <Field Name="CustNo_IssueReminderHdr">
+          <DataField>CustNo_IssueReminderHdr</DataField>
+        </Field>
+        <Field Name="CompanyInfoBankAccNo">
+          <DataField>CompanyInfoBankAccNo</DataField>
+        </Field>
+        <Field Name="CompanyInfoBankName">
+          <DataField>CompanyInfoBankName</DataField>
+        </Field>
+        <Field Name="CompanyInfoGiroNo">
+          <DataField>CompanyInfoGiroNo</DataField>
+        </Field>
+        <Field Name="CompanyInfoVATRegNo">
+          <DataField>CompanyInfoVATRegNo</DataField>
+        </Field>
+        <Field Name="CompanyInfoHomePage">
+          <DataField>CompanyInfoHomePage</DataField>
+        </Field>
+        <Field Name="CompanyInfoEMail">
+          <DataField>CompanyInfoEMail</DataField>
+        </Field>
+        <Field Name="CustAddr8">
+          <DataField>CustAddr8</DataField>
+        </Field>
+        <Field Name="CompanyInfoPhoneNo">
+          <DataField>CompanyInfoPhoneNo</DataField>
+        </Field>
+        <Field Name="CustAddr7">
+          <DataField>CustAddr7</DataField>
+        </Field>
+        <Field Name="CustAddr6">
+          <DataField>CustAddr6</DataField>
+        </Field>
+        <Field Name="CompanyAddr6">
+          <DataField>CompanyAddr6</DataField>
+        </Field>
+        <Field Name="CustAddr5">
+          <DataField>CustAddr5</DataField>
+        </Field>
+        <Field Name="CompanyAddr5">
+          <DataField>CompanyAddr5</DataField>
+        </Field>
+        <Field Name="CustAddr4">
+          <DataField>CustAddr4</DataField>
+        </Field>
+        <Field Name="CompanyAddr4">
+          <DataField>CompanyAddr4</DataField>
+        </Field>
+        <Field Name="CustAddr3">
+          <DataField>CustAddr3</DataField>
+        </Field>
+        <Field Name="CompanyAddr3">
+          <DataField>CompanyAddr3</DataField>
+        </Field>
+        <Field Name="CustAddr2">
+          <DataField>CustAddr2</DataField>
+        </Field>
+        <Field Name="CompanyAddr2">
+          <DataField>CompanyAddr2</DataField>
+        </Field>
+        <Field Name="CustAddr1">
+          <DataField>CustAddr1</DataField>
+        </Field>
+        <Field Name="CompanyAddr1">
+          <DataField>CompanyAddr1</DataField>
+        </Field>
+        <Field Name="TextPage">
+          <DataField>TextPage</DataField>
+        </Field>
+        <Field Name="PostingDateCaption">
+          <DataField>PostingDateCaption</DataField>
+        </Field>
+        <Field Name="ReminderNoCaption">
+          <DataField>ReminderNoCaption</DataField>
+        </Field>
+        <Field Name="BankAccNoCaption">
+          <DataField>BankAccNoCaption</DataField>
+        </Field>
+        <Field Name="BankNameCaption">
+          <DataField>BankNameCaption</DataField>
+        </Field>
+        <Field Name="GiroNoCaption">
+          <DataField>GiroNoCaption</DataField>
+        </Field>
+        <Field Name="VATRegNoCaption">
+          <DataField>VATRegNoCaption</DataField>
+        </Field>
+        <Field Name="PhoneNoCaption">
+          <DataField>PhoneNoCaption</DataField>
+        </Field>
+        <Field Name="ReminderCaption">
+          <DataField>ReminderCaption</DataField>
+        </Field>
+        <Field Name="CustNo_IssueReminderHdrCaption">
+          <DataField>CustNo_IssueReminderHdrCaption</DataField>
+        </Field>
+        <Field Name="DimText">
+          <DataField>DimText</DataField>
+        </Field>
+        <Field Name="Number_IntegerLine">
+          <DataField>Number_IntegerLine</DataField>
+        </Field>
+        <Field Name="HeaderDimensionsCaption">
+          <DataField>HeaderDimensionsCaption</DataField>
+        </Field>
+        <Field Name="RemAmt_IssuedReminderLine">
+          <DataField>RemAmt_IssuedReminderLine</DataField>
+        </Field>
+        <Field Name="RemAmt_IssuedReminderLineFormat">
+          <DataField>RemAmt_IssuedReminderLineFormat</DataField>
+        </Field>
+        <Field Name="Desc_IssuedReminderLine">
+          <DataField>Desc_IssuedReminderLine</DataField>
+        </Field>
+        <Field Name="Type_IssuedReminderLine">
+          <DataField>Type_IssuedReminderLine</DataField>
+        </Field>
+        <Field Name="DocDate_IssuedReminderLine">
+          <DataField>DocDate_IssuedReminderLine</DataField>
+        </Field>
+        <Field Name="DocNo_IssuedReminderLine">
+          <DataField>DocNo_IssuedReminderLine</DataField>
+        </Field>
+        <Field Name="DocNoCaption_IssuedReminderLine">
+          <DataField>DocNoCaption_IssuedReminderLine</DataField>
+        </Field>
+        <Field Name="DueDate_IssuedReminderLine">
+          <DataField>DueDate_IssuedReminderLine</DataField>
+        </Field>
+        <Field Name="OriginalAmt_IssuedReminderLine">
+          <DataField>OriginalAmt_IssuedReminderLine</DataField>
+        </Field>
+        <Field Name="OriginalAmt_IssuedReminderLineFormat">
+          <DataField>OriginalAmt_IssuedReminderLineFormat</DataField>
+        </Field>
+        <Field Name="DocType_IssuedReminderLine">
+          <DataField>DocType_IssuedReminderLine</DataField>
+        </Field>
+        <Field Name="LineNo_IssuedReminderLine">
+          <DataField>LineNo_IssuedReminderLine</DataField>
+        </Field>
+        <Field Name="ShowInternalInfo">
+          <DataField>ShowInternalInfo</DataField>
+        </Field>
+        <Field Name="NNCInterestAmt">
+          <DataField>NNCInterestAmt</DataField>
+        </Field>
+        <Field Name="NNCInterestAmtFormat">
+          <DataField>NNCInterestAmtFormat</DataField>
+        </Field>
+        <Field Name="TotalText">
+          <DataField>TotalText</DataField>
+        </Field>
+        <Field Name="MIREntry_IssuedReminderLine">
+          <DataField>MIREntry_IssuedReminderLine</DataField>
+        </Field>
+        <Field Name="NNCTotal">
+          <DataField>NNCTotal</DataField>
+        </Field>
+        <Field Name="NNCTotalFormat">
+          <DataField>NNCTotalFormat</DataField>
+        </Field>
+        <Field Name="TotalInclVATText">
+          <DataField>TotalInclVATText</DataField>
+        </Field>
+        <Field Name="NNCVATAmt">
+          <DataField>NNCVATAmt</DataField>
+        </Field>
+        <Field Name="NNCVATAmtFormat">
+          <DataField>NNCVATAmtFormat</DataField>
+        </Field>
+        <Field Name="NNCTotalInclVAT">
+          <DataField>NNCTotalInclVAT</DataField>
+        </Field>
+        <Field Name="NNCTotalInclVATFormat">
+          <DataField>NNCTotalInclVATFormat</DataField>
+        </Field>
+        <Field Name="TotalVATAmt">
+          <DataField>TotalVATAmt</DataField>
+        </Field>
+        <Field Name="TotalVATAmtFormat">
+          <DataField>TotalVATAmtFormat</DataField>
+        </Field>
+        <Field Name="RemNo_IssuedReminderLine">
+          <DataField>RemNo_IssuedReminderLine</DataField>
+        </Field>
+        <Field Name="DocumentDateCaption1">
+          <DataField>DocumentDateCaption1</DataField>
+        </Field>
+        <Field Name="InterestAmountCaption">
+          <DataField>InterestAmountCaption</DataField>
+        </Field>
+        <Field Name="RemAmt_IssuedReminderLineCaption">
+          <DataField>RemAmt_IssuedReminderLineCaption</DataField>
+        </Field>
+        <Field Name="DocNo_IssuedReminderLineCaption">
+          <DataField>DocNo_IssuedReminderLineCaption</DataField>
+        </Field>
+        <Field Name="OriginalAmt_IssuedReminderLineCaption">
+          <DataField>OriginalAmt_IssuedReminderLineCaption</DataField>
+        </Field>
+        <Field Name="DocType_IssuedReminderLineCaption">
+          <DataField>DocType_IssuedReminderLineCaption</DataField>
+        </Field>
+        <Field Name="Interest">
+          <DataField>Interest</DataField>
+        </Field>
+        <Field Name="InterestFormat">
+          <DataField>InterestFormat</DataField>
+        </Field>
+        <Field Name="RemainingAmountText">
+          <DataField>RemainingAmountText</DataField>
+        </Field>
+        <Field Name="Desc1_IssuedReminderLine">
+          <DataField>Desc1_IssuedReminderLine</DataField>
+        </Field>
+        <Field Name="LineNo1_IssuedReminderLine">
+          <DataField>LineNo1_IssuedReminderLine</DataField>
+        </Field>
+        <Field Name="VATAmtLineAmtIncludVAT">
+          <DataField>VATAmtLineAmtIncludVAT</DataField>
+        </Field>
+        <Field Name="VATAmtLineAmtIncludVATFormat">
+          <DataField>VATAmtLineAmtIncludVATFormat</DataField>
+        </Field>
+        <Field Name="VALVATAmount">
+          <DataField>VALVATAmount</DataField>
+        </Field>
+        <Field Name="VALVATAmountFormat">
+          <DataField>VALVATAmountFormat</DataField>
+        </Field>
+        <Field Name="VALVATBase">
+          <DataField>VALVATBase</DataField>
+        </Field>
+        <Field Name="VALVATBaseFormat">
+          <DataField>VALVATBaseFormat</DataField>
+        </Field>
+        <Field Name="VALVATBaseVALVATAmt">
+          <DataField>VALVATBaseVALVATAmt</DataField>
+        </Field>
+        <Field Name="VALVATBaseVALVATAmtFormat">
+          <DataField>VALVATBaseVALVATAmtFormat</DataField>
+        </Field>
+        <Field Name="VATAmtLineVAT">
+          <DataField>VATAmtLineVAT</DataField>
+        </Field>
+        <Field Name="VATAmtLineVATFormat">
+          <DataField>VATAmtLineVATFormat</DataField>
+        </Field>
+        <Field Name="AmountIncVATCaption">
+          <DataField>AmountIncVATCaption</DataField>
+        </Field>
+        <Field Name="VATAmtSpecCaption">
+          <DataField>VATAmtSpecCaption</DataField>
+        </Field>
+        <Field Name="ContinuedCaption">
+          <DataField>ContinuedCaption</DataField>
+        </Field>
+        <Field Name="VATClauseVATIdentifier">
+          <DataField>VATClauseVATIdentifier</DataField>
+        </Field>
+        <Field Name="VATClauseCode">
+          <DataField>VATClauseCode</DataField>
+        </Field>
+        <Field Name="VATClauseDescription">
+          <DataField>VATClauseDescription</DataField>
+        </Field>
+        <Field Name="VATClauseDescription2">
+          <DataField>VATClauseDescription2</DataField>
+        </Field>
+        <Field Name="VATClauseAmount">
+          <DataField>VATClauseAmount</DataField>
+        </Field>
+        <Field Name="VATClauseAmountFormat">
+          <DataField>VATClauseAmountFormat</DataField>
+        </Field>
+        <Field Name="VATClausesCaption">
+          <DataField>VATClausesCaption</DataField>
+        </Field>
+        <Field Name="VATClauseVATIdentifierCaption">
+          <DataField>VATClauseVATIdentifierCaption</DataField>
+        </Field>
+        <Field Name="VATClauseVATAmtCaption">
+          <DataField>VATClauseVATAmtCaption</DataField>
+        </Field>
+        <Field Name="VALExchRate">
+          <DataField>VALExchRate</DataField>
+        </Field>
+        <Field Name="VALSpecLCYHeader">
+          <DataField>VALSpecLCYHeader</DataField>
+        </Field>
+        <Field Name="VALVATAmountLCY">
+          <DataField>VALVATAmountLCY</DataField>
+        </Field>
+        <Field Name="VALVATAmountLCYFormat">
+          <DataField>VALVATAmountLCYFormat</DataField>
+        </Field>
+        <Field Name="VALVATBaseLCY">
+          <DataField>VALVATBaseLCY</DataField>
+        </Field>
+        <Field Name="VALVATBaseLCYFormat">
+          <DataField>VALVATBaseLCYFormat</DataField>
+        </Field>
+        <Field Name="VATAmtLineVATCtrl107">
+          <DataField>VATAmtLineVATCtrl107</DataField>
+        </Field>
+        <Field Name="VATAmtLineVATCtrl107Format">
+          <DataField>VATAmtLineVATCtrl107Format</DataField>
+        </Field>
+        <Field Name="ContinuedCaption1">
+          <DataField>ContinuedCaption1</DataField>
+        </Field>
+        <Field Name="GreetingText">
+          <DataField>GreetingText</DataField>
+        </Field>
+        <Field Name="AmtDueText">
+          <DataField>AmtDueText</DataField>
+        </Field>
+        <Field Name="BodyText">
+          <DataField>BodyText</DataField>
+        </Field>
+        <Field Name="ClosingText">
+          <DataField>ClosingText</DataField>
+        </Field>
+        <Field Name="DescriptionText">
+          <DataField>DescriptionText</DataField>
+        </Field>
+        <Field Name="TotalRemAmt_IssuedReminderLine">
+          <DataField>TotalRemAmt_IssuedReminderLine</DataField>
+        </Field>
+        <Field Name="TotalRemAmt_IssuedReminderLineFormat">
+          <DataField>TotalRemAmt_IssuedReminderLineFormat</DataField>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
   <ReportSections>
     <ReportSection>
       <Body>
@@ -1077,7 +1489,7 @@
                                     </TablixCells>
                                   </TablixRow>
                                   <TablixRow>
-                                    <Height>0.13889in</Height>
+                                    <Height>0.35278cm</Height>
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
@@ -3688,7 +4100,7 @@
                                 </Filter>
                               </Filters>
                               <Left>0.01537cm</Left>
-                              <Height>4.23329cm</Height>
+                              <Height>4.58608cm</Height>
                               <Width>17.95724cm</Width>
                               <Style>
                                 <FontFamily>Segoe UI</FontFamily>
@@ -6889,7 +7301,7 @@
                               <Top>4.67079cm</Top>
                               <Left>0.01537cm</Left>
                               <Height>2.78694cm</Height>
-                              <Width>17.94208cm</Width>
+                              <Width>17.94201cm</Width>
                               <ZIndex>1</ZIndex>
                               <Visibility>
                                 <Hidden>=iif(Sum(Fields!VALVATAmount.Value)&lt;&gt;0,FALSE,TRUE)</Hidden>
@@ -9296,8 +9708,8 @@
                               <DataSetName>DataSet_Result</DataSetName>
                               <Top>7.49097cm</Top>
                               <Left>0.01537cm</Left>
-                              <Height>3.17497cm</Height>
-                              <Width>17.94203cm</Width>
+                              <Height>3.17498cm</Height>
+                              <Width>17.94205cm</Width>
                               <ZIndex>2</ZIndex>
                               <Visibility>
                                 <Hidden>=iif(Sum(Fields!VALVATBaseLCY.Value)&lt;&gt;0,FALSE,TRUE)</Hidden>
@@ -9507,7 +9919,7 @@
                               <Top>4.29399cm</Top>
                               <Left>0.01537cm</Left>
                               <Height>0.35278cm</Height>
-                              <Width>17.9419cm</Width>
+                              <Width>17.94177cm</Width>
                               <ZIndex>3</ZIndex>
                               <Style>
                                 <FontFamily>Segoe UI</FontFamily>
@@ -9526,7 +9938,7 @@
                                 </TablixColumns>
                                 <TablixRows>
                                   <TablixRow>
-                                    <Height>0.25603cm</Height>
+                                    <Height>0.27719cm</Height>
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
@@ -9647,10 +10059,9 @@ Cstr(Fields!CompanyInfoEMail.Value)
                                   <TablixMember />
                                 </TablixMembers>
                               </TablixRowHierarchy>
-                              <Top>0.02116cm</Top>
                               <Left>0.11274cm</Left>
-                              <Height>0.25603cm</Height>
-                              <Width>3.31572cm</Width>
+                              <Height>0.27719cm</Height>
+                              <Width>3.31571cm</Width>
                               <ZIndex>4</ZIndex>
                               <Visibility>
                                 <Hidden>true</Hidden>
@@ -10413,7 +10824,7 @@ Cstr(Fields!CompanyInfoEMail.Value)
                               </Filters>
                               <Top>10.82233cm</Top>
                               <Height>2.11666cm</Height>
-                              <Width>17.94187cm</Width>
+                              <Width>17.94189cm</Width>
                               <ZIndex>6</ZIndex>
                               <Visibility>
                                 <Hidden>=(Fields!VATClausesCaption.Value = "")</Hidden>
@@ -10973,7 +11384,7 @@ Cstr(Fields!CompanyInfoEMail.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(29,1)</Value>
+                      <Value EvaluationMode="Constant" />
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -11004,7 +11415,7 @@ Cstr(Fields!CompanyInfoEMail.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(22,1)</Value>
+                      <Value EvaluationMode="Constant" />
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -11037,7 +11448,7 @@ Cstr(Fields!CompanyInfoEMail.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=(Code.GetData(30,1))</Value>
+                      <Value>=(Code.GetData(34,1))</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -11068,7 +11479,7 @@ Cstr(Fields!CompanyInfoEMail.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(23,1)</Value>
+                      <Value>=Code.GetData(16,1)</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -11101,7 +11512,7 @@ Cstr(Fields!CompanyInfoEMail.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=(Code.GetData(31,1))</Value>
+                      <Value>=(Code.GetData(35,1))</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -11132,7 +11543,7 @@ Cstr(Fields!CompanyInfoEMail.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(24,1)</Value>
+                      <Value>=Code.GetData(17,1)</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -11165,7 +11576,7 @@ Cstr(Fields!CompanyInfoEMail.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=(Code.GetData(32,1))</Value>
+                      <Value>=Code.GetData(40,1)</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -11196,7 +11607,7 @@ Cstr(Fields!CompanyInfoEMail.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(25,1)</Value>
+                      <Value>=Code.GetData(15,1)</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -11229,7 +11640,7 @@ Cstr(Fields!CompanyInfoEMail.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=(Code.GetData(33,1))</Value>
+                      <Value>=Code.GetData(36,1)</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -11260,7 +11671,7 @@ Cstr(Fields!CompanyInfoEMail.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(26,1)</Value>
+                      <Value>=Code.GetData(18,1)</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -11293,7 +11704,7 @@ Cstr(Fields!CompanyInfoEMail.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(15,1)</Value>
+                      <Value>=Code.GetData(20,1)</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -11326,7 +11737,7 @@ Cstr(Fields!CompanyInfoEMail.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=(Code.GetData(34,1))</Value>
+                      <Value>=(Code.GetData(39,1))</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -11356,7 +11767,7 @@ Cstr(Fields!CompanyInfoEMail.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(16,1)</Value>
+                      <Value>=Code.GetData(21,1)</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -11388,7 +11799,7 @@ Cstr(Fields!CompanyInfoEMail.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=(Code.GetData(35,1))</Value>
+                      <Value>=Code.GetData(37,1)</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -11419,7 +11830,7 @@ Cstr(Fields!CompanyInfoEMail.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(17,1)</Value>
+                      <Value>=Code.GetData(19,1)</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -11452,7 +11863,7 @@ Cstr(Fields!CompanyInfoEMail.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(36,1)</Value>
+                      <Value EvaluationMode="Constant" />
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -11483,7 +11894,7 @@ Cstr(Fields!CompanyInfoEMail.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(18,1)</Value>
+                      <Value EvaluationMode="Constant" />
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -11501,7 +11912,7 @@ Cstr(Fields!CompanyInfoEMail.Value)
               <Top>234.79999pt</Top>
               <Left>2.85622cm</Left>
               <Height>11pt</Height>
-              <Width>15.08568cm</Width>
+              <Width>8.1556cm</Width>
               <ZIndex>32</ZIndex>
               <Style>
                 <FontFamily>Segoe UI</FontFamily>
@@ -11516,7 +11927,7 @@ Cstr(Fields!CompanyInfoEMail.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(37,1)</Value>
+                      <Value EvaluationMode="Constant" />
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -11545,7 +11956,7 @@ Cstr(Fields!CompanyInfoEMail.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(19,1)</Value>
+                      <Value EvaluationMode="Constant" />
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -11635,7 +12046,7 @@ Cstr(Fields!CompanyInfoEMail.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=(Code.GetData(39,1))</Value>
+                      <Value EvaluationMode="Constant" />
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -11664,7 +12075,7 @@ Cstr(Fields!CompanyInfoEMail.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(21,1)</Value>
+                      <Value EvaluationMode="Constant" />
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -11695,7 +12106,7 @@ Cstr(Fields!CompanyInfoEMail.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(40,1)</Value>
+                      <Value>=Code.GetData(30,1)</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -11723,7 +12134,7 @@ Cstr(Fields!CompanyInfoEMail.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(41,1)</Value>
+                      <Value>=(Code.GetData(32,1))</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -11754,7 +12165,7 @@ Cstr(Fields!CompanyInfoEMail.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(43,1)</Value>
+                      <Value>=Code.GetData(25,1)</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -11787,7 +12198,7 @@ Cstr(Fields!CompanyInfoEMail.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(42,1)</Value>
+                      <Value>=(Code.GetData(33,1))</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -11818,7 +12229,7 @@ Cstr(Fields!CompanyInfoEMail.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(44,1)</Value>
+                      <Value>=Code.GetData(26,1)</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -11910,7 +12321,7 @@ Cstr(Fields!CompanyInfoEMail.Value)
         <LeftMargin>1.76389cm</LeftMargin>
         <RightMargin>1.05833cm</RightMargin>
         <TopMargin>1.05833cm</TopMargin>
-        <BottomMargin>1.48167cm</BottomMargin>
+        <BottomMargin>4cm</BottomMargin>
         <Style>
           <FontFamily>Segoe UI</FontFamily>
           <FontSize>8pt</FontSize>
@@ -11918,6 +12329,12 @@ Cstr(Fields!CompanyInfoEMail.Value)
       </Page>
     </ReportSection>
   </ReportSections>
+  <ReportParametersLayout>
+    <GridLayoutDefinition>
+      <NumberOfColumns>4</NumberOfColumns>
+      <NumberOfRows>2</NumberOfRows>
+    </GridLayoutDefinition>
+  </ReportParametersLayout>
   <Code>
     Public Function BlankZero(ByVal Value As Decimal)
     if Value = 0 then
@@ -12027,416 +12444,4 @@ End Function
   <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
   <rd:ReportID>d2aee5a0-d59c-4de8-acb3-f896eff1ae14</rd:ReportID>
-  <DataSets>
-    <DataSet Name="DataSet_Result">
-      <Fields>
-        <Field Name="No_IssuedReminderHeader">
-          <DataField>No_IssuedReminderHeader</DataField>
-        </Field>
-        <Field Name="DueDateCaption">
-          <DataField>DueDateCaption</DataField>
-        </Field>
-        <Field Name="VATAmountCaption">
-          <DataField>VATAmountCaption</DataField>
-        </Field>
-        <Field Name="VATBaseCaption">
-          <DataField>VATBaseCaption</DataField>
-        </Field>
-        <Field Name="VATPercentCaption">
-          <DataField>VATPercentCaption</DataField>
-        </Field>
-        <Field Name="TotalCaption">
-          <DataField>TotalCaption</DataField>
-        </Field>
-        <Field Name="PageCaption">
-          <DataField>PageCaption</DataField>
-        </Field>
-        <Field Name="DocDateCaption">
-          <DataField>DocDateCaption</DataField>
-        </Field>
-        <Field Name="HomePageCaption">
-          <DataField>HomePageCaption</DataField>
-        </Field>
-        <Field Name="EMailCaption">
-          <DataField>EMailCaption</DataField>
-        </Field>
-        <Field Name="ShowMIRLines">
-          <DataField>ShowMIRLines</DataField>
-        </Field>
-        <Field Name="CompanyInfo1Picture">
-          <DataField>CompanyInfo1Picture</DataField>
-        </Field>
-        <Field Name="CompanyInfo2Picture">
-          <DataField>CompanyInfo2Picture</DataField>
-        </Field>
-        <Field Name="CompanyInfo3Picture">
-          <DataField>CompanyInfo3Picture</DataField>
-        </Field>
-        <Field Name="DueDate_IssuedReminderHdr">
-          <DataField>DueDate_IssuedReminderHdr</DataField>
-        </Field>
-        <Field Name="PostDate_IssuedReminderHdr">
-          <DataField>PostDate_IssuedReminderHdr</DataField>
-        </Field>
-        <Field Name="No1_IssuedReminderHdr">
-          <DataField>No1_IssuedReminderHdr</DataField>
-        </Field>
-        <Field Name="YourRef_IssueReminderHdr">
-          <DataField>YourRef_IssueReminderHdr</DataField>
-        </Field>
-        <Field Name="Contact_IssuedReminderHdr">
-          <DataField>Contact_IssuedReminderHdr</DataField>
-        </Field>
-        <Field Name="ReferenceText">
-          <DataField>ReferenceText</DataField>
-        </Field>
-        <Field Name="VatRegNo_IssueReminderHdr">
-          <DataField>VatRegNo_IssueReminderHdr</DataField>
-        </Field>
-        <Field Name="VATNoText">
-          <DataField>VATNoText</DataField>
-        </Field>
-        <Field Name="DocDate_IssueReminderHdr">
-          <DataField>DocDate_IssueReminderHdr</DataField>
-        </Field>
-        <Field Name="CustNo_IssueReminderHdr">
-          <DataField>CustNo_IssueReminderHdr</DataField>
-        </Field>
-        <Field Name="CompanyInfoBankAccNo">
-          <DataField>CompanyInfoBankAccNo</DataField>
-        </Field>
-        <Field Name="CompanyInfoBankName">
-          <DataField>CompanyInfoBankName</DataField>
-        </Field>
-        <Field Name="CompanyInfoGiroNo">
-          <DataField>CompanyInfoGiroNo</DataField>
-        </Field>
-        <Field Name="CompanyInfoVATRegNo">
-          <DataField>CompanyInfoVATRegNo</DataField>
-        </Field>
-        <Field Name="CompanyInfoHomePage">
-          <DataField>CompanyInfoHomePage</DataField>
-        </Field>
-        <Field Name="CompanyInfoEMail">
-          <DataField>CompanyInfoEMail</DataField>
-        </Field>
-        <Field Name="CustAddr8">
-          <DataField>CustAddr8</DataField>
-        </Field>
-        <Field Name="CompanyInfoPhoneNo">
-          <DataField>CompanyInfoPhoneNo</DataField>
-        </Field>
-        <Field Name="CustAddr7">
-          <DataField>CustAddr7</DataField>
-        </Field>
-        <Field Name="CustAddr6">
-          <DataField>CustAddr6</DataField>
-        </Field>
-        <Field Name="CompanyAddr6">
-          <DataField>CompanyAddr6</DataField>
-        </Field>
-        <Field Name="CustAddr5">
-          <DataField>CustAddr5</DataField>
-        </Field>
-        <Field Name="CompanyAddr5">
-          <DataField>CompanyAddr5</DataField>
-        </Field>
-        <Field Name="CustAddr4">
-          <DataField>CustAddr4</DataField>
-        </Field>
-        <Field Name="CompanyAddr4">
-          <DataField>CompanyAddr4</DataField>
-        </Field>
-        <Field Name="CustAddr3">
-          <DataField>CustAddr3</DataField>
-        </Field>
-        <Field Name="CompanyAddr3">
-          <DataField>CompanyAddr3</DataField>
-        </Field>
-        <Field Name="CustAddr2">
-          <DataField>CustAddr2</DataField>
-        </Field>
-        <Field Name="CompanyAddr2">
-          <DataField>CompanyAddr2</DataField>
-        </Field>
-        <Field Name="CustAddr1">
-          <DataField>CustAddr1</DataField>
-        </Field>
-        <Field Name="CompanyAddr1">
-          <DataField>CompanyAddr1</DataField>
-        </Field>
-        <Field Name="TextPage">
-          <DataField>TextPage</DataField>
-        </Field>
-        <Field Name="PostingDateCaption">
-          <DataField>PostingDateCaption</DataField>
-        </Field>
-        <Field Name="ReminderNoCaption">
-          <DataField>ReminderNoCaption</DataField>
-        </Field>
-        <Field Name="BankAccNoCaption">
-          <DataField>BankAccNoCaption</DataField>
-        </Field>
-        <Field Name="BankNameCaption">
-          <DataField>BankNameCaption</DataField>
-        </Field>
-        <Field Name="GiroNoCaption">
-          <DataField>GiroNoCaption</DataField>
-        </Field>
-        <Field Name="VATRegNoCaption">
-          <DataField>VATRegNoCaption</DataField>
-        </Field>
-        <Field Name="PhoneNoCaption">
-          <DataField>PhoneNoCaption</DataField>
-        </Field>
-        <Field Name="ReminderCaption">
-          <DataField>ReminderCaption</DataField>
-        </Field>
-        <Field Name="CustNo_IssueReminderHdrCaption">
-          <DataField>CustNo_IssueReminderHdrCaption</DataField>
-        </Field>
-        <Field Name="DimText">
-          <DataField>DimText</DataField>
-        </Field>
-        <Field Name="Number_IntegerLine">
-          <DataField>Number_IntegerLine</DataField>
-        </Field>
-        <Field Name="HeaderDimensionsCaption">
-          <DataField>HeaderDimensionsCaption</DataField>
-        </Field>
-        <Field Name="RemAmt_IssuedReminderLine">
-          <DataField>RemAmt_IssuedReminderLine</DataField>
-        </Field>
-        <Field Name="RemAmt_IssuedReminderLineFormat">
-          <DataField>RemAmt_IssuedReminderLineFormat</DataField>
-        </Field>
-        <Field Name="Desc_IssuedReminderLine">
-          <DataField>Desc_IssuedReminderLine</DataField>
-        </Field>
-        <Field Name="Type_IssuedReminderLine">
-          <DataField>Type_IssuedReminderLine</DataField>
-        </Field>
-        <Field Name="DocDate_IssuedReminderLine">
-          <DataField>DocDate_IssuedReminderLine</DataField>
-        </Field>
-        <Field Name="DocNo_IssuedReminderLine">
-          <DataField>DocNo_IssuedReminderLine</DataField>
-        </Field>
-        <Field Name="DocNoCaption_IssuedReminderLine">
-          <DataField>DocNoCaption_IssuedReminderLine</DataField>
-        </Field>
-        <Field Name="DueDate_IssuedReminderLine">
-          <DataField>DueDate_IssuedReminderLine</DataField>
-        </Field>
-        <Field Name="OriginalAmt_IssuedReminderLine">
-          <DataField>OriginalAmt_IssuedReminderLine</DataField>
-        </Field>
-        <Field Name="OriginalAmt_IssuedReminderLineFormat">
-          <DataField>OriginalAmt_IssuedReminderLineFormat</DataField>
-        </Field>
-        <Field Name="DocType_IssuedReminderLine">
-          <DataField>DocType_IssuedReminderLine</DataField>
-        </Field>
-        <Field Name="LineNo_IssuedReminderLine">
-          <DataField>LineNo_IssuedReminderLine</DataField>
-        </Field>
-        <Field Name="ShowInternalInfo">
-          <DataField>ShowInternalInfo</DataField>
-        </Field>
-        <Field Name="NNCInterestAmt">
-          <DataField>NNCInterestAmt</DataField>
-        </Field>
-        <Field Name="NNCInterestAmtFormat">
-          <DataField>NNCInterestAmtFormat</DataField>
-        </Field>
-        <Field Name="TotalText">
-          <DataField>TotalText</DataField>
-        </Field>
-        <Field Name="MIREntry_IssuedReminderLine">
-          <DataField>MIREntry_IssuedReminderLine</DataField>
-        </Field>
-        <Field Name="NNCTotal">
-          <DataField>NNCTotal</DataField>
-        </Field>
-        <Field Name="NNCTotalFormat">
-          <DataField>NNCTotalFormat</DataField>
-        </Field>
-        <Field Name="TotalInclVATText">
-          <DataField>TotalInclVATText</DataField>
-        </Field>
-        <Field Name="NNCVATAmt">
-          <DataField>NNCVATAmt</DataField>
-        </Field>
-        <Field Name="NNCVATAmtFormat">
-          <DataField>NNCVATAmtFormat</DataField>
-        </Field>
-        <Field Name="NNCTotalInclVAT">
-          <DataField>NNCTotalInclVAT</DataField>
-        </Field>
-        <Field Name="NNCTotalInclVATFormat">
-          <DataField>NNCTotalInclVATFormat</DataField>
-        </Field>
-        <Field Name="TotalVATAmt">
-          <DataField>TotalVATAmt</DataField>
-        </Field>
-        <Field Name="TotalVATAmtFormat">
-          <DataField>TotalVATAmtFormat</DataField>
-        </Field>
-        <Field Name="RemNo_IssuedReminderLine">
-          <DataField>RemNo_IssuedReminderLine</DataField>
-        </Field>
-        <Field Name="DocumentDateCaption1">
-          <DataField>DocumentDateCaption1</DataField>
-        </Field>
-        <Field Name="InterestAmountCaption">
-          <DataField>InterestAmountCaption</DataField>
-        </Field>
-        <Field Name="RemAmt_IssuedReminderLineCaption">
-          <DataField>RemAmt_IssuedReminderLineCaption</DataField>
-        </Field>
-        <Field Name="DocNo_IssuedReminderLineCaption">
-          <DataField>DocNo_IssuedReminderLineCaption</DataField>
-        </Field>
-        <Field Name="OriginalAmt_IssuedReminderLineCaption">
-          <DataField>OriginalAmt_IssuedReminderLineCaption</DataField>
-        </Field>
-        <Field Name="DocType_IssuedReminderLineCaption">
-          <DataField>DocType_IssuedReminderLineCaption</DataField>
-        </Field>
-        <Field Name="Interest">
-          <DataField>Interest</DataField>
-        </Field>
-        <Field Name="InterestFormat">
-          <DataField>InterestFormat</DataField>
-        </Field>
-        <Field Name="RemainingAmountText">
-          <DataField>RemainingAmountText</DataField>
-        </Field>
-        <Field Name="Desc1_IssuedReminderLine">
-          <DataField>Desc1_IssuedReminderLine</DataField>
-        </Field>
-        <Field Name="LineNo1_IssuedReminderLine">
-          <DataField>LineNo1_IssuedReminderLine</DataField>
-        </Field>
-        <Field Name="VATAmtLineAmtIncludVAT">
-          <DataField>VATAmtLineAmtIncludVAT</DataField>
-        </Field>
-        <Field Name="VATAmtLineAmtIncludVATFormat">
-          <DataField>VATAmtLineAmtIncludVATFormat</DataField>
-        </Field>
-        <Field Name="VALVATAmount">
-          <DataField>VALVATAmount</DataField>
-        </Field>
-        <Field Name="VALVATAmountFormat">
-          <DataField>VALVATAmountFormat</DataField>
-        </Field>
-        <Field Name="VALVATBase">
-          <DataField>VALVATBase</DataField>
-        </Field>
-        <Field Name="VALVATBaseFormat">
-          <DataField>VALVATBaseFormat</DataField>
-        </Field>
-        <Field Name="VALVATBaseVALVATAmt">
-          <DataField>VALVATBaseVALVATAmt</DataField>
-        </Field>
-        <Field Name="VALVATBaseVALVATAmtFormat">
-          <DataField>VALVATBaseVALVATAmtFormat</DataField>
-        </Field>
-        <Field Name="VATAmtLineVAT">
-          <DataField>VATAmtLineVAT</DataField>
-        </Field>
-        <Field Name="VATAmtLineVATFormat">
-          <DataField>VATAmtLineVATFormat</DataField>
-        </Field>
-        <Field Name="AmountIncVATCaption">
-          <DataField>AmountIncVATCaption</DataField>
-        </Field>
-        <Field Name="VATAmtSpecCaption">
-          <DataField>VATAmtSpecCaption</DataField>
-        </Field>
-        <Field Name="ContinuedCaption">
-          <DataField>ContinuedCaption</DataField>
-        </Field>
-        <Field Name="VATClauseVATIdentifier">
-          <DataField>VATClauseVATIdentifier</DataField>
-        </Field>
-        <Field Name="VATClauseCode">
-          <DataField>VATClauseCode</DataField>
-        </Field>
-        <Field Name="VATClauseDescription">
-          <DataField>VATClauseDescription</DataField>
-        </Field>
-        <Field Name="VATClauseDescription2">
-          <DataField>VATClauseDescription2</DataField>
-        </Field>
-        <Field Name="VATClauseAmount">
-          <DataField>VATClauseAmount</DataField>
-        </Field>
-        <Field Name="VATClauseAmountFormat">
-          <DataField>VATClauseAmountFormat</DataField>
-        </Field>
-        <Field Name="VATClausesCaption">
-          <DataField>VATClausesCaption</DataField>
-        </Field>
-        <Field Name="VATClauseVATIdentifierCaption">
-          <DataField>VATClauseVATIdentifierCaption</DataField>
-        </Field>
-        <Field Name="VATClauseVATAmtCaption">
-          <DataField>VATClauseVATAmtCaption</DataField>
-        </Field>
-        <Field Name="VALExchRate">
-          <DataField>VALExchRate</DataField>
-        </Field>
-        <Field Name="VALSpecLCYHeader">
-          <DataField>VALSpecLCYHeader</DataField>
-        </Field>
-        <Field Name="VALVATAmountLCY">
-          <DataField>VALVATAmountLCY</DataField>
-        </Field>
-        <Field Name="VALVATAmountLCYFormat">
-          <DataField>VALVATAmountLCYFormat</DataField>
-        </Field>
-        <Field Name="VALVATBaseLCY">
-          <DataField>VALVATBaseLCY</DataField>
-        </Field>
-        <Field Name="VALVATBaseLCYFormat">
-          <DataField>VALVATBaseLCYFormat</DataField>
-        </Field>
-        <Field Name="VATAmtLineVATCtrl107">
-          <DataField>VATAmtLineVATCtrl107</DataField>
-        </Field>
-        <Field Name="VATAmtLineVATCtrl107Format">
-          <DataField>VATAmtLineVATCtrl107Format</DataField>
-        </Field>
-        <Field Name="ContinuedCaption1">
-          <DataField>ContinuedCaption1</DataField>
-        </Field>
-        <Field Name="GreetingText">
-          <DataField>GreetingText</DataField>
-        </Field>
-        <Field Name="AmtDueText">
-          <DataField>AmtDueText</DataField>
-        </Field>
-        <Field Name="BodyText">
-          <DataField>BodyText</DataField>
-        </Field>
-        <Field Name="ClosingText">
-          <DataField>ClosingText</DataField>
-        </Field>
-        <Field Name="DescriptionText">
-          <DataField>DescriptionText</DataField>
-        </Field>
-        <Field Name="TotalRemAmt_IssuedReminderLine">
-          <DataField>TotalRemAmt_IssuedReminderLine</DataField>
-        </Field>
-        <Field Name="TotalRemAmt_IssuedReminderLineFormat">
-          <DataField>TotalRemAmt_IssuedReminderLineFormat</DataField>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>DataSource</DataSourceName>
-        <CommandText />
-      </Query>
-    </DataSet>
-  </DataSets>
 </Report>
