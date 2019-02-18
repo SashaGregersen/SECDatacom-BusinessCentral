@@ -12,6 +12,11 @@ tableextension 50027 "Synchronize Customer" extends "Sales & Receivables Setup"
             DataClassification = ToBeClassified;
             TableRelation = "No. Series";
         }
+
+        field(50002; "Freight Item"; code[20])
+        {
+            DataClassification = ToBeClassified;
+        }
     }
 
     var

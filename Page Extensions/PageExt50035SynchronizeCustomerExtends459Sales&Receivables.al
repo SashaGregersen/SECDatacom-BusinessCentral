@@ -17,6 +17,15 @@ pageextension 50035 "Synchronize Customer" extends "Sales & Receivables Setup"
                 ApplicationArea = all;
             }
         }
+
+        addafter("Freight G/L Acc. No.")
+        {
+            field("Freight Item"; "Freight Item")
+            {
+                ApplicationArea = all;
+                TableRelation = Item;
+            }
+        }
     }
 
     actions
