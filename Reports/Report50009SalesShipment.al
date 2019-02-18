@@ -271,6 +271,12 @@ report 50009 "SEC Sales - Shipment"
                         column(No_SalesShptLineCaption; FieldCaption("No."))
                         {
                         }
+                        Column(Vendor_Item_No_Lbl; VendorItemNoLbl)
+                        {
+                        }
+                        column(Vendor_Item_No; item."Vendor Item No.")
+                        {
+                        }
                         dataitem(DimensionLoop2; "Integer")
                         {
                             DataItemTableView = SORTING (Number) WHERE (Number = FILTER (1 ..));
@@ -362,6 +368,11 @@ report 50009 "SEC Sales - Shipment"
 
                         trigger OnAfterGetRecord()
                         begin
+                            if Type = Type::Item then
+                                Item.Get("No.")
+                            else
+                                Clear(Item);
+
                             LinNo := "Line No.";
                             if not ShowCorrectionLines and Correction then
                                 CurrReport.Skip;
@@ -739,6 +750,8 @@ report 50009 "SEC Sales - Shipment"
         LotNoCaptionLbl: Label 'Lot No.';
         DescriptionCaptionLbl: Label 'Description';
         NoCaptionLbl: Label 'No.';
+        VendorItemNoLbl: Label 'Vendor Item No.';
+        Item: Record Item;
         PageCaptionCap: Label 'Page %1 of %2';
 
     procedure InitLogInteraction()
