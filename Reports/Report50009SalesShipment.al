@@ -587,7 +587,7 @@ report 50009 "SEC Sales - Shipment"
                                 Clear(PrefSenderCountryRegion);
                         end else
                             Clear(PrefSender);
-                        Clear(PrefSenderCountryRegion);
+                            Clear(PrefSenderCountryRegion);
                     end else begin
                         Clear(Reseller);
                         Clear(PrefSender);
