@@ -4317,7 +4317,7 @@ Cstr(Fields!Pref_Sender_Country.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=IIF(Code.GetData(45,1) = "",(Code.GetData(14,1), (Code.GetData(45,1))</Value>
+                      <Value>=IIF(Code.GetData(45,1) = "",(Code.GetData(14,1)), (Code.GetData(45,1)))</Value>
                       <Style>
                         <FontStyle>Normal</FontStyle>
                         <FontFamily>Segoe UI</FontFamily>
