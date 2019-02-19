@@ -3635,6 +3635,7 @@ Cstr(Fields!PageCaption.Value)
               <Value>=Convert.ToBase64String(Fields!CompanyInfo3Picture.Value)</Value>
               <MIMEType>image/bmp</MIMEType>
               <Sizing>FitProportional</Sizing>
+              <Left>0.00001cm</Left>
               <Height>14mm</Height>
               <Width>60mm</Width>
               <ZIndex>3</ZIndex>
@@ -3763,7 +3764,7 @@ Cstr(Fields!PageCaption.Value)
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>3.42003cm</Top>
+              <Top>5.00753cm</Top>
               <Height>11pt</Height>
               <Width>11.46387cm</Width>
               <ZIndex>8</ZIndex>
@@ -5158,6 +5159,21 @@ End Function
         </Field>
         <Field Name="Pref_Shipment_Address">
           <DataField>Pref_Shipment_Address</DataField>
+        </Field>
+        <Field Name="Pref_Sender_Name">
+          <DataField>Pref_Sender_Name</DataField>
+        </Field>
+        <Field Name="Pref_Sender_Adress">
+          <DataField>Pref_Sender_Adress</DataField>
+        </Field>
+        <Field Name="Pref_Sender_Postcode">
+          <DataField>Pref_Sender_Postcode</DataField>
+        </Field>
+        <Field Name="Pref_Sender_City">
+          <DataField>Pref_Sender_City</DataField>
+        </Field>
+        <Field Name="Pref_Sender_Country">
+          <DataField>Pref_Sender_Country</DataField>
         </Field>
         <Field Name="DimText">
           <DataField>DimText</DataField>

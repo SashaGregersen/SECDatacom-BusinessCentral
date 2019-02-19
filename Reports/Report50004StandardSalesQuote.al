@@ -412,7 +412,7 @@ report 50004 "SEC Sales - Quote"
             column(EndCustCity; Endcustomer.City)
             {
             }
-            column(EndCustCountry; Endcustomer."Country/Region Code")
+            column(EndCustCountry; EndcustomerCountryRegion.Name)
             {
             }
 
