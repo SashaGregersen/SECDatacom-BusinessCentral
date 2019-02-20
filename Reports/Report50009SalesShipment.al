@@ -580,9 +580,8 @@ report 50009 "SEC Sales - Shipment"
                     if "Sales Shipment Header"."Reseller" <> '' then begin
                         Reseller.Get("Sales Shipment Header"."Reseller");
                         if Reseller."Prefered Sender Address" <> '' then begin
-                            PrefSender.get(Reseller."Prefered Sender Address");
-
-
+                            PrefSender.SetCurrentKey("Customer No.", Code);
+                            PrefSender.get(Reseller."No.", Reseller."Prefered Sender Address");
                             if PrefSender."Country/Region Code" <> '' then begin
                                 PrefSenderCountryRegion.get(PrefSender."Country/Region Code")
                             End else
