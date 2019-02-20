@@ -2870,12 +2870,11 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!TrackingSpecBufferQty.Value</Value>
+                                                    <Value>=Fields!TrackingSpecBufferSerNo.Value</Value>
                                                     <Style>
                                                       <FontStyle>Normal</FontStyle>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
-                                                      <Format>=Fields!TrackingSpecBufferQtyFormat.Value</Format>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -2890,7 +2889,6 @@
                                               <PaddingLeft>5pt</PaddingLeft>
                                             </Style>
                                           </Textbox>
-                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                     </TablixCells>
@@ -3032,12 +3030,11 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!TrackingSpecBufferQty.Value</Value>
+                                                    <Value>=Fields!TrackingSpecBufferSerNo.Value</Value>
                                                     <Style>
                                                       <FontStyle>Normal</FontStyle>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
-                                                      <Format>=Fields!TrackingSpecBufferQtyFormat.Value</Format>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -3365,9 +3362,9 @@
                                             </Paragraphs>
                                             <rd:DefaultName>Textbox104</rd:DefaultName>
                                             <Style>
-                                              <TopBorder>
-                                                <Style>Solid</Style>
-                                              </TopBorder>
+                                              <Border>
+                                                <Style>None</Style>
+                                              </Border>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingLeft>5pt</PaddingLeft>
                                             </Style>
@@ -3502,20 +3499,19 @@
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="textbox1">
+                                          <Textbox Name="Textbox21">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!Quantity1.Value</Value>
+                                                    <Value />
                                                     <Style>
                                                       <FontStyle>Normal</FontStyle>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
                                                       <FontWeight>Bold</FontWeight>
-                                                      <Format>=Fields!Quantity1Format.Value</Format>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -3524,10 +3520,7 @@
                                                 </Style>
                                               </Paragraph>
                                             </Paragraphs>
-                                            <Visibility>
-                                              <Hidden>=IIF(Fields!TrackingSpecBufferNo.Value &lt;&gt; "",False,True)</Hidden>
-                                            </Visibility>
-                                            <DataElementOutput>NoOutput</DataElementOutput>
+                                            <rd:DefaultName>Textbox21</rd:DefaultName>
                                             <Style>
                                               <Border>
                                                 <Style>None</Style>
@@ -4968,7 +4961,7 @@ Cstr(Fields!Pref_Sender_Country.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>TEst</Value>
+                      <Value />
                       <Style>
                         <FontStyle>Normal</FontStyle>
                         <FontFamily>Segoe UI</FontFamily>
@@ -5193,7 +5186,9 @@ Cstr(Fields!Pref_Sender_Country.Value)
                       <Style />
                     </TextRun>
                   </TextRuns>
-                  <Style />
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
