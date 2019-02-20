@@ -195,7 +195,7 @@ report 50009 "SEC Sales - Shipment"
                     column(Pref_Sender_Country; PrefSenderCountryRegion.Name)
                     {
                     }
-                    column(Shipped_From_lbl; ShipFromLbl)
+                    column(Shipped_From_Lbl; ShipFromLbl)
                     {
                     }
                     //<< NC adding Preferred Sender Adress
