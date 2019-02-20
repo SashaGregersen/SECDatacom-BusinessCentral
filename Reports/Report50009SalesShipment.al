@@ -180,7 +180,7 @@ report 50009 "SEC Sales - Shipment"
                     {
                     }
                     //>> NC adding Preferred Sender Adress 
-                    column(Pref_Sender_Name; PrefSender.Name)
+                    column(Pref_Sender_Name; PrefSender.name)
                     {
                     }
                     column(Pref_Sender_Adress; PrefSender.Address)
@@ -581,6 +581,8 @@ report 50009 "SEC Sales - Shipment"
                         Reseller.Get("Sales Shipment Header"."Reseller");
                         if Reseller."Prefered Sender Address" <> '' then begin
                             PrefSender.get(Reseller."Prefered Sender Address");
+
+
                             if PrefSender."Country/Region Code" <> '' then begin
                                 PrefSenderCountryRegion.get(PrefSender."Country/Region Code")
                             End else
