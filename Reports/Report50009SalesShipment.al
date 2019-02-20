@@ -195,6 +195,9 @@ report 50009 "SEC Sales - Shipment"
                     column(Pref_Sender_Country; PrefSenderCountryRegion.Name)
                     {
                     }
+                    column(Shipped_From_lbl; ShipFromLbl)
+                    {
+                    }
                     //<< NC adding Preferred Sender Adress
                     dataitem(DimensionLoop1; "Integer")
                     {
@@ -509,6 +512,9 @@ report 50009 "SEC Sales - Shipment"
                         column(NoCaption; NoCaptionLbl)
                         {
                         }
+                        column(Barcode_Lbl; BarcodeLbl)
+                        {
+                        }
                         dataitem(TotalItemTracking; "Integer")
                         {
                             DataItemTableView = SORTING (Number) WHERE (Number = CONST (1));
@@ -796,6 +802,7 @@ report 50009 "SEC Sales - Shipment"
         PrefSender: Record "Ship-to Address";
         PrefSenderCountryRegion: Record "Country/Region";
         ShipFromLbl: Label 'Shipped from:';
+        BarcodeLbl: Label 'Barcode';
         PageCaptionCap: Label 'Page %1 of %2';
 
     procedure InitLogInteraction()
