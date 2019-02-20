@@ -553,11 +553,12 @@ report 50005 "SEC Sales - Order Conf."
                     if Type = Type::"G/L Account" then
                         "No." := '';
 
-                    //Getting Vendor item no from the Item 
+                    //>>NC - Getting Vendor item no from the Item 
                     if Type = Type::Item then
                         Item.Get("No.")
                     else
                         Clear(Item);
+                    //<< NC
 
                     if "Line Discount %" = 0 then
                         LineDiscountPctText := ''
@@ -883,7 +884,7 @@ report 50005 "SEC Sales - Order Conf."
 
 
 
-                //Getting Endcustomer info    
+                //>>NC - Getting Endcustomer info    
                 if "End Customer" <> '' then begin
                     Endcustomer.Get("End Customer");
                     if Endcustomer."Country/Region Code" <> '' then
@@ -894,6 +895,7 @@ report 50005 "SEC Sales - Order Conf."
                     clear(Endcustomer);
                     Clear(EndcustomerCountryRegion);
                 end;
+                //<<NC
 
                 if not IsReportInPreviewMode then
                     CODEUNIT.Run(CODEUNIT::"Sales-Printed", Header);
