@@ -179,6 +179,26 @@ report 50009 "SEC Sales - Shipment"
                     Column(Pref_Shipment_Address; "Sales Shipment Header"."Prefered Shipment Address")
                     {
                     }
+                    //>> NC adding Preferred Sender Adress 
+                    column(Pref_Sender_Name; PrefSender.name)
+                    {
+                    }
+                    column(Pref_Sender_Adress; PrefSender.Address)
+                    {
+                    }
+                    column(Pref_Sender_Postcode; PrefSender."Post code")
+                    {
+                    }
+                    column(Pref_Sender_City; PrefSender.City)
+                    {
+                    }
+                    column(Pref_Sender_Country; PrefSenderCountryRegion.Name)
+                    {
+                    }
+                    column(Shipped_From_Lbl; ShipFromLbl)
+                    {
+                    }
+                    //<< NC adding Preferred Sender Adress
                     dataitem(DimensionLoop1; "Integer")
                     {
                         DataItemLinkReference = "Sales Shipment Header";
@@ -492,6 +512,9 @@ report 50009 "SEC Sales - Shipment"
                         column(NoCaption; NoCaptionLbl)
                         {
                         }
+                        column(Barcode_Lbl; BarcodeLbl)
+                        {
+                        }
                         dataitem(TotalItemTracking; "Integer")
                         {
                             DataItemTableView = SORTING (Number) WHERE (Number = CONST (1));
@@ -558,6 +581,26 @@ report 50009 "SEC Sales - Shipment"
                     end;
                     //CurrReport.PageNo := 1;
                     TotalQty := 0;           // Item Tracking
+
+                    //>> NC getting Pref. Sender Adress from Reseller info
+                    if "Sales Shipment Header"."Reseller" <> '' then begin
+                        Reseller.Get("Sales Shipment Header"."Reseller");
+                        if Reseller."Prefered Sender Address" <> '' then begin
+                            PrefSender.SetCurrentKey("Customer No.", Code);
+                            PrefSender.get(Reseller."No.", Reseller."Prefered Sender Address");
+                            if PrefSender."Country/Region Code" <> '' then begin
+                                PrefSenderCountryRegion.get(PrefSender."Country/Region Code")
+                            End else
+                                Clear(PrefSenderCountryRegion);
+                        end else
+                            Clear(PrefSender);
+                        Clear(PrefSenderCountryRegion);
+                    end else begin
+                        Clear(Reseller);
+                        Clear(PrefSender);
+                        Clear(PrefSenderCountryRegion);
+                    end;
+                    //<< NC
                 end;
 
                 trigger OnPostDataItem()
@@ -755,6 +798,11 @@ report 50009 "SEC Sales - Shipment"
         NoCaptionLbl: Label 'No.';
         VendorItemNoLbl: Label 'Vendor Item No.';
         Item: Record Item;
+        Reseller: Record Customer;
+        PrefSender: Record "Ship-to Address";
+        PrefSenderCountryRegion: Record "Country/Region";
+        ShipFromLbl: Label 'Shipped from:';
+        BarcodeLbl: Label 'Barcode';
         PageCaptionCap: Label 'Page %1 of %2';
 
     procedure InitLogInteraction()
