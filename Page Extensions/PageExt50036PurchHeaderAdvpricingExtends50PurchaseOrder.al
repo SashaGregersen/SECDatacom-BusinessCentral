@@ -20,4 +20,21 @@ pageextension 50036 "Purch. Header Adv. pricing" extends "Purchase Order"
         }
     }
 
+    actions
+    {
+        addafter("Create Inventor&y Put-away/Pick")
+        {
+            action("Import Serial Numbers")
+            {
+                Image = ImportExcel;
+                trigger OnAction()
+                var
+                    ImportSerialNumbersPurchase: Codeunit "Import Serial Number Purchase";
+                begin
+                    ImportSerialNumbersPurchase.ImportSerialNumbers(Rec);
+                end;
+            }
+        }
+    }
+
 }

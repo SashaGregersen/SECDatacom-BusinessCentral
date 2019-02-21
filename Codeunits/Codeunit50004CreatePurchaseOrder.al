@@ -49,10 +49,9 @@ codeunit 50004 "Create Purchase Order"
             PurchHeader."No." := '';
             PurchHeader."Document Type" := PurchHeader."Document Type"::Order;
             PurchHeader.Validate("Buy-from Vendor No.", VendorNo);
-            if CurrencyCode <> '' then
-                PurchHeader.Validate("Currency Code", CurrencyCode);
+            PurchHeader.Validate("Currency Code", CurrencyCode);
             if VendorBidNo <> '' then
-                PurchHeader.Validate("Vendor Invoice No.", VendorBidNo);
+                PurchHeader.Validate("Vendor Shipment No.", VendorBidNo);
             PurchHeader.Insert(true);
             if (SalesHeader."Drop-Shipment" = true) or (SalesHeader."Ship-To-Code" <> '') then begin
                 PurchHeader.SetShipToAddress(SalesHeader."Ship-to Name", SalesHeader."Ship-to Name 2", SalesHeader."Ship-to Address",
@@ -146,10 +145,12 @@ codeunit 50004 "Create Purchase Order"
     Local procedure NewPurchOrder(SalesLine: record "Sales Line"; SalesHeader: record "Sales Header"; ItemVendorNo: code[20]; var PurchHeader: record "Purchase Header"; var GlobalLineCount: Integer)
     var
         PurchLine: record "Purchase Line";
+        Vendor: record Vendor;
     begin
         SalesLine.CalcFields("Reserved Quantity");
         if (SalesLine."Quantity" - SalesLine."Reserved Quantity") <> 0 then begin
-            CreatePurchHeader(SalesHeader, ItemVendorNo, '', '', PurchHeader);
+            Vendor.get(ItemVendorNo);
+            CreatePurchHeader(SalesHeader, ItemVendorNo, Vendor."Currency Code", '', PurchHeader);
             CreatePurchLine(PurchHeader, SalesHeader, SalesLine, PurchLine);
             ReserveItemOnPurchOrder(SalesLine, PurchLine);
             GlobalLineCount := GlobalLineCount + 1;
