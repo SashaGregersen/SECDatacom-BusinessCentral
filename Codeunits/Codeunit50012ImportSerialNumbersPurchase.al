@@ -72,21 +72,19 @@ codeunit 50012 "Import Serial Number Purchase"
     var
         PurchaseLine: Record "Purchase Line";
     begin
-        if TempItemLedgerEntry.FindSet() then
+        PurchaseLine.SetRange("Document No.", PurchHeader."No.");
+        PurchaseLine.SetRange("Document Type", PurchHeader."Document Type");
+        PurchaseLine.SetRange(Type, PurchaseLine.Type::Item);
+        if PurchaseLine.FindSet() then
             repeat
-                PurchaseLine.SetRange("Document No.", PurchHeader."No.");
-                PurchaseLine.SetRange("Document Type", PurchHeader."Document Type");
-                PurchaseLine.SetRange("No.", TempItemLedgerEntry."Item No.");
-                if PurchaseLine.FindSet() then
-                    repeat
-                        if TempItemLedgerEntry.Get(TempItemLedgerEntry."Entry No.") then begin
-                            Purchaseline.CalcFields("Reserved Quantity");
-                            if (Purchaseline."Reserved Quantity" <> 0) then
-                                FindReservationEntries(TempItemLedgerEntry, PurchaseLine);
-                        end;
-                    until PurchaseLine.next = 0;
-
-            until TempItemLedgerEntry.next = 0;
+                TempItemLedgerEntry.SetRange("Item No.", PurchaseLine."No.");
+                if TempItemLedgerEntry.FindFirst() then begin
+                    Purchaseline.CalcFields("Reserved Quantity");
+                    if (Purchaseline."Reserved Quantity" <> 0) then
+                        FindReservationEntries(TempItemLedgerEntry, PurchaseLine);
+                    //Vi skal også håndterer tilfældet, hvor de ikke er reservede - dvs. de bare skal på lager
+                end;
+            until PurchaseLine.next = 0;
 
         if TempItemLedgerEntry.Count() > 0 then
             Error('There are not enough items to assign all serial numbers')
@@ -144,71 +142,61 @@ codeunit 50012 "Import Serial Number Purchase"
 
     local procedure SplitReservationEntry(var ReservationEntry: Record "Reservation Entry"; var TempItemLedgerEntry: record "Item Ledger Entry" temporary; PurchLine: record "Purchase Line"; var TempReservationEntry: record "Reservation Entry")
     var
-        NumberOfLoops: integer;
-        ReserveEngineMgt: Codeunit "Reservation Engine Mgt.";
-        NewReservationEntry: record "Reservation Entry";
+        OppositeReservationEntry: record "Reservation Entry";
         EntryNo: integer;
-        LastReservationEntry: record "Reservation Entry";
+        Counter: Integer;
     begin
-        if ReservationEntry."Serial No." = '' then begin
-            if (NumberOfLoops < ReservationEntry.Quantity) and (NumberOfLoops <> ReservationEntry.Quantity) then
-                repeat
-                    EntryNo := 0;
-                    LastReservationEntry.FindLast();
-                    EntryNo := LastReservationEntry."Entry No." + 1;
-                    NewReservationEntry.Init;
-                    NewReservationEntry.Validate("Entry No.", EntryNo);
-                    NewReservationEntry.TransferFields(ReservationEntry, false);
-                    NewReservationEntry.Validate(Positive, true);
-                    NewReservationEntry.Validate("Quantity (Base)", 1);
-                    NewReservationEntry.Insert(true);
-                    InsertTempReserEntry(NewReservationEntry, TempReservationEntry);
-                    if ReservationEntry.Get(ReservationEntry."Entry No.", not ReservationEntry.Positive) then begin
-                        NewReservationEntry.Init;
-                        NewReservationEntry.Validate("Entry No.", EntryNo);
-                        NewReservationEntry.TransferFields(ReservationEntry, false);
-                        NewReservationEntry.Validate(Positive, false);
-                        NewReservationEntry.Validate("Quantity (Base)", -1);
-                        NewReservationEntry.Insert(true);
-                        InsertTempReserEntry(NewReservationEntry, TempReservationEntry);
-                        NumberOfLoops := NumberOfLoops + 1;
-                    end;
-                until NumberOfLoops = ReservationEntry.Quantity;
+        if ReservationEntry."Serial No." <> '' then
+            exit;
+        if not OppositeReservationEntry.Get(ReservationEntry."Entry No.", not ReservationEntry.Positive) then
+            exit;
+        EntryNo := GetLastReservantionEntryNo();
+        for Counter := 1 to ReservationEntry.Quantity do begin
+            EntryNo := EntryNo + 1;
+            InsertTempReservationEntry(ReservationEntry, TempReservationEntry, 1, EntryNo);
+            EntryNo := EntryNo + 1;
+            InsertTempReservationEntry(OppositeReservationEntry, TempReservationEntry, -1, EntryNo);
         end;
     end;
 
-    local procedure InsertTempReserEntry(ReservationEntry: record "Reservation Entry"; var TempReservationEntry: Record "Reservation Entry" temporary)
-    var
+    local procedure InsertTempReservationEntry(ReservationEntry: record "Reservation Entry"; var TempReservationEntry: Record "Reservation Entry" temporary; NewQuantity: Decimal; NewEntryNo: Integer)
     begin
         TempReservationEntry.Init;
         TempReservationEntry.TransferFields(ReservationEntry);
+        TempReservationEntry."Entry No." := NewEntryNo;
+        TempReservationEntry.Validate("Quantity (Base)", NewQuantity);
         TempReservationEntry.Insert(true);
     end;
 
     local procedure UpdateReservationEntryWithSerialNo(var TempReservationEntry: record "Reservation Entry" temporary; var TempItemLedgerEntry: record "Item Ledger Entry" temporary)
     var
         ReservationEntry: record "Reservation Entry";
+        Counter: Integer;
     begin
-        if TempReservationEntry.Get(TempReservationEntry."Entry No.", TempReservationEntry.Positive) then begin
-            ReservationEntry.SetRange("Entry No.", TempReservationEntry."Entry No.");
-            if ReservationEntry.FindFirst() then begin
+        Counter := 1;
+        if TempReservationEntry.FindSet() then
+            repeat
+                if Counter mod 2 <> 0 then begin
+                    TempItemLedgerEntry.SetRange("Item No.", TempReservationEntry."Item No.");
+                    TempItemLedgerEntry.FindFirst();
+                end;
+                ReservationEntry := TempReservationEntry;
                 ReservationEntry.Validate("Serial No.", TempItemLedgerEntry."Serial No.");
                 ReservationEntry.Validate("Item Tracking", ReservationEntry."Item Tracking"::"Serial No.");
-                ReservationEntry.Modify(true);
+                ReservationEntry.Insert(true);
+                if Counter mod 2 = 0 then
+                    TempItemLedgerEntry.Delete();
+                counter := counter + 1;
+            until TempReservationEntry.next = 0;
+    end;
 
-                if TempReservationEntry.Get(TempReservationEntry."Entry No.", not TempReservationEntry.Positive) then begin
-                    ReservationEntry.SetRange("Entry No.", TempReservationEntry."Entry No.");
-                    if ReservationEntry.FindFirst() then begin
-                        ReservationEntry.Validate("Serial No.", TempItemLedgerEntry."Serial No.");
-                        ReservationEntry.Validate("Item Tracking", ReservationEntry."Item Tracking"::"Serial No.");
-                        ReservationEntry.Modify(true);
-
-                        TempItemLedgerEntry.Delete();
-                    end;
-                end;
-
-            end;
-
-        end;
+    local procedure GetLastReservantionEntryNo(): Integer;
+    var
+        ReservationEntry: Record "Reservation Entry";
+    begin
+        If not ReservationEntry.FindLast() then
+            exit(1)
+        else
+            exit(ReservationEntry."Entry No.")
     end;
 }
