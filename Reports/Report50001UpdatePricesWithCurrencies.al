@@ -15,7 +15,6 @@ report 50001 "Update Prices with Currencies"
             begin
                 LocalCurrency := '';
                 AdvancedPriceManage.FindPriceCurrencies('', true, CurrencyTemp);
-
             end;
 
             trigger OnAfterGetRecord();

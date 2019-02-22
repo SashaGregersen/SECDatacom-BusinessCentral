@@ -116,7 +116,7 @@ codeunit 50000 "Advanced Price Management"
                     PurchaseDiscount."Item No." := ItemTemp."No.";
                     PurchaseDiscount."Vendor No." := VendorNo;
                     PurchaseDiscount."Minimum Quantity" := 1;           //Note: should be changed to a var!
-                    PurchaseDiscount."Unit of Measure Code" := 'STK';   //Note: should be changed to a var!
+                    PurchaseDiscount."Unit of Measure Code" := 'PCS';   //Note: should be changed to a var!
                     PurchaseDiscount."Starting Date" := StartingDate;
                     PurchaseDiscount."Currency Code" := Vendor."Currency Code";
                     //PurchaseDiscount."Variant Code" := ?              Does not support variants at the moment - SEC does not use variants
