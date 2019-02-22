@@ -661,9 +661,9 @@ report 50010 "SEC Purchase - Order"
                     if VATAmount = 0 then
                         CurrReport.Break;
                     SetRange(Number, 1, TempVATAmountLine.Count);
-                    CurrReport.CreateTotals(
+                    /* CurrReport.CreateTotals(
                       TempVATAmountLine."Line Amount", TempVATAmountLine."Inv. Disc. Base Amount",
-                      TempVATAmountLine."Invoice Discount Amount", TempVATAmountLine."VAT Base", TempVATAmountLine."VAT Amount");
+                      TempVATAmountLine."Invoice Discount Amount", TempVATAmountLine."VAT Base", TempVATAmountLine."VAT Amount"); */
                 end;
             }
             dataitem(VATCounterLCY; "Integer")
