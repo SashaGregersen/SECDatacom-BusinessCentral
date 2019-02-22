@@ -15,7 +15,6 @@ report 50001 "Update Prices with Currencies"
             begin
                 LocalCurrency := '';
                 AdvancedPriceManage.FindPriceCurrencies('', true, CurrencyTemp);
-
             end;
 
             trigger OnAfterGetRecord();
@@ -25,7 +24,6 @@ report 50001 "Update Prices with Currencies"
                 DiffrFromVendorCurr: Code[10];
                 salesprice2: record "Sales Price";
             begin
-                SetRange("No.", '70061'); //husk at fjerne denne linje efter test
                 repeat
                     CurrencyTemp.SetRange(Code, "Vendor Currency");
                     if not CurrencyTemp.Find() then

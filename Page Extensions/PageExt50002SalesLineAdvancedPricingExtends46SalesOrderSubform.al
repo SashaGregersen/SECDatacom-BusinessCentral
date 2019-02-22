@@ -81,20 +81,7 @@ pageextension 50002 "Sales Line Bid" extends "Sales Order Subform"
 
     actions
     {
-        addafter(Reserve)
-        {
-            action("Import Serial No.")
-            {
-                Image = ImportExcel;
 
-                trigger OnAction()
-                var
-                    ImportSerialNumber: Codeunit "Import Serial Numbers";
-                begin
-                    ImportSerialNumber.ImportSerialNumberFromSalesLine(Rec);
-                end;
-            }
-        }
     }
 
 
