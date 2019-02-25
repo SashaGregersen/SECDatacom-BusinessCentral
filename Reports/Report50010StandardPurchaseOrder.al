@@ -2,7 +2,7 @@ report 50010 "SEC Purchase - Order"
 {
     // version NAVW113.01
 
-    RDLCLayout = './Layouts/Standard Purchase - Order.rdl';
+    RDLCLayout = './Layouts/Standard Purchase - Order.rdlc';
     //WordLayout = './Layouts/Standard Purchase - Order.docx';
     Caption = 'Purchase - Order';
     DefaultLayout = RDLC;
