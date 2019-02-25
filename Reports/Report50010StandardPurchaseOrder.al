@@ -2,7 +2,7 @@ report 50010 "SEC Purchase - Order"
 {
     // version NAVW113.01
 
-    RDLCLayout = './Layouts/Standard Purchase - Order.rdlc';
+    RDLCLayout = './Layouts/Standard Purchase - Order.rdl';
     //WordLayout = './Layouts/Standard Purchase - Order.docx';
     Caption = 'Purchase - Order';
     DefaultLayout = RDLC;
@@ -413,6 +413,48 @@ report 50010 "SEC Purchase - Order"
             column(VendorOrderNo; "Vendor Order No.")
             {
             }
+            //>>NC adding End customer and Reseller fields
+            column(Endcustomer_Lbl; FieldCaption("End Customer"))
+            {
+            }
+            column(EndCustName; Endcustomer.Name)
+            {
+            }
+            column(EndCustAddress; Endcustomer.Address)
+            {
+            }
+            column(EndCustPostcode; Endcustomer."Post code")
+            {
+            }
+            column(EndCustCity; Endcustomer.City)
+            {
+            }
+            column(EndCustCountry; EndcustomerCountryRegion.Name)
+            {
+            }
+            column(Reseller_Lbl; FieldCaption("Reseller"))
+            {
+            }
+            column(ResellerName; Resell.Name)
+            {
+            }
+            column(ResellerAddress; Resell.Address)
+            {
+            }
+            column(ResellerPostcode; Resell."Post code")
+            {
+            }
+            column(ResellerCity; Resell.City)
+            {
+            }
+            column(ResellerCountry; ResellerCountryRegion.Name)
+            {
+            }
+            column(Var_ID_Lbl; VarIDLbl)
+            {
+            }
+
+            //<< NC
             dataitem("Purchase Line"; "Purchase Line")
             {
                 DataItemLink = "Document Type" = FIELD ("Document Type"), "Document No." = FIELD ("No.");
@@ -848,6 +890,31 @@ report 50010 "SEC Purchase - Order"
                     if ArchiveDocument then
                         ArchiveManagement.StorePurchDocument("Purchase Header", LogInteraction);
                 end;
+
+                //>> NC Endcustomer and Reseller GetData
+                if "End Customer" <> '' then begin
+                    Endcustomer.Get("End Customer");
+                    if Endcustomer."Country/Region Code" <> '' then
+                        EndcustomerCountryRegion.get(Endcustomer."Country/Region Code")
+                    else
+                        Clear(EndcustomerCountryRegion);
+                End else begin
+                    clear(Endcustomer);
+                    Clear(EndcustomerCountryRegion);
+                end;
+
+                if "Reseller" <> '' then begin
+                    Resell.Get("Reseller");
+                    if Resell."Country/Region Code" <> '' then
+                        ResellerCountryRegion.get(Resell."Country/Region Code")
+                    else
+                        Clear(ResellerCountryRegion);
+                End else begin
+                    clear(Resell);
+                    Clear(ResellerCountryRegion);
+                end;
+                //<< NC
+
             end;
         }
     }
@@ -1049,6 +1116,13 @@ report 50010 "SEC Purchase - Order"
         VendorInvoiceNoLbl: Label 'Vendor Invoice No.';
         UnitPriceLbl: Label 'Unit Price (LCY)';
         JobNoLbl: Label 'Job No.';
+        //>> NC Global Variables
+        Endcustomer: Record Customer;
+        Resell: Record Customer;
+        EndcustomerCountryRegion: Record "Country/Region";
+        ResellerCountryRegion: Record "Country/Region";
+        VarIDLbl: Label 'Var ID:';
+        //<< NC
         JobTaskNoLbl: Label 'Job Task No.';
 
     procedure InitializeRequest(LogInteractionParam: Boolean)

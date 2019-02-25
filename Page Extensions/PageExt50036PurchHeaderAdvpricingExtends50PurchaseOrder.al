@@ -35,6 +35,19 @@ pageextension 50036 "Purch. Header Adv. pricing" extends "Purchase Order"
                 end;
             }
         }
-    }
+        addlast(Processing)
+        {
+            action(ShowMyReport)
+            {
+                Image = ItemGroup;
+                trigger OnAction();
+                begin
+                    PurchOrder.Run();
+                end;
+            }
 
+        }
+    }
+    var
+        PurchOrder: report 50010;
 }
