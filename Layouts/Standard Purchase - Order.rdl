@@ -8,6 +8,7 @@
         <ConnectString />
       </ConnectionProperties>
       <rd:SecurityType>None</rd:SecurityType>
+      <rd:DataSourceID>10f45945-7138-43aa-a536-5751e9f796ae</rd:DataSourceID>
     </DataSource>
   </DataSources>
   <ReportSections>
