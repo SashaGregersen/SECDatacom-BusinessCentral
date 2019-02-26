@@ -3,7 +3,7 @@ report 50011 "SEC Purchase Order"
     // version NAVW113.01
 
     DefaultLayout = RDLC;
-    RDLCLayout = './Layouts/Order.rdlc';
+    RDLCLayout = './Layouts/Order.rdl';
     Caption = 'Order';
     PreviewMode = PrintLayout;
 
