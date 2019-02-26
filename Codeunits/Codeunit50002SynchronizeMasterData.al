@@ -19,7 +19,7 @@ codeunit 50002 "Synchronize Master Data"
             repeat
                 Item.ChangeCompany(GlSetup."Master Company");
                 Item.GET(PurchLine."No.");
-                Item.CALCFIELDS(Inventory, "Reserved Qty. on Inventory", "Reserved Qty. on Purch. Orders");
+                Item.CALCFIELDS(Inventory, "Reserved Qty. on Inventory");
                 AvailableInv := Item.Inventory - Item."Reserved Qty. on Inventory";
             until Location.Next = 0;
         exit(AvailableInv);
@@ -39,7 +39,7 @@ codeunit 50002 "Synchronize Master Data"
             repeat
                 Item.ChangeCompany(GlSetup."Master Company");
                 Item.GET(SalesLine."No.");
-                Item.CALCFIELDS(Inventory, "Reserved Qty. on Inventory", "Reserved Qty. on Purch. Orders");
+                Item.CALCFIELDS(Inventory, "Reserved Qty. on Inventory");
                 AvailableInv := Item.Inventory - Item."Reserved Qty. on Inventory";
             until Location.Next = 0;
         exit(AvailableInv);
