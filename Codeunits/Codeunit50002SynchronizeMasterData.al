@@ -5,7 +5,7 @@ codeunit 50002 "Synchronize Master Data"
 
     end;
 
-    procedure UpdateInventoryFromLocation(PurchLine: record "Purchase Line"): Decimal
+    procedure UpdateInventoryOnPurchLineFromLocation(PurchLine: record "Purchase Line"): Decimal
     var
         Location: Record Location;
         AvailableInv: Decimal;
@@ -17,11 +17,30 @@ codeunit 50002 "Synchronize Master Data"
         Location.SetRange("Calculate Available Stock", true);
         if Location.FindSet then
             repeat
-                PurchLine."Location Code" := Location.code;
                 Item.ChangeCompany(GlSetup."Master Company");
                 Item.GET(PurchLine."No.");
-                Item.CALCFIELDS(Inventory, "Reserved Qty. on Inventory");
-                AvailableInv := Item.Inventory - Item."Reserved Qty. on Inventory" - Item."Reserved Qty. on Purch. Orders";
+                Item.CALCFIELDS(Inventory, "Reserved Qty. on Inventory", "Reserved Qty. on Purch. Orders");
+                AvailableInv := Item.Inventory - Item."Reserved Qty. on Inventory";
+            until Location.Next = 0;
+        exit(AvailableInv);
+    end;
+
+    procedure UpdateInventoryOnSalesLineFromLocation(SalesLine: record "Sales Line"): Decimal
+    var
+        Location: Record Location;
+        AvailableInv: Decimal;
+        Item: Record Item;
+        GlSetup: record "General Ledger Setup";
+    begin
+        GlSetup.Get;
+        Location.ChangeCompany(GlSetup."Master Company");
+        Location.SetRange("Calculate Available Stock", true);
+        if Location.FindSet then
+            repeat
+                Item.ChangeCompany(GlSetup."Master Company");
+                Item.GET(SalesLine."No.");
+                Item.CALCFIELDS(Inventory, "Reserved Qty. on Inventory", "Reserved Qty. on Purch. Orders");
+                AvailableInv := Item.Inventory - Item."Reserved Qty. on Inventory";
             until Location.Next = 0;
         exit(AvailableInv);
     end;

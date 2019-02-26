@@ -1,4 +1,4 @@
-pageextension 50032 "Inventory Availability" extends "Purchase Line FactBox"
+pageextension 50014 "Inventory Availability Sales" extends "Sales Line FactBox"
 {
     layout
     {
@@ -27,7 +27,7 @@ pageextension 50032 "Inventory Availability" extends "Purchase Line FactBox"
     var
         CalcAvailInv: Codeunit 5790;
     begin
-        CurrentAvailability := StrSubstNo('%1', UpdateInventory.UpdateInventoryOnPurchLineFromLocation(Rec));
+        CurrentAvailability := StrSubstNo('%1', UpdateInventory.UpdateInventoryOnSalesLineFromLocation(Rec));
     end;
 
 }
