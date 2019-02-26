@@ -125,6 +125,27 @@ pageextension 50021 "End Customer and Reseller" extends 42
                 end;
             }
         }
+        addbefore(SendEmailConfirmation)
+        {
+            action(SendOrderConfirmation)
+            {
+                Image = SendConfirmation;
+                Caption = 'Send ordrebekræftelse';
+                Visible = EdiDocument;
+                trigger OnAction();
+                var
+                    EdiProfile: Record "EDI Profile";
+                begin
+                    EdiProfile.SetRange(Type, EdiProfile.Type::Customer);
+                    EdiProfile.SetRange("No.", "Sell-to Customer No.");
+                    if not EdiProfile.FindFirst then exit;
+                    EdiProfile.EDIAction := EdiProfile.EDIAction::OrderConfirmation;
+                    EdiProfile.DocumentType := "Document Type";
+                    EdiProfile.DocumentNo := "No.";
+                    Codeunit.Run(EdiProfile."EDI Object", EdiProfile);
+                end;
+            }
+        }
 
         addafter("Create &Warehouse Shipment")
         {
@@ -143,4 +164,14 @@ pageextension 50021 "End Customer and Reseller" extends 42
     }
     var
         SalesOrder: report 50005;
+        EdiDocument: Boolean;
+
+    trigger OnAfterGetCurrRecord();
+    var
+        EdiProfile: Record "EDI Profile";
+    begin
+        EdiProfile.SetRange(Type, EdiProfile.Type::Customer);
+        EdiProfile.SetRange("No.", "Sell-to Customer No.");
+        EdiDocument := EdiProfile.FindFirst();
+    end;
 }

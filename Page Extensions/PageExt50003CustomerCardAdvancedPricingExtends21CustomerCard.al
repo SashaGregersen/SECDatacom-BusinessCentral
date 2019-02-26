@@ -54,6 +54,24 @@ pageextension 50003 "Customer Card Advanced Pricing" extends "Customer Card"
                 end;
             }
         }
+        addafter(CustomerReportSelections)
+        {
+            action("EDI Profile")
+            {
+                ApplicationArea = All;
+                Image = ExportMessage;
+                Caption = 'EDI Profile';
+
+                trigger OnAction()
+                var
+                    EDIProfile: Record "EDI Profile";
+                begin
+                    EDIProfile.SetRange(Type, EDIProfile.Type::Customer);
+                    EDIProfile.SetRange("No.", "No.");
+                    Page.RunModal(Page::"EDI Profiles", EDIProfile);
+                end;
+            }
+        }
 
     }
 

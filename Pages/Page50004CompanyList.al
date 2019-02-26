@@ -1,4 +1,4 @@
-page 50005 "Company List"
+page 50004 "Company List"
 {
     PageType = List;
     UsageCategory = Lists;
