@@ -62,7 +62,7 @@ xmlport 50000 "Price File Export XML"
 
                     fieldelement(DefaultDimCode; DefaultDimension."Dimension Value Code")
                     {
-
+                        //name skal med ud i stedet for code
                     }
                 }
                 trigger OnAfterGetRecord()

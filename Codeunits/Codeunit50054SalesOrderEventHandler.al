@@ -400,7 +400,27 @@ codeunit 50054 "Sales Order Event Handler"
             end;
 
         end;
-
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, codeunit::"Sales-Post", 'OnAfterPostSalesDoc', '', true, true)]
+    local procedure OnAfterPostSalesDocOnPostSalesHeader(var SalesHeader: Record "Sales Header"; var GenJnlPostLine: Codeunit "Gen. Jnl.-Post Line"; SalesShptHdrNo: Code[20]; RetRcpHdrNo: Code[20]; SalesInvHdrNo: Code[20]; SalesCrMemoHdrNo: Code[20]; CommitIsSuppressed: Boolean)
+    var
+        EdiProfile: Record "EDI Profile";
+    begin
+        EdiProfile.SetRange(Type, EdiProfile.Type::Customer);
+        EdiProfile.SetRange("No.", SalesHeader."Sell-to Customer No.");
+        if not EdiProfile.FindFirst then exit;
+
+        if SalesShptHdrNo <> '' then begin
+            EdiProfile.EDIAction := EdiProfile.EDIAction::Shipment;
+            EdiProfile.DocumentNo := SalesShptHdrNo;
+            Codeunit.Run(EdiProfile."EDI Object", EdiProfile);
+        end;
+
+        if SalesInvHdrNo <> '' then begin
+            EdiProfile.EDIAction := EdiProfile.EDIAction::Invoice;
+            EdiProfile.DocumentNo := SalesInvHdrNo;
+            Codeunit.Run(EdiProfile."EDI Object", EdiProfile);
+        end;
+    end;
 }

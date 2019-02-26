@@ -1,2 +1,7 @@
 {
+    "al.assemblyProbingPaths": [
+        "./.netpackages",
+        "c:/Windows/assembly/",
+        "C:/Program Files/Microsoft Dynamics NAV/110/Service/Add-ins"
+    ]
 }
