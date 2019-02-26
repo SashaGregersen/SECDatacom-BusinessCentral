@@ -49,14 +49,14 @@ codeunit 50003 "File Management Import"
                             Bid.Validate("Project Sale", true);
                             Bid.Insert(true);
 
-                            if TempCSVBuffer.value <> '' then
-                                SalesHeader.Validate("End Customer", TempCSVBuffer.Value);
-                        end;
-                    2:
-                        begin
                             if TempCSVBuffer.value = '' then
                                 Error('Reseller is missing on line %1', TempCSVBuffer."Line No.");
                             SalesHeader.Validate(Reseller, TempCSVBuffer.Value);
+                        end;
+                    2:
+                        begin
+                            if TempCSVBuffer.value <> '' then
+                                SalesHeader.Validate("End Customer", TempCSVBuffer.Value);
                         end;
                     3:
                         begin
@@ -68,9 +68,8 @@ codeunit 50003 "File Management Import"
                         end;
                     4:
                         begin
-                            if TempCSVBuffer.value = '' then
-                                Error('External Document No. is missing on line %1', TempCSVBuffer."Line No.");
-                            SalesHeader.Validate("External Document No.", TempCSVBuffer.Value);
+                            if TempCSVBuffer.value <> '' then
+                                SalesHeader.Validate("External Document No.", TempCSVBuffer.Value);
                         end;
                     5:
                         begin
@@ -87,9 +86,8 @@ codeunit 50003 "File Management Import"
                         end;
                     12:
                         begin
-                            if TempCSVBuffer.value = '' then
-                                Error('Vendor Bid No. is missing on line %1', TempCSVBuffer."Line No.");
-                            Bid.Validate("Vendor Bid No.", TempCSVBuffer.Value);
+                            if TempCSVBuffer.value <> '' then
+                                Bid.Validate("Vendor Bid No.", TempCSVBuffer.Value);
                         end;
                     13:
                         begin
@@ -164,9 +162,8 @@ codeunit 50003 "File Management Import"
                         end;
                     10:
                         begin
-                            if TempCSVBuffer.value = '' then
-                                Error('Currency code is missing on line %1', TempCSVBuffer."Line No.");
-                            BidPrices.Validate("Currency Code", TempCSVBuffer.Value);
+                            if TempCSVBuffer.value <> '' then
+                                BidPrices.Validate("Currency Code", TempCSVBuffer.Value);
                             BidPrices.Insert(true);
                             CreateSalesLines(Salesheader, BidPrices, Quantity, GlobalCounter);
                         end;

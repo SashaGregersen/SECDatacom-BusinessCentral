@@ -4,7 +4,7 @@
   "publisher": "Netcompany",
   "brief": "",
   "description": "",
-  "version": "1.0.2.5",
+  "version": "1.0.2.7",
   "showMyCode": true,
   "privacyStatement": "",
   "EULA": "",
@@ -27,8 +27,8 @@
     }
   ],
   "screenshots": [],
-  "platform": "11.0.0.0",
-  "application": "11.0.0.0",
+  "platform": "13.0.0.0",
+  "application": "13.0.0.0",
   "idRange": {
     "from": 50000,
     "to": 50099

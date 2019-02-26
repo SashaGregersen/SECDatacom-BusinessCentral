@@ -146,6 +146,21 @@ pageextension 50021 "End Customer and Reseller" extends 42
                 end;
             }
         }
+
+        addafter("Create &Warehouse Shipment")
+        {
+            action("Import Serial No.")
+            {
+                Image = ImportExcel;
+
+                trigger OnAction()
+                var
+                    ImportSerialNumberSales: Codeunit "Import Serial Number Sales";
+                begin
+                    ImportSerialNumberSales.ImportSerialNumbers(Rec);
+                end;
+            }
+        }
     }
     var
         SalesOrder: report 50005;

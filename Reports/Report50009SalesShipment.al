@@ -180,7 +180,7 @@ report 50009 "SEC Sales - Shipment"
                     {
                     }
                     //>> NC adding Preferred Sender Adress 
-                    column(Pref_Sender_Name; PrefSender.Name)
+                    column(Pref_Sender_Name; PrefSender.name)
                     {
                     }
                     column(Pref_Sender_Adress; PrefSender.Address)
@@ -193,6 +193,9 @@ report 50009 "SEC Sales - Shipment"
                     {
                     }
                     column(Pref_Sender_Country; PrefSenderCountryRegion.Name)
+                    {
+                    }
+                    column(Shipped_From_Lbl; ShipFromLbl)
                     {
                     }
                     //<< NC adding Preferred Sender Adress
@@ -509,6 +512,9 @@ report 50009 "SEC Sales - Shipment"
                         column(NoCaption; NoCaptionLbl)
                         {
                         }
+                        column(Barcode_Lbl; BarcodeLbl)
+                        {
+                        }
                         dataitem(TotalItemTracking; "Integer")
                         {
                             DataItemTableView = SORTING (Number) WHERE (Number = CONST (1));
@@ -580,7 +586,8 @@ report 50009 "SEC Sales - Shipment"
                     if "Sales Shipment Header"."Reseller" <> '' then begin
                         Reseller.Get("Sales Shipment Header"."Reseller");
                         if Reseller."Prefered Sender Address" <> '' then begin
-                            PrefSender.get(Reseller."Prefered Sender Address");
+                            PrefSender.SetCurrentKey("Customer No.", Code);
+                            PrefSender.get(Reseller."No.", Reseller."Prefered Sender Address");
                             if PrefSender."Country/Region Code" <> '' then begin
                                 PrefSenderCountryRegion.get(PrefSender."Country/Region Code")
                             End else
@@ -795,6 +802,7 @@ report 50009 "SEC Sales - Shipment"
         PrefSender: Record "Ship-to Address";
         PrefSenderCountryRegion: Record "Country/Region";
         ShipFromLbl: Label 'Shipped from:';
+        BarcodeLbl: Label 'Barcode';
         PageCaptionCap: Label 'Page %1 of %2';
 
     procedure InitLogInteraction()
