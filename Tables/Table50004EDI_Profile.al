@@ -20,7 +20,7 @@ table 50004 "EDI Profile"
         field(3; "EDI Object"; Integer)
         {
             DataClassification = ToBeClassified;
-            TableRelation = Object.ID where (Type = const (Codeunit));
+            TableRelation = AllObjWithCaption."Object ID" where ("Object Type" = const (Codeunit));
         }
         field(4; DocumentType; Option)
         {
