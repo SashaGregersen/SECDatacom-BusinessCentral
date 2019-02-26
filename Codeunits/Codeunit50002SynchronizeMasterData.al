@@ -20,7 +20,7 @@ codeunit 50002 "Synchronize Master Data"
                 Item.ChangeCompany(GlSetup."Master Company");
                 Item.GET(PurchLine."No.");
                 Item.CALCFIELDS(Inventory, "Reserved Qty. on Inventory");
-                AvailableInv := Item.Inventory - Item."Reserved Qty. on Inventory";
+                AvailableInv := AvailableInv + Item.Inventory - Item."Reserved Qty. on Inventory";
             until Location.Next = 0;
         exit(AvailableInv);
     end;
@@ -40,7 +40,22 @@ codeunit 50002 "Synchronize Master Data"
                 Item.ChangeCompany(GlSetup."Master Company");
                 Item.GET(SalesLine."No.");
                 Item.CALCFIELDS(Inventory, "Reserved Qty. on Inventory");
-                AvailableInv := Item.Inventory - Item."Reserved Qty. on Inventory";
+                AvailableInv := AvailableInv + Item.Inventory - Item."Reserved Qty. on Inventory";
+            until Location.Next = 0;
+        exit(AvailableInv);
+    end;
+
+    procedure UpdateInventoryOnItemFromLocation(Item: record "Item"; GLsetup: Record "General Ledger Setup"): Decimal
+    var
+        Location: Record Location;
+        AvailableInv: Decimal;
+    begin
+        Location.ChangeCompany(GlSetup."Master Company");
+        Location.SetRange("Calculate Available Stock", true);
+        if Location.FindSet then
+            repeat
+                Item.CALCFIELDS(Inventory, "Reserved Qty. on Inventory");
+                AvailableInv := AvailableInv + Item.Inventory - Item."Reserved Qty. on Inventory";
             until Location.Next = 0;
         exit(AvailableInv);
     end;
