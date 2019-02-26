@@ -53,6 +53,20 @@ pageextension 50003 "Customer Card Advanced Pricing" extends "Customer Card"
                     page.RunModal(page::"Customer Kickback Percentages", CustKickbackPct)
                 end;
             }
+            action("EDI Profile")
+            {
+                ApplicationArea = All;
+                Image = ExportMessage;
+
+                trigger OnAction()
+                var
+                    EDIProfile: Record "EDI Profile";
+                begin
+                    EDIProfile.SetRange(Type, EDIProfile.Type::Customer);
+                    EDIProfile.SetRange("No.", "No.");
+                    Page.RunModal(Page::"EDI Profiles", EDIProfile);
+                end;
+            }
         }
 
     }

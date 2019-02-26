@@ -17,6 +17,11 @@ tableextension 50027 "Synchronize Customer" extends "Sales & Receivables Setup"
         {
             DataClassification = ToBeClassified;
         }
+
+        field(66050; "Cygate Endpoint"; Text[150])
+        {
+            DataClassification = ToBeClassified;
+        }
     }
 
     var

@@ -53,11 +53,32 @@ dotnet
 
 codeunit 50013 "EDICygate"
 {
+    TableNo = "EDI Profile";
+
     trigger OnRun();
+    var
+        encoding: DotNet mscorlib_System_Text_Encoding;
+        SalesHeader: Record "Sales Header";
+        SalesShptHead: Record "Sales Shipment Header";
     begin
-        //test encoding
-        encoding := encoding.Default();
-        Message('%1\%2\%3', encoding.EncodingName(), encoding.CodePage(), encoding.WebName());
+        if DocumentNo = '' then begin
+            //test encoding
+            encoding := encoding.Default();
+            Message('%1\%2\%3', encoding.EncodingName(), encoding.CodePage(), encoding.WebName());
+            exit;
+        end;
+
+        if EDIAction = EDIAction::OrderConfirmation then begin
+            SalesHeader.Get(DocumentType, DocumentNo);
+            SendConfirmationNotice(SalesHeader);
+            exit;
+        end;
+
+        if EDIAction = EDIAction::Shipment then begin
+            SalesShptHead.Get(DocumentNo);
+            SendDispatchNotice(SalesShptHead);
+            exit;
+        end;
     end;
 
     procedure SendConfirmationNotice(SalesHead: Record "Sales Header");
@@ -75,7 +96,12 @@ codeunit 50013 "EDICygate"
         WebClient: DotNet System_Net_WebClient;
         StringWriter: DotNet mscorlib_System_IO_StringWriter;
         XmlWriter: DotNet System_Xml_XmlTextWriter;
+        encoding: DotNet mscorlib_System_Text_Encoding;
     begin
+        SalesSetup.Get;
+        SalesSetup.TestField("Cygate Endpoint");
+        encoding := encoding.Default();
+
         XMLDoc := XMLDoc.XmlDocument();
         XMLNode1 := XMLDoc.CreateProcessingInstruction('xml', 'version=''1.0'' encoding=''' + FORMAT(encoding.WebName) + '''');
 
@@ -300,16 +326,236 @@ codeunit 50013 "EDICygate"
         WebClient.Encoding(encoding);
         WebClient.Headers.Add('Content-Type', 'text/xml; charset=' + FORMAT(encoding.WebName));
 
-        /*
-        ResultString := Format(
+        ResultString := WebClient.UploadString(SalesSetup."Cygate Endpoint", 'POST', StringWriter.ToString());
+        Message(ResultString);
+    end;
+
+
+    procedure SendDispatchNotice(ShipHead: Record "Sales Shipment Header");
+    var
+        SalesSetup: Record "Sales & Receivables Setup";
+        ShipLine: Record "Sales Shipment Line";
+        Ile: Record "Item Ledger Entry";
+        Item: Record Item;
+        ResultString: Text;
+        XMLDoc: DotNet System_Xml_XmlDocument;
+        XMLNode1: DotNet System_Xml_XmlNode;
+        XMLElement1: DotNet System_Xml_XmlElement;
+        XMLElement2: DotNet System_Xml_XmlElement;
+        XMLElement3: DotNet System_Xml_XmlElement;
+        XMLElement4: DotNet System_Xml_XmlElement;
+        XMLElement5: DotNet System_Xml_XmlElement;
+        XMLElement6: DotNet System_Xml_XmlElement;
+        XMLElement7: DotNet System_Xml_XmlElement;
+        XMLElement8: DotNet System_Xml_XmlElement;
+        WebClient: DotNet System_Net_WebClient;
+        StringWriter: DotNet mscorlib_System_IO_StringWriter;
+        XmlWriter: DotNet System_Xml_XmlTextWriter;
+        encoding: DotNet mscorlib_System_Text_Encoding;
+    begin
+        SalesSetup.Get;
+        SalesSetup.TestField("Cygate Endpoint");
+
+        encoding := encoding.Default();
+
+        XMLDoc := XMLDoc.XmlDocument();
+        XMLNode1 := XMLDoc.CreateProcessingInstruction('xml', 'version=''1.0'' encoding=''' + FORMAT(encoding.WebName) + '''');
+        XMLDoc.AppendChild(XMLNode1);
+        XMLElement2 := XMLDoc.CreateElement('DespatchAdvice');
+        XMLDoc.AppendChild(XMLElement2);
+        XMLElement1 := XMLDoc.CreateElement('Envelope');
+        XMLElement2.AppendChild(XMLElement1);
+
+        XMLNode1 := XMLDoc.CreateNode('element', 'Version', '');
+        XMLNode1.InnerText('1.2');
+        XMLElement1.AppendChild(XMLNode1);
+
+        XMLNode1 := XMLDoc.CreateNode('element', 'SenderID', '');
+        XMLNode1.InnerText('SecDataCom');
+        XMLElement1.AppendChild(XMLNode1);
+
+        XMLNode1 := XMLDoc.CreateNode('element', 'ReceiverID', '');
+        XMLNode1.InnerText('FSBIS110');
+        XMLElement1.AppendChild(XMLNode1);
+
+        XMLNode1 := XMLDoc.CreateNode('element', 'TransactionID', '');
+        XMLNode1.InnerText('2e6867376bbb4dbb92656661d557acfe');
+        XMLElement1.AppendChild(XMLNode1);
+
+        XMLElement3 := XMLDoc.CreateElement('Shipment');
+        XMLElement2.AppendChild(XMLElement3);
+
+        XMLNode1 := XMLDoc.CreateNode('element', 'DeliveryDate', '');
+        XMLNode1.InnerText(FORMAT(ShipHead."Shipment Date", 0, '<Year4>-<Month,2>-<Day,2>'));
+        XMLElement3.AppendChild(XMLNode1);
+
+        XMLNode1 := XMLDoc.CreateNode('element', 'ShipmentNumber', '');
+        XMLNode1.InnerText(ShipHead."No.");
+        XMLElement3.AppendChild(XMLNode1);
+
+        XMLElement4 := XMLDoc.CreateElement('Addresses');
+        XMLElement3.AppendChild(XMLElement4);
+
+        XMLElement1 := XMLDoc.CreateElement('ShipToAddress');
+        XMLElement4.AppendChild(XMLElement1);
+
+        XMLNode1 := XMLDoc.CreateNode('element', 'AddressCode', '');
+        XMLNode1.InnerText(ShipHead."Ship-to Code");
+        XMLElement1.AppendChild(XMLNode1);
+
+        XMLNode1 := XMLDoc.CreateNode('element', 'Name', '');
+        XMLNode1.InnerText(ShipHead."Ship-to Name");
+        XMLElement1.AppendChild(XMLNode1);
+
+        XMLNode1 := XMLDoc.CreateNode('element', 'Department', '');
+        XMLNode1.InnerText('');
+        XMLElement1.AppendChild(XMLNode1);
+
+        XMLNode1 := XMLDoc.CreateNode('element', 'Street', '');
+        XMLNode1.InnerText(ShipHead."Ship-to Address");
+        XMLElement1.AppendChild(XMLNode1);
+
+        XMLNode1 := XMLDoc.CreateNode('element', 'ZipCode', '');
+        XMLNode1.InnerText(ShipHead."Ship-to Post Code");
+        XMLElement1.AppendChild(XMLNode1);
+
+        XMLNode1 := XMLDoc.CreateNode('element', 'City', '');
+        XMLNode1.InnerText(ShipHead."Ship-to City");
+        XMLElement1.AppendChild(XMLNode1);
+
+        XMLNode1 := XMLDoc.CreateNode('element', 'CountryCode', '');
+        XMLNode1.InnerText(ShipHead."Ship-to Country/Region Code");
+        XMLElement1.AppendChild(XMLNode1);
+
+        XMLNode1 := XMLDoc.CreateNode('element', 'MobilePhoneNumber', '');
+        XMLNode1.InnerText('');
+        XMLElement1.AppendChild(XMLNode1);
+
+        XMLNode1 := XMLDoc.CreateNode('element', 'TrackingReference', '');
+        XMLNode1.InnerText(ShipHead."Package Tracking No.");
+        XMLElement3.AppendChild(XMLNode1);
+
+        XMLNode1 := XMLDoc.CreateNode('element', 'ShippingLabel', '');
+        XMLNode1.InnerText('');
+        XMLElement3.AppendChild(XMLNode1);
+
+        XMLElement4 := XMLDoc.CreateElement('TransportDetails');
+        XMLElement3.AppendChild(XMLElement4);
+
+        XMLNode1 := XMLDoc.CreateNode('element', 'CarrierCode', '');
+        XMLNode1.InnerText(ShipHead."Shipping Agent Code");
+        XMLElement4.AppendChild(XMLNode1);
+
+        XMLNode1 := XMLDoc.CreateNode('element', 'ModeOfTransport', '');
+        XMLNode1.InnerText(ShipHead."Shipment Method Code");
+        XMLElement4.AppendChild(XMLNode1);
+
+        XMLElement4 := XMLDoc.CreateElement('Packages');
+        XMLElement3.AppendChild(XMLElement4);
+
+        ShipLine.SetRange("Document No.", ShipHead."No.");
+        ShipLine.SetRange(Type, ShipLine.Type::Item);
+        if ShipLine.FindSet then repeat
+                                     if not Item.Get(ShipLine."No.") then
+                                         Clear(Item);
+
+                                     XMLElement5 := XMLDoc.CreateElement('Package');
+                                     XMLElement4.AppendChild(XMLElement5);
+
+                                     XMLNode1 := XMLDoc.CreateNode('element', 'ModeOfTransport', '');
+                                     XMLNode1.InnerText(ShipHead."Shipment Method Code");
+                                     XMLElement5.AppendChild(XMLNode1);
+
+                                     XMLNode1 := XMLDoc.CreateNode('element', 'TrackingReference', '');
+                                     XMLNode1.InnerText('');
+                                     XMLElement5.AppendChild(XMLNode1);
+
+                                     XMLNode1 := XMLDoc.CreateNode('element', 'PackageIdentifier', '');
+                                     XMLNode1.InnerText('');
+                                     XMLElement5.AppendChild(XMLNode1);
+
+                                     XMLElement6 := XMLDoc.CreateElement('PackageItems');
+                                     XMLElement5.AppendChild(XMLElement6);
+
+                                     XMLElement7 := XMLDoc.CreateElement('PackageItem');
+                                     XMLElement6.AppendChild(XMLElement7);
+
+                                     XMLNode1 := XMLDoc.CreateNode('element', 'PurchaseOrderNumber', '');
+                                     XMLNode1.InnerText(ShipHead."External Document No.");
+                                     XMLElement7.AppendChild(XMLNode1);
+
+                                     XMLNode1 := XMLDoc.CreateNode('element', 'VendorOrderNumber', '');
+                                     XMLNode1.InnerText(ShipHead."Order No.");
+                                     XMLElement7.AppendChild(XMLNode1);
+
+                                     XMLNode1 := XMLDoc.CreateNode('element', 'PurchaseOrderRowNumber', '');
+                                     XMLNode1.InnerText(FORMAT(ShipLine."Line No."));
+                                     XMLElement7.AppendChild(XMLNode1);
+
+                                     XMLNode1 := XMLDoc.CreateNode('element', 'VendorOrderRowNumber', '');
+                                     XMLNode1.InnerText(FORMAT(ShipLine."Line No."));
+                                     XMLElement7.AppendChild(XMLNode1);
+
+                                     XMLNode1 := XMLDoc.CreateNode('element', 'PartNumber', '');
+                                     XMLNode1.InnerText(ShipLine."No.");
+                                     XMLElement7.AppendChild(XMLNode1);
+
+                                     XMLNode1 := XMLDoc.CreateNode('element', 'Description', '');
+                                     XMLNode1.InnerText(ShipLine.Description);
+                                     XMLElement7.AppendChild(XMLNode1);
+
+                                     XMLNode1 := XMLDoc.CreateNode('element', 'DeliveredQuantity', '');
+                                     XMLNode1.InnerText(FORMAT(ShipLine.Quantity));
+                                     XMLElement7.AppendChild(XMLNode1);
+
+                                     XMLNode1 := XMLDoc.CreateNode('element', 'VendorPartNumber', '');
+                                     XMLNode1.InnerText(ShipLine."No.");
+                                     XMLElement7.AppendChild(XMLNode1);
+
+                                     XMLNode1 := XMLDoc.CreateNode('element', 'ManufacturerPartNumber', '');
+                                     XMLNode1.InnerText(Item."Vendor Item No.");
+                                     XMLElement7.AppendChild(XMLNode1);
+
+                                     XMLNode1 := XMLDoc.CreateNode('element', 'EANCode', '');
+                                     XMLNode1.InnerText();
+                                     XMLElement7.AppendChild(XMLNode1);
+
+                                     Ile.SetCurrentKey("Document No.", "Document Type", "Document Line No.");
+                                     Ile.SetRange("Document No.", ShipLine."Document No.");
+                                     Ile.SetRange("Document Line No.", ShipLine."Line No.");
+                                     if Ile.FindSet then begin
+                                         XMLElement8 := XMLDoc.CreateElement('SerialNumbers');
+                                         XMLElement7.AppendChild(XMLElement8);
+                                         repeat
+                                             XMLNode1 := XMLDoc.CreateNode('element', 'Serial', '');
+                                             XMLNode1.InnerText(Ile."Serial No.");
+                                             XMLElement8.AppendChild(XMLNode1);
+                                         until Ile.Next() = 0;
+                                     end;
+            until ShipLine.Next() = 0;
+
+        XMLDoc.Save('c:\temp\cygate2.xml');
+
+        StringWriter := StringWriter.StringWriter();
+        XmlWriter := XmlWriter.XmlTextWriter(StringWriter);
+
+        XMLDoc.WriteTo(XmlWriter);
+
+        WebClient := WebClient.WebClient();
+        WebClient.Encoding(encoding);
+        WebClient.Headers.Add('Content-Type', 'text/xml; charset=' + FORMAT(encoding.WebName));
+
+
+        ResultString := FORMAT(
         //WebClient.UploadString('http://bisextwebtest.fssystem.se/SecDataCom.aspx','POST',StringWriter.ToString()));
         //WebClient.UploadString('http://cygatese.fssystem.se/SecDataCom.aspx','POST',StringWriter.ToString()));
         WebClient.UploadString(SalesSetup."Cygate Endpoint", 'POST', StringWriter.ToString()));
-        */
+
+
         //encoding.UTF8.GetString(
         MESSAGE(ResultString);
+
+
     end;
 
-    var
-        encoding: DotNet mscorlib_System_Text_Encoding;
 }
