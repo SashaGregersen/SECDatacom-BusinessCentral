@@ -81,7 +81,6 @@ Cstr(Fields!ShipmentMethodDesc.Value) + Chr(177) +
 Cstr(Fields!PrepmtPaymentTermsDesc.Value) + Chr(177) + 
 Cstr(Fields!No_PurchHeader.Value) + Chr(177) + 
 Cstr(Fields!PricesInclVATtxt.Value) + Chr(177) + 
-Cstr(Fields!ReportTitleCopyText.Value) + Chr(177) + 
 Cstr(Fields!BuyFrmVendNo_PurchHeaderCaption.Value) + Chr(177) + 
 Cstr(Fields!ReferenceText.Value) + Chr(177) + 
 Cstr(Fields!PurchaserText.Value) + Chr(177) + 
@@ -8594,7 +8593,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value />
+                                                    <Value>=Code.GetData(49,1)</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -8622,7 +8621,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value />
+                                                    <Value>=Code.GetData(55,1)</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -10310,7 +10309,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(19,1)</Value>
+                      <Value>=Code.GetData(18,1)</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -10385,7 +10384,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(20,1)</Value>
+                      <Value>=Code.GetData(19,1)</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -10436,7 +10435,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(21,1)</Value>
+                      <Value>=Code.GetData(20,1)</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -10486,7 +10485,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(22,1)</Value>
+                      <Value>=Code.GetData(21,1)</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -10510,7 +10509,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(23,1)</Value>
+                      <Value>=Code.GetData(22,1)</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -10534,7 +10533,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(24,1)</Value>
+                      <Value>=Code.GetData(23,1)</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -10558,7 +10557,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(25,1)</Value>
+                      <Value>=Code.GetData(24,1)</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -10583,7 +10582,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(26,1)</Value>
+                      <Value>=Code.GetData(25,1)</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -10608,7 +10607,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(27,1)</Value>
+                      <Value>=Code.GetData(26,1)</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -10633,7 +10632,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(28,1)</Value>
+                      <Value>=Code.GetData(27,1)</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -10658,7 +10657,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(29,1)</Value>
+                      <Value />
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -10683,7 +10682,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(30,1)</Value>
+                      <Value />
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -10708,7 +10707,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(31,1) &amp; " " &amp; Code.GetGroupPageNumber(ReportItems!NewPage.Value,Globals!PageNumber)</Value>
+                      <Value>=Code.GetData(30,1) &amp; " " &amp; Code.GetGroupPageNumber(ReportItems!NewPage.Value,Globals!PageNumber)</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -10721,9 +10720,9 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>0.69674cm</Top>
-              <Left>12.76203cm</Left>
+              <Left>12.20311cm</Left>
               <Height>11pt</Height>
-              <Width>5.2399cm</Width>
+              <Width>5.79882cm</Width>
               <ZIndex>16</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -10735,7 +10734,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(32,1)</Value>
+                      <Value />
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -10762,7 +10761,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(33,1)</Value>
+                      <Value>=Code.GetData(31,1)</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -10829,7 +10828,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>5.03676cm</Top>
-              <Left>4.0226cm</Left>
+              <Left>3.97289cm</Left>
               <Height>11pt</Height>
               <Width>8.72211cm</Width>
               <ZIndex>20</ZIndex>
@@ -10843,7 +10842,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(34,1)</Value>
+                      <Value>=Code.GetData(33,1)</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -10871,7 +10870,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(35,1)</Value>
+                      <Value>=Code.GetData(34,1)</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -10898,7 +10897,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(36,1)</Value>
+                      <Value>=Code.GetData(35,1)</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -10925,7 +10924,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(37,1)</Value>
+                      <Value>=Code.GetData(36,1)</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -10952,7 +10951,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(38,1)</Value>
+                      <Value />
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -10964,8 +10963,8 @@ Cstr(Fields!Var_ID_Lbl.Value)
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>4.265cm</Top>
-              <Left>15.39484cm</Left>
+              <Top>4.30029cm</Top>
+              <Left>15.38446cm</Left>
               <Height>11pt</Height>
               <Width>2.60707cm</Width>
               <ZIndex>25</ZIndex>
@@ -10979,7 +10978,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(39,1)</Value>
+                      <Value />
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -11006,7 +11005,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(40,1)</Value>
+                      <Value>=Code.GetData(32,1)</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -11033,7 +11032,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(41,1)</Value>
+                      <Value>=Code.GetData(39,1)</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -11060,7 +11059,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(42,1)</Value>
+                      <Value>=Code.GetData(41,1) &amp; " " &amp; Code.GetData(40,1)</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -11087,7 +11086,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(43,1)</Value>
+                      <Value>=Code.GetData(42,1)</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -11321,7 +11320,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
               </Paragraphs>
               <Top>0.27431in</Top>
               <Height>11pt</Height>
-              <Width>12.72515cm</Width>
+              <Width>12.062cm</Width>
               <ZIndex>39</ZIndex>
               <Style>
                 <Border />
@@ -11335,7 +11334,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(44,1)</Value>
+                      <Value />
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -11363,7 +11362,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(45,1)</Value>
+                      <Value />
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -11392,7 +11391,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(46,1)</Value>
+                      <Value>=Code.GetData(45,1)</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -11441,7 +11440,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(47,1)</Value>
+                      <Value>=Code.GetData(46,1)</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -11490,7 +11489,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(48,1)</Value>
+                      <Value>=Code.GetData(47,1)</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -11514,7 +11513,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(49,1)</Value>
+                      <Value>=Code.GetData(48,1)</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
