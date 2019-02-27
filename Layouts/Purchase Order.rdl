@@ -2966,7 +2966,6 @@ Cstr(Fields!Var_ID_Lbl.Value)
                                 </SortExpression>
                               </SortExpressions>
                               <Top>0.03167cm</Top>
-                              <Left>0cm</Left>
                               <Height>6.84384cm</Height>
                               <Width>7.08611in</Width>
                               <ZIndex>1</ZIndex>
@@ -5554,7 +5553,6 @@ Cstr(Fields!Var_ID_Lbl.Value)
                                 </Filter>
                               </Filters>
                               <Top>2.72in</Top>
-                              <Left>0cm</Left>
                               <Height>1.01944in</Height>
                               <Width>7.08609in</Width>
                               <ZIndex>3</ZIndex>
@@ -8439,7 +8437,6 @@ Cstr(Fields!Var_ID_Lbl.Value)
                                 </Filter>
                               </Filters>
                               <Top>8.6in</Top>
-                              <Left>0cm</Left>
                               <Height>2.2622in</Height>
                               <Width>7.08329in</Width>
                               <ZIndex>5</ZIndex>
@@ -8847,14 +8844,14 @@ Cstr(Fields!Var_ID_Lbl.Value)
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="Textbox204">
+                                          <Textbox Name="EndCustName">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value />
+                                                    <Value>=Fields!EndCustName.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -8864,7 +8861,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                                                 <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>Textbox204</rd:DefaultName>
+                                            <rd:DefaultName>EndCustName</rd:DefaultName>
                                             <Style>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingRight>5pt</PaddingRight>
@@ -8874,14 +8871,14 @@ Cstr(Fields!Var_ID_Lbl.Value)
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="Textbox221">
+                                          <Textbox Name="ResellerName">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value />
+                                                    <Value>=Fields!ResellerName.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -8891,7 +8888,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                                                 <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>Textbox221</rd:DefaultName>
+                                            <rd:DefaultName>ResellerName</rd:DefaultName>
                                             <Style>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingRight>5pt</PaddingRight>
@@ -8918,6 +8915,20 @@ Cstr(Fields!Var_ID_Lbl.Value)
                                                       <FontSize>8pt</FontSize>
                                                     </Style>
                                                   </TextRun>
+                                                  <TextRun>
+                                                    <Value xml:space="preserve"> </Value>
+                                                    <Style>
+                                                      <FontFamily>Segoe UI</FontFamily>
+                                                      <FontSize>8pt</FontSize>
+                                                    </Style>
+                                                  </TextRun>
+                                                  <TextRun>
+                                                    <Value>=Fields!ShipToAddr3.Value</Value>
+                                                    <Style>
+                                                      <FontFamily>Segoe UI</FontFamily>
+                                                      <FontSize>8pt</FontSize>
+                                                    </Style>
+                                                  </TextRun>
                                                 </TextRuns>
                                                 <Style />
                                               </Paragraph>
@@ -8932,14 +8943,14 @@ Cstr(Fields!Var_ID_Lbl.Value)
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="Textbox205">
+                                          <Textbox Name="EndCustAddress">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value />
+                                                    <Value>=Fields!EndCustAddress.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -8949,7 +8960,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                                                 <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>Textbox205</rd:DefaultName>
+                                            <rd:DefaultName>EndCustAddress</rd:DefaultName>
                                             <Style>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingRight>5pt</PaddingRight>
@@ -8959,14 +8970,14 @@ Cstr(Fields!Var_ID_Lbl.Value)
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="Textbox225">
+                                          <Textbox Name="ResellerAddress">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value />
+                                                    <Value>=Fields!ResellerAddress.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -8976,7 +8987,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                                                 <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>Textbox225</rd:DefaultName>
+                                            <rd:DefaultName>ResellerAddress</rd:DefaultName>
                                             <Style>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingRight>5pt</PaddingRight>
@@ -8997,7 +9008,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!ShipToAddr3.Value</Value>
+                                                    <Value>=Fields!ShipToAddr4.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -9017,14 +9028,28 @@ Cstr(Fields!Var_ID_Lbl.Value)
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="Textbox206">
+                                          <Textbox Name="EndCustPostcode">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value />
+                                                    <Value>=Fields!EndCustPostcode.Value</Value>
+                                                    <Style>
+                                                      <FontFamily>Segoe UI</FontFamily>
+                                                      <FontSize>8pt</FontSize>
+                                                    </Style>
+                                                  </TextRun>
+                                                  <TextRun>
+                                                    <Value xml:space="preserve"> </Value>
+                                                    <Style>
+                                                      <FontFamily>Segoe UI</FontFamily>
+                                                      <FontSize>8pt</FontSize>
+                                                    </Style>
+                                                  </TextRun>
+                                                  <TextRun>
+                                                    <Value>=Fields!EndCustCity.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -9034,7 +9059,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                                                 <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>Textbox206</rd:DefaultName>
+                                            <rd:DefaultName>EndCustPostcode</rd:DefaultName>
                                             <Style>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingRight>5pt</PaddingRight>
@@ -9044,14 +9069,28 @@ Cstr(Fields!Var_ID_Lbl.Value)
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="Textbox226">
+                                          <Textbox Name="ResellerPostcode">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value />
+                                                    <Value>=Fields!ResellerPostcode.Value</Value>
+                                                    <Style>
+                                                      <FontFamily>Segoe UI</FontFamily>
+                                                      <FontSize>8pt</FontSize>
+                                                    </Style>
+                                                  </TextRun>
+                                                  <TextRun>
+                                                    <Value xml:space="preserve"> </Value>
+                                                    <Style>
+                                                      <FontFamily>Segoe UI</FontFamily>
+                                                      <FontSize>8pt</FontSize>
+                                                    </Style>
+                                                  </TextRun>
+                                                  <TextRun>
+                                                    <Value>=Fields!ResellerCity.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -9061,7 +9100,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                                                 <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>Textbox226</rd:DefaultName>
+                                            <rd:DefaultName>ResellerPostcode</rd:DefaultName>
                                             <Style>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingRight>5pt</PaddingRight>
@@ -9082,7 +9121,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!ShipToAddr4.Value</Value>
+                                                    <Value>=Fields!ShipToAddr5.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -9102,14 +9141,14 @@ Cstr(Fields!Var_ID_Lbl.Value)
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="Textbox208">
+                                          <Textbox Name="EndCustCountry">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value />
+                                                    <Value>=Fields!EndCustCountry.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -9119,7 +9158,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                                                 <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>Textbox208</rd:DefaultName>
+                                            <rd:DefaultName>EndCustCountry</rd:DefaultName>
                                             <Style>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingRight>5pt</PaddingRight>
@@ -9129,14 +9168,14 @@ Cstr(Fields!Var_ID_Lbl.Value)
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="Textbox227">
+                                          <Textbox Name="ResellerCountry">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value />
+                                                    <Value>=Fields!ResellerCountry.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -9146,7 +9185,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                                                 <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>Textbox227</rd:DefaultName>
+                                            <rd:DefaultName>ResellerCountry</rd:DefaultName>
                                             <Style>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingRight>5pt</PaddingRight>
@@ -9167,7 +9206,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!ShipToAddr5.Value</Value>
+                                                    <Value>=Fields!ShipToAddr6.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -9214,14 +9253,14 @@ Cstr(Fields!Var_ID_Lbl.Value)
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="Textbox228">
+                                          <Textbox Name="Var_ID_Lbl">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value />
+                                                    <Value>=Fields!Var_ID_Lbl.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -9231,7 +9270,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                                                 <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>Textbox228</rd:DefaultName>
+                                            <rd:DefaultName>Var_ID_Lbl</rd:DefaultName>
                                             <Style>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingRight>5pt</PaddingRight>
@@ -9252,7 +9291,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!ShipToAddr6.Value</Value>
+                                                    <Value>=Fields!ShipToAddr7.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -9268,6 +9307,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
+                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell>
@@ -9337,7 +9377,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!ShipToAddr7.Value</Value>
+                                                    <Value>=Fields!ShipToAddr8.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -9422,7 +9462,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!ShipToAddr8.Value</Value>
+                                                    <Value />
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -9575,6 +9615,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                                   </TablixMember>
                                 </TablixMembers>
                               </TablixRowHierarchy>
+                              <DataSetName>DataSet_Result</DataSetName>
                               <Filters>
                                 <Filter>
                                   <FilterExpression>=Fields!ShipToAddr1.Value</FilterExpression>
@@ -10219,7 +10260,6 @@ Cstr(Fields!Var_ID_Lbl.Value)
                                 </Filter>
                               </Filters>
                               <Top>30.4cm</Top>
-                              <Left>0cm</Left>
                               <Height>0.85278cm</Height>
                               <Width>17.99872cm</Width>
                               <ZIndex>8</ZIndex>
@@ -10288,6 +10328,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>DataSet_Result</DataSetName>
+            <Left>0.04795cm</Left>
             <Height>31.3cm</Height>
             <Width>17.99872cm</Width>
             <Style />
@@ -10296,7 +10337,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
         <Height>31.3cm</Height>
         <Style />
       </Body>
-      <Width>18.00193cm</Width>
+      <Width>18.04988cm</Width>
       <Page>
         <PageHeader>
           <Height>7.4cm</Height>
@@ -10320,6 +10361,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>3.8505cm</Top>
+              <Left>0.04795cm</Left>
               <Height>11pt</Height>
               <Width>3.99999cm</Width>
               <Style>
@@ -10345,7 +10387,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>3.8505cm</Top>
-              <Left>4.0226cm</Left>
+              <Left>4.07055cm</Left>
               <Height>11pt</Height>
               <Width>8.72211cm</Width>
               <ZIndex>1</ZIndex>
@@ -10370,7 +10412,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>4.61602cm</Top>
-              <Left>4.0226cm</Left>
+              <Left>4.07055cm</Left>
               <Height>11pt</Height>
               <Width>8.72211cm</Width>
               <ZIndex>2</ZIndex>
@@ -10395,6 +10437,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>4.63366cm</Top>
+              <Left>0.04795cm</Left>
               <Height>11pt</Height>
               <Width>3.99999cm</Width>
               <ZIndex>3</ZIndex>
@@ -10408,7 +10451,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(11,1)</Value>
+                      <Value>=Code.GetData(16,1)</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -10420,8 +10463,8 @@ Cstr(Fields!Var_ID_Lbl.Value)
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>6.12767cm</Top>
-              <Left>15.39484cm</Left>
+              <Top>6.18328cm</Top>
+              <Left>15.41491cm</Left>
               <Height>11pt</Height>
               <Width>2.60388cm</Width>
               <ZIndex>4</ZIndex>
@@ -10435,7 +10478,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(20,1)</Value>
+                      <Value>=Code.GetData(23,1)</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -10446,7 +10489,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>6.11273cm</Top>
-              <Left>12.77999cm</Left>
+              <Left>12.82794cm</Left>
               <Height>11pt</Height>
               <Width>2.58697cm</Width>
               <ZIndex>5</ZIndex>
@@ -10471,7 +10514,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>4.2027cm</Top>
-              <Left>4.0226cm</Left>
+              <Left>4.07055cm</Left>
               <Height>11pt</Height>
               <Width>8.72211cm</Width>
               <ZIndex>6</ZIndex>
@@ -10495,7 +10538,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>4.2456cm</Top>
+              <Top>4.30029cm</Top>
               <Height>11pt</Height>
               <Width>3.99999cm</Width>
               <ZIndex>7</ZIndex>
@@ -10520,6 +10563,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>2.57187in</Top>
+              <Left>0.04795cm</Left>
               <Height>11pt</Height>
               <Width>3.99999cm</Width>
               <ZIndex>8</ZIndex>
@@ -10533,7 +10577,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(23,1)</Value>
+                      <Value>=Code.GetData(20,1)</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -10544,6 +10588,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>5.03676cm</Top>
+              <Left>0.04795cm</Left>
               <Height>11pt</Height>
               <Width>3.99999cm</Width>
               <ZIndex>9</ZIndex>
@@ -10568,7 +10613,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>5.75995cm</Top>
-              <Left>12.76042cm</Left>
+              <Left>12.80837cm</Left>
               <Height>11pt</Height>
               <Width>2.63089cm</Width>
               <ZIndex>10</ZIndex>
@@ -10593,7 +10638,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>5.40718cm</Top>
-              <Left>12.76042cm</Left>
+              <Left>12.80837cm</Left>
               <Height>11pt</Height>
               <Width>2.64534cm</Width>
               <ZIndex>11</ZIndex>
@@ -10618,7 +10663,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>5.00584cm</Top>
-              <Left>12.76042cm</Left>
+              <Left>12.80837cm</Left>
               <Height>11pt</Height>
               <Width>2.64181cm</Width>
               <ZIndex>12</ZIndex>
@@ -10643,7 +10688,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>4.65306cm</Top>
-              <Left>12.76042cm</Left>
+              <Left>12.80837cm</Left>
               <Height>11pt</Height>
               <Width>2.64534cm</Width>
               <ZIndex>13</ZIndex>
@@ -10668,7 +10713,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>4.265cm</Top>
-              <Left>12.76042cm</Left>
+              <Left>12.80837cm</Left>
               <Height>11pt</Height>
               <Width>2.64534cm</Width>
               <ZIndex>14</ZIndex>
@@ -10693,7 +10738,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>3.52417cm</Top>
-              <Left>12.76042cm</Left>
+              <Left>12.80837cm</Left>
               <Height>11pt</Height>
               <Width>2.64534cm</Width>
               <ZIndex>15</ZIndex>
@@ -10720,7 +10765,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>0.69674cm</Top>
-              <Left>12.20311cm</Left>
+              <Left>12.25106cm</Left>
               <Height>11pt</Height>
               <Width>5.79882cm</Width>
               <ZIndex>16</ZIndex>
@@ -10747,7 +10792,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>3.17139cm</Top>
-              <Left>12.76042cm</Left>
+              <Left>12.80837cm</Left>
               <Height>11pt</Height>
               <Width>5.24148cm</Width>
               <ZIndex>17</ZIndex>
@@ -10774,7 +10819,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>2.81861cm</Top>
-              <Left>12.76042cm</Left>
+              <Left>12.80837cm</Left>
               <Height>11pt</Height>
               <Width>5.24148cm</Width>
               <ZIndex>18</ZIndex>
@@ -10801,7 +10846,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>2.57187in</Top>
-              <Left>4.05788cm</Left>
+              <Left>4.10583cm</Left>
               <Height>11pt</Height>
               <Width>13.94084cm</Width>
               <ZIndex>19</ZIndex>
@@ -10815,7 +10860,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(16,1)</Value>
+                      <Value>=Code.GetData(11,1)</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -10828,7 +10873,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>5.03676cm</Top>
-              <Left>3.97289cm</Left>
+              <Left>4.02084cm</Left>
               <Height>11pt</Height>
               <Width>8.72211cm</Width>
               <ZIndex>20</ZIndex>
@@ -10855,7 +10900,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>5.71139cm</Top>
-              <Left>15.39131cm</Left>
+              <Left>15.43926cm</Left>
               <Height>11pt</Height>
               <Width>2.6106cm</Width>
               <ZIndex>21</ZIndex>
@@ -10883,7 +10928,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>5.35861cm</Top>
-              <Left>15.39484cm</Left>
+              <Left>15.44279cm</Left>
               <Height>11pt</Height>
               <Width>2.60707cm</Width>
               <ZIndex>22</ZIndex>
@@ -10910,7 +10955,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>5.00584cm</Top>
-              <Left>15.39131cm</Left>
+              <Left>15.43926cm</Left>
               <Height>11pt</Height>
               <Width>2.6106cm</Width>
               <ZIndex>23</ZIndex>
@@ -10937,7 +10982,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>4.65306cm</Top>
-              <Left>15.39484cm</Left>
+              <Left>15.44279cm</Left>
               <Height>11pt</Height>
               <Width>2.60707cm</Width>
               <ZIndex>24</ZIndex>
@@ -10964,7 +11009,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>4.30029cm</Top>
-              <Left>15.38446cm</Left>
+              <Left>15.43241cm</Left>
               <Height>11pt</Height>
               <Width>2.60707cm</Width>
               <ZIndex>25</ZIndex>
@@ -10991,7 +11036,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>3.52417cm</Top>
-              <Left>15.39484cm</Left>
+              <Left>15.44279cm</Left>
               <Height>11pt</Height>
               <Width>2.60707cm</Width>
               <ZIndex>26</ZIndex>
@@ -11018,7 +11063,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>2.46584cm</Top>
-              <Left>12.76042cm</Left>
+              <Left>12.80837cm</Left>
               <Height>11pt</Height>
               <Width>5.24148cm</Width>
               <ZIndex>27</ZIndex>
@@ -11045,7 +11090,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>2.11306cm</Top>
-              <Left>12.76042cm</Left>
+              <Left>12.80837cm</Left>
               <Height>11pt</Height>
               <Width>5.24148cm</Width>
               <ZIndex>28</ZIndex>
@@ -11072,7 +11117,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>1.76028cm</Top>
-              <Left>12.76042cm</Left>
+              <Left>12.80837cm</Left>
               <Height>11pt</Height>
               <Width>5.24148cm</Width>
               <ZIndex>29</ZIndex>
@@ -11099,7 +11144,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>1.4075cm</Top>
-              <Left>12.76042cm</Left>
+              <Left>12.80837cm</Left>
               <Height>11pt</Height>
               <Width>5.24148cm</Width>
               <ZIndex>30</ZIndex>
@@ -11113,7 +11158,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(18,1)</Value>
+                      <Value>=Fields!DocType_PurchHeader.Value</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>14pt</FontSize>
@@ -11126,7 +11171,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Left>1.57282cm</Left>
+              <Left>1.62077cm</Left>
               <Height>20pt</Height>
               <Width>16.4291cm</Width>
               <ZIndex>31</ZIndex>
@@ -11151,6 +11196,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>3.20138cm</Top>
+              <Left>0.04795cm</Left>
               <Height>11pt</Height>
               <Width>12.72515cm</Width>
               <ZIndex>32</ZIndex>
@@ -11175,6 +11221,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>2.8486cm</Top>
+              <Left>0.04795cm</Left>
               <Height>11pt</Height>
               <Width>12.72515cm</Width>
               <ZIndex>33</ZIndex>
@@ -11199,6 +11246,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>2.49582cm</Top>
+              <Left>0.04795cm</Left>
               <Height>11pt</Height>
               <Width>12.72515cm</Width>
               <ZIndex>34</ZIndex>
@@ -11223,6 +11271,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>2.14665cm</Top>
+              <Left>0.04795cm</Left>
               <Height>11pt</Height>
               <Width>12.72515cm</Width>
               <ZIndex>35</ZIndex>
@@ -11247,6 +11296,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>1.79387cm</Top>
+              <Left>0.04795cm</Left>
               <Height>11pt</Height>
               <Width>12.72515cm</Width>
               <ZIndex>36</ZIndex>
@@ -11271,6 +11321,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>1.40583cm</Top>
+              <Left>0.04795cm</Left>
               <Height>11pt</Height>
               <Width>12.72515cm</Width>
               <ZIndex>37</ZIndex>
@@ -11295,6 +11346,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>1.05305cm</Top>
+              <Left>0.04795cm</Left>
               <Height>11pt</Height>
               <Width>12.72515cm</Width>
               <ZIndex>38</ZIndex>
@@ -11319,6 +11371,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>0.27431in</Top>
+              <Left>0.04795cm</Left>
               <Height>11pt</Height>
               <Width>12.062cm</Width>
               <ZIndex>39</ZIndex>
@@ -11345,7 +11398,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>3.91223cm</Top>
-              <Left>12.76042cm</Left>
+              <Left>12.80837cm</Left>
               <Height>11pt</Height>
               <Width>2.64534cm</Width>
               <ZIndex>40</ZIndex>
@@ -11375,7 +11428,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>3.91223cm</Top>
-              <Left>15.39484cm</Left>
+              <Left>15.44279cm</Left>
               <Height>11pt</Height>
               <Width>2.60707cm</Width>
               <ZIndex>41</ZIndex>
@@ -11402,6 +11455,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>5.82365cm</Top>
+              <Left>0.04795cm</Left>
               <Height>11pt</Height>
               <Width>3.99999cm</Width>
               <ZIndex>42</ZIndex>
@@ -11426,7 +11480,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>5.82365cm</Top>
-              <Left>4.0226cm</Left>
+              <Left>4.07055cm</Left>
               <Height>11pt</Height>
               <Width>8.72211cm</Width>
               <ZIndex>43</ZIndex>
@@ -11451,6 +11505,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>6.17642cm</Top>
+              <Left>0.04795cm</Left>
               <Height>11pt</Height>
               <Width>3.99999cm</Width>
               <ZIndex>44</ZIndex>
@@ -11475,7 +11530,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>6.17642cm</Top>
-              <Left>4.0226cm</Left>
+              <Left>4.07055cm</Left>
               <Height>11pt</Height>
               <Width>8.72211cm</Width>
               <ZIndex>45</ZIndex>
@@ -11500,6 +11555,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>5.41514cm</Top>
+              <Left>0.04795cm</Left>
               <Height>11pt</Height>
               <Width>3.99999cm</Width>
               <ZIndex>46</ZIndex>
@@ -11527,7 +11583,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>5.42834cm</Top>
-              <Left>4.0226cm</Left>
+              <Left>4.07055cm</Left>
               <Height>11pt</Height>
               <Width>8.72211cm</Width>
               <ZIndex>47</ZIndex>

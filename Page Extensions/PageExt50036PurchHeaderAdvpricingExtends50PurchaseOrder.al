@@ -49,5 +49,5 @@ pageextension 50036 "Purch. Header Adv. pricing" extends "Purchase Order"
         }
     }
     var
-        PurchOrder: report 50011;
+        PurchOrder: report 50010;
 }
