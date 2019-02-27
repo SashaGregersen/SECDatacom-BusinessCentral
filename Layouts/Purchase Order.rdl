@@ -9164,6 +9164,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
+                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell>
@@ -9233,7 +9234,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!EndCustPhone.Value</Value>
+                                                    <Value />
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -9253,14 +9254,14 @@ Cstr(Fields!Var_ID_Lbl.Value)
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="ResellerPhone">
+                                          <Textbox Name="Textbox139">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!ResellerPhone.Value</Value>
+                                                    <Value>=Fields!Var_ID_Lbl.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -9270,7 +9271,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                                                 <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>ResellerPhone</rd:DefaultName>
+                                            <rd:DefaultName>Textbox139</rd:DefaultName>
                                             <Style>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingRight>5pt</PaddingRight>
@@ -9338,14 +9339,14 @@ Cstr(Fields!Var_ID_Lbl.Value)
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="ResellerEmail">
+                                          <Textbox Name="Textbox140">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!ResellerEmail.Value</Value>
+                                                    <Value />
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -9355,7 +9356,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                                                 <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>ResellerEmail</rd:DefaultName>
+                                            <rd:DefaultName>Textbox140</rd:DefaultName>
                                             <Style>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingRight>5pt</PaddingRight>
@@ -9423,14 +9424,14 @@ Cstr(Fields!Var_ID_Lbl.Value)
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="Textbox230">
+                                          <Textbox Name="Var_ID_Lbl">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!Var_ID_Lbl.Value</Value>
+                                                    <Value />
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -9440,8 +9441,11 @@ Cstr(Fields!Var_ID_Lbl.Value)
                                                 <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>Textbox230</rd:DefaultName>
+                                            <rd:DefaultName>Var_ID_Lbl</rd:DefaultName>
                                             <Style>
+                                              <Border>
+                                                <Style>None</Style>
+                                              </Border>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
@@ -11788,9 +11792,6 @@ End Function</Code>
         <Field Name="EndCustCountry">
           <DataField>EndCustCountry</DataField>
         </Field>
-        <Field Name="EndCustPhone">
-          <DataField>EndCustPhone</DataField>
-        </Field>
         <Field Name="Reseller_Lbl">
           <DataField>Reseller_Lbl</DataField>
         </Field>
@@ -11808,12 +11809,6 @@ End Function</Code>
         </Field>
         <Field Name="ResellerCountry">
           <DataField>ResellerCountry</DataField>
-        </Field>
-        <Field Name="ResellerPhone">
-          <DataField>ResellerPhone</DataField>
-        </Field>
-        <Field Name="ResellerEmail">
-          <DataField>ResellerEmail</DataField>
         </Field>
         <Field Name="Var_ID_Lbl">
           <DataField>Var_ID_Lbl</DataField>

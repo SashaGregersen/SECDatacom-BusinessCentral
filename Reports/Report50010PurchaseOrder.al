@@ -90,9 +90,6 @@ report 50010 "SEC Purchase Order"
             column(EndCustCountry; EndcustomerCountryRegion.Name)
             {
             }
-            Column(EndCustPhone; Endcustomer."Phone No.")
-            {
-            }
             column(Reseller_Lbl; FieldCaption("Reseller"))
             {
             }
@@ -109,12 +106,6 @@ report 50010 "SEC Purchase Order"
             {
             }
             column(ResellerCountry; ResellerCountryRegion.Name)
-            {
-            }
-            column(ResellerPhone; Resell."Phone No.")
-            {
-            }
-            column(ResellerEmail; Resell."E-Mail")
             {
             }
             column(Var_ID_Lbl; VarIDLbl)
@@ -1218,7 +1209,7 @@ report 50010 "SEC Purchase Order"
         Resell: Record Customer;
         EndcustomerCountryRegion: Record "Country/Region";
         ResellerCountryRegion: Record "Country/Region";
-        VarIDLbl: Label 'Var ID:';
+        VarIDLbl: Label 'VAR ID:';
         //<< NC
         TotalPrepmtLineAmount: Decimal;
 
