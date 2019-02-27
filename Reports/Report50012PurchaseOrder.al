@@ -3,8 +3,8 @@ report 50011 "SEC Purchase Order"
     // version NAVW113.01
 
     DefaultLayout = RDLC;
-    RDLCLayout = './Layouts/Order.rdl';
-    Caption = 'Order';
+    RDLCLayout = './Layouts/Purchase Order.rdl';
+    Caption = 'Purchase Order';
     PreviewMode = PrintLayout;
 
     dataset
@@ -71,18 +71,58 @@ report 50011 "SEC Purchase Order"
             column(AllowInvoiceDiscCaption; AllowInvoiceDiscCaptionLbl)
             {
             }
+            //>>NC adding End customer and Reseller fields
+            column(Endcustomer_Lbl; FieldCaption("End Customer"))
+            {
+            }
+            column(EndCustName; Endcustomer.Name)
+            {
+            }
+            column(EndCustAddress; Endcustomer.Address)
+            {
+            }
+            column(EndCustPostcode; Endcustomer."Post code")
+            {
+            }
+            column(EndCustCity; Endcustomer.City)
+            {
+            }
+            column(EndCustCountry; EndcustomerCountryRegion.Name)
+            {
+            }
+            column(Reseller_Lbl; FieldCaption("Reseller"))
+            {
+            }
+            column(ResellerName; Resell.Name)
+            {
+            }
+            column(ResellerAddress; Resell.Address)
+            {
+            }
+            column(ResellerPostcode; Resell."Post code")
+            {
+            }
+            column(ResellerCity; Resell.City)
+            {
+            }
+            column(ResellerCountry; ResellerCountryRegion.Name)
+            {
+            }
+            column(Var_ID_Lbl; VarIDLbl)
+            {
+            }
             dataitem(CopyLoop; "Integer")
             {
                 DataItemTableView = SORTING (Number);
                 dataitem(PageLoop; "Integer")
                 {
                     DataItemTableView = SORTING (Number) WHERE (Number = CONST (1));
-                    column(ReportTitleCopyText; StrSubstNo(Text004, CopyText))
+                    /*column(ReportTitleCopyText; StrSubstNo(Text004, CopyText))
                     {
                     }
-                    column(CurrRepPageNo; StrSubstNo(Text005, Format(CurrReport.PageNo)))
+                    //column(CurrRepPageNo; StrSubstNo(Text005, Format(CurrReport.PageNo)))
                     {
-                    }
+                    }*/
                     column(CompanyAddr1; CompanyAddr[1])
                     {
                     }
@@ -545,9 +585,9 @@ report 50011 "SEC Purchase Order"
                             if VATAmount = 0 then
                                 CurrReport.Break;
                             SetRange(Number, 1, VATAmountLine.Count);
-                            CurrReport.CreateTotals(
-                              VATAmountLine."Line Amount", VATAmountLine."Inv. Disc. Base Amount",
-                              VATAmountLine."Invoice Discount Amount", VATAmountLine."VAT Base", VATAmountLine."VAT Amount");
+                            /* CurrReport.CreateTotals(
+                               VATAmountLine."Line Amount", VATAmountLine."Inv. Disc. Base Amount",
+                               VATAmountLine."Invoice Discount Amount", VATAmountLine."VAT Base", VATAmountLine."VAT Amount");*/
                         end;
                     }
                     dataitem(VATCounterLCY; "Integer")
@@ -588,7 +628,7 @@ report 50011 "SEC Purchase Order"
                                 CurrReport.Break;
 
                             SetRange(Number, 1, VATAmountLine.Count);
-                            CurrReport.CreateTotals(VALVATBaseLCY, VALVATAmountLCY);
+                            //CurrReport.CreateTotals(VALVATBaseLCY, VALVATAmountLCY);
 
                             if GLSetup."LCY Code" = '' then
                                 VALSpecLCYHeader := Text007 + Text008
@@ -807,13 +847,13 @@ report 50011 "SEC Purchase Order"
 
                         trigger OnPreDataItem()
                         begin
-                            CurrReport.CreateTotals(
+                            /*CurrReport.CreateTotals(
                               PrepmtInvBuf.Amount, PrepmtInvBuf."Amount Incl. VAT",
                               PrepmtVATAmountLine."Line Amount", PrepmtVATAmountLine."VAT Base",
                               PrepmtVATAmountLine."VAT Amount",
                               PrepmtLineAmount);
                             PrepmtLoopLineNo := 0;
-                            TotalPrepmtLineAmount := 0;
+                            TotalPrepmtLineAmount := 0;*/
                         end;
                     }
                     dataitem(PrepmtVATCounter; "Integer")
@@ -892,7 +932,7 @@ report 50011 "SEC Purchase Order"
 
                     if Number > 1 then
                         CopyText := FormatDocument.GetCOPYText;
-                    CurrReport.PageNo := 1;
+                    //CurrReport.PageNo := 1;
                     OutputNo := OutputNo + 1;
 
                     TotalSubTotal := 0;
@@ -923,6 +963,30 @@ report 50011 "SEC Purchase Order"
                 PricesInclVATtxt := Format("Prices Including VAT");
 
                 DimSetEntry1.SetRange("Dimension Set ID", "Dimension Set ID");
+
+                //>> NC Endcustomer and Reseller GetData
+                if "End Customer" <> '' then begin
+                    Endcustomer.Get("End Customer");
+                    if Endcustomer."Country/Region Code" <> '' then
+                        EndcustomerCountryRegion.get(Endcustomer."Country/Region Code")
+                    else
+                        Clear(EndcustomerCountryRegion);
+                End else begin
+                    clear(Endcustomer);
+                    Clear(EndcustomerCountryRegion);
+                end;
+
+                if "Reseller" <> '' then begin
+                    Resell.Get("Reseller");
+                    if Resell."Country/Region Code" <> '' then
+                        ResellerCountryRegion.get(Resell."Country/Region Code")
+                    else
+                        Clear(ResellerCountryRegion);
+                End else begin
+                    clear(Resell);
+                    Clear(ResellerCountryRegion);
+                end;
+                //<< NC
 
                 if not IsReportInPreviewMode then
                     if ArchiveDocument then
@@ -1140,6 +1204,13 @@ report 50011 "SEC Purchase Order"
         EmailIDCaptionLbl: Label 'Email';
         AllowInvoiceDiscCaptionLbl: Label 'Allow Invoice Discount';
         PrepmtLoopLineNo: Integer;
+        //>> NC Global Variables
+        Endcustomer: Record Customer;
+        Resell: Record Customer;
+        EndcustomerCountryRegion: Record "Country/Region";
+        ResellerCountryRegion: Record "Country/Region";
+        VarIDLbl: Label 'Var ID:';
+        //<< NC
         TotalPrepmtLineAmount: Decimal;
 
     procedure InitializeRequest(NewNoOfCopies: Integer; NewShowInternalInfo: Boolean; NewArchiveDocument: Boolean; NewLogInteraction: Boolean)

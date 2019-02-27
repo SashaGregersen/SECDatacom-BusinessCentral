@@ -453,7 +453,6 @@ report 50010 "SEC Purchase - Order"
             column(Var_ID_Lbl; VarIDLbl)
             {
             }
-
             //<< NC
             dataitem("Purchase Line"; "Purchase Line")
             {
