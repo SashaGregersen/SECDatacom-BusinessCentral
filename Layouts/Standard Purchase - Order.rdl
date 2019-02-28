@@ -8,6 +8,7 @@
         <ConnectString />
       </ConnectionProperties>
       <rd:SecurityType>None</rd:SecurityType>
+      <rd:DataSourceID>10f45945-7138-43aa-a536-5751e9f796ae</rd:DataSourceID>
     </DataSource>
   </DataSources>
   <ReportSections>
@@ -459,6 +460,45 @@ End Function
         </Field>
         <Field Name="VendorOrderNo">
           <DataField>VendorOrderNo</DataField>
+        </Field>
+        <Field Name="Endcustomer_Lbl">
+          <DataField>Endcustomer_Lbl</DataField>
+        </Field>
+        <Field Name="EndCustName">
+          <DataField>EndCustName</DataField>
+        </Field>
+        <Field Name="EndCustAddress">
+          <DataField>EndCustAddress</DataField>
+        </Field>
+        <Field Name="EndCustPostcode">
+          <DataField>EndCustPostcode</DataField>
+        </Field>
+        <Field Name="EndCustCity">
+          <DataField>EndCustCity</DataField>
+        </Field>
+        <Field Name="EndCustCountry">
+          <DataField>EndCustCountry</DataField>
+        </Field>
+        <Field Name="Reseller_Lbl">
+          <DataField>Reseller_Lbl</DataField>
+        </Field>
+        <Field Name="ResellerName">
+          <DataField>ResellerName</DataField>
+        </Field>
+        <Field Name="ResellerAddress">
+          <DataField>ResellerAddress</DataField>
+        </Field>
+        <Field Name="ResellerPostcode">
+          <DataField>ResellerPostcode</DataField>
+        </Field>
+        <Field Name="ResellerCity">
+          <DataField>ResellerCity</DataField>
+        </Field>
+        <Field Name="ResellerCountry">
+          <DataField>ResellerCountry</DataField>
+        </Field>
+        <Field Name="Var_ID_Lbl">
+          <DataField>Var_ID_Lbl</DataField>
         </Field>
         <Field Name="LineNo_PurchLine">
           <DataField>LineNo_PurchLine</DataField>
