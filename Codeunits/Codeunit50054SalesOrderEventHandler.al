@@ -374,6 +374,7 @@ codeunit 50054 "Sales Order Event Handler"
     var
         SalesReceiveSetup: record "Sales & Receivables Setup";
         SalesLine: record "Sales Line";
+        SalesLine2: record "Sales Line";
         InsertSalesLine: record "Sales Line";
     begin
         if SalesHeader.Status = SalesHeader.Status::Released then begin
@@ -387,11 +388,16 @@ codeunit 50054 "Sales Order Event Handler"
             if confirm('Do you want to add freight to the order?', true) then begin
                 SalesLine.SetRange("Document No.", SalesHeader."No.");
                 SalesLine.SetRange("Document Type", SalesHeader."Document Type");
-                if SalesLine.FindLast() then begin
+                SalesLine.SetRange(Type, SalesLine.Type::Item);
+                SalesLine.SetRange("No.", SalesReceiveSetup."Freight Item");
+                if not SalesLine.FindFirst() then begin
+                    SalesLine2.SetRange("Document No.", SalesHeader."No.");
+                    SalesLine2.SetRange("Document Type", SalesHeader."Document Type");
+                    SalesLine2.FindLast();
                     InsertSalesLine.init;
                     InsertSalesLine."Document No." := SalesHeader."No.";
                     InsertSalesLine."Document Type" := SalesHeader."Document Type";
-                    InsertSalesLine.Validate("Line No.", SalesLine."Line No." + 10000);
+                    InsertSalesLine.Validate("Line No.", SalesLine2."Line No." + 10000);
                     InsertSalesLine.Validate(Type, InsertSalesLine.type::Item);
                     InsertSalesLine.Validate("No.", SalesReceiveSetup."Freight Item");
                     InsertSalesLine.Validate(Quantity, 1);

@@ -79,6 +79,7 @@ codeunit 50004 "Create Purchase Order"
         PurchLine.Validate(Quantity, (SalesLine.Quantity - SalesLine."Reserved Quantity"));
         PurchLine.Validate("Expected Receipt Date", SalesLine."Shipment Date"); //vend med SEC         
         PurchLine.Insert(true);
+        // Direct unit cost udbygges til at håndtere valuta 
         PurchLine.Validate("Direct Unit Cost", SalesLine."Purchase Price on Purchase Order");
         PurchLine.Validate("Bid No.", SalesLine."Bid No.");
         PurchLine.Modify(true);
