@@ -111,6 +111,7 @@ report 50010 "SEC Purchase Order"
             column(Var_ID_Lbl; VarIDLbl)
             {
             }
+            //alasd
             dataitem(CopyLoop; "Integer")
             {
                 DataItemTableView = SORTING (Number);
