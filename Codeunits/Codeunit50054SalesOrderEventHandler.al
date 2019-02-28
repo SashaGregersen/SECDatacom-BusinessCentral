@@ -385,12 +385,12 @@ codeunit 50054 "Sales Order Event Handler"
 
         SalesReceiveSetup.Get();
         if SalesReceiveSetup."Freight Item" <> '' then begin
-            if confirm('Do you want to add freight to the order?', true) then begin
-                SalesLine.SetRange("Document No.", SalesHeader."No.");
-                SalesLine.SetRange("Document Type", SalesHeader."Document Type");
-                SalesLine.SetRange(Type, SalesLine.Type::Item);
-                SalesLine.SetRange("No.", SalesReceiveSetup."Freight Item");
-                if not SalesLine.FindFirst() then begin
+            SalesLine.SetRange("Document No.", SalesHeader."No.");
+            SalesLine.SetRange("Document Type", SalesHeader."Document Type");
+            SalesLine.SetRange(Type, SalesLine.Type::Item);
+            SalesLine.SetRange("No.", SalesReceiveSetup."Freight Item");
+            if not SalesLine.FindFirst() then
+                if confirm('Do you want to add freight to the order?', true) then begin
                     SalesLine2.SetRange("Document No.", SalesHeader."No.");
                     SalesLine2.SetRange("Document Type", SalesHeader."Document Type");
                     SalesLine2.FindLast();
@@ -403,9 +403,8 @@ codeunit 50054 "Sales Order Event Handler"
                     InsertSalesLine.Validate(Quantity, 1);
                     InsertSalesLine.Insert(true);
                 end;
-            end;
-
         end;
+
     end;
 
     [EventSubscriber(ObjectType::Codeunit, codeunit::"Sales-Post", 'OnAfterPostSalesDoc', '', true, true)]
