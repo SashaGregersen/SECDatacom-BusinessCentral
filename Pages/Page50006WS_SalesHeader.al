@@ -112,15 +112,34 @@ page 50006 "WS Sales Header"
                 {
                     ApplicationArea = All;
                 }
-                /*
-                <End User Name>	<Slutbrugernavn>	Field		"End User Name"
-                <End User Address>	<Slutbrugeradresse>	Field		"End User Address"
-                <End User Address 2>	<Slutbrugeradresse 2>	Field		"End User Address 2"
-                <End User Post Code>	<Slutbrugerpostnr.>	Field		"End User Post Code"
-                <End User City>	<Slutbrugerby>	Field		"End User City"
-                <End User Country>	<Slutbrugerlandekode>	Field		"End User Country"
-                <End User Phone No.>	<Slutbrugertelefon>	Field		"End User Phone No."
-                */
+                field("End User Name"; "End User Name")
+                {
+                    ApplicationArea = All;
+                }
+                field("End User Address"; "End User Address")
+                {
+                    ApplicationArea = All;
+                }
+                field("End User Address 2"; "End User Address 2")
+                {
+                    ApplicationArea = All;
+                }
+                field("End User Post Code"; "End User Post Code")
+                {
+                    ApplicationArea = All;
+                }
+                field("End User City"; "End User City")
+                {
+                    ApplicationArea = All;
+                }
+                field("End User Country"; "End User Country")
+                {
+                    ApplicationArea = All;
+                }
+                field("End User Phone No."; "End User Phone No.")
+                {
+                    ApplicationArea = All;
+                }
                 field(ShipComment; ShipComment)
                 {
                     //Gemmes ikke i deres eksisterende løsning?
@@ -142,7 +161,48 @@ page 50006 "WS Sales Header"
             }
         }
     }
+    trigger OnInsertRecord(BelowxRec: Boolean): Boolean;
+    begin
+        Validate("End Customer", CheckCreateCustomer());
+    end;
+
+    trigger OnModifyRecord(): Boolean;
+    begin
+        Validate("End Customer", CheckCreateCustomer());
+    end;
+
+    procedure CheckCreateCustomer(): Code[20];
+    var
+        Cust: Record Customer;
+    begin
+        if "End Customer" <> '' then exit("End Customer");
+
+        Cust.SetRange(Address, "End User Address");
+        Cust.SetRange("Post Code", "End User Post Code");
+        Cust.SetRange(Name, "End User Name");
+        if not Cust.FindFirst() then begin
+            Cust.Init();
+            Cust.Insert(true);
+            Cust.Validate(Name, "End User Name");
+            Cust.Validate(Address, "End User Address");
+            Cust.Validate("Address 2", "End User Address 2");
+            Cust.Validate("Post Code", "End User Post Code");
+            Cust.Validate(City, "End User City");
+            Cust.Validate("Country/Region Code", "End User Country");
+            Cust.Validate("Phone No.", "End User Phone No.");
+            Cust.Modify(true);
+        end;
+        exit(Cust."No.");
+    end;
+
     var
         ShipComment: Text;
         VendorOrderComment: Text;
+        "End User Name": Text[50];
+        "End User Address": Text[50];
+        "End User Address 2": Text[50];
+        "End User Post Code": Code[20];
+        "End User City": Text[30];
+        "End User Country": Code[10];
+        "End User Phone No.": Text[30];
 }
