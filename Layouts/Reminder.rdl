@@ -24,7 +24,7 @@
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>14.02466cm</Height>
+                  <Height>15.88611cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -9672,6 +9672,126 @@ Cstr(Fields!CompanyInfoEMail.Value)
                                 </TablixColumns>
                                 <TablixRows>
                                   <TablixRow>
+                                    <Height>0.6cm</Height>
+                                    <TablixCells>
+                                      <TablixCell>
+                                        <CellContents>
+                                          <Textbox Name="PaymentID_Control1160940016">
+                                            <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Paragraphs>
+                                              <Paragraph>
+                                                <TextRuns>
+                                                  <TextRun>
+                                                    <Value>=Fields!PaymentID_Control1160940016.Value</Value>
+                                                    <Style>
+                                                      <FontFamily>Segoe UI</FontFamily>
+                                                      <FontSize>8pt</FontSize>
+                                                    </Style>
+                                                  </TextRun>
+                                                </TextRuns>
+                                                <Style />
+                                              </Paragraph>
+                                            </Paragraphs>
+                                            <rd:DefaultName>PaymentID_Control1160940016</rd:DefaultName>
+                                            <Style>
+                                              <Border />
+                                              <PaddingRight>5pt</PaddingRight>
+                                            </Style>
+                                          </Textbox>
+                                        </CellContents>
+                                      </TablixCell>
+                                      <TablixCell>
+                                        <CellContents>
+                                          <Textbox Name="PmtSetup__FIK_GIRO_No________">
+                                            <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Paragraphs>
+                                              <Paragraph>
+                                                <TextRuns>
+                                                  <TextRun>
+                                                    <Value>=Fields!PmtSetup__FIK_GIRO_No________.Value</Value>
+                                                    <Style>
+                                                      <FontFamily>Segoe UI</FontFamily>
+                                                      <FontSize>8pt</FontSize>
+                                                    </Style>
+                                                  </TextRun>
+                                                </TextRuns>
+                                                <Style />
+                                              </Paragraph>
+                                            </Paragraphs>
+                                            <rd:DefaultName>PmtSetup__FIK_GIRO_No________</rd:DefaultName>
+                                            <Style>
+                                              <Border />
+                                              <PaddingLeft>5pt</PaddingLeft>
+                                              <PaddingRight>5pt</PaddingRight>
+                                            </Style>
+                                          </Textbox>
+                                        </CellContents>
+                                      </TablixCell>
+                                    </TablixCells>
+                                  </TablixRow>
+                                  <TablixRow>
+                                    <Height>0.6cm</Height>
+                                    <TablixCells>
+                                      <TablixCell>
+                                        <CellContents>
+                                          <Textbox Name="PmtSetup__IK_Card_Type_____">
+                                            <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Paragraphs>
+                                              <Paragraph>
+                                                <TextRuns>
+                                                  <TextRun>
+                                                    <Value>=Fields!PmtSetup__IK_Card_Type_____.Value</Value>
+                                                    <Style>
+                                                      <FontFamily>Segoe UI</FontFamily>
+                                                      <FontSize>8pt</FontSize>
+                                                    </Style>
+                                                  </TextRun>
+                                                </TextRuns>
+                                                <Style />
+                                              </Paragraph>
+                                            </Paragraphs>
+                                            <rd:DefaultName>PmtSetup__IK_Card_Type_____</rd:DefaultName>
+                                            <Style>
+                                              <Border />
+                                              <PaddingRight>5pt</PaddingRight>
+                                            </Style>
+                                          </Textbox>
+                                        </CellContents>
+                                      </TablixCell>
+                                      <TablixCell>
+                                        <CellContents>
+                                          <Textbox Name="PmtSetup__FIK_GIRO_No__">
+                                            <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Paragraphs>
+                                              <Paragraph>
+                                                <TextRuns>
+                                                  <TextRun>
+                                                    <Value>=Fields!PmtSetup__FIK_GIRO_No__.Value</Value>
+                                                    <Style>
+                                                      <FontFamily>Segoe UI</FontFamily>
+                                                      <FontSize>8pt</FontSize>
+                                                    </Style>
+                                                  </TextRun>
+                                                </TextRuns>
+                                                <Style />
+                                              </Paragraph>
+                                            </Paragraphs>
+                                            <rd:DefaultName>PmtSetup__FIK_GIRO_No__</rd:DefaultName>
+                                            <Style>
+                                              <Border />
+                                              <PaddingLeft>5pt</PaddingLeft>
+                                              <PaddingRight>5pt</PaddingRight>
+                                            </Style>
+                                          </Textbox>
+                                        </CellContents>
+                                      </TablixCell>
+                                    </TablixCells>
+                                  </TablixRow>
+                                  <TablixRow>
                                     <Height>0.35278cm</Height>
                                     <TablixCells>
                                       <TablixCell>
@@ -9799,6 +9919,8 @@ Cstr(Fields!CompanyInfoEMail.Value)
                               </TablixColumnHierarchy>
                               <TablixRowHierarchy>
                                 <TablixMembers>
+                                  <TablixMember />
+                                  <TablixMember />
                                   <TablixMember>
                                     <Visibility>
                                       <Hidden>=Iif(Fields!Number_IntegerLine.Value = 1, false, true)</Hidden>
@@ -9811,8 +9933,9 @@ Cstr(Fields!CompanyInfoEMail.Value)
                                   </TablixMember>
                                 </TablixMembers>
                               </TablixRowHierarchy>
-                              <Top>13.23972cm</Top>
-                              <Height>0.70556cm</Height>
+                              <DataSetName>DataSet_Result</DataSetName>
+                              <Top>13.98055cm</Top>
+                              <Height>1.90556cm</Height>
                               <Width>17.95724cm</Width>
                               <ZIndex>5</ZIndex>
                               <Style>
@@ -10456,8 +10579,9 @@ Cstr(Fields!CompanyInfoEMail.Value)
                 </TablixMember>
               </TablixMembers>
             </TablixRowHierarchy>
+            <DataSetName>DataSet_Result</DataSetName>
             <Left>0.02794cm</Left>
-            <Height>14.02466cm</Height>
+            <Height>15.88611cm</Height>
             <Width>17.97261cm</Width>
             <Style>
               <FontFamily>Segoe UI</FontFamily>
@@ -10465,7 +10589,7 @@ Cstr(Fields!CompanyInfoEMail.Value)
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>14.02466cm</Height>
+        <Height>16.26507cm</Height>
         <Style>
           <FontFamily>Segoe UI</FontFamily>
           <FontSize>8pt</FontSize>
