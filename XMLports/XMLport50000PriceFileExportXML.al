@@ -72,6 +72,9 @@ xmlport 50000 "Price File Export XML"
                     Invt: Decimal;
                     ItemCategory: record "Item Category";
                 begin
+                    if not item."Use on Website" then
+                        currXMLport.Skip();
+
                     ItemCategory.Get(Item."Item Category Code");
                     if ItemCategory."Overwrite Quantity" then
                         Invent := format(999)

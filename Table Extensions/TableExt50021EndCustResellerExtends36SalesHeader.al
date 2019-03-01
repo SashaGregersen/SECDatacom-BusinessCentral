@@ -145,12 +145,8 @@ tableextension 50021 "End Customer and Reseller" extends 36
                         rec.Validate("Ship-to Contact", ShipToAdress.Contact);
                         rec.validate("Ship-To-Code", shiptoadress.Code);
                     end else begin
-                        ShipToAdress.SetRange("Customer No.", "End Customer");
-                        if ShipToAdress.FindFirst() then begin
-                            SetShipToAddress(ShipToAdress.Name, ShipToAdress."Name 2", ShipToAdress.Address, ShipToAdress."Address 2", ShipToAdress.City, ShipToAdress."Post Code", shiptoadress.County, shiptoadress."Country/Region Code");
-                            rec.Validate("Ship-to Contact", ShipToAdress.Contact);
-                            rec.validate("Ship-To-Code", shiptoadress.Code);
-                        end;
+                        SetShipToAddress(Customer.Name, Customer."Name 2", Customer.Address, Customer."Address 2", Customer.City, Customer."Post Code", Customer.County, Customer."Country/Region Code");
+                        rec.Validate("Ship-to Contact", Customer.Contact);
                     end;
                 end else begin
                     Customer.Get(rec."Sell-to Customer No.");
