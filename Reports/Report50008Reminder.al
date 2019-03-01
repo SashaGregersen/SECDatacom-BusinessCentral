@@ -690,9 +690,6 @@ report 50008 "SEC Reminder"
                 end;
 
                 // <PM>
-                LastPage := false;
-                LocalCurrency := "Currency Code" in ['', GLSetup."LCY Code"];
-
                 case PmtSetup."IK Card Type" of
                     '01':
                         PmtIDLength := 0;
@@ -933,8 +930,6 @@ report 50008 "SEC Reminder"
         PmtSetup: Record "Payment Setup";
         PaymentID: Code[16];
         PmtIDLength: Integer;
-        LastPage: Boolean;
-        LocalCurrency: Boolean;
         //<<NC
         ShowMIRLines: Boolean;
 
