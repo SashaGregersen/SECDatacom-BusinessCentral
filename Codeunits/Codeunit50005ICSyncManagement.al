@@ -104,7 +104,7 @@ codeunit 50005 "IC Sync Management"
             exit;
         if CompanyTemp.FindSet() then
             repeat
-                CopyPurchasePricesToOtherCompanies(SalesPriceWorkSheet."Item No.");
+                //CopyPurchasePricesToOtherCompanies(SalesPriceWorkSheet."Item No.");  //skal den her være der? bør fjernes for ikke at lave noget 2 gange
                 CopySPWToOtherCompanies(SalesPriceWorkSheet, CompanyTemp.Name);
                 SessionID := RunUpdateListPricesInOtherCompany(CompanyTemp.Name);
                 CheckSessionForTimeoutAndError(SessionID, 30, CompanyTemp.Name);
@@ -196,14 +196,16 @@ codeunit 50005 "IC Sync Management"
         SessionEnded: Boolean;
         TimeOutStart: DateTime;
         SessionEvent: Record "Session Event";
+        SleepCounter: Integer;
     begin
         SessionEnded := FALSE;
         Timedout := false;
         TimeOutStart := CurrentDateTime();
+        SleepCounter := 100;
         WHILE NOT Timedout AND NOT SessionEnded DO BEGIN
             COMMIT;
             SelectLatestVersion();
-            SLEEP(1000);
+            SLEEP(SleepCounter);
             Timedout := (CurrentDateTime() - TimeOutStart) DIV 1000 > SessionTimerSeconds;
 
             IF NOT Timedout THEN BEGIN
@@ -220,6 +222,7 @@ codeunit 50005 "IC Sync Management"
                 SessionEventComment := SessionEvent.Comment;
                 exit(false);
             end;
+            SleepCounter := SleepCounter + SleepCounter;
         end;
         SessionEventComment := StrSubstNo('Session %1 timed out after %2 seconds', SessionID, SessionTimerSeconds);
         exit(true);

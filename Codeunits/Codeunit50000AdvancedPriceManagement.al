@@ -16,30 +16,24 @@ codeunit 50000 "Advanced Price Management"
         ItemDiscGroupTemp: Record "Item Discount Group" temporary;
         ICPartner: Record "IC Partner";
         ICSyncMgt: Codeunit "IC Sync Management";
+        ItemTemp: Record Item temporary;
     begin
+        Clear(ItemTemp);
         If SalesPriceWorksheet.FindSet() then
             repeat
-                CreateListprices(SalesPriceWorksheet);
+                CreateListprices(SalesPriceWorksheet);                              //Lav listepriser inkl. købspriser baseret på listepriser
                 if Item.Get(SalesPriceWorksheet."Item No.") then begin
-                    if Item."Item Disc. Group" <> '' then begin
-                        ItemDiscGroupTemp.Code := item."Item Disc. Group";
-                        if not ItemDiscGroupTemp.Insert() then;
-                    end;
-                    if Item."Vendor No." <> '' then begin
-                        CreatePricesForICPartners(Item."No.", Item."Vendor No.");
-                    end;
+                    ItemTemp := Item;
+                    if not ItemTemp.Insert(false) then;
                 end;
-                ICSyncMgt.UpdatePricesInOtherCompanies(SalesPriceWorksheet);
+                ICSyncMgt.UpdatePricesInOtherCompanies(SalesPriceWorksheet);       //lav salgspriser i andre selskaber 
             until SalesPriceWorksheet.Next() = 0;
-        if ItemDiscGroupTemp.FindSet() then
+        if ItemTemp.FindSet() then
             repeat
-                CalcSalesPricesForItemDiscGroup(ItemDiscGroupTemp.Code);
-            until ItemDiscGroupTemp.Next() = 0;
-        if ICPartner.FindSet() then
-            repeat
-                ICSyncMgt.CopyPurchasePricesToOtherCompanies(SalesPriceWorksheet."Item No.");
-            until ICPartner.Next() = 0;
-
+                CreatePricesForItemFromItemDiscountGroups(ItemTemp);               //lav priser basesert på sales discounts for hver vare 
+                if ItemTemp."Vendor No." <> '' then
+                    CreatePricesForICPartners(ItemTemp."No.", ItemTemp."Vendor No.");  //lav transfer priser for partnere og flyt tdem til andre selskaber
+            until ItemTemp.Next() = 0;
     end;
 
     procedure CreateListprices(SalesPriceWorksheet: Record "Sales Price Worksheet");
@@ -305,6 +299,33 @@ codeunit 50000 "Advanced Price Management"
                 end;
             until ICPartner.Next() = 0;
         ICSyncMgt.CopyPurchasePricesToOtherCompanies(Item."No.");
+    end;
+
+    local procedure CreatePricesForItemFromItemDiscountGroups(Item: Record Item)
+    var
+        ItemDiscGroup: Record "Item Discount Group";
+        SalesLineDiscount: Record "Sales Line Discount";
+        CurrencyTemp: Record Currency temporary;
+        ImplementPrices: report "Implement Price Change";
+        SalesPriceWorksheet: Record "Sales Price Worksheet";
+    begin
+        if not ItemDiscGroup.Get(Item."Item Disc. Group") then
+            exit;
+        FindPriceCurrencies('', true, CurrencyTemp);
+        SalesLineDiscount.SetRange(Type, SalesLineDiscount.Type::"Item Disc. Group");
+        SalesLineDiscount.SetRange(Code, ItemDiscGroup.Code);
+        if SalesLineDiscount.FindSet() then
+            repeat
+                CreatePricesForItem(Item."No.", SalesLineDiscount, CurrencyTemp);
+            until SalesLineDiscount.Next() = 0;
+        SalesPriceWorksheet.SetRange("Item No.", Item."No.");
+        if not SalesPriceWorksheet.IsEmpty() then begin
+            Clear(ImplementPrices);
+            ImplementPrices.SetTableView(SalesPriceWorksheet);
+            ImplementPrices.InitializeRequest(true);
+            ImplementPrices.UseRequestPage(false);
+            ImplementPrices.Run();
+        end;
     end;
 
     local procedure CreatePricesForItem(ItemNo: Code[20]; SalesDiscountGroup: Record "Sales Line Discount"; var CurrencyTemp: Record Currency temporary)

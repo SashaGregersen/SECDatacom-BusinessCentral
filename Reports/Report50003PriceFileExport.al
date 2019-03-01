@@ -8,7 +8,7 @@ report 50003 "Price File Export"
     {
         dataitem(Item; Item)
         {
-            RequestFilterFields = "No.", "Use on Website";
+            RequestFilterFields = "No.", "Vendor No.", "Use on Website";
             trigger OnPreDataItem()
             var
                 XmlStream: OutStream;

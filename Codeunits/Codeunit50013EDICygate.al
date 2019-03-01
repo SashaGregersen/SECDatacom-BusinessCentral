@@ -106,7 +106,7 @@ codeunit 50013 "EDICygate"
         encoding: DotNet mscorlib_System_Text_Encoding;
     begin
         SalesSetup.Get;
-        SalesSetup.TestField("Cygate Endpoint");
+        //SalesSetup.TestField("Cygate Endpoint");
         encoding := encoding.Default();
 
         XMLDoc := XMLDoc.XmlDocument();
@@ -334,7 +334,7 @@ codeunit 50013 "EDICygate"
         WebClient.Encoding(encoding);
         WebClient.Headers.Add('Content-Type', 'text/xml; charset=' + FORMAT(encoding.WebName));
 
-        ResultString := WebClient.UploadString(SalesSetup."Cygate Endpoint", 'POST', StringWriter.ToString());
+        //ResultString := WebClient.UploadString(SalesSetup."Cygate Endpoint", 'POST', StringWriter.ToString());
         Message(ResultString);
     end;
 
@@ -362,7 +362,7 @@ codeunit 50013 "EDICygate"
         encoding: DotNet mscorlib_System_Text_Encoding;
     begin
         SalesSetup.Get;
-        SalesSetup.TestField("Cygate Endpoint");
+        //SalesSetup.TestField("Cygate Endpoint");
 
         encoding := encoding.Default();
 
@@ -554,7 +554,7 @@ codeunit 50013 "EDICygate"
         WebClient.Encoding(encoding);
         WebClient.Headers.Add('Content-Type', 'text/xml; charset=' + FORMAT(encoding.WebName));
 
-        ResultString := WebClient.UploadString(SalesSetup."Cygate Endpoint", 'POST', StringWriter.ToString());
+        //ResultString := WebClient.UploadString(SalesSetup."Cygate Endpoint", 'POST', StringWriter.ToString());
 
         Message(ResultString);
     end;
@@ -584,7 +584,7 @@ codeunit 50013 "EDICygate"
         SalesShipHead: Record "Sales Shipment Header";
     begin
         SalesSetup.Get;
-        SalesSetup.TestField("Cygate Endpoint");
+        //SalesSetup.TestField("Cygate Endpoint");
 
         Clear(InvoiceLine);
         InvoiceLine.SetRange("Document No.", InvoiceHead."No.");
@@ -883,7 +883,7 @@ codeunit 50013 "EDICygate"
         WebClient.Encoding(encoding);
         WebClient.Headers.Add('Content-Type', 'text/xml; charset=' + FORMAT(encoding.WebName));
 
-        ResultString := WebClient.UploadString(SalesSetup."Cygate Endpoint", 'POST', StringWriter.ToString());
+        //ResultString := WebClient.UploadString(SalesSetup."Cygate Endpoint", 'POST', StringWriter.ToString());
 
         Message(ResultString);
     end;
