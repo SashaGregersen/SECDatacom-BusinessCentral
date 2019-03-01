@@ -46,7 +46,7 @@ report 50008 "SEC Reminder"
             column(ShowMIRLines; ShowMIRLines)
             {
             }
-            //>>NC Payment Seyup Columns
+            //>>NC Payment Setup Columns
             column(PaymentID_Control1160940016; PaymentID)
             {
             }
