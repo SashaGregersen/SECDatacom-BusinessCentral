@@ -332,14 +332,14 @@ codeunit 50054 "Sales Order Event Handler"
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Sales Header", 'OnAfterValidateEvent', 'subsidiary', true, true)]
-    local procedure SalesHeaderOnAfterValidateSubsidiary(var rec: record "Sales Header")
+    local procedure SalesHeaderOnAfterValidateSubsidiary(var rec: record "Sales Header"; var xrec: Record "Sales Header")
     var
 
     begin
         if CompanyName() <> 'SECDenmark' then
             exit;
 
-        if rec.Subsidiary <> '' then
+        if (xrec.Subsidiary <> '') and (rec.Subsidiary <> xrec.Subsidiary) then
             Error('You cannot change an intercompany order');
 
     end;
