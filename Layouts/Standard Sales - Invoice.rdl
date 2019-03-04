@@ -4458,7 +4458,6 @@
                             </Border>
                           </Style>
                         </Rectangle>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -7114,6 +7113,99 @@
               <FontSize>8pt</FontSize>
             </Style>
           </Tablix>
+          <Textbox Name="textbox414">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=Fields!PmtSetup__IK_Card_Type_____.Value</Value>
+                    <Style>
+                      <FontFamily>Segoe UI</FontFamily>
+                      <FontSize>9pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Left</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <Top>22.1794cm</Top>
+            <Left>0.02032in</Left>
+            <Height>0.16656in</Height>
+            <Width>1.05cm</Width>
+            <ZIndex>2</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingRight>5pt</PaddingRight>
+            </Style>
+          </Textbox>
+          <Textbox Name="textbox413">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=Fields!PaymentID.Value</Value>
+                    <Style>
+                      <FontFamily>Segoe UI</FontFamily>
+                      <FontSize>9pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Left</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <Top>22.1794cm</Top>
+            <Left>1.10159cm</Left>
+            <Height>0.16656in</Height>
+            <Width>2.91547cm</Width>
+            <ZIndex>3</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingRight>5pt</PaddingRight>
+            </Style>
+          </Textbox>
+          <Textbox Name="textbox412">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=Fields!PmtSetup__FIK_GIRO_No________.Value</Value>
+                    <Style>
+                      <FontFamily>Segoe UI</FontFamily>
+                      <FontSize>9pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Left</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <Top>22.1794cm</Top>
+            <Left>4.01706cm</Left>
+            <Height>0.16656in</Height>
+            <Width>3.57cm</Width>
+            <ZIndex>4</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingRight>5pt</PaddingRight>
+            </Style>
+          </Textbox>
         </ReportItems>
         <Height>24.59593cm</Height>
         <Style />
@@ -7815,6 +7907,21 @@ End Function
         </Field>
         <Field Name="External_Document_No_Lbl">
           <DataField>External_Document_No_Lbl</DataField>
+        </Field>
+        <Field Name="PaymentID_Control1160940016">
+          <DataField>PaymentID_Control1160940016</DataField>
+        </Field>
+        <Field Name="PaymentID">
+          <DataField>PaymentID</DataField>
+        </Field>
+        <Field Name="PmtSetup__FIK_GIRO_No________">
+          <DataField>PmtSetup__FIK_GIRO_No________</DataField>
+        </Field>
+        <Field Name="PmtSetup__IK_Card_Type_____">
+          <DataField>PmtSetup__IK_Card_Type_____</DataField>
+        </Field>
+        <Field Name="PmtSetup__FIK_GIRO_No__">
+          <DataField>PmtSetup__FIK_GIRO_No__</DataField>
         </Field>
         <Field Name="LineNo_Line">
           <DataField>LineNo_Line</DataField>

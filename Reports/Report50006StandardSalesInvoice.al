@@ -421,7 +421,6 @@ report 50006 "SEC - Sales Invoice"
             {
             }
             //>> NC columns
-
             //>>Endcustomer columns
             column(Endcustomer_Lbl; EndcustomerLbl)
             {
@@ -442,7 +441,7 @@ report 50006 "SEC - Sales Invoice"
             {
             }
             //<<Encustomer columns
-
+            //>>Misc columns
             column(Suppress_Prices_on_Printouts; "Suppress Prices on Printouts")
             {
             }
@@ -458,7 +457,25 @@ report 50006 "SEC - Sales Invoice"
             Column(External_Document_No_Lbl; Fieldcaption("External Document No."))
             {
             }
-            //<< NC columns
+            //<<Misc columns
+            //>>Payment Setup Columns
+            column(PaymentID_Control1160940016; PaymentID)
+            {
+            }
+            column(PaymentID; PaymentID)
+            {
+            }
+            column(PmtSetup__FIK_GIRO_No________; ' +' + PmtSetup."FIK/GIRO-No." + '<')
+            {
+            }
+            column(PmtSetup__IK_Card_Type_____; '+' + PmtSetup."IK Card Type" + '<')
+            {
+            }
+            column(PmtSetup__FIK_GIRO_No__; PmtSetup."FIK/GIRO-No.")
+            {
+            }
+            //<< Payment Setup
+            //<<NC
             dataitem(Line; "Sales Invoice Line")
             {
                 DataItemLink = "Document No." = FIELD ("No.");
@@ -1113,7 +1130,7 @@ report 50006 "SEC - Sales Invoice"
                     CurrReport.Language := Language.GetLanguageID("Language Code");
                 end;
 
-                //>>Getting Endcustomer info  
+                //>>NC Getting Endcustomer info  
                 if "End Customer" <> '' then begin
                     Endcustomer.Get("End Customer");
                     if Endcustomer."Country/Region Code" <> '' then
@@ -1124,9 +1141,9 @@ report 50006 "SEC - Sales Invoice"
                     clear(Endcustomer);
                     Clear(EndcustomerCountryRegion);
                 end;
-                //<<Getting Endcustomer info
+                //<<NC
 
-                //>>Determining EU Customers for special VAT text
+                //>>NC Determining EU Customers for special VAT text
                 if
                     "VAT Bus. Posting Group" <> '' then begin
                     VATBusPostingGroup.Get("VAT Bus. Posting Group");
@@ -1137,7 +1154,7 @@ report 50006 "SEC - Sales Invoice"
                 End else begin
                     Clear(VatBusPostingGroup);
                 end;
-                //<<Determining EU Customers for special VAT text
+                //<<NC
 
                 if not IdentityManagement.IsInvAppId then
                     CurrReport.Language := Language.GetLanguageID("Language Code");
@@ -1182,6 +1199,35 @@ report 50006 "SEC - Sales Invoice"
                         RemainingAmountTxt := StrSubstNo(PartiallyPaidLbl, Format(RemainingAmount, 0, '<Precision,2><Standard Format,0>'))
                     else
                         RemainingAmountTxt := '';
+
+                //>>NC adding Payment ID to FIK String
+                // <PM>
+                case PmtSetup."IK Card Type" of
+                    '01':
+                        PmtIDLength := 0;
+                    '04':
+                        PmtIDLength := 16;
+                    '15':
+                        PmtIDLength := 16;
+                    '41':
+                        PmtIDLength := 10;
+                    '71':
+                        PmtIDLength := 15;
+                    '73':
+                        PmtIDLength := 0;
+                    '75':
+                        PmtIDLength := 16;
+                    else
+                        PmtIDLength := 0;
+                end;
+
+                if PmtIDLength > 0 then begin
+                    PaymentID := PadStr('', PmtIDLength - 2 - StrLen("No."), '0') + "No." + '2';
+                    PaymentID := PaymentID + Modulus10(PaymentID);
+                end else
+                    PaymentID := PadStr('', PmtIDLength, '0');
+                // </PM>
+                //<<NC
 
                 TotalSubTotal := 0;
                 TotalInvDiscAmount := 0;
@@ -1268,6 +1314,9 @@ report 50006 "SEC - Sales Invoice"
         CompanyInfo.VerifyAndSetPaymentInfo;
         TempBlobCompanyLogo.Blob := CompanyInfo.Picture;
         TempBlobCompanyLogo.Insert;
+        //>>NC Getting Payment setup for FIK String
+        PmtSetup.Get;
+        //<<NC
     end;
 
     trigger OnPostReport()
@@ -1428,7 +1477,11 @@ report 50006 "SEC - Sales Invoice"
         IsCustEU: Boolean;
         VendorItemNoLbl: Label 'Vendor Item No.';
         EUCustLbl: label 'The invoice is subject to reverse charge on VAT';
-
+        //>> PM
+        PmtSetup: Record "Payment Setup";
+        PaymentID: Code[16];
+        PmtIDLength: Integer;
+        //<<PM
         //<<NC variables
         PricePerLbl: Label 'Price per';
 
@@ -1637,5 +1690,39 @@ report 50006 "SEC - Sales Invoice"
     local procedure OnBeforeGetDocumentCaption(SalesInvoiceHeader: Record "Sales Invoice Header"; var DocCaption: Text)
     begin
     end;
+
+    //>>NC adding Modulus10 Procedure for FIK String
+    procedure Modulus10(TestNumber: Code[16]): Code[16]
+    var
+        Counter: Integer;
+        Accumulator: Integer;
+        WeightNo: Integer;
+        SumStr: Text[30];
+    begin
+        // <PM>
+        WeightNo := 2;
+        SumStr := '';
+        for Counter := StrLen(TestNumber) downto 1 do begin
+            Evaluate(Accumulator, CopyStr(TestNumber, Counter, 1));
+            Accumulator := Accumulator * WeightNo;
+            SumStr := SumStr + Format(Accumulator);
+            if WeightNo = 1 then
+                WeightNo := 2
+            else
+                WeightNo := 1;
+        end;
+        Accumulator := 0;
+        for Counter := 1 to StrLen(SumStr) do begin
+            Evaluate(WeightNo, CopyStr(SumStr, Counter, 1));
+            Accumulator := Accumulator + WeightNo;
+        end;
+        Accumulator := 10 - (Accumulator mod 10);
+        if Accumulator = 10 then
+            exit('0')
+        else
+            exit(Format(Accumulator));
+        // </PM>
+    end;
+    //<<NC
 }
 
