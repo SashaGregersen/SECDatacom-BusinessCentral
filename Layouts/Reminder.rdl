@@ -9593,7 +9593,7 @@ Cstr(Fields!HomePageCaption.Value) + Chr(177) +
 Cstr(Fields!EMailCaption.Value) + Chr(177) + 
 Cstr(Fields!CompanyInfoHomePage.Value) + Chr(177) + 
 Cstr(Fields!CompanyInfoEMail.Value)  + Chr(177) +
-Cstr(Fields!PaymentID_Control1160940016.Value) + Chr(177) + 
+Cstr(Fields!PaymentID.Value) + Chr(177) + 
 Cstr(Fields!PmtSetup__FIK_GIRO_No__.Value) + Chr(177) + 
 Cstr(Fields!PmtSetup__IK_Card_Type_____.Value) + Chr(177) + 
 Cstr(Fields!PmtSetup__FIK_GIRO_No________.Value)
@@ -10478,11 +10478,16 @@ Cstr(Fields!PmtSetup__FIK_GIRO_No________.Value)
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>=Code.GetData(47,1)</Value>
-                    <Style />
+                    <Value>=Fields!PmtSetup__IK_Card_Type_____.Value</Value>
+                    <Style>
+                      <FontFamily>Segoe UI</FontFamily>
+                      <FontSize>9pt</FontSize>
+                    </Style>
                   </TextRun>
                 </TextRuns>
-                <Style />
+                <Style>
+                  <TextAlign>Left</TextAlign>
+                </Style>
               </Paragraph>
             </Paragraphs>
             <Top>14.14813cm</Top>
@@ -10492,31 +10497,9 @@ Cstr(Fields!PmtSetup__FIK_GIRO_No________.Value)
             <ZIndex>1</ZIndex>
             <Style>
               <Border>
-                <Color>Brown</Color>
-                <Style>Solid</Style>
+                <Style>None</Style>
               </Border>
-              <TopBorder>
-                <Color>Brown</Color>
-                <Style>Solid</Style>
-                <Width>1pt</Width>
-              </TopBorder>
-              <BottomBorder>
-                <Color>Brown</Color>
-                <Style>Solid</Style>
-                <Width>1pt</Width>
-              </BottomBorder>
-              <LeftBorder>
-                <Color>Brown</Color>
-                <Style>Solid</Style>
-                <Width>1pt</Width>
-              </LeftBorder>
-              <RightBorder>
-                <Color>Brown</Color>
-                <Style>Solid</Style>
-                <Width>1pt</Width>
-              </RightBorder>
-              <PaddingLeft>2pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
+              <PaddingRight>5pt</PaddingRight>
             </Style>
           </Textbox>
           <Textbox Name="textbox413">
@@ -10526,43 +10509,27 @@ Cstr(Fields!PmtSetup__FIK_GIRO_No________.Value)
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>=Code.GetData(45,1)</Value>
-                    <Style />
+                    <Value>=Fields!PaymentID.Value</Value>
+                    <Style>
+                      <FontFamily>Segoe UI</FontFamily>
+                      <FontSize>9pt</FontSize>
+                    </Style>
                   </TextRun>
                 </TextRuns>
-                <Style />
+                <Style>
+                  <TextAlign>Left</TextAlign>
+                </Style>
               </Paragraph>
             </Paragraphs>
             <Top>14.14813cm</Top>
             <Left>1.09326cm</Left>
             <Height>0.16656in</Height>
-            <Width>3.78cm</Width>
+            <Width>2.91547cm</Width>
             <ZIndex>2</ZIndex>
             <Style>
               <Border>
-                <Color>Brown</Color>
-                <Style>Solid</Style>
+                <Style>None</Style>
               </Border>
-              <TopBorder>
-                <Color>Brown</Color>
-                <Style>Solid</Style>
-                <Width>1pt</Width>
-              </TopBorder>
-              <BottomBorder>
-                <Color>Brown</Color>
-                <Style>Solid</Style>
-                <Width>1pt</Width>
-              </BottomBorder>
-              <LeftBorder>
-                <Color>Brown</Color>
-                <Style>Solid</Style>
-                <Width>1pt</Width>
-              </LeftBorder>
-              <RightBorder>
-                <Color>Brown</Color>
-                <Style>Solid</Style>
-                <Width>1pt</Width>
-              </RightBorder>
               <PaddingRight>5pt</PaddingRight>
             </Style>
           </Textbox>
@@ -10573,43 +10540,27 @@ Cstr(Fields!PmtSetup__FIK_GIRO_No________.Value)
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>=Code.GetData(48,1)</Value>
-                    <Style />
+                    <Value>=Fields!PmtSetup__FIK_GIRO_No________.Value</Value>
+                    <Style>
+                      <FontFamily>Segoe UI</FontFamily>
+                      <FontSize>9pt</FontSize>
+                    </Style>
                   </TextRun>
                 </TextRuns>
-                <Style />
+                <Style>
+                  <TextAlign>Left</TextAlign>
+                </Style>
               </Paragraph>
             </Paragraphs>
             <Top>14.14813cm</Top>
-            <Left>4.87326cm</Left>
+            <Left>4.00873cm</Left>
             <Height>0.16656in</Height>
             <Width>3.57cm</Width>
             <ZIndex>3</ZIndex>
             <Style>
               <Border>
-                <Color>Brown</Color>
-                <Style>Solid</Style>
+                <Style>None</Style>
               </Border>
-              <TopBorder>
-                <Color>Brown</Color>
-                <Style>Solid</Style>
-                <Width>1pt</Width>
-              </TopBorder>
-              <BottomBorder>
-                <Color>Brown</Color>
-                <Style>Solid</Style>
-                <Width>1pt</Width>
-              </BottomBorder>
-              <LeftBorder>
-                <Color>Brown</Color>
-                <Style>Solid</Style>
-                <Width>1pt</Width>
-              </LeftBorder>
-              <RightBorder>
-                <Color>Brown</Color>
-                <Style>Solid</Style>
-                <Width>1pt</Width>
-              </RightBorder>
               <PaddingRight>5pt</PaddingRight>
             </Style>
           </Textbox>
