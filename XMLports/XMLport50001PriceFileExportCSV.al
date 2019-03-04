@@ -39,7 +39,7 @@ xmlport 50001 "Price File Export CSV"
                 {
 
                 }
-                fieldelement(Inventory; item.Inventory)
+                Textelement(Invent)
                 {
 
                 }
@@ -67,16 +67,32 @@ xmlport 50001 "Price File Export CSV"
 
                     fieldelement(DefaultDimCode; DefaultDimension."Dimension Value Code")
                     {
-
+                        //name skal med ud i stedet for code
                     }
                 }
                 trigger OnAfterGetRecord()
+                var
+                    SyncMasterData: Codeunit "Synchronize Master Data";
+                    Item2: record Item;
+                    Invt: Decimal;
+                    ItemCategory: record "Item Category";
                 begin
-                    Item.ChangeCompany(GLSetup."Master Company");
-                    if item."Blocked from purchase" then begin
-                        if Item.Inventory <= 0 then
-                            currXMLport.skip
+                    if not item."Use on Website" then
+                        currXMLport.Skip();
+
+                    if ItemCategory.Get(Item."Item Category Code") then begin
+                        if ItemCategory."Overwrite Quantity" then
+                            Invent := format(999);
+                    end else begin
+                        Item2.ChangeCompany(GLSetup."Master Company");
+                        if (Item2.Get(Item."No.")) then begin
+                            Invt := SyncMasterData.UpdateInventoryOnItemFromLocation(Item2, GLSetup);
+                            if (Invt <= 0) and Item2."Blocked from purchase" then
+                                currXMLport.skip;
+                        end;
+                        Invent := format(Invt);
                     end;
+
                     SalesPrice.SetRange("Item No.", Item."No.");
                     if not salesprice.FindSet() then
                         currXMLport.Skip();

@@ -75,10 +75,10 @@ xmlport 50000 "Price File Export XML"
                     if not item."Use on Website" then
                         currXMLport.Skip();
 
-                    ItemCategory.Get(Item."Item Category Code");
-                    if ItemCategory."Overwrite Quantity" then
-                        Invent := format(999)
-                    else begin
+                    if ItemCategory.Get(Item."Item Category Code") then begin
+                        if ItemCategory."Overwrite Quantity" then
+                            Invent := format(999)
+                    end else begin
                         Item2.ChangeCompany(GLSetup."Master Company");
                         if (Item2.Get(Item."No.")) then begin
                             Invt := SyncMasterData.UpdateInventoryOnItemFromLocation(Item2, GLSetup);

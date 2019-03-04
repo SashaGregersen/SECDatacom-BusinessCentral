@@ -49,13 +49,20 @@ codeunit 50002 "Synchronize Master Data"
     var
         Location: Record Location;
         AvailableInv: Decimal;
+        ItemLedgerEntry: record "Item Ledger Entry";
     begin
         Location.ChangeCompany(GlSetup."Master Company");
         Location.SetRange("Calculate Available Stock", true);
         if Location.FindSet then
             repeat
-                Item.CALCFIELDS(Inventory, "Reserved Qty. on Inventory");
-                AvailableInv := AvailableInv + Item.Inventory - Item."Reserved Qty. on Inventory";
+                ItemLedgerEntry.ChangeCompany(GLsetup."Master Company");
+                ItemLedgerEntry.Setrange("Item No.", Item."No.");
+                ItemLedgerEntry.SetRange("Location Code", Location.Code);
+                if ItemLedgerEntry.FindSet() then
+                    repeat
+                        ItemLedgerEntry.CalcFields("Reserved Quantity");
+                        AvailableInv := (ItemLedgerEntry.Quantity - ItemLedgerEntry."Reserved Quantity") + AvailableInv;
+                    until ItemLedgerEntry.next = 0;
             until Location.Next = 0;
         exit(AvailableInv);
     end;
