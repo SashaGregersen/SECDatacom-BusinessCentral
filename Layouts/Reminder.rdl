@@ -24,7 +24,7 @@
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>14.47444cm</Height>
+                  <Height>13.97174cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -9592,7 +9592,11 @@ Cstr(Fields!DocDateCaption.Value) + Chr(177) +
 Cstr(Fields!HomePageCaption.Value) + Chr(177) + 
 Cstr(Fields!EMailCaption.Value) + Chr(177) + 
 Cstr(Fields!CompanyInfoHomePage.Value) + Chr(177) + 
-Cstr(Fields!CompanyInfoEMail.Value)
+Cstr(Fields!CompanyInfoEMail.Value)  + Chr(177) +
+Cstr(Fields!PaymentID_Control1160940016.Value) + Chr(177) + 
+Cstr(Fields!PmtSetup__FIK_GIRO_No__.Value) + Chr(177) + 
+Cstr(Fields!PmtSetup__IK_Card_Type_____.Value) + Chr(177) + 
+Cstr(Fields!PmtSetup__FIK_GIRO_No________.Value)
 , 1)</Hidden>
                                             </Visibility>
                                             <Style>
@@ -9812,7 +9816,7 @@ Cstr(Fields!CompanyInfoEMail.Value)
                                 </TablixMembers>
                               </TablixRowHierarchy>
                               <DataSetName>DataSet_Result</DataSetName>
-                              <Top>13.45138cm</Top>
+                              <Top>13.11538cm</Top>
                               <Height>0.70556cm</Height>
                               <Width>17.95724cm</Width>
                               <ZIndex>5</ZIndex>
@@ -10459,15 +10463,156 @@ Cstr(Fields!CompanyInfoEMail.Value)
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>DataSet_Result</DataSetName>
-            <Top>0cm</Top>
             <Left>0.02794cm</Left>
-            <Height>14.47444cm</Height>
+            <Height>13.97174cm</Height>
             <Width>18cm</Width>
             <Style>
               <FontFamily>Segoe UI</FontFamily>
               <FontSize>8pt</FontSize>
             </Style>
           </Tablix>
+          <Textbox Name="textbox414">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=Code.GetData(47,1)</Value>
+                    <Style />
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <Top>14.14813cm</Top>
+            <Left>0.01704in</Left>
+            <Height>0.16656in</Height>
+            <Width>1.05cm</Width>
+            <ZIndex>1</ZIndex>
+            <Style>
+              <Border>
+                <Color>Brown</Color>
+                <Style>Solid</Style>
+              </Border>
+              <TopBorder>
+                <Color>Brown</Color>
+                <Style>Solid</Style>
+                <Width>1pt</Width>
+              </TopBorder>
+              <BottomBorder>
+                <Color>Brown</Color>
+                <Style>Solid</Style>
+                <Width>1pt</Width>
+              </BottomBorder>
+              <LeftBorder>
+                <Color>Brown</Color>
+                <Style>Solid</Style>
+                <Width>1pt</Width>
+              </LeftBorder>
+              <RightBorder>
+                <Color>Brown</Color>
+                <Style>Solid</Style>
+                <Width>1pt</Width>
+              </RightBorder>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+            </Style>
+          </Textbox>
+          <Textbox Name="textbox413">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=Code.GetData(45,1)</Value>
+                    <Style />
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <Top>14.14813cm</Top>
+            <Left>1.09326cm</Left>
+            <Height>0.16656in</Height>
+            <Width>3.78cm</Width>
+            <ZIndex>2</ZIndex>
+            <Style>
+              <Border>
+                <Color>Brown</Color>
+                <Style>Solid</Style>
+              </Border>
+              <TopBorder>
+                <Color>Brown</Color>
+                <Style>Solid</Style>
+                <Width>1pt</Width>
+              </TopBorder>
+              <BottomBorder>
+                <Color>Brown</Color>
+                <Style>Solid</Style>
+                <Width>1pt</Width>
+              </BottomBorder>
+              <LeftBorder>
+                <Color>Brown</Color>
+                <Style>Solid</Style>
+                <Width>1pt</Width>
+              </LeftBorder>
+              <RightBorder>
+                <Color>Brown</Color>
+                <Style>Solid</Style>
+                <Width>1pt</Width>
+              </RightBorder>
+              <PaddingRight>5pt</PaddingRight>
+            </Style>
+          </Textbox>
+          <Textbox Name="textbox412">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=Code.GetData(48,1)</Value>
+                    <Style />
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <Top>14.14813cm</Top>
+            <Left>4.87326cm</Left>
+            <Height>0.16656in</Height>
+            <Width>3.57cm</Width>
+            <ZIndex>3</ZIndex>
+            <Style>
+              <Border>
+                <Color>Brown</Color>
+                <Style>Solid</Style>
+              </Border>
+              <TopBorder>
+                <Color>Brown</Color>
+                <Style>Solid</Style>
+                <Width>1pt</Width>
+              </TopBorder>
+              <BottomBorder>
+                <Color>Brown</Color>
+                <Style>Solid</Style>
+                <Width>1pt</Width>
+              </BottomBorder>
+              <LeftBorder>
+                <Color>Brown</Color>
+                <Style>Solid</Style>
+                <Width>1pt</Width>
+              </LeftBorder>
+              <RightBorder>
+                <Color>Brown</Color>
+                <Style>Solid</Style>
+                <Width>1pt</Width>
+              </RightBorder>
+              <PaddingRight>5pt</PaddingRight>
+            </Style>
+          </Textbox>
         </ReportItems>
         <Height>16.70847cm</Height>
         <Style>
@@ -10475,7 +10620,7 @@ Cstr(Fields!CompanyInfoEMail.Value)
           <FontSize>8pt</FontSize>
         </Style>
       </Body>
-      <Width>18.54952cm</Width>
+      <Width>18.91994cm</Width>
       <Page>
         <PageHeader>
           <Height>9.41211cm</Height>
@@ -11848,8 +11993,8 @@ Cstr(Fields!CompanyInfoEMail.Value)
         <PageWidth>21cm</PageWidth>
         <InteractiveHeight>11in</InteractiveHeight>
         <InteractiveWidth>8.5in</InteractiveWidth>
-        <LeftMargin>1.76389cm</LeftMargin>
-        <RightMargin>1.05833cm</RightMargin>
+        <LeftMargin>1cm</LeftMargin>
+        <RightMargin>1cm</RightMargin>
         <TopMargin>1.05833cm</TopMargin>
         <BottomMargin>4cm</BottomMargin>
         <Style>
