@@ -46,20 +46,6 @@ report 50008 "SEC Reminder"
             column(ShowMIRLines; ShowMIRLines)
             {
             }
-            //>>NC Payment Setup Columns
-            column(PaymentID_Control1160940016; PaymentID)
-            {
-            }
-            column(PmtSetup__FIK_GIRO_No________; ' +' + PmtSetup."FIK/GIRO-No." + '<')
-            {
-            }
-            column(PmtSetup__IK_Card_Type_____; '+' + PmtSetup."IK Card Type" + '<')
-            {
-            }
-            column(PmtSetup__FIK_GIRO_No__; PmtSetup."FIK/GIRO-No.")
-            {
-            }
-            //<<NC
             dataitem("Integer"; "Integer")
             {
                 DataItemTableView = SORTING (Number) WHERE (Number = CONST (1));
@@ -199,7 +185,23 @@ report 50008 "SEC Reminder"
                 column(CustNo_IssueReminderHdrCaption; "Issued Reminder Header".FieldCaption("Customer No."))
                 {
                 }
-
+                //>>NC Payment Setup Columns
+                column(PaymentID_Control1160940016; PaymentID)
+                {
+                }
+                column(PaymentID; PaymentID)
+                {
+                }
+                column(PmtSetup__FIK_GIRO_No________; ' +' + PmtSetup."FIK/GIRO-No." + '<')
+                {
+                }
+                column(PmtSetup__IK_Card_Type_____; '+' + PmtSetup."IK Card Type" + '<')
+                {
+                }
+                column(PmtSetup__FIK_GIRO_No__; PmtSetup."FIK/GIRO-No.")
+                {
+                }
+                //<<NC
                 dataitem(DimensionLoop; "Integer")
                 {
                     DataItemLinkReference = "Issued Reminder Header";

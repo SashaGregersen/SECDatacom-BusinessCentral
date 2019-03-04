@@ -12149,18 +12149,6 @@ End Function
         <Field Name="ShowMIRLines">
           <DataField>ShowMIRLines</DataField>
         </Field>
-        <Field Name="PaymentID_Control1160940016">
-          <DataField>PaymentID_Control1160940016</DataField>
-        </Field>
-        <Field Name="PmtSetup__FIK_GIRO_No________">
-          <DataField>PmtSetup__FIK_GIRO_No________</DataField>
-        </Field>
-        <Field Name="PmtSetup__IK_Card_Type_____">
-          <DataField>PmtSetup__IK_Card_Type_____</DataField>
-        </Field>
-        <Field Name="PmtSetup__FIK_GIRO_No__">
-          <DataField>PmtSetup__FIK_GIRO_No__</DataField>
-        </Field>
         <Field Name="CompanyInfo1Picture">
           <DataField>CompanyInfo1Picture</DataField>
         </Field>
@@ -12292,6 +12280,21 @@ End Function
         </Field>
         <Field Name="CustNo_IssueReminderHdrCaption">
           <DataField>CustNo_IssueReminderHdrCaption</DataField>
+        </Field>
+        <Field Name="PaymentID_Control1160940016">
+          <DataField>PaymentID_Control1160940016</DataField>
+        </Field>
+        <Field Name="PaymentID">
+          <DataField>PaymentID</DataField>
+        </Field>
+        <Field Name="PmtSetup__FIK_GIRO_No________">
+          <DataField>PmtSetup__FIK_GIRO_No________</DataField>
+        </Field>
+        <Field Name="PmtSetup__IK_Card_Type_____">
+          <DataField>PmtSetup__IK_Card_Type_____</DataField>
+        </Field>
+        <Field Name="PmtSetup__FIK_GIRO_No__">
+          <DataField>PmtSetup__FIK_GIRO_No__</DataField>
         </Field>
         <Field Name="DimText">
           <DataField>DimText</DataField>
