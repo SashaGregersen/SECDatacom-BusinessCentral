@@ -9,7 +9,7 @@ codeunit 50002 "Synchronize Master Data"
     var
         Location: Record Location;
         AvailableInv: Decimal;
-        Item: Record Item;
+        ItemLedgerEntry: record "Item Ledger Entry";
         GlSetup: record "General Ledger Setup";
     begin
         GlSetup.Get;
@@ -17,10 +17,14 @@ codeunit 50002 "Synchronize Master Data"
         Location.SetRange("Calculate Available Stock", true);
         if Location.FindSet then
             repeat
-                Item.ChangeCompany(GlSetup."Master Company");
-                Item.GET(PurchLine."No.");
-                Item.CALCFIELDS(Inventory, "Reserved Qty. on Inventory");
-                AvailableInv := AvailableInv + Item.Inventory - Item."Reserved Qty. on Inventory";
+                ItemLedgerEntry.ChangeCompany(GLsetup."Master Company");
+                ItemLedgerEntry.Setrange("Item No.", PurchLine."No.");
+                ItemLedgerEntry.SetRange("Location Code", Location.Code);
+                if ItemLedgerEntry.FindSet() then
+                    repeat
+                        ItemLedgerEntry.CalcFields("Reserved Quantity");
+                        AvailableInv := (ItemLedgerEntry.Quantity - ItemLedgerEntry."Reserved Quantity") + AvailableInv;
+                    until ItemLedgerEntry.next = 0;
             until Location.Next = 0;
         exit(AvailableInv);
     end;
@@ -29,7 +33,7 @@ codeunit 50002 "Synchronize Master Data"
     var
         Location: Record Location;
         AvailableInv: Decimal;
-        Item: Record Item;
+        ItemLedgerEntry: record "Item Ledger Entry";
         GlSetup: record "General Ledger Setup";
     begin
         GlSetup.Get;
@@ -37,10 +41,14 @@ codeunit 50002 "Synchronize Master Data"
         Location.SetRange("Calculate Available Stock", true);
         if Location.FindSet then
             repeat
-                Item.ChangeCompany(GlSetup."Master Company");
-                Item.GET(SalesLine."No.");
-                Item.CALCFIELDS(Inventory, "Reserved Qty. on Inventory");
-                AvailableInv := AvailableInv + Item.Inventory - Item."Reserved Qty. on Inventory";
+                ItemLedgerEntry.ChangeCompany(GLsetup."Master Company");
+                ItemLedgerEntry.Setrange("Item No.", SalesLine."No.");
+                ItemLedgerEntry.SetRange("Location Code", Location.Code);
+                if ItemLedgerEntry.FindSet() then
+                    repeat
+                        ItemLedgerEntry.CalcFields("Reserved Quantity");
+                        AvailableInv := (ItemLedgerEntry.Quantity - ItemLedgerEntry."Reserved Quantity") + AvailableInv;
+                    until ItemLedgerEntry.next = 0;
             until Location.Next = 0;
         exit(AvailableInv);
     end;
@@ -79,6 +87,20 @@ codeunit 50002 "Synchronize Master Data"
         ICSyncMgt: Codeunit "IC Sync Management";
     begin
         ICSyncMgt.InsertModifyItemDiscGroupInOtherCompanies(ItemDiscGroup);
+    End;
+
+    procedure SynchronizeItemSubstituionToCompany(ItemSub: Record "Item Substitution")
+    var
+        ICSyncMgt: Codeunit "IC Sync Management";
+    begin
+        ICSyncMgt.InsertModifyItemSubstituionInOtherCompanies(ItemSub);
+    End;
+
+    procedure SynchronizeDefaultDimensionToCompany(DefaultDim: Record "Default Dimension")
+    var
+        ICSyncMgt: Codeunit "IC Sync Management";
+    begin
+        ICSyncMgt.InsertModifyDefaultDimInOtherCompanies(DefaultDim);
     End;
 
     procedure SynchronizeCustomerToSECDK(customer: record Customer)

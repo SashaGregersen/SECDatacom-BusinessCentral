@@ -73,6 +73,46 @@ codeunit 50050 "Item Event handler"
         SyncMasterData.SynchronizeItemDiscGroupToCompany(Rec);
     end;
 
+    [EventSubscriber(ObjectType::table, database::"Item Substitution", 'OnAfterinsertEvent', '', true, true)]
+    local procedure ItemSubstituionOnAfterInsertEvent(var Rec: Record "Item Substitution")
+    var
+        SyncMasterData: Codeunit "Synchronize Master Data";
+    begin
+        if rec.IsTemporary() then
+            exit;
+        SyncMasterData.SynchronizeItemSubstituionToCompany(Rec);
+    end;
+
+    [EventSubscriber(ObjectType::table, database::"Item Substitution", 'OnAfterModifyEvent', '', true, true)]
+    local procedure ItemSubstitutionOnAfterModifyEvent(var Rec: Record "Item Substitution")
+    var
+        SyncMasterData: Codeunit "Synchronize Master Data";
+    begin
+        if rec.IsTemporary() then
+            exit;
+        SyncMasterData.SynchronizeItemSubstituionToCompany(Rec);
+    end;
+
+    [EventSubscriber(ObjectType::table, database::"Default Dimension", 'OnAfterinsertEvent', '', true, true)]
+    local procedure DefaultDimOnAfterInsertEvent(var Rec: Record "Default Dimension")
+    var
+        SyncMasterData: Codeunit "Synchronize Master Data";
+    begin
+        if rec.IsTemporary() then
+            exit;
+        SyncMasterData.SynchronizeDefaultDimensionToCompany(Rec);
+    end;
+
+    [EventSubscriber(ObjectType::table, database::"Default Dimension", 'OnAfterModifyEvent', '', true, true)]
+    local procedure DefaultDimOnAfterModifyEvent(var Rec: Record "Default Dimension")
+    var
+        SyncMasterData: Codeunit "Synchronize Master Data";
+    begin
+        if rec.IsTemporary() then
+            exit;
+        SyncMasterData.SynchronizeDefaultDimensionToCompany(Rec);
+    end;
+
 }
 
 
