@@ -19,12 +19,12 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>17.97261cm</Width>
+                  <Width>18cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>14.02466cm</Height>
+                  <Height>13.97174cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -3687,7 +3687,7 @@
                                   </FilterValues>
                                 </Filter>
                               </Filters>
-                              <Left>0.01537cm</Left>
+                              <Left>0.03072cm</Left>
                               <Height>4.58608cm</Height>
                               <Width>17.95724cm</Width>
                               <Style>
@@ -6887,7 +6887,7 @@
                               </TablixRowHierarchy>
                               <DataSetName>DataSet_Result</DataSetName>
                               <Top>4.67079cm</Top>
-                              <Left>0.01537cm</Left>
+                              <Left>0.03072cm</Left>
                               <Height>2.78694cm</Height>
                               <Width>17.94201cm</Width>
                               <ZIndex>1</ZIndex>
@@ -9295,7 +9295,7 @@
                               </TablixRowHierarchy>
                               <DataSetName>DataSet_Result</DataSetName>
                               <Top>7.49097cm</Top>
-                              <Left>0.01537cm</Left>
+                              <Left>0.03072cm</Left>
                               <Height>3.17498cm</Height>
                               <Width>17.94205cm</Width>
                               <ZIndex>2</ZIndex>
@@ -9505,7 +9505,7 @@
                                 </TablixMembers>
                               </TablixRowHierarchy>
                               <Top>4.29399cm</Top>
-                              <Left>0.01537cm</Left>
+                              <Left>0.03072cm</Left>
                               <Height>0.35278cm</Height>
                               <Width>17.94177cm</Width>
                               <ZIndex>3</ZIndex>
@@ -9592,7 +9592,11 @@ Cstr(Fields!DocDateCaption.Value) + Chr(177) +
 Cstr(Fields!HomePageCaption.Value) + Chr(177) + 
 Cstr(Fields!EMailCaption.Value) + Chr(177) + 
 Cstr(Fields!CompanyInfoHomePage.Value) + Chr(177) + 
-Cstr(Fields!CompanyInfoEMail.Value)
+Cstr(Fields!CompanyInfoEMail.Value)  + Chr(177) +
+Cstr(Fields!PaymentID.Value) + Chr(177) + 
+Cstr(Fields!PmtSetup__FIK_GIRO_No__.Value) + Chr(177) + 
+Cstr(Fields!PmtSetup__IK_Card_Type_____.Value) + Chr(177) + 
+Cstr(Fields!PmtSetup__FIK_GIRO_No________.Value)
 , 1)</Hidden>
                                             </Visibility>
                                             <Style>
@@ -9647,7 +9651,7 @@ Cstr(Fields!CompanyInfoEMail.Value)
                                   <TablixMember />
                                 </TablixMembers>
                               </TablixRowHierarchy>
-                              <Left>0.11274cm</Left>
+                              <Left>0.12809cm</Left>
                               <Height>0.27719cm</Height>
                               <Width>3.31571cm</Width>
                               <ZIndex>4</ZIndex>
@@ -9811,7 +9815,8 @@ Cstr(Fields!CompanyInfoEMail.Value)
                                   </TablixMember>
                                 </TablixMembers>
                               </TablixRowHierarchy>
-                              <Top>13.23972cm</Top>
+                              <DataSetName>DataSet_Result</DataSetName>
+                              <Top>13.11538cm</Top>
                               <Height>0.70556cm</Height>
                               <Width>17.95724cm</Width>
                               <ZIndex>5</ZIndex>
@@ -10411,6 +10416,7 @@ Cstr(Fields!CompanyInfoEMail.Value)
                                 </Filter>
                               </Filters>
                               <Top>10.82233cm</Top>
+                              <Left>0.01535cm</Left>
                               <Height>2.11666cm</Height>
                               <Width>17.94189cm</Width>
                               <ZIndex>6</ZIndex>
@@ -10456,22 +10462,116 @@ Cstr(Fields!CompanyInfoEMail.Value)
                 </TablixMember>
               </TablixMembers>
             </TablixRowHierarchy>
+            <DataSetName>DataSet_Result</DataSetName>
             <Left>0.02794cm</Left>
-            <Height>14.02466cm</Height>
-            <Width>17.97261cm</Width>
+            <Height>13.97174cm</Height>
+            <Width>18cm</Width>
             <Style>
               <FontFamily>Segoe UI</FontFamily>
               <FontSize>8pt</FontSize>
             </Style>
           </Tablix>
+          <Textbox Name="textbox414">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=Fields!PmtSetup__IK_Card_Type_____.Value</Value>
+                    <Style>
+                      <FontFamily>Segoe UI</FontFamily>
+                      <FontSize>9pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Left</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <Top>14.14813cm</Top>
+            <Left>0.01704in</Left>
+            <Height>0.16656in</Height>
+            <Width>1.05cm</Width>
+            <ZIndex>1</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingRight>5pt</PaddingRight>
+            </Style>
+          </Textbox>
+          <Textbox Name="textbox413">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=Fields!PaymentID.Value</Value>
+                    <Style>
+                      <FontFamily>Segoe UI</FontFamily>
+                      <FontSize>9pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Left</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <Top>14.14813cm</Top>
+            <Left>1.09326cm</Left>
+            <Height>0.16656in</Height>
+            <Width>2.91547cm</Width>
+            <ZIndex>2</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingRight>5pt</PaddingRight>
+            </Style>
+          </Textbox>
+          <Textbox Name="textbox412">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=Fields!PmtSetup__FIK_GIRO_No________.Value</Value>
+                    <Style>
+                      <FontFamily>Segoe UI</FontFamily>
+                      <FontSize>9pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Left</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <Top>14.14813cm</Top>
+            <Left>4.00873cm</Left>
+            <Height>0.16656in</Height>
+            <Width>3.57cm</Width>
+            <ZIndex>3</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingRight>5pt</PaddingRight>
+            </Style>
+          </Textbox>
         </ReportItems>
-        <Height>14.02466cm</Height>
+        <Height>16.70847cm</Height>
         <Style>
           <FontFamily>Segoe UI</FontFamily>
           <FontSize>8pt</FontSize>
         </Style>
       </Body>
-      <Width>18.02794cm</Width>
+      <Width>18.91994cm</Width>
       <Page>
         <PageHeader>
           <Height>9.41211cm</Height>
@@ -11844,8 +11944,8 @@ Cstr(Fields!CompanyInfoEMail.Value)
         <PageWidth>21cm</PageWidth>
         <InteractiveHeight>11in</InteractiveHeight>
         <InteractiveWidth>8.5in</InteractiveWidth>
-        <LeftMargin>1.76389cm</LeftMargin>
-        <RightMargin>1.05833cm</RightMargin>
+        <LeftMargin>1cm</LeftMargin>
+        <RightMargin>1cm</RightMargin>
         <TopMargin>1.05833cm</TopMargin>
         <BottomMargin>4cm</BottomMargin>
         <Style>
@@ -12131,6 +12231,21 @@ End Function
         </Field>
         <Field Name="CustNo_IssueReminderHdrCaption">
           <DataField>CustNo_IssueReminderHdrCaption</DataField>
+        </Field>
+        <Field Name="PaymentID_Control1160940016">
+          <DataField>PaymentID_Control1160940016</DataField>
+        </Field>
+        <Field Name="PaymentID">
+          <DataField>PaymentID</DataField>
+        </Field>
+        <Field Name="PmtSetup__FIK_GIRO_No________">
+          <DataField>PmtSetup__FIK_GIRO_No________</DataField>
+        </Field>
+        <Field Name="PmtSetup__IK_Card_Type_____">
+          <DataField>PmtSetup__IK_Card_Type_____</DataField>
+        </Field>
+        <Field Name="PmtSetup__FIK_GIRO_No__">
+          <DataField>PmtSetup__FIK_GIRO_No__</DataField>
         </Field>
         <Field Name="DimText">
           <DataField>DimText</DataField>

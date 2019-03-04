@@ -33,8 +33,6 @@ codeunit 50057 "IC Event Handler"
 
     local procedure CopyAdvPricingHeaderFields(LocalSalesHeader: Record "Sales Header"; SalesHeaderOtherCompany: Record "Sales Header"; SubsidiaryCustomerNo: code[20])
     begin
-        LocalSalesHeader.Subsidiary := SubsidiaryCustomerNo;
-        LocalSalesHeader.Reseller := SalesHeaderOtherCompany.Reseller;
         if SalesHeaderOtherCompany."End Customer" <> '' then
             LocalSalesHeader.Validate("End Customer", SalesHeaderOtherCompany."End Customer");
         if SalesHeaderOtherCompany."Drop-Shipment" then begin
@@ -48,6 +46,8 @@ codeunit 50057 "IC Event Handler"
             LocalSalesHeader."Ship-to Name 2" := SalesHeaderOtherCompany."Ship-to Name 2";
             LocalSalesHeader."Ship-to Post Code" := SalesHeaderOtherCompany."Ship-to Post Code";
         end;
+        LocalSalesHeader.Reseller := SalesHeaderOtherCompany.Reseller;
+        LocalSalesHeader.Subsidiary := SubsidiaryCustomerNo;
         LocalSalesHeader.Modify(false);
     end;
 

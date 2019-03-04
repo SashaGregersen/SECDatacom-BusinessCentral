@@ -73,9 +73,12 @@ codeunit 50005 "IC Sync Management"
                             PurchasePrice."Item No." := SalesPrice."Item No.";
                             PurchasePrice."Vendor No." := ICPartnerInOtherCompany."Vendor No.";
                             PurchasePrice."Unit of Measure Code" := SalesPrice."Unit of Measure Code";
-                            if SalesPrice."Currency Code" <> '' then
-                                PurchasePrice."Currency Code" := SalesPrice."Currency Code"
-                            else
+                            if SalesPrice."Currency Code" <> '' then begin
+                                if SalesPrice."Currency Code" = ICPartner."Currency Code" then
+                                    PurchasePrice."Currency Code" := ''
+                                else
+                                    PurchasePrice."Currency Code" := SalesPrice."Currency Code";
+                            end else
                                 PurchasePrice."Currency Code" := ICPartnerInOtherCompany."Currency Code";
                             PurchasePrice."Starting Date" := SalesPrice."Starting Date";
                             PurchasePrice."Ending Date" := SalesPrice."Ending Date";
