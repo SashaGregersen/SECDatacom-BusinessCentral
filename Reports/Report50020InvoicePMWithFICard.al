@@ -6,7 +6,7 @@ report 50020 "SEC Invoice PM w/FI-Card"
     //   Payment Management
     // </PM>
     DefaultLayout = RDLC;
-    RDLCLayout = './Invoice PM wFI-Card.rdlc';
+    RDLCLayout = './Layouts/Invoice PM wFI-Card.rdl';
 
     Caption = 'Invoice Payment Management w/FI-Card';
     Permissions = TableData "Sales Shipment Buffer" = rimd;

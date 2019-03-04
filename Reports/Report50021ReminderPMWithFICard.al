@@ -6,7 +6,7 @@ report 50021 "SEC Reminder PM w/FI-Card"
     //   Payment Management
     // </PM>
     DefaultLayout = RDLC;
-    RDLCLayout = './Reminder PM wFI-Card.rdlc';
+    RDLCLayout = './layouts/Reminder PM wFI-Card.rdl';
 
     Caption = 'Reminder Payment Management w/FI-Card';
 
