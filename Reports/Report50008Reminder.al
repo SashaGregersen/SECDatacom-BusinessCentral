@@ -692,6 +692,7 @@ report 50008 "SEC Reminder"
                     VATInterest := 0;
                 end;
 
+                //>>NC adding Payment ID to FIK String
                 // <PM>
                 case PmtSetup."IK Card Type" of
                     '01':
@@ -718,6 +719,7 @@ report 50008 "SEC Reminder"
                 end else
                     PaymentID := PadStr('', PmtIDLength, '0');
                 // </PM>
+                //<<NC
 
                 TotalVATAmount := "VAT Amount";
                 NNC_InterestAmountTotal := 0;
