@@ -30,7 +30,7 @@ codeunit 50054 "Sales Order Event Handler"
         Item: record item;
         SubItem: record "Item Substitution";
     begin
-        if rec.Type = rec.type::Item then begin
+        if (rec.Type = rec.type::Item) and (not rec.isicorder) then begin
             Item.Get(rec."No.");
             if item."Default Location" <> '' then
                 rec.validate("Location Code", item."Default Location");

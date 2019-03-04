@@ -240,6 +240,12 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
 
     end;
 
-
+    procedure IsICOrder(): Boolean
+    var
+        ICPartner: Record "IC Partner";
+    begin
+        ICPartner.SetRange("Customer No.", "Sell-to Customer No.");
+        exit(ICPartner.FindFirst());
+    end;
 
 }
