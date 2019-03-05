@@ -30,7 +30,7 @@ codeunit 50054 "Sales Order Event Handler"
         Item: record item;
         SubItem: record "Item Substitution";
     begin
-        if rec.Type = rec.type::Item then begin
+        if (rec.Type = rec.type::Item) and (not rec.isicorder) then begin
             Item.Get(rec."No.");
             if item."Default Location" <> '' then
                 rec.validate("Location Code", item."Default Location");
@@ -332,14 +332,14 @@ codeunit 50054 "Sales Order Event Handler"
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Sales Header", 'OnAfterValidateEvent', 'subsidiary', true, true)]
-    local procedure SalesHeaderOnAfterValidateSubsidiary(var rec: record "Sales Header")
+    local procedure SalesHeaderOnAfterValidateSubsidiary(var rec: record "Sales Header"; var xrec: Record "Sales Header")
     var
 
     begin
         if CompanyName() <> 'SECDenmark' then
             exit;
 
-        if rec.Subsidiary <> '' then
+        if (xrec.Subsidiary <> '') and (rec.Subsidiary <> xrec.Subsidiary) then
             Error('You cannot change an intercompany order');
 
     end;
