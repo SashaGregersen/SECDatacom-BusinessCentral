@@ -95,6 +95,18 @@ pageextension 50021 "End Customer and Reseller" extends 42
                     CurrPage.Update();
                 end;
             }
+            action("Import Project Sales Lines")
+            {
+                Image = ImportExcel;
+
+                trigger OnAction()
+                var
+                    ProjectSalesImport: Codeunit "File Management Import";
+                begin
+                    ProjectSalesImport.ImportSalesLinesFromCSV(Rec);
+                    CurrPage.Update();
+                end;
+            }
             action("Create Purchase Order")
             {
                 Image = NewDocument;

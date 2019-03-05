@@ -112,7 +112,4 @@ codeunit 50050 "Item Event handler"
             exit;
         SyncMasterData.SynchronizeDefaultDimensionToCompany(Rec);
     end;
-
 }
-
-
