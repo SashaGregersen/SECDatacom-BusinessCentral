@@ -37,5 +37,5 @@ pageextension 50028 "End Customer and Reseller 8" extends 132
     }
 
     var
-        SalesInvoice: report 50022;
+        SalesInvoice: report 50006;
 }

@@ -16,5 +16,5 @@ pageextension 50040 "report tester" extends 438
         }
     }
     var
-        Reminder: report 50021;
+        Reminder: report 50008;
 }
