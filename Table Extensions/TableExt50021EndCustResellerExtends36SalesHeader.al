@@ -90,7 +90,10 @@ tableextension 50021 "End Customer and Reseller" extends 36
             var
                 Customer: Record Customer;
                 ICpartner: Record "IC Partner";
+                ICPartnerList: page "ic partner list";
             begin
+                if not ICpartner.Get(rec.Subsidiary) then
+                    Clear(ICpartner);
                 IF page.RunModal(page::"IC Partner List", icpartner) = Action::LookupOK then
                     Validate("subsidiary", ICpartner."Customer No.");
             end;
