@@ -16,6 +16,9 @@ codeunit 50003 "File Management Import"
         TempCSVBuffer.init;
         SelectFileFromFileShare(TempCSVBuffer);
 
+        //Before import to prevent errors
+        CreateItemsFromBid(TempCSVBuffer, BidNo, 0);
+
         Salesline.setrange("Document No.", SalesHeader."No.");
         Salesline.SetRange("Document Type", SalesHeader."Document Type");
         if Salesline.FindFirst() then begin
@@ -28,6 +31,7 @@ codeunit 50003 "File Management Import"
             CreatePurchaseOrderFromSalesOrder(TempCSVBuffer, SalesHeader);
         end;
 
+        TempCSVBuffer.Reset;
         TempCSVBuffer.DeleteAll();        //delete TempCSVbuffer when finish            
     end;
 
@@ -112,8 +116,8 @@ codeunit 50003 "File Management Import"
         Qty: Integer;
         Quantity: Integer;
         GlobalCounter: Integer;
-        Item: record item;
-        bid: record bid;
+        Item: Record Item;
+        bid: Record Bid;
     begin
         TempCSVBuffer.SetFilter("Line No.", '<>%1', 1);
         if TempCSVBuffer.FindSet() then
@@ -171,6 +175,70 @@ codeunit 50003 "File Management Import"
 
             until TempCSVBuffer.next = 0;
         Message('%1 lines inserted on sales order %2', GlobalCounter, SalesHeader."No.");
+    end;
+
+    local procedure CreateItemsFromBid(var TempCSVBuffer: Record "CSV Buffer" temporary; var BidNo: Code[20]; ImportType: Option ProjectImport,LinesImport);
+    var
+        SalesSetup: Record "Sales & Receivables Setup";
+        ConfigTemplateManagement: Codeunit "Config. Template Management";
+        ItemRecRef: RecordRef;
+        ConfigTemplateHeader: Record "Config. Template Header";
+        DimensionsTemplate: Record "Dimensions Template";
+        Item: Record Item;
+        bid: Record Bid;
+    begin
+        if not SalesSetup.Get then exit;
+
+        TempCSVBuffer.SetFilter("Line No.", '<>%1', 1);
+
+        case ImportType of
+            ImportType::ProjectImport:
+                TempCSVBuffer.SetRange("Field No.", 11);
+            ImportType::LinesImport:
+                TempCSVBuffer.SetRange("Field No.", 6);
+        end;
+
+        if BidNo = '' then begin
+            if TempCSVBuffer.FindFirst then begin
+                Bid.Init();
+                Bid.Validate(Description, 'Project Sale');
+                Bid.Validate("Project Sale", true);
+                Bid.Validate("Vendor No.", TempCSVBuffer.value);
+                if ImportType = ImportType::LinesImport then
+                    Bid.Insert(true);
+            end;
+        end else
+            Bid.Get(BidNo);
+
+        case ImportType of
+            ImportType::ProjectImport:
+                TempCSVBuffer.SetRange("Field No.", 6);
+            ImportType::LinesImport:
+                TempCSVBuffer.SetRange("Field No.", 1);
+        end;
+
+        if TempCSVBuffer.FindSet() then
+            repeat
+                item.SetRange("Vendor No.", Bid."Vendor No.");
+                Item.Setrange("Vendor Item No.", TempCSVBuffer.Value);
+                if not Item.FindFirst() then begin
+                    if not ConfigTemplateHeader.Get(SalesSetup."Stock Item Template") then
+                        error('Item does not exists for vendor item no %1 or vendor no. %2', TempCSVBuffer.Value, bid."Vendor No.");
+
+                    Clear(Item);
+                    Item.Insert(true);
+                    Item.Validate("Vendor No.", Bid."Vendor No.");
+                    Item.Validate("Vendor Item No.", TempCSVBuffer.Value);
+                    Item.Modify(true);
+                    ItemRecRef.GetTable(Item);
+
+                    ConfigTemplateManagement.UpdateRecord(ConfigTemplateHeader, ItemRecRef);
+                    DimensionsTemplate.InsertDimensionsFromTemplates(ConfigTemplateHeader, Item."No.", DATABASE::Item);
+                    Item.Get(Item."No.");
+                end;
+            until TempCSVBuffer.next = 0;
+
+        TempCSVBuffer.Reset;
     end;
 
     local procedure CreateSalesLines(SalesHeader: record "Sales Header"; BidPrices: record "Bid Item Price"; Qty: Integer; var GlobalCounter: Integer)
@@ -301,4 +369,105 @@ codeunit 50003 "File Management Import"
         end;
     end;
 
+    procedure ImportSalesLinesFromCSV(SalesHeader: record "Sales Header")
+    var
+        TempCSVBuffer: record "CSV Buffer" temporary;
+        Bid: Record Bid;
+        BidNo: Code[20];
+        Salesline: Record "Sales Line";
+        Claim: Boolean;
+        BidPrices: Record "Bid Item Price";
+        Item: Record Item;
+        Qty: Decimal;
+        NoseriesManage: Codeunit NoSeriesManagement;
+        UnitPriceSell: Decimal;
+        UnitPriceBuy: decimal;
+        Quantity: Integer;
+        GlobalCounter: Integer;
+    begin
+        TempCSVBuffer.init;
+        SelectFileFromFileShare(TempCSVBuffer);
+
+        //Before import to prevent errors        
+        CreateItemsFromBid(TempCSVBuffer, BidNo, 1);
+        Bid.Get(BidNo);
+
+        if Bid."Vendor Bid No." = '' then begin
+            TempCSVBuffer.SetFilter("Line No.", '<>%1', 1);
+
+            TempCSVBuffer.SetRange("Field No.", 7);
+            if TempCSVBuffer.FindFirst then
+                Bid.Validate("Vendor Bid No.", TempCSVBuffer.Value);
+
+            TempCSVBuffer.SetRange("Field No.", 8);
+            if TempCSVBuffer.FindFirst then begin
+                if TempCSVBuffer.value <> '' then begin
+                    Evaluate(Claim, TempCSVBuffer.Value);
+                    Bid.Validate(Claimable, Claim);
+                end;
+            end;
+            Bid.Modify(true);
+        end;
+
+        TempCSVBuffer.SetFilter("Field No.", '%1..%2', 1, 5);
+        if TempCSVBuffer.FindSet() then
+            repeat
+                if TempCSVBuffer."Field No." = 1 then begin
+                    BidPrices.init;
+                    BidPrices.Validate("Bid No.", BidNo);
+                    BidPrices.Validate("Customer No.", SalesHeader."End Customer");
+                end;
+                case TempCSVBuffer."Field No." of
+                    1:
+                        begin
+                            if TempCSVBuffer.value = '' then
+                                Error('Vendor Item No. is missing on line %1', TempCSVBuffer."Line No.");
+                            Bid.Get(BidNo);
+                            Item.SetRange("Vendor No.", bid."Vendor No.");
+                            Item.Setrange("Vendor Item No.", TempCSVBuffer.Value);
+                            if Item.FindFirst() then
+                                BidPrices.Validate("item No.", Item."No.")
+                            else
+                                error('Item does not exists for vendor item no %1 or vendor no. %2', TempCSVBuffer.Value, bid."Vendor No.");
+                        end;
+                    2:
+                        begin
+                            if TempCSVBuffer.value = '' then
+                                Error('Quantity is missing on line %1', TempCSVBuffer."Line No.");
+                            Evaluate(Qty, TempCSVBuffer.Value);
+                            Quantity := qty;
+                        end;
+                    3:
+                        begin
+                            if TempCSVBuffer.Value <> '' then begin
+                                Evaluate(UnitPriceSell, TempCSVBuffer.Value);
+                                BidPrices.Validate("Bid Unit Sales Price", UnitPriceSell);
+                            end;
+                        end;
+                    4:
+                        begin
+                            if TempCSVBuffer.value <> '' then begin
+                                Evaluate(UnitPriceBuy, TempCSVBuffer.Value);
+                                BidPrices.Validate("Bid Unit Purchase Price", UnitPriceBuy);
+                            end;
+                        end;
+                    5:
+                        begin
+                            if TempCSVBuffer.value <> '' then
+                                BidPrices.Validate("Currency Code", TempCSVBuffer.Value);
+                            BidPrices.Insert(true);
+                            CreateSalesLines(Salesheader, BidPrices, Quantity, GlobalCounter);
+                        end;
+                end;
+            until TempCSVBuffer.next = 0;
+
+        TempCSVBuffer.Reset;
+        TempCSVBuffer.DeleteAll();        //delete TempCSVbuffer when finish            
+    end;
+
+    procedure ImportItems()
+    var
+    begin
+
+    end;
 }
