@@ -49,7 +49,7 @@ pageextension 50017 "Expense Management Role Center" extends "Expense Management
 
         addafter("Expense Approval E-mail")
         {
-            action("")
+            action("Synchronize with Continia Online")
             {
                 trigger OnAction()
                 var

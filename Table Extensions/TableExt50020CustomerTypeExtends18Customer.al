@@ -22,6 +22,14 @@ tableextension 50020 CustomerType extends 18
                 end;
             end;
 
+            trigger OnValidate()
+            var
+                ShipToAddress: record "Ship-to Address";
+            begin
+                if "Prefered Shipment Address" <> '' then
+                    ShipToAddress.Get("No.", "Prefered Shipment Address");
+            end;
+
         }
         field(50002; "Prefered Sender Address"; code[20])
         {
@@ -36,12 +44,20 @@ tableextension 50020 CustomerType extends 18
                     rec.Modify(true);
                 end;
             end;
+
+            trigger OnValidate()
+            var
+                ShipToAddress: record "Ship-to Address";
+            begin
+                if "Prefered Sender Address" <> '' then
+                    ShipToAddress.Get("No.", "Prefered Sender Address");
+            end;
         }
         field(50003; "Owning Company"; Text[35])
         {
             DataClassification = ToBeClassified;
             TableRelation = Company.Name;
-            Editable = true;
+            Editable = false;
         }
 
     }
