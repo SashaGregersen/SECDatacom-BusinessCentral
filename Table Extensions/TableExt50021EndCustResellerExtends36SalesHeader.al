@@ -11,9 +11,21 @@ tableextension 50021 "End Customer and Reseller" extends 36
                 customer: record customer;
                 shiptoadress: record "Ship-to Address";
             begin
-                If customer.get(Rec."End Customer") then
+                If customer.get(Rec."End Customer") then begin
                     if customer."Customer Type" <> customer."Customer Type"::"End Customer" then
                         error('Not an end-customer');
+
+                    if "Drop-Shipment" then begin
+                        if ShipToAdress.get(Customer."No.", Customer."Prefered Shipment Address") then begin
+                            SetShipToAddress(ShipToAdress.Name, ShipToAdress."Name 2", ShipToAdress.Address, ShipToAdress."Address 2", ShipToAdress.City, ShipToAdress."Post Code", shiptoadress.County, shiptoadress."Country/Region Code");
+                            rec.Validate("Ship-to Contact", ShipToAdress.Contact);
+                            rec.validate("Ship-To-Code", shiptoadress.Code);
+                        end else begin
+                            SetShipToAddress(Customer.Name, Customer."Name 2", Customer.Address, Customer."Address 2", Customer.City, Customer."Post Code", Customer.County, Customer."Country/Region Code");
+                            rec.Validate("Ship-to Contact", Customer.Contact);
+                        end;
+                    end;
+                end;
             end;
 
             trigger Onlookup();
@@ -41,11 +53,11 @@ tableextension 50021 "End Customer and Reseller" extends 36
                         if Subsidiary = '' then begin
                             validate("Sell-to Customer No.", customer."No.");
                             validate("Sell-to-Customer-Name", customer.Name);
-                            if customer."Prefered Shipment Address" <> '' then begin
+                            if (rec."Drop-Shipment" = false) and (rec."Prefered Shipment Address" <> '') then begin
                                 shiptoadress.get(customer."No.", customer."Prefered Shipment Address");
-                                rec.validate("Ship-To-Code", shiptoadress.Code);
                                 SetShipToAddress(ShipToAdress.Name, ShipToAdress."Name 2", ShipToAdress.Address, ShipToAdress."Address 2", ShipToAdress.City, ShipToAdress."Post Code", shiptoadress.County, shiptoadress."Country/Region Code");
                                 rec.Validate("Ship-to Contact", ShipToAdress.Contact);
+                                rec.validate("Ship-To-Code", shiptoadress.Code);
                             end;
                         end;
             end;
@@ -178,16 +190,30 @@ tableextension 50021 "End Customer and Reseller" extends 36
                     IF page.RunModal(page::"Ship-to Address List", ShipToAdress) = Action::LookupOK then begin
                         SetShipToAddress(ShipToAdress.Name, ShipToAdress."Name 2", ShipToAdress.Address, ShipToAdress."Address 2", ShipToAdress.City, ShipToAdress."Post Code", shiptoadress.County, shiptoadress."Country/Region Code");
                         rec.Validate("Ship-to Contact", ShipToAdress.Contact);
+                        rec.validate("Ship-To-Code", ShipToAdress.Code);
+                        rec.Modify(true);
                     end;
                 end else begin
                     ShipToAdress.SetRange("Customer No.", "Sell-to Customer No.");
                     IF page.RunModal(page::"Ship-to Address List", ShipToAdress) = Action::LookupOK then begin
                         SetShipToAddress(ShipToAdress.Name, ShipToAdress."Name 2", ShipToAdress.Address, ShipToAdress."Address 2", ShipToAdress.City, ShipToAdress."Post Code", shiptoadress.County, shiptoadress."Country/Region Code");
                         rec.Validate("Ship-to Contact", ShipToAdress.Contact);
+                        rec.validate("Ship-To-Code", ShipToAdress.Code);
+                        rec.Modify(true);
                     end;
                 end;
             end;
 
+            trigger OnValidate()
+            var
+                ShipToAdress: record "Ship-to Address";
+                Customer: Record customer;
+            begin
+                if rec."Ship-To-Code" <> '' then
+                    if Customer.get("End Customer") and (rec."Drop-Shipment") then
+                        ShipToAdress.Get(customer."No.", rec."Ship-To-Code");
+
+            end;
         }
 
         field(50007; "Sell-to-Customer-Name"; text[50])

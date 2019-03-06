@@ -31,7 +31,7 @@ pageextension 50035 "Synchronize Customer" extends "Sales & Receivables Setup"
                 ApplicationArea = all;
             }
 
-            field("Project Item Template"; "Stock Item Template")
+            field("Project Item Template"; "Project Item Template")
             {
                 ApplicationArea = all;
             }
