@@ -222,7 +222,7 @@ codeunit 50003 "File Management Import"
                 item.SetRange("Vendor No.", Bid."Vendor No.");
                 Item.Setrange("Vendor Item No.", TempCSVBuffer.Value);
                 if not Item.FindFirst() then begin
-                    if not ConfigTemplateHeader.Get(SalesSetup."Stock Item Template") then
+                    if not ConfigTemplateHeader.Get(SalesSetup."Project Item Template") then
                         error('Item does not exists for vendor item no %1 or vendor no. %2', TempCSVBuffer.Value, bid."Vendor No.");
 
                     Clear(Item);

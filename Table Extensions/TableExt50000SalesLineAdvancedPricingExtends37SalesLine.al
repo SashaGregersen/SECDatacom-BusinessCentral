@@ -178,6 +178,7 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
         }
 
     }
+
     local procedure updateBidPrices(BidPrices: Record "Bid Item Price"; NewClaimableValue: Boolean; IsProjectSales: Boolean)
     begin
         validate("Bid Unit Sales Price", BidPrices."Bid Unit Sales Price");
@@ -189,7 +190,6 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
         "Bid Purchase Discount" := BidPrices."Bid Purchase Discount Pct.";
         Claimable := NewClaimableValue;
     end;
-
 
     procedure CalcAdvancedPrices();
     var
@@ -247,5 +247,4 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
         ICPartner.SetRange("Customer No.", "Sell-to Customer No.");
         exit(ICPartner.FindFirst());
     end;
-
 }

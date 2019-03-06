@@ -18,7 +18,7 @@ tableextension 50027 "Synchronize Customer" extends "Sales & Receivables Setup"
             DataClassification = ToBeClassified;
         }
 
-        field(50100; "Stock Item Template"; code[10])
+        field(50100; "Project Item Template"; code[10])
         {
             DataClassification = ToBeClassified;
             TableRelation = "Config. Template Header".Code where ("Table ID" = const (27));
