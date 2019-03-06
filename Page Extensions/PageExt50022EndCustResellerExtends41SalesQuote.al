@@ -41,6 +41,7 @@ pageextension 50022 "End Customer and Reseller 2" extends 41
             field("Ship-To-Code"; "Ship-To-Code")
             {
                 ApplicationArea = all;
+                Caption = 'Ship-to Code';
             }
         }
         modify("Sell-to Customer No.")
@@ -56,6 +57,7 @@ pageextension 50022 "End Customer and Reseller 2" extends 41
             field("Sell-to-Customer-Name"; "Sell-to-Customer-Name")
             {
                 ApplicationArea = all;
+                Caption = 'Sell-to Customer Name';
             }
         }
     }

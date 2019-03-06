@@ -108,6 +108,8 @@ codeunit 50002 "Synchronize Master Data"
         Company: record company;
         Customer2: record customer;
         GlSetup: record "General Ledger Setup";
+        CustDiscGroup: record "Customer Discount Group";
+        CustPriceGroup: record "Customer Price Group";
     begin
         GlSetup.Get;
         Company.SetRange(Company.Name, GlSetup."Master Company");
@@ -115,6 +117,14 @@ codeunit 50002 "Synchronize Master Data"
             Customer2.ChangeCompany(Company.Name);
             Customer2.Init();
             Customer2.TransferFields(customer);
+            if customer."IC Partner Code" <> '' then
+                Customer2."IC Partner Code" := '';
+            if Customer."Location Code" <> '' then
+                Customer2."Location Code" := '';
+            if Customer."Customer Disc. Group" <> '' then
+                Customer2."Customer Disc. Group" := '';
+            if Customer."Customer Price Group" <> '' then
+                Customer2."Customer Price Group" := '';
             IF not Customer2.Insert(false) then
                 Customer2.Modify(false);
         end;
