@@ -206,6 +206,7 @@ codeunit 50003 "File Management Import"
                 Bid.Validate("Vendor No.", TempCSVBuffer.value);
                 if ImportType = ImportType::LinesImport then
                     Bid.Insert(true);
+                BidNo := Bid."No.";
             end;
         end else
             Bid.Get(BidNo);
@@ -536,11 +537,13 @@ codeunit 50003 "File Management Import"
                             Item."Default Location" := TempCSVBuffer.Value;
                         end;
                     else begin
-                            DimSetEntry.Init();
-                            DimSetEntry."Dimension Set ID" := 0;
-                            DimSetEntry.Validate("Dimension Code", DimCodeArr[TempCSVBuffer."Field No." - 11]);
-                            DimSetEntry.Validate("Dimension Value Code", TempCSVBuffer.Value);
-                            DimSetEntry.Insert(true);
+                            if TempCSVBuffer.Value <> '' then begin
+                                DimSetEntry.Init();
+                                DimSetEntry."Dimension Set ID" := 0;
+                                DimSetEntry.Validate("Dimension Code", DimCodeArr[TempCSVBuffer."Field No." - 11]);
+                                DimSetEntry.Validate("Dimension Value Code", TempCSVBuffer.Value);
+                                DimSetEntry.Insert(true);
+                            end;
                         end;
                 end;
             until TempCSVBuffer.next = 0;
@@ -561,9 +564,7 @@ codeunit 50003 "File Management Import"
         if not DimSetEntry.IsTemporary() then
             exit; //DimSetEntry SKAL være temporer
 
-        if (tmpItem.Description = '') and
-           (tmpItem."Description 2" = '') and
-           (ConfigTemplateHeader.Code = '') then
+        if (tmpItem.Description = '') then
             exit;
 
         Item.SetRange("Vendor No.", tmpItem."Vendor No.");

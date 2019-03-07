@@ -9,6 +9,8 @@ pageextension 50054 "Import Item List" extends "Item List"
                 Caption = 'Import Items';
                 Image = Import;
                 ApplicationArea = All;
+                Promoted = true;
+
                 trigger OnAction()
                 var
                     FileMgtImport: Codeunit "File Management Import";
@@ -18,6 +20,4 @@ pageextension 50054 "Import Item List" extends "Item List"
             }
         }
     }
-
-
 }
