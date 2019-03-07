@@ -283,7 +283,8 @@ codeunit 50003 "File Management Import"
         SalesLine: record "Sales Line";
         GlobalCounter: Integer;
     begin
-        TempCSVBuffer.SetRange("Line No.", 2);
+        //Refacotr when merged with code that XJMA is doing
+        /* TempCSVBuffer.SetRange("Line No.", 2);
         if TempCSVBuffer.FindSet() then
             repeat
                 case TempCSVBuffer."Field No." of
@@ -341,7 +342,7 @@ codeunit 50003 "File Management Import"
                         end;
                 end;
 
-            until TempCSVBuffer.next = 0;
+            until TempCSVBuffer.next = 0; */
     end;
 
     procedure SelectFileFromFileShare(Var TempCSVBUffer: record "CSV Buffer" temporary)

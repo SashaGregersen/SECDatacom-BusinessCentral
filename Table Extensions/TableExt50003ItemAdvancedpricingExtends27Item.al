@@ -33,6 +33,11 @@ tableextension 50003 "Item Adv. Pricing" extends Item
         {
 
         }
+        field(50006; "IC partner Vendor No."; Code[20])
+        {
+            DataClassification = ToBeClassified;
+            TableRelation = Vendor;
+        }
 
     }
 
