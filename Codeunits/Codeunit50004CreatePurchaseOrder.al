@@ -96,12 +96,18 @@ codeunit 50004 "Create Purchase Order"
     var
         BidMgt: Codeunit "Bid Management";
         BidItemPrice: Record "Bid Item Price";
+        LastPurchaseLine: Record "Purchase Line";
     begin
         SalesLine.CalcFields("Reserved Quantity");
         PurchLine.Init;
         PurchLine."Document No." := Purchheader."No.";
         PurchLine."Document Type" := Purchheader."Document Type";
-        PurchLine.Validate("Line No.", SalesLine."Line No.");
+        lastPurchaseLine.SetRange("Document No.", Purchheader."No.");
+        lastPurchaseLine.SetRange("Document Type", Purchheader."Document Type");
+        if lastPurchaseLine.FindLast() then
+            PurchLine.Validate("Line No.", lastPurchaseLine."Line No." + 10000)
+        else
+            PurchLine.Validate("Line No.", 10000);
         PurchLine.Validate(Type, SalesLine.Type);
         PurchLine.Validate("No.", SalesLine."No.");
         PurchLine.Validate("Location Code", SalesLine."Location Code");
