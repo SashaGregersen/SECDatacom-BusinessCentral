@@ -8,11 +8,19 @@ codeunit 50004 "Create Purchase Order"
     Procedure CreatePurchOrderFromSalesOrder(SalesHeader: record "Sales Header")
     var
         SalesLine: record "Sales Line";
-        Item: record Item;
         PurchHeader: record "Purchase Header";
         GlobalLineCounter: Integer;
         PurchLine: record "Purchase Line";
+        VendorNo: Code[20];
+        PurchasePrice: Record "Purchase Price";
+        BidPrice: Record "Bid Item Price";
+        QtyToPurchase: Decimal;
+        CurrencyCode: Code[20];
+        Item: Record Item;
+        AdvPriceMgt: Codeunit "Advanced Price Management";
+        BidMgt: Codeunit "Bid Management";
     begin
+        GlobalLineCounter := 0;
         SalesHeader.CalcFields("Amount Including VAT");
         SalesHeader.TestField("Amount Including VAT");
         SalesLine.SetRange("Document No.", SalesHeader."No.");
@@ -20,23 +28,42 @@ codeunit 50004 "Create Purchase Order"
         SalesLine.SetRange(type, SalesLine.type::Item);
         if SalesLine.FindSet() then
             repeat
-                Item.get(SalesLine."No.");
-                Item.TestField("Vendor No.");
-                PurchHeader.SetRange("No.", PurchHeader."No.");
-                PurchHeader.SetRange("Document Type", PurchHeader."Document Type");
-                PurchHeader.SetRange("Buy-from Vendor No.", item."Vendor No.");
-                if not PurchHeader.FindFirst() then begin
-                    GlobalLineCounter := 0;
-                    If CheckSalesLineForBidNo(SalesLine) = true then
-                        NewPurchOrder(SalesLine, SalesHeader, Item."Vendor No.", PurchHeader, GlobalLineCounter)
-                end else begin
-                    if CheckSalesLineForBidNo(SalesLine) = true then
-                        UpdateExistingPurchOrder(SalesLine, PurchHeader, SalesHeader, GlobalLineCounter);
+                SalesLine.CalcFields("Reserved Quantity");
+                QtyToPurchase := SalesLine."Quantity" - SalesLine."Reserved Quantity";
+                if QtyToPurchase <> 0 then begin
+                    VendorNo := GetVendorNoForItem(SalesLine."No.");
+                    Item.Get(SalesLine."No.");
+                    CurrencyCode := Item."Vendor Currency";
+                    Clear(PurchasePrice);
+                    if SalesLine."Bid No." <> '' then begin
+                        Clear(BidPrice);
+                        if not BidMgt.GetBestBidPrice(SalesLine."Bid No.", SalesLine."Sell-to Customer No.", SalesLine."No.", CurrencyCode, BidPrice) then
+                            Clear(PurchasePrice)
+                        else begin
+                            BidMgt.MakePurchasePriceFromBidPrice(BidPrice, PurchasePrice);
+                            CurrencyCode := PurchasePrice."Currency Code";
+                        end;
+                    end else begin
+                        Item.Get(SalesLine."No.");
+                        CurrencyCode := Item."Vendor Currency";
+                        if AdvPriceMgt.FindBestPurchasePrice(SalesLine."No.", VendorNo, CurrencyCode, SalesLine."Variant Code", PurchasePrice) then
+                            CurrencyCode := PurchasePrice."Currency Code";
+                    end;
+
+                    if PurchasePrice."Direct Unit Cost" <> 0 then begin
+                        if not FindPurchaseHeader(VendorNo, CurrencyCode, PurchHeader) then
+                            CreatePurchHeader(SalesHeader, VendorNo, CurrencyCode, SalesLine."Bid No.", PurchHeader);
+                        CreatePurchLine(PurchHeader, SalesHeader, SalesLine, PurchasePrice."Direct Unit Cost", PurchLine);
+                        ReserveItemOnPurchOrder(SalesLine, PurchLine);
+                        GlobalLineCounter := GlobalLineCounter + 1;
+                    end;
                 end;
             until SalesLine.next = 0;
 
         if GlobalLineCounter = 0 then
-            Message('Every item is reserved');
+            Message('All items are already on purchase orders or reserved against inventory')
+        else
+            Message(StrSubstNo('%1 Purchase Lines created', GlobalLineCounter));
     end;
 
     procedure CreatePurchHeader(SalesHeader: record "Sales Header"; VendorNo: code[20]; CurrencyCode: code[10]; VendorBidNo: code[20]; var PurchHeader: record "Purchase Header")
@@ -65,10 +92,12 @@ codeunit 50004 "Create Purchase Order"
         end;
     end;
 
-    procedure CreatePurchLine(PurchHeader: record "Purchase Header"; SalesHeader: record "sales header"; SalesLine: record "Sales Line"; var PurchLine: Record "Purchase Line")
+    procedure CreatePurchLine(PurchHeader: record "Purchase Header"; SalesHeader: record "sales header"; SalesLine: record "Sales Line"; PurchasePrice: Decimal; var PurchLine: Record "Purchase Line")
     var
-
+        BidMgt: Codeunit "Bid Management";
+        BidItemPrice: Record "Bid Item Price";
     begin
+        SalesLine.CalcFields("Reserved Quantity");
         PurchLine.Init;
         PurchLine."Document No." := Purchheader."No.";
         PurchLine."Document Type" := Purchheader."Document Type";
@@ -77,12 +106,11 @@ codeunit 50004 "Create Purchase Order"
         PurchLine.Validate("No.", SalesLine."No.");
         PurchLine.Validate("Location Code", SalesLine."Location Code");
         PurchLine.Validate(Quantity, (SalesLine.Quantity - SalesLine."Reserved Quantity"));
-        PurchLine.Validate("Expected Receipt Date", SalesLine."Shipment Date"); //vend med SEC         
+        PurchLine.Validate("Expected Receipt Date", SalesLine."Shipment Date"); //vend med SEC 
+        if SalesLine."Bid No." <> '' then
+            PurchLine.Validate("Bid No.", SalesLine."Bid No.");
+        PurchLine.Validate("Direct Unit Cost", PurchasePrice);
         PurchLine.Insert(true);
-        // Direct unit cost udbygges til at håndtere valuta 
-        PurchLine.Validate("Direct Unit Cost", SalesLine."Purchase Price on Purchase Order");
-        PurchLine.Validate("Bid No.", SalesLine."Bid No.");
-        PurchLine.Modify(true);
     end;
 
     procedure ReserveItemOnPurchOrder(SalesLine: record "Sales Line"; PurchLine: record "Purchase Line")
@@ -148,14 +176,15 @@ codeunit 50004 "Create Purchase Order"
         PurchLine: record "Purchase Line";
         Vendor: record Vendor;
     begin
-        SalesLine.CalcFields("Reserved Quantity");
-        if (SalesLine."Quantity" - SalesLine."Reserved Quantity") <> 0 then begin
-            Vendor.get(ItemVendorNo);
-            CreatePurchHeader(SalesHeader, ItemVendorNo, Vendor."Currency Code", '', PurchHeader);
-            CreatePurchLine(PurchHeader, SalesHeader, SalesLine, PurchLine);
-            ReserveItemOnPurchOrder(SalesLine, PurchLine);
-            GlobalLineCount := GlobalLineCount + 1;
-        end;
+        //Deprecated - to be deleted
+        /*         SalesLine.CalcFields("Reserved Quantity");
+                if (SalesLine."Quantity" - SalesLine."Reserved Quantity") <> 0 then begin
+                    Vendor.get(ItemVendorNo);
+                    CreatePurchHeader(SalesHeader, ItemVendorNo, Vendor."Currency Code", '', PurchHeader);
+                    CreatePurchLine(PurchHeader, SalesHeader, SalesLine, PurchLine);
+                    ReserveItemOnPurchOrder(SalesLine, PurchLine);
+                    GlobalLineCount := GlobalLineCount + 1;
+                end; */
     end;
 
 
@@ -163,12 +192,13 @@ codeunit 50004 "Create Purchase Order"
     var
         PurchLine: record "Purchase Line";
     begin
-        SalesLine.CalcFields("Reserved Quantity");
+        //Deprecated - to be deleted
+        /* SalesLine.CalcFields("Reserved Quantity");
         if (SalesLine."Quantity" - SalesLine."Reserved Quantity") <> 0 then begin
             CreatePurchLine(PurchHeader, SalesHeader, SalesLine, PurchLine);
             ReserveItemOnPurchOrder(SalesLine, PurchLine);
             GlobalLineCount := GlobalLineCount + 1;
-        end;
+        end; */
     end;
 
     Local procedure CheckSalesLineForBidNo(SalesLine: record "Sales Line"): Boolean
@@ -180,4 +210,27 @@ codeunit 50004 "Create Purchase Order"
         else
             exit(true);
     end;
+
+    local procedure GetVendorNoForItem(ItemNo: Code[20]): Code[20]
+    var
+        Item: Record Item;
+    begin
+        Item.Get(ItemNo);
+        if Item."IC partner Vendor No." <> '' then
+            exit(Item."IC partner Vendor No.")
+        else begin
+            Item.TestField("Vendor No.");
+            exit(Item."Vendor No.");
+        end;
+    end;
+
+    local procedure FindPurchaseHeader(VendorNo: code[20]; CurrencyCode: Code[20]; var PurchHeader: record "Purchase Header"): Boolean
+    begin
+        PurchHeader.SetRange("Document Type", PurchHeader."Document Type"::Order);
+        PurchHeader.SetRange("Buy-from Vendor No.", VendorNo);
+        PurchHeader.SetRange("Currency Code", CurrencyCode);
+        PurchHeader.SetRange(Status, PurchHeader.Status::Open);
+        exit(PurchHeader.FindFirst());
+    end;
+
 }
