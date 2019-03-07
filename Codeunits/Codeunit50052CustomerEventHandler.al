@@ -135,8 +135,10 @@ codeunit 50052 "Customer Event Handler"
     local procedure PostCodeOnAfterValidate(var Rec: Record "Customer")
     var
         Postcode: record "Post Code";
+        Glsetup: record "General Ledger Setup";
     begin
-        if Rec."Post Code" <> '' then begin
+        Glsetup.Get();
+        if (Rec."Post Code" <> '') then begin
             if not Postcode.Get(rec."Post Code") then begin
                 Postcode.Init();
                 Postcode.validate(Code, rec."Post Code");
