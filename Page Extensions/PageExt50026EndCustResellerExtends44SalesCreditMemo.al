@@ -50,6 +50,7 @@ pageextension 50026 "End Customer and Reseller 6" extends 44
             field("Sell-to-Customer-Name"; "Sell-to-Customer-Name")
             {
                 ApplicationArea = all;
+                Caption = 'Sell-to Customer Name';
             }
         }
 

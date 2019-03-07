@@ -20,9 +20,9 @@ pageextension 50029 "End Customer and Reseller 9" extends 6660
 
     actions
     {
-        // Add changes to page actions here
+
     }
 
     var
-        myInt: Integer;
+
 }
