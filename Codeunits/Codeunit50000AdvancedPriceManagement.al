@@ -157,6 +157,11 @@ codeunit 50000 "Advanced Price Management"
         Suggestprices: report "Suggest Sales Price on Wksh.";
         CurrencyTemp: Record Currency temporary;
     begin
+        if PurchaseLineDiscount."Customer Markup" = 0 then begin
+            ConvertListPrices(PurchaseLineDiscount."Item No.");
+            exit;
+        end;
+
         if FindLatestPurchasePrice(PurchaseLineDiscount."Item No.", PurchaseLineDiscount."Vendor No.", PurchaseLineDiscount."Currency Code", PurchasePrice) then begin
             Salesprice.Init();
             Salesprice."Sales Type" := Salesprice."Sales Type"::"All Customers";
@@ -408,7 +413,7 @@ codeunit 50000 "Advanced Price Management"
         if not Item.get(SalesLine."No.") then
             exit;
         PurchPrice.SetRange("Item No.", Item."No.");
-        PurchPrice.SetRange("Vendor No.", Item."Vendor No.");
+        PurchPrice.SetRange("Vendor No.", GetVendorNoForItem(item."No."));
         if SalesLine."Variant Code" <> '' then
             PurchPrice.SetRange("Variant Code", SalesLine."Variant Code");
         PurchPrice.SetFilter("Ending Date", '..%1', WorkDate);
@@ -583,6 +588,39 @@ codeunit 50000 "Advanced Price Management"
             exit(true);
         Clear(PurchasePrice);
         exit(false);
+    end;
+
+    procedure GetVendorNoForItem(ItemNo: Code[20]): Code[20]
+    var
+        Item: Record Item;
+    begin
+        Item.Get(ItemNo);
+        if Item."IC partner Vendor No." <> '' then
+            exit(Item."IC partner Vendor No.")
+        else begin
+            Item.TestField("Vendor No.");
+            exit(Item."Vendor No.");
+        end;
+    end;
+
+    local procedure ConvertListPrices(ItemNo: Code[20])
+    var
+        SalesListPrice: Record "Sales Price";
+        SalesPrice: Record "Sales Price";
+    begin
+
+        //Item No.,Sales Type,Sales Code,Starting Date,Currency Code,Variant Code,Unit of Measure Code,Minimum Quantity
+        SalesListPrice.SetRange("Item No.", ItemNo);
+        SalesListPrice.SetRange("Variant Code", 'LISTPRICE');
+        SalesListPrice.SetFilter("Ending Date", '%1', 0D);
+        if SalesListPrice.FindSet() then
+            repeat
+                if SalesPrice.get(SalesListPrice."Item No.", SalesListPrice."Sales Type", SalesListPrice."Sales Code", SalesListPrice."Starting Date",
+                SalesListPrice."Currency Code", '', SalesListPrice."Unit of Measure Code", SalesListPrice."Minimum Quantity") then begin
+                    SalesPrice."Unit Price" := SalesListPrice."Unit Price";
+                    SalesPrice.Modify(true);
+                end;
+            until SalesListPrice.Next() = 0;
     end;
 
 }
