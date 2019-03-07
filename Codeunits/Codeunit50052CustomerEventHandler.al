@@ -143,6 +143,15 @@ codeunit 50052 "Customer Event Handler"
                 Postcode.validate(City, rec.City);
                 Postcode.validate("Country/Region Code", rec."Country/Region Code");
                 Postcode.Insert(true);
+            end else begin
+                if Postcode."Country/Region Code" <> rec."Country/Region Code" then begin
+                    Postcode.Init();
+                    Postcode.validate(Code, rec."Post Code");
+                    Postcode.validate(City, rec.City);
+                    Postcode.validate("Country/Region Code", rec."Country/Region Code");
+                    Postcode.Insert(true);
+                end;
+
             end;
         end;
     end;
