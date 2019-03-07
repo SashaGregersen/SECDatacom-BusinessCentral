@@ -7,12 +7,9 @@ codeunit 50053 "Vendor Item No Event Handler"
     local procedure OnAfterValidateVendorItemNoOnItemCardEvent(Rec: record Item)
     var
     begin
-        /*
         if rec."Vendor Item No." <> '' then begin
             Rec.Validate("Vendor-Item-No.", Rec."Vendor Item No.");
-            rec.Modify(true);
         end;
-        */
     end;
 
     [EventSubscriber(ObjectType::table, database::"Purchase Line", 'OnAfterInsertEvent', '', true, true)]
