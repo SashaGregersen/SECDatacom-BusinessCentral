@@ -72,6 +72,16 @@ pageextension 50003 "Customer Card Advanced Pricing" extends "Customer Card"
                 end;
             }
         }
+        addafter(Contact)
+        {
+            action(VARInfo)
+            {
+                Caption = 'VAR';
+                Image = Relationship;
+                RunObject = Page "VAR";
+                RunPageLink = "Customer No." = field ("No.");
+            }
+        }
 
     }
 

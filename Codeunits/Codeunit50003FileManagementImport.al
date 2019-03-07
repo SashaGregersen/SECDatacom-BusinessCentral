@@ -206,6 +206,7 @@ codeunit 50003 "File Management Import"
                 Bid.Validate("Vendor No.", TempCSVBuffer.value);
                 if ImportType = ImportType::LinesImport then
                     Bid.Insert(true);
+                BidNo := Bid."No.";
             end;
         end else
             Bid.Get(BidNo);
@@ -468,7 +469,142 @@ codeunit 50003 "File Management Import"
 
     procedure ImportItems()
     var
+        TempCSVBuffer: record "CSV Buffer" temporary;
+        ConfigTemplateHeader: Record "Config. Template Header";
+        Item: Record Item;
+        DimCodeArr: array[4] of Code[20];
+        DimSetEntry: Record "Dimension Set Entry" temporary;
     begin
+        TempCSVBuffer.init;
+        SelectFileFromFileShare(TempCSVBuffer);
 
+        TempCSVBuffer.SetFilter("Line No.", '%1', 1);
+        TempCSVBuffer.SetRange("Field No.", 12, 15);
+        if TempCSVBuffer.FindSet then
+            repeat
+                DimCodeArr[TempCSVBuffer."Field No." - 11] := TempCSVBuffer.Value;
+            until TempCSVBuffer.Next() = 0;
+
+        TempCSVBuffer.SetRange("Field No.");
+        TempCSVBuffer.SetFilter("Line No.", '<>%1', 1);
+        if TempCSVBuffer.FindSet() then
+            repeat
+                case TempCSVBuffer."Field No." of
+                    1:
+                        begin
+                            CreateItem(Item, ConfigTemplateHeader, DimSetEntry);
+                            Item.Description := TempCSVBuffer.Value;
+                        end;
+                    2:
+                        begin
+                            Item."Description 2" := TempCSVBuffer.Value;
+                        end;
+                    3:
+                        begin
+                            ConfigTemplateHeader.Get(TempCSVBuffer.Value)
+                        end;
+                    4:
+                        begin
+                            Item."Global Dimension 1 Code" := TempCSVBuffer.Value;
+                        end;
+                    5:
+                        begin
+                            Item."Item Disc. Group" := TempCSVBuffer.Value;
+                        end;
+                    6:
+                        begin
+                            Item."Vendor No." := TempCSVBuffer.Value;
+                        end;
+                    7:
+                        begin
+                            //Field 32 pt. da denne opdaterer 50004
+                            Item."Vendor Item No." := TempCSVBuffer.Value;
+                        end;
+                    8:
+                        begin
+                            if Evaluate(Item."Net Weight", TempCSVBuffer.Value) then;
+                        end;
+                    9:
+                        begin
+                            if Evaluate(Item."Transfer Price %", TempCSVBuffer.Value) then;
+                        end;
+                    10:
+                        begin
+                            if Evaluate(Item."Use on Website", TempCSVBuffer.Value) then;
+                        end;
+                    11:
+                        begin
+                            Item."Default Location" := TempCSVBuffer.Value;
+                        end;
+                    else begin
+                            if TempCSVBuffer.Value <> '' then begin
+                                DimSetEntry.Init();
+                                DimSetEntry."Dimension Set ID" := 0;
+                                DimSetEntry.Validate("Dimension Code", DimCodeArr[TempCSVBuffer."Field No." - 11]);
+                                DimSetEntry.Validate("Dimension Value Code", TempCSVBuffer.Value);
+                                DimSetEntry.Insert(true);
+                            end;
+                        end;
+                end;
+            until TempCSVBuffer.next = 0;
+        CreateItem(Item, ConfigTemplateHeader, DimSetEntry);
+
+        TempCSVBuffer.Reset;
+        TempCSVBuffer.DeleteAll();        //delete TempCSVbuffer when finish            
+    end;
+
+    local Procedure CreateItem(var tmpItem: Record Item; var ConfigTemplateHeader: Record "Config. Template Header"; var DimSetEntry: Record "Dimension Set Entry")
+    var
+        Item: Record Item;
+        ConfigTemplateManagement: Codeunit "Config. Template Management";
+        ItemRecRef: RecordRef;
+        DimensionsTemplate: Record "Dimensions Template";
+        DefDim: Record "Default Dimension";
+    begin
+        if not DimSetEntry.IsTemporary() then
+            exit; //DimSetEntry SKAL være temporer
+
+        if (tmpItem.Description = '') then
+            exit;
+
+        Item.SetRange("Vendor No.", tmpItem."Vendor No.");
+        Item.Setrange("Vendor Item No.", tmpItem."Vendor Item No.");
+        if Item.FindFirst() then
+            Error('Combination of Vendor %1 and Vendor Item No. %2 already exists', tmpItem."Vendor No.", tmpItem."Vendor Item No.");
+
+        Clear(Item);
+        Item.Insert(true);
+        Item.Validate(Description, tmpItem.Description);
+        Item.Validate("Description 2", tmpItem."Description 2");
+        Item.Validate("Vendor No.", tmpItem."Vendor No.");
+        Item.Validate("Vendor Item No.", tmpItem."Vendor Item No.");
+        Item.Validate("Item Disc. Group", tmpItem."Item Disc. Group");
+        Item.Validate("Net Weight", tmpItem."Net Weight");
+        Item.Validate("Transfer Price %", tmpItem."Transfer Price %");
+        Item.Validate("Use on Website", tmpItem."Use on Website");
+        Item.Validate("Default Location", tmpItem."Default Location");
+        Item.Validate("Global Dimension 1 Code", tmpItem."Global Dimension 1 Code");
+        Item.Modify(true);
+
+        ItemRecRef.GetTable(Item);
+
+        ConfigTemplateManagement.UpdateRecord(ConfigTemplateHeader, ItemRecRef);
+        DimensionsTemplate.InsertDimensionsFromTemplates(ConfigTemplateHeader, Item."No.", DATABASE::Item);
+
+        if DimSetEntry.FindSet() then
+            repeat
+                DefDim.Init;
+                DefDim.Validate("Table ID", Database::Item);
+                DefDim.Validate("No.", Item."No.");
+                DefDim.Validate("Dimension Code", DimSetEntry."Dimension Code");
+                DefDim.Validate("Dimension Value Code", DimSetEntry."Dimension Value Code");
+                DefDim.Insert(true);
+            until DimSetEntry.Next() = 0;
+
+        //Nulstil så vi ved det er næste record
+        Clear(ConfigTemplateHeader);
+        Clear(tmpItem);
+        Clear(DimSetEntry);
+        DimSetEntry.DeleteAll();
     end;
 }
