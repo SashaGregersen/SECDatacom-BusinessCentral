@@ -35,6 +35,14 @@ pageextension 50022 "End Customer and Reseller 2" extends 41
         {
             Visible = false;
         }
+        addafter("Your Reference")
+        {
+            field("Suppress Prices on Printouts"; "Suppress Prices on Printouts")
+            {
+                ApplicationArea = all;
+
+            }
+        }
 
         addbefore("Ship-to Code")
         {
