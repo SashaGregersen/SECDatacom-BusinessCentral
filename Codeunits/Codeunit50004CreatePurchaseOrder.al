@@ -21,8 +21,6 @@ codeunit 50004 "Create Purchase Order"
         BidMgt: Codeunit "Bid Management";
     begin
         GlobalLineCounter := 0;
-        SalesHeader.CalcFields("Amount Including VAT");
-        SalesHeader.TestField("Amount Including VAT");
         SalesLine.SetRange("Document No.", SalesHeader."No.");
         SalesLine.SetRange("Document Type", SalesHeader."Document Type");
         SalesLine.SetRange(type, SalesLine.type::Item);
