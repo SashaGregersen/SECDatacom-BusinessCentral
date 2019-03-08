@@ -415,7 +415,9 @@ report 50004 "SEC Sales - Quote"
             column(EndCustCountry; EndcustomerCountryRegion.Name)
             {
             }
-
+            column(Suppress_Prices_on_Printouts; "Suppress Prices on Printouts")
+            {
+            }
             dataitem(Line; "Sales Line")
             {
                 DataItemLink = "Document No." = FIELD ("No.");
