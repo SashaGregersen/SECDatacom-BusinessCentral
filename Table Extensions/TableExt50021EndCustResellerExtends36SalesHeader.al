@@ -224,13 +224,18 @@ tableextension 50021 "End Customer and Reseller" extends 36
                 ShipToAdress: record "Ship-to Address";
                 Customer: Record customer;
             begin
-                if ("Drop-Shipment") then begin
-                    Customer.Get("End Customer");
-                    ShipToAdress.Get(Customer."No.", "Ship-To-Code");
-                end else begin
-                    Customer.Get("Sell-to Customer No.");
-                    ShipToAdress.Get("Sell-to Customer No.", "Ship-To-Code");
-                end;
+                if "Ship-To-Code" = '' then
+                    if "Drop-Shipment" = true then begin
+                        Customer.get(rec."End Customer");
+                        Clear("Ship-To-Code");
+                        SetShipToAddress(Customer.Name, Customer."Name 2", Customer.Address, Customer."Address 2", Customer.City, Customer."Post Code", Customer.County, Customer."Country/Region Code");
+                        rec.Validate("Ship-to Contact", Customer.Contact);
+                    end else begin
+                        Customer.Get(rec."Sell-to Customer No.");
+                        Clear("Ship-To-Code");
+                        SetShipToAddress(rec."Sell-to Customer Name", rec."Sell-to Customer Name 2", rec."Sell-to Address", rec."Sell-to Address 2", rec."Sell-to City", rec."Sell-to Post Code", rec."Sell-to County", rec."Sell-to Country/Region Code");
+                        rec.Validate("Ship-to Contact", rec."Sell-to Contact");
+                    end;
             end;
         }
 
