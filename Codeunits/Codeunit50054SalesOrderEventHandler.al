@@ -359,22 +359,12 @@ codeunit 50054 "Sales Order Event Handler"
     var
 
     begin
-        if rec.Status = rec.Status::Released then begin
-            case rec."Document Type" of
-                '1':
-                    begin
-                        rec.TestField("Sell-to Contact");
-                        rec.TestField("OIOUBL-Sell-to Contact E-Mail");
-                        rec.TestField("OIOUBL-Sell-to Contact Phone No.");
-                    end;
-                '2':
-                    begin
-                        rec.TestField("Sell-to Contact");
-                        rec.TestField("OIOUBL-Sell-to Contact E-Mail");
-                        rec.TestField("OIOUBL-Sell-to Contact Phone No.");
-                    end;
+        if rec."Document Type" = rec."Document Type"::Order then
+            if rec.Status = rec.Status::Released then begin
+                rec.TestField("Sell-to Contact");
+                rec.TestField("OIOUBL-Sell-to Contact E-Mail");
+                rec.TestField("OIOUBL-Sell-to Contact Phone No.");
             end;
-        end;
     end;
 
     [EventSubscriber(ObjectType::Codeunit, codeunit::"Release Sales Document", 'OnAfterUpdateSalesDocLines', '', true, true)]
@@ -385,45 +375,37 @@ codeunit 50054 "Sales Order Event Handler"
         SalesLine2: record "Sales Line";
         InsertSalesLine: record "Sales Line";
     begin
+        if SalesHeader."Document Type" <> salesheader."Document Type"::Order then
+            exit;
+
         if SalesHeader.Status = SalesHeader.Status::Released then begin
-            case SalesHeader."Document Type" of
-                '1':
-                    begin
-                        SalesHeader.TestField("Sell-to Contact");
-                        SalesHeader.TestField("OIOUBL-Sell-to Contact E-Mail");
-                        SalesHeader.TestField("OIOUBL-Sell-to Contact Phone No.");
-                    end;
-                '2':
-                    begin
-                        SalesHeader.TestField("Sell-to Contact");
-                        SalesHeader.TestField("OIOUBL-Sell-to Contact E-Mail");
-                        SalesHeader.TestField("OIOUBL-Sell-to Contact Phone No.");
-                    end;
-            end;
-
-            SalesReceiveSetup.Get();
-            if SalesReceiveSetup."Freight Item" <> '' then begin
-                SalesLine.SetRange("Document No.", SalesHeader."No.");
-                SalesLine.SetRange("Document Type", SalesHeader."Document Type");
-                SalesLine.SetRange(Type, SalesLine.Type::Item);
-                SalesLine.SetRange("No.", SalesReceiveSetup."Freight Item");
-                if not SalesLine.FindFirst() then
-                    if confirm('Do you want to add freight to the order?', true) then begin
-                        SalesLine2.SetRange("Document No.", SalesHeader."No.");
-                        SalesLine2.SetRange("Document Type", SalesHeader."Document Type");
-                        SalesLine2.FindLast();
-                        InsertSalesLine.init;
-                        InsertSalesLine."Document No." := SalesHeader."No.";
-                        InsertSalesLine."Document Type" := SalesHeader."Document Type";
-                        InsertSalesLine.Validate("Line No.", SalesLine2."Line No." + 10000);
-                        InsertSalesLine.Validate(Type, InsertSalesLine.type::Item);
-                        InsertSalesLine.Validate("No.", SalesReceiveSetup."Freight Item");
-                        InsertSalesLine.Validate(Quantity, 1);
-                        InsertSalesLine.Insert(true);
-                    end;
-            end;
-
+            SalesHeader.TestField("Sell-to Contact");
+            SalesHeader.TestField("OIOUBL-Sell-to Contact E-Mail");
+            SalesHeader.TestField("OIOUBL-Sell-to Contact Phone No.");
         end;
+
+        SalesReceiveSetup.Get();
+        if SalesReceiveSetup."Freight Item" <> '' then begin
+            SalesLine.SetRange("Document No.", SalesHeader."No.");
+            SalesLine.SetRange("Document Type", SalesHeader."Document Type"::Order);
+            SalesLine.SetRange(Type, SalesLine.Type::Item);
+            SalesLine.SetRange("No.", SalesReceiveSetup."Freight Item");
+            if not SalesLine.FindFirst() then
+                if confirm('Do you want to add freight to the order?', true) then begin
+                    SalesLine2.SetRange("Document No.", SalesHeader."No.");
+                    SalesLine2.SetRange("Document Type", SalesHeader."Document Type"::Order);
+                    SalesLine2.FindLast();
+                    InsertSalesLine.init;
+                    InsertSalesLine."Document No." := SalesHeader."No.";
+                    InsertSalesLine."Document Type" := SalesHeader."Document Type";
+                    InsertSalesLine.Validate("Line No.", SalesLine2."Line No." + 10000);
+                    InsertSalesLine.Validate(Type, InsertSalesLine.type::Item);
+                    InsertSalesLine.Validate("No.", SalesReceiveSetup."Freight Item");
+                    InsertSalesLine.Validate(Quantity, 1);
+                    InsertSalesLine.Insert(true);
+                end;
+        end;
+
     end;
 
     [EventSubscriber(ObjectType::Codeunit, codeunit::"Sales-Post", 'OnAfterPostSalesDoc', '', true, true)]
