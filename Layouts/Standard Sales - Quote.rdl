@@ -2920,6 +2920,7 @@
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
+                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                     </TablixCells>
@@ -3770,6 +3771,9 @@
                                               </Paragraph>
                                             </Paragraphs>
                                             <rd:DefaultName>LineAmount_Line</rd:DefaultName>
+                                            <Visibility>
+                                              <Hidden>==IIF(Fields!Suppress_Prices_on_Printouts.value = "True",true,false)</Hidden>
+                                            </Visibility>
                                             <Style>
                                               <Border>
                                                 <Color>LightGrey</Color>
