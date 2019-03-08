@@ -31,7 +31,7 @@ codeunit 50004 "Create Purchase Order"
                 SalesLine.CalcFields("Reserved Quantity");
                 QtyToPurchase := SalesLine."Quantity" - SalesLine."Reserved Quantity";
                 if QtyToPurchase <> 0 then begin
-                    VendorNo := GetVendorNoForItem(SalesLine."No.");
+                    VendorNo := AdvPriceMgt.GetVendorNoForItem(SalesLine."No.");
                     Item.Get(SalesLine."No.");
                     CurrencyCode := Item."Vendor Currency";
                     Clear(PurchasePrice);
@@ -217,18 +217,7 @@ codeunit 50004 "Create Purchase Order"
             exit(true);
     end;
 
-    local procedure GetVendorNoForItem(ItemNo: Code[20]): Code[20]
-    var
-        Item: Record Item;
-    begin
-        Item.Get(ItemNo);
-        if Item."IC partner Vendor No." <> '' then
-            exit(Item."IC partner Vendor No.")
-        else begin
-            Item.TestField("Vendor No.");
-            exit(Item."Vendor No.");
-        end;
-    end;
+
 
     local procedure FindPurchaseHeader(VendorNo: code[20]; CurrencyCode: Code[20]; var PurchHeader: record "Purchase Header"): Boolean
     begin

@@ -144,8 +144,7 @@ codeunit 50051 "Price Event Handler"
         if Rec."Line Discount %" <> xRec."Line Discount %" then begin
             if AdvPriceMgt.FindListPriceForitem(Rec."Item No.", Rec."Currency Code", ListPrice) then
                 AdvPriceMgt.CreateUpdatePurchasePrices(Rec, ListPrice);
-            if rec."Customer Markup" <> 0 then
-                AdvPriceMgt.CreateUpdateSalesMarkupPrices(Rec);
+            AdvPriceMgt.CreateUpdateSalesMarkupPrices(Rec);
             exit;
         end;
         if rec."Customer Markup" <> xRec."Customer Markup" then
