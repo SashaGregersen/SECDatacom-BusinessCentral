@@ -124,9 +124,8 @@ codeunit 50004 "Create Purchase Order"
         Reservationentry: record "Reservation Entry";
         EntryNo: Integer;
     begin
-        EntryNo := 0;
-        ReservationEntry.FindLast();
-        EntryNo := ReservationEntry."Entry No." + 1;
+        Clear(EntryNo);
+        EntryNo := GetLastReservantionEntryNo();
         InsertReservationSalesLine(SalesLine, EntryNo);
         InsertReservationPurchLine(PurchLine, EntryNo);
     end;
@@ -226,6 +225,16 @@ codeunit 50004 "Create Purchase Order"
         PurchHeader.SetRange("Currency Code", CurrencyCode);
         PurchHeader.SetRange(Status, PurchHeader.Status::Open);
         exit(PurchHeader.FindFirst());
+    end;
+
+    local procedure GetLastReservantionEntryNo(): Integer;
+    var
+        ReservationEntry: Record "Reservation Entry";
+    begin
+        If not ReservationEntry.FindLast() then
+            exit(1)
+        else
+            exit(ReservationEntry."Entry No.")
     end;
 
 }

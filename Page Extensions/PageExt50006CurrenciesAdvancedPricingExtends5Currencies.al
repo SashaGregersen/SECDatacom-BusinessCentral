@@ -4,12 +4,12 @@ pageextension 50006 "Currencies Adv. Pricing" extends currencies
     {
         addafter(ExchangeRateAmt)
         {
-            field("Make Prices";"Make Prices")
+            field("Make Prices"; "Make Prices")
             {
                 ApplicationArea = all;
             }
         }
     }
 
-   
+
 }
