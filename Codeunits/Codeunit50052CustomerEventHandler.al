@@ -134,17 +134,10 @@ codeunit 50052 "Customer Event Handler"
     [EventSubscriber(ObjectType::table, database::"Customer", 'OnAfterValidateEvent', 'Post Code', true, true)]
     local procedure PostCodeOnAfterValidate(var Rec: Record "Customer")
     var
-        Postcode: record "Post Code";
+        SyncMasterData: Codeunit "Synchronize Master Data";
+        PostCode: record "Post Code";
     begin
-        if Rec."Post Code" <> '' then begin
-            if not Postcode.Get(rec."Post Code") then begin
-                Postcode.Init();
-                Postcode.validate(Code, rec."Post Code");
-                Postcode.validate(City, rec.City);
-                Postcode.validate("Country/Region Code", rec."Country/Region Code");
-                Postcode.Insert(true);
-            end;
-        end;
+        SyncMasterData.CheckPostCode(Rec, PostCode);
     end;
 
 }
