@@ -110,6 +110,7 @@ codeunit 50002 "Synchronize Master Data"
         GlSetup: record "General Ledger Setup";
         CustDiscGroup: record "Customer Discount Group";
         CustPriceGroup: record "Customer Price Group";
+        postcode: Record "Post Code";
     begin
         GlSetup.Get;
         Company.SetRange(Company.Name, GlSetup."Master Company");
@@ -127,8 +128,46 @@ codeunit 50002 "Synchronize Master Data"
                 Customer2."Customer Price Group" := '';
             IF not Customer2.Insert(false) then
                 Customer2.Modify(false);
+            postcode.ChangeCompany(Company.Name);
+            if Customer2."Post Code" <> '' then
+                if not postcode.Get(customer2."Post Code", Customer2.City) then begin
+                    Postcode.Init();
+                    Postcode.ValidatePostCode(Customer2.City, Customer2."Post Code", Customer2.County, Customer2."Country/Region Code", false);
+                    Postcode.Code := Customer2."Post Code";
+                    Postcode.ValidateCity(Customer2.City, Customer2."Post Code", Customer2.County, Customer2."Country/Region Code", false);
+                    Postcode.City := Customer.City;
+                    Postcode.ValidateCountryCode(Customer2.City, Customer2."Post Code", Customer2.County, Customer2."Country/Region Code");
+                    Postcode."Country/Region Code" := Customer2."Country/Region Code";
+                    Postcode.Insert(true);
+                end;
         end;
 
+    end;
+
+    procedure CheckPostCode(Customer: record Customer; postcode: record "Post Code")
+    var
+
+    begin
+        if (Customer."Post Code" <> '') then begin
+            if not Postcode.Get(Customer."Post Code", Customer.City) then begin
+                CreateNewPostCode(Customer);
+            end;
+        end;
+    end;
+
+    local procedure CreateNewPostCode(Customer: Record Customer)
+    var
+        Postcode: record "Post Code";
+        Glsetup: record "General Ledger Setup";
+    begin
+        Postcode.Init();
+        Postcode.ValidatePostCode(Customer.City, Customer."Post Code", Customer.County, Customer."Country/Region Code", false);
+        Postcode.Code := Customer."Post Code";
+        Postcode.ValidateCity(Customer.City, Customer."Post Code", Customer.County, Customer."Country/Region Code", false);
+        Postcode.City := Customer.City;
+        Postcode.ValidateCountryCode(Customer.City, Customer."Post Code", Customer.County, Customer."Country/Region Code");
+        Postcode."Country/Region Code" := Customer."Country/Region Code";
+        Postcode.Insert(true);
     end;
 
     Procedure SetItemDefaults(var rec: record Item)
