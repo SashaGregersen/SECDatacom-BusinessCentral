@@ -23,10 +23,11 @@ codeunit 50057 "IC Event Handler"
     begin
         if not GetPurchaseLineFromOtherCompany(ICInboxSalesLine, PurchaseLineOtherCompany, ICPartner."Inbox Details") then
             exit;
-        GetSalesLineFromOtherCompany(PurchaseLineOtherCompany, SalesLineOtherCompany, ICPartner."Inbox Details");
+        if not GetSalesLineFromOtherCompany(PurchaseLineOtherCompany, SalesLineOtherCompany, ICPartner."Inbox Details") then
+            exit;
         if LocalSalesHeader.Subsidiary = '' then begin
-            GetSalesHeaderFromOtherCompany(SalesLineOtherCompany, SalesHeaderOtherCompany, ICPartner."Inbox Details");
-            CopyAdvPricingHeaderFields(LocalSalesHeader, SalesHeaderOtherCompany, ICPartner."Customer No.");
+            if GetSalesHeaderFromOtherCompany(SalesLineOtherCompany, SalesHeaderOtherCompany, ICPartner."Inbox Details") then
+                CopyAdvPricingHeaderFields(LocalSalesHeader, SalesHeaderOtherCompany, ICPartner."Customer No.");
         end;
         CopyAdvPricingLineFields(LocalSalesline, SalesLineOtherCompany);
     end;
@@ -67,7 +68,7 @@ codeunit 50057 "IC Event Handler"
         exit(PurchaseLineOtherCompany.Get(ICInboxSalesLine."Document Type" + 1, ICInboxSalesLine."Document No.", ICInboxSalesLine."Line No."));
     end;
 
-    local procedure GetSalesLineFromOtherCompany(PurchaseLineOtherCompany: Record "Purchase Line"; var SalesLineOtherCompany: Record "Sales Line"; OtherCompanyName: text[30])
+    local procedure GetSalesLineFromOtherCompany(PurchaseLineOtherCompany: Record "Purchase Line"; var SalesLineOtherCompany: Record "Sales Line"; OtherCompanyName: text[30]): Boolean
     var
         PurchaseReservationEntry: Record "Reservation Entry";
         SalesReservationEntry: Record "Reservation Entry";
@@ -79,17 +80,27 @@ codeunit 50057 "IC Event Handler"
         PurchaseReservationEntry.SetRange("Source type", 39);
         if not PurchaseReservationEntry.FindFirst() then begin
             Clear(SalesLineOtherCompany);
-            exit;
+            exit(false);
         end;
         SalesReservationEntry.ChangeCompany(OtherCompanyName);
-        SalesReservationEntry.Get(PurchaseReservationEntry."Entry No.", not PurchaseReservationEntry.Positive);
+        if not SalesReservationEntry.Get(PurchaseReservationEntry."Entry No.", not PurchaseReservationEntry.Positive) then begin
+            Clear(SalesLineOtherCompany);
+            exit(false);
+        end;
         SalesLineOtherCompany.ChangeCompany(OtherCompanyName);
-        SalesLineOtherCompany.Get(SalesReservationEntry."Source Subtype", SalesReservationEntry."Source ID", SalesReservationEntry."Source Ref. No.");
+        if not SalesLineOtherCompany.Get(SalesReservationEntry."Source Subtype", SalesReservationEntry."Source ID", SalesReservationEntry."Source Ref. No.") then begin
+            Clear(SalesLineOtherCompany);
+            exit(false);
+        end;
+
     end;
 
-    local procedure GetSalesHeaderFromOtherCompany(SalesLineOtherCompany: Record "Sales Line"; var SalesHeaderOtherCompany: Record "Sales Header"; OtherCompanyName: text[30])
+    local procedure GetSalesHeaderFromOtherCompany(SalesLineOtherCompany: Record "Sales Line"; var SalesHeaderOtherCompany: Record "Sales Header"; OtherCompanyName: text[30]): Boolean
     begin
         SalesHeaderOtherCompany.ChangeCompany(OtherCompanyName);
-        SalesHeaderOtherCompany.get(SalesLineOtherCompany."Document Type", SalesLineOtherCompany."Document No.");
+        if not SalesHeaderOtherCompany.get(SalesLineOtherCompany."Document Type", SalesLineOtherCompany."Document No.") then begin
+            Clear(SalesHeaderOtherCompany);
+            exit(false);
+        end;
     end;
 }
