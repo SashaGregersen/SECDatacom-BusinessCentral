@@ -123,7 +123,7 @@ codeunit 50004 "Create Purchase Order"
         EntryNo: Integer;
     begin
         Clear(EntryNo);
-        EntryNo := GetLastReservantionEntryNo();
+        EntryNo := GetNextReservantionEntryNo();
         InsertReservationSalesLine(SalesLine, EntryNo);
         InsertReservationPurchLine(PurchLine, EntryNo);
     end;
@@ -225,14 +225,14 @@ codeunit 50004 "Create Purchase Order"
         exit(PurchHeader.FindFirst());
     end;
 
-    local procedure GetLastReservantionEntryNo(): Integer;
+    local procedure GetNextReservantionEntryNo(): Integer;
     var
         ReservationEntry: Record "Reservation Entry";
     begin
         If not ReservationEntry.FindLast() then
             exit(1)
         else
-            exit(ReservationEntry."Entry No.")
+            exit(ReservationEntry."Entry No." + 1)
     end;
 
 }
