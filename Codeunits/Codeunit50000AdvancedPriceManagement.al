@@ -109,11 +109,10 @@ codeunit 50000 "Advanced Price Management"
                     PurchaseDiscount.Init;
                     PurchaseDiscount."Item No." := ItemTemp."No.";
                     PurchaseDiscount."Vendor No." := VendorNo;
-                    PurchaseDiscount."Minimum Quantity" := 1;           //Note: should be changed to a var!
+                    PurchaseDiscount."Minimum Quantity" := 0;           //Note: should be changed to a var!
                     PurchaseDiscount."Unit of Measure Code" := 'PCS';   //Note: should be changed to a var!
                     PurchaseDiscount."Starting Date" := StartingDate;
                     PurchaseDiscount."Currency Code" := Vendor."Currency Code";
-                    //PurchaseDiscount."Variant Code" := ?              Does not support variants at the moment - SEC does not use variants
                     PurchaseDiscount."Line Discount %" := DiscPct;
                     PurchaseDiscount."Customer Markup" := CustomerMarkup;
                     if not PurchaseDiscount.Insert(true) then
@@ -623,4 +622,17 @@ codeunit 50000 "Advanced Price Management"
             until SalesListPrice.Next() = 0;
     end;
 
+    procedure UpdateTransferPrices(ItemDiscGroupCode: Code[20]; NewPercentage: Decimal)
+    var
+        Item: Record Item;
+        UpdateReport: Report "Update Transfer Price %";
+    begin
+        UpdateReport.SetTranferPricePercentage(NewPercentage);
+        if ItemDiscGroupCode <> '' then begin
+            item.SetRange("Item Disc. Group", ItemDiscGroupCode);
+            UpdateReport.SetTableView(Item);
+        end;
+        UpdateReport.UseRequestPage(false);
+        UpdateReport.RunModal();
+    End;
 }
