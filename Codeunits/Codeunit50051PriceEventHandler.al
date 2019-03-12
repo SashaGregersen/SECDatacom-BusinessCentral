@@ -187,4 +187,16 @@ codeunit 50051 "Price Event Handler"
         AdvPriceMgt.CreateSalesPriceFromPurchasePriceMarkup(Rec);
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, codeunit::"Purch. Price Calc. Mgt.", 'OnAfterFindPurchLineDisc', '', true, true)]
+    local procedure PurchPriceCalcMgtOnAfterFindPurchLineDisc(VAR ToPurchaseLineDiscount: Record "Purchase Line Discount"; VAR FromPurchaseLineDiscount: Record "Purchase Line Discount"; ItemNo: Code[20]; QuantityPerUoM: Decimal; Quantity: Decimal; ShowAll: Boolean)
+    var
+        PurchaseDisc: Record "Purchase Line Discount";
+    begin
+        if ToPurchaseLineDiscount.FindSet(true, false) then
+            repeat
+                ToPurchaseLineDiscount."Line Discount %" := 0;
+                ToPurchaseLineDiscount.Modify(false);
+            until ToPurchaseLineDiscount.Next() = 0;
+    end;
+
 }
