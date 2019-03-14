@@ -9164,7 +9164,6 @@ Cstr(Fields!Var_ID_Lbl.Value)
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
-                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell>
@@ -9261,7 +9260,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!Var_ID_Lbl.Value</Value>
+                                                    <Value>=Fields!Var_ID.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -9277,6 +9276,7 @@ Cstr(Fields!Var_ID_Lbl.Value)
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
+                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                     </TablixCells>
@@ -11812,6 +11812,9 @@ End Function</Code>
         </Field>
         <Field Name="Var_ID_Lbl">
           <DataField>Var_ID_Lbl</DataField>
+        </Field>
+        <Field Name="Var_ID">
+          <DataField>Var_ID</DataField>
         </Field>
         <Field Name="CompanyAddr1">
           <DataField>CompanyAddr1</DataField>
