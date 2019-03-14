@@ -430,21 +430,25 @@ codeunit 50054 "Sales Order Event Handler"
         end;
     end;
 
-    [EventSubscriber(ObjectType::Codeunit, codeunit::"Release Sales Document", 'OnBeforeReleaseSalesDoc', '', true, true)]
-    local procedure OnBeforeReleaseSalesDoc(VAR SalesHeader: Record "Sales Header"; PreviewMode: Boolean)
+    [EventSubscriber(ObjectType::Codeunit, codeunit::"Release Sales Document", 'OnBeforeModifySalesDoc', '', true, true)]
+    local procedure ReleaseSalesDocOnBeforeModifySalesDoc(VAR SalesHeader: Record "Sales Header"; PreviewMode: Boolean; VAR IsHandled: Boolean)
     var
         CustChkCrLimit: Codeunit "Cust-Check Cr. Limit";
+        Conf001: TextConst DAN = 'Debitorens kreditmaksimum er overskredet. Ønsker du at forsætte?', ENU = 'The customer''s credit limit has been exceeded. Do you want to continue?';
     begin
-        if not CustChkCrLimit.SalesHeaderCheck(SalesHeader) then
-            Error('Creditlimit exceeded. Released stopped.');
+        if CustChkCrLimit.SalesHeaderCheck(SalesHeader) then
+            if not Confirm(Conf001) then
+                IsHandled := true;
     end;
 
     [EventSubscriber(ObjectType::Codeunit, codeunit::"Sales-Quote to Order (Yes/No)", 'OnBeforeRun', '', true, true)]
     local procedure SalesQuoteToOrderOnBeforeRun(VAR SalesHeader: Record "Sales Header"; VAR IsHandled: Boolean)
     var
         CustChkCrLimit: Codeunit "Cust-Check Cr. Limit";
+        Conf001: TextConst DAN = 'Debitorens kreditmaksimum er overskredet. Ønsker du at forsætte?', ENU = 'The customer''s credit limit has been exceeded. Do you want to continue?';
     begin
-        if not CustChkCrLimit.SalesHeaderCheck(SalesHeader) then
-            Error('Creditlimit exceeded. Quote not converted.');
+        if CustChkCrLimit.SalesHeaderCheck(SalesHeader) then
+            if not Confirm(Conf001) then
+                IsHandled := true;
     end;
 }
