@@ -14,6 +14,7 @@ report 50010 "SEC Purchase Order"
             DataItemTableView = SORTING ("Document Type", "No.") WHERE ("Document Type" = CONST (Order));
             RequestFilterFields = "No.", "Buy-from Vendor No.", "No. Printed";
             RequestFilterHeading = 'Purchase Order';
+
             column(DocType_PurchHeader; "Document Type")
             {
             }
@@ -109,6 +110,9 @@ report 50010 "SEC Purchase Order"
             {
             }
             column(Var_ID_Lbl; VarIDLbl)
+            {
+            }
+            column(Var_ID; VarRec."VAR id")
             {
             }
             //alasd
@@ -987,6 +991,12 @@ report 50010 "SEC Purchase Order"
                     clear(Resell);
                     Clear(ResellerCountryRegion);
                 end;
+
+                Clear(VARRec);
+                VarRec.SetCurrentKey("Customer No.", "Vendor No.");
+                VarRec.SetRange("Customer No.", Reseller);
+                VarRec.SetRange("Vendor No.", "Buy-from Vendor No.");
+                if VARRec.FindFirst() then;
                 //<< NC
 
                 if not IsReportInPreviewMode then
@@ -1213,6 +1223,7 @@ report 50010 "SEC Purchase Order"
         VarIDLbl: Label 'VAR ID:';
         //<< NC
         TotalPrepmtLineAmount: Decimal;
+        VARRec: Record "VAR";
 
     procedure InitializeRequest(NewNoOfCopies: Integer; NewShowInternalInfo: Boolean; NewArchiveDocument: Boolean; NewLogInteraction: Boolean)
     begin

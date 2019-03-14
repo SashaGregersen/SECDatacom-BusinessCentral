@@ -4,6 +4,7 @@ page 50008 "VAR"
     UsageCategory = Lists;
     ApplicationArea = All;
     SourceTable = "VAR";
+    PopulateAllFields = true;
 
     layout
     {

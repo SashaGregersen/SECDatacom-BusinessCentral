@@ -429,4 +429,22 @@ codeunit 50054 "Sales Order Event Handler"
             Codeunit.Run(EdiProfile."EDI Object", EdiProfile);
         end;
     end;
+
+    [EventSubscriber(ObjectType::Codeunit, codeunit::"Release Sales Document", 'OnBeforeReleaseSalesDoc', '', true, true)]
+    local procedure OnBeforeReleaseSalesDoc(VAR SalesHeader: Record "Sales Header"; PreviewMode: Boolean)
+    var
+        CustChkCrLimit: Codeunit "Cust-Check Cr. Limit";
+    begin
+        if not CustChkCrLimit.SalesHeaderCheck(SalesHeader) then
+            Error('Creditlimit exceeded. Released stopped.');
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, codeunit::"Sales-Quote to Order (Yes/No)", 'OnBeforeRun', '', true, true)]
+    local procedure SalesQuoteToOrderOnBeforeRun(VAR SalesHeader: Record "Sales Header"; VAR IsHandled: Boolean)
+    var
+        CustChkCrLimit: Codeunit "Cust-Check Cr. Limit";
+    begin
+        if not CustChkCrLimit.SalesHeaderCheck(SalesHeader) then
+            Error('Creditlimit exceeded. Quote not converted.');
+    end;
 }

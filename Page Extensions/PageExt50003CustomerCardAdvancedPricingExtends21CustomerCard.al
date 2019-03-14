@@ -2,6 +2,22 @@ pageextension 50003 "Customer Card Advanced Pricing" extends "Customer Card"
 {
     layout
     {
+        modify("Credit Limit (LCY)")
+        {
+            Editable = false;
+        }
+        addbefore("Credit Limit (LCY)")
+        {
+            field("Insured Risk"; "Insured Risk")
+            {
+                ApplicationArea = all;
+            }
+            field("UnInsured Risk"; "UnInsured Risk")
+            {
+                ApplicationArea = all;
+            }
+        }
+
         addafter("IC Partner Code")
         {
             field("Customer Type"; "Customer Type")
