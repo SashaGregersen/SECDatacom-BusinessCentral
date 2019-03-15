@@ -37,7 +37,6 @@ codeunit 50050 "Item Event handler"
     begin
         If not runtrigger then
             EXIT;
-        SyncMasterData.SetItemDefaults(Rec);
         InventorySetup.get;
         IF InventorySetup."Synchronize Item" = FALSE then
             Exit;
