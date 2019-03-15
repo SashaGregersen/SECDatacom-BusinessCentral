@@ -16,15 +16,8 @@ pageextension 50017 "Expense Management Role Center" extends "Expense Management
 
         }
 
-        addafter("Send Status Email to Approvers")
-        {
-            action("Send Reminder E-mail to Expense Users")
-            {
-                RunObject = codeunit "Reminder E-Mail";
-            }
-        }
 
-        addafter("Send Reminder E-mail to Expense Users")
+        addafter("Send Status Email to Approvers")
         {
             action("Expense Approval E-mail")
             {
