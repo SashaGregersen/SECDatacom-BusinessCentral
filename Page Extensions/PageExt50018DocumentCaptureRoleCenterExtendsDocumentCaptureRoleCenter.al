@@ -11,12 +11,7 @@ pageextension 50018 "Documnet Capture Role Center" extends "Document Capture Rol
         {
             action("Send Status Email to Approvers")
             {
-                trigger OnAction()
-                var
-                    SendStatusEmailtoApprovers: Codeunit 6085712;
-                begin
-                    SendStatusEmailtoApprovers.Run();
-                end;
+                RunObject = codeunit "Purch. Approval E-Mail";
             }
 
         }

@@ -59,23 +59,6 @@ tableextension 50020 CustomerType extends 18
             TableRelation = Company.Name;
             Editable = false;
         }
-
-        field(50004; "Insured Risk"; Decimal)
-        {
-            DataClassification = ToBeClassified;
-            trigger OnValidate()
-            begin
-                Validate("Credit Limit (LCY)", "Insured Risk" + "UnInsured Risk");
-            end;
-        }
-        field(50005; "UnInsured Risk"; Decimal)
-        {
-            DataClassification = ToBeClassified;
-            trigger OnValidate()
-            begin
-                Validate("Credit Limit (LCY)", "Insured Risk" + "UnInsured Risk");
-            end;
-        }
     }
 
 }
