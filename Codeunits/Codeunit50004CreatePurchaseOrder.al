@@ -19,6 +19,7 @@ codeunit 50004 "Create Purchase Order"
         Item: Record Item;
         AdvPriceMgt: Codeunit "Advanced Price Management";
         BidMgt: Codeunit "Bid Management";
+        MessageTxt: Text;
     begin
         GlobalLineCounter := 0;
         SalesLine.SetRange("Document No.", SalesHeader."No.");
@@ -50,7 +51,7 @@ codeunit 50004 "Create Purchase Order"
 
                     if PurchasePrice."Direct Unit Cost" <> 0 then begin
                         if not FindPurchaseHeader(VendorNo, CurrencyCode, PurchHeader) then
-                            CreatePurchHeader(SalesHeader, VendorNo, CurrencyCode, SalesLine."Bid No.", PurchHeader);
+                            MessageTxt := CreatePurchHeader(SalesHeader, VendorNo, CurrencyCode, SalesLine."Bid No.", PurchHeader);
                         CreatePurchLine(PurchHeader, SalesHeader, SalesLine, PurchasePrice."Direct Unit Cost", PurchLine);
                         ReserveItemOnPurchOrder(SalesLine, PurchLine);
                         GlobalLineCounter := GlobalLineCounter + 1;
@@ -59,35 +60,35 @@ codeunit 50004 "Create Purchase Order"
             until SalesLine.next = 0;
 
         if GlobalLineCounter = 0 then
-            Message('All items are already on purchase orders or reserved against inventory')
-        else
+            Message('No lines created. All items are either already on purchase orders or reserved against inventory, or do not have a purchase price')
+        else begin
+            if MessageTxt <> '' then
+                Message(MessageTxt);
             Message(StrSubstNo('%1 Purchase Lines created', GlobalLineCounter));
+        end;
     end;
 
-    procedure CreatePurchHeader(SalesHeader: record "Sales Header"; VendorNo: code[20]; CurrencyCode: code[10]; VendorBidNo: code[20]; var PurchHeader: record "Purchase Header")
+    procedure CreatePurchHeader(SalesHeader: record "Sales Header"; VendorNo: code[20]; CurrencyCode: code[10]; VendorBidNo: code[20]; var PurchHeader: record "Purchase Header"): Text
     var
 
     begin
-        PurchHeader.SetRange("No.", PurchHeader."No.");
-        if not PurchHeader.FindFirst() then begin
-            PurchHeader.Init;
-            PurchHeader."No." := '';
-            PurchHeader."Document Type" := PurchHeader."Document Type"::Order;
-            PurchHeader.Validate("Buy-from Vendor No.", VendorNo);
-            PurchHeader.Validate("Currency Code", CurrencyCode);
-            if VendorBidNo <> '' then
-                PurchHeader.Validate("Vendor Shipment No.", VendorBidNo);
-            PurchHeader.Insert(true);
-            if (SalesHeader."Drop-Shipment" = true) or (SalesHeader."Ship-To-Code" <> '') then begin
-                PurchHeader.SetShipToAddress(SalesHeader."Ship-to Name", SalesHeader."Ship-to Name 2", SalesHeader."Ship-to Address",
-                SalesHeader."Ship-to Address 2", SalesHeader."Ship-to City", SalesHeader."Ship-to Post Code",
-                SalesHeader."Ship-to Country/Region Code", SalesHeader."Ship-to Country/Region Code");
-            end;
-            PurchHeader."End Customer" := SalesHeader."End Customer";
-            PurchHeader.Reseller := SalesHeader.Reseller;
-            PurchHeader.Modify(true);
-            Message('Purchase Order %1 created', PurchHeader."No.");
+        PurchHeader.Init;
+        PurchHeader."No." := '';
+        PurchHeader."Document Type" := PurchHeader."Document Type"::Order;
+        PurchHeader.Insert(true);
+        PurchHeader.Validate("Buy-from Vendor No.", VendorNo);
+        PurchHeader.Validate("Currency Code", CurrencyCode);
+        if VendorBidNo <> '' then
+            PurchHeader.Validate("Vendor Shipment No.", VendorBidNo);
+        if (SalesHeader."Drop-Shipment" = true) or (SalesHeader."Ship-To-Code" <> '') then begin
+            PurchHeader.SetShipToAddress(SalesHeader."Ship-to Name", SalesHeader."Ship-to Name 2", SalesHeader."Ship-to Address",
+            SalesHeader."Ship-to Address 2", SalesHeader."Ship-to City", SalesHeader."Ship-to Post Code",
+            SalesHeader."Ship-to Country/Region Code", SalesHeader."Ship-to Country/Region Code");
         end;
+        PurchHeader."End Customer" := SalesHeader."End Customer";
+        PurchHeader.Reseller := SalesHeader.Reseller;
+        PurchHeader.Modify(true);
+        exit(StrSubstNo('Purchase Order %1 created', PurchHeader."No."));
     end;
 
     procedure CreatePurchLine(PurchHeader: record "Purchase Header"; SalesHeader: record "sales header"; SalesLine: record "Sales Line"; PurchasePrice: Decimal; var PurchLine: Record "Purchase Line")
@@ -216,13 +217,17 @@ codeunit 50004 "Create Purchase Order"
 
 
 
-    local procedure FindPurchaseHeader(VendorNo: code[20]; CurrencyCode: Code[20]; var PurchHeader: record "Purchase Header"): Boolean
+    local procedure FindPurchaseHeader(VendorNo: code[20]; CurrencyCode: Code[20]; var PurchHeader: record "Purchase Header") FoundHeader: Boolean
     begin
         PurchHeader.SetRange("Document Type", PurchHeader."Document Type"::Order);
         PurchHeader.SetRange("Buy-from Vendor No.", VendorNo);
         PurchHeader.SetRange("Currency Code", CurrencyCode);
         PurchHeader.SetRange(Status, PurchHeader.Status::Open);
-        exit(PurchHeader.FindFirst());
+        FoundHeader := PurchHeader.FindFirst();
+        PurchHeader.SetRange("Document Type");
+        PurchHeader.SetRange("Buy-from Vendor No.");
+        PurchHeader.SetRange("Currency Code");
+        PurchHeader.SetRange(Status);
     end;
 
     local procedure GetNextReservantionEntryNo(): Integer;
