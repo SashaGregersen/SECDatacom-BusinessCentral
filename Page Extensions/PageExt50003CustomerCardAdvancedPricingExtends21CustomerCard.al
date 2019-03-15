@@ -2,6 +2,46 @@ pageextension 50003 "Customer Card Advanced Pricing" extends "Customer Card"
 {
     layout
     {
+        modify("Credit Limit (LCY)")
+        {
+            Editable = false;
+        }
+        addbefore("Credit Limit (LCY)")
+        {
+            field("Insured Risk"; "Insured Risk")
+            {
+                ApplicationArea = all;
+                trigger OnValidate()
+                begin
+                    if not CreditInsurance.Get("No.") then begin
+                        CreditInsurance."Customer No." := "No.";
+                        CreditInsurance.Insert();
+                    end;
+
+                    CreditInsurance.Validate("Insured Risk", "Insured Risk");
+                    CreditInsurance.Modify();
+
+                    Validate("Credit Limit (LCY)", "Insured Risk" + "UnInsured Risk");
+                end;
+            }
+            field("UnInsured Risk"; "UnInsured Risk")
+            {
+                ApplicationArea = all;
+                trigger OnValidate()
+                begin
+                    if not CreditInsurance.Get("No.") then begin
+                        CreditInsurance."Customer No." := "No.";
+                        CreditInsurance.Insert();
+                    end;
+
+                    CreditInsurance.Validate("UnInsured Risk", "UnInsured Risk");
+                    CreditInsurance.Modify();
+
+                    Validate("Credit Limit (LCY)", "Insured Risk" + "UnInsured Risk");
+                end;
+            }
+        }
+
         addafter("IC Partner Code")
         {
             field("Customer Type"; "Customer Type")
@@ -84,7 +124,18 @@ pageextension 50003 "Customer Card Advanced Pricing" extends "Customer Card"
         }
 
     }
+    var
+        CreditInsurance: Record "Credit Insurance";
+        "Insured Risk": Decimal;
+        "UnInsured Risk": Decimal;
 
-
-
+    trigger OnAfterGetCurrRecord()
+    begin
+        "Insured Risk" := 0;
+        "UnInsured Risk" := 0;
+        if CreditInsurance.Get("No.") then begin
+            "Insured Risk" := CreditInsurance."Insured Risk";
+            "UnInsured Risk" := CreditInsurance."UnInsured Risk";
+        end;
+    end;
 }

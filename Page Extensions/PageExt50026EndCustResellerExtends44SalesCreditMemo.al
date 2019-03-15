@@ -30,6 +30,13 @@ pageextension 50026 "End Customer and Reseller 6" extends 44
                 ApplicationArea = all;
             }
         }
+        addbefore("Salesperson Code")
+        {
+            field("Suppress Prices on Printouts"; "Suppress Prices on Printouts")
+            {
+                ApplicationArea = all;
+            }
+        }
         addafter("External Document No.")
         {
             field("Drop-Shipment"; "Drop-Shipment")
@@ -57,23 +64,5 @@ pageextension 50026 "End Customer and Reseller 6" extends 44
 
     }
 
-    actions
-    {
-        addlast(Processing)
-        {
-            action(ShowMyReport)
-            {
-                Image = ItemGroup;
-                trigger OnAction();
-                begin
-                    SalesCrMemo.Run();
-                end;
-            }
 
-        }
-    }
-
-
-    var
-        SalesCrMemo: report 50007;
 }

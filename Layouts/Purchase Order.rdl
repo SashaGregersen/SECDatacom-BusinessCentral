@@ -11813,6 +11813,9 @@ End Function</Code>
         <Field Name="Var_ID_Lbl">
           <DataField>Var_ID_Lbl</DataField>
         </Field>
+        <Field Name="Var_ID">
+          <DataField>Var_ID</DataField>
+        </Field>
         <Field Name="CompanyAddr1">
           <DataField>CompanyAddr1</DataField>
         </Field>

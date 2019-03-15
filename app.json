@@ -34,7 +34,5 @@
     "to": 50099
   },
   "target": "Internal",
-  "runtime": "2.0"
-  
-  
+  "runtime": "2.2"
 }

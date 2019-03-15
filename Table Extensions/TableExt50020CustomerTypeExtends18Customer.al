@@ -59,7 +59,6 @@ tableextension 50020 CustomerType extends 18
             TableRelation = Company.Name;
             Editable = false;
         }
-
     }
 
 }
