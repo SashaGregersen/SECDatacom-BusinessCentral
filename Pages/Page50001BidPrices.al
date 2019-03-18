@@ -69,7 +69,7 @@ page 50001 "Bid Prices"
                     Bid.Init();
                     Bid.Insert(true);
                     if Item.Get(Rec.GetFilter("item No.")) then begin
-                        bid.Validate("Vendor No.", Item."Vendor No.");
+                        Bid.Validate("Vendor No.", Item."Vendor No.");
                         Bid.Modify(true);
                     end;
                 end;
