@@ -7,6 +7,7 @@ pageextension 50021 "End Customer and Reseller" extends 42
             field("End Customer"; "End Customer")
             {
                 ApplicationArea = all;
+                Caption = 'End Customer No.';
             }
         }
         addbefore("End Customer")
@@ -14,18 +15,43 @@ pageextension 50021 "End Customer and Reseller" extends 42
             field(Reseller; Reseller)
             {
                 ApplicationArea = all;
+                Caption = 'Reseller No.';
             }
         }
-        addafter("reseller")
+        addafter("End Customer")
         {
-            field(Subsidiary; Subsidiary)
+            field("End Customer Name"; EndCustName)
             {
                 ApplicationArea = all;
             }
         }
+        addafter("reseller")
+        {
+            field("Reseller name"; Resellername)
+            {
+                ApplicationArea = all;
+            }
+            field(Subsidiary; Subsidiary)
+            {
+                ApplicationArea = all;
+                Caption = 'Subsidiary No.';
+            }
+        }
         addafter(Subsidiary)
         {
+            field("Subsidiary Name"; SubsidiaryName)
+            {
+                ApplicationArea = all;
+            }
             field("Financing Partner"; "Financing Partner")
+            {
+                ApplicationArea = all;
+                Caption = 'Financing Partner No.';
+            }
+        }
+        addafter("Financing Partner")
+        {
+            field("Financing Partner Name"; FinanceName)
             {
                 ApplicationArea = all;
             }
@@ -184,6 +210,10 @@ pageextension 50021 "End Customer and Reseller" extends 42
     var
         SalesOrder: report 50005;
         EdiDocument: Boolean;
+        EndCustName: text[50];
+        ResellerName: text[50];
+        SubsidiaryName: text[50];
+        FinanceName: text[50];
 
     trigger OnAfterGetCurrRecord();
     var
@@ -192,5 +222,31 @@ pageextension 50021 "End Customer and Reseller" extends 42
         EdiProfile.SetRange(Type, EdiProfile.Type::Customer);
         EdiProfile.SetRange("No.", "Sell-to Customer No.");
         EdiDocument := EdiProfile.FindFirst();
+    end;
+
+    trigger OnModifyRecord(): Boolean
+    var
+        Customer: Record customer;
+    begin
+        if "End Customer" <> '' then begin
+            Customer.get("End Customer");
+            EndCustName := Customer.Name;
+            Rec.Modify(true);
+        end;
+        if "Reseller" <> '' then begin
+            Customer.get("Reseller");
+            Resellername := Customer.Name;
+            Rec.Modify(true);
+        end;
+        if "Subsidiary" <> '' then begin
+            Customer.get("Subsidiary");
+            SubsidiaryName := Customer.Name;
+            Rec.Modify(true);
+        end;
+        if "Financing Partner" <> '' then begin
+            Customer.get("Financing Partner");
+            FinanceName := Customer.Name;
+            Rec.Modify(true);
+        end;
     end;
 }

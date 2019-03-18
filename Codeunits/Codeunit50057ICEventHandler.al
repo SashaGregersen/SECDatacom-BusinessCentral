@@ -34,21 +34,21 @@ codeunit 50057 "IC Event Handler"
 
     local procedure CopyAdvPricingHeaderFields(LocalSalesHeader: Record "Sales Header"; SalesHeaderOtherCompany: Record "Sales Header"; SubsidiaryCustomerNo: code[20])
     begin
+        LocalSalesHeader.Validate(Reseller, SalesHeaderOtherCompany.Reseller);
+        LocalSalesHeader.Validate(Subsidiary, SubsidiaryCustomerNo);
         if SalesHeaderOtherCompany."End Customer" <> '' then
             LocalSalesHeader.Validate("End Customer", SalesHeaderOtherCompany."End Customer");
-        if SalesHeaderOtherCompany."Drop-Shipment" then begin
-            LocalSalesHeader."Ship-to Address" := SalesHeaderOtherCompany."Ship-to Address";
-            LocalSalesHeader."Ship-to Address 2" := SalesHeaderOtherCompany."Ship-to Address 2";
-            LocalSalesHeader."Ship-to City" := SalesHeaderOtherCompany."Ship-to City";
-            LocalSalesHeader."Ship-to Contact" := SalesHeaderOtherCompany."Ship-to Contact";
-            LocalSalesHeader."Ship-to Country/Region Code" := SalesHeaderOtherCompany."Ship-to Country/Region Code";
-            LocalSalesHeader."Ship-to County" := SalesHeaderOtherCompany."Ship-to County";
-            LocalSalesHeader."Ship-to Name" := SalesHeaderOtherCompany."Ship-to Name";
-            LocalSalesHeader."Ship-to Name 2" := SalesHeaderOtherCompany."Ship-to Name 2";
-            LocalSalesHeader."Ship-to Post Code" := SalesHeaderOtherCompany."Ship-to Post Code";
-        end;
-        LocalSalesHeader.Reseller := SalesHeaderOtherCompany.Reseller;
-        LocalSalesHeader.Subsidiary := SubsidiaryCustomerNo;
+        //if SalesHeaderOtherCompany."Drop-Shipment" then begin        
+        LocalSalesHeader."Ship-to Address" := SalesHeaderOtherCompany."Ship-to Address";
+        LocalSalesHeader."Ship-to Address 2" := SalesHeaderOtherCompany."Ship-to Address 2";
+        LocalSalesHeader."Ship-to City" := SalesHeaderOtherCompany."Ship-to City";
+        LocalSalesHeader."Ship-to Contact" := SalesHeaderOtherCompany."Ship-to Contact";
+        LocalSalesHeader."Ship-to Country/Region Code" := SalesHeaderOtherCompany."Ship-to Country/Region Code";
+        LocalSalesHeader."Ship-to County" := SalesHeaderOtherCompany."Ship-to County";
+        LocalSalesHeader."Ship-to Name" := SalesHeaderOtherCompany."Ship-to Name";
+        LocalSalesHeader."Ship-to Name 2" := SalesHeaderOtherCompany."Ship-to Name 2";
+        LocalSalesHeader."Ship-to Post Code" := SalesHeaderOtherCompany."Ship-to Post Code";
+        //end;        
         LocalSalesHeader.Modify(false);
     end;
 
