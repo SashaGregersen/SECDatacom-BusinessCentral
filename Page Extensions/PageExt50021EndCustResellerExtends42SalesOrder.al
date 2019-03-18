@@ -8,6 +8,16 @@ pageextension 50021 "End Customer and Reseller" extends 42
             {
                 ApplicationArea = all;
                 Caption = 'End Customer No.';
+                trigger OnValidate()
+                var
+                    Customer: Record customer;
+                begin
+                    if "End Customer" <> '' then begin
+                        Customer.get("End Customer");
+                        EndCustName := Customer.Name;
+                        Rec.Modify(true);
+                    end;
+                end;
             }
         }
         addbefore("End Customer")
@@ -16,6 +26,17 @@ pageextension 50021 "End Customer and Reseller" extends 42
             {
                 ApplicationArea = all;
                 Caption = 'Reseller No.';
+                trigger OnValidate()
+                var
+                    Customer: Record customer;
+                begin
+                    if "Reseller" <> '' then begin
+                        Customer.get("Reseller");
+                        Resellername := Customer.Name;
+                        Rec.Modify(true);
+                    end;
+                end;
+
             }
         }
         addafter("End Customer")
@@ -23,18 +44,30 @@ pageextension 50021 "End Customer and Reseller" extends 42
             field("End Customer Name"; EndCustName)
             {
                 ApplicationArea = all;
+                Editable = false;
             }
         }
         addafter("reseller")
         {
-            field("Reseller name"; Resellername)
+            field("Reseller Name"; Resellername)
             {
                 ApplicationArea = all;
+                Editable = false;
             }
             field(Subsidiary; Subsidiary)
             {
                 ApplicationArea = all;
                 Caption = 'Subsidiary No.';
+                trigger OnValidate()
+                var
+                    Customer: Record customer;
+                begin
+                    if "Subsidiary" <> '' then begin
+                        Customer.get("Subsidiary");
+                        SubsidiaryName := Customer.Name;
+                        Rec.Modify(true);
+                    end;
+                end;
             }
         }
         addafter(Subsidiary)
@@ -42,11 +75,22 @@ pageextension 50021 "End Customer and Reseller" extends 42
             field("Subsidiary Name"; SubsidiaryName)
             {
                 ApplicationArea = all;
+                Editable = false;
             }
             field("Financing Partner"; "Financing Partner")
             {
                 ApplicationArea = all;
                 Caption = 'Financing Partner No.';
+                trigger OnValidate()
+                var
+                    Customer: Record customer;
+                begin
+                    if "Financing Partner" <> '' then begin
+                        Customer.get("Financing Partner");
+                        FinanceName := Customer.Name;
+                        Rec.Modify(true);
+                    end;
+                end;
             }
         }
         addafter("Financing Partner")
@@ -54,6 +98,7 @@ pageextension 50021 "End Customer and Reseller" extends 42
             field("Financing Partner Name"; FinanceName)
             {
                 ApplicationArea = all;
+                Editable = false;
             }
         }
         addafter("External Document No.")
@@ -222,31 +267,5 @@ pageextension 50021 "End Customer and Reseller" extends 42
         EdiProfile.SetRange(Type, EdiProfile.Type::Customer);
         EdiProfile.SetRange("No.", "Sell-to Customer No.");
         EdiDocument := EdiProfile.FindFirst();
-    end;
-
-    trigger OnModifyRecord(): Boolean
-    var
-        Customer: Record customer;
-    begin
-        if "End Customer" <> '' then begin
-            Customer.get("End Customer");
-            EndCustName := Customer.Name;
-            Rec.Modify(true);
-        end;
-        if "Reseller" <> '' then begin
-            Customer.get("Reseller");
-            Resellername := Customer.Name;
-            Rec.Modify(true);
-        end;
-        if "Subsidiary" <> '' then begin
-            Customer.get("Subsidiary");
-            SubsidiaryName := Customer.Name;
-            Rec.Modify(true);
-        end;
-        if "Financing Partner" <> '' then begin
-            Customer.get("Financing Partner");
-            FinanceName := Customer.Name;
-            Rec.Modify(true);
-        end;
     end;
 }
