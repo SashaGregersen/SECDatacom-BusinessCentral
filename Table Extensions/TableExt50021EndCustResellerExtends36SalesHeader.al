@@ -11,12 +11,11 @@ tableextension 50021 "End Customer and Reseller" extends 36
                 customer: record customer;
                 shiptoadress: record "Ship-to Address";
             begin
-                If customer.get(Rec."End Customer") then
+                If customer.get(Rec."End Customer") then begin
                     if customer."Customer Type" <> customer."Customer Type"::"End Customer" then
-                        error('Not an end-customer');
-                if "Drop-Shipment" and "Ship directly from supplier" then begin
-                    Clear("Ship-To-Code");
-                    SetShipToAddressOnSalesOrder(Customer);
+                        error('Not an end-customer')
+                    else
+                        SetDropShipment();
                 end;
             end;
 
@@ -47,10 +46,7 @@ tableextension 50021 "End Customer and Reseller" extends 36
                         if Subsidiary = '' then begin
                             validate("Sell-to Customer No.", customer."No.");
                             validate("Sell-to-Customer-Name", customer.Name);
-                            if ("Drop-Shipment" = false) and ("Ship directly from supplier") then begin
-                                Clear("Ship-To-Code");
-                                SetShipToAddressOnSalesOrder(Customer);
-                            end;
+                            SetDropShipment();
                         end;
             end;
 
@@ -88,6 +84,7 @@ tableextension 50021 "End Customer and Reseller" extends 36
                         validate("Sell-to Customer No.", Subsidiary);
                         validate("Bill-to Customer No.", Subsidiary);
                         validate("sell-to-Customer-Name", customer.Name);
+                        SetDropShipment();
                     end;
                 end;
             end;
@@ -153,33 +150,7 @@ tableextension 50021 "End Customer and Reseller" extends 36
                 ShipToAdress: record "Ship-to Address";
                 Customer: record customer;
             begin
-                if "Ship directly from supplier" = false then begin
-                    if Subsidiary <> '' then begin
-                        Customer.Get(rec.Subsidiary);
-                        Clear("Ship-To-Code");
-                        SetShipToAddressOnSalesOrder(Customer);
-                    end else begin
-                        if "Drop-Shipment" then begin
-                            Customer.get(rec."End Customer");
-                            Clear("Ship-To-Code");
-                            SetShipToAddressOnSalesOrder(Customer);
-                        end else begin
-                            Customer.Get(rec.Reseller);
-                            Clear("Ship-To-Code");
-                            SetShipToAddressOnSalesOrder(Customer);
-                        end;
-                    end;
-                end else begin
-                    if "Drop-Shipment" then begin
-                        Customer.get(rec."End Customer");
-                        Clear("Ship-To-Code");
-                        SetShipToAddressOnSalesOrder(Customer);
-                    end else begin
-                        Customer.Get(rec.Reseller);
-                        Clear("Ship-To-Code");
-                        SetShipToAddressOnSalesOrder(Customer);
-                    end;
-                end;
+                SetDropShipment();
             end;
         }
 
@@ -252,15 +223,7 @@ tableextension 50021 "End Customer and Reseller" extends 36
             var
                 Customer: record customer;
             begin
-                if "Ship directly from supplier" = false then begin
-                    if Subsidiary <> '' then begin
-                        Customer.Get(rec.Subsidiary);
-                        Clear("Ship-To-Code");
-                        SetShipToAddressOnSalesOrder(Customer);
-                    end else
-                        Customer.Get(Subsidiary);
-                end else
-                    CheckDropShipmentAndSetShipToAddressOnSalesOrder(Customer);
+                SetDropShipment();
             end;
         }
 
@@ -294,6 +257,40 @@ tableextension 50021 "End Customer and Reseller" extends 36
             Clear("Ship-To-Code");
             SetShipToAddress(Customer.Name, customer."Name 2", customer.Address, Customer."Address 2", customer.City, Customer."Post Code", customer.County, customer."Country/Region Code");
             rec.Validate("Ship-to Contact", Customer.Contact);
+        end;
+    end;
+
+    procedure SetDropShipment()
+    var
+        ShipToAdress: record "Ship-to Address";
+        Customer: record customer;
+    begin
+        if "Ship directly from supplier" = false then begin
+            if Subsidiary <> '' then begin
+                Customer.Get(rec.Subsidiary);
+                Clear("Ship-To-Code");
+                SetShipToAddressOnSalesOrder(Customer);
+            end else begin
+                if "Drop-Shipment" then begin
+                    Customer.get(rec."End Customer");
+                    Clear("Ship-To-Code");
+                    SetShipToAddressOnSalesOrder(Customer);
+                end else begin
+                    Customer.Get(rec.Reseller);
+                    Clear("Ship-To-Code");
+                    SetShipToAddressOnSalesOrder(Customer);
+                end;
+            end;
+        end else begin
+            if "Drop-Shipment" then begin
+                Customer.get(rec."End Customer");
+                Clear("Ship-To-Code");
+                SetShipToAddressOnSalesOrder(Customer);
+            end else begin
+                Customer.Get(rec.Reseller);
+                Clear("Ship-To-Code");
+                SetShipToAddressOnSalesOrder(Customer);
+            end;
         end;
     end;
 
