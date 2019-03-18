@@ -10,15 +10,14 @@ tableextension 50021 "End Customer and Reseller" extends 36
             var
                 customer: record customer;
                 shiptoadress: record "Ship-to Address";
-                //SalesOrderPage:page "Sales Order";
             begin
                 If customer.get(Rec."End Customer") then begin
                     if customer."Customer Type" <> customer."Customer Type"::"End Customer" then
                         error('Not an end-customer')
-                    else
-                        //SalesOrderPage.GetRecord(Rec);
-
+                    else begin
+                        rec.validate("End Customer Name", customer.name);
                         SetDropShipment();
+                    end;
                 end;
             end;
 
@@ -49,6 +48,7 @@ tableextension 50021 "End Customer and Reseller" extends 36
                         if Subsidiary = '' then begin
                             validate("Sell-to Customer No.", customer."No.");
                             validate("Sell-to-Customer-Name", customer.Name);
+                            rec.validate("Reseller Name", customer.name);
                             SetDropShipment();
                         end;
             end;
@@ -87,6 +87,7 @@ tableextension 50021 "End Customer and Reseller" extends 36
                         validate("Sell-to Customer No.", Subsidiary);
                         validate("Bill-to Customer No.", Subsidiary);
                         validate("sell-to-Customer-Name", customer.Name);
+                        rec.validate("Subsidiary Name", customer.name);
                         SetDropShipment();
                     end;
                 end;
@@ -128,6 +129,7 @@ tableextension 50021 "End Customer and Reseller" extends 36
                         Validate("Bill-to Country/Region Code", customer."Country/Region Code");
                         validate("Bill-to Post Code", customer."Post Code");
                         validate("Bill-to County", customer.County);
+                        rec.validate("Financing Partner Name", customer.name);
                     end else
                         error('Not a Financing Partner');
             end;
@@ -228,6 +230,26 @@ tableextension 50021 "End Customer and Reseller" extends 36
             begin
                 SetDropShipment();
             end;
+        }
+        field(50010; "Reseller Name"; text[50])
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
+        field(50011; "End Customer Name"; text[50])
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
+        field(50012; "Subsidiary Name"; text[50])
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
+        field(50013; "Financing Partner Name"; text[50])
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
         }
 
     }

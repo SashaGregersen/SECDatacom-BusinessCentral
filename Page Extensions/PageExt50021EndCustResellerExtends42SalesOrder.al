@@ -8,16 +8,6 @@ pageextension 50021 "End Customer and Reseller" extends 42
             {
                 ApplicationArea = all;
                 Caption = 'End Customer No.';
-                trigger OnValidate()
-                var
-                    Customer: Record customer;
-                begin
-                    if "End Customer" <> '' then begin
-                        Customer.get("End Customer");
-                        EndCustName := Customer.Name;
-                        Rec.Modify(true);
-                    end;
-                end;
             }
         }
         addbefore("End Customer")
@@ -26,22 +16,11 @@ pageextension 50021 "End Customer and Reseller" extends 42
             {
                 ApplicationArea = all;
                 Caption = 'Reseller No.';
-                trigger OnValidate()
-                var
-                    Customer: Record customer;
-                begin
-                    if "Reseller" <> '' then begin
-                        Customer.get("Reseller");
-                        Resellername := Customer.Name;
-                        Rec.Modify(true);
-                    end;
-                end;
-
             }
         }
         addafter("End Customer")
         {
-            field("End Customer Name"; EndCustName)
+            field("End Customer Name"; "End Customer Name")
             {
                 ApplicationArea = all;
                 Editable = false;
@@ -49,7 +28,7 @@ pageextension 50021 "End Customer and Reseller" extends 42
         }
         addafter("reseller")
         {
-            field("Reseller Name"; Resellername)
+            field("Reseller Name"; "Reseller Name")
             {
                 ApplicationArea = all;
                 Editable = false;
@@ -58,21 +37,11 @@ pageextension 50021 "End Customer and Reseller" extends 42
             {
                 ApplicationArea = all;
                 Caption = 'Subsidiary No.';
-                trigger OnValidate()
-                var
-                    Customer: Record customer;
-                begin
-                    if "Subsidiary" <> '' then begin
-                        Customer.get("Subsidiary");
-                        SubsidiaryName := Customer.Name;
-                        Rec.Modify(true);
-                    end;
-                end;
             }
         }
         addafter(Subsidiary)
         {
-            field("Subsidiary Name"; SubsidiaryName)
+            field("Subsidiary Name"; "Subsidiary Name")
             {
                 ApplicationArea = all;
                 Editable = false;
@@ -81,21 +50,11 @@ pageextension 50021 "End Customer and Reseller" extends 42
             {
                 ApplicationArea = all;
                 Caption = 'Financing Partner No.';
-                trigger OnValidate()
-                var
-                    Customer: Record customer;
-                begin
-                    if "Financing Partner" <> '' then begin
-                        Customer.get("Financing Partner");
-                        FinanceName := Customer.Name;
-                        Rec.Modify(true);
-                    end;
-                end;
             }
         }
         addafter("Financing Partner")
         {
-            field("Financing Partner Name"; FinanceName)
+            field("Financing Partner Name"; "Financing Partner Name")
             {
                 ApplicationArea = all;
                 Editable = false;
@@ -255,17 +214,15 @@ pageextension 50021 "End Customer and Reseller" extends 42
     var
         SalesOrder: report 50005;
         EdiDocument: Boolean;
-        EndCustName: text[50];
-        ResellerName: text[50];
-        SubsidiaryName: text[50];
-        FinanceName: text[50];
 
     trigger OnAfterGetCurrRecord();
     var
         EdiProfile: Record "EDI Profile";
+        Customer: Record customer;
     begin
         EdiProfile.SetRange(Type, EdiProfile.Type::Customer);
         EdiProfile.SetRange("No.", "Sell-to Customer No.");
         EdiDocument := EdiProfile.FindFirst();
     end;
+
 }
