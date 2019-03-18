@@ -10,11 +10,14 @@ tableextension 50021 "End Customer and Reseller" extends 36
             var
                 customer: record customer;
                 shiptoadress: record "Ship-to Address";
+                //SalesOrderPage:page "Sales Order";
             begin
                 If customer.get(Rec."End Customer") then begin
                     if customer."Customer Type" <> customer."Customer Type"::"End Customer" then
                         error('Not an end-customer')
                     else
+                        //SalesOrderPage.GetRecord(Rec);
+
                         SetDropShipment();
                 end;
             end;
