@@ -57,7 +57,7 @@ tableextension 50020 CustomerType extends 18
         {
             DataClassification = ToBeClassified;
             TableRelation = Company.Name;
-            Editable = false;
+            Editable = true; //ret til false
         }
     }
 

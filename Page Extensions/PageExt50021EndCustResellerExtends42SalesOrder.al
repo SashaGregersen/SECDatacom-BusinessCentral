@@ -35,10 +35,15 @@ pageextension 50021 "End Customer and Reseller" extends 42
             field("Drop-Shipment"; "Drop-Shipment")
             {
                 ApplicationArea = all;
+                Caption = 'Deliver directly to end customer';
+            }
 
+            field("Ship directly from supplier"; "Ship directly from supplier")
+            {
+                ApplicationArea = all;
             }
         }
-        addafter("Drop-Shipment")
+        addafter("Ship directly from supplier")
         {
             field("Suppress Prices on Printouts"; "Suppress Prices on Printouts")
             {

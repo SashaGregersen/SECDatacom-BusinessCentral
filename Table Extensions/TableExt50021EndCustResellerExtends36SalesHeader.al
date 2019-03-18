@@ -14,16 +14,9 @@ tableextension 50021 "End Customer and Reseller" extends 36
                 If customer.get(Rec."End Customer") then
                     if customer."Customer Type" <> customer."Customer Type"::"End Customer" then
                         error('Not an end-customer');
-                if "Drop-Shipment" then begin
+                if "Drop-Shipment" and "Ship directly from supplier" then begin
                     Clear("Ship-To-Code");
-                    if ShipToAdress.get(Customer."No.", Customer."Prefered Shipment Address") then begin
-                        SetShipToAddress(ShipToAdress.Name, ShipToAdress."Name 2", ShipToAdress.Address, ShipToAdress."Address 2", ShipToAdress.City, ShipToAdress."Post Code", shiptoadress.County, shiptoadress."Country/Region Code");
-                        rec.Validate("Ship-to Contact", ShipToAdress.Contact);
-                        rec.validate("Ship-To-Code", shiptoadress.Code);
-                    end else begin
-                        SetShipToAddress(Customer.Name, Customer."Name 2", Customer.Address, Customer."Address 2", Customer.City, Customer."Post Code", Customer.County, Customer."Country/Region Code");
-                        rec.Validate("Ship-to Contact", Customer.Contact);
-                    end;
+                    SetShipToAddressOnSalesOrder(Customer);
                 end;
             end;
 
@@ -54,11 +47,9 @@ tableextension 50021 "End Customer and Reseller" extends 36
                         if Subsidiary = '' then begin
                             validate("Sell-to Customer No.", customer."No.");
                             validate("Sell-to-Customer-Name", customer.Name);
-                            if (rec."Drop-Shipment" = false) and (rec."Prefered Shipment Address" <> '') then begin
-                                shiptoadress.get(customer."No.", customer."Prefered Shipment Address");
-                                SetShipToAddress(ShipToAdress.Name, ShipToAdress."Name 2", ShipToAdress.Address, ShipToAdress."Address 2", ShipToAdress.City, ShipToAdress."Post Code", shiptoadress.County, shiptoadress."Country/Region Code");
-                                rec.Validate("Ship-to Contact", ShipToAdress.Contact);
-                                rec.validate("Ship-To-Code", shiptoadress.Code);
+                            if ("Drop-Shipment" = false) and ("Ship directly from supplier") then begin
+                                Clear("Ship-To-Code");
+                                SetShipToAddressOnSalesOrder(Customer);
                             end;
                         end;
             end;
@@ -162,27 +153,31 @@ tableextension 50021 "End Customer and Reseller" extends 36
                 ShipToAdress: record "Ship-to Address";
                 Customer: record customer;
             begin
-                if "Drop-Shipment" = true then begin
-                    Customer.get(rec."End Customer");
-                    Clear("Ship-To-Code");
-                    if ShipToAdress.get(Customer."No.", Customer."Prefered Shipment Address") then begin
-                        SetShipToAddress(ShipToAdress.Name, ShipToAdress."Name 2", ShipToAdress.Address, ShipToAdress."Address 2", ShipToAdress.City, ShipToAdress."Post Code", shiptoadress.County, shiptoadress."Country/Region Code");
-                        rec.Validate("Ship-to Contact", ShipToAdress.Contact);
-                        rec.validate("Ship-To-Code", shiptoadress.Code);
+                if "Ship directly from supplier" = false then begin
+                    if Subsidiary <> '' then begin
+                        Customer.Get(rec.Subsidiary);
+                        Clear("Ship-To-Code");
+                        SetShipToAddressOnSalesOrder(Customer);
                     end else begin
-                        SetShipToAddress(Customer.Name, Customer."Name 2", Customer.Address, Customer."Address 2", Customer.City, Customer."Post Code", Customer.County, Customer."Country/Region Code");
-                        rec.Validate("Ship-to Contact", Customer.Contact);
+                        if "Drop-Shipment" then begin
+                            Customer.get(rec."End Customer");
+                            Clear("Ship-To-Code");
+                            SetShipToAddressOnSalesOrder(Customer);
+                        end else begin
+                            Customer.Get(rec.Reseller);
+                            Clear("Ship-To-Code");
+                            SetShipToAddressOnSalesOrder(Customer);
+                        end;
                     end;
                 end else begin
-                    Customer.Get(rec."Sell-to Customer No.");
-                    Clear("Ship-To-Code");
-                    if ShipToAdress.get(Customer."No.", Customer."Prefered Shipment Address") then begin
-                        SetShipToAddress(ShipToAdress.Name, ShipToAdress."Name 2", ShipToAdress.Address, ShipToAdress."Address 2", ShipToAdress.City, ShipToAdress."Post Code", shiptoadress.County, shiptoadress."Country/Region Code");
-                        rec.Validate("Ship-to Contact", ShipToAdress.Contact);
-                        rec.validate("Ship-To-Code", shiptoadress.Code);
+                    if "Drop-Shipment" then begin
+                        Customer.get(rec."End Customer");
+                        Clear("Ship-To-Code");
+                        SetShipToAddressOnSalesOrder(Customer);
                     end else begin
-                        SetShipToAddress(rec."Sell-to Customer Name", rec."Sell-to Customer Name 2", rec."Sell-to Address", rec."Sell-to Address 2", rec."Sell-to City", rec."Sell-to Post Code", rec."Sell-to County", rec."Sell-to Country/Region Code");
-                        rec.Validate("Ship-to Contact", rec."Sell-to Contact");
+                        Customer.Get(rec.Reseller);
+                        Clear("Ship-To-Code");
+                        SetShipToAddressOnSalesOrder(Customer);
                     end;
                 end;
             end;
@@ -196,7 +191,7 @@ tableextension 50021 "End Customer and Reseller" extends 36
             var
                 ShipToAdress: record "Ship-to Address";
             begin
-                if "Drop-Shipment" = true then begin
+                if "Drop-Shipment" then begin
                     if not ShipToAdress.Get(rec."End Customer", "Ship-To-Code") then
                         Clear("Ship-To-Code");
                     ShipToAdress.SetRange("Customer No.", "End Customer");
@@ -209,7 +204,7 @@ tableextension 50021 "End Customer and Reseller" extends 36
                 end else begin
                     if not ShipToAdress.Get(rec.Reseller, "Ship-To-Code") then
                         Clear("Ship-To-Code");
-                    ShipToAdress.SetRange("Customer No.", "Sell-to Customer No.");
+                    ShipToAdress.SetRange("Customer No.", rec.Reseller);
                     IF page.RunModal(page::"Ship-to Address List", ShipToAdress, ShipToAdress.Code) = Action::LookupOK then begin
                         SetShipToAddress(ShipToAdress.Name, ShipToAdress."Name 2", ShipToAdress.Address, ShipToAdress."Address 2", ShipToAdress.City, ShipToAdress."Post Code", shiptoadress.County, shiptoadress."Country/Region Code");
                         rec.Validate("Ship-to Contact", ShipToAdress.Contact);
@@ -225,16 +220,16 @@ tableextension 50021 "End Customer and Reseller" extends 36
                 Customer: Record customer;
             begin
                 if "Ship-To-Code" = '' then
-                    if "Drop-Shipment" = true then begin
-                        Customer.get(rec."End Customer");
-                        Clear("Ship-To-Code");
-                        SetShipToAddress(Customer.Name, Customer."Name 2", Customer.Address, Customer."Address 2", Customer.City, Customer."Post Code", Customer.County, Customer."Country/Region Code");
-                        rec.Validate("Ship-to Contact", Customer.Contact);
+                    if "Ship directly from supplier" = false then begin
+                        if Subsidiary <> '' then begin
+                            Customer.Get(rec.Subsidiary);
+                            Clear("Ship-To-Code");
+                            SetShipToAddressOnSalesOrder(Customer);
+                        end else begin
+                            CheckDropShipmentAndSetShipToAddressOnSalesOrder(Customer);
+                        end;
                     end else begin
-                        Customer.Get(rec."Sell-to Customer No.");
-                        Clear("Ship-To-Code");
-                        SetShipToAddress(rec."Sell-to Customer Name", rec."Sell-to Customer Name 2", rec."Sell-to Address", rec."Sell-to Address 2", rec."Sell-to City", rec."Sell-to Post Code", rec."Sell-to County", rec."Sell-to Country/Region Code");
-                        rec.Validate("Ship-to Contact", rec."Sell-to Contact");
+                        CheckDropShipmentAndSetShipToAddressOnSalesOrder(Customer);
                     end;
             end;
         }
@@ -249,7 +244,57 @@ tableextension 50021 "End Customer and Reseller" extends 36
             DataClassification = ToBeClassified;
         }
 
+        field(50009; "Ship directly from supplier"; Boolean)
+        {
+            DataClassification = ToBeClassified;
+
+            trigger OnValidate()
+            var
+                Customer: record customer;
+            begin
+                if "Ship directly from supplier" = false then begin
+                    if Subsidiary <> '' then begin
+                        Customer.Get(rec.Subsidiary);
+                        Clear("Ship-To-Code");
+                        SetShipToAddressOnSalesOrder(Customer);
+                    end else
+                        Customer.Get(Subsidiary);
+                end else
+                    CheckDropShipmentAndSetShipToAddressOnSalesOrder(Customer);
+            end;
+        }
+
     }
 
+    procedure SetShipToAddressOnSalesOrder(Customer: record customer)
+    var
+        ShipToAdress: record "Ship-to Address";
+    begin
+        if ShipToAdress.get(Customer."No.", Customer."Prefered Shipment Address") then begin
+            SetShipToAddress(ShipToAdress.Name, ShipToAdress."Name 2", ShipToAdress.Address, ShipToAdress."Address 2", ShipToAdress.City, ShipToAdress."Post Code", shiptoadress.County, shiptoadress."Country/Region Code");
+            rec.Validate("Ship-to Contact", ShipToAdress.Contact);
+            rec.validate("Ship-To-Code", shiptoadress.Code);
+        end else begin
+            SetShipToAddress(Customer.Name, customer."Name 2", customer.Address, Customer."Address 2", customer.City, Customer."Post Code", customer.County, customer."Country/Region Code");
+            rec.Validate("Ship-to Contact", Customer.Contact);
+        end;
+    end;
+
+    procedure CheckDropShipmentAndSetShipToAddressOnSalesOrder(Customer: record customer)
+    var
+        ShipToAdress: record "Ship-to Address";
+    begin
+        if "Drop-Shipment" then begin
+            Customer.get(rec."End Customer");
+            Clear("Ship-To-Code");
+            SetShipToAddress(Customer.Name, Customer."Name 2", Customer.Address, Customer."Address 2", Customer.City, Customer."Post Code", Customer.County, Customer."Country/Region Code");
+            rec.Validate("Ship-to Contact", Customer.Contact);
+        end else begin
+            Customer.Get(rec.Reseller);
+            Clear("Ship-To-Code");
+            SetShipToAddress(Customer.Name, customer."Name 2", customer.Address, Customer."Address 2", customer.City, Customer."Post Code", customer.County, customer."Country/Region Code");
+            rec.Validate("Ship-to Contact", Customer.Contact);
+        end;
+    end;
 
 }
