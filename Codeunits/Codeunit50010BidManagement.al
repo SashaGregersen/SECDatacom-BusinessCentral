@@ -30,21 +30,28 @@ codeunit 50010 "Bid Management"
         GLSetupInOtherCompany.ChangeCompany(CompanyNameToCopyTo);
         GLSetupInOtherCompany.Get();
         BidToCopyTo.ChangeCompany(CompanyNameToCopyTo);
-        BidToCopyTo := BidToCopy;
-        if not BidToCopyTo.Insert(false) then
+        if not BidToCopyTo.Get(BidToCopy."No.") then begin
+            BidToCopyTo := BidToCopy;
+            BidToCopyTo.Insert(false);
+        end else begin
+            BidToCopyTo.TransferFields(BidToCopy, false);
             BidToCopyTo.Modify(false);
+        end;
         BidPrice.SetRange("Bid No.", BidToCopy."No.");
         if BidPrice.FindSet() then
             repeat
                 if (BidPrice."Currency Code" = '') and (GLSetup."LCY Code" <> GLSetupInOtherCompany."LCY Code") then
                     BidPrice."Currency Code" := GLSetup."LCY Code";
                 Item.Get(BidPrice."item No.");
-                BidPriceToCopyTo := BidPrice;
-                if Item."Transfer Price %" <> 0 then
-                    bidPriceToCopyTo.Validate("Bid Unit Purchase Price", bidprice."Bid Unit Purchase Price" * (1 + (Item."Transfer Price %" / 100)));
                 BidPriceToCopyTo.ChangeCompany(CompanyNameToCopyTo);
-                if not BidPriceToCopyTo.Insert(false) then
-                    BidPriceToCopyTo.Modify(false);
+                if not BidPriceToCopyTo.get(BidPrice."Bid No.", BidPrice."item No.", BidPrice."Customer No.", BidPrice."Currency Code") then begin
+                    BidPriceToCopyTo := BidPrice;
+                    BidPriceToCopyTo.Insert(false);
+                end else
+                    BidPriceToCopyTo.TransferFields(BidPrice, false);
+                if Item."Transfer Price %" <> 0 then
+                    BidPriceToCopyTo.Validate("Bid Unit Purchase Price", bidprice."Bid Unit Purchase Price" * (1 + (Item."Transfer Price %" / 100)));
+                BidPriceToCopyTo.Modify(false);
             until BidPrice.Next() = 0;
     end;
 
