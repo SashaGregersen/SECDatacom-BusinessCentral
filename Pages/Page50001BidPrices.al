@@ -72,6 +72,7 @@ page 50001 "Bid Prices"
                         Bid.Validate("Vendor No.", Item."Vendor No.");
                         Bid.Modify(true);
                     end;
+                    Message('Bid No. %1 created', Bid."No.");
                 end;
             }
         }
@@ -79,6 +80,6 @@ page 50001 "Bid Prices"
 
     trigger OnInsertRecord(Belowxrec: Boolean): Boolean
     begin
-        rec.Mark();
+        rec.Mark(true);
     end;
 }
