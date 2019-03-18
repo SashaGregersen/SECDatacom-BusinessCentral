@@ -57,10 +57,21 @@ page 50001 "Bid Prices"
     {
         area(processing)
         {
-            action(ActionName)
+            action(CreateNewBid)
             {
+                Caption = 'Create New Bid';
+
                 trigger OnAction();
+                var
+                    Bid: Record Bid;
+                    Item: Record Item;
                 begin
+                    Bid.Init();
+                    Bid.Insert(true);
+                    if Item.Get(Rec.GetFilter("item No.")) then begin
+                        bid.Validate("Vendor No.", Item."Vendor No.");
+                        Bid.Modify(true);
+                    end;
                 end;
             }
         }
