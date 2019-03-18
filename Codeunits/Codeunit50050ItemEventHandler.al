@@ -99,6 +99,8 @@ codeunit 50050 "Item Event handler"
     begin
         if rec.IsTemporary() then
             exit;
+        if rec."Table ID" <> 27 then
+            exit;
         SyncMasterData.SynchronizeDefaultDimensionToCompany(Rec);
     end;
 
@@ -108,6 +110,8 @@ codeunit 50050 "Item Event handler"
         SyncMasterData: Codeunit "Synchronize Master Data";
     begin
         if rec.IsTemporary() then
+            exit;
+        if rec."Table ID" <> 27 then
             exit;
         SyncMasterData.SynchronizeDefaultDimensionToCompany(Rec);
     end;

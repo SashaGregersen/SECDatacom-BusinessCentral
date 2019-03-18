@@ -42,6 +42,12 @@ pageextension 50026 "End Customer and Reseller 6" extends 44
             field("Drop-Shipment"; "Drop-Shipment")
             {
                 ApplicationArea = all;
+                Caption = 'Deliver directly to end customer';
+            }
+
+            field("Ship directly from supplier"; "Ship directly from supplier")
+            {
+                ApplicationArea = all;
             }
         }
         modify("Sell-to Customer No.")
