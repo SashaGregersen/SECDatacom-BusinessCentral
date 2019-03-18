@@ -24,6 +24,7 @@ codeunit 50010 "Bid Management"
         BidPriceToCopyTo: Record "Bid Item Price";
         GLSetup: Record "General Ledger Setup";
         GLSetupInOtherCompany: Record "General Ledger Setup";
+        Item: Record Item;
     begin
         GLSetup.Get();
         GLSetupInOtherCompany.ChangeCompany(CompanyNameToCopyTo);
@@ -37,9 +38,11 @@ codeunit 50010 "Bid Management"
             repeat
                 if (BidPrice."Currency Code" = '') and (GLSetup."LCY Code" <> GLSetupInOtherCompany."LCY Code") then
                     BidPrice."Currency Code" := GLSetup."LCY Code";
-                BidPriceToCopyTo.ChangeCompany(CompanyNameToCopyTo);
+                Item.Get(BidPrice."item No.");
                 BidPriceToCopyTo := BidPrice;
-
+                if Item."Transfer Price %" <> 0 then
+                    bidPriceToCopyTo.Validate("Bid Unit Purchase Price", bidprice."Bid Unit Purchase Price" * (1 + (Item."Transfer Price %" / 100)));
+                BidPriceToCopyTo.ChangeCompany(CompanyNameToCopyTo);
                 if not BidPriceToCopyTo.Insert(false) then
                     BidPriceToCopyTo.Modify(false);
             until BidPrice.Next() = 0;
