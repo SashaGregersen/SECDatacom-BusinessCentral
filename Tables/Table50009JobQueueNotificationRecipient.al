@@ -12,6 +12,7 @@ table 50009 "Job Queue Notif. Recipient"
         field(2; "Recipient ID"; Code[50])
         {
             TableRelation = User."User Name";
+            ValidateTableRelation = false;
         }
         field(3; "Notify By"; Option)
         {
