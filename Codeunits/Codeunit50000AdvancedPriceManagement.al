@@ -90,7 +90,7 @@ codeunit 50000 "Advanced Price Management"
         PurchaseLineDiscount.SetRange("Currency Code", SalesPriceWorksheet."Currency Code");
         if PurchaseLineDiscount.FindLast() then begin
             FindListPriceForitem(SalesPriceWorksheet."Item No.", SalesPriceWorksheet."Currency Code", SalesPrice);
-            CreateUpdatePurchasePrices(PurchaseLineDiscount, SalesPrice);
+            CreateUpdatePurchasePricesFromListPrice(PurchaseLineDiscount, SalesPrice);
             CreateUpdateSalesMarkupPrices(PurchaseLineDiscount);
         end;
     end;
@@ -106,27 +106,53 @@ codeunit 50000 "Advanced Price Management"
         if FindItemsInItemDiscGroup(ItemTemp, itemDiscGroup) then begin
             if ItemTemp.FindFirst then begin
                 repeat
-                    PurchaseDiscount.Init;
-                    PurchaseDiscount."Item No." := ItemTemp."No.";
-                    PurchaseDiscount."Vendor No." := VendorNo;
-                    PurchaseDiscount."Minimum Quantity" := 0;           //Note: should be changed to a var!
-                    PurchaseDiscount."Unit of Measure Code" := 'PCS';   //Note: should be changed to a var!
-                    PurchaseDiscount."Starting Date" := StartingDate;
-                    PurchaseDiscount."Currency Code" := Vendor."Currency Code";
-                    PurchaseDiscount."Line Discount %" := DiscPct;
-                    PurchaseDiscount."Customer Markup" := CustomerMarkup;
-                    if not PurchaseDiscount.Insert(true) then
-                        PurchaseDiscount.Modify(true);
+                    InsertUpdatePurchaseDiscount(ItemTemp."No.", VendorNo, StartingDate, Vendor."Currency Code", DiscPct, CustomerMarkup);
                 until ItemTemp.next = 0;
             end;
         end;
     end;
 
-    procedure CreateUpdatePurchasePrices(PurchaseLineDiscount: Record "Purchase Line Discount"; ListPrice: Record "Sales Price");
+    procedure UpdateItemPurchaseDicountsFromItemDiscGroup(Item: Record Item)
+    var
+        ItemDiscGroup: Record "Item Discount Group";
+        ItemDiscPct: Record "Item Disc. Group Percentages";
+        Vendor: Record Vendor;
+    begin
+        if not ItemDiscGroup.Get(item."Item Disc. Group") then
+            exit;
+        ItemDiscPct.SetRange("Item Disc. Group Code", ItemDiscGroup.Code);
+        ItemDiscPct.SetAscending("Start Date", false);
+        if not ItemDiscPct.FindLast() then
+            exit;
+        if not Vendor.get(ItemDiscPct."Purchase From Vendor No.") then
+            exit;
+        InsertUpdatePurchaseDiscount(Item."No.", Vendor."No.", ItemDiscPct."Start Date", Vendor."Currency Code", ItemDiscPct."Purchase Discount Percentage", ItemDiscPct."Customer Markup Percentage");
+    end;
+
+    local procedure InsertUpdatePurchaseDiscount(ItemNo: Code[20]; VendorNo: Code[20]; StartingDate: Date; CurrCode: Code[20]; DiscPct: Decimal; CustMarkup: Decimal)
+    var
+        PurchaseDiscount: Record "Purchase Line Discount";
+    begin
+        PurchaseDiscount.Init;
+        PurchaseDiscount."Item No." := ItemNo;
+        PurchaseDiscount."Vendor No." := VendorNo;
+        PurchaseDiscount."Minimum Quantity" := 0;           //Note: should be changed to a var!
+        PurchaseDiscount."Unit of Measure Code" := 'PCS';   //Note: should be changed to a var!
+        PurchaseDiscount."Starting Date" := StartingDate;
+        PurchaseDiscount."Currency Code" := CurrCode;
+        PurchaseDiscount."Line Discount %" := DiscPct;
+        PurchaseDiscount."Customer Markup" := CustMarkup;
+        if not PurchaseDiscount.Insert(true) then
+            PurchaseDiscount.Modify(true);
+    end;
+
+    procedure CreateUpdatePurchasePricesFromListPrice(PurchaseLineDiscount: Record "Purchase Line Discount"; ListPrice: Record "Sales Price");
     var
         PurchasePrice: Record "Purchase Price";
     begin
-        if not FindLatestPurchasePrice(PurchaseLineDiscount."Item No.", PurchaseLineDiscount."Vendor No.", PurchaseLineDiscount."Currency Code", PurchasePrice) then begin
+        If PurchaseLineDiscount."Line Discount %" = 0 then
+            exit;
+        if not FindLatestPurchasePrice(PurchaseLineDiscount."Item No.", PurchaseLineDiscount."Vendor No.", PurchaseLineDiscount."Currency Code", ListPrice."Starting Date", PurchasePrice) then begin
             PurchasePrice.Init;
             PurchasePrice.TransferFields(PurchaseLineDiscount);
             PurchasePrice.validate("Starting Date", ListPrice."Starting Date");
@@ -139,11 +165,13 @@ codeunit 50000 "Advanced Price Management"
         end;
     end;
 
-    local procedure FindLatestPurchasePrice(ItemNo: code[20]; VendorNo: code[20]; CurrCode: code[20]; var PurchasePrice: Record "Purchase Price"): Boolean
+    local procedure FindLatestPurchasePrice(ItemNo: code[20]; VendorNo: code[20]; CurrCode: code[20]; NotBeforeDate: Date; var PurchasePrice: Record "Purchase Price"): Boolean
     begin
         PurchasePrice.SetRange("Item No.", ItemNo);
         PurchasePrice.SetRange("Vendor No.", VendorNo);
         PurchasePrice.SetRange("Currency Code", CurrCode);
+        if NotBeforeDate <> 0D then
+            PurchasePrice.SetFilter("Starting Date", '%1..', NotBeforeDate);
         exit(PurchasePrice.FindLast());
     end;
 
@@ -161,7 +189,7 @@ codeunit 50000 "Advanced Price Management"
             exit;
         end;
 
-        if FindLatestPurchasePrice(PurchaseLineDiscount."Item No.", PurchaseLineDiscount."Vendor No.", PurchaseLineDiscount."Currency Code", PurchasePrice) then begin
+        if FindLatestPurchasePrice(PurchaseLineDiscount."Item No.", PurchaseLineDiscount."Vendor No.", PurchaseLineDiscount."Currency Code", PurchaseLineDiscount."Starting Date", PurchasePrice) then begin
             Salesprice.Init();
             Salesprice."Sales Type" := Salesprice."Sales Type"::"All Customers";
             Salesprice."Currency Code" := PurchasePrice."Currency Code";
@@ -170,7 +198,7 @@ codeunit 50000 "Advanced Price Management"
             Salesprice."Item No." := PurchasePrice."Item No.";
             Salesprice."Unit of Measure Code" := PurchasePrice."Unit of Measure Code";
             Salesprice."Minimum Quantity" := PurchasePrice."Minimum Quantity";
-            Salesprice."Unit Price" := PurchasePrice."Direct Unit Cost" / ((100 - PurchaseLineDiscount."Customer Markup") / 100);
+            Salesprice."Unit Price" := round(PurchasePrice."Direct Unit Cost" / ((100 - PurchaseLineDiscount."Customer Markup") / 100));
             if not Salesprice.Insert(true) then
                 Salesprice.Modify(true);
 
@@ -264,7 +292,7 @@ codeunit 50000 "Advanced Price Management"
         if ICPartner.FindSet() then
             repeat
                 if ICPartner."Customer No." <> '' then begin
-                    if FindLatestPurchasePrice(ItemNo, VendorNo, Item."Vendor Currency", PurchasePrice) then begin
+                    if FindLatestPurchasePrice(ItemNo, VendorNo, Item."Vendor Currency", 0D, PurchasePrice) then begin
                         Salesprice.Init();
                         Salesprice."Sales Type" := Salesprice."Sales Type"::Customer;
                         SalesPrice."Sales Code" := ICPartner."Customer No.";
@@ -562,6 +590,23 @@ codeunit 50000 "Advanced Price Management"
                 OldSalesPrice."Ending Date" := EndDate;
                 OldSalesPrice.Modify(true);
             until OldSalesPrice.Next() = 0;
+    end;
+
+    procedure CloseOldPurchasePrices(PurchasePrice: Record "Purchase Price")
+    var
+        OldPurchasePrice: Record "Purchase Price";
+        EndDate: Date;
+    begin
+        EndDate := CalcDate('<-1D>', PurchasePrice."Starting Date");
+        OldPurchasePrice := PurchasePrice;
+        OldPurchasePrice.SetRecFilter();
+        OldPurchasePrice.SetRange("Starting Date", 0D, EndDate);
+        OldPurchasePrice.SetFilter("Ending Date", '=%1', 0D);
+        if OldPurchasePrice.FindSet(true, false) then
+            repeat
+                OldPurchasePrice."Ending Date" := EndDate;
+                OldPurchasePrice.Modify(true);
+            until OldPurchasePrice.Next() = 0;
     end;
 
     procedure FindBestPurchasePrice(itemNo: Code[20]; VendorNo: Code[20]; CurrencyCode: Code[20]; VariantCode: Code[20]; var PurchasePrice: Record "Purchase Price"): Boolean

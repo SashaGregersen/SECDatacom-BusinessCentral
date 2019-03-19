@@ -47,18 +47,18 @@ table 50007 "Item Disc. Group Percentages"
 
     trigger OnInsert()
     begin
-        if ("Purchase Discount Percentage" <> 0) or ("Customer Markup Percentage" <> 0) then
-            AdvPriceMgt.UpdatePurchaseDicountsForItemDiscGroup("Item Disc. Group Code", "Purchase Discount Percentage", "Customer Markup Percentage", "Start Date", "Purchase From Vendor No.");
         if Rec."Transfer Price Percentage" <> 0 then
             AdvPriceMgt.UpdateTransferPrices("Item Disc. Group Code", "Transfer Price Percentage");
+        if ("Purchase Discount Percentage" <> 0) or ("Customer Markup Percentage" <> 0) then
+            AdvPriceMgt.UpdatePurchaseDicountsForItemDiscGroup("Item Disc. Group Code", "Purchase Discount Percentage", "Customer Markup Percentage", "Start Date", "Purchase From Vendor No.");
     end;
 
     trigger OnModify()
     begin
-        if (xRec."Purchase Discount Percentage" <> rec."Purchase Discount Percentage") or (xRec."Customer Markup Percentage" <> rec."Customer Markup Percentage") then
-            AdvPriceMgt.UpdatePurchaseDicountsForItemDiscGroup("Item Disc. Group Code", "Purchase Discount Percentage", "Customer Markup Percentage", "Start Date", "Purchase From Vendor No.");
-        if xRec."Transfer Price Percentage" <> rec."Transfer Price Percentage" then
+        if Rec."Transfer Price Percentage" <> 0 then
             AdvPriceMgt.UpdateTransferPrices("Item Disc. Group Code", Rec."Transfer Price Percentage");
+        if (Rec."Purchase Discount Percentage" <> 0) or (Rec."Customer Markup Percentage" <> 0) then
+            AdvPriceMgt.UpdatePurchaseDicountsForItemDiscGroup("Item Disc. Group Code", "Purchase Discount Percentage", "Customer Markup Percentage", "Start Date", "Purchase From Vendor No.");
     end;
 
     trigger OnDelete()

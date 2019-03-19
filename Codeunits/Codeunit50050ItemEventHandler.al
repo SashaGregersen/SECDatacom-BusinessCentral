@@ -20,6 +20,8 @@ codeunit 50050 "Item Event handler"
     begin
         If not runtrigger then
             EXIT;
+        if Rec."Item Disc. Group" <> '' then
+            AdvPriceMgt.UpdateItemPurchaseDicountsFromItemDiscGroup(Rec);
         AdvPriceMgt.CreateListPriceVariant(Rec);
         SyncMasterData.SetItemDefaults(Rec);
 
@@ -34,9 +36,12 @@ codeunit 50050 "Item Event handler"
     var
         InventorySetup: Record "Inventory Setup";
         SyncMasterData: Codeunit "Synchronize Master Data";
+        AdvPriceMgt: Codeunit "Advanced Price Management";
     begin
         If not runtrigger then
             EXIT;
+        if Rec."Item Disc. Group" <> '' then
+            AdvPriceMgt.UpdateItemPurchaseDicountsFromItemDiscGroup(Rec);
         InventorySetup.get;
         IF InventorySetup."Synchronize Item" = FALSE then
             Exit;
@@ -50,6 +55,25 @@ codeunit 50050 "Item Event handler"
     begin
         if Vendor.get(rec."Vendor No.") then
             Rec.Validate("Vendor Currency", Vendor."Currency Code");
+    end;
+
+    [EventSubscriber(ObjectType::table, database::"Item", 'OnAfterValidateEvent', 'Item Disc. Group', true, true)]
+    local procedure ItemOnAfterValidateItemDiscGroup(var Rec: Record "Item")
+    var
+        ItemDiscGroup: Record "Item Discount Group";
+        ItemDiscPct: Record "Item Disc. Group Percentages";
+        Vendor: Record Vendor;
+    begin
+        if not ItemDiscGroup.Get(Rec."Item Disc. Group") then
+            exit;
+        ItemDiscPct.SetRange("Item Disc. Group Code", ItemDiscGroup.Code);
+        ItemDiscPct.SetAscending("Start Date", false);
+        if not ItemDiscPct.FindLast() then
+            exit;
+        if ItemDiscPct."Purchase From Vendor No." <> '' then
+            rec.Validate("Vendor No.", ItemDiscPct."Purchase From Vendor No.");
+        if ItemDiscPct."Transfer Price Percentage" <> 0 then
+            rec.Validate("Transfer Price %", ItemDiscPct."Transfer Price Percentage");
     end;
 
     [EventSubscriber(ObjectType::table, database::"Item Discount Group", 'OnAfterinsertEvent', '', true, true)]
