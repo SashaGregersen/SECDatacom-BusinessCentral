@@ -48,6 +48,8 @@ codeunit 50057 "IC Event Handler"
         LocalSalesHeader."Ship-to Name" := SalesHeaderOtherCompany."Ship-to Name";
         LocalSalesHeader."Ship-to Name 2" := SalesHeaderOtherCompany."Ship-to Name 2";
         LocalSalesHeader."Ship-to Post Code" := SalesHeaderOtherCompany."Ship-to Post Code";
+        LocalSalesHeader.Validate("Ship directly from supplier", SalesHeaderOtherCompany."Ship directly from supplier");
+        LocalSalesHeader.Validate("Drop-shipment", SalesHeaderOtherCompany."Drop-Shipment");
         //end;        
         LocalSalesHeader.Modify(false);
     end;
