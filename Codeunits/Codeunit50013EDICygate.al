@@ -108,7 +108,7 @@ codeunit 50013 "EDICygate"
     begin
         SalesSetup.Get;
         GLSetup.Get();
-        //SalesSetup.TestField("Cygate Endpoint");
+        SalesSetup.TestField("Cygate Endpoint");
         encoding := encoding.Default();
 
         XMLDoc := XMLDoc.XmlDocument();
@@ -339,7 +339,7 @@ codeunit 50013 "EDICygate"
         WebClient.Encoding(encoding);
         WebClient.Headers.Add('Content-Type', 'text/xml; charset=' + FORMAT(encoding.WebName));
 
-        //ResultString := WebClient.UploadString(SalesSetup."Cygate Endpoint", 'POST', StringWriter.ToString());
+        ResultString := WebClient.UploadString(SalesSetup."Cygate Endpoint", 'POST', StringWriter.ToString());
         Message(ResultString);
     end;
 
@@ -367,7 +367,7 @@ codeunit 50013 "EDICygate"
         encoding: DotNet mscorlib_System_Text_Encoding;
     begin
         SalesSetup.Get;
-        //SalesSetup.TestField("Cygate Endpoint");
+        SalesSetup.TestField("Cygate Endpoint");
 
         encoding := encoding.Default();
 
@@ -559,7 +559,7 @@ codeunit 50013 "EDICygate"
         WebClient.Encoding(encoding);
         WebClient.Headers.Add('Content-Type', 'text/xml; charset=' + FORMAT(encoding.WebName));
 
-        //ResultString := WebClient.UploadString(SalesSetup."Cygate Endpoint", 'POST', StringWriter.ToString());
+        ResultString := WebClient.UploadString(SalesSetup."Cygate Endpoint", 'POST', StringWriter.ToString());
 
         Message(ResultString);
     end;
@@ -591,7 +591,7 @@ codeunit 50013 "EDICygate"
     begin
         SalesSetup.Get();
         GLSetup.Get();
-        //SalesSetup.TestField("Cygate Endpoint");
+        SalesSetup.TestField("Cygate Endpoint");
 
         Clear(InvoiceLine);
         InvoiceLine.SetRange("Document No.", InvoiceHead."No.");
@@ -846,10 +846,6 @@ codeunit 50013 "EDICygate"
                 XMLNode1.InnerText(InvoiceLine."No.");
                 XMLElement1.AppendChild(XMLNode1);
 
-                //??XMLNode1 := XMLDoc.CreateNode('element', 'CustomerPartNumber', '');
-                //                        XMLNode1.InnerText(Item."Vendor Item No.");
-                //                        XMLElement7.AppendChild(XMLNode1);
-
                 XMLNode1 := XMLDoc.CreateNode('element', 'ManufacturerPartNumber', '');
                 XMLNode1.InnerText(Item."Vendor Item No.");
                 XMLElement1.AppendChild(XMLNode1);
@@ -893,7 +889,7 @@ codeunit 50013 "EDICygate"
         WebClient.Encoding(encoding);
         WebClient.Headers.Add('Content-Type', 'text/xml; charset=' + FORMAT(encoding.WebName));
 
-        //ResultString := WebClient.UploadString(SalesSetup."Cygate Endpoint", 'POST', StringWriter.ToString());
+        ResultString := WebClient.UploadString(SalesSetup."Cygate Endpoint", 'POST', StringWriter.ToString());
 
         Message(ResultString);
     end;

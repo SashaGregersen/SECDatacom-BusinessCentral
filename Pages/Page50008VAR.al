@@ -5,6 +5,7 @@ page 50008 "VAR"
     ApplicationArea = All;
     SourceTable = "VAR";
     PopulateAllFields = true;
+    DelayedInsert = true;
 
     layout
     {
