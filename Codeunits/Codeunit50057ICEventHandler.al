@@ -94,7 +94,7 @@ codeunit 50057 "IC Event Handler"
             Clear(SalesLineOtherCompany);
             exit(false);
         end;
-
+        exit(true);
     end;
 
     local procedure GetSalesHeaderFromOtherCompany(SalesLineOtherCompany: Record "Sales Line"; var SalesHeaderOtherCompany: Record "Sales Header"; OtherCompanyName: text[30]): Boolean

@@ -57,10 +57,22 @@ page 50001 "Bid Prices"
     {
         area(processing)
         {
-            action(ActionName)
+            action(CreateNewBid)
             {
+                Caption = 'Create New Bid';
+
                 trigger OnAction();
+                var
+                    Bid: Record Bid;
+                    Item: Record Item;
                 begin
+                    Bid.Init();
+                    Bid.Insert(true);
+                    if Item.Get(Rec.GetFilter("item No.")) then begin
+                        Bid.Validate("Vendor No.", Item."Vendor No.");
+                        Bid.Modify(true);
+                    end;
+                    Message('Bid No. %1 created', Bid."No.");
                 end;
             }
         }
@@ -68,6 +80,6 @@ page 50001 "Bid Prices"
 
     trigger OnInsertRecord(Belowxrec: Boolean): Boolean
     begin
-        rec.Mark();
+        rec.Mark(true);
     end;
 }

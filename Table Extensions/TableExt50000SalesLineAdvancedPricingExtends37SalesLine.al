@@ -36,6 +36,8 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
                 CurrExchRate: Record "Currency Exchange Rate";
             begin
                 if "Bid No." = '' then begin
+                    Validate("Bid Unit Sales Price", 0);
+                    Validate("Bid Unit Purchase Price", 0);
                     "Unit Cost" := 0;
                     UpdateAmounts();
                 end else begin
