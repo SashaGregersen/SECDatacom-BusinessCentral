@@ -33,22 +33,28 @@ codeunit 50057 "IC Event Handler"
     end;
 
     local procedure CopyAdvPricingHeaderFields(LocalSalesHeader: Record "Sales Header"; SalesHeaderOtherCompany: Record "Sales Header"; SubsidiaryCustomerNo: code[20])
+    var
+        Customer: record customer;
     begin
-        LocalSalesHeader.Validate(Reseller, SalesHeaderOtherCompany.Reseller);
-        LocalSalesHeader.Validate(Subsidiary, SubsidiaryCustomerNo);
+        LocalSalesHeader.Subsidiary := SubsidiaryCustomerNo;
+        LocalSalesHeader.Reseller := SalesHeaderOtherCompany.Reseller;
         if SalesHeaderOtherCompany."End Customer" <> '' then
             LocalSalesHeader.Validate("End Customer", SalesHeaderOtherCompany."End Customer");
-        //if SalesHeaderOtherCompany."Drop-Shipment" then begin        
-        LocalSalesHeader."Ship-to Address" := SalesHeaderOtherCompany."Ship-to Address";
-        LocalSalesHeader."Ship-to Address 2" := SalesHeaderOtherCompany."Ship-to Address 2";
-        LocalSalesHeader."Ship-to City" := SalesHeaderOtherCompany."Ship-to City";
-        LocalSalesHeader."Ship-to Contact" := SalesHeaderOtherCompany."Ship-to Contact";
-        LocalSalesHeader."Ship-to Country/Region Code" := SalesHeaderOtherCompany."Ship-to Country/Region Code";
-        LocalSalesHeader."Ship-to County" := SalesHeaderOtherCompany."Ship-to County";
-        LocalSalesHeader."Ship-to Name" := SalesHeaderOtherCompany."Ship-to Name";
-        LocalSalesHeader."Ship-to Name 2" := SalesHeaderOtherCompany."Ship-to Name 2";
-        LocalSalesHeader."Ship-to Post Code" := SalesHeaderOtherCompany."Ship-to Post Code";
-        //end;        
+        if SalesHeaderOtherCompany."End Customer Name" <> '' then
+            LocalSalesHeader.Validate("End Customer Name", SalesHeaderOtherCompany."End Customer Name");
+        if SalesHeaderOtherCompany."Financing Partner" <> '' then
+            LocalSalesHeader.Validate("Financing Partner", SalesHeaderOtherCompany."Financing Partner");
+        if SalesHeaderOtherCompany."Financing Partner Name" <> '' then
+            LocalSalesHeader.Validate("Financing Partner Name", SalesHeaderOtherCompany."Financing Partner Name");
+        if LocalSalesHeader.Subsidiary <> '' then begin
+            Customer.get(LocalSalesHeader.Subsidiary);
+            LocalSalesHeader.validate("Subsidiary Name", Customer.Name);
+            LocalSalesHeader.validate("Sell-to-Customer-Name", Customer.Name);
+        end;
+        if SalesHeaderOtherCompany."Reseller Name" <> '' then
+            LocalSalesHeader.Validate("Reseller Name", SalesHeaderOtherCompany."Reseller Name");
+        LocalSalesHeader.Validate("Ship directly from supplier", SalesHeaderOtherCompany."Ship directly from supplier");
+        LocalSalesHeader.Validate("Drop-shipment", SalesHeaderOtherCompany."Drop-Shipment");
         LocalSalesHeader.Modify(false);
     end;
 
@@ -102,5 +108,6 @@ codeunit 50057 "IC Event Handler"
             Clear(SalesHeaderOtherCompany);
             exit(false);
         end;
+        exit(true);
     end;
 }
