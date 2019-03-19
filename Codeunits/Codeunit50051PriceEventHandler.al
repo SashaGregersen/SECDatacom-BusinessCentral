@@ -134,34 +134,32 @@ codeunit 50051 "Price Event Handler"
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Purchase Line Discount", 'OnAfterModifyEvent', '', true, true)]
-    local procedure PurchaseLineDiscountOnAfterModify(var Rec: Record "Purchase Line Discount"; xRec: Record "Purchase Line Discount")
+    local procedure PurchaseLineDiscountOnAfterModify(var Rec: Record "Purchase Line Discount"; xRec: Record "Purchase Line Discount"; RunTrigger: Boolean)
     var
         PurchasePrice: Record "Purchase Price";
         ListPrice: Record "Sales Price";
     begin
+        if not RunTrigger then
+            exit;
         if Rec.IsTemporary() then
             exit;
-        if Rec."Line Discount %" <> xRec."Line Discount %" then begin
-            if AdvPriceMgt.FindListPriceForitem(Rec."Item No.", Rec."Currency Code", ListPrice) then
-                AdvPriceMgt.CreateUpdatePurchasePrices(Rec, ListPrice);
-            AdvPriceMgt.CreateUpdateSalesMarkupPrices(Rec);
-            exit;
-        end;
-        if rec."Customer Markup" <> xRec."Customer Markup" then
-            AdvPriceMgt.CreateUpdateSalesMarkupPrices(Rec);
+        if AdvPriceMgt.FindListPriceForitem(Rec."Item No.", Rec."Currency Code", ListPrice) then
+            AdvPriceMgt.CreateUpdatePurchasePricesFromListPrice(Rec, ListPrice);
+        AdvPriceMgt.CreateUpdateSalesMarkupPrices(Rec);
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Purchase Line Discount", 'OnAfterInsertEvent', '', true, true)]
-    local procedure PurchaseLineDiscountOnAfterInsert(var Rec: Record "Purchase Line Discount")
+    local procedure PurchaseLineDiscountOnAfterInsert(var Rec: Record "Purchase Line Discount"; RunTrigger: Boolean)
     var
         PurchasePrice: Record "Purchase Price";
         ListPrice: Record "Sales Price";
     begin
+        If not RunTrigger then
+            exit;
         if Rec.IsTemporary() then
             exit;
-        if not AdvPriceMgt.FindListPriceForitem(Rec."Item No.", Rec."Currency Code", ListPrice) then
-            exit;
-        AdvPriceMgt.CreateUpdatePurchasePrices(Rec, ListPrice);
+        if AdvPriceMgt.FindListPriceForitem(Rec."Item No.", Rec."Currency Code", ListPrice) then
+            AdvPriceMgt.CreateUpdatePurchasePricesFromListPrice(Rec, ListPrice);
         AdvPriceMgt.CreateUpdateSalesMarkupPrices(Rec);
     end;
 
@@ -173,6 +171,7 @@ codeunit 50051 "Price Event Handler"
         if Rec.IsTemporary() then
             exit;
         AdvPriceMgt.CreateSalesPriceFromPurchasePriceMarkup(Rec);
+        AdvPriceMgt.CreatePricesForICPartners(Rec."Item No.", Rec."Vendor No.");
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Purchase Price", 'OnAfterModifyEvent', '', true, true)]
@@ -185,6 +184,7 @@ codeunit 50051 "Price Event Handler"
         if Rec."Direct Unit Cost" = xrec."Direct Unit Cost" then
             exit;
         AdvPriceMgt.CreateSalesPriceFromPurchasePriceMarkup(Rec);
+        AdvPriceMgt.CreatePricesForICPartners(Rec."Item No.", Rec."Vendor No.");
     end;
 
     [EventSubscriber(ObjectType::Codeunit, codeunit::"Purch. Price Calc. Mgt.", 'OnAfterFindPurchLineDisc', '', true, true)]
