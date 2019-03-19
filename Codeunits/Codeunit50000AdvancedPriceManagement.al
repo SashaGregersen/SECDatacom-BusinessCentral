@@ -590,6 +590,23 @@ codeunit 50000 "Advanced Price Management"
             until OldSalesPrice.Next() = 0;
     end;
 
+    procedure CloseOldPurchasePrices(PurchasePrice: Record "Purchase Price")
+    var
+        OldPurchasePrice: Record "Purchase Price";
+        EndDate: Date;
+    begin
+        EndDate := CalcDate('<-1D>', PurchasePrice."Starting Date");
+        OldPurchasePrice := PurchasePrice;
+        OldPurchasePrice.SetRecFilter();
+        OldPurchasePrice.SetRange("Starting Date", 0D, EndDate);
+        OldPurchasePrice.SetFilter("Ending Date", '=%1', 0D);
+        if OldPurchasePrice.FindSet(true, false) then
+            repeat
+                OldPurchasePrice."Ending Date" := EndDate;
+                OldPurchasePrice.Modify(true);
+            until OldPurchasePrice.Next() = 0;
+    end;
+
     procedure FindBestPurchasePrice(itemNo: Code[20]; VendorNo: Code[20]; CurrencyCode: Code[20]; VariantCode: Code[20]; var PurchasePrice: Record "Purchase Price"): Boolean
     var
         Item: Record Item;

@@ -170,6 +170,7 @@ codeunit 50051 "Price Event Handler"
     begin
         if Rec.IsTemporary() then
             exit;
+        AdvPriceMgt.CloseOldPurchasePrices(Rec);
         AdvPriceMgt.CreateSalesPriceFromPurchasePriceMarkup(Rec);
         AdvPriceMgt.CreatePricesForICPartners(Rec."Item No.", Rec."Vendor No.");
     end;
