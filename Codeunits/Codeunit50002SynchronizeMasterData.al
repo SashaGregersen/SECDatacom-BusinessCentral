@@ -124,6 +124,13 @@ codeunit 50002 "Synchronize Master Data"
         ICSyncMgt.InsertModifyExtendedTextLineInOtherCompanies(ExtendedTextLine);
     End;
 
+    procedure DeleteItemInOtherCompany(Item: Record "Item")
+    var
+        ICSyncMgt: Codeunit "IC Sync Management";
+    begin
+        ICSyncMgt.DeleteItemInOtherCompanies(Item);
+    End;
+
     procedure SynchronizeCustomerToSECDK(customer: record Customer)
     var
         Company: record company;

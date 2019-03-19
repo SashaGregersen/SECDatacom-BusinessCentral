@@ -48,6 +48,18 @@ codeunit 50050 "Item Event handler"
         SyncMasterData.SynchronizeInventoryToCompany(rec);
     end;
 
+    [EventSubscriber(ObjectType::table, database::"Item", 'OnAfterDeleteEvent', '', true, true)]
+    local procedure ItemOnAfterDelete(var Rec: Record "Item"; runtrigger: Boolean)
+    var
+        InventorySetup: Record "Inventory Setup";
+        SyncMasterData: Codeunit "Synchronize Master Data";
+        AdvPriceMgt: Codeunit "Advanced Price Management";
+    begin
+        If not runtrigger then
+            EXIT;
+        SyncMasterData.DeleteItemInOtherCompany(Rec);
+    end;
+
     [EventSubscriber(ObjectType::table, database::"Item", 'OnAfterValidateEvent', 'Vendor No.', true, true)]
     local procedure ItemOnAfterValidateVendorNo(var Rec: Record "Item")
     var

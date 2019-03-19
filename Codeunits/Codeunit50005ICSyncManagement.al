@@ -48,6 +48,25 @@ codeunit 50005 "IC Sync Management"
             until CompanyRec.Next() = 0;
     end;
 
+    local procedure GetCompaniesToDeleteItem(var CompanyTemp: Record Company temporary)
+    var
+        CompanyRec: Record Company;
+        InventorySetup: Record "Inventory Setup";
+
+    begin
+        CompanyRec.SetFilter(Name, '<>%1', CompanyName());
+        if CompanyRec.FindSet() then
+            repeat
+                InventorySetup.ChangeCompany(CompanyRec.Name);
+                if InventorySetup.Get() then begin
+                    if InventorySetup."Receive Synchronized Items" then begin
+                        CompanyTemp := CompanyRec;
+                        if not CompanyTemp.Insert(false) then;
+                    end;
+                end;
+            until CompanyRec.Next() = 0;
+    end;
+
     procedure CopyPurchasePricesToOtherCompanies(ItemNo: code[20])
     //Add the specific sales prices from parent company as specific purchase prices in the child company
 
@@ -226,6 +245,22 @@ codeunit 50005 "IC Sync Management"
             until CompanyTemp.Next() = 0;
     end;
 
+    procedure DeleteItemInOtherCompanies(Item: Record "Item")
+
+    var
+        CompanyTemp: Record Company temporary;
+        SessionID: Integer;
+    begin
+        GetCompaniesToDeleteItem(CompanyTemp);
+        if CompanyTemp.Count() = 0 then
+            exit;
+        if CompanyTemp.FindSet() then
+            repeat
+                SessionID := RunDeleteItemInOtherCompany(Item, CompanyTemp.Name);
+                CheckSessionForTimeoutAndError(SessionID, 5, CompanyTemp.Name);
+            until CompanyTemp.Next() = 0;
+    end;
+
     local procedure CheckSessionForTimeoutAndError(SessionID: Integer; SessionTimerSeconds: Integer; RunningInCompany: Text)
     //needs to be refactored so the error message is returned to the calling procedure - then the calling procedure can take corrective measures before making the error
     var
@@ -323,6 +358,17 @@ codeunit 50005 "IC Sync Management"
         SessionEventComment: Text;
     begin
         OK := StartSession(SessionID, 50018, RunInCompany, ExtendedTxtLine);
+        if not OK then
+            Error(GetLastErrorText());
+        Commit();
+    end;
+
+    local procedure RunDeleteItemInOtherCompany(Item: record "Item"; RunInCompany: Text) SessionID: Integer
+    var
+        OK: Boolean;
+        SessionEventComment: Text;
+    begin
+        OK := StartSession(SessionID, 50019, RunInCompany, Item);
         if not OK then
             Error(GetLastErrorText());
         Commit();
