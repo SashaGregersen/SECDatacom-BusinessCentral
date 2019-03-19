@@ -47,7 +47,7 @@ pageextension 50009 "Item Adv. Pricing" extends "Item Card"
         {
             action(CreateICPrices)
             {
-                Caption = 'CreateICPrices';
+                Caption = 'Create IC Prices';
                 Image = UpdateUnitCost;
                 ApplicationArea = All;
                 trigger OnAction()
