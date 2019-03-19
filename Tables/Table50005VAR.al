@@ -25,7 +25,7 @@ table 50005 "VAR"
 
     keys
     {
-        key(PK; "VAR id", "Vendor No.")
+        key(PK; "VAR id")
         {
             Clustered = true;
         }
