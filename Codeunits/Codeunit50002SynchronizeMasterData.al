@@ -103,6 +103,27 @@ codeunit 50002 "Synchronize Master Data"
         ICSyncMgt.InsertModifyDefaultDimInOtherCompanies(DefaultDim);
     End;
 
+    procedure SynchronizeItemTranslationToCompany(ItemTrans: Record "Item Translation")
+    var
+        ICSyncMgt: Codeunit "IC Sync Management";
+    begin
+        ICSyncMgt.InsertModifyItemTranslationInOtherCompanies(ItemTrans);
+    End;
+
+    procedure SynchronizeExtendedTextHeaderToCompany(ExtendedTextHeader: Record "Extended Text Header")
+    var
+        ICSyncMgt: Codeunit "IC Sync Management";
+    begin
+        ICSyncMgt.InsertModifyExtendedTextHeaderInOtherCompanies(ExtendedTextHeader);
+    End;
+
+    procedure SynchronizeExtendedTextLineToCompany(ExtendedTextLine: Record "Extended Text Line")
+    var
+        ICSyncMgt: Codeunit "IC Sync Management";
+    begin
+        ICSyncMgt.InsertModifyExtendedTextLineInOtherCompanies(ExtendedTextLine);
+    End;
+
     procedure SynchronizeCustomerToSECDK(customer: record Customer)
     var
         Company: record company;
