@@ -150,6 +150,8 @@ codeunit 50000 "Advanced Price Management"
     var
         PurchasePrice: Record "Purchase Price";
     begin
+        If PurchaseLineDiscount."Line Discount %" = 0 then
+            exit;
         if not FindLatestPurchasePrice(PurchaseLineDiscount."Item No.", PurchaseLineDiscount."Vendor No.", PurchaseLineDiscount."Currency Code", ListPrice."Starting Date", PurchasePrice) then begin
             PurchasePrice.Init;
             PurchasePrice.TransferFields(PurchaseLineDiscount);
