@@ -16,20 +16,22 @@ pageextension 50010 "GLSetup" extends "General Ledger Setup"
 
     actions
     {
-        /*         addafter("Change Payment &Tolerance")
-                {
-                    action(MartinsHack)
-                    {
-                        Caption = 'Martin Hack - Only for test!';
-                        Image = ChangeCustomer;
-                        ApplicationArea = All;
-                        trigger OnAction()
-                        var
-                            TempHacks: Codeunit "Temp Hacks";
-                        begin
-                            TempHacks.Run();
-                        end;
-                    } 
-    }*/
+        /*
+        addafter("Change Payment &Tolerance")
+        {
+            action(MartinsHack)
+            {
+                Caption = 'Martin Hack - Only for test!';
+                Image = ChangeCustomer;
+                ApplicationArea = All;
+                trigger OnAction()
+                var
+                    TempHacks: Codeunit 50058;
+                begin
+                    TempHacks.Run();
+                end;
+            }
+        }
+        */
     }
 }
