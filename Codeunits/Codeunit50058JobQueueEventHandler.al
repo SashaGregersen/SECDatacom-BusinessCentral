@@ -5,8 +5,7 @@ codeunit 50058 "Job Queue Event Handler"
 
     var
         RunWorkflowOnAfterJobQueueEntryErrorDescTxt: TextConst DAN = 'Job Que Entry Status has been changed to Error', ENU = 'Job Que Entry Status has been changed to Error';
-        NotifyUserResponseDescTxt: TextConst ENU = 'Notify User (NC).';
-        SendNotificationEmailResponseTxt: TextConst ENU = 'Send notification e-mail (NC).';
+        NotifyUserResponseDescTxt: TextConst ENU = 'Notify Reciepient';
 
     trigger OnRun();
     var
@@ -15,17 +14,12 @@ codeunit 50058 "Job Queue Event Handler"
     begin
         WorkflowEventHandling.AddEventToLibrary(RunWorkflowOnAfterJobQueueEntryErrorCode, Database::"Job Queue Entry", RunWorkflowOnAfterJobQueueEntryErrorDescTxt, 0, false);
         WorkflowResponseHandling.AddResponsePredecessor(NotifyUserResponseCode, RunWorkflowOnAfterJobQueueEntryErrorCode);
-        WorkflowResponseHandling.AddResponsePredecessor(SendNotificationEmailResponseCode, RunWorkflowOnAfterJobQueueEntryErrorCode);
+        WorkflowResponseHandling.AddResponsePredecessor(NotifyUserResponseCode, RunWorkflowOnAfterInsertJobQueueLogEntryCode);
     end;
 
     local procedure NotifyUserResponseCode(): Code[128];
     begin
-        exit(UpperCase('NotifyUser (NC)'));
-    end;
-
-    local procedure SendNotificationEmailResponseCode(): Code[128];
-    begin
-        exit(UpperCase('SendNotificationEmail (NC)'));
+        exit(UpperCase('Notificer Recipient'));
     end;
 
     procedure RunWorkflowOnAfterJobQueueEntryErrorCode(): Code[128];
@@ -44,8 +38,60 @@ codeunit 50058 "Job Queue Event Handler"
         WorkflowEventHandling: Codeunit "Workflow Event Handling";
         RunWorkflowOnAfterInsertJobQueueLogEntryDescTxt: TextConst ENU = 'A Job Queue Log Entry was inserted.';
     begin
-        WorkflowEventHandling.AddEventToLibrary(RunWorkflowOnAfterInsertJobQueueLogEntryCode, DATABASE::"Job Queue Log Entry", RunWorkflowOnAfterInsertJobQueueLogEntryDescTxt, 0, false);
-        WorkflowEventHandling.AddEventToLibrary(RunWorkflowOnAfterJobQueueEntryErrorCode, DATABASE::"Job Queue Entry", RunWorkflowOnAfterJobQueueEntryErrorDescTxt, 0, false);
+        WorkflowEventHandling.AddEventToLibrary(RunWorkflowOnAfterInsertJobQueueLogEntryCode, Database::"Job Queue Log Entry", RunWorkflowOnAfterInsertJobQueueLogEntryDescTxt, 0, false);
+        WorkflowEventHandling.AddEventToLibrary(RunWorkflowOnAfterJobQueueEntryErrorCode, Database::"Job Queue Entry", RunWorkflowOnAfterJobQueueEntryErrorDescTxt, 0, false);
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Workflow Response Handling", 'OnExecuteWorkflowResponse', '', true, true)]
+    procedure ExecuteWorkflowResponses(var ResponseExecuted: Boolean; Variant: Variant; xVariant: Variant; ResponseWorkflowStepInstance: Record "Workflow Step Instance");
+    var
+        WorkflowResponse: Record "Workflow Response";
+        JobQueueNotifRecipient: Record "Job Queue Notif. Recipient";
+        JobQueueEntryId: GUID;
+        JobQueueEntryDescription: Text;
+        LastErrorText: Text;
+        UserSetup: Record "User Setup";
+        NotificationAttemptFailedTxt: TextConst ENU = '"An  attempt to send a notification e-mail failed. Important information might have been discarded. Please check your e-mail setup. "';
+    begin
+        //forsæt kun hvis det er job queue / log
+        if not GetErrorAndSource(Variant, JobQueueEntryId, JobQueueEntryDescription, LastErrorText) then exit;
+
+        JobQueueNotifRecipient.SetRange("Job Queue ID", JobQueueEntryId);
+        if JobQueueNotifRecipient.FindSet() then
+            repeat
+                UserSetup.Get(JobQueueNotifRecipient."Recipient ID");
+                case JobQueueNotifRecipient."Notify By" of
+                    JobQueueNotifRecipient."Notify By"::"E-mail":
+                        begin
+                            IF NOT TrySendNotificationEmail(UserSetup."E-Mail",
+                                        StrSubstNo('Job Queue %1 %2 has the following error %3',
+                                                    JobQueueEntryId,
+                                                    JobQueueEntryDescription,
+                                                    LastErrorText),
+                                        StrSubstNo('Job Queue %1 %2 has the following error %3',
+                                                    JobQueueEntryId,
+                                                    JobQueueEntryDescription,
+                                                    LastErrorText)) then
+                                NotifyUserWkfl(Variant,
+                                                '',
+                                                true,
+                                                NotificationAttemptFailedTxt,
+                                                0,
+                                                UserSetup."User ID");
+                        end;
+                    JobQueueNotifRecipient."Notify By"::Note:
+                        begin
+                            NotifyUserWkfl(Variant, '',
+                                true,
+                                StrSubstNo('Job Queue %1 %2 has the following error %3',
+                                            JobQueueEntryId,
+                                            JobQueueEntryDescription,
+                                            LastErrorText),
+                                9004,
+                                UserSetup."User ID");
+                        end;
+                end;
+            until JobQueueNotifRecipient.Next() = 0;
     end;
 
     [EventSubscriber(ObjectType::Table, Database::"Job Queue Log Entry", 'OnAfterInsertEvent', '', false, false)]
@@ -71,78 +117,34 @@ codeunit 50058 "Job Queue Event Handler"
         WorkflowResponseHandling: Codeunit "Workflow Response Handling";
     begin
         WorkflowResponseHandling.AddResponseToLibrary(NotifyUserResponseCode, 0, NotifyUserResponseDescTxt, 'NCNOTIFYUSER');
-        WorkflowResponseHandling.AddResponseToLibrary(SendNotificationEmailResponseCode, 0, SendNotificationEmailResponseTxt, 'NCSENDMAIL');
     end;
 
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Workflow Response Handling", 'OnExecuteWorkflowResponse', '', true, true)]
-    local procedure ExecuteWorkflowResponses(var ResponseExecuted: Boolean; Variant: Variant; xVariant: Variant; ResponseWorkflowStepInstance: Record 1504);
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Workflow Response Handling", 'OnAddWorkflowResponsePredecessorsToLibrary', '', true, true)]
+    procedure AddWorkflowEventResponseCombinationsToLibrary(ResponseFunctionName: Code[128]);
     var
-        WorkflowResponse: Record "Workflow Response";
+        WorkflowResponseHandling: Codeunit "Workflow Response Handling";
     begin
-        if WorkflowResponse.Get(ResponseWorkflowStepInstance."Function Name") then
-            case WorkflowResponse."Function Name" of
-                NotifyUserResponseCode:
-                    begin
-                        NotifyUserResponse(Variant, ResponseWorkflowStepInstance);
-                        ResponseExecuted := true;
-                    end;
-                SendNotificationEmailResponseCode:
-                    begin
-                        SendNotificationEmailResponse(Variant, ResponseWorkflowStepInstance);
-                        ResponseExecuted := true;
-                    end;
-            end;
+        case ResponseFunctionName OF
+            NotifyUserResponseCode:
+                begin
+                    WorkflowResponseHandling.AddResponsePredecessor(NotifyUserResponseCode, RunWorkflowOnAfterInsertJobQueueLogEntryCode);
+                    WorkflowResponseHandling.AddResponsePredecessor(NotifyUserResponseCode, RunWorkflowOnAfterJobQueueEntryErrorCode);
+                end;
+        end;
     end;
 
-    local procedure NotifyUserResponse(Variant: Variant; WorkflowStepInstance: Record 1504);
-    var
-        WorkflowStepArgument: Record 1523;
-        /*NCWorkflowSupportFuntions : Codeunit 50032;*/
-        JobQueueEntryId: GUID;
-        JobQueueEntryDescription: Text;
-        LastErrorText: Text;
-    begin
-        /*
-      WorkflowStepArgument.GET(WorkflowStepInstance.Argument);
-      GetErrorAndSource(Variant, JobQueueEntryId, JobQueueEntryDescription, LastErrorText);  //NC10.00.03
-      NCWorkflowSupportFuntions.NotifyUserWkfl(Variant, '', TRUE, STRSUBSTNO(WorkflowStepArgument."Notification Message (NC)", JobQueueEntryId, JobQueueEntryDescription, LastErrorText)
-        , WorkflowStepArgument."Notif. Link Target Page (NC)",WorkflowStepArgument."Notification User ID (NC)");
-        */
-    end;
-
-    procedure SendNotificationEmailResponse(Variant: Variant; WorkflowStepInstance: Record 1504);
-    var
-        WorkflowStepArgument: Record 1523;
-        UserSetup: Record 91;
-        /*NCWorkflowSupportFuntions@1000000003 : Codeunit 50032;*/
-        NotificationAttemptFailedTxt: TextConst ENU = '"An  attempt to send a notification e-mail failed. Important information might have been discarded. Please check your e-mail setup. "';
-        JobQueueEntryId: GUID;
-        JobQueueEntryDescription: Text;
-        LastErrorText: Text;
-    begin
-        /*
-        WorkflowStepArgument.GET(WorkflowStepInstance.Argument);
-        GetErrorAndSource(Variant, JobQueueEntryId, JobQueueEntryDescription, LastErrorText);
-        UserSetup.GET(WorkflowStepArgument."E-mail recipient User ID (NC)");
-
-        IF NOT NCWorkflowSupportFuntions.TrySendNotificationEmail(UserSetup."E-Mail", STRSUBSTNO(WorkflowStepArgument."E-mail message (NC)", JobQueueEntryId, JobQueueEntryDescription, LastErrorText)
-          , STRSUBSTNO(WorkflowStepArgument."E-mail subject (NC)", JobQueueEntryId, JobQueueEntryDescription, LastErrorText)) THEN
-            NCWorkflowSupportFuntions.NotifyUserWkfl(Variant, '', TRUE, NotificationAttemptFailedTxt, 0, WorkflowStepArgument."E-mail recipient User ID (NC)");
-            */
-    end;
-
-    local procedure GetErrorAndSource(Variant: Variant; var JobQueueEntryId: GUID; var JobQueueEntryDescription: Text; var LastErrorText: Text);
+    local procedure GetErrorAndSource(Variant: Variant; var JobQueueEntryId: GUID; var JobQueueEntryDescription: Text; var LastErrorText: Text): Boolean;
     var
         RecRef: RecordRef;
-        JobQueueEntry: Record 472;
-        JobQueueLogEntry: Record 474;
+        JobQueueEntry: Record "Job Queue Entry";
+        JobQueueLogEntry: Record "Job Queue Log Entry";
     begin
         RecRef.GetTable(Variant);
         Clear(JobQueueEntryId);
         Clear(JobQueueEntryDescription);
         Clear(LastErrorText);
 
-        case RecRef.NUMBER of
+        case RecRef.Number of
             Database::"Job Queue Entry":
                 begin
                     JobQueueEntry := Variant;
@@ -157,6 +159,91 @@ codeunit 50058 "Job Queue Event Handler"
                     JobQueueEntryDescription := JobQueueLogEntry.Description;
                     LastErrorText := StrSubstNo('%1%2%3%4', JobQueueLogEntry."Error Message", JobQueueLogEntry."Error Message 2", JobQueueLogEntry."Error Message 3", JobQueueLogEntry."Error Message 4");
                 end;
+            else
+                exit(false);
         end;
+        exit(true);
+    end;
+
+    [TryFunction]
+    procedure TrySendNotificationEmail(SendToEmail: Text[80]; CustomText: Text; EmailSubject: Text[250]);
+    VAR
+        TempEmailItem: Record "Email Item" temporary;
+        EmailBody: Record TempBlob temporary;
+    begin
+        if SendToEmail = '' then
+            exit;
+        GenerateEmailBody(EmailBody, CustomText);
+
+        TempEmailItem."Send to" := SendToEmail;
+        TempEmailItem.Subject := EmailSubject;
+        TempEmailItem.Body := EmailBody.Blob;
+        TempEmailItem."Plaintext Formatted" := false;
+        TempEmailItem."From Address" := 'noreply@netcompany.com';//!! change
+
+        if not TempEmailItem.Send(true) then
+            error('E-mail not sent.');
+    end;
+
+    local procedure GenerateEmailBody(var BodyBlob: Record TempBlob; CustomText: Text);
+    var
+        BodyStream: OutStream;
+    begin
+        BodyBlob.Blob.CREATEOUTSTREAM(BodyStream, TextEncoding::UTF8);
+        if CustomText <> '' then begin
+            BodyStream.WriteText(CustomText);
+            BodyStream.WriteText('<br><br>');
+        end;
+    end;
+
+    procedure SendNotification(Description: Text; Note: text)
+    var
+        Notification: Notification;
+    begin
+        Notification.Message(StrSubstNo('%1 %2', UpperCase(Description), Note));
+        Notification.SCOPE := NotificationScope::LocalScope;
+        Notification.Send;
+    end;
+
+    procedure NotifyUserWkfl(RecRefAsVariant: Variant; Description: Text; IsError: Boolean; Note: Text; PageID: Integer; NotifyUserID: Code[50]);
+    var
+        RecordLink: Record "Record Link";
+        DataTypeManagement: Codeunit "Data Type Management";
+        RecRef: RecordRef;
+    begin
+        DataTypeManagement.GetRecordRef(RecRefAsVariant, RecRef);
+        CreateNoteWkfl(RecRef, Description, IsError, PageID, Note, RecordLink, NotifyUserID);
+        SendNotification(Description, Note);
+    end;
+
+    procedure CreateNoteWkfl(RecRef: RecordRef; Description: Text; IsError: Boolean; PageID: Integer; Note: Text; var RecordLink: Record "Record Link"; NotifyUserID: Code[50]);
+    var
+        LinkId: Integer;
+        TypeHelper: Codeunit 10;
+    begin
+        RecordLink.FindLast();
+        LinkId := RecordLink."Link ID" + 1;
+        RecordLink.Init();
+        ;
+        RecordLink."Link ID" := LinkId;
+        RecordLink."Record ID" := RecRef.RecordId;
+        RecordLink.Description := Description;
+        RecordLink.Type := RecordLink.Type::Note;
+        RecordLink.Company := CompanyName;
+
+        RecordLink.URL1 := GetUrl(ClientType::Windows, CompanyName, ObjectType::Page, PageID, RecRef);
+        RecordLink.URL2 := GetUrl(ClientType::Web, CompanyName, ObjectType::Page, PageID, RecRef);
+        RecordLink.URL3 := GetUrl(ClientType::Phone, CompanyName, ObjectType::Page, PageID, RecRef);
+        RecordLink.URL4 := GetUrl(ClientType::Tablet, CompanyName, ObjectType::Page, PageID, RecRef);
+
+        if IsError then
+            RecordLink.Notify := true
+        else
+            RecordLink.Notify := false;
+        RecordLink.Created := CurrentDateTime();
+        RecordLink."User ID" := UserId();
+        RecordLink."To User ID" := NotifyUserID;
+        TypeHelper.WriteRecordLinkNote(RecordLink, StrSubstNo('%1 %2', UpperCase(RecordLink.Description), Note));
+        RecordLink.Insert;
     end;
 }
