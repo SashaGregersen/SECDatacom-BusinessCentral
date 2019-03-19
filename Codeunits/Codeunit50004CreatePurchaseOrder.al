@@ -20,6 +20,8 @@ codeunit 50004 "Create Purchase Order"
         AdvPriceMgt: Codeunit "Advanced Price Management";
         BidMgt: Codeunit "Bid Management";
         MessageTxt: Text;
+        TempPurchHeader: Record "Purchase Header" temporary;
+        ReleasePurchDoc: Codeunit "Release Purchase Document";
     begin
         GlobalLineCounter := 0;
         SalesLine.SetRange("Document No.", SalesHeader."No.");
@@ -50,8 +52,12 @@ codeunit 50004 "Create Purchase Order"
                     end;
 
                     if PurchasePrice."Direct Unit Cost" <> 0 then begin
-                        if not FindPurchaseHeader(VendorNo, CurrencyCode, PurchHeader) then
-                            MessageTxt := CreatePurchHeader(SalesHeader, VendorNo, CurrencyCode, SalesLine."Bid No.", PurchHeader);
+                        if not FindTempPurchaseHeader(VendorNo, CurrencyCode, TempPurchHeader) then begin
+                            MessageTxt := MessageTxt + CreatePurchHeader(SalesHeader, VendorNo, CurrencyCode, SalesLine."Bid No.", PurchHeader) + '/';
+                            TempPurchHeader := PurchHeader;
+                            TempPurchHeader.Insert(false);
+                        end else
+                            PurchHeader.Get(TempPurchHeader."Document Type", TempPurchHeader."No.");
                         CreatePurchLine(PurchHeader, SalesHeader, SalesLine, PurchasePrice."Direct Unit Cost", PurchLine);
                         ReserveItemOnPurchOrder(SalesLine, PurchLine);
                         GlobalLineCounter := GlobalLineCounter + 1;
@@ -59,11 +65,19 @@ codeunit 50004 "Create Purchase Order"
                 end;
             until SalesLine.next = 0;
 
+        if TempPurchHeader.FindSet() then
+            repeat
+                PurchHeader.Get(TempPurchHeader."Document Type", TempPurchHeader."No.");
+                ReleasePurchDoc.ReleasePurchaseHeader(PurchHeader, false);
+            until TempPurchHeader.Next() = 0;
+
         if GlobalLineCounter = 0 then
             Message('No lines created. All items are either already on purchase orders or reserved against inventory, or do not have a purchase price')
         else begin
-            if MessageTxt <> '' then
+            if MessageTxt <> '' then begin
+                MessageTxt := DelChr(MessageTxt, '>', '/');
                 Message(MessageTxt);
+            end;
             Message(StrSubstNo('%1 Purchase Lines created', GlobalLineCounter));
         end;
     end;
@@ -175,36 +189,6 @@ codeunit 50004 "Create Purchase Order"
         ReservationEntry.Insert(true);
     end;
 
-    Local procedure NewPurchOrder(SalesLine: record "Sales Line"; SalesHeader: record "Sales Header"; ItemVendorNo: code[20]; var PurchHeader: record "Purchase Header"; var GlobalLineCount: Integer)
-    var
-        PurchLine: record "Purchase Line";
-        Vendor: record Vendor;
-    begin
-        //Deprecated - to be deleted
-        /*         SalesLine.CalcFields("Reserved Quantity");
-                if (SalesLine."Quantity" - SalesLine."Reserved Quantity") <> 0 then begin
-                    Vendor.get(ItemVendorNo);
-                    CreatePurchHeader(SalesHeader, ItemVendorNo, Vendor."Currency Code", '', PurchHeader);
-                    CreatePurchLine(PurchHeader, SalesHeader, SalesLine, PurchLine);
-                    ReserveItemOnPurchOrder(SalesLine, PurchLine);
-                    GlobalLineCount := GlobalLineCount + 1;
-                end; */
-    end;
-
-
-    Local procedure UpdateExistingPurchOrder(Salesline: record "Sales Line"; PurchHeader: record "Purchase Header"; SalesHeader: record "Sales Header"; var GlobalLineCount: Integer)
-    var
-        PurchLine: record "Purchase Line";
-    begin
-        //Deprecated - to be deleted
-        /* SalesLine.CalcFields("Reserved Quantity");
-        if (SalesLine."Quantity" - SalesLine."Reserved Quantity") <> 0 then begin
-            CreatePurchLine(PurchHeader, SalesHeader, SalesLine, PurchLine);
-            ReserveItemOnPurchOrder(SalesLine, PurchLine);
-            GlobalLineCount := GlobalLineCount + 1;
-        end; */
-    end;
-
     Local procedure CheckSalesLineForBidNo(SalesLine: record "Sales Line"): Boolean
     var
 
@@ -215,9 +199,8 @@ codeunit 50004 "Create Purchase Order"
             exit(true);
     end;
 
-
-
     local procedure FindPurchaseHeader(VendorNo: code[20]; CurrencyCode: Code[20]; var PurchHeader: record "Purchase Header") FoundHeader: Boolean
+    //Not used right now - keeping it because we might need it again
     begin
         PurchHeader.SetRange("Document Type", PurchHeader."Document Type"::Order);
         PurchHeader.SetRange("Buy-from Vendor No.", VendorNo);
@@ -228,6 +211,19 @@ codeunit 50004 "Create Purchase Order"
         PurchHeader.SetRange("Buy-from Vendor No.");
         PurchHeader.SetRange("Currency Code");
         PurchHeader.SetRange(Status);
+    end;
+
+    local procedure FindTempPurchaseHeader(VendorNo: code[20]; CurrencyCode: Code[20]; var TempPurchHeader: record "Purchase Header" temporary) FoundHeader: Boolean
+    begin
+        TempPurchHeader.SetRange("Document Type", TempPurchHeader."Document Type"::Order);
+        TempPurchHeader.SetRange("Buy-from Vendor No.", VendorNo);
+        TempPurchHeader.SetRange("Currency Code", CurrencyCode);
+        TempPurchHeader.SetRange(Status, TempPurchHeader.Status::Open);
+        FoundHeader := TempPurchHeader.FindFirst();
+        TempPurchHeader.SetRange("Document Type");
+        TempPurchHeader.SetRange("Buy-from Vendor No.");
+        TempPurchHeader.SetRange("Currency Code");
+        TempPurchHeader.SetRange(Status);
     end;
 
     local procedure GetNextReservantionEntryNo(): Integer;
