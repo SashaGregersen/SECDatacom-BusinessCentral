@@ -4,7 +4,6 @@ codeunit 50019 "IC Sync Delete Item"
 
     trigger OnRun()
     begin
-        if not rec.Delete(true) then
-            exit;
+        rec.Delete(true);
     end;
 }
