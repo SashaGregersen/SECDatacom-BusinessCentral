@@ -5,21 +5,10 @@ codeunit 50058 "Job Queue Event Handler"
 
     var
         RunWorkflowOnAfterJobQueueEntryErrorDescTxt: TextConst DAN = 'Job Que Entry Status has been changed to Error', ENU = 'Job Que Entry Status has been changed to Error';
-        NotifyUserResponseDescTxt: TextConst ENU = 'Notify Reciepient';
-
-    trigger OnRun();
-    var
-        WorkflowEventHandling: Codeunit "Workflow Event Handling";
-        WorkflowResponseHandling: Codeunit "Workflow Response Handling";
-    begin
-        WorkflowEventHandling.AddEventToLibrary(RunWorkflowOnAfterJobQueueEntryErrorCode, Database::"Job Queue Entry", RunWorkflowOnAfterJobQueueEntryErrorDescTxt, 0, false);
-        WorkflowResponseHandling.AddResponsePredecessor(NotifyUserResponseCode, RunWorkflowOnAfterJobQueueEntryErrorCode);
-        WorkflowResponseHandling.AddResponsePredecessor(NotifyUserResponseCode, RunWorkflowOnAfterInsertJobQueueLogEntryCode);
-    end;
 
     local procedure NotifyUserResponseCode(): Code[128];
     begin
-        exit(UpperCase('Notificer Recipient'));
+        exit(UpperCase('Notify Reciepient'));
     end;
 
     procedure RunWorkflowOnAfterJobQueueEntryErrorCode(): Code[128];
@@ -48,18 +37,20 @@ codeunit 50058 "Job Queue Event Handler"
         WorkflowResponse: Record "Workflow Response";
         JobQueueNotifRecipient: Record "Job Queue Notif. Recipient";
         JobQueueEntryId: GUID;
+        JobQueueLogEntryNo: Integer;
         JobQueueEntryDescription: Text;
         LastErrorText: Text;
         UserSetup: Record "User Setup";
         NotificationAttemptFailedTxt: TextConst ENU = '"An  attempt to send a notification e-mail failed. Important information might have been discarded. Please check your e-mail setup. "';
     begin
         //forsæt kun hvis det er job queue / log
-        if not GetErrorAndSource(Variant, JobQueueEntryId, JobQueueEntryDescription, LastErrorText) then exit;
+        if not GetErrorAndSource(Variant, JobQueueEntryId, JobQueueLogEntryNo, JobQueueEntryDescription, LastErrorText) then exit;
 
         JobQueueNotifRecipient.SetRange("Job Queue ID", JobQueueEntryId);
         if JobQueueNotifRecipient.FindSet() then
             repeat
                 UserSetup.Get(JobQueueNotifRecipient."Recipient ID");
+
                 case JobQueueNotifRecipient."Notify By" of
                     JobQueueNotifRecipient."Notify By"::"E-mail":
                         begin
@@ -87,10 +78,14 @@ codeunit 50058 "Job Queue Event Handler"
                                             JobQueueEntryId,
                                             JobQueueEntryDescription,
                                             LastErrorText),
-                                9004,
+                                0,
                                 UserSetup."User ID");
                         end;
                 end;
+
+                ResponseExecuted := true;
+                JobQueueNotifRecipient."Last Notified Log Entry" := JobQueueLogEntryNo;
+                JobQueueNotifRecipient.Modify(false);
             until JobQueueNotifRecipient.Next() = 0;
     end;
 
@@ -116,7 +111,7 @@ codeunit 50058 "Job Queue Event Handler"
     var
         WorkflowResponseHandling: Codeunit "Workflow Response Handling";
     begin
-        WorkflowResponseHandling.AddResponseToLibrary(NotifyUserResponseCode, 0, NotifyUserResponseDescTxt, 'NCNOTIFYUSER');
+        WorkflowResponseHandling.AddResponseToLibrary(NotifyUserResponseCode, 0, 'Notify Recipient', 'NCNOTIFYUSER');
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Workflow Response Handling", 'OnAddWorkflowResponsePredecessorsToLibrary', '', true, true)]
@@ -133,7 +128,7 @@ codeunit 50058 "Job Queue Event Handler"
         end;
     end;
 
-    local procedure GetErrorAndSource(Variant: Variant; var JobQueueEntryId: GUID; var JobQueueEntryDescription: Text; var LastErrorText: Text): Boolean;
+    local procedure GetErrorAndSource(Variant: Variant; var JobQueueEntryId: GUID; JobQueueLogEntryNo: Integer; var JobQueueEntryDescription: Text; var LastErrorText: Text): Boolean;
     var
         RecRef: RecordRef;
         JobQueueEntry: Record "Job Queue Entry";
@@ -141,6 +136,7 @@ codeunit 50058 "Job Queue Event Handler"
     begin
         RecRef.GetTable(Variant);
         Clear(JobQueueEntryId);
+        Clear(JobQueueLogEntryNo);
         Clear(JobQueueEntryDescription);
         Clear(LastErrorText);
 
@@ -148,14 +144,27 @@ codeunit 50058 "Job Queue Event Handler"
             Database::"Job Queue Entry":
                 begin
                     JobQueueEntry := Variant;
+                    if not JobQueueEntry."Use Notification" then
+                        exit(false);
                     JobQueueEntryId := JobQueueEntry.ID;
                     JobQueueEntryDescription := JobQueueEntry.Description;
                     LastErrorText := StrSubstNo('%1%2%3%4', JobQueueEntry."Error Message", JobQueueEntry."Error Message 2", JobQueueEntry."Error Message 3", JobQueueEntry."Error Message 4");
+
+                    JobQueueLogEntry.SetCurrentKey(ID, Status);
+                    JobQueueLogEntry.SetRange(ID, JobQueueEntryId);
+                    JobQueueLogEntry.SetRange(Status, JobQueueLogEntry.Status::Error);
+                    if JobQueueLogEntry.FindLast() then
+                        JobQueueLogEntryNo := JobQueueLogEntry."Entry No.";
                 end;
             Database::"Job Queue Log Entry":
                 begin
                     JobQueueLogEntry := Variant;
+                    JobQueueEntry.Get(JobQueueLogEntry.ID);
+                    if not JobQueueEntry."Use Notification" then
+                        exit(false);
+
                     JobQueueEntryId := JobQueueLogEntry.ID;
+                    JobQueueLogEntryNo := JobQueueLogEntry."Entry No.";
                     JobQueueEntryDescription := JobQueueLogEntry.Description;
                     LastErrorText := StrSubstNo('%1%2%3%4', JobQueueLogEntry."Error Message", JobQueueLogEntry."Error Message 2", JobQueueLogEntry."Error Message 3", JobQueueLogEntry."Error Message 4");
                 end;
@@ -179,7 +188,6 @@ codeunit 50058 "Job Queue Event Handler"
         TempEmailItem.Subject := EmailSubject;
         TempEmailItem.Body := EmailBody.Blob;
         TempEmailItem."Plaintext Formatted" := false;
-        TempEmailItem."From Address" := 'noreply@netcompany.com';//!! change
 
         if not TempEmailItem.Send(true) then
             error('E-mail not sent.');
@@ -219,12 +227,11 @@ codeunit 50058 "Job Queue Event Handler"
     procedure CreateNoteWkfl(RecRef: RecordRef; Description: Text; IsError: Boolean; PageID: Integer; Note: Text; var RecordLink: Record "Record Link"; NotifyUserID: Code[50]);
     var
         LinkId: Integer;
-        TypeHelper: Codeunit 10;
+        TypeHelper: Codeunit "Type Helper";
     begin
         RecordLink.FindLast();
         LinkId := RecordLink."Link ID" + 1;
         RecordLink.Init();
-        ;
         RecordLink."Link ID" := LinkId;
         RecordLink."Record ID" := RecRef.RecordId;
         RecordLink.Description := Description;
