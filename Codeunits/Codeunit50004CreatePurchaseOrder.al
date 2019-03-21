@@ -94,10 +94,11 @@ codeunit 50004 "Create Purchase Order"
         PurchHeader.Validate("Currency Code", CurrencyCode);
         if VendorBidNo <> '' then
             PurchHeader.Validate("Vendor Shipment No.", VendorBidNo);
-        if (SalesHeader."Drop-Shipment" = true) or (SalesHeader."Ship-To-Code" <> '') then begin
+        if (SalesHeader."Ship directly from supplier") then begin
             PurchHeader.SetShipToAddress(SalesHeader."Ship-to Name", SalesHeader."Ship-to Name 2", SalesHeader."Ship-to Address",
             SalesHeader."Ship-to Address 2", SalesHeader."Ship-to City", SalesHeader."Ship-to Post Code",
             SalesHeader."Ship-to Country/Region Code", SalesHeader."Ship-to Country/Region Code");
+
         end;
         PurchHeader."End Customer" := SalesHeader."End Customer";
         PurchHeader.Reseller := SalesHeader.Reseller;

@@ -22,6 +22,7 @@ pageextension 50009 "Item Adv. Pricing" extends "Item Card"
             field("Use on Website"; "Use on Website")
             {
                 ApplicationArea = all;
+                caption = 'Show in E-shop/Price file';
             }
         }
         addafter("Shelf No.")
