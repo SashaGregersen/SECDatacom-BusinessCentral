@@ -282,10 +282,14 @@ codeunit 50003 "File Management Import"
         VendorBidNo: Code[20];
         CurrencyCode: code[20];
         SalesLine: record "Sales Line";
-        GlobalCounter: Integer;
+        GlobalLineCounter: Integer;
+        PurchasePrice: Record "Purchase Price";
+        BidPrice: Record "Bid Item Price";
+        AdvPriceMgt: Codeunit "Advanced Price Management";
+        BidMgt: Codeunit "Bid Management";
+        ReleasePurchDoc: Codeunit "Release Purchase Document";
     begin
-        //Refacotr when merged with code that XJMA is doing
-        /* TempCSVBuffer.SetRange("Line No.", 2);
+        TempCSVBuffer.SetRange("Line No.", 2);
         if TempCSVBuffer.FindSet() then
             repeat
                 case TempCSVBuffer."Field No." of
@@ -304,15 +308,37 @@ codeunit 50003 "File Management Import"
                     14:
                         begin
                             if TempCSVBuffer.Value = '' then begin
+                                Clear(PurchasePrice);
+
+                                Clear(BidPrice);
+                                if not BidMgt.GetBestBidPrice(SalesLine."Bid No.", SalesLine."Sell-to Customer No.", SalesLine."No.", CurrencyCode, BidPrice) then
+                                    Clear(PurchasePrice)
+                                else begin
+                                    BidMgt.MakePurchasePriceFromBidPrice(BidPrice, PurchasePrice);
+                                    CurrencyCode := PurchasePrice."Currency Code";
+                                end;
+
                                 PurchFromSales.CreatePurchHeader(SalesHeader, VendorNo, CurrencyCode, VendorBidNo, PurchOrder);
                                 SalesLine.SetRange("Document No.", SalesHeader."No.");
                                 SalesLine.SetRange("Document Type", SalesHeader."Document Type");
+                                SalesLine.SetRange(Type, SalesLine.Type::Item);
                                 if SalesLine.findset then
                                     repeat
-                                        PurchFromSales.CreatePurchLine(PurchOrder, SalesHeader, SalesLine, PurchLine);
+                                        PurchFromSales.CreatePurchLine(PurchOrder, SalesHeader, SalesLine, PurchasePrice."Direct Unit Cost", PurchLine);
                                         PurchFromSales.ReserveItemOnPurchOrder(SalesLine, PurchLine);
+                                        GlobalLineCounter := GlobalLineCounter + 1;
                                     until SalesLine.next = 0;
                             end else begin
+                                Clear(PurchasePrice);
+
+                                Clear(BidPrice);
+                                if not BidMgt.GetBestBidPrice(SalesLine."Bid No.", SalesLine."Sell-to Customer No.", SalesLine."No.", CurrencyCode, BidPrice) then
+                                    Clear(PurchasePrice)
+                                else begin
+                                    BidMgt.MakePurchasePriceFromBidPrice(BidPrice, PurchasePrice);
+                                    CurrencyCode := PurchasePrice."Currency Code";
+                                end;
+
                                 PurchOrder.get(PurchOrder."Document Type"::Order, TempCSVBuffer.Value);
                                 if PurchOrder."Buy-from Vendor No." = '' then begin
                                     PurchOrder.validate("Buy-from Vendor No.", VendorNo);
@@ -328,22 +354,22 @@ codeunit 50003 "File Management Import"
                                 end;
                                 SalesLine.SetRange("Document No.", SalesHeader."No.");
                                 SalesLine.SetRange("Document Type", SalesHeader."Document Type");
+                                SalesLine.SetRange(Type, SalesLine.Type::Item);
                                 if SalesLine.findset then begin
                                     repeat
                                         SalesLine.CalcFields("Reserved Quantity");
                                         if SalesLine."Reserved Quantity" = 0 then begin
-                                            PurchFromSales.CreatePurchLine(PurchOrder, SalesHeader, SalesLine, PurchLine);
+                                            PurchFromSales.CreatePurchLine(PurchOrder, SalesHeader, SalesLine, PurchasePrice."Direct Unit Cost", PurchLine);
                                             PurchFromSales.ReserveItemOnPurchOrder(Salesline, PurchLine);
-                                            GlobalCounter := GlobalCounter + 1;
+                                            GlobalLineCounter := GlobalLineCounter + 1;
                                         end;
                                     until SalesLine.next = 0;
-                                    Message('%1 lines inserted on purchase order %2', GlobalCounter, PurchOrder."No.");
+                                    Message('%1 lines inserted on purchase order %2', GlobalLineCounter, PurchOrder."No.");
                                 end;
                             end;
                         end;
                 end;
-
-            until TempCSVBuffer.next = 0; */
+            until TempCSVBuffer.next = 0;
     end;
 
     procedure SelectFileFromFileShare(Var TempCSVBUffer: record "CSV Buffer" temporary)

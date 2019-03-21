@@ -22,6 +22,7 @@ codeunit 50004 "Create Purchase Order"
         MessageTxt: Text;
         TempPurchHeader: Record "Purchase Header" temporary;
         ReleasePurchDoc: Codeunit "Release Purchase Document";
+        Bid: Record Bid;
     begin
         GlobalLineCounter := 0;
         SalesLine.SetRange("Document No.", SalesHeader."No.");
@@ -53,7 +54,8 @@ codeunit 50004 "Create Purchase Order"
 
                     if PurchasePrice."Direct Unit Cost" <> 0 then begin
                         if not FindTempPurchaseHeader(VendorNo, CurrencyCode, TempPurchHeader) then begin
-                            MessageTxt := MessageTxt + CreatePurchHeader(SalesHeader, VendorNo, CurrencyCode, SalesLine."Bid No.", PurchHeader) + '/';
+                            Bid.Get(SalesLine."Bid No.");
+                            MessageTxt := MessageTxt + CreatePurchHeader(SalesHeader, VendorNo, CurrencyCode, Bid."Vendor Bid No.", PurchHeader) + '/';
                             TempPurchHeader := PurchHeader;
                             TempPurchHeader.Insert(false);
                         end else
