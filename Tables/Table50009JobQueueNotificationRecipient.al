@@ -39,4 +39,15 @@ table 50009 "Job Queue Notif. Recipient"
             Clustered = true;
         }
     }
+
+
+    trigger OnInsert()
+    begin
+        "Last Modified" := CurrentDateTime();
+    end;
+
+    trigger OnModify()
+    begin
+        "Last Modified" := CurrentDateTime();
+    end;
 }

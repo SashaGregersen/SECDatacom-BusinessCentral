@@ -22,6 +22,7 @@ codeunit 50004 "Create Purchase Order"
         MessageTxt: Text;
         TempPurchHeader: Record "Purchase Header" temporary;
         ReleasePurchDoc: Codeunit "Release Purchase Document";
+        Bid: Record Bid;
     begin
         GlobalLineCounter := 0;
         SalesLine.SetRange("Document No.", SalesHeader."No.");
@@ -53,7 +54,8 @@ codeunit 50004 "Create Purchase Order"
 
                     if PurchasePrice."Direct Unit Cost" <> 0 then begin
                         if not FindTempPurchaseHeader(VendorNo, CurrencyCode, TempPurchHeader) then begin
-                            MessageTxt := MessageTxt + CreatePurchHeader(SalesHeader, VendorNo, CurrencyCode, SalesLine."Bid No.", PurchHeader) + '/';
+                            Bid.Get(SalesLine."Bid No.");
+                            MessageTxt := MessageTxt + CreatePurchHeader(SalesHeader, VendorNo, CurrencyCode, Bid."Vendor Bid No.", PurchHeader) + '/';
                             TempPurchHeader := PurchHeader;
                             TempPurchHeader.Insert(false);
                         end else
@@ -84,7 +86,8 @@ codeunit 50004 "Create Purchase Order"
 
     procedure CreatePurchHeader(SalesHeader: record "Sales Header"; VendorNo: code[20]; CurrencyCode: code[10]; VendorBidNo: code[20]; var PurchHeader: record "Purchase Header"): Text
     var
-
+        Customer: record customer;
+        CompanyInfo: record "Company Information";
     begin
         PurchHeader.Init;
         PurchHeader."No." := '';
@@ -95,10 +98,18 @@ codeunit 50004 "Create Purchase Order"
         if VendorBidNo <> '' then
             PurchHeader.Validate("Vendor Shipment No.", VendorBidNo);
         if (SalesHeader."Ship directly from supplier") then begin
-            PurchHeader.SetShipToAddress(SalesHeader."Ship-to Name", SalesHeader."Ship-to Name 2", SalesHeader."Ship-to Address",
-            SalesHeader."Ship-to Address 2", SalesHeader."Ship-to City", SalesHeader."Ship-to Post Code",
-            SalesHeader."Ship-to Country/Region Code", SalesHeader."Ship-to Country/Region Code");
-
+            PurchHeader.SetShipToAddress(SalesHeader."Ship-to Name", SalesHeader."Ship-to Name 2",
+            SalesHeader."Ship-to Address", SalesHeader."Ship-to Address 2", SalesHeader."Ship-to City",
+            SalesHeader."Ship-to Post Code", SalesHeader."Ship-to County", SalesHeader."Ship-to Country/Region Code");
+            PurchHeader.validate("Ship-to Contact", SalesHeader."Ship-to Contact");
+        end else begin
+            if SalesHeader.Subsidiary <> '' then begin
+                CompanyInfo.get();
+                PurchHeader.SetShipToAddress(CompanyInfo.Name, CompanyInfo."Ship-to Name 2", CompanyInfo."Ship-to Address",
+                CompanyInfo."Ship-to Address 2", CompanyInfo."Ship-to City", CompanyInfo."Ship-to Post Code",
+                CompanyInfo."Ship-to County", CompanyInfo."Ship-to Country/Region Code");
+                PurchHeader.validate("Ship-to Contact", CompanyInfo."Ship-to Contact");
+            end;
         end;
         PurchHeader."End Customer" := SalesHeader."End Customer";
         PurchHeader.Reseller := SalesHeader.Reseller;

@@ -6,6 +6,13 @@ tableextension 50042 "Job Queue Notification" extends "Job Queue Entry"
         {
             DataClassification = ToBeClassified;
             CaptionML = DAN = 'Brug notificering', ENU = 'Use Notification';
+            trigger OnValidate()
+            begin
+                if "Use Notification" then
+                    "Notification Enabled DateTime" := CurrentDateTime()
+                else
+                    "Notification Enabled DateTime" := 0DT;
+            end;
         }
         field(50001; "Notification Enabled DateTime"; DateTime)
         {
@@ -14,4 +21,11 @@ tableextension 50042 "Job Queue Notification" extends "Job Queue Entry"
             Editable = false;
         }
     }
+    trigger OnAfterDelete()
+    var
+        JobQueueNotifRecipient: Record "Job Queue Notif. Recipient";
+    begin
+        JobQueueNotifRecipient.SetRange("Job Queue ID", ID);
+        JobQueueNotifRecipient.DeleteAll();
+    end;
 }
