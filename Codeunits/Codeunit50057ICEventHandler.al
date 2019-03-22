@@ -39,7 +39,7 @@ codeunit 50057 "IC Event Handler"
         LocalSalesHeader.Subsidiary := SubsidiaryCustomerNo;
         LocalSalesHeader.Reseller := SalesHeaderOtherCompany.Reseller;
         if SalesHeaderOtherCompany."End Customer" <> '' then
-            LocalSalesHeader.Validate("End Customer", SalesHeaderOtherCompany."End Customer");
+            LocalSalesHeader."End Customer" := SalesHeaderOtherCompany."End Customer";
         if SalesHeaderOtherCompany."End Customer Name" <> '' then
             LocalSalesHeader.Validate("End Customer Name", SalesHeaderOtherCompany."End Customer Name");
         if SalesHeaderOtherCompany."Financing Partner" <> '' then

@@ -18,10 +18,6 @@ query 50005 "POS Report"
             {
 
             }
-            column(Currency_Code; "Currency Code")
-            {
-
-            }
 
             dataitem(Sales_Invoice_Line; "Sales Invoice Line")
             {
@@ -52,20 +48,6 @@ query 50005 "POS Report"
                 {
 
                 }
-                column(Unit_Cost; "Unit Cost")
-                {
-
-                }
-
-                column(Unit_Cost__LCY; "Unit Cost (LCY)")
-                {
-
-                }
-
-                column(Amount; Amount)
-                {
-
-                }
                 column(Bid_No; "Bid No.")
                 {
 
@@ -79,6 +61,11 @@ query 50005 "POS Report"
                 {
                     DataItemLink = "No." = Sales_Invoice_Line."No.";
                     column(Vendor_Item_No_; "Vendor Item No.")
+                    {
+
+                    }
+
+                    column(Vendor_Currency; "Vendor Currency")
                     {
 
                     }
