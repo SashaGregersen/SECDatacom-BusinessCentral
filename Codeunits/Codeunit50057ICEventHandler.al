@@ -41,11 +41,7 @@ codeunit 50057 "IC Event Handler"
         if SalesHeaderOtherCompany."End Customer" <> '' then
             LocalSalesHeader."End Customer" := SalesHeaderOtherCompany."End Customer";
         if SalesHeaderOtherCompany."End Customer Name" <> '' then
-            LocalSalesHeader.Validate("End Customer Name", SalesHeaderOtherCompany."End Customer Name");
-        if SalesHeaderOtherCompany."Financing Partner" <> '' then
-            LocalSalesHeader.Validate("Financing Partner", SalesHeaderOtherCompany."Financing Partner");
-        if SalesHeaderOtherCompany."Financing Partner Name" <> '' then
-            LocalSalesHeader.Validate("Financing Partner Name", SalesHeaderOtherCompany."Financing Partner Name");
+            LocalSalesHeader.validate("End Customer Name", SalesHeaderOtherCompany."End Customer Name");
         if LocalSalesHeader.Subsidiary <> '' then begin
             Customer.get(LocalSalesHeader.Subsidiary);
             LocalSalesHeader.validate("Subsidiary Name", Customer.Name);

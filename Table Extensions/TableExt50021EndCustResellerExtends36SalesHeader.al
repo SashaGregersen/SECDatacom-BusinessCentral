@@ -75,6 +75,7 @@ tableextension 50021 "End Customer and Reseller" extends 36
         {
             DataClassification = ToBeClassified;
             TableRelation = "customer";
+            Editable = false;
             trigger OnValidate();
             var
                 customer: record customer;
@@ -253,7 +254,6 @@ tableextension 50021 "End Customer and Reseller" extends 36
         }
 
     }
-
     procedure SetShipToAddressOnSalesOrder(Customer: record customer)
     var
         ShipToAdress: record "Ship-to Address";

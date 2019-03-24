@@ -7,8 +7,10 @@ codeunit 50054 "Sales Order Event Handler"
     local procedure SalesLineOnAfterValidateType(Var rec: record "Sales Line")
     var
         salesheader: record "sales header";
+        GLSetup: Record "General Ledger Setup";
     begin
-        if CompanyName() <> 'SECDenmark' then
+        GLSetup.get();
+        if CompanyName() <> GLSetup."Master Company" then
             exit;
 
         salesheader.setrange("No.", rec."Document No.");
@@ -29,7 +31,9 @@ codeunit 50054 "Sales Order Event Handler"
         salesheader: record "sales header";
         Item: record item;
         SubItem: record "Item Substitution";
+        GlSetup: Record "General Ledger Setup";
     begin
+        GlSetup.get();
         if (rec.Type = rec.type::Item) and (not rec.isicorder) then begin
             Item.Get(rec."No.");
             if item."Default Location" <> '' then
@@ -51,7 +55,7 @@ codeunit 50054 "Sales Order Event Handler"
             end;
         end;
 
-        if CompanyName() <> 'SECDenmark' then
+        if CompanyName() <> GlSetup."Master Company" then
             exit;
 
         salesheader.setrange("No.", rec."Document No.");
@@ -69,8 +73,10 @@ codeunit 50054 "Sales Order Event Handler"
     local procedure SalesLineOnAfterValidateDescription(Var rec: record "Sales Line")
     var
         salesheader: record "sales header";
+        GlSetup: Record "General Ledger Setup";
     begin
-        if CompanyName() <> 'SECDenmark' then
+        GlSetup.get();
+        if CompanyName() <> GlSetup."Master Company" then
             exit;
 
         salesheader.setrange("No.", rec."Document No.");
@@ -89,8 +95,10 @@ codeunit 50054 "Sales Order Event Handler"
     local procedure SalesLineOnAfterValidateQuantity(Var rec: record "Sales Line")
     var
         salesheader: record "sales header";
+        GlSetup: Record "General Ledger Setup";
     begin
-        if CompanyName() <> 'SECDenmark' then
+        GlSetup.get();
+        if CompanyName() <> GlSetup."Master Company" then
             exit;
 
         salesheader.setrange("No.", rec."Document No.");
@@ -109,8 +117,10 @@ codeunit 50054 "Sales Order Event Handler"
     local procedure SalesLineOnAfterValidateQtyToAssembleToOrder(Var rec: record "Sales Line")
     var
         salesheader: record "sales header";
+        GlSetup: record "General Ledger Setup";
     begin
-        if CompanyName() <> 'SECDenmark' then
+        GlSetup.get();
+        if CompanyName() <> GlSetup."Master Company" then
             exit;
 
         salesheader.setrange("No.", rec."Document No.");
@@ -129,8 +139,10 @@ codeunit 50054 "Sales Order Event Handler"
     local procedure SalesLineOnAfterValidateUnitPrice(Var rec: record "Sales Line")
     var
         salesheader: record "sales header";
+        GlSetup: record "General Ledger Setup";
     begin
-        if CompanyName() <> 'SECDenmark' then
+        GlSetup.get();
+        if CompanyName() <> GlSetup."Master Company" then
             exit;
 
         salesheader.setrange("No.", rec."Document No.");
@@ -149,8 +161,10 @@ codeunit 50054 "Sales Order Event Handler"
     local procedure SalesLineOnAfterValidateLineAmount(Var rec: record "Sales Line")
     var
         salesheader: record "sales header";
+        GlSetup: record "General Ledger Setup";
     begin
-        if CompanyName() <> 'SECDenmark' then
+        GlSetup.get();
+        if CompanyName() <> GlSetup."Master Company" then
             exit;
 
         salesheader.setrange("No.", rec."Document No.");
@@ -169,8 +183,10 @@ codeunit 50054 "Sales Order Event Handler"
     local procedure SalesLineOnAfterValidateLineDiscount(Var rec: record "Sales Line")
     var
         salesheader: record "sales header";
+        GLSetup: Record "General Ledger Setup";
     begin
-        if CompanyName() <> 'SECDenmark' then
+        GlSetup.get();
+        if CompanyName() <> GlSetup."Master Company" then
             exit;
 
         salesheader.setrange("No.", rec."Document No.");
@@ -189,8 +205,10 @@ codeunit 50054 "Sales Order Event Handler"
     local procedure SalesLineOnAfterValidateBidNo(Var rec: record "Sales Line")
     var
         salesheader: record "sales header";
+        GlSetup: Record "General Ledger Setup";
     begin
-        if CompanyName() <> 'SECDenmark' then
+        GlSetup.get();
+        if CompanyName() <> GlSetup."Master Company" then
             exit;
 
         salesheader.setrange("No.", rec."Document No.");
@@ -209,8 +227,10 @@ codeunit 50054 "Sales Order Event Handler"
     local procedure SalesLineOnAfterValidateBidUnitSalesPrice(Var rec: record "Sales Line")
     var
         salesheader: record "sales header";
+        GlSetup: Record "General Ledger Setup";
     begin
-        if CompanyName() <> 'SECDenmark' then
+        GlSetup.get();
+        if CompanyName() <> GlSetup."Master Company" then
             exit;
 
         salesheader.setrange("No.", rec."Document No.");
@@ -229,8 +249,10 @@ codeunit 50054 "Sales Order Event Handler"
     local procedure SalesLineOnAfterValidateBidSalesDiscount(Var rec: record "Sales Line")
     var
         salesheader: record "sales header";
+        GlSetup: Record "General Ledger Setup";
     begin
-        if CompanyName() <> 'SECDenmark' then
+        GlSetup.get();
+        if CompanyName() <> GlSetup."Master Company" then
             exit;
 
         salesheader.setrange("No.", rec."Document No.");
@@ -249,8 +271,10 @@ codeunit 50054 "Sales Order Event Handler"
     local procedure SalesLineOnAfterValidateUnitPurchasePrice(Var rec: record "Sales Line")
     var
         salesheader: record "sales header";
+        GlSetup: Record "General Ledger Setup";
     begin
-        if CompanyName() <> 'SECDenmark' then
+        GlSetup.get();
+        if CompanyName() <> GlSetup."Master Company" then
             exit;
 
         salesheader.setrange("No.", rec."Document No.");
@@ -269,8 +293,10 @@ codeunit 50054 "Sales Order Event Handler"
     local procedure SalesLineOnAfterValidateBidUnitPurchasePrice(Var rec: record "Sales Line")
     var
         salesheader: record "sales header";
+        GlSetup: Record "General Ledger Setup";
     begin
-        if CompanyName() <> 'SECDenmark' then
+        GlSetup.get();
+        if CompanyName() <> GlSetup."Master Company" then
             exit;
 
         salesheader.setrange("No.", rec."Document No.");
@@ -289,8 +315,10 @@ codeunit 50054 "Sales Order Event Handler"
     local procedure SalesLineOnAfterValidateBidPurchaseDiscount(Var rec: record "Sales Line")
     var
         salesheader: record "sales header";
+        GlSetup: Record "General Ledger Setup";
     begin
-        if CompanyName() <> 'SECDenmark' then
+        GlSetup.get();
+        if CompanyName() <> GlSetup."Master Company" then
             exit;
 
         salesheader.setrange("No.", rec."Document No.");
@@ -308,9 +336,10 @@ codeunit 50054 "Sales Order Event Handler"
     [EventSubscriber(ObjectType::Table, database::"Sales Header", 'OnAfterValidateEvent', 'end customer', true, true)]
     local procedure SalesHeaderOnAfterValidateEndCustomer(var rec: record "Sales Header")
     var
-
+        GlSetup: Record "General Ledger Setup";
     begin
-        if CompanyName() <> 'SECDenmark' then
+        GlSetup.get();
+        if CompanyName() <> GlSetup."Master Company" then
             exit;
 
         if rec.Subsidiary <> '' then
@@ -321,9 +350,10 @@ codeunit 50054 "Sales Order Event Handler"
     [EventSubscriber(ObjectType::Table, database::"Sales Header", 'OnAfterValidateEvent', 'Reseller', true, true)]
     local procedure SalesHeaderOnAfterValidateReseller(var rec: record "Sales Header")
     var
-
+        GlSetup: Record "General Ledger Setup";
     begin
-        if CompanyName() <> 'SECDenmark' then
+        GlSetup.get();
+        if CompanyName() <> GlSetup."Master Company" then
             exit;
 
         if rec.Subsidiary <> '' then
@@ -333,9 +363,10 @@ codeunit 50054 "Sales Order Event Handler"
     [EventSubscriber(ObjectType::Table, database::"Sales Header", 'OnAfterValidateEvent', 'subsidiary', true, true)]
     local procedure SalesHeaderOnAfterValidateSubsidiary(var rec: record "Sales Header"; var xrec: Record "Sales Header")
     var
-
+        GlSetup: Record "General Ledger Setup";
     begin
-        if CompanyName() <> 'SECDenmark' then
+        GlSetup.get();
+        if CompanyName() <> GlSetup."Master Company" then
             exit;
 
         if (xrec.Subsidiary <> '') and (rec.Subsidiary <> xrec.Subsidiary) then
@@ -345,9 +376,10 @@ codeunit 50054 "Sales Order Event Handler"
     [EventSubscriber(ObjectType::Table, database::"Sales Header", 'OnAfterValidateEvent', 'financing partner', true, true)]
     local procedure SalesHeaderOnAfterValidateFinancingPartner(var rec: record "Sales Header")
     var
-
+        GlSetup: Record "General Ledger Setup";
     begin
-        if CompanyName() <> 'SECDenmark' then
+        GlSetup.get();
+        if CompanyName() <> GlSetup."Master Company" then
             exit;
 
         if rec.Subsidiary <> '' then
