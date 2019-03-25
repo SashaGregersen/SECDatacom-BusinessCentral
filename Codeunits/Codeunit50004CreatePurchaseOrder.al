@@ -54,7 +54,7 @@ codeunit 50004 "Create Purchase Order"
 
                     if PurchasePrice."Direct Unit Cost" <> 0 then begin
                         if not FindTempPurchaseHeader(VendorNo, CurrencyCode, TempPurchHeader) then begin
-                            MessageTxt := MessageTxt + CreatePurchHeader(SalesHeader, VendorNo, CurrencyCode, SalesLine."Bid No.", PurchHeader) + '/';
+                            MessageTxt := MessageTxt + CreatePurchHeader(SalesHeader, VendorNo, CurrencyCode, GetVendorBidNo(SalesLine."Bid No."), PurchHeader) + '/';
                             TempPurchHeader := PurchHeader;
                             TempPurchHeader.Insert(false);
                         end else
@@ -245,6 +245,16 @@ codeunit 50004 "Create Purchase Order"
             exit(1)
         else
             exit(ReservationEntry."Entry No." + 1)
+    end;
+
+    local procedure GetVendorBidNo(BidNo: Code[20]): code[20]
+    var
+        Bid: record "Bid";
+    begin
+        if Bid.get(BidNo) then
+            exit(Bid."Vendor Bid No.")
+        else
+            exit(BidNo);
     end;
 
 }

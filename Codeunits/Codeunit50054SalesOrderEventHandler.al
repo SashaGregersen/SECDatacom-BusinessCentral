@@ -32,6 +32,7 @@ codeunit 50054 "Sales Order Event Handler"
         Item: record item;
         SubItem: record "Item Substitution";
         GlSetup: Record "General Ledger Setup";
+        ItemSub: page "Item Substitutions";
     begin
         GlSetup.get();
         if (rec.Type = rec.type::Item) and (not rec.isicorder) then begin
@@ -42,11 +43,13 @@ codeunit 50054 "Sales Order Event Handler"
                 SubItem.SetRange("No.", Item."No.");
                 if not SubItem.IsEmpty() then begin
                     If Confirm('Item %1 is blocked from purchase.\Do you wish to select a substitute item?', false, item."No.") then begin
-                        if page.RunModal(page::"Item Substitutions", SubItem) = action::LookupOK then begin
+                        if page.RunModal(page::"Item Substitutions", SubItem) = action::LookupOK then begin //dette fungere ikke med en runmodal
                             rec.Validate("No.", SubItem."Substitute No.");
                         end else
                             Error('There is no substitute items available');
-                    end;
+                    end else
+                        if not Confirm('Item %1 is blocked from purchase\Do you wish to sell the item?', false, Item."No.") then
+                            Error('The Item cannot be sold, please select another item');
                 end else begin
                     If not Confirm('Item %1 is blocked from purchase and no substitute item exists.\\Do you wish to sell the item?', false, Item."No.") then begin
                         Error('The Item cannot be sold, please select another item');
