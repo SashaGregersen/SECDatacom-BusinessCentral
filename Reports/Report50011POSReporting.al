@@ -3,6 +3,8 @@ report 50011 "POS Reporting"
     UsageCategory = Administration;
     ApplicationArea = All;
     ProcessingOnly = true;
+    UseRequestPage = false;
+
 
     dataset
     {
@@ -158,7 +160,6 @@ report 50011 "POS Reporting"
                     {
 
                     }
-
                     dataitem("Item Disc. Group Percentages"; "Item Disc. Group Percentages")
                     {
                         DataItemLink = "Item Disc. Group Code" = field ("Item Disc. Group");
@@ -167,6 +168,16 @@ report 50011 "POS Reporting"
                         {
 
                         }
+                    }
+                    dataitem("VAR"; "VAR")
+                    {
+                        DataItemLink = "Vendor No." = field ("Vendor No.");
+
+                        column(VAR_id; "VAR id")
+                        {
+
+                        }
+
                     }
 
                 }
@@ -196,7 +207,6 @@ report 50011 "POS Reporting"
                     }
 
                 }
-
                 dataitem("Bid Item Price"; "Bid Item Price")
                 {
                     DataItemLink = "Bid No." = field ("Bid No.");
@@ -215,6 +225,7 @@ report 50011 "POS Reporting"
                 PurchInvHeader: record "Purch. Inv. Header";
                 ItemLedgEntry: Record "Item Ledger Entry";
                 PurchInvLine: Record "Purch. Inv. Line";
+                VARID: record "VAR";
             begin
                 if "Sales Invoice Header"."Drop-Shipment" then begin
                     Customer.get("End Customer");
@@ -239,6 +250,8 @@ report 50011 "POS Reporting"
                     ResellEndCustCountryRegion := Customer."Country/Region Code";
                     ResellEndCustContact := Customer.Contact;
                 end;
+
+                "VAR".setrange("Customer No.", "Sales Invoice Header".Reseller);
 
                 "Item Ledger Entry".setrange("Document No.", Sales_Invoice_Line."Shipment No.");
                 "Item Ledger Entry".setRange("Document Type", 1);

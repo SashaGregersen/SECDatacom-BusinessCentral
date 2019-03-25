@@ -112,7 +112,7 @@ report 50003 "Price File Export"
         end;
     end;
 
-    local procedure FormatCurrentDateTime(var CurrDateTime: Text)
+    procedure FormatCurrentDateTime(var CurrDateTime: Text)
     var
         CurrDateTime2: text;
     begin

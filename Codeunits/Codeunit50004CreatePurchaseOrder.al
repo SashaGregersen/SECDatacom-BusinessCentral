@@ -54,8 +54,7 @@ codeunit 50004 "Create Purchase Order"
 
                     if PurchasePrice."Direct Unit Cost" <> 0 then begin
                         if not FindTempPurchaseHeader(VendorNo, CurrencyCode, TempPurchHeader) then begin
-                            Bid.Get(SalesLine."Bid No.");
-                            MessageTxt := MessageTxt + CreatePurchHeader(SalesHeader, VendorNo, CurrencyCode, Bid."Vendor Bid No.", PurchHeader) + '/';
+                            MessageTxt := MessageTxt + CreatePurchHeader(SalesHeader, VendorNo, CurrencyCode, SalesLine."Bid No.", PurchHeader) + '/';
                             TempPurchHeader := PurchHeader;
                             TempPurchHeader.Insert(false);
                         end else
