@@ -186,6 +186,7 @@ codeunit 50003 "File Management Import"
         DimensionsTemplate: Record "Dimensions Template";
         Item: Record Item;
         bid: Record Bid;
+        TempCSVBufferTemplate: Record "CSV Buffer" temporary;
     begin
         if not SalesSetup.Get then exit;
 
@@ -211,6 +212,20 @@ codeunit 50003 "File Management Import"
         end else
             Bid.Get(BidNo);
 
+        //Gem templates!
+        case ImportType of
+            ImportType::ProjectImport:
+                TempCSVBuffer.SetRange("Field No.", 15);
+            ImportType::LinesImport:
+                TempCSVBuffer.SetRange("Field No.", 10);
+        end;
+        if TempCSVBuffer.FindSet() then
+            repeat
+                TempCSVBufferTemplate.Copy(TempCSVBuffer);
+                TempCSVBufferTemplate.Insert();
+            until TempCSVBuffer.Next() = 0;
+
+        //Import items
         case ImportType of
             ImportType::ProjectImport:
                 TempCSVBuffer.SetRange("Field No.", 6);
@@ -220,11 +235,17 @@ codeunit 50003 "File Management Import"
 
         if TempCSVBuffer.FindSet() then
             repeat
-                item.SetRange("Vendor No.", Bid."Vendor No.");
+                Item.SetRange("Vendor No.", Bid."Vendor No.");
                 Item.Setrange("Vendor Item No.", TempCSVBuffer.Value);
                 if not Item.FindFirst() then begin
-                    if not ConfigTemplateHeader.Get(SalesSetup."Project Item Template") then
-                        error('Item does not exists for vendor item no %1 or vendor no. %2', TempCSVBuffer.Value, bid."Vendor No.");
+                    Clear(ConfigTemplateHeader);
+                    TempCSVBufferTemplate.SetRange("Line No.", TempCSVBuffer."Line No.");
+                    if TempCSVBufferTemplate.FindFirst() then
+                        if ConfigTemplateHeader.Get(TempCSVBufferTemplate.Value) then;
+
+                    if ConfigTemplateHeader.IsEmpty() then
+                        if not ConfigTemplateHeader.Get(SalesSetup."Project Item Template") then
+                            error('Item does not exists for vendor item no %1 or vendor no. %2', TempCSVBuffer.Value, bid."Vendor No.");
 
                     Clear(Item);
                     Item.Insert(true);
@@ -238,6 +259,9 @@ codeunit 50003 "File Management Import"
                     Item.Get(Item."No.");
                 end;
             until TempCSVBuffer.next = 0;
+
+        TempCSVBufferTemplate.Reset;
+        TempCSVBufferTemplate.DeleteAll();
 
         TempCSVBuffer.Reset;
     end;

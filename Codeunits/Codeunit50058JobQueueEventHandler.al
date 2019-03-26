@@ -44,7 +44,7 @@ codeunit 50058 "Job Queue Event Handler"
         NotificationAttemptFailedTxt: TextConst ENU = '"An  attempt to send a notification e-mail failed. Important information might have been discarded. Please check your e-mail setup. "';
     begin
         if not WorkflowResponse.GET(ResponseWorkflowStepInstance."Function Name") then exit;
-        if WorkflowResponse."Function Name" <> NotifyUserResponseCode() then exit;
+        if (WorkflowResponse."Function Name" <> NotifyUserResponseCode()) then exit;
 
         if not GetErrorAndSource(Variant, JobQueueEntryId, JobQueueLogEntryNo, JobQueueEntryDescription, LastErrorText) then begin
             ResponseExecuted := TRUE;
