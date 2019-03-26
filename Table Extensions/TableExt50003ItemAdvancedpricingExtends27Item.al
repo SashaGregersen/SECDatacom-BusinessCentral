@@ -41,4 +41,12 @@ tableextension 50003 "Item Adv. Pricing" extends Item
 
     }
 
+    Fieldgroups
+    {
+        addlast(DropDown; "Vendor Item No.")
+        {
+
+        }
+    }
+
 }
