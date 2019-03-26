@@ -2,7 +2,22 @@ pageextension 50034 "Price File Export" extends "Customer List"
 {
     layout
     {
+        addafter(Name)
+        {
+            field(Address; Address)
+            {
 
+            }
+
+            field("Address 2"; "Address 2")
+            {
+
+            }
+            field(City; City)
+            {
+
+            }
+        }
     }
 
     actions

@@ -108,10 +108,12 @@ page 50006 "WS Sales Header"
                 {
                     ApplicationArea = All;
                 }
+                /*
                 field("End Customer"; "End Customer")
                 {
                     ApplicationArea = All;
                 }
+                */
                 field("End User Name"; "End User Name")
                 {
                     ApplicationArea = All;
@@ -152,7 +154,7 @@ page 50006 "WS Sales Header"
                     ApplicationArea = All;
                     Caption = 'VendorOrderComment';
                 }
-                part("WS SalesLines"; "WS Sales Line")
+                part("Cygate Sales Line"; "WS Sales Line")
                 {
                     ApplicationArea = Basic, Suite;
                     SubPageLink = "Document Type" = field ("Document Type"), "Document No." = field ("No.");

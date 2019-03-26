@@ -12,7 +12,7 @@ pageextension 50005 "Price Wrksh. Adv. Pricing" extends "Sales Price Worksheet"
                     Item: Record Item;
                 begin
                     if "Vendor Item No." <> '' then begin
-                        Item.SetRange("Vendor Item No.", rec."Vendor Item No.");
+                        Item.SetRange("Vendor Item No.", rec."Vendor Item No."); //der skal sættes filter på vendor no.
                         if Item.FindFirst() then
                             rec.Validate("Item No.", item."No.");
                     end;
