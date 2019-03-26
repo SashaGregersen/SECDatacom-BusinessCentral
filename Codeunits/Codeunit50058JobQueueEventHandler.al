@@ -43,8 +43,13 @@ codeunit 50058 "Job Queue Event Handler"
         UserSetup: Record "User Setup";
         NotificationAttemptFailedTxt: TextConst ENU = '"An  attempt to send a notification e-mail failed. Important information might have been discarded. Please check your e-mail setup. "';
     begin
-        //forsæt kun hvis det er job queue / log
-        if not GetErrorAndSource(Variant, JobQueueEntryId, JobQueueLogEntryNo, JobQueueEntryDescription, LastErrorText) then exit;
+        if not WorkflowResponse.GET(ResponseWorkflowStepInstance."Function Name") then exit;
+        if WorkflowResponse."Function Name" <> NotifyUserResponseCode() then exit;
+
+        if not GetErrorAndSource(Variant, JobQueueEntryId, JobQueueLogEntryNo, JobQueueEntryDescription, LastErrorText) then begin
+            ResponseExecuted := TRUE;
+            exit;
+        end;
 
         JobQueueNotifRecipient.SetRange("Job Queue ID", JobQueueEntryId);
         if JobQueueNotifRecipient.FindSet() then
@@ -83,10 +88,10 @@ codeunit 50058 "Job Queue Event Handler"
                         end;
                 end;
 
-                ResponseExecuted := true;
                 JobQueueNotifRecipient."Last Notified Log Entry" := JobQueueLogEntryNo;
                 JobQueueNotifRecipient.Modify(false);
             until JobQueueNotifRecipient.Next() = 0;
+        ResponseExecuted := true;
     end;
 
     [EventSubscriber(ObjectType::Table, Database::"Job Queue Log Entry", 'OnAfterInsertEvent', '', false, false)]
