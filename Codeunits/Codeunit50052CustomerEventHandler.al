@@ -4,10 +4,12 @@ codeunit 50052 "Customer Event Handler"
     EventSubscriberInstance = StaticAutomatic;
 
     [EventSubscriber(ObjectType::Table, database::"Customer Price Group", 'OnAfterInsertEvent', '', true, true)]
-    local procedure CustomerPriceGroupOnAfterinsert(var Rec: Record "Customer Price Group")
+    local procedure CustomerPriceGroupOnAfterinsert(var Rec: Record "Customer Price Group"; Runtrigger: Boolean)
     var
         CustomerDiscountGroup: Record "Customer Discount Group";
     begin
+        if not Runtrigger then
+            exit;
         If not CustomerDiscountGroup.Get(Rec.Code) then begin
             CustomerDiscountGroup.Init();
             CustomerDiscountGroup.Code := Rec.Code;
@@ -17,10 +19,12 @@ codeunit 50052 "Customer Event Handler"
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Customer Discount Group", 'OnAfterInsertEvent', '', true, true)]
-    local procedure CustomerDiscountGroupOnAfterinsert(var Rec: Record "Customer Discount Group")
+    local procedure CustomerDiscountGroupOnAfterinsert(var Rec: Record "Customer Discount Group"; RunTrigger: Boolean)
     var
         CustomerPriceGroup: Record "Customer Price Group";
     begin
+        if not Runtrigger then
+            exit;
         If not CustomerpriceGroup.Get(Rec.Code) then begin
             CustomerPriceGroup.Init();
             CustomerPriceGroup.Code := Rec.Code;

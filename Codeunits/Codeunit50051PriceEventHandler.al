@@ -91,8 +91,10 @@ codeunit 50051 "Price Event Handler"
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Sales Price", 'OnAfterInsertEvent', '', true, true)]
-    local procedure SalesPriceOnAfterInsert(var Rec: Record "Sales Price")
+    local procedure SalesPriceOnAfterInsert(var Rec: Record "Sales Price"; RunTrigger: Boolean)
     begin
+        if not Runtrigger then
+            exit;
         if Rec.IsTemporary() then
             exit;
         Rec."Allow Line Disc." := false;
@@ -112,12 +114,14 @@ codeunit 50051 "Price Event Handler"
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Sales Line Discount", 'OnAfterModifyEvent', '', true, true)]
-    local procedure SalesLineDiscountOnAfterModify(var Rec: Record "Sales Line Discount")
+    local procedure SalesLineDiscountOnAfterModify(var Rec: Record "Sales Line Discount"; RunTrigger: Boolean)
     var
         DiscontGroupFilters: Record "Sales Line Discount";
         SalesPriceWorksheet: Record "Sales Price Worksheet";
         ImplementPrices: Report "Implement Price Change";
     begin
+        if not Runtrigger then
+            exit;
         if Rec.IsTemporary() then
             exit;
         DiscontGroupFilters.SetRange(Type, DiscontGroupFilters.type::"Item Disc. Group");
@@ -185,8 +189,6 @@ codeunit 50051 "Price Event Handler"
         If not RunTrigger then
             exit;
         if Rec.IsTemporary() then
-            exit;
-        if Rec."Direct Unit Cost" = xrec."Direct Unit Cost" then
             exit;
         AdvPriceMgt.CreateSalesPriceFromPurchasePriceMarkup(Rec);
         AdvPriceMgt.CreatePricesForICPartners(Rec."Item No.", Rec."Vendor No.");
