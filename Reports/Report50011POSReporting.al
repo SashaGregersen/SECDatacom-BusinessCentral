@@ -288,7 +288,7 @@ report 50011 "POS Reporting"
             var
 
             begin
-                CurrReport.Break();
+                //CurrReport.Break();
             end;
 
             trigger OnPostDataItem()

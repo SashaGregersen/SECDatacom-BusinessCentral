@@ -37,7 +37,7 @@ codeunit 50020 "POS Report Export"
         ExportFormat: report "Price File Export";
     begin
         ExportFormat.FormatCurrentDateTime(CurrDateTime);
-        Filelocation := 'POSReport_' + CurrDateTime + '.xls';
+        Filelocation := 'c:\POS Report\POSReport_' + CurrDateTime + '.xls';
     end;
 
     var
