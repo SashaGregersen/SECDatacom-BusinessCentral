@@ -35,9 +35,12 @@ codeunit 50020 "POS Report Export"
     var
         CurrDateTime: text;
         ExportFormat: report "Price File Export";
+        PurchPaySetup: Record "Purchases & Payables Setup";
     begin
+        PurchPaySetup.Get();
+        PurchPaySetup.TestField("POS File Location");
         ExportFormat.FormatCurrentDateTime(CurrDateTime);
-        Filelocation := 'c:\POS Report\POSReport_' + CurrDateTime + '.xls';
+        Filelocation := PurchPaySetup."POS File Location" + '\POSReport_' + CurrDateTime + '.xls';
     end;
 
     var

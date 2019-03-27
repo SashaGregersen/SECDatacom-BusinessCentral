@@ -4,6 +4,9 @@ report 50011 "POS Reporting"
     ApplicationArea = All;
     ProcessingOnly = false;
     UseRequestPage = true;
+    DefaultLayout = RDLC;
+    RDLCLayout = './Layouts/POSReport.rdl';
+    Caption = 'POS Report';
 
     dataset
     {
@@ -143,7 +146,7 @@ report 50011 "POS Reporting"
                 }
                 column(ListPrice; Listprice)
                 {
-
+                    //hvordan finder vi den rigtige listepris på salgstidspunktet?
                 }
                 column(Bid_No; "Bid No.")
                 {
@@ -175,7 +178,7 @@ report 50011 "POS Reporting"
 
                         column(Purchase_Discount_Percentage; "Purchase Discount Percentage")
                         {
-                            // hvordan finder vi den rigtige %
+                            // hvordan finder vi den rigtige % på købstidspunktet
                         }
                     }
                     dataitem("VAR"; "VAR")
@@ -288,7 +291,7 @@ report 50011 "POS Reporting"
             var
 
             begin
-                //CurrReport.Break();
+
             end;
 
             trigger OnPostDataItem()
