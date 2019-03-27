@@ -2,14 +2,14 @@ report 50011 "POS Reporting"
 {
     UsageCategory = Administration;
     ApplicationArea = All;
-    ProcessingOnly = true;
-    UseRequestPage = false;
-
+    ProcessingOnly = false;
+    UseRequestPage = true;
 
     dataset
     {
         dataitem("Sales Invoice Header"; "Sales Invoice Header")
         {
+            RequestFilterFields = "Posting Date";
 
             column(Document_No; "No.")
             {
@@ -237,29 +237,31 @@ report 50011 "POS Reporting"
                 VARID: record "VAR";
             begin
                 if "Sales Invoice Header"."Drop-Shipment" then begin
-                    Customer.get("Reseller");
-                    ResellEndCustName := Customer.name;
-                    ResellEndCustName2 := Customer."Name 2";
-                    ResellEndCustAddress := Customer.Address;
-                    ResellEndCustAddress2 := Customer."Address 2";
-                    ResellEndCustCity := Customer.City;
-                    ResellEndCustPostCode := Customer."Post Code";
-                    ResellEndCustCounty := Customer.County;
-                    ResellEndCustCountryRegion := Customer."Country/Region Code";
-                    ResellEndCustContact := Customer.Contact;
+                    if Customer.get("Reseller") then begin
+                        ResellEndCustName := Customer.name;
+                        ResellEndCustName2 := Customer."Name 2";
+                        ResellEndCustAddress := Customer.Address;
+                        ResellEndCustAddress2 := Customer."Address 2";
+                        ResellEndCustCity := Customer.City;
+                        ResellEndCustPostCode := Customer."Post Code";
+                        ResellEndCustCounty := Customer.County;
+                        ResellEndCustCountryRegion := Customer."Country/Region Code";
+                        ResellEndCustContact := Customer.Contact;
+                    end;
                 end else begin
-                    Customer.get("End Customer");
-                    ResellEndCustName := Customer.name;
-                    ResellEndCustName2 := Customer."Name 2";
-                    ResellEndCustAddress := Customer.Address;
-                    ResellEndCustAddress2 := Customer."Address 2";
-                    ResellEndCustCity := Customer.City;
-                    ResellEndCustPostCode := Customer."Post Code";
-                    ResellEndCustCounty := Customer.County;
-                    ResellEndCustCountryRegion := Customer."Country/Region Code";
-                    ResellEndCustContact := Customer.Contact;
-                    ResellEndCustPhone := Customer."Phone No.";
-                    ResellEndCustEmail := Customer."E-Mail";
+                    if Customer.get("End Customer") then begin
+                        ResellEndCustName := Customer.name;
+                        ResellEndCustName2 := Customer."Name 2";
+                        ResellEndCustAddress := Customer.Address;
+                        ResellEndCustAddress2 := Customer."Address 2";
+                        ResellEndCustCity := Customer.City;
+                        ResellEndCustPostCode := Customer."Post Code";
+                        ResellEndCustCounty := Customer.County;
+                        ResellEndCustCountryRegion := Customer."Country/Region Code";
+                        ResellEndCustContact := Customer.Contact;
+                        ResellEndCustPhone := Customer."Phone No.";
+                        ResellEndCustEmail := Customer."E-Mail";
+                    end;
                 end;
 
                 "VAR".setrange("Customer No.", "Sales Invoice Header".Reseller);
@@ -297,11 +299,14 @@ report 50011 "POS Reporting"
             end;
 
         }
+
+
         /* dataitem("Sales Cr.Memo Header"; "Sales Cr.Memo Header")
         {
 
         } */
     }
+
 
     var
         PurchOrderNo: code[20];

@@ -6,7 +6,7 @@ codeunit 50020 "POS Report Export"
         TempFile.TEXTMODE(FALSE);
         // Specify that you can write to TempFile.  
         TempFile.WRITEMODE(TRUE);
-        Name := CreateFileLocationPath();
+        Name := CreateFileName();
         // Create and open TempFile.  
         TempFile.CREATE(Name);
         // Close TempFile so that the SAVEASEXCEL function can write to it.  
@@ -31,16 +31,13 @@ codeunit 50020 "POS Report Export"
         TempFile.CLOSE();
     end;
 
-    local procedure CreateFileLocationPath() Filelocation: Text
+    local procedure CreateFileName() Filelocation: Text
     var
         CurrDateTime: text;
-        PurchPaySetup: record "Purchases & Payables Setup";
         ExportFormat: report "Price File Export";
     begin
-        PurchPaySetup.Get();
-        PurchPaySetup.TestField("POS file location");
         ExportFormat.FormatCurrentDateTime(CurrDateTime);
-        Filelocation := PurchPaySetup."POS file location" + '\POSReport_' + CurrDateTime + '.xls';
+        Filelocation := 'POSReport_' + CurrDateTime + '.xls';
     end;
 
     var
