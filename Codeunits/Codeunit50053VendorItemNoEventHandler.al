@@ -140,10 +140,12 @@ codeunit 50053 "Vendor Item No Event Handler"
 
     [EventSubscriber(ObjectType::table, database::"Warranty Ledger Entry", 'OnAfterInsertEvent', '', true, true)]
 
-    local procedure OnAfterModifyWarrantyLedgerEntryEvent(var rec: record "Warranty Ledger Entry")
+    local procedure OnAfterModifyWarrantyLedgerEntryEvent(var rec: record "Warranty Ledger Entry"; runtrigger: Boolean)
     var
 
     begin
+        if not runtrigger then
+            exit;
         if rec."Vendor Item No." <> '' then begin
             Rec.Validate("Vendor-Item-No", Rec."Vendor Item No.");
             rec.Modify(true);

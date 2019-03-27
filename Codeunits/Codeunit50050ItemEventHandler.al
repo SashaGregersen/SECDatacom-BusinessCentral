@@ -89,50 +89,60 @@ codeunit 50050 "Item Event handler"
     end;
 
     [EventSubscriber(ObjectType::table, database::"Item Discount Group", 'OnAfterinsertEvent', '', true, true)]
-    local procedure ItemDiscountOnAfterInsertEvent(var Rec: Record "Item Discount Group")
+    local procedure ItemDiscountOnAfterInsertEvent(var Rec: Record "Item Discount Group"; runtrigger: Boolean)
     var
         SyncMasterData: Codeunit "Synchronize Master Data";
     begin
+        if not runtrigger then
+            exit;
         if rec.IsTemporary() then
             exit;
         SyncMasterData.SynchronizeItemDiscGroupToCompany(Rec);
     end;
 
     [EventSubscriber(ObjectType::table, database::"Item Discount Group", 'OnAfterModifyEvent', '', true, true)]
-    local procedure ItemDiscountOnAfterModifyEvent(var Rec: Record "Item Discount Group")
+    local procedure ItemDiscountOnAfterModifyEvent(var Rec: Record "Item Discount Group"; runtrigger: Boolean)
     var
         SyncMasterData: Codeunit "Synchronize Master Data";
     begin
+        if not runtrigger then
+            exit;
         if rec.IsTemporary() then
             exit;
         SyncMasterData.SynchronizeItemDiscGroupToCompany(Rec);
     end;
 
     [EventSubscriber(ObjectType::table, database::"Item Substitution", 'OnAfterinsertEvent', '', true, true)]
-    local procedure ItemSubstituionOnAfterInsertEvent(var Rec: Record "Item Substitution")
+    local procedure ItemSubstituionOnAfterInsertEvent(var Rec: Record "Item Substitution"; runtrigger: Boolean)
     var
         SyncMasterData: Codeunit "Synchronize Master Data";
     begin
+        if not runtrigger then
+            exit;
         if rec.IsTemporary() then
             exit;
         SyncMasterData.SynchronizeItemSubstituionToCompany(Rec);
     end;
 
     [EventSubscriber(ObjectType::table, database::"Item Substitution", 'OnAfterModifyEvent', '', true, true)]
-    local procedure ItemSubstitutionOnAfterModifyEvent(var Rec: Record "Item Substitution")
+    local procedure ItemSubstitutionOnAfterModifyEvent(var Rec: Record "Item Substitution"; runtrigger: Boolean)
     var
         SyncMasterData: Codeunit "Synchronize Master Data";
     begin
+        if not runtrigger then
+            exit;
         if rec.IsTemporary() then
             exit;
         SyncMasterData.SynchronizeItemSubstituionToCompany(Rec);
     end;
 
     [EventSubscriber(ObjectType::table, database::"Default Dimension", 'OnAfterinsertEvent', '', true, true)]
-    local procedure DefaultDimOnAfterInsertEvent(var Rec: Record "Default Dimension")
+    local procedure DefaultDimOnAfterInsertEvent(var Rec: Record "Default Dimension"; runtrigger: Boolean)
     var
         SyncMasterData: Codeunit "Synchronize Master Data";
     begin
+        if not runtrigger then
+            exit;
         if rec.IsTemporary() then
             exit;
         if rec."Table ID" <> 27 then
@@ -141,10 +151,12 @@ codeunit 50050 "Item Event handler"
     end;
 
     [EventSubscriber(ObjectType::table, database::"Default Dimension", 'OnAfterModifyEvent', '', true, true)]
-    local procedure DefaultDimOnAfterModifyEvent(var Rec: Record "Default Dimension")
+    local procedure DefaultDimOnAfterModifyEvent(var Rec: Record "Default Dimension"; runtrigger: Boolean)
     var
         SyncMasterData: Codeunit "Synchronize Master Data";
     begin
+        if not runtrigger then
+            exit;
         if rec.IsTemporary() then
             exit;
         if rec."Table ID" <> 27 then
@@ -153,30 +165,36 @@ codeunit 50050 "Item Event handler"
     end;
 
     [EventSubscriber(ObjectType::table, database::"Item Translation", 'OnAfterinsertEvent', '', true, true)]
-    local procedure ItemTranslationOnAfterInsertEvent(var Rec: Record "Item Translation")
+    local procedure ItemTranslationOnAfterInsertEvent(var Rec: Record "Item Translation"; runtrigger: Boolean)
     var
         SyncMasterData: Codeunit "Synchronize Master Data";
     begin
+        if not runtrigger then
+            exit;
         if rec.IsTemporary() then
             exit;
         SyncMasterData.SynchronizeItemTranslationToCompany(Rec);
     end;
 
     [EventSubscriber(ObjectType::table, database::"Item Translation", 'OnAfterModifyEvent', '', true, true)]
-    local procedure ItemTranslationOnAfterModifyEvent(var Rec: Record "Item Translation")
+    local procedure ItemTranslationOnAfterModifyEvent(var Rec: Record "Item Translation"; runtrigger: Boolean)
     var
         SyncMasterData: Codeunit "Synchronize Master Data";
     begin
+        if not runtrigger then
+            exit;
         if rec.IsTemporary() then
             exit;
         SyncMasterData.SynchronizeItemTranslationToCompany(Rec);
     end;
 
     [EventSubscriber(ObjectType::table, database::"Extended Text Header", 'OnAfterinsertEvent', '', true, true)]
-    local procedure ExtendedTextHeaderOnAfterInsertEvent(var Rec: Record "Extended Text Header")
+    local procedure ExtendedTextHeaderOnAfterInsertEvent(var Rec: Record "Extended Text Header"; runtrigger: Boolean)
     var
         SyncMasterData: Codeunit "Synchronize Master Data";
     begin
+        if not runtrigger then
+            exit;
         if rec.IsTemporary() then
             exit;
         if rec."Table Name" <> rec."Table Name"::Item then
@@ -185,10 +203,12 @@ codeunit 50050 "Item Event handler"
     end;
 
     [EventSubscriber(ObjectType::table, database::"Extended Text Header", 'OnAfterModifyEvent', '', true, true)]
-    local procedure ExtendedTextHeaderOnAfterModifyEvent(var Rec: Record "Extended Text Header")
+    local procedure ExtendedTextHeaderOnAfterModifyEvent(var Rec: Record "Extended Text Header"; runtrigger: Boolean)
     var
         SyncMasterData: Codeunit "Synchronize Master Data";
     begin
+        if not runtrigger then
+            exit;
         if rec.IsTemporary() then
             exit;
         if rec."Table Name" <> rec."Table Name"::Item then
@@ -197,10 +217,12 @@ codeunit 50050 "Item Event handler"
     end;
 
     [EventSubscriber(ObjectType::table, database::"Extended Text Line", 'OnAfterinsertEvent', '', true, true)]
-    local procedure ExtendedTextLineOnAfterInsertEvent(var Rec: Record "Extended Text Line")
+    local procedure ExtendedTextLineOnAfterInsertEvent(var Rec: Record "Extended Text Line"; runtrigger: Boolean)
     var
         SyncMasterData: Codeunit "Synchronize Master Data";
     begin
+        if not runtrigger then
+            exit;
         if rec.IsTemporary() then
             exit;
         if rec."Table Name" <> rec."Table Name"::Item then
@@ -209,10 +231,12 @@ codeunit 50050 "Item Event handler"
     end;
 
     [EventSubscriber(ObjectType::table, database::"Extended Text Line", 'OnAfterModifyEvent', '', true, true)]
-    local procedure ExtendedTextLineOnAfterModifyEvent(var Rec: Record "Extended Text Line")
+    local procedure ExtendedTextLineOnAfterModifyEvent(var Rec: Record "Extended Text Line"; runtrigger: Boolean)
     var
         SyncMasterData: Codeunit "Synchronize Master Data";
     begin
+        if not runtrigger then
+            exit;
         if rec.IsTemporary() then
             exit;
         if rec."Table Name" <> rec."Table Name"::Item then

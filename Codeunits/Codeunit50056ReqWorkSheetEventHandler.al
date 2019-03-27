@@ -55,12 +55,14 @@ codeunit 50056 "Req Worksheet Event Handler"
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Requisition Line", 'OnAfterInsertEvent', '', true, true)]
-    local procedure OnAfterInsertEvent(var rec: Record "Requisition Line")
+    local procedure OnAfterInsertEvent(var rec: Record "Requisition Line"; runtrigger: Boolean)
     var
         Item: record Item;
         SubItem: record "Item Substitution";
         ItemSub: Codeunit "Item Substitution";
     begin
+        if not runtrigger then
+            exit;
         if (rec."Substitute Item Exists" = true) and (rec."Action Message" = rec."Action Message"::New) then
             if item.get(rec."No.") then
                 if item."Blocked from purchase" = true then

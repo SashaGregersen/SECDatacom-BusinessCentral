@@ -67,6 +67,7 @@ report 50011 "POS Reporting"
             {
 
             }
+            // indsæt phone + email på kontakt hvis nye felter skal på 
             column(ResellEndCustName; ResellEndCustName)
             {
 
@@ -100,6 +101,14 @@ report 50011 "POS Reporting"
 
             }
             column(ResellEndCustContact; ResellEndCustContact)
+            {
+
+            }
+            column(ResellEndCustContactEmail; ResellEndCustEmail)
+            {
+
+            }
+            column(ResellEndCustContactPhone; ResellEndCustPhone)
             {
 
             }
@@ -166,7 +175,7 @@ report 50011 "POS Reporting"
 
                         column(Purchase_Discount_Percentage; "Purchase Discount Percentage")
                         {
-
+                            // hvordan finder vi den rigtige %
                         }
                     }
                     dataitem("VAR"; "VAR")
@@ -228,17 +237,6 @@ report 50011 "POS Reporting"
                 VARID: record "VAR";
             begin
                 if "Sales Invoice Header"."Drop-Shipment" then begin
-                    Customer.get("End Customer");
-                    ResellEndCustName := Customer.name;
-                    ResellEndCustName2 := Customer."Name 2";
-                    ResellEndCustAddress := Customer.Address;
-                    ResellEndCustAddress2 := Customer."Address 2";
-                    ResellEndCustCity := Customer.City;
-                    ResellEndCustPostCode := Customer."Post Code";
-                    ResellEndCustCounty := Customer.County;
-                    ResellEndCustCountryRegion := Customer."Country/Region Code";
-                    ResellEndCustContact := Customer.Contact;
-                end else begin
                     Customer.get("Reseller");
                     ResellEndCustName := Customer.name;
                     ResellEndCustName2 := Customer."Name 2";
@@ -249,6 +247,19 @@ report 50011 "POS Reporting"
                     ResellEndCustCounty := Customer.County;
                     ResellEndCustCountryRegion := Customer."Country/Region Code";
                     ResellEndCustContact := Customer.Contact;
+                end else begin
+                    Customer.get("End Customer");
+                    ResellEndCustName := Customer.name;
+                    ResellEndCustName2 := Customer."Name 2";
+                    ResellEndCustAddress := Customer.Address;
+                    ResellEndCustAddress2 := Customer."Address 2";
+                    ResellEndCustCity := Customer.City;
+                    ResellEndCustPostCode := Customer."Post Code";
+                    ResellEndCustCounty := Customer.County;
+                    ResellEndCustCountryRegion := Customer."Country/Region Code";
+                    ResellEndCustContact := Customer.Contact;
+                    ResellEndCustPhone := Customer."Phone No.";
+                    ResellEndCustEmail := Customer."E-Mail";
                 end;
 
                 "VAR".setrange("Customer No.", "Sales Invoice Header".Reseller);
@@ -256,7 +267,7 @@ report 50011 "POS Reporting"
                 "Item Ledger Entry".setrange("Document No.", Sales_Invoice_Line."Shipment No.");
                 "Item Ledger Entry".setRange("Document Type", 1);
                 "Item Ledger Entry".setrange("Document Line No.", Sales_Invoice_Line."Shipment Line No.");
-                "Item Ledger Entry".setFilter("Serial No.", '<>%1', ' ');
+                //"Item Ledger Entry".setFilter("Serial No.", '<>%1', ' ');
                 if "Item Ledger Entry".FindFirst() then begin
                     ItemLedgEntry.SetRange("Serial No.", "Item Ledger Entry"."Serial No.");
                     ItemLedgEntry.SetRange("Entry Type", 1);
@@ -286,10 +297,10 @@ report 50011 "POS Reporting"
             end;
 
         }
-        dataitem("Sales Cr.Memo Header"; "Sales Cr.Memo Header")
+        /* dataitem("Sales Cr.Memo Header"; "Sales Cr.Memo Header")
         {
 
-        }
+        } */
     }
 
     var
@@ -307,5 +318,7 @@ report 50011 "POS Reporting"
         ResellEndCustCounty: text[30];
         ResellEndCustCountryRegion: code[10];
         ResellEndCustContact: text[50];
+        ResellEndCustPhone: text[30];
+        ResellEndCustEmail: text[80];
 
 }

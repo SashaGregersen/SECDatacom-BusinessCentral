@@ -86,10 +86,12 @@ codeunit 50052 "Customer Event Handler"
 
     [EventSubscriber(ObjectType::Table, database::"Sales Header", 'OnAfterInsertEvent', '', true, true)]
 
-    local procedure UpdateSellToCustomerInRelatedFields(var rec: Record "Sales Header")
+    local procedure UpdateSellToCustomerInRelatedFields(var rec: Record "Sales Header"; runtrigger: Boolean)
     var
         Customer: record Customer;
     begin
+        if not runtrigger then
+            exit;
         If rec."Sell-to Customer No." <> '' then begin
             IF Customer.GET(rec."Sell-to Customer No.") then begin
                 if Customer."IC Partner Code" <> '' then
