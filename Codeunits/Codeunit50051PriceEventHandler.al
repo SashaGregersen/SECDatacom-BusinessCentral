@@ -164,10 +164,12 @@ codeunit 50051 "Price Event Handler"
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Purchase Price", 'OnAfterInsertEvent', '', true, true)]
-    local procedure PurchasePriceOnAfterInsert(var Rec: Record "Purchase Price")
+    local procedure PurchasePriceOnAfterInsert(var Rec: Record "Purchase Price"; RunTrigger: Boolean)
     var
         PurchaseDisc: Record "Purchase Line Discount";
     begin
+        if not RunTrigger then
+            Exit;
         if Rec.IsTemporary() then
             exit;
         AdvPriceMgt.CloseOldPurchasePrices(Rec);
@@ -176,10 +178,12 @@ codeunit 50051 "Price Event Handler"
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Purchase Price", 'OnAfterModifyEvent', '', true, true)]
-    local procedure PurchasePriceOnAfterModify(var Rec: Record "Purchase Price"; var xrec: Record "Purchase Price")
+    local procedure PurchasePriceOnAfterModify(var Rec: Record "Purchase Price"; var xrec: Record "Purchase Price"; RunTrigger: Boolean)
     var
         PurchaseDisc: Record "Purchase Line Discount";
     begin
+        If not RunTrigger then
+            exit;
         if Rec.IsTemporary() then
             exit;
         if Rec."Direct Unit Cost" = xrec."Direct Unit Cost" then
