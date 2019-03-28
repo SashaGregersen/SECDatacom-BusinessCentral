@@ -4,7 +4,7 @@ codeunit 50053 "Vendor Item No Event Handler"
     EventSubscriberInstance = StaticAutomatic;
 
     [EventSubscriber(ObjectType::Table, database::Item, 'OnAfterValidateEvent', 'Vendor Item No.', true, true)]
-    local procedure OnAfterValidateVendorItemNoOnItemCardEvent(Rec: record Item)
+    local procedure OnAfterValidateVendorItemNoOnItemCardEvent(var Rec: record Item)
     var
     begin
         if rec."Vendor Item No." <> '' then begin
@@ -41,7 +41,7 @@ codeunit 50053 "Vendor Item No Event Handler"
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Item Vendor", 'OnAfterModifyEvent', '', true, true)]
-    local procedure OnAfterModifyVendorItemNoOnItemVendorEvent(Rec: record "Item Vendor"; runtrigger: Boolean)
+    local procedure OnAfterModifyVendorItemNoOnItemVendorEvent(var Rec: record "Item Vendor"; runtrigger: Boolean)
     var
     begin
         if not runtrigger then
@@ -53,7 +53,7 @@ codeunit 50053 "Vendor Item No Event Handler"
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Requisition Line", 'OnAfterValidateEvent', 'Vendor Item No.', true, true)]
-    local procedure OnAfterValidateVendorItemNoOnReqLineEvent(Rec: record "Requisition Line")
+    local procedure OnAfterValidateVendorItemNoOnReqLineEvent(var Rec: record "Requisition Line")
     var
     begin
         if rec."Vendor Item No." <> '' then begin
@@ -63,7 +63,7 @@ codeunit 50053 "Vendor Item No Event Handler"
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Requisition Line", 'OnAfterInsertEvent', '', true, true)]
-    local procedure OnAfterInsertReqLineEvent(Rec: record "Requisition Line"; runtrigger: Boolean)
+    local procedure OnAfterInsertReqLineEvent(var Rec: record "Requisition Line"; runtrigger: Boolean)
     var
     begin
         if not runtrigger then
@@ -75,7 +75,7 @@ codeunit 50053 "Vendor Item No Event Handler"
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Requisition Line", 'OnAfterModifyEvent', '', true, true)]
-    local procedure OnAfterModifyReqLineEvent(Rec: record "Requisition Line"; runtrigger: Boolean)
+    local procedure OnAfterModifyReqLineEvent(var Rec: record "Requisition Line"; runtrigger: Boolean)
     var
     begin
         if not runtrigger then
@@ -87,7 +87,7 @@ codeunit 50053 "Vendor Item No Event Handler"
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Stockkeeping Unit", 'OnAfterModifyEvent', '', true, true)]
-    local procedure OnAfterModifyStockkepingUnitEvent(Rec: record "Stockkeeping Unit"; runtrigger: Boolean)
+    local procedure OnAfterModifyStockkepingUnitEvent(var Rec: record "Stockkeeping Unit"; runtrigger: Boolean)
     var
     begin
         if not runtrigger then
@@ -99,7 +99,7 @@ codeunit 50053 "Vendor Item No Event Handler"
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Nonstock Item", 'OnAfterModifyEvent', '', true, true)]
-    local procedure OnAfterModifyNonStockItemEvent(Rec: record "Nonstock Item"; runtrigger: Boolean)
+    local procedure OnAfterModifyNonStockItemEvent(var Rec: record "Nonstock Item"; runtrigger: Boolean)
     var
     begin
         if not runtrigger then

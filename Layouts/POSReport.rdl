@@ -11,6 +11,169 @@
       <rd:DataSourceID>617f74e2-fd04-4115-a4e5-15e499e3a1ea</rd:DataSourceID>
     </DataSource>
   </DataSources>
+  <DataSets>
+    <DataSet Name="DataSet_Result">
+      <Query>
+        <DataSourceName>DataSource</DataSourceName>
+        <CommandText />
+      </Query>
+      <Fields>
+        <Field Name="Document_No">
+          <DataField>Document_No</DataField>
+        </Field>
+        <Field Name="External_Document_No">
+          <DataField>External_Document_No</DataField>
+        </Field>
+        <Field Name="Sales_Order_No">
+          <DataField>Sales_Order_No</DataField>
+        </Field>
+        <Field Name="Reseller">
+          <DataField>Reseller</DataField>
+        </Field>
+        <Field Name="End_Customer">
+          <DataField>End_Customer</DataField>
+        </Field>
+        <Field Name="Ship_to_Name">
+          <DataField>Ship_to_Name</DataField>
+        </Field>
+        <Field Name="Ship_to_Name_2">
+          <DataField>Ship_to_Name_2</DataField>
+        </Field>
+        <Field Name="Ship_to_Address">
+          <DataField>Ship_to_Address</DataField>
+        </Field>
+        <Field Name="Ship_to_Address_2">
+          <DataField>Ship_to_Address_2</DataField>
+        </Field>
+        <Field Name="Ship_to_City">
+          <DataField>Ship_to_City</DataField>
+        </Field>
+        <Field Name="Ship_to_Post_Code">
+          <DataField>Ship_to_Post_Code</DataField>
+        </Field>
+        <Field Name="Ship_to_Country_Region_Code">
+          <DataField>Ship_to_Country_Region_Code</DataField>
+        </Field>
+        <Field Name="Ship_to_County">
+          <DataField>Ship_to_County</DataField>
+        </Field>
+        <Field Name="Ship_to_Contact">
+          <DataField>Ship_to_Contact</DataField>
+        </Field>
+        <Field Name="ResellEndCustName">
+          <DataField>ResellEndCustName</DataField>
+        </Field>
+        <Field Name="ResellEndCustName2">
+          <DataField>ResellEndCustName2</DataField>
+        </Field>
+        <Field Name="ResellEndCustAddress">
+          <DataField>ResellEndCustAddress</DataField>
+        </Field>
+        <Field Name="ResellEndCustAddress2">
+          <DataField>ResellEndCustAddress2</DataField>
+        </Field>
+        <Field Name="ResellEndCustCity">
+          <DataField>ResellEndCustCity</DataField>
+        </Field>
+        <Field Name="ResellEndCustPostCode">
+          <DataField>ResellEndCustPostCode</DataField>
+        </Field>
+        <Field Name="ResellEndCustCountryRegion">
+          <DataField>ResellEndCustCountryRegion</DataField>
+        </Field>
+        <Field Name="ResellEndCustCounty">
+          <DataField>ResellEndCustCounty</DataField>
+        </Field>
+        <Field Name="ResellEndCustContact">
+          <DataField>ResellEndCustContact</DataField>
+        </Field>
+        <Field Name="ResellEndCustContactEmail">
+          <DataField>ResellEndCustContactEmail</DataField>
+        </Field>
+        <Field Name="ResellEndCustContactPhone">
+          <DataField>ResellEndCustContactPhone</DataField>
+        </Field>
+        <Field Name="IC_Partner_Code">
+          <DataField>IC_Partner_Code</DataField>
+        </Field>
+        <Field Name="Vendor_Code">
+          <DataField>Vendor_Code</DataField>
+        </Field>
+        <Field Name="Posting_Date">
+          <DataField>Posting_Date</DataField>
+        </Field>
+        <Field Name="Item_No">
+          <DataField>Item_No</DataField>
+        </Field>
+        <Field Name="Description">
+          <DataField>Description</DataField>
+        </Field>
+        <Field Name="Quantity">
+          <DataField>Quantity</DataField>
+        </Field>
+        <Field Name="QuantityFormat">
+          <DataField>QuantityFormat</DataField>
+        </Field>
+        <Field Name="ListPrice">
+          <DataField>ListPrice</DataField>
+        </Field>
+        <Field Name="ListPriceFormat">
+          <DataField>ListPriceFormat</DataField>
+        </Field>
+        <Field Name="Bid_No">
+          <DataField>Bid_No</DataField>
+        </Field>
+        <Field Name="Shipment_No">
+          <DataField>Shipment_No</DataField>
+        </Field>
+        <Field Name="Shipment_Date">
+          <DataField>Shipment_Date</DataField>
+        </Field>
+        <Field Name="Vendor_Item_No_">
+          <DataField>Vendor_Item_No_</DataField>
+        </Field>
+        <Field Name="Vendor_Currency">
+          <DataField>Vendor_Currency</DataField>
+        </Field>
+        <Field Name="Purchase_Discount_Percentage">
+          <DataField>Purchase_Discount_Percentage</DataField>
+        </Field>
+        <Field Name="Purchase_Discount_PercentageFormat">
+          <DataField>Purchase_Discount_PercentageFormat</DataField>
+        </Field>
+        <Field Name="VAR_id">
+          <DataField>VAR_id</DataField>
+        </Field>
+        <Field Name="Serial_No_">
+          <DataField>Serial_No_</DataField>
+        </Field>
+        <Field Name="PurchOrderNo">
+          <DataField>PurchOrderNo</DataField>
+        </Field>
+        <Field Name="PurchOrderPostDate">
+          <DataField>PurchOrderPostDate</DataField>
+        </Field>
+        <Field Name="PurchCostPrice">
+          <DataField>PurchCostPrice</DataField>
+        </Field>
+        <Field Name="PurchCostPriceFormat">
+          <DataField>PurchCostPriceFormat</DataField>
+        </Field>
+        <Field Name="PurchCostPriceLCY">
+          <DataField>PurchCostPriceLCY</DataField>
+        </Field>
+        <Field Name="PurchCostPriceLCYFormat">
+          <DataField>PurchCostPriceLCYFormat</DataField>
+        </Field>
+        <Field Name="Bid_Purchase_Discount_Pct_">
+          <DataField>Bid_Purchase_Discount_Pct_</DataField>
+        </Field>
+        <Field Name="Bid_Purchase_Discount_Pct_Format">
+          <DataField>Bid_Purchase_Discount_Pct_Format</DataField>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
   <ReportSections>
     <ReportSection>
       <Body>
@@ -759,7 +922,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Resell End Cust Name</Value>
+                                  <Value>Reseller or End Customer Name</Value>
                                   <Style>
                                     <FontSize>11pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -800,7 +963,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Resell End Cust Name2</Value>
+                                  <Value>Reseller or End Customer Name2</Value>
                                   <Style>
                                     <FontSize>11pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -841,7 +1004,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Resell End Cust Address</Value>
+                                  <Value>Reseller or End Customer Address</Value>
                                   <Style>
                                     <FontSize>11pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -882,7 +1045,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Resell End Cust Address2</Value>
+                                  <Value>Reseller or End Customer Address2</Value>
                                   <Style>
                                     <FontSize>11pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -923,7 +1086,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Resell End Cust City</Value>
+                                  <Value>Reseller or End Cust City</Value>
                                   <Style>
                                     <FontSize>11pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -964,7 +1127,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Resell End Cust Post Code</Value>
+                                  <Value>Reseller or End Customer Post Code</Value>
                                   <Style>
                                     <FontSize>11pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -1005,7 +1168,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Resell End Cust Country Region</Value>
+                                  <Value>Reseller or End Customer Country Region</Value>
                                   <Style>
                                     <FontSize>11pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -1046,7 +1209,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Resell End Cust County</Value>
+                                  <Value>Reseller or End Cust omer County</Value>
                                   <Style>
                                     <FontSize>11pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -1087,7 +1250,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Resell End Cust Contact</Value>
+                                  <Value>Reseller or End Customer Contact</Value>
                                   <Style>
                                     <FontSize>11pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -1128,7 +1291,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Resell End Cust Contact Email</Value>
+                                  <Value>Reseller or End Customer Contact Email</Value>
                                   <Style>
                                     <FontSize>11pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -1169,7 +1332,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Resell End Cust Contact Phone</Value>
+                                  <Value>Reseller or End Customer Contact Phone</Value>
                                   <Style>
                                     <FontSize>11pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -4045,6 +4208,12 @@
       </Page>
     </ReportSection>
   </ReportSections>
+  <ReportParametersLayout>
+    <GridLayoutDefinition>
+      <NumberOfColumns>4</NumberOfColumns>
+      <NumberOfRows>2</NumberOfRows>
+    </GridLayoutDefinition>
+  </ReportParametersLayout>
   <Code>Public Function BlankZero(ByVal Value As Decimal)
     if Value = 0 then
         Return ""
@@ -4084,167 +4253,4 @@ End Function
   <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
   <rd:ReportUnitType>Inch</rd:ReportUnitType>
   <rd:ReportID>0eeb6585-38ae-40f1-885b-8d50088d51b4</rd:ReportID>
-  <DataSets>
-    <DataSet Name="DataSet_Result">
-      <Fields>
-        <Field Name="Document_No">
-          <DataField>Document_No</DataField>
-        </Field>
-        <Field Name="External_Document_No">
-          <DataField>External_Document_No</DataField>
-        </Field>
-        <Field Name="Sales_Order_No">
-          <DataField>Sales_Order_No</DataField>
-        </Field>
-        <Field Name="Reseller">
-          <DataField>Reseller</DataField>
-        </Field>
-        <Field Name="End_Customer">
-          <DataField>End_Customer</DataField>
-        </Field>
-        <Field Name="Ship_to_Name">
-          <DataField>Ship_to_Name</DataField>
-        </Field>
-        <Field Name="Ship_to_Name_2">
-          <DataField>Ship_to_Name_2</DataField>
-        </Field>
-        <Field Name="Ship_to_Address">
-          <DataField>Ship_to_Address</DataField>
-        </Field>
-        <Field Name="Ship_to_Address_2">
-          <DataField>Ship_to_Address_2</DataField>
-        </Field>
-        <Field Name="Ship_to_City">
-          <DataField>Ship_to_City</DataField>
-        </Field>
-        <Field Name="Ship_to_Post_Code">
-          <DataField>Ship_to_Post_Code</DataField>
-        </Field>
-        <Field Name="Ship_to_Country_Region_Code">
-          <DataField>Ship_to_Country_Region_Code</DataField>
-        </Field>
-        <Field Name="Ship_to_County">
-          <DataField>Ship_to_County</DataField>
-        </Field>
-        <Field Name="Ship_to_Contact">
-          <DataField>Ship_to_Contact</DataField>
-        </Field>
-        <Field Name="ResellEndCustName">
-          <DataField>ResellEndCustName</DataField>
-        </Field>
-        <Field Name="ResellEndCustName2">
-          <DataField>ResellEndCustName2</DataField>
-        </Field>
-        <Field Name="ResellEndCustAddress">
-          <DataField>ResellEndCustAddress</DataField>
-        </Field>
-        <Field Name="ResellEndCustAddress2">
-          <DataField>ResellEndCustAddress2</DataField>
-        </Field>
-        <Field Name="ResellEndCustCity">
-          <DataField>ResellEndCustCity</DataField>
-        </Field>
-        <Field Name="ResellEndCustPostCode">
-          <DataField>ResellEndCustPostCode</DataField>
-        </Field>
-        <Field Name="ResellEndCustCountryRegion">
-          <DataField>ResellEndCustCountryRegion</DataField>
-        </Field>
-        <Field Name="ResellEndCustCounty">
-          <DataField>ResellEndCustCounty</DataField>
-        </Field>
-        <Field Name="ResellEndCustContact">
-          <DataField>ResellEndCustContact</DataField>
-        </Field>
-        <Field Name="ResellEndCustContactEmail">
-          <DataField>ResellEndCustContactEmail</DataField>
-        </Field>
-        <Field Name="ResellEndCustContactPhone">
-          <DataField>ResellEndCustContactPhone</DataField>
-        </Field>
-        <Field Name="IC_Partner_Code">
-          <DataField>IC_Partner_Code</DataField>
-        </Field>
-        <Field Name="Vendor_Code">
-          <DataField>Vendor_Code</DataField>
-        </Field>
-        <Field Name="Posting_Date">
-          <DataField>Posting_Date</DataField>
-        </Field>
-        <Field Name="Item_No">
-          <DataField>Item_No</DataField>
-        </Field>
-        <Field Name="Description">
-          <DataField>Description</DataField>
-        </Field>
-        <Field Name="Quantity">
-          <DataField>Quantity</DataField>
-        </Field>
-        <Field Name="QuantityFormat">
-          <DataField>QuantityFormat</DataField>
-        </Field>
-        <Field Name="ListPrice">
-          <DataField>ListPrice</DataField>
-        </Field>
-        <Field Name="ListPriceFormat">
-          <DataField>ListPriceFormat</DataField>
-        </Field>
-        <Field Name="Bid_No">
-          <DataField>Bid_No</DataField>
-        </Field>
-        <Field Name="Shipment_No">
-          <DataField>Shipment_No</DataField>
-        </Field>
-        <Field Name="Shipment_Date">
-          <DataField>Shipment_Date</DataField>
-        </Field>
-        <Field Name="Vendor_Item_No_">
-          <DataField>Vendor_Item_No_</DataField>
-        </Field>
-        <Field Name="Vendor_Currency">
-          <DataField>Vendor_Currency</DataField>
-        </Field>
-        <Field Name="Purchase_Discount_Percentage">
-          <DataField>Purchase_Discount_Percentage</DataField>
-        </Field>
-        <Field Name="Purchase_Discount_PercentageFormat">
-          <DataField>Purchase_Discount_PercentageFormat</DataField>
-        </Field>
-        <Field Name="VAR_id">
-          <DataField>VAR_id</DataField>
-        </Field>
-        <Field Name="Serial_No_">
-          <DataField>Serial_No_</DataField>
-        </Field>
-        <Field Name="PurchOrderNo">
-          <DataField>PurchOrderNo</DataField>
-        </Field>
-        <Field Name="PurchOrderPostDate">
-          <DataField>PurchOrderPostDate</DataField>
-        </Field>
-        <Field Name="PurchCostPrice">
-          <DataField>PurchCostPrice</DataField>
-        </Field>
-        <Field Name="PurchCostPriceFormat">
-          <DataField>PurchCostPriceFormat</DataField>
-        </Field>
-        <Field Name="PurchCostPriceLCY">
-          <DataField>PurchCostPriceLCY</DataField>
-        </Field>
-        <Field Name="PurchCostPriceLCYFormat">
-          <DataField>PurchCostPriceLCYFormat</DataField>
-        </Field>
-        <Field Name="Bid_Purchase_Discount_Pct_">
-          <DataField>Bid_Purchase_Discount_Pct_</DataField>
-        </Field>
-        <Field Name="Bid_Purchase_Discount_Pct_Format">
-          <DataField>Bid_Purchase_Discount_Pct_Format</DataField>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>DataSource</DataSourceName>
-        <CommandText />
-      </Query>
-    </DataSet>
-  </DataSets>
 </Report>
