@@ -588,6 +588,7 @@ codeunit 50003 "File Management Import"
                         end;
                     else begin
                             if TempCSVBuffer.Value <> '' then begin
+
                                 DimSetEntry.Init();
                                 DimSetEntry."Dimension Set ID" := 0;
                                 DimSetEntry.Validate("Dimension Code", DimCodeArr[TempCSVBuffer."Field No." - 11]);
@@ -598,6 +599,8 @@ codeunit 50003 "File Management Import"
                 end;
             until TempCSVBuffer.next = 0;
         CreateItem(Item, ConfigTemplateHeader, DimSetEntry);
+        DimSetEntry.Reset();
+        DimSetEntry.DeleteAll();
 
         TempCSVBuffer.Reset;
         TempCSVBuffer.DeleteAll();        //delete TempCSVbuffer when finish            
@@ -643,12 +646,22 @@ codeunit 50003 "File Management Import"
 
         if DimSetEntry.FindSet() then
             repeat
-                DefDim.Init;
-                DefDim.Validate("Table ID", Database::Item);
-                DefDim.Validate("No.", Item."No.");
-                DefDim.Validate("Dimension Code", DimSetEntry."Dimension Code");
-                DefDim.Validate("Dimension Value Code", DimSetEntry."Dimension Value Code");
-                DefDim.Insert(true);
+                if DimSetEntry."Dimension Value Code" <> '' then begin
+                    DefDim.Reset();
+                    DefDim.SetRange("Table ID", Database::Item);
+                    DefDim.SetRange("No.", Item."No.");
+                    DefDim.SetRange("Dimension Code", DimSetEntry."Dimension Code");
+
+                    if not DefDim.FindFirst() then begin
+                        DefDim.Init;
+                        DefDim.Validate("Table ID", Database::Item);
+                        DefDim.Validate("No.", Item."No.");
+                        DefDim.Validate("Dimension Code", DimSetEntry."Dimension Code");
+                        DefDim.Insert(true);
+                    end;
+                    DefDim.Validate("Dimension Value Code", DimSetEntry."Dimension Value Code");
+                    DefDim.Modify(true);
+                end;
             until DimSetEntry.Next() = 0;
 
         //Nulstil så vi ved det er næste record
