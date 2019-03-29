@@ -23,8 +23,10 @@ codeunit 50057 "IC Event Handler"
     begin
         if not GetPurchaseLineFromOtherCompany(ICInboxSalesLine, PurchaseLineOtherCompany, ICPartner."Inbox Details") then
             exit;
+        UpdateSalesLineWithICPOInfo(PurchaseLineOtherCompany, LocalSalesline);
         if not GetSalesLineFromOtherCompany(PurchaseLineOtherCompany, SalesLineOtherCompany, ICPartner."Inbox Details") then
             exit;
+        UpdateSalesLineWithICSOInfo(SalesLineOtherCompany, LocalSalesline);
         if LocalSalesHeader.Subsidiary = '' then begin
             if GetSalesHeaderFromOtherCompany(SalesLineOtherCompany, SalesHeaderOtherCompany, ICPartner."Inbox Details") then
                 CopyAdvPricingHeaderFields(LocalSalesHeader, SalesHeaderOtherCompany, ICPartner."Customer No.");
@@ -105,5 +107,79 @@ codeunit 50057 "IC Event Handler"
             exit(false);
         end;
         exit(true);
+    end;
+
+    local procedure UpdateSalesLineWithICPOInfo(ICPurchLine: Record "Purchase Line"; var LocalSalesLine: Record "Sales Line")
+    begin
+        LocalSalesLine."IC PO No." := ICPurchLine."Document No.";
+        LocalSalesLine."IC PO Line No." := ICPurchLine."Line No.";
+    end;
+
+    local procedure UpdateSalesLineWithICSOInfo(ICSalesline: Record "sales Line"; var LocalSalesLine: Record "Sales Line")
+    begin
+        LocalSalesLine."IC SO No." := ICsalesLine."Document No.";
+        LocalSalesLine."IC SO Line No." := ICsalesLine."Line No.";
+    end;
+
+    local procedure GetICPartner(var ICpartner: Record "IC Partner"; CustomerNo: code[20]): Boolean
+    begin
+        ICpartner.SetRange("Customer No.", CustomerNo);
+        exit(ICpartner.FindFirst());
+    end;
+
+    local procedure UpdateReceiptsOnPurchaseOrderInOtherCompany(SalesShptHdrNo: Code[20]; OtherCompanyName: text[35])
+    var
+        SalesShptHeader: Record "Sales Shipment Header";
+        SalesShptLine: Record "Sales Shipment Line";
+        POLineInOtherCompany: Record "Purchase Line";
+    begin
+        if not SalesShptHeader.Get(SalesShptHdrNo) then
+            exit;
+        SalesShptLine.SetRange("Document No.", SalesShptHeader."No.");
+        POLineInOtherCompany.ChangeCompany(OtherCompanyName);
+        if SalesShptLine.FindSet() then
+            repeat
+                if POLineInOtherCompany.Get(SalesShptLine."IC PO No.", SalesShptLine."IC PO Line No.") then begin
+                    POLineInOtherCompany."Qty. to Receive" := SalesShptLine.Quantity;
+                    POLineInOtherCompany.Modify(false);
+                end;
+            until SalesShptLine.Next() = 0;
+    end;
+
+    local procedure UpdateInvoiceOnPurchaseOrderInOtherCompany(SalesInvHdrNo: Code[20]; OtherCompanyName: text[35])
+    var
+        SalesInvHeader: Record "Sales Invoice Header";
+        SalesInvLine: Record "Sales Invoice Line";
+        POLineInOtherCompany: Record "Purchase Line";
+    begin
+        if not SalesInvHeader.Get(SalesInvHdrNo) then
+            exit;
+        SalesInvLine.SetRange("Document No.", SalesInvHeader."No.");
+        POLineInOtherCompany.ChangeCompany(OtherCompanyName);
+        if SalesInvLine.FindSet() then
+            repeat
+                if POLineInOtherCompany.Get(SalesInvLine."IC PO No.", SalesInvLine."IC PO Line No.") then begin
+                    POLineInOtherCompany."Qty. to Invoice" := SalesInvLine.Quantity;
+                    POLineInOtherCompany.Modify(false);
+                end;
+            until SalesInvLine.Next() = 0;
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, codeunit::"Sales-Post", 'OnAfterPostSalesDoc', '', true, true)]
+    local procedure OnAfterPostSalesDocOnPostSalesHeader(var SalesHeader: Record "Sales Header"; var GenJnlPostLine: Codeunit "Gen. Jnl.-Post Line"; SalesShptHdrNo: Code[20]; RetRcpHdrNo: Code[20]; SalesInvHdrNo: Code[20]; SalesCrMemoHdrNo: Code[20]; CommitIsSuppressed: Boolean)
+    var
+        ICpartner: Record "IC Partner";
+    begin
+        if SalesHeader.Subsidiary <> '' then begin
+            GetICPartner(ICpartner, SalesHeader.Subsidiary);
+            UpdateReceiptsOnPurchaseOrderInOtherCompany(SalesShptHdrNo, ICpartner."Inbox Details");
+            case SalesHeader."Document Type" of
+                salesheader."Document Type"::Invoice:
+                    UpdateInvoiceOnPurchaseOrderInOtherCompany(SalesInvHdrNo, ICpartner."Inbox Details");
+                salesheader."Document Type"::"Credit Memo":
+                    UpdateInvoiceOnPurchaseOrderInOtherCompany(SalesInvHdrNo, ICpartner."Inbox Details");
+            end;
+            //remeber to create the credit memo function  and update the case
+        end;
     end;
 }

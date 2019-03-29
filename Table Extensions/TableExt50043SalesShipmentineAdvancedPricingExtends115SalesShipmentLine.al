@@ -1,4 +1,4 @@
-tableextension 50012 "Sales Cr.Memo Adv. Pricing" extends "Sales Cr.Memo Line"
+tableextension 50043 "Sales Shipt. Line Adv. Pricing" extends "Sales Shipment Line"
 {
     fields
     {
