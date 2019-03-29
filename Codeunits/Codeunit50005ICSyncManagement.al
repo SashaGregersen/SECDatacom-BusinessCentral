@@ -261,6 +261,17 @@ codeunit 50005 "IC Sync Management"
             until CompanyTemp.Next() = 0;
     end;
 
+    procedure PostPurchaseOrderInOtherCompany(PurchaseOrder: Record "Purchase Header"; PostInCompanyName: Text[35])
+
+    var
+        SessionID: Integer;
+    begin
+        if PostInCompanyName = '' then
+            exit;
+        SessionID := RunPostPurchaseOrderInOtherCompanyy(PurchaseOrder, PostInCompanyName);
+        CheckSessionForTimeoutAndError(SessionID, 5, PostInCompanyName);
+    end;
+
     local procedure CheckSessionForTimeoutAndError(SessionID: Integer; SessionTimerSeconds: Integer; RunningInCompany: Text)
     //needs to be refactored so the error message is returned to the calling procedure - then the calling procedure can take corrective measures before making the error
     var
@@ -369,6 +380,17 @@ codeunit 50005 "IC Sync Management"
         SessionEventComment: Text;
     begin
         OK := StartSession(SessionID, 50019, RunInCompany, Item);
+        if not OK then
+            Error(GetLastErrorText());
+        Commit();
+    end;
+
+    local procedure RunPostPurchaseOrderInOtherCompanyy(Purchaseorder: Record "Purchase Header"; RunInCompany: Text) SessionID: Integer
+    var
+        OK: Boolean;
+        SessionEventComment: Text;
+    begin
+        OK := StartSession(SessionID, Codeunit::"Post Purchase Order IC", RunInCompany);
         if not OK then
             Error(GetLastErrorText());
         Commit();

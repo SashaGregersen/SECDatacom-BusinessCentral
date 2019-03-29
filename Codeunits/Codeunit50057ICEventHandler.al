@@ -165,10 +165,28 @@ codeunit 50057 "IC Event Handler"
             until SalesInvLine.Next() = 0;
     end;
 
+    local procedure AddICPurchaseOrderToTempList(SalesHeader: Record "Sales Header"; OtherCompanyName: text[35]; TempPOList: Record "Purchase Header" temporary)
+    var
+        SalesLine: Record "Sales Line";
+        PurchOrderInOtherCompany: Record "Purchase Header";
+    begin
+        SalesLine.SetRange("Document No.", SalesHeader."No.");
+        PurchOrderInOtherCompany.ChangeCompany(OtherCompanyName);
+        if SalesLine.FindSet() then
+            repeat
+                if PurchOrderInOtherCompany.get(SalesLine."IC PO No.", SalesLine."IC PO Line No.") then begin
+                    TempPOList := PurchOrderInOtherCompany;
+                    if not TempPOList.Insert(false) then;
+                end;
+            until SalesLine.Next() = 0;
+    end;
+
     [EventSubscriber(ObjectType::Codeunit, codeunit::"Sales-Post", 'OnAfterPostSalesDoc', '', true, true)]
     local procedure OnAfterPostSalesDocOnPostSalesHeader(var SalesHeader: Record "Sales Header"; var GenJnlPostLine: Codeunit "Gen. Jnl.-Post Line"; SalesShptHdrNo: Code[20]; RetRcpHdrNo: Code[20]; SalesInvHdrNo: Code[20]; SalesCrMemoHdrNo: Code[20]; CommitIsSuppressed: Boolean)
     var
         ICpartner: Record "IC Partner";
+        ICSyncMgt: Codeunit "IC Sync Management";
+        TempICPurchOrder: Record "Purchase Header" temporary;
     begin
         if SalesHeader.Subsidiary <> '' then begin
             GetICPartner(ICpartner, SalesHeader.Subsidiary);
@@ -178,8 +196,13 @@ codeunit 50057 "IC Event Handler"
                     UpdateInvoiceOnPurchaseOrderInOtherCompany(SalesInvHdrNo, ICpartner."Inbox Details");
                 salesheader."Document Type"::"Credit Memo":
                     UpdateInvoiceOnPurchaseOrderInOtherCompany(SalesInvHdrNo, ICpartner."Inbox Details");
+                    //remeber to create the credit memo function  and update the case
             end;
-            //remeber to create the credit memo function  and update the case
+            AddICPurchaseOrderToTempList(SalesHeader, ICpartner."Inbox Details", TempICPurchOrder);
+            if TempICPurchOrder.FindSet() then
+                repeat
+                    ICSyncMgt.PostPurchaseOrderInOtherCompany(TempICPurchOrder, ICpartner."Inbox Details");
+                until TempICPurchOrder.Next() = 0;
         end;
     end;
 }
