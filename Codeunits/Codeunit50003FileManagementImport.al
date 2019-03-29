@@ -24,11 +24,11 @@ codeunit 50003 "File Management Import"
         if Salesline.FindFirst() then begin
             TestCSVBufferFields(TempCSVBuffer);
             CreateSalesLineFromBid(TempCSVBuffer, SalesHeader, Salesline."Bid No.");
-            CreatePurchaseOrderFromSalesOrder(TempCSVBuffer, SalesHeader);
+            CreatePurchaseOrderFromSalesOrder(TempCSVBuffer, SalesHeader, 0);
         end else begin
             CreateSalesHeaderFromCSV(TempCSVBuffer, SalesHeader, BidNo);
             CreateSalesLineFromBid(TempCSVBuffer, SalesHeader, BidNo);
-            CreatePurchaseOrderFromSalesOrder(TempCSVBuffer, SalesHeader);
+            CreatePurchaseOrderFromSalesOrder(TempCSVBuffer, SalesHeader, 0);
         end;
 
         TempCSVBuffer.Reset;
@@ -187,17 +187,16 @@ codeunit 50003 "File Management Import"
         Item: Record Item;
         bid: Record Bid;
         TempCSVBufferTemplate: Record "CSV Buffer" temporary;
+        ImportTypeDiff: Integer;
     begin
         if not SalesSetup.Get then exit;
 
+        if ImportType = ImportType::LinesImport then
+            ImportTypeDiff := 5;
+
         TempCSVBuffer.SetFilter("Line No.", '<>%1', 1);
 
-        case ImportType of
-            ImportType::ProjectImport:
-                TempCSVBuffer.SetRange("Field No.", 11);
-            ImportType::LinesImport:
-                TempCSVBuffer.SetRange("Field No.", 6);
-        end;
+        TempCSVBuffer.SetRange("Field No.", 11 - ImportTypeDiff);
 
         if BidNo = '' then begin
             if TempCSVBuffer.FindFirst then begin
@@ -213,12 +212,7 @@ codeunit 50003 "File Management Import"
             Bid.Get(BidNo);
 
         //Gem templates!
-        case ImportType of
-            ImportType::ProjectImport:
-                TempCSVBuffer.SetRange("Field No.", 15);
-            ImportType::LinesImport:
-                TempCSVBuffer.SetRange("Field No.", 10);
-        end;
+        TempCSVBuffer.SetRange("Field No.", 15 - ImportTypeDiff);
         if TempCSVBuffer.FindSet() then
             repeat
                 TempCSVBufferTemplate.Copy(TempCSVBuffer);
@@ -226,13 +220,7 @@ codeunit 50003 "File Management Import"
             until TempCSVBuffer.Next() = 0;
 
         //Import items
-        case ImportType of
-            ImportType::ProjectImport:
-                TempCSVBuffer.SetRange("Field No.", 6);
-            ImportType::LinesImport:
-                TempCSVBuffer.SetRange("Field No.", 1);
-        end;
-
+        TempCSVBuffer.SetRange("Field No.", 6 - ImportTypeDiff);
         if TempCSVBuffer.FindSet() then
             repeat
                 Item.SetRange("Vendor No.", Bid."Vendor No.");
@@ -297,7 +285,7 @@ codeunit 50003 "File Management Import"
         GlobalCounter := GlobalCounter + 1;
     end;
 
-    local procedure CreatePurchaseOrderFromSalesOrder(Var TempCSVBuffer: record "CSV Buffer" temporary; SalesHeader: record "Sales Header")
+    local procedure CreatePurchaseOrderFromSalesOrder(Var TempCSVBuffer: record "CSV Buffer" temporary; SalesHeader: record "Sales Header"; ImportType: Option ProjectImport,LinesImport)
     var
         PurchOrder: record "Purchase Header";
         PurchFromSales: codeunit "Create Purchase Order";
@@ -312,11 +300,15 @@ codeunit 50003 "File Management Import"
         AdvPriceMgt: Codeunit "Advanced Price Management";
         BidMgt: Codeunit "Bid Management";
         ReleasePurchDoc: Codeunit "Release Purchase Document";
+        ImportTypeDiff: Integer;
     begin
         TempCSVBuffer.SetRange("Line No.", 2);
+        if ImportType = ImportType::LinesImport then
+            ImportTypeDiff := 5;
+
         if TempCSVBuffer.FindSet() then
             repeat
-                case TempCSVBuffer."Field No." of
+                case (TempCSVBuffer."Field No." + ImportTypeDiff) of
                     10:
                         begin
                             CurrencyCode := TempCSVBuffer.value;
@@ -332,22 +324,21 @@ codeunit 50003 "File Management Import"
                     14:
                         begin
                             if TempCSVBuffer.Value = '' then begin
-                                Clear(PurchasePrice);
-
-                                Clear(BidPrice);
-                                if not BidMgt.GetBestBidPrice(SalesLine."Bid No.", SalesLine."Sell-to Customer No.", SalesLine."No.", CurrencyCode, BidPrice) then
-                                    Clear(PurchasePrice)
-                                else begin
-                                    BidMgt.MakePurchasePriceFromBidPrice(BidPrice, PurchasePrice);
-                                    CurrencyCode := PurchasePrice."Currency Code";
-                                end;
-
                                 PurchFromSales.CreatePurchHeader(SalesHeader, VendorNo, CurrencyCode, VendorBidNo, PurchOrder);
                                 SalesLine.SetRange("Document No.", SalesHeader."No.");
                                 SalesLine.SetRange("Document Type", SalesHeader."Document Type");
                                 SalesLine.SetRange(Type, SalesLine.Type::Item);
                                 if SalesLine.findset then
                                     repeat
+                                        Clear(PurchasePrice);
+                                        Clear(BidPrice);
+                                        if not BidMgt.GetBestBidPrice(SalesLine."Bid No.", SalesLine."Sell-to Customer No.", SalesLine."No.", CurrencyCode, BidPrice) then
+                                            Clear(PurchasePrice)
+                                        else begin
+                                            BidMgt.MakePurchasePriceFromBidPrice(BidPrice, PurchasePrice);
+                                            CurrencyCode := PurchasePrice."Currency Code";
+                                        end;
+
                                         PurchFromSales.CreatePurchLine(PurchOrder, SalesHeader, SalesLine, PurchasePrice."Direct Unit Cost", PurchLine);
                                         PurchFromSales.ReserveItemOnPurchOrder(SalesLine, PurchLine);
                                         GlobalLineCounter := GlobalLineCounter + 1;
@@ -514,6 +505,9 @@ codeunit 50003 "File Management Import"
             until TempCSVBuffer.next = 0;
 
         TempCSVBuffer.Reset;
+
+        CreatePurchaseOrderFromSalesOrder(TempCSVBuffer, SalesHeader, 1); //Opret køb
+
         TempCSVBuffer.DeleteAll();        //delete TempCSVbuffer when finish            
     end;
 
@@ -588,6 +582,7 @@ codeunit 50003 "File Management Import"
                         end;
                     else begin
                             if TempCSVBuffer.Value <> '' then begin
+
                                 DimSetEntry.Init();
                                 DimSetEntry."Dimension Set ID" := 0;
                                 DimSetEntry.Validate("Dimension Code", DimCodeArr[TempCSVBuffer."Field No." - 11]);
@@ -598,6 +593,8 @@ codeunit 50003 "File Management Import"
                 end;
             until TempCSVBuffer.next = 0;
         CreateItem(Item, ConfigTemplateHeader, DimSetEntry);
+        DimSetEntry.Reset();
+        DimSetEntry.DeleteAll();
 
         TempCSVBuffer.Reset;
         TempCSVBuffer.DeleteAll();        //delete TempCSVbuffer when finish            
@@ -643,12 +640,22 @@ codeunit 50003 "File Management Import"
 
         if DimSetEntry.FindSet() then
             repeat
-                DefDim.Init;
-                DefDim.Validate("Table ID", Database::Item);
-                DefDim.Validate("No.", Item."No.");
-                DefDim.Validate("Dimension Code", DimSetEntry."Dimension Code");
-                DefDim.Validate("Dimension Value Code", DimSetEntry."Dimension Value Code");
-                DefDim.Insert(true);
+                if DimSetEntry."Dimension Value Code" <> '' then begin
+                    DefDim.Reset();
+                    DefDim.SetRange("Table ID", Database::Item);
+                    DefDim.SetRange("No.", Item."No.");
+                    DefDim.SetRange("Dimension Code", DimSetEntry."Dimension Code");
+
+                    if not DefDim.FindFirst() then begin
+                        DefDim.Init;
+                        DefDim.Validate("Table ID", Database::Item);
+                        DefDim.Validate("No.", Item."No.");
+                        DefDim.Validate("Dimension Code", DimSetEntry."Dimension Code");
+                        DefDim.Insert(true);
+                    end;
+                    DefDim.Validate("Dimension Value Code", DimSetEntry."Dimension Value Code");
+                    DefDim.Modify(true);
+                end;
             until DimSetEntry.Next() = 0;
 
         //Nulstil så vi ved det er næste record
