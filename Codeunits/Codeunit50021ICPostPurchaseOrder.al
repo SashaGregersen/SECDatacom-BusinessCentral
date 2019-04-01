@@ -14,11 +14,21 @@ codeunit 50021 "Post Purchase Order IC"
                 QtyToReceive := PurchLine."Qty. to Receive";
                 QtyToInvoice := PurchLine."Qty. to Invoice";
                 PurchLine.validate("Qty. to Receive", QtyToReceive);
+                if QtyToReceive <> 0 then
+                    DoReceive := true;
                 PurchLine.validate("Qty. to Invoice", QtyToReceive);
+                if QtyToReceive <> 0 then
+                    DoReceive := true;
                 PurchLine.Modify(true);
             until PurchLine.Next() = 0;
         If PurchHeader.Status = PurchHeader.Status::Open then
             ReleasePurchDoc.PerformManualRelease(PurchHeader);
+        if not PurchHeader.get(Rec."Document Type", Rec."No.") then
+            Error('Purchase Order %1 in company %2 Could not be updated', rec."No.", CompanyName())
+        else begin
+            PurchHeader.Receive := DoReceive;
+            PurchHeader.Invoice := DoInvoice;
+        end;
         PostPurchase.Run(PurchHeader);
     end;
 
@@ -27,6 +37,8 @@ codeunit 50021 "Post Purchase Order IC"
         PurchLine: Record "Purchase Line";
         QtyToReceive: Decimal;
         QtyToInvoice: Decimal;
+        DoReceive: Boolean;
+        DoInvoice: Boolean;
         PostPurchase: Codeunit "Purch.-Post";
         ReleasePurchDoc: Codeunit "Release Purchase Document";
 

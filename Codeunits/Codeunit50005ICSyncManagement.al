@@ -269,7 +269,7 @@ codeunit 50005 "IC Sync Management"
         if PostInCompanyName = '' then
             exit;
         SessionID := RunPostPurchaseOrderInOtherCompanyy(PurchaseOrder, PostInCompanyName);
-        CheckSessionForTimeoutAndError(SessionID, 5, PostInCompanyName);
+        CheckSessionForTimeoutAndError(SessionID, 120, PostInCompanyName);
     end;
 
     local procedure CheckSessionForTimeoutAndError(SessionID: Integer; SessionTimerSeconds: Integer; RunningInCompany: Text)
@@ -390,7 +390,7 @@ codeunit 50005 "IC Sync Management"
         OK: Boolean;
         SessionEventComment: Text;
     begin
-        OK := StartSession(SessionID, Codeunit::"Post Purchase Order IC", RunInCompany);
+        OK := StartSession(SessionID, Codeunit::"Post Purchase Order IC", RunInCompany, Purchaseorder);
         if not OK then
             Error(GetLastErrorText());
         Commit();
