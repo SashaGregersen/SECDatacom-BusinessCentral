@@ -3721,8 +3721,22 @@ End Function
         <Field Name="Description">
           <DataField>Description</DataField>
         </Field>
+<<<<<<< HEAD
         <Field Name="Bid_No_">
           <DataField>Bid_No_</DataField>
+=======
+        <Field Name="Bid_No">
+          <DataField>Bid_No</DataField>
+        </Field>
+        <Field Name="Purch_Order_No">
+          <DataField>Purch_Order_No</DataField>
+        </Field>
+        <Field Name="Purch_Order_Posting_Date">
+          <DataField>Purch_Order_Posting_Date</DataField>
+        </Field>
+        <Field Name="Vendor_Item_No_">
+          <DataField>Vendor_Item_No_</DataField>
+>>>>>>> bcdfcbaefae5251238f602dd7c21238d35ef660a
         </Field>
         <Field Name="Unit_List_Price">
           <DataField>Unit_List_Price</DataField>
@@ -3742,15 +3756,21 @@ End Function
         <Field Name="Bid_Unit_Purchase_PriceFormat">
           <DataField>Bid_Unit_Purchase_PriceFormat</DataField>
         </Field>
+<<<<<<< HEAD
         <Field Name="Currency">
           <DataField>Currency</DataField>
+=======
+        <Field Name="Bid_Unit_Purchase_Price_LCY">
+          <DataField>Bid_Unit_Purchase_Price_LCY</DataField>
+>>>>>>> bcdfcbaefae5251238f602dd7c21238d35ef660a
         </Field>
-        <Field Name="PurchCostPrice">
-          <DataField>PurchCostPrice</DataField>
+        <Field Name="Bid_Unit_Purchase_Price_LCYFormat">
+          <DataField>Bid_Unit_Purchase_Price_LCYFormat</DataField>
         </Field>
-        <Field Name="PurchCostPriceFormat">
-          <DataField>PurchCostPriceFormat</DataField>
+        <Field Name="Cost_Percentage">
+          <DataField>Cost_Percentage</DataField>
         </Field>
+<<<<<<< HEAD
         <Field Name="Cost_Percentage">
           <DataField>Cost_Percentage</DataField>
         </Field>
@@ -3771,6 +3791,19 @@ End Function
         </Field>
         <Field Name="Purch_Order_Posting_Date">
           <DataField>Purch_Order_Posting_Date</DataField>
+=======
+        <Field Name="Cost_PercentageFormat">
+          <DataField>Cost_PercentageFormat</DataField>
+        </Field>
+        <Field Name="SerialNo">
+          <DataField>SerialNo</DataField>
+        </Field>
+        <Field Name="Quantity">
+          <DataField>Quantity</DataField>
+        </Field>
+        <Field Name="QuantityFormat">
+          <DataField>QuantityFormat</DataField>
+>>>>>>> bcdfcbaefae5251238f602dd7c21238d35ef660a
         </Field>
       </Fields>
       <Query>
