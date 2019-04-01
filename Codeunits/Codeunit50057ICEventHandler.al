@@ -191,12 +191,13 @@ codeunit 50057 "IC Event Handler"
         if SalesHeader.Subsidiary <> '' then begin
             GetICPartner(ICpartner, SalesHeader.Subsidiary);
             UpdateReceiptsOnPurchaseOrderInOtherCompany(SalesShptHdrNo, ICpartner."Inbox Details");
+            //Add support for return orders
             case SalesHeader."Document Type" of
                 salesheader."Document Type"::Invoice:
                     UpdateInvoiceOnPurchaseOrderInOtherCompany(SalesInvHdrNo, ICpartner."Inbox Details");
                 salesheader."Document Type"::"Credit Memo":
                     UpdateInvoiceOnPurchaseOrderInOtherCompany(SalesInvHdrNo, ICpartner."Inbox Details");
-                    //remeber to create the credit memo function  and update the case
+                    //remember to create the credit memo function  and update the case
             end;
             AddICPurchaseOrderToTempList(SalesHeader, ICpartner."Inbox Details", TempICPurchOrder);
             if TempICPurchOrder.FindSet() then
