@@ -99,7 +99,7 @@ codeunit 50020 "POS Report Export"
         exit(CurrencyExcRate.ExchangeAmtFCYToLCY(Today(), CurrencyFactorCode, FromLCYToFCY, Factor));
     end;
 
-    procedure RetrieveEntriesFromPostedInv(TempItemLedgEntry: record "Item Ledger Entry" temporary; InvoiceRowID: text[250])
+    procedure RetrieveEntriesFromPostedInv(var TempItemLedgEntry: record "Item Ledger Entry" temporary; InvoiceRowID: text[250])
     var
         ValueEntryRelation: record "Value Entry Relation";
         ValueEntry: record "Value Entry";
@@ -156,7 +156,7 @@ codeunit 50020 "POS Report Export"
         EXIT(1);
     end;
 
-    local procedure AddTempRecordToSet(TempItemLedgEntry: record "Item Ledger Entry" temporary; SignFactor: Integer)
+    local procedure AddTempRecordToSet(var TempItemLedgEntry: record "Item Ledger Entry" temporary; SignFactor: Integer)
     var
         TempItemLedgEntry2: record "Item Ledger Entry" temporary;
         ItemTrackingMgt: Codeunit "Item Tracking Management";
