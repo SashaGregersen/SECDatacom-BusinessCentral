@@ -162,17 +162,17 @@ report 50011 "POS Reporting"
                 }
                 column(Unit_List_Price; UnitListPrice)
                 {
-                    //Find unit list price in bid item prices
+                    //tages fra bid
                 }
                 column(Bid_Purchase_Discount_Pct_; BidPurchaseDiscountPct)
                 {
-                    //Find unit list price in bid item prices
+                    //tages fra bid
                 }
                 column(Bid_Unit_Purchase_Price; BidUnitPurchasePrice)
                 {
                     //tages fra bid
                 }
-                column(Currency; BidCurrency)
+                column(Currency; Currency)
                 {
                     //tages fra bid eller vendor currency
                 }
@@ -262,29 +262,33 @@ report 50011 "POS Reporting"
                     item.get("No.");
                     VendorItemNo := item."Vendor Item No.";
                     VARID.SetRange("Customer No.", "Sales Invoice Header".Reseller);
-                    VARID.SetRange("Vendor No.", VendorItemNo);
+                    VARID.SetRange("Vendor No.", item."Vendor No.");
                     if VARID.FindFirst() then
                         VARIDInt := VARID."VAR id";
 
-                    if bid.get("Bid No.") then
+                    if bid.get("Bid No.") then begin
                         VendorBidNo := bid."Vendor Bid No.";
-                    if BidItemPrices.get(Sales_Invoice_Line."Bid No.",
-                    Sales_Invoice_Line."No.", Sales_Invoice_Line."Sell-to Customer No.", VendorItemNo)
-                    then begin
-                        UnitListPrice := BidItemPrices."Unit List Price";
-                        BidPurchaseDiscountPct := BidItemPrices."Bid Purchase Discount Pct.";
-                        BidCurrency := BidItemPrices."Currency Code";
-                        BidUnitPurchasePrice := BidItemPrices."Bid Unit Purchase Price";
-                    end else begin
-                        BidItemPrices.setrange("Bid No.", Sales_Invoice_Line."Bid No.");
-                        BidItemPrices.setrange("item No.", Sales_Invoice_Line."No.");
-                        BidItemPrices.setrange("Currency Code", VendorItemNo);
-                        if BidItemPrices.FindFirst() then begin
+                        if BidItemPrices.get(Sales_Invoice_Line."Bid No.",
+                        Sales_Invoice_Line."No.", Sales_Invoice_Line."Sell-to Customer No.", item."Vendor Currency")
+                        then begin
                             UnitListPrice := BidItemPrices."Unit List Price";
                             BidPurchaseDiscountPct := BidItemPrices."Bid Purchase Discount Pct.";
-                            BidCurrency := BidItemPrices."Currency Code";
+                            Currency := BidItemPrices."Currency Code";
                             BidUnitPurchasePrice := BidItemPrices."Bid Unit Purchase Price";
+                        end else begin
+                            BidItemPrices.setrange("Bid No.", Sales_Invoice_Line."Bid No.");
+                            BidItemPrices.setrange("item No.", Sales_Invoice_Line."No.");
+                            BidItemPrices.setrange("Currency Code", item."Vendor Currency");
+                            if BidItemPrices.FindFirst() then begin
+                                UnitListPrice := BidItemPrices."Unit List Price";
+                                BidPurchaseDiscountPct := BidItemPrices."Bid Purchase Discount Pct.";
+                                Currency := BidItemPrices."Currency Code";
+                                BidUnitPurchasePrice := BidItemPrices."Bid Unit Purchase Price";
+                            end;
                         end;
+                    end else begin
+                        Currency := Item."Vendor Currency";
+                        //UnitListPrice := Sales_Invoice_Line."Unit Price";
                     end;
                     if PurchCostPrice <> 0 then
                         CostPercentage := (PurchCostPrice - BidItemPrices."Bid Unit Purchase Price")
@@ -298,7 +302,6 @@ report 50011 "POS Reporting"
 
             begin
                 GlSetup.get();
-                "Sales Invoice Header".setrange("No.", '103057'); //fjernes
                 Sales_Invoice_Line.SetRange(type, Sales_Invoice_Line.type::Item);
             end;
 
@@ -362,7 +365,7 @@ report 50011 "POS Reporting"
 
     var
         BidUnitPurchasePrice: Decimal;
-        BidCurrency: code[10];
+        Currency: code[10];
         ShipmentNo: code[20];
         VendorItemNo: Text[60];
         VendorBidNo: Text[100];
