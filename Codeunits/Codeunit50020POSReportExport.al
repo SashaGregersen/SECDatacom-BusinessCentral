@@ -191,5 +191,6 @@ codeunit 50020 "POS Report Export"
         ToFile: text;
         ReturnValue: Boolean;
         POSReport: Report "POS Reporting";
+        RequestFilter: text;
 
 }
