@@ -316,7 +316,7 @@ codeunit 50005 "IC Sync Management"
         if PostInCompanyName = '' then
             exit;
         SessionID := RunPostPurchaseOrderInOtherCompany(PurchaseOrder, PostInCompanyName);
-        CheckSessionForTimeoutAndError(SessionID, 50, PostInCompanyName);
+        CheckSessionForTimeoutAndError(SessionID, 5, PostInCompanyName);
     end;
 
     procedure PostSalesOrderInOtherCompany(SalesOrder: Record "Sales Header"; PostInCompanyName: Text[35])
@@ -327,7 +327,7 @@ codeunit 50005 "IC Sync Management"
         if PostInCompanyName = '' then
             exit;
         SessionID := RunPostSalesOrderInOtherCompany(SalesOrder, PostInCompanyName);
-        CheckSessionForTimeoutAndError(SessionID, 5, PostInCompanyName);
+        CheckSessionForTimeoutAndError(SessionID, 180, PostInCompanyName);
     end;
 
 
