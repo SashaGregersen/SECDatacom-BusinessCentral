@@ -26,11 +26,11 @@ report 50011 "POS Reporting"
             {
 
             }
-            column(Reseller; Reseller)
+            column(Reseller; ResellerName)
             {
 
             }
-            column(End_Customer; "End Customer")
+            column(End_Customer; EndCustomerName)
             {
 
             }
@@ -115,16 +115,16 @@ report 50011 "POS Reporting"
             {
 
             }
-            column(VAR_id; VARIDInt)
-            {
-
-            }
 
             dataitem(Sales_Invoice_Line; "Sales Invoice Line")
             {
                 DataItemLink = "Document No." = field ("No.");
 
-                column(Shipment_No; "Shipment No.")
+                column(VAR_id; VARIDInt)
+                {
+
+                }
+                column(Shipment_No; ShipmentNo)
                 {
 
                 }
@@ -148,70 +148,42 @@ report 50011 "POS Reporting"
                 {
 
                 }
+                column(Vendor_Item_No_; VendorItemNo)
+                {
+
+                }
                 column(Description; Description)
                 {
 
                 }
-                column(Bid_No; "Bid No.")
+                column(Bid_No_; VendorBidNo)
                 {
 
                 }
-                column(Purch_Order_No; PurchOrderNo)
+                column(Unit_List_Price; UnitListPrice)
                 {
-
+                    //tages fra bid
                 }
-                column(Purch_Order_Posting_Date; PurchOrderPostDate)
+                column(Bid_Purchase_Discount_Pct_; BidPurchaseDiscountPct)
                 {
-
+                    //tages fra bid
                 }
-                dataitem(Item; Item)
+                column(Bid_Unit_Purchase_Price; BidUnitPurchasePrice)
                 {
-                    DataItemLink = "No." = field ("No.");
-                    column(Vendor_Item_No_; "Vendor Item No.")
-                    {
-
-                    }
-
+                    //tages fra bid
                 }
-                dataitem("Bid Item Price"; "Bid Item Price")
+                column(Currency; Currency)
                 {
-                    DataItemLink = "Bid No." = field ("Bid No."), "item No." = field ("No."), "Customer No." = field ("Sell-to Customer No."); // hvordan skal vi lave dette link
-
-                    column(Unit_List_Price; "Unit List Price")
-                    {
-
-                    }
-                    column(Bid_Purchase_Discount_Pct_; "Bid Purchase Discount Pct.")
-                    {
-
-                    }
-                    column(Bid_Unit_Purchase_Price; "Bid Unit Purchase Price")
-                    {
-
-                    }
-                    column(Bid_Unit_Purchase_Price_LCY; BidUnitPurchasePriceLCY)
-                    {
-                        //omregn med currency exchange rate på hovedet 
-                    }
-                    column(Cost_Percentage; CostPercentage)
-                    {
-                        //omregn vha. (unit purch pric - bid unit purch price) / unit purch price    
-                    }
-
-                    trigger OnAfterGetRecord()
-                    begin
-                        CostPercentage :=
-                        (Sales_Invoice_Line."Unit Purchase Price" - "Bid Unit Purchase Price") /
-                        Sales_Invoice_Line."Unit Purchase Price";
-                        if "Sales Invoice Header"."Currency Code" <> GlSetup."LCY Code" then
-                            BidUnitPurchasePriceLCY :=
-                            POSReportExport.ExchangeAmtLCYToFCYAndFCYToLCY(Sales_Invoice_Line."Bid Unit Purchase Price",
-                            "Sales Invoice Header"."Currency Code", "Sales Invoice Header"."Currency Factor")
-                        else
-                            BidUnitPurchasePriceLCY := "Bid Unit Purchase Price";
-                    end;
+                    //tages fra bid eller vendor currency
                 }
-
+                column(PurchCostPrice; PurchCostPrice)
+                {
+                    //skal hentes fra købslinjen
+                }
+                column(Cost_Percentage; CostPercentage)
+                {
+                    //udregnet vha. (unit purch pric - bid unit purch price) / unit purch price    
+                }
                 dataitem(Copyloop; Integer)
                 {
 
@@ -223,55 +195,105 @@ report 50011 "POS Reporting"
                     {
 
                     }
+                    column(Purch_Order_No; PurchOrderNo)
+                    {
+
+                    }
+                    column(Purch_Order_Posting_Date; PurchOrderPostDate)
+                    {
+
+                    }
 
                     trigger OnPreDataItem()
                     var
                         ValueEntry: record "Value Entry";
                         ItemLedgEntry: record "Item Ledger Entry";
-                        TempItemLedgEntry: record "Item Ledger Entry" temporary;
                     begin
+                        TempItemLedgEntrySales.DeleteAll();
                         ValueEntry.SetRange("Document No.", Sales_Invoice_Line."Document No.");
                         ValueEntry.SetRange("Document Line No.", Sales_Invoice_Line."Line No.");
-                        if ValueEntry.findfirst then begin
-                            if ItemLedgEntry.get(ValueEntry."Item Ledger Entry No.") then begin //er det nødvendigt med en get her?
-                                POSReportExport.RetrieveEntriesFromPostedInv(TempItemLedgEntry, Sales_Invoice_Line.RowID1());
-                                Copyloop.Number := TempItemLedgEntry.count();
-                                if Copyloop.Number = 1 then
-                                    Qty := Sales_Invoice_Line.Quantity;
-                                if Copyloop.Number > 1 then
-                                    Qty := 1;
-                            end;
+                        if ValueEntry.FindSet() then begin
+                            repeat
+                                ItemLedgEntry.get(ValueEntry."Item Ledger Entry No.");
+                                POSReportExport.RetrieveEntriesFromPostedInv(TempItemLedgEntrySales, Sales_Invoice_Line.RowID1());
+                            until ValueEntry.next = 0;
+                            Qty := Sales_Invoice_Line.Quantity;
+                            SETRANGE(Number, 1, TempItemLedgEntrySales.count());
                         end;
+
                     end;
 
                     trigger OnAfterGetRecord()
                     var
                         ValueEntry: record "Value Entry";
                         ItemLedgEntry: record "Item Ledger Entry";
-                        TempItemLedgerEntry: record "Item Ledger Entry" temporary;
-                        ItemLedgEntry2: record "Item Ledger Entry";
+                        TempItemLedgEntryPurchase: record "Item Ledger Entry" temporary;
+                        PurchRcptHeader: record "Purch. Rcpt. Header";
+                        PurchInvHeader: record "Purch. Inv. Header";
+                        PostedSalesShipment: Record "Sales Shipment Header";
                     begin
-                        TempItemLedgerEntry.DeleteAll();
-                        ValueEntry.SetRange("Document No.", Sales_Invoice_Line."Document No.");
-                        ValueEntry.SetRange("Document Line No.", Sales_Invoice_Line."Line No.");
-                        if ValueEntry.findfirst then begin
-                            if ItemLedgEntry.get(ValueEntry."Item Ledger Entry No.") then begin //er det nødvendigt med en get her?
-                                if ItemLedgEntry."Serial No." <> '' then
-                                    SerialNo := ItemLedgEntry."Serial No."
-                                else begin
-                                    POSReportExport.FindAppliedEntry(ItemLedgEntry, TempItemLedgerEntry);
-                                    if ValueEntry.get(TempItemLedgerEntry."Entry No.") then begin
-                                        if ItemLedgEntry2.get(ValueEntry."Item Ledger Entry No.") then begin
-                                            if ItemLedgEntry2."Serial No." <> '' then
-                                                SerialNo := ItemLedgEntry2."Serial No.";
-                                        end;
-                                    end;
-                                end;
+                        Qty := Sales_Invoice_Line.Quantity;
+                        if TempItemLedgEntrySales.Count() >= 1 then
+                            Qty := 1;
+                        if TempItemLedgEntrySales.findfirst then begin
+                            PostedSalesShipment.get(TempItemLedgEntrySales."Document No.");
+                            ShipmentNo := PostedSalesShipment."No.";
+                            SerialNo := TempItemLedgEntrySales."Serial No.";
+                            POSReportExport.FindAppliedEntry(TempItemLedgEntrySales, TempItemLedgEntryPurchase);
+                            if PurchRcptHeader.get(TempItemLedgEntryPurchase."Document No.") then begin
+                                PurchInvHeader.SetRange("Order No.", PurchRcptHeader."Order No.");
+                                PurchInvHeader.FindFirst();
+                                PurchOrderNo := PurchInvHeader."No.";
+                                PurchOrderPostDate := PurchInvHeader."Posting Date";
+                            end;
+                            TempItemLedgEntrySales.Delete();
+                        end;
+
+                    end;
+
+                }
+                trigger OnAfterGetRecord()
+                var
+                    BidItemPrices: record "Bid Item Price";
+                    Item: Record item;
+                    Bid: record bid;
+                    VARID: record "VAR";
+                begin
+                    item.get("No.");
+                    VendorItemNo := item."Vendor Item No.";
+                    VARID.SetRange("Customer No.", "Sales Invoice Header".Reseller);
+                    VARID.SetRange("Vendor No.", item."Vendor No.");
+                    if VARID.FindFirst() then
+                        VARIDInt := VARID."VAR id";
+
+                    if bid.get("Bid No.") then begin
+                        VendorBidNo := bid."Vendor Bid No.";
+                        if BidItemPrices.get(Sales_Invoice_Line."Bid No.",
+                        Sales_Invoice_Line."No.", Sales_Invoice_Line."Sell-to Customer No.", item."Vendor Currency")
+                        then begin
+                            UnitListPrice := BidItemPrices."Unit List Price";
+                            BidPurchaseDiscountPct := BidItemPrices."Bid Purchase Discount Pct.";
+                            Currency := BidItemPrices."Currency Code";
+                            BidUnitPurchasePrice := BidItemPrices."Bid Unit Purchase Price";
+                        end else begin
+                            BidItemPrices.setrange("Bid No.", Sales_Invoice_Line."Bid No.");
+                            BidItemPrices.setrange("item No.", Sales_Invoice_Line."No.");
+                            BidItemPrices.setrange("Currency Code", item."Vendor Currency");
+                            if BidItemPrices.FindFirst() then begin
+                                UnitListPrice := BidItemPrices."Unit List Price";
+                                BidPurchaseDiscountPct := BidItemPrices."Bid Purchase Discount Pct.";
+                                Currency := BidItemPrices."Currency Code";
+                                BidUnitPurchasePrice := BidItemPrices."Bid Unit Purchase Price";
                             end;
                         end;
+                    end else begin
+                        Currency := Item."Vendor Currency";
+                        //UnitListPrice := Sales_Invoice_Line."Unit Price";
                     end;
-                }
-
+                    if PurchCostPrice <> 0 then
+                        CostPercentage := (PurchCostPrice - BidItemPrices."Bid Unit Purchase Price")
+                        / PurchCostPrice;
+                end;
 
             }
 
@@ -280,34 +302,14 @@ report 50011 "POS Reporting"
 
             begin
                 GlSetup.get();
+                Sales_Invoice_Line.SetRange(type, Sales_Invoice_Line.type::Item);
             end;
 
             trigger OnAfterGetRecord()
             var
-                ValueEntry: record "Value Entry";
-                ItemLedgEntry: record "Item Ledger Entry";
-                TempItemLedgerEntry: record "Item Ledger Entry" temporary;
-                AppliedEntries: record "Item Application Entry History";
-                PurchInvHeader: record "Purch. Inv. Header";
-                VARID: record "VAR";
-                PurchRcptHeader: record "Purch. Rcpt. Header";
+
             begin
                 SetEndCustReseller();
-                TempItemLedgerEntry.DeleteAll();
-                if ValueEntry.get(Sales_Invoice_Line."Document No.") then begin
-                    if ItemLedgEntry.get(ValueEntry."Item Ledger Entry No.") then begin
-                        POSReportExport.FindAppliedEntry(ItemLedgEntry, TempItemLedgerEntry);
-                        if PurchRcptHeader.get(TempItemLedgerEntry."Document No.") then begin
-                            PurchInvHeader.get(PurchRcptHeader."Order No.");
-                            PurchOrderNo := PurchInvHeader."No.";
-                            PurchOrderPostDate := PurchInvHeader."Posting Date";
-                        end;
-                    end;
-                end;
-
-                VARID.get("Sales Invoice Header".Reseller, Item."Vendor No.");
-                VARIDInt := VARID."VAR id";
-
             end;
 
             trigger OnPostDataItem()
@@ -332,6 +334,7 @@ report 50011 "POS Reporting"
     begin
         if "Sales Invoice Header"."Drop-Shipment" then begin
             if Customer.get("Sales Invoice Header".Reseller) then begin
+                ResellerName := Customer.Name;
                 ResellEndCustName := Customer.name;
                 ResellEndCustName2 := Customer."Name 2";
                 ResellEndCustAddress := Customer.Address;
@@ -344,6 +347,7 @@ report 50011 "POS Reporting"
             end;
         end else begin
             if Customer.get("Sales Invoice Header".Reseller) then begin
+                EndCustomerName := Customer.name;
                 ResellEndCustName := Customer.name;
                 ResellEndCustName2 := Customer."Name 2";
                 ResellEndCustAddress := Customer.Address;
@@ -360,16 +364,26 @@ report 50011 "POS Reporting"
     end;
 
     var
+        BidUnitPurchasePrice: Decimal;
+        Currency: code[10];
+        ShipmentNo: code[20];
+        VendorItemNo: Text[60];
+        VendorBidNo: Text[100];
+        EndCustomerName: text[50];
+        ResellerName: Text[50];
+        BidPurchaseDiscountPct: Decimal;
+        UnitListPrice: Decimal;
+        TempItemLedgEntrySales: record "Item Ledger Entry" temporary;
         Qty: Decimal;
         POSReportExport: codeunit "POS Report Export";
         SerialNo: text[50];
-        BidUnitPurchasePriceLCY: Decimal;
+        BidUnitPurchasePriceLCY: Decimal; //slettes
         CostPercentage: Decimal;
         VARIDInt: Integer;
         PurchOrderNo: code[20];
         PurchOrderPostDate: Date;
         PurchCostPrice: decimal;
-        PurchCostPriceLCY: decimal;
+        PurchCostPriceLCY: decimal; //slettes
         ListPrice: Decimal;
         ResellEndCustName: text[50];
         ResellEndCustName2: text[50];
