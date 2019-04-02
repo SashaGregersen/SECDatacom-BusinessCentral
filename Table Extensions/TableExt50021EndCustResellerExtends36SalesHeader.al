@@ -253,21 +253,22 @@ tableextension 50021 "End Customer and Reseller" extends 36
                 Contact: record Contact;
             begin
                 If not Contact.get("End Customer Contact") then
-                    error('Not a contact')
-                else
-                    rec.validate("End Customer Contact", Contact.Name);
-
+                    error('Not a contact');
             end;
 
             trigger Onlookup();
             var
                 Contact: record Contact;
             begin
+                Clear(Contact);
                 if not Contact.Get("End Customer Contact") then
                     Clear("End Customer Contact");
-                Contact.SetRange("Company No.", Contact."Company No.");
+                LookupContact("End Customer", Contact."No.", Contact);
+                if Contact."No." = '' then
+                    Contact.SETRANGE("No.", '');
                 IF page.RunModal(page::"Contact List", Contact, Contact."No.") = Action::LookupOK then begin
-                    Validate("End Customer Contact", Contact.Name);
+                    Validate("End Customer Contact", Contact."No.");
+                    Validate("End Customer Contact Name", Contact.Name);
                     validate("End Customer Phone No.", Contact."Phone No.");
                     Validate("End Customer Email", Contact."E-Mail");
                 end;
@@ -278,6 +279,10 @@ tableextension 50021 "End Customer and Reseller" extends 36
             DataClassification = ToBeClassified;
         }
         field(50018; "End Customer Email"; Text[80])
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(50019; "End Customer Contact Name"; Text[50])
         {
             DataClassification = ToBeClassified;
         }
@@ -336,6 +341,14 @@ tableextension 50021 "End Customer and Reseller" extends 36
             Clear("Ship-To-Code");
             SetShipToAddressOnSalesOrder(Customer);
         end;
+    end;
+
+    local procedure LookupContact(CustomerNo: code[20]; ContactNo: code[20]; var Contact: record Contact)
+    var
+        ContactBusinessRelation: record "Contact Business Relation";
+    begin
+        IF ContactBusinessRelation.FindByRelation(ContactBusinessRelation."Link to Table"::Customer, CustomerNo) THEN
+            Contact.SETRANGE("Company No.", ContactBusinessRelation."Contact No.")
     end;
 
 }

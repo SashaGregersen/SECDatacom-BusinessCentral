@@ -57,7 +57,8 @@ codeunit 50052 "Customer Event Handler"
     begin
         If not runtrigger then
             EXIT;
-
+        if rec.IsTemporary() then
+            exit;
         rec.validate("Owning Company", CompanyName());
 
         if CompanyName() = rec."Owning Company" then begin
@@ -78,7 +79,8 @@ codeunit 50052 "Customer Event Handler"
     begin
         If not runtrigger then
             EXIT;
-
+        if rec.IsTemporary() then
+            exit;
         if CompanyName() = rec."Owning Company" then begin
             SalesSetup.get;
             IF SalesSetup."Synchronize Customer" = FALSE then
@@ -168,6 +170,30 @@ codeunit 50052 "Customer Event Handler"
         if rec.IsTemporary() then
             exit;
         SyncMasterData.SynchronizeShipToAddressToCompany(Rec);
+    end;
+
+    [EventSubscriber(ObjectType::table, database::"Post Code", 'OnAfterinsertEvent', '', true, true)]
+    local procedure PostCodeOnAfterInsertEvent(var Rec: Record "Post Code"; runtrigger: Boolean)
+    var
+        SyncMasterData: Codeunit "Synchronize Master Data";
+    begin
+        if not runtrigger then
+            exit;
+        if rec.IsTemporary() then
+            exit;
+        SyncMasterData.SynchronizePostCodeToCompany(Rec);
+    end;
+
+    [EventSubscriber(ObjectType::table, database::"Post Code", 'OnAfterModifyEvent', '', true, true)]
+    local procedure PostCodeOnAfterModifyEvent(var Rec: Record "Post Code"; runtrigger: Boolean)
+    var
+        SyncMasterData: Codeunit "Synchronize Master Data";
+    begin
+        if not runtrigger then
+            exit;
+        if rec.IsTemporary() then
+            exit;
+        SyncMasterData.SynchronizePostCodeToCompany(Rec);
     end;
 
 }
