@@ -9164,7 +9164,6 @@ Cstr(Fields!Var_ID_Lbl.Value)
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
-                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell>
@@ -9254,25 +9253,29 @@ Cstr(Fields!Var_ID_Lbl.Value)
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="Textbox139">
+                                          <Textbox Name="VAR_ID">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!Var_ID_Lbl.Value</Value>
+                                                    <Value>="VAR ID: " &amp; (Fields!Var_ID.Value)</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
-                                                <Style />
+                                                <Style>
+                                                  <TextAlign>Left</TextAlign>
+                                                </Style>
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>Textbox139</rd:DefaultName>
                                             <Style>
+                                              <Border>
+                                                <Style>None</Style>
+                                              </Border>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
@@ -9571,31 +9574,11 @@ Cstr(Fields!Var_ID_Lbl.Value)
                                           <Hidden>=IIF(Fields!SellToCustNo_PurchHeader.Value="",TRUE,FALSE)</Hidden>
                                         </Visibility>
                                       </TablixMember>
-                                      <TablixMember>
-                                        <Visibility>
-                                          <Hidden>=IIF(Fields!ShipToAddr1.Value="",TRUE,FALSE)</Hidden>
-                                        </Visibility>
-                                      </TablixMember>
-                                      <TablixMember>
-                                        <Visibility>
-                                          <Hidden>=IIF(Fields!ShipToAddr2.Value="",TRUE,FALSE)</Hidden>
-                                        </Visibility>
-                                      </TablixMember>
-                                      <TablixMember>
-                                        <Visibility>
-                                          <Hidden>=IIF(Fields!ShipToAddr3.Value="",TRUE,FALSE)</Hidden>
-                                        </Visibility>
-                                      </TablixMember>
-                                      <TablixMember>
-                                        <Visibility>
-                                          <Hidden>=IIF(Fields!ShipToAddr4.Value="",TRUE,FALSE)</Hidden>
-                                        </Visibility>
-                                      </TablixMember>
-                                      <TablixMember>
-                                        <Visibility>
-                                          <Hidden>=IIF(Fields!ShipToAddr5.Value="",TRUE,FALSE)</Hidden>
-                                        </Visibility>
-                                      </TablixMember>
+                                      <TablixMember />
+                                      <TablixMember />
+                                      <TablixMember />
+                                      <TablixMember />
+                                      <TablixMember />
                                       <TablixMember>
                                         <Visibility>
                                           <Hidden>=IIF(Fields!ShipToAddr6.Value="",TRUE,FALSE)</Hidden>
@@ -11812,6 +11795,9 @@ End Function</Code>
         </Field>
         <Field Name="Var_ID_Lbl">
           <DataField>Var_ID_Lbl</DataField>
+        </Field>
+        <Field Name="Var_ID">
+          <DataField>Var_ID</DataField>
         </Field>
         <Field Name="CompanyAddr1">
           <DataField>CompanyAddr1</DataField>

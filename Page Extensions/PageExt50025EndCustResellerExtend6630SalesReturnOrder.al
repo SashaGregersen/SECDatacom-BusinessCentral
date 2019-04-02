@@ -35,6 +35,12 @@ pageextension 50025 "End Customer and Reseller 5" extends 6630
             field("Drop-Shipment"; "Drop-Shipment")
             {
                 ApplicationArea = all;
+                Caption = 'Deliver directly to end customer';
+            }
+
+            field("Ship directly from supplier"; "Ship directly from supplier")
+            {
+                ApplicationArea = all;
             }
         }
         modify("Sell-to Customer No.")
@@ -50,6 +56,7 @@ pageextension 50025 "End Customer and Reseller 5" extends 6630
             field("Sell-to-Customer-Name"; "Sell-to-Customer-Name")
             {
                 ApplicationArea = all;
+                Caption = 'Sell-to Customer Name';
             }
         }
 

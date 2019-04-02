@@ -91,6 +91,7 @@ codeunit 50013 "EDICygate"
     procedure SendConfirmationNotice(SalesHead: Record "Sales Header");
     var
         SalesSetup: Record "Sales & Receivables Setup";
+        GLSetup: Record "General Ledger Setup";
         SalesLine: Record "Sales Line";
         Item: Record Item;
         ResultString: Text;
@@ -106,7 +107,8 @@ codeunit 50013 "EDICygate"
         encoding: DotNet mscorlib_System_Text_Encoding;
     begin
         SalesSetup.Get;
-        //SalesSetup.TestField("Cygate Endpoint");
+        GLSetup.Get();
+        SalesSetup.TestField("Cygate Endpoint");
         encoding := encoding.Default();
 
         XMLDoc := XMLDoc.XmlDocument();
@@ -146,6 +148,9 @@ codeunit 50013 "EDICygate"
         XMLElement1.AppendChild(XMLNode1);
 
         XMLNode1 := XMLDoc.CreateNode('element', 'CurrencyCode', '');
+        if SalesHead."Currency Code" = '' then
+            SalesHead."Currency Code" := GLSetup."Local Currency Symbol";
+
         XMLNode1.InnerText(SalesHead."Currency Code");
         XMLElement1.AppendChild(XMLNode1);
 
@@ -334,7 +339,7 @@ codeunit 50013 "EDICygate"
         WebClient.Encoding(encoding);
         WebClient.Headers.Add('Content-Type', 'text/xml; charset=' + FORMAT(encoding.WebName));
 
-        //ResultString := WebClient.UploadString(SalesSetup."Cygate Endpoint", 'POST', StringWriter.ToString());
+        ResultString := WebClient.UploadString(SalesSetup."Cygate Endpoint", 'POST', StringWriter.ToString());
         Message(ResultString);
     end;
 
@@ -362,7 +367,7 @@ codeunit 50013 "EDICygate"
         encoding: DotNet mscorlib_System_Text_Encoding;
     begin
         SalesSetup.Get;
-        //SalesSetup.TestField("Cygate Endpoint");
+        SalesSetup.TestField("Cygate Endpoint");
 
         encoding := encoding.Default();
 
@@ -554,7 +559,7 @@ codeunit 50013 "EDICygate"
         WebClient.Encoding(encoding);
         WebClient.Headers.Add('Content-Type', 'text/xml; charset=' + FORMAT(encoding.WebName));
 
-        //ResultString := WebClient.UploadString(SalesSetup."Cygate Endpoint", 'POST', StringWriter.ToString());
+        ResultString := WebClient.UploadString(SalesSetup."Cygate Endpoint", 'POST', StringWriter.ToString());
 
         Message(ResultString);
     end;
@@ -582,9 +587,11 @@ codeunit 50013 "EDICygate"
         XmlWriter: DotNet System_Xml_XmlTextWriter;
         encoding: DotNet mscorlib_System_Text_Encoding;
         SalesShipHead: Record "Sales Shipment Header";
+        GLSetup: Record "General Ledger Setup";
     begin
-        SalesSetup.Get;
-        //SalesSetup.TestField("Cygate Endpoint");
+        SalesSetup.Get();
+        GLSetup.Get();
+        SalesSetup.TestField("Cygate Endpoint");
 
         Clear(InvoiceLine);
         InvoiceLine.SetRange("Document No.", InvoiceHead."No.");
@@ -635,6 +642,9 @@ codeunit 50013 "EDICygate"
         XMLElement3.AppendChild(XMLNode1);
 
         XMLNode1 := XMLDoc.CreateNode('element', 'InvoiceCurrency', '');
+        if InvoiceHead."Currency Code" = '' then
+            InvoiceHead."Currency Code" := GLSetup."Local Currency Symbol";
+
         XMLNode1.InnerText(InvoiceHead."Currency Code");
         XMLElement3.AppendChild(XMLNode1);
 
@@ -836,10 +846,6 @@ codeunit 50013 "EDICygate"
                 XMLNode1.InnerText(InvoiceLine."No.");
                 XMLElement1.AppendChild(XMLNode1);
 
-                //??XMLNode1 := XMLDoc.CreateNode('element', 'CustomerPartNumber', '');
-                //                        XMLNode1.InnerText(Item."Vendor Item No.");
-                //                        XMLElement7.AppendChild(XMLNode1);
-
                 XMLNode1 := XMLDoc.CreateNode('element', 'ManufacturerPartNumber', '');
                 XMLNode1.InnerText(Item."Vendor Item No.");
                 XMLElement1.AppendChild(XMLNode1);
@@ -883,7 +889,7 @@ codeunit 50013 "EDICygate"
         WebClient.Encoding(encoding);
         WebClient.Headers.Add('Content-Type', 'text/xml; charset=' + FORMAT(encoding.WebName));
 
-        //ResultString := WebClient.UploadString(SalesSetup."Cygate Endpoint", 'POST', StringWriter.ToString());
+        ResultString := WebClient.UploadString(SalesSetup."Cygate Endpoint", 'POST', StringWriter.ToString());
 
         Message(ResultString);
     end;

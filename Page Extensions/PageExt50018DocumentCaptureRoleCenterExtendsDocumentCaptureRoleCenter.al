@@ -7,7 +7,14 @@ pageextension 50018 "Documnet Capture Role Center" extends "Document Capture Rol
 
     actions
     {
+        addfirst(Processing)
+        {
+            action("Send Status Email to Approvers")
+            {
+                RunObject = codeunit "Purch. Approval E-Mail";
+            }
 
+        }
     }
 
 

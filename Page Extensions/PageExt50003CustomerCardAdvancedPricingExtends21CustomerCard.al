@@ -2,6 +2,67 @@ pageextension 50003 "Customer Card Advanced Pricing" extends "Customer Card"
 {
     layout
     {
+        addafter(GLN)
+        {
+            field("EAN No."; "EAN No.") //Nyt felt eksistere ikke
+            {
+
+            }
+        }
+        modify("Credit Limit (LCY)")
+        {
+            Editable = false;
+        }
+        addbefore("Credit Limit (LCY)")
+        {
+            field("Insured Risk"; "Insured Risk")
+            {
+                ApplicationArea = all;
+                trigger OnValidate()
+                begin
+                    if not CreditInsurance.Get("No.") then begin
+                        CreditInsurance."Customer No." := "No.";
+                        CreditInsurance.Insert();
+                    end;
+
+                    CreditInsurance.Validate("Insured Risk", "Insured Risk");
+                    CreditInsurance.Modify();
+
+                    Validate("Credit Limit (LCY)", "Insured Risk" + "UnInsured Risk");
+                end;
+            }
+            field("UnInsured Risk"; "UnInsured Risk")
+            {
+                ApplicationArea = all;
+                trigger OnValidate()
+                begin
+                    if not CreditInsurance.Get("No.") then begin
+                        CreditInsurance."Customer No." := "No.";
+                        CreditInsurance.Insert();
+                    end;
+
+                    CreditInsurance.Validate("UnInsured Risk", "UnInsured Risk");
+                    CreditInsurance.Modify();
+
+                    Validate("Credit Limit (LCY)", "Insured Risk" + "UnInsured Risk");
+                end;
+            }
+            field("Atradius No."; "Atradius No.")
+            {
+                ApplicationArea = all;
+                trigger OnValidate()
+                begin
+                    if not CreditInsurance.Get("No.") then begin
+                        CreditInsurance."Customer No." := "No.";
+                        CreditInsurance.Insert();
+                    end;
+
+                    CreditInsurance.Validate("Atradius No.", "Atradius No.");
+                    CreditInsurance.Modify();
+                end;
+            }
+        }
+
         addafter("IC Partner Code")
         {
             field("Customer Type"; "Customer Type")
@@ -72,9 +133,33 @@ pageextension 50003 "Customer Card Advanced Pricing" extends "Customer Card"
                 end;
             }
         }
+        addafter(Contact)
+        {
+            action(VARInfo)
+            {
+                Caption = 'VAR';
+                Image = Relationship;
+                RunObject = Page "VAR";
+                RunPageLink = "Customer No." = field ("No.");
+            }
+        }
 
     }
+    var
+        CreditInsurance: Record "Credit Insurance";
+        "Insured Risk": Decimal;
+        "UnInsured Risk": Decimal;
+        "Atradius No.": Code[20];
 
-
-
+    trigger OnAfterGetCurrRecord()
+    begin
+        "Insured Risk" := 0;
+        "UnInsured Risk" := 0;
+        "Atradius No." := '';
+        if CreditInsurance.Get("No.") then begin
+            "Insured Risk" := CreditInsurance."Insured Risk";
+            "UnInsured Risk" := CreditInsurance."UnInsured Risk";
+            "Atradius No." := CreditInsurance."Atradius No.";
+        end;
+    end;
 }

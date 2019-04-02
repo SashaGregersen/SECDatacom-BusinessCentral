@@ -3505,6 +3505,9 @@
                                               </Paragraph>
                                             </Paragraphs>
                                             <rd:DefaultName>UnitPrice</rd:DefaultName>
+                                            <Visibility>
+                                              <Hidden>=IF(Fields!Suppress_Prices_on_Printouts.value = "True",true,false)</Hidden>
+                                            </Visibility>
                                             <Style>
                                               <Border>
                                                 <Color>LightGrey</Color>
@@ -3514,6 +3517,7 @@
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
+                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell>
@@ -3602,6 +3606,9 @@
                                               </Paragraph>
                                             </Paragraphs>
                                             <rd:DefaultName>LineAmount_Line</rd:DefaultName>
+                                            <Visibility>
+                                              <Hidden>=IF(Fields!Suppress_Prices_on_Printouts.value = "True",true,false)</Hidden>
+                                            </Visibility>
                                             <Style>
                                               <Border>
                                                 <Color>LightGrey</Color>
@@ -7050,6 +7057,9 @@ End Function
         </Field>
         <Field Name="External_Document_No_">
           <DataField>External_Document_No_</DataField>
+        </Field>
+        <Field Name="Suppress_Prices_on_Printouts">
+          <DataField>Suppress_Prices_on_Printouts</DataField>
         </Field>
         <Field Name="LineNo_Line">
           <DataField>LineNo_Line</DataField>

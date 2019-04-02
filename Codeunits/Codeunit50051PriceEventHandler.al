@@ -91,8 +91,10 @@ codeunit 50051 "Price Event Handler"
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Sales Price", 'OnAfterInsertEvent', '', true, true)]
-    local procedure SalesPriceOnAfterInsert(var Rec: Record "Sales Price")
+    local procedure SalesPriceOnAfterInsert(var Rec: Record "Sales Price"; RunTrigger: Boolean)
     begin
+        if not Runtrigger then
+            exit;
         if Rec.IsTemporary() then
             exit;
         Rec."Allow Line Disc." := false;
@@ -112,12 +114,14 @@ codeunit 50051 "Price Event Handler"
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Sales Line Discount", 'OnAfterModifyEvent', '', true, true)]
-    local procedure SalesLineDiscountOnAfterModify(var Rec: Record "Sales Line Discount")
+    local procedure SalesLineDiscountOnAfterModify(var Rec: Record "Sales Line Discount"; RunTrigger: Boolean)
     var
         DiscontGroupFilters: Record "Sales Line Discount";
         SalesPriceWorksheet: Record "Sales Price Worksheet";
         ImplementPrices: Report "Implement Price Change";
     begin
+        if not Runtrigger then
+            exit;
         if Rec.IsTemporary() then
             exit;
         DiscontGroupFilters.SetRange(Type, DiscontGroupFilters.type::"Item Disc. Group");
@@ -134,58 +138,84 @@ codeunit 50051 "Price Event Handler"
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Purchase Line Discount", 'OnAfterModifyEvent', '', true, true)]
-    local procedure PurchaseLineDiscountOnAfterModify(var Rec: Record "Purchase Line Discount"; xRec: Record "Purchase Line Discount")
+    local procedure PurchaseLineDiscountOnAfterModify(var Rec: Record "Purchase Line Discount"; xRec: Record "Purchase Line Discount"; RunTrigger: Boolean)
     var
         PurchasePrice: Record "Purchase Price";
         ListPrice: Record "Sales Price";
     begin
+        if not RunTrigger then
+            exit;
         if Rec.IsTemporary() then
             exit;
-        if Rec."Line Discount %" <> xRec."Line Discount %" then begin
-            if AdvPriceMgt.FindListPriceForitem(Rec."Item No.", Rec."Currency Code", ListPrice) then
-                AdvPriceMgt.CreateUpdatePurchasePrices(Rec, ListPrice);
-            if rec."Customer Markup" <> 0 then
-                AdvPriceMgt.CreateUpdateSalesMarkupPrices(Rec);
-            exit;
-        end;
-        if rec."Customer Markup" <> xRec."Customer Markup" then
-            AdvPriceMgt.CreateUpdateSalesMarkupPrices(Rec);
+        if AdvPriceMgt.FindListPriceForitem(Rec."Item No.", Rec."Currency Code", ListPrice) then
+            AdvPriceMgt.CreateUpdatePurchasePricesFromListPrice(Rec, ListPrice);
+        AdvPriceMgt.CreateUpdateSalesMarkupPrices(Rec);
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Purchase Line Discount", 'OnAfterInsertEvent', '', true, true)]
-    local procedure PurchaseLineDiscountOnAfterInsert(var Rec: Record "Purchase Line Discount")
+    local procedure PurchaseLineDiscountOnAfterInsert(var Rec: Record "Purchase Line Discount"; RunTrigger: Boolean)
     var
         PurchasePrice: Record "Purchase Price";
         ListPrice: Record "Sales Price";
     begin
+        If not RunTrigger then
+            exit;
         if Rec.IsTemporary() then
             exit;
-        if not AdvPriceMgt.FindListPriceForitem(Rec."Item No.", Rec."Currency Code", ListPrice) then
-            exit;
-        AdvPriceMgt.CreateUpdatePurchasePrices(Rec, ListPrice);
+        if AdvPriceMgt.FindListPriceForitem(Rec."Item No.", Rec."Currency Code", ListPrice) then
+            AdvPriceMgt.CreateUpdatePurchasePricesFromListPrice(Rec, ListPrice);
         AdvPriceMgt.CreateUpdateSalesMarkupPrices(Rec);
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Purchase Price", 'OnAfterInsertEvent', '', true, true)]
-    local procedure PurchasePriceOnAfterInsert(var Rec: Record "Purchase Price")
+    local procedure PurchasePriceOnAfterInsert(var Rec: Record "Purchase Price"; RunTrigger: Boolean)
     var
         PurchaseDisc: Record "Purchase Line Discount";
     begin
+        if not RunTrigger then
+            Exit;
         if Rec.IsTemporary() then
             exit;
+        AdvPriceMgt.CloseOldPurchasePrices(Rec);
         AdvPriceMgt.CreateSalesPriceFromPurchasePriceMarkup(Rec);
+        AdvPriceMgt.CreatePricesForICPartners(Rec."Item No.", Rec."Vendor No.");
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Purchase Price", 'OnAfterModifyEvent', '', true, true)]
-    local procedure PurchasePriceOnAfterModify(var Rec: Record "Purchase Price"; var xrec: Record "Purchase Price")
+    local procedure PurchasePriceOnAfterModify(var Rec: Record "Purchase Price"; var xrec: Record "Purchase Price"; RunTrigger: Boolean)
     var
         PurchaseDisc: Record "Purchase Line Discount";
     begin
+        If not RunTrigger then
+            exit;
         if Rec.IsTemporary() then
             exit;
-        if Rec."Direct Unit Cost" = xrec."Direct Unit Cost" then
-            exit;
         AdvPriceMgt.CreateSalesPriceFromPurchasePriceMarkup(Rec);
+        AdvPriceMgt.CreatePricesForICPartners(Rec."Item No.", Rec."Vendor No.");
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, codeunit::"Purch. Price Calc. Mgt.", 'OnAfterFindPurchLineDisc', '', true, true)]
+    local procedure PurchPriceCalcMgtOnAfterFindPurchLineDisc(VAR ToPurchaseLineDiscount: Record "Purchase Line Discount"; VAR FromPurchaseLineDiscount: Record "Purchase Line Discount"; ItemNo: Code[20]; QuantityPerUoM: Decimal; Quantity: Decimal; ShowAll: Boolean)
+    var
+        PurchaseDisc: Record "Purchase Line Discount";
+    begin
+        if ToPurchaseLineDiscount.FindSet(true, false) then
+            repeat
+                ToPurchaseLineDiscount."Line Discount %" := 0;
+                ToPurchaseLineDiscount.Modify(false);
+            until ToPurchaseLineDiscount.Next() = 0;
+    end;
+
+    [EventSubscriber(ObjectType::Table, Database::"Sales Price Worksheet", 'OnAfterValidateEvent', 'Item No.', true, true)]
+    local procedure SalesPriceWorksheetOnAfterValidateItemNo(var Rec: Record "Sales Price Worksheet")
+    var
+        Item: Record Item;
+    begin
+        if Rec."Item No." = '' then exit;
+        if Item.Get(Rec."Item No.") then begin
+            Rec.Validate("Vendor Item No.", Item."Vendor Item No.");
+            Rec.Validate("Unit of Measure Code", Item."Sales Unit of Measure");
+        end;
     end;
 
 }

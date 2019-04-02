@@ -78,6 +78,26 @@ tableextension 50012 "Sales Cr.Memo Adv. Pricing" extends "Sales Cr.Memo Line"
             DataClassification = ToBeClassified;
             Editable = false;
         }
+        field(50030; "IC PO No."; Code[20])
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
+        field(50031; "IC PO Line No."; Integer)
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
+        field(50032; "IC SO No."; Code[20])
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
+        field(50033; "IC SO Line No."; Integer)
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
     }
 
 }

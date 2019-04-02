@@ -353,6 +353,9 @@ report 50007 "SEC Sales - Credit Memo"
             column(External_Document_No_; "External Document No.")
             {
             }
+            column(Suppress_Prices_on_Printouts; "Suppress Prices on Printouts")
+            {
+            }
             dataitem(Line; "Sales Cr.Memo Line")
             {
                 DataItemLink = "Document No." = FIELD ("No.");

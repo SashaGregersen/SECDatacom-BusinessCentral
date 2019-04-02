@@ -20,7 +20,7 @@ report 50002 "Update Transfer Price %"
 
             begin
                 Window.Update(1, "No.");
-                "Transfer Price %" := Newpercentaga;
+                "Transfer Price %" := Newpercentage;
                 Modify(true);
             end;
 
@@ -41,7 +41,7 @@ report 50002 "Update Transfer Price %"
             {
                 group("Transfer Prices")
                 {
-                    field("New percentage"; Newpercentaga)
+                    field("New percentage"; Newpercentage)
                     {
                         ApplicationArea = All;
 
@@ -52,7 +52,12 @@ report 50002 "Update Transfer Price %"
 
     }
 
+    procedure SetTranferPricePercentage(PercentageValue: Decimal)
+    begin
+        Newpercentage := PercentageValue;
+    end;
+
     var
-        Newpercentaga: Decimal;
+        Newpercentage: Decimal;
         Window: Dialog;
 }

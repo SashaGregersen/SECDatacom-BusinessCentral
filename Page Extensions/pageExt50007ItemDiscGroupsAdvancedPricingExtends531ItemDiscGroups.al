@@ -20,15 +20,15 @@ pageextension 50007 "Item Dsc. Group Adv. Pricing" extends "Item Disc. Groups"
                 End;
 
             }
-            action("Update Transfer Price Percentage")
+            action("Show Percentages")
             {
-                image = TransferFunds;
+                image = Percentage;
                 trigger OnAction();
                 var
-                    Item: Record Item;
+                    Percentages: Record "Item Disc. Group Percentages";
                 begin
-                    item.SetRange("Item Disc. Group", Rec.Code);
-                    report.RunModal(Report::"Update Transfer Price %", true, false, Item);
+                    Percentages.SetRange("Item Disc. Group Code", Rec.Code);
+                    Page.RunModal(Page::"Item Disc. Group Percentages", Percentages);
                 End;
             }
         }

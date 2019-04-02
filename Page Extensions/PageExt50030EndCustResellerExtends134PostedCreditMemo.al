@@ -36,5 +36,4 @@ pageextension 50030 "End Customer and Reseller 10" extends 134
 
     var
         SalesCrMemo: report 50007;
-        myInt: Integer;
 }

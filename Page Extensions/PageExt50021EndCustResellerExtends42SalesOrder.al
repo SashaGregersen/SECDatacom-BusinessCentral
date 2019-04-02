@@ -7,6 +7,7 @@ pageextension 50021 "End Customer and Reseller" extends 42
             field("End Customer"; "End Customer")
             {
                 ApplicationArea = all;
+                Caption = 'End Customer No.';
             }
         }
         addbefore("End Customer")
@@ -14,20 +15,64 @@ pageextension 50021 "End Customer and Reseller" extends 42
             field(Reseller; Reseller)
             {
                 ApplicationArea = all;
+                Caption = 'Reseller No.';
+            }
+        }
+        addafter("End Customer")
+        {
+            field("End Customer Name"; "End Customer Name")
+            {
+                ApplicationArea = all;
+                Editable = false;
+            }
+            field("End Customer Contact"; "End Customer Contact")
+            {
+                ApplicationArea = all;
+                Importance = Additional;
+            }
+            field("End Customer Phone No."; "End Customer Phone No.")
+            {
+                ApplicationArea = all;
+                Importance = Additional;
+            }
+            field("End Customer Email"; "End Customer Email")
+            {
+                ApplicationArea = all;
+                Importance = Additional;
             }
         }
         addafter("reseller")
         {
+            field("Reseller Name"; "Reseller Name")
+            {
+                ApplicationArea = all;
+                Editable = false;
+            }
             field(Subsidiary; Subsidiary)
             {
                 ApplicationArea = all;
+                Caption = 'Subsidiary No.';
             }
         }
         addafter(Subsidiary)
         {
+            field("Subsidiary Name"; "Subsidiary Name")
+            {
+                ApplicationArea = all;
+                Editable = false;
+            }
             field("Financing Partner"; "Financing Partner")
             {
                 ApplicationArea = all;
+                Caption = 'Financing Partner No.';
+            }
+        }
+        addafter("Financing Partner")
+        {
+            field("Financing Partner Name"; "Financing Partner Name")
+            {
+                ApplicationArea = all;
+                Editable = false;
             }
         }
         addafter("External Document No.")
@@ -35,10 +80,15 @@ pageextension 50021 "End Customer and Reseller" extends 42
             field("Drop-Shipment"; "Drop-Shipment")
             {
                 ApplicationArea = all;
+                Caption = 'Deliver directly to end customer';
+            }
 
+            field("Ship directly from supplier"; "Ship directly from supplier")
+            {
+                ApplicationArea = all;
             }
         }
-        addafter("Drop-Shipment")
+        addafter("Ship directly from supplier")
         {
             field("Suppress Prices on Printouts"; "Suppress Prices on Printouts")
             {
@@ -59,6 +109,20 @@ pageextension 50021 "End Customer and Reseller" extends 42
             field("Ship-To-Code"; "Ship-To-Code")
             {
                 ApplicationArea = all;
+                Caption = 'Ship-to Code';
+            }
+        }
+        addafter("Ship-to Contact")
+        {
+            field("Ship-to Phone No."; "Ship-to Phone No.")
+            {
+                ApplicationArea = all;
+                Caption = 'Phone No.';
+            }
+            field("Ship-to Email"; "Ship-to Email")
+            {
+                ApplicationArea = all;
+                Caption = 'E-mail';
             }
         }
         modify("Sell-to Customer No.")
@@ -74,6 +138,7 @@ pageextension 50021 "End Customer and Reseller" extends 42
             field("Sell-to-Customer-Name"; "Sell-to-Customer-Name")
             {
                 ApplicationArea = all;
+                Caption = 'Sell-to Customer Name';
             }
         }
 
@@ -181,9 +246,11 @@ pageextension 50021 "End Customer and Reseller" extends 42
     trigger OnAfterGetCurrRecord();
     var
         EdiProfile: Record "EDI Profile";
+        Customer: Record customer;
     begin
         EdiProfile.SetRange(Type, EdiProfile.Type::Customer);
         EdiProfile.SetRange("No.", "Sell-to Customer No.");
         EdiDocument := EdiProfile.FindFirst();
     end;
+
 }

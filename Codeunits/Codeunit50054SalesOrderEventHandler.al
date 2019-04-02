@@ -7,8 +7,10 @@ codeunit 50054 "Sales Order Event Handler"
     local procedure SalesLineOnAfterValidateType(Var rec: record "Sales Line")
     var
         salesheader: record "sales header";
+        GLSetup: Record "General Ledger Setup";
     begin
-        if CompanyName() <> 'SECDenmark' then
+        GLSetup.get();
+        if CompanyName() <> GLSetup."Master Company" then
             exit;
 
         salesheader.setrange("No.", rec."Document No.");
@@ -29,7 +31,10 @@ codeunit 50054 "Sales Order Event Handler"
         salesheader: record "sales header";
         Item: record item;
         SubItem: record "Item Substitution";
+        GlSetup: Record "General Ledger Setup";
+        ItemSub: page "Item Substitutions";
     begin
+        GlSetup.get();
         if (rec.Type = rec.type::Item) and (not rec.isicorder) then begin
             Item.Get(rec."No.");
             if item."Default Location" <> '' then
@@ -38,11 +43,13 @@ codeunit 50054 "Sales Order Event Handler"
                 SubItem.SetRange("No.", Item."No.");
                 if not SubItem.IsEmpty() then begin
                     If Confirm('Item %1 is blocked from purchase.\Do you wish to select a substitute item?', false, item."No.") then begin
-                        if page.RunModal(page::"Item Substitutions", SubItem) = action::LookupOK then begin
+                        if page.RunModal(page::"Item Substitutions", SubItem) = action::LookupOK then begin //dette fungere ikke med en runmodal
                             rec.Validate("No.", SubItem."Substitute No.");
                         end else
                             Error('There is no substitute items available');
-                    end;
+                    end else
+                        if not Confirm('Item %1 is blocked from purchase\Do you wish to sell the item?', false, Item."No.") then
+                            Error('The Item cannot be sold, please select another item');
                 end else begin
                     If not Confirm('Item %1 is blocked from purchase and no substitute item exists.\\Do you wish to sell the item?', false, Item."No.") then begin
                         Error('The Item cannot be sold, please select another item');
@@ -51,7 +58,7 @@ codeunit 50054 "Sales Order Event Handler"
             end;
         end;
 
-        if CompanyName() <> 'SECDenmark' then
+        if CompanyName() <> GlSetup."Master Company" then
             exit;
 
         salesheader.setrange("No.", rec."Document No.");
@@ -69,8 +76,10 @@ codeunit 50054 "Sales Order Event Handler"
     local procedure SalesLineOnAfterValidateDescription(Var rec: record "Sales Line")
     var
         salesheader: record "sales header";
+        GlSetup: Record "General Ledger Setup";
     begin
-        if CompanyName() <> 'SECDenmark' then
+        GlSetup.get();
+        if CompanyName() <> GlSetup."Master Company" then
             exit;
 
         salesheader.setrange("No.", rec."Document No.");
@@ -89,8 +98,10 @@ codeunit 50054 "Sales Order Event Handler"
     local procedure SalesLineOnAfterValidateQuantity(Var rec: record "Sales Line")
     var
         salesheader: record "sales header";
+        GlSetup: Record "General Ledger Setup";
     begin
-        if CompanyName() <> 'SECDenmark' then
+        GlSetup.get();
+        if CompanyName() <> GlSetup."Master Company" then
             exit;
 
         salesheader.setrange("No.", rec."Document No.");
@@ -109,8 +120,10 @@ codeunit 50054 "Sales Order Event Handler"
     local procedure SalesLineOnAfterValidateQtyToAssembleToOrder(Var rec: record "Sales Line")
     var
         salesheader: record "sales header";
+        GlSetup: record "General Ledger Setup";
     begin
-        if CompanyName() <> 'SECDenmark' then
+        GlSetup.get();
+        if CompanyName() <> GlSetup."Master Company" then
             exit;
 
         salesheader.setrange("No.", rec."Document No.");
@@ -129,8 +142,10 @@ codeunit 50054 "Sales Order Event Handler"
     local procedure SalesLineOnAfterValidateUnitPrice(Var rec: record "Sales Line")
     var
         salesheader: record "sales header";
+        GlSetup: record "General Ledger Setup";
     begin
-        if CompanyName() <> 'SECDenmark' then
+        GlSetup.get();
+        if CompanyName() <> GlSetup."Master Company" then
             exit;
 
         salesheader.setrange("No.", rec."Document No.");
@@ -149,8 +164,10 @@ codeunit 50054 "Sales Order Event Handler"
     local procedure SalesLineOnAfterValidateLineAmount(Var rec: record "Sales Line")
     var
         salesheader: record "sales header";
+        GlSetup: record "General Ledger Setup";
     begin
-        if CompanyName() <> 'SECDenmark' then
+        GlSetup.get();
+        if CompanyName() <> GlSetup."Master Company" then
             exit;
 
         salesheader.setrange("No.", rec."Document No.");
@@ -169,8 +186,10 @@ codeunit 50054 "Sales Order Event Handler"
     local procedure SalesLineOnAfterValidateLineDiscount(Var rec: record "Sales Line")
     var
         salesheader: record "sales header";
+        GLSetup: Record "General Ledger Setup";
     begin
-        if CompanyName() <> 'SECDenmark' then
+        GlSetup.get();
+        if CompanyName() <> GlSetup."Master Company" then
             exit;
 
         salesheader.setrange("No.", rec."Document No.");
@@ -189,8 +208,10 @@ codeunit 50054 "Sales Order Event Handler"
     local procedure SalesLineOnAfterValidateBidNo(Var rec: record "Sales Line")
     var
         salesheader: record "sales header";
+        GlSetup: Record "General Ledger Setup";
     begin
-        if CompanyName() <> 'SECDenmark' then
+        GlSetup.get();
+        if CompanyName() <> GlSetup."Master Company" then
             exit;
 
         salesheader.setrange("No.", rec."Document No.");
@@ -209,8 +230,10 @@ codeunit 50054 "Sales Order Event Handler"
     local procedure SalesLineOnAfterValidateBidUnitSalesPrice(Var rec: record "Sales Line")
     var
         salesheader: record "sales header";
+        GlSetup: Record "General Ledger Setup";
     begin
-        if CompanyName() <> 'SECDenmark' then
+        GlSetup.get();
+        if CompanyName() <> GlSetup."Master Company" then
             exit;
 
         salesheader.setrange("No.", rec."Document No.");
@@ -229,8 +252,10 @@ codeunit 50054 "Sales Order Event Handler"
     local procedure SalesLineOnAfterValidateBidSalesDiscount(Var rec: record "Sales Line")
     var
         salesheader: record "sales header";
+        GlSetup: Record "General Ledger Setup";
     begin
-        if CompanyName() <> 'SECDenmark' then
+        GlSetup.get();
+        if CompanyName() <> GlSetup."Master Company" then
             exit;
 
         salesheader.setrange("No.", rec."Document No.");
@@ -249,8 +274,10 @@ codeunit 50054 "Sales Order Event Handler"
     local procedure SalesLineOnAfterValidateUnitPurchasePrice(Var rec: record "Sales Line")
     var
         salesheader: record "sales header";
+        GlSetup: Record "General Ledger Setup";
     begin
-        if CompanyName() <> 'SECDenmark' then
+        GlSetup.get();
+        if CompanyName() <> GlSetup."Master Company" then
             exit;
 
         salesheader.setrange("No.", rec."Document No.");
@@ -269,8 +296,10 @@ codeunit 50054 "Sales Order Event Handler"
     local procedure SalesLineOnAfterValidateBidUnitPurchasePrice(Var rec: record "Sales Line")
     var
         salesheader: record "sales header";
+        GlSetup: Record "General Ledger Setup";
     begin
-        if CompanyName() <> 'SECDenmark' then
+        GlSetup.get();
+        if CompanyName() <> GlSetup."Master Company" then
             exit;
 
         salesheader.setrange("No.", rec."Document No.");
@@ -289,8 +318,10 @@ codeunit 50054 "Sales Order Event Handler"
     local procedure SalesLineOnAfterValidateBidPurchaseDiscount(Var rec: record "Sales Line")
     var
         salesheader: record "sales header";
+        GlSetup: Record "General Ledger Setup";
     begin
-        if CompanyName() <> 'SECDenmark' then
+        GlSetup.get();
+        if CompanyName() <> GlSetup."Master Company" then
             exit;
 
         salesheader.setrange("No.", rec."Document No.");
@@ -308,9 +339,10 @@ codeunit 50054 "Sales Order Event Handler"
     [EventSubscriber(ObjectType::Table, database::"Sales Header", 'OnAfterValidateEvent', 'end customer', true, true)]
     local procedure SalesHeaderOnAfterValidateEndCustomer(var rec: record "Sales Header")
     var
-
+        GlSetup: Record "General Ledger Setup";
     begin
-        if CompanyName() <> 'SECDenmark' then
+        GlSetup.get();
+        if CompanyName() <> GlSetup."Master Company" then
             exit;
 
         if rec.Subsidiary <> '' then
@@ -321,40 +353,40 @@ codeunit 50054 "Sales Order Event Handler"
     [EventSubscriber(ObjectType::Table, database::"Sales Header", 'OnAfterValidateEvent', 'Reseller', true, true)]
     local procedure SalesHeaderOnAfterValidateReseller(var rec: record "Sales Header")
     var
-
+        GlSetup: Record "General Ledger Setup";
     begin
-        if CompanyName() <> 'SECDenmark' then
+        GlSetup.get();
+        if CompanyName() <> GlSetup."Master Company" then
             exit;
 
         if rec.Subsidiary <> '' then
             Error('You cannot change an intercompany order');
-
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Sales Header", 'OnAfterValidateEvent', 'subsidiary', true, true)]
     local procedure SalesHeaderOnAfterValidateSubsidiary(var rec: record "Sales Header"; var xrec: Record "Sales Header")
     var
-
+        GlSetup: Record "General Ledger Setup";
     begin
-        if CompanyName() <> 'SECDenmark' then
+        GlSetup.get();
+        if CompanyName() <> GlSetup."Master Company" then
             exit;
 
         if (xrec.Subsidiary <> '') and (rec.Subsidiary <> xrec.Subsidiary) then
             Error('You cannot change an intercompany order');
-
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Sales Header", 'OnAfterValidateEvent', 'financing partner', true, true)]
     local procedure SalesHeaderOnAfterValidateFinancingPartner(var rec: record "Sales Header")
     var
-
+        GlSetup: Record "General Ledger Setup";
     begin
-        if CompanyName() <> 'SECDenmark' then
+        GlSetup.get();
+        if CompanyName() <> GlSetup."Master Company" then
             exit;
 
         if rec.Subsidiary <> '' then
             Error('You cannot change an intercompany order');
-
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Sales Header", 'OnAfterValidateEvent', 'Status', true, true)]
@@ -362,11 +394,12 @@ codeunit 50054 "Sales Order Event Handler"
     var
 
     begin
-        if rec.Status = rec.Status::Released then begin
-            rec.TestField("Sell-to Contact");
-            rec.TestField("OIOUBL-Sell-to Contact E-Mail");
-            rec.TestField("OIOUBL-Sell-to Contact Phone No.");
-        end;
+        if rec."Document Type" = rec."Document Type"::Order then
+            if rec.Status = rec.Status::Released then begin
+                rec.TestField("Ship-to Contact");
+                rec.TestField("Ship-to Phone No.");
+                rec.TestField("Ship-to Email");
+            end;
     end;
 
     [EventSubscriber(ObjectType::Codeunit, codeunit::"Release Sales Document", 'OnAfterUpdateSalesDocLines', '', true, true)]
@@ -377,22 +410,25 @@ codeunit 50054 "Sales Order Event Handler"
         SalesLine2: record "Sales Line";
         InsertSalesLine: record "Sales Line";
     begin
+        if SalesHeader."Document Type" <> salesheader."Document Type"::Order then
+            exit;
+
         if SalesHeader.Status = SalesHeader.Status::Released then begin
-            SalesHeader.TestField("Sell-to Contact");
-            SalesHeader.TestField("OIOUBL-Sell-to Contact E-Mail");
-            SalesHeader.TestField("OIOUBL-Sell-to Contact Phone No.");
+            SalesHeader.TestField("Ship-to Contact");
+            SalesHeader.TestField("Ship-to Phone No.");
+            SalesHeader.TestField("Ship-to Email");
         end;
 
         SalesReceiveSetup.Get();
         if SalesReceiveSetup."Freight Item" <> '' then begin
             SalesLine.SetRange("Document No.", SalesHeader."No.");
-            SalesLine.SetRange("Document Type", SalesHeader."Document Type");
+            SalesLine.SetRange("Document Type", SalesHeader."Document Type"::Order);
             SalesLine.SetRange(Type, SalesLine.Type::Item);
             SalesLine.SetRange("No.", SalesReceiveSetup."Freight Item");
             if not SalesLine.FindFirst() then
                 if confirm('Do you want to add freight to the order?', true) then begin
                     SalesLine2.SetRange("Document No.", SalesHeader."No.");
-                    SalesLine2.SetRange("Document Type", SalesHeader."Document Type");
+                    SalesLine2.SetRange("Document Type", SalesHeader."Document Type"::Order);
                     SalesLine2.FindLast();
                     InsertSalesLine.init;
                     InsertSalesLine."Document No." := SalesHeader."No.";
@@ -427,5 +463,27 @@ codeunit 50054 "Sales Order Event Handler"
             EdiProfile.DocumentNo := SalesInvHdrNo;
             Codeunit.Run(EdiProfile."EDI Object", EdiProfile);
         end;
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, codeunit::"Release Sales Document", 'OnBeforeModifySalesDoc', '', true, true)]
+    local procedure ReleaseSalesDocOnBeforeModifySalesDoc(VAR SalesHeader: Record "Sales Header"; PreviewMode: Boolean; VAR IsHandled: Boolean)
+    var
+        CustChkCrLimit: Codeunit "Cust-Check Cr. Limit";
+        Conf001: TextConst DAN = 'Debitorens kreditmaksimum er overskredet. Ønsker du at forsætte?', ENU = 'The customer''s credit limit has been exceeded. Do you want to continue?';
+    begin
+        if CustChkCrLimit.SalesHeaderCheck(SalesHeader) then
+            if not Confirm(Conf001) then
+                IsHandled := true;
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, codeunit::"Sales-Quote to Order (Yes/No)", 'OnBeforeRun', '', true, true)]
+    local procedure SalesQuoteToOrderOnBeforeRun(VAR SalesHeader: Record "Sales Header"; VAR IsHandled: Boolean)
+    var
+        CustChkCrLimit: Codeunit "Cust-Check Cr. Limit";
+        Conf001: TextConst DAN = 'Debitorens kreditmaksimum er overskredet. Ønsker du at forsætte?', ENU = 'The customer''s credit limit has been exceeded. Do you want to continue?';
+    begin
+        if CustChkCrLimit.SalesHeaderCheck(SalesHeader) then
+            if not Confirm(Conf001) then
+                IsHandled := true;
     end;
 }

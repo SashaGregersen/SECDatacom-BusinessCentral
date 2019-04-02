@@ -18,6 +18,17 @@ pageextension 50000 SECNavigationArea extends "Order Processor Role Center"
                     ApplicationArea = All;
                 }
 
+
+            }
+        }
+
+        addafter(Action31)
+        {
+            action("POS Report")
+            {
+                ApplicationArea = all;
+                Image = Excel;
+                RunObject = codeunit "POS Report Export";
             }
         }
     }

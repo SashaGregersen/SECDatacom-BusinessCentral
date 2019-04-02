@@ -4,10 +4,12 @@ codeunit 50052 "Customer Event Handler"
     EventSubscriberInstance = StaticAutomatic;
 
     [EventSubscriber(ObjectType::Table, database::"Customer Price Group", 'OnAfterInsertEvent', '', true, true)]
-    local procedure CustomerPriceGroupOnAfterinsert(var Rec: Record "Customer Price Group")
+    local procedure CustomerPriceGroupOnAfterinsert(var Rec: Record "Customer Price Group"; Runtrigger: Boolean)
     var
         CustomerDiscountGroup: Record "Customer Discount Group";
     begin
+        if not Runtrigger then
+            exit;
         If not CustomerDiscountGroup.Get(Rec.Code) then begin
             CustomerDiscountGroup.Init();
             CustomerDiscountGroup.Code := Rec.Code;
@@ -17,10 +19,12 @@ codeunit 50052 "Customer Event Handler"
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Customer Discount Group", 'OnAfterInsertEvent', '', true, true)]
-    local procedure CustomerDiscountGroupOnAfterinsert(var Rec: Record "Customer Discount Group")
+    local procedure CustomerDiscountGroupOnAfterinsert(var Rec: Record "Customer Discount Group"; RunTrigger: Boolean)
     var
         CustomerPriceGroup: Record "Customer Price Group";
     begin
+        if not Runtrigger then
+            exit;
         If not CustomerpriceGroup.Get(Rec.Code) then begin
             CustomerPriceGroup.Init();
             CustomerPriceGroup.Code := Rec.Code;
@@ -86,10 +90,12 @@ codeunit 50052 "Customer Event Handler"
 
     [EventSubscriber(ObjectType::Table, database::"Sales Header", 'OnAfterInsertEvent', '', true, true)]
 
-    local procedure UpdateSellToCustomerInRelatedFields(var rec: Record "Sales Header")
+    local procedure UpdateSellToCustomerInRelatedFields(var rec: Record "Sales Header"; runtrigger: Boolean)
     var
         Customer: record Customer;
     begin
+        if not runtrigger then
+            exit;
         If rec."Sell-to Customer No." <> '' then begin
             IF Customer.GET(rec."Sell-to Customer No.") then begin
                 if Customer."IC Partner Code" <> '' then
@@ -129,6 +135,39 @@ codeunit 50052 "Customer Event Handler"
             PriceGroupLink."Customer Discount Group Code" := Rec."Customer Disc. Group";
             PriceGroupLink.Insert(true);
         end;
+    end;
+
+    [EventSubscriber(ObjectType::table, database::"Customer", 'OnAfterValidateEvent', 'Post Code', true, true)]
+    local procedure PostCodeOnAfterValidate(var Rec: Record "Customer")
+    var
+        SyncMasterData: Codeunit "Synchronize Master Data";
+        PostCode: record "Post Code";
+    begin
+        SyncMasterData.CheckPostCode(Rec, PostCode);
+    end;
+
+    [EventSubscriber(ObjectType::table, database::"Ship-to Address", 'OnAfterinsertEvent', '', true, true)]
+    local procedure ItemSubstituionOnAfterInsertEvent(var Rec: Record "Ship-to Address"; runtrigger: Boolean)
+    var
+        SyncMasterData: Codeunit "Synchronize Master Data";
+    begin
+        if not runtrigger then
+            exit;
+        if rec.IsTemporary() then
+            exit;
+        SyncMasterData.SynchronizeShipToAddressToCompany(Rec);
+    end;
+
+    [EventSubscriber(ObjectType::table, database::"Ship-to Address", 'OnAfterModifyEvent', '', true, true)]
+    local procedure ItemSubstitutionOnAfterModifyEvent(var Rec: Record "Ship-to Address"; runtrigger: Boolean)
+    var
+        SyncMasterData: Codeunit "Synchronize Master Data";
+    begin
+        if not runtrigger then
+            exit;
+        if rec.IsTemporary() then
+            exit;
+        SyncMasterData.SynchronizeShipToAddressToCompany(Rec);
     end;
 
 }

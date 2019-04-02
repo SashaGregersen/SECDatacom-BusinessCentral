@@ -66,11 +66,12 @@ pageextension 50002 "Sales Line Bid" extends "Sales Order Subform"
             {
                 ApplicationArea = All;
             }
-            field("Purchase Price on Purchase Order"; "Purchase Price on Purchase Order")
-            {
-                ApplicationArea = All;
+            /*             field("Purchase Price on Purchase Order"; "Purchase Price on Purchase Order")
+                        {
+                            ApplicationArea = All;
 
-            }
+                        }
+             */
         }
 
         modify("Drop Shipment")

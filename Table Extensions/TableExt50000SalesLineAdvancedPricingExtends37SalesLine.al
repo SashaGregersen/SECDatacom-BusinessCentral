@@ -25,7 +25,8 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
                         BidPrices."Bid Unit Purchase Price" := CurrExchRate.ExchangeAmount(BidPrices."Bid Unit Purchase Price", BidPrices."Currency Code", "Currency Code", "Posting Date");
                         updateBidPrices(BidPrices, Bid.Claimable, Bid."Project Sale");
                     end;
-                end;
+                end else
+                    Validate("Bid No.", '');
             end;
 
             trigger Onvalidate();
@@ -34,33 +35,42 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
                 BidPrices: Record "Bid Item Price";
                 CurrExchRate: Record "Currency Exchange Rate";
             begin
-                if Bid.Get("Bid No.") then begin
-                    BidPrices.SetRange("Bid No.", "Bid No.");
-                    BidPrices.SetRange("item No.", "No.");
-                    BidPrices.SetRange("Customer No.", "Sell-to Customer No.");
-                    BidPrices.SetRange("Currency Code", "Currency Code");
-                    if BidPrices.FindFirst then begin
-                        updateBidPrices(BidPrices, BidPrices.Claimable, Bid."Project Sale");
-                    end else begin
-                        BidPrices.SetRange("Customer No.");
+                if "Bid No." = '' then begin
+                    Validate("Bid Unit Sales Price", 0);
+                    Validate("Bid Unit Purchase Price", 0);
+                    "Unit Cost" := 0;
+                    UpdateAmounts();
+                end else begin
+                    if Bid.Get("Bid No.") then begin
+                        BidPrices.SetRange("Bid No.", "Bid No.");
+                        BidPrices.SetRange("item No.", "No.");
+                        BidPrices.SetRange("Customer No.", "Sell-to Customer No.");
+                        BidPrices.SetRange("Currency Code", "Currency Code");
                         if BidPrices.FindFirst then begin
                             updateBidPrices(BidPrices, BidPrices.Claimable, Bid."Project Sale");
                         end else begin
-                            BidPrices.SetRange("Currency Code");
+                            BidPrices.SetRange("Customer No.");
                             if BidPrices.FindFirst then begin
-                                if ("Currency Code" = BidPrices."Currency Code") then begin
-                                    updateBidPrices(BidPrices, BidPrices.Claimable, Bid."Project Sale");
-                                    exit;
-                                end;
-                                BidPrices."Bid Unit Sales Price" := CurrExchRate.ExchangeAmount(BidPrices."Bid Unit Sales Price", BidPrices."Currency Code", "Currency Code", "Posting Date");
-                                BidPrices."Bid Unit Purchase Price" := CurrExchRate.ExchangeAmount(BidPrices."Bid Unit Purchase Price", BidPrices."Currency Code", "Currency Code", "Posting Date");
                                 updateBidPrices(BidPrices, BidPrices.Claimable, Bid."Project Sale");
-                            end
+                            end else begin
+                                BidPrices.SetRange("Currency Code");
+                                if BidPrices.FindFirst then begin
+                                    if ("Currency Code" = BidPrices."Currency Code") then begin
+                                        updateBidPrices(BidPrices, BidPrices.Claimable, Bid."Project Sale");
+                                        exit;
+                                    end;
+                                    BidPrices."Bid Unit Sales Price" := CurrExchRate.ExchangeAmount(BidPrices."Bid Unit Sales Price", BidPrices."Currency Code", "Currency Code", "Posting Date");
+                                    BidPrices."Bid Unit Purchase Price" := CurrExchRate.ExchangeAmount(BidPrices."Bid Unit Purchase Price", BidPrices."Currency Code", "Currency Code", "Posting Date");
+                                    updateBidPrices(BidPrices, BidPrices.Claimable, Bid."Project Sale");
+                                end
+                            end;
                         end;
+                    end else begin
+                        Validate("Bid Unit Sales Price", 0);
+                        Validate("Bid Unit Purchase Price", 0);
+                        "Unit Cost" := 0;
+                        UpdateAmounts();
                     end;
-                end else begin
-                    Validate("Bid Unit Sales Price", 0);
-                    Validate("Bid Unit Purchase Price", 0)
                 end;
             end;
         }
@@ -170,14 +180,35 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
         {
             DataClassification = ToBeClassified;
             Editable = false;
+            ObsoleteState = Pending;
         }
         field(50026; "Line Amount Excl. VAT (LCY)"; Decimal)
         {
             DataClassification = ToBeClassified;
             Editable = false;
         }
-
+        field(50030; "IC PO No."; Code[20])
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
+        field(50031; "IC PO Line No."; Integer)
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
+        field(50032; "IC SO No."; Code[20])
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
+        field(50033; "IC SO Line No."; Integer)
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
     }
+
     local procedure updateBidPrices(BidPrices: Record "Bid Item Price"; NewClaimableValue: Boolean; IsProjectSales: Boolean)
     begin
         validate("Bid Unit Sales Price", BidPrices."Bid Unit Sales Price");
@@ -190,7 +221,6 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
         Claimable := NewClaimableValue;
     end;
 
-
     procedure CalcAdvancedPrices();
     var
         TransferPriceAmount: Decimal;
@@ -200,7 +230,7 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
             "Profit Amount" := "Line Amount" - "Calculated Purchase Price";
             if "Line Amount" <> 0 then
                 "Profit Margin" := ("Profit Amount" / "Line Amount") * 100;
-            "Purchase Price on Purchase Order" := "unit Purchase Price";
+            //"Purchase Price on Purchase Order" := "unit Purchase Price";
             Claimable := false;
             "Claim Amount" := 0;
             exit;
@@ -220,24 +250,23 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
 
         If "Bid Unit Purchase Price" <> 0 then begin
             "Calculated Purchase Price" := ("Bid Unit Purchase Price" * Quantity) + TransferPriceAmount;
-            if not Claimable then
-                "Purchase Price on Purchase Order" := "Bid Unit Purchase Price"
-            else
-                "Purchase Price on Purchase Order" := "Unit Purchase Price";
+            //if not Claimable then
+            //    "Purchase Price on Purchase Order" := "Bid Unit Purchase Price"
+            //else
+            //    "Purchase Price on Purchase Order" := "Unit Purchase Price";
             if ("Unit Purchase Price" <> 0) and Claimable then
                 "Claim Amount" := ("Unit Purchase Price" * Quantity) - ("Bid Unit Purchase Price" * Quantity)
             else
                 "Claim Amount" := 0;
         end else begin
             "Calculated Purchase Price" := ("unit Purchase Price" * Quantity) + TransferPriceAmount;
-            "Purchase Price on Purchase Order" := "Unit Purchase Price";
+            //"Purchase Price on Purchase Order" := "Unit Purchase Price";
             "Claim Amount" := 0;
         end;
 
         "Profit Amount" := "Line Amount" - "Calculated Purchase Price" - "Kickback Amount";
         if "Line Amount" <> 0 then
             "Profit Margin" := ("Profit Amount" / "Line Amount") * 100;
-
     end;
 
     procedure IsICOrder(): Boolean
@@ -247,5 +276,4 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
         ICPartner.SetRange("Customer No.", "Sell-to Customer No.");
         exit(ICPartner.FindFirst());
     end;
-
 }

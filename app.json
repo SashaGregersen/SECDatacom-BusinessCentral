@@ -4,7 +4,7 @@
   "publisher": "Netcompany",
   "brief": "",
   "description": "",
-  "version": "1.0.2.12",
+  "version": "1.0.2.22",
   "showMyCode": true,
   "privacyStatement": "",
   "EULA": "",
@@ -34,7 +34,5 @@
     "to": 50099
   },
   "target": "Internal",
-  "runtime": "2.0"
-  
-  
+  "runtime": "2.2"
 }

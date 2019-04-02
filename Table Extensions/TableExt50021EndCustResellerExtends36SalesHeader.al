@@ -11,15 +11,22 @@ tableextension 50021 "End Customer and Reseller" extends 36
                 customer: record customer;
                 shiptoadress: record "Ship-to Address";
             begin
-                If customer.get(Rec."End Customer") then
+                If customer.get(Rec."End Customer") then begin
                     if customer."Customer Type" <> customer."Customer Type"::"End Customer" then
-                        error('Not an end-customer');
+                        error('Not an end-customer')
+                    else begin
+                        rec.validate("End Customer Name", customer.name);
+                        SetDropShipment();
+                    end;
+                end;
             end;
 
             trigger Onlookup();
             var
                 Customer: Record Customer;
             begin
+                if not Customer.get("End Customer") then
+                    clear("End Customer");
                 Customer.SetRange("Customer Type", customer."Customer Type"::"End Customer");
                 IF page.RunModal(page::"Customer List", Customer, customer.Name) = Action::LookupOK then
                     Validate("End Customer", customer."No.");
@@ -41,12 +48,8 @@ tableextension 50021 "End Customer and Reseller" extends 36
                         if Subsidiary = '' then begin
                             validate("Sell-to Customer No.", customer."No.");
                             validate("Sell-to-Customer-Name", customer.Name);
-                            if customer."Prefered Shipment Address" <> '' then begin
-                                shiptoadress.get(customer."No.", customer."Prefered Shipment Address");
-                                rec.validate("Ship-To-Code", shiptoadress.Code);
-                                SetShipToAddress(ShipToAdress.Name, ShipToAdress."Name 2", ShipToAdress.Address, ShipToAdress."Address 2", ShipToAdress.City, ShipToAdress."Post Code", shiptoadress.County, shiptoadress."Country/Region Code");
-                                rec.Validate("Ship-to Contact", ShipToAdress.Contact);
-                            end;
+                            rec.validate("Reseller Name", customer.name);
+                            SetDropShipment();
                         end;
             end;
 
@@ -54,6 +57,8 @@ tableextension 50021 "End Customer and Reseller" extends 36
             var
                 Customer: Record Customer;
             begin
+                if not Customer.Get(Reseller) then
+                    Clear(Reseller);
                 Customer.SetRange("Customer Type", customer."Customer Type"::Reseller);
                 IF page.RunModal(page::"Customer List", Customer, customer."No.") = Action::LookupOK then
                     Validate("Reseller", Customer."No.");
@@ -70,6 +75,7 @@ tableextension 50021 "End Customer and Reseller" extends 36
         {
             DataClassification = ToBeClassified;
             TableRelation = "customer";
+            Editable = false;
             trigger OnValidate();
             var
                 customer: record customer;
@@ -82,6 +88,7 @@ tableextension 50021 "End Customer and Reseller" extends 36
                         validate("Sell-to Customer No.", Subsidiary);
                         validate("Bill-to Customer No.", Subsidiary);
                         validate("sell-to-Customer-Name", customer.Name);
+                        rec.validate("Subsidiary Name", customer.name);
                     end;
                 end;
             end;
@@ -90,11 +97,15 @@ tableextension 50021 "End Customer and Reseller" extends 36
             var
                 Customer: Record Customer;
                 ICpartner: Record "IC Partner";
+                ICPartner2: record "IC Partner";
                 ICPartnerList: page "ic partner list";
             begin
-                if not ICpartner.Get(rec.Subsidiary) then
-                    Clear(ICpartner);
-                IF page.RunModal(page::"IC Partner List", icpartner) = Action::LookupOK then
+                if Rec.Subsidiary <> '' then begin
+                    ICPartner2.SetRange("Customer No.", Rec.Subsidiary);
+                    ICPartner2.FindFirst();
+                    ICpartner.Get(ICPartner2.Code);
+                end;
+                IF page.RunModal(page::"IC Partner List", ICpartner, ICpartner.Code) = Action::LookupOK then
                     Validate("subsidiary", ICpartner."Customer No.");
             end;
         }
@@ -118,6 +129,7 @@ tableextension 50021 "End Customer and Reseller" extends 36
                         Validate("Bill-to Country/Region Code", customer."Country/Region Code");
                         validate("Bill-to Post Code", customer."Post Code");
                         validate("Bill-to County", customer.County);
+                        rec.validate("Financing Partner Name", customer.name);
                     end else
                         error('Not a Financing Partner');
             end;
@@ -126,8 +138,10 @@ tableextension 50021 "End Customer and Reseller" extends 36
             var
                 Customer: Record Customer;
             begin
+                if not Customer.Get("Financing Partner") then
+                    Clear("Financing Partner");
                 Customer.SetRange("Customer Type", customer."Customer Type"::"Financing Partner");
-                IF page.RunModal(page::"Customer List", Customer) = Action::LookupOK then
+                IF page.RunModal(page::"Customer List", Customer, Customer."No.") = Action::LookupOK then
                     Validate("Financing Partner", Customer."No.");
             end;
 
@@ -141,27 +155,7 @@ tableextension 50021 "End Customer and Reseller" extends 36
                 ShipToAdress: record "Ship-to Address";
                 Customer: record customer;
             begin
-                if "Drop-Shipment" = true then begin
-                    Customer.get(rec."End Customer");
-                    if ShipToAdress.get(Customer."No.", Customer."Prefered Shipment Address") then begin
-                        SetShipToAddress(ShipToAdress.Name, ShipToAdress."Name 2", ShipToAdress.Address, ShipToAdress."Address 2", ShipToAdress.City, ShipToAdress."Post Code", shiptoadress.County, shiptoadress."Country/Region Code");
-                        rec.Validate("Ship-to Contact", ShipToAdress.Contact);
-                        rec.validate("Ship-To-Code", shiptoadress.Code);
-                    end else begin
-                        SetShipToAddress(Customer.Name, Customer."Name 2", Customer.Address, Customer."Address 2", Customer.City, Customer."Post Code", Customer.County, Customer."Country/Region Code");
-                        rec.Validate("Ship-to Contact", Customer.Contact);
-                    end;
-                end else begin
-                    Customer.Get(rec."Sell-to Customer No.");
-                    if ShipToAdress.get(Customer."No.", Customer."Prefered Shipment Address") then begin
-                        SetShipToAddress(ShipToAdress.Name, ShipToAdress."Name 2", ShipToAdress.Address, ShipToAdress."Address 2", ShipToAdress.City, ShipToAdress."Post Code", shiptoadress.County, shiptoadress."Country/Region Code");
-                        rec.Validate("Ship-to Contact", ShipToAdress.Contact);
-                        rec.validate("Ship-To-Code", shiptoadress.Code);
-                    end else begin
-                        SetShipToAddress(rec."Sell-to Customer Name", rec."Sell-to Customer Name 2", rec."Sell-to Address", rec."Sell-to Address 2", rec."Sell-to City", rec."Sell-to Post Code", rec."Sell-to County", rec."Sell-to Country/Region Code");
-                        rec.Validate("Ship-to Contact", rec."Sell-to Contact");
-                    end;
-                end;
+                SetDropShipment();
             end;
         }
 
@@ -173,21 +167,41 @@ tableextension 50021 "End Customer and Reseller" extends 36
             var
                 ShipToAdress: record "Ship-to Address";
             begin
-                if "Drop-Shipment" = true then begin
+                if "Drop-Shipment" then begin
+                    if not ShipToAdress.Get(rec."End Customer", "Ship-To-Code") then
+                        Clear("Ship-To-Code");
                     ShipToAdress.SetRange("Customer No.", "End Customer");
-                    IF page.RunModal(page::"Ship-to Address List", ShipToAdress) = Action::LookupOK then begin
+                    IF page.RunModal(page::"Ship-to Address List", ShipToAdress, ShipToAdress.Code) = Action::LookupOK then begin
                         SetShipToAddress(ShipToAdress.Name, ShipToAdress."Name 2", ShipToAdress.Address, ShipToAdress."Address 2", ShipToAdress.City, ShipToAdress."Post Code", shiptoadress.County, shiptoadress."Country/Region Code");
                         rec.Validate("Ship-to Contact", ShipToAdress.Contact);
+                        rec.validate("Ship-To-Code", ShipToAdress.Code);
+                        rec.validate("Ship-to Phone No.", ShipToAdress."Phone No.");
+                        rec.Validate("Ship-To Email", ShipToAdress."E-Mail");
+                        rec.Modify(true);
                     end;
                 end else begin
-                    ShipToAdress.SetRange("Customer No.", "Sell-to Customer No.");
-                    IF page.RunModal(page::"Ship-to Address List", ShipToAdress) = Action::LookupOK then begin
+                    if not ShipToAdress.Get(rec.Reseller, "Ship-To-Code") then
+                        Clear("Ship-To-Code");
+                    ShipToAdress.SetRange("Customer No.", rec.Reseller);
+                    IF page.RunModal(page::"Ship-to Address List", ShipToAdress, ShipToAdress.Code) = Action::LookupOK then begin
                         SetShipToAddress(ShipToAdress.Name, ShipToAdress."Name 2", ShipToAdress.Address, ShipToAdress."Address 2", ShipToAdress.City, ShipToAdress."Post Code", shiptoadress.County, shiptoadress."Country/Region Code");
                         rec.Validate("Ship-to Contact", ShipToAdress.Contact);
+                        rec.validate("Ship-To-Code", ShipToAdress.Code);
+                        rec.validate("Ship-to Phone No.", ShipToAdress."Phone No.");
+                        rec.Validate("Ship-To Email", ShipToAdress."E-Mail");
+                        rec.Modify(true);
                     end;
                 end;
             end;
 
+            trigger OnValidate()
+            var
+                ShipToAdress: record "Ship-to Address";
+                Customer: Record customer;
+            begin
+                if "Ship-To-Code" = '' then
+                    CheckDropShipmentAndSetShipToAddressOnSalesOrder(Customer);
+            end;
         }
 
         field(50007; "Sell-to-Customer-Name"; text[50])
@@ -199,8 +213,129 @@ tableextension 50021 "End Customer and Reseller" extends 36
         {
             DataClassification = ToBeClassified;
         }
+        field(50009; "Ship directly from supplier"; Boolean)
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(50010; "Reseller Name"; text[50])
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
+        field(50011; "End Customer Name"; text[50])
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
+        field(50012; "Subsidiary Name"; text[50])
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
+        field(50013; "Financing Partner Name"; text[50])
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
+        field(50014; "Ship-to Phone No."; Text[30])
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(50015; "Ship-to Email"; Text[80])
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(50016; "End Customer Contact"; Text[50])
+        {
+            DataClassification = ToBeClassified;
+            trigger OnValidate();
+            var
+                Contact: record Contact;
+            begin
+                If not Contact.get("End Customer Contact") then
+                    error('Not a contact')
+                else
+                    rec.validate("End Customer Contact", Contact.Name);
+
+            end;
+
+            trigger Onlookup();
+            var
+                Contact: record Contact;
+            begin
+                if not Contact.Get("End Customer Contact") then
+                    Clear("End Customer Contact");
+                Contact.SetRange("Company No.", Contact."Company No.");
+                IF page.RunModal(page::"Contact List", Contact, Contact."No.") = Action::LookupOK then begin
+                    Validate("End Customer Contact", Contact.Name);
+                    validate("End Customer Phone No.", Contact."Phone No.");
+                    Validate("End Customer Email", Contact."E-Mail");
+                end;
+            end;
+        }
+        field(50017; "End Customer Phone No."; Text[30])
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(50018; "End Customer Email"; Text[80])
+        {
+            DataClassification = ToBeClassified;
+        }
 
     }
+    procedure SetShipToAddressOnSalesOrder(Customer: record customer)
+    var
+        ShipToAdress: record "Ship-to Address";
+    begin
+        if ShipToAdress.get(Customer."No.", Customer."Prefered Shipment Address") then begin
+            SetShipToAddress(ShipToAdress.Name, ShipToAdress."Name 2", ShipToAdress.Address, ShipToAdress."Address 2", ShipToAdress.City, ShipToAdress."Post Code", shiptoadress.County, shiptoadress."Country/Region Code");
+            rec.Validate("Ship-to Contact", ShipToAdress.Contact);
+            rec.validate("Ship-To-Code", shiptoadress.Code);
+            rec.Validate("Ship-to Phone No.", ShipToAdress."Phone No.");
+            rec.Validate("Ship-To Email", ShipToAdress."E-Mail");
+        end else begin
+            SetShipToAddress(Customer.Name, customer."Name 2", customer.Address, Customer."Address 2", customer.City, Customer."Post Code", customer.County, customer."Country/Region Code");
+            rec.Validate("Ship-to Contact", Customer.Contact);
+            rec.validate("Ship-to Phone No.", Customer."Phone No.");
+            rec.Validate("Ship-To Email", Customer."E-Mail");
+        end;
+    end;
 
+    procedure CheckDropShipmentAndSetShipToAddressOnSalesOrder(Customer: record customer)
+    var
+        ShipToAdress: record "Ship-to Address";
+    begin
+        if "Drop-Shipment" then begin
+            Customer.get(rec."End Customer");
+            Clear("Ship-To-Code");
+            SetShipToAddress(Customer.Name, Customer."Name 2", Customer.Address, Customer."Address 2", Customer.City, Customer."Post Code", Customer.County, Customer."Country/Region Code");
+            rec.Validate("Ship-to Contact", Customer.Contact);
+            rec.validate("Ship-to Phone No.", Customer."Phone No.");
+            rec.Validate("Ship-to Email", Customer."E-Mail");
+        end else begin
+            Customer.Get(rec.Reseller);
+            Clear("Ship-To-Code");
+            SetShipToAddress(Customer.Name, customer."Name 2", customer.Address, Customer."Address 2", customer.City, Customer."Post Code", customer.County, customer."Country/Region Code");
+            rec.Validate("Ship-to Contact", Customer.Contact);
+            rec.validate("Ship-to Phone No.", Customer."Phone No.");
+            rec.Validate("Ship-to Email", Customer."E-Mail");
+        end;
+    end;
+
+    procedure SetDropShipment()
+    var
+        ShipToAdress: record "Ship-to Address";
+        Customer: record customer;
+    begin
+        if "Drop-Shipment" then begin
+            Customer.get(rec."End Customer");
+            Clear("Ship-To-Code");
+            SetShipToAddressOnSalesOrder(Customer);
+        end else begin
+            Customer.Get(rec.Reseller);
+            Clear("Ship-To-Code");
+            SetShipToAddressOnSalesOrder(Customer);
+        end;
+    end;
 
 }

@@ -65,9 +65,13 @@ xmlport 50001 "Price File Export CSV"
                     LinkTable = Item;
                     LinkFields = "No." = field ("No."), "Table ID" = const (27);
 
+                    fieldelement(DefaultDimCode; DefaultDimension."Dimension Code")
+                    {
+
+                    }
                     fieldelement(DefaultDimCode; DefaultDimension."Dimension Value Code")
                     {
-                        //name skal med ud i stedet for code
+
                     }
                 }
                 trigger OnAfterGetRecord()

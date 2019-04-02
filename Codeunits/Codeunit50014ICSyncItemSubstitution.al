@@ -4,7 +4,7 @@ codeunit 50014 "IC Sync Item Substitution"
 
     trigger OnRun()
     begin
-        if not rec.Insert(true) then
-            rec.Modify(true);
+        if not rec.Insert(false) then
+            rec.Modify(false);
     end;
 }

@@ -4,7 +4,7 @@ codeunit 50008 "IC Sync Item Discount Group"
 
     trigger OnRun()
     begin
-        if not rec.Insert(true) then
-            rec.Modify(true);
+        if not rec.Insert(false) then
+            rec.Modify(false);
     end;
 }

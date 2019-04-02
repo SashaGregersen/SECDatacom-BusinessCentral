@@ -48,6 +48,25 @@ codeunit 50005 "IC Sync Management"
             until CompanyRec.Next() = 0;
     end;
 
+    local procedure GetCompaniesToDeleteItem(var CompanyTemp: Record Company temporary)
+    var
+        CompanyRec: Record Company;
+        InventorySetup: Record "Inventory Setup";
+
+    begin
+        CompanyRec.SetFilter(Name, '<>%1', CompanyName());
+        if CompanyRec.FindSet() then
+            repeat
+                InventorySetup.ChangeCompany(CompanyRec.Name);
+                if InventorySetup.Get() then begin
+                    if InventorySetup."Receive Synchronized Items" then begin
+                        CompanyTemp := CompanyRec;
+                        if not CompanyTemp.Insert(false) then;
+                    end;
+                end;
+            until CompanyRec.Next() = 0;
+    end;
+
     procedure CopyPurchasePricesToOtherCompanies(ItemNo: code[20])
     //Add the specific sales prices from parent company as specific purchase prices in the child company
 
@@ -178,6 +197,109 @@ codeunit 50005 "IC Sync Management"
             until CompanyTemp.Next() = 0;
     end;
 
+    procedure InsertModifyItemTranslationInOtherCompanies(ItemTrans: Record "Item Translation")
+
+    var
+        CompanyTemp: Record Company temporary;
+        SessionID: Integer;
+    begin
+        GetCompaniesToSyncTo(CompanyTemp);
+        if CompanyTemp.Count() = 0 then
+            exit;
+        if CompanyTemp.FindSet() then
+            repeat
+                SessionID := RunInsertModifyItemTransInOtherCompany(ItemTrans, CompanyTemp.Name);
+                CheckSessionForTimeoutAndError(SessionID, 5, CompanyTemp.Name);
+            until CompanyTemp.Next() = 0;
+    end;
+
+    procedure InsertModifyExtendedTextHeaderInOtherCompanies(ExtendedTextHeader: Record "Extended Text Header")
+
+    var
+        CompanyTemp: Record Company temporary;
+        SessionID: Integer;
+    begin
+        GetCompaniesToSyncTo(CompanyTemp);
+        if CompanyTemp.Count() = 0 then
+            exit;
+        if CompanyTemp.FindSet() then
+            repeat
+                SessionID := RunInsertModifyExtendedTextHeaderInOtherCompany(ExtendedTextHeader, CompanyTemp.Name);
+                CheckSessionForTimeoutAndError(SessionID, 5, CompanyTemp.Name);
+            until CompanyTemp.Next() = 0;
+    end;
+
+    procedure InsertModifyExtendedTextLineInOtherCompanies(ExtendedTextLine: Record "Extended Text Line")
+
+    var
+        CompanyTemp: Record Company temporary;
+        SessionID: Integer;
+    begin
+        GetCompaniesToSyncTo(CompanyTemp);
+        if CompanyTemp.Count() = 0 then
+            exit;
+        if CompanyTemp.FindSet() then
+            repeat
+                SessionID := RunInsertModifyExtendedTextLineInOtherCompany(ExtendedTextLine, CompanyTemp.Name);
+                CheckSessionForTimeoutAndError(SessionID, 5, CompanyTemp.Name);
+            until CompanyTemp.Next() = 0;
+    end;
+
+    procedure DeleteItemInOtherCompanies(Item: Record "Item")
+
+    var
+        CompanyTemp: Record Company temporary;
+        SessionID: Integer;
+    begin
+        GetCompaniesToDeleteItem(CompanyTemp);
+        if CompanyTemp.Count() = 0 then
+            exit;
+        if CompanyTemp.FindSet() then
+            repeat
+                SessionID := RunDeleteItemInOtherCompany(Item, CompanyTemp.Name);
+                CheckSessionForTimeoutAndError(SessionID, 5, CompanyTemp.Name);
+            until CompanyTemp.Next() = 0;
+    end;
+
+    procedure InsertModifyShipToAddressInOtherCompanies(ShipToAddress: Record "Ship-to Address")
+
+    var
+        CompanyTemp: Record Company temporary;
+        SessionID: Integer;
+    begin
+        GetCompaniesToSyncTo(CompanyTemp);
+        if CompanyTemp.Count() = 0 then
+            exit;
+        if CompanyTemp.FindSet() then
+            repeat
+                SessionID := RunInsertModifyShipToAddressInOtherCompany(ShipToAddress, CompanyTemp.Name);
+                CheckSessionForTimeoutAndError(SessionID, 5, CompanyTemp.Name);
+            until CompanyTemp.Next() = 0;
+    end;
+
+    procedure PostPurchaseOrderInOtherCompany(PurchaseOrder: Record "Purchase Header"; PostInCompanyName: Text[35])
+
+    var
+        SessionID: Integer;
+    begin
+        if PostInCompanyName = '' then
+            exit;
+        SessionID := RunPostPurchaseOrderInOtherCompany(PurchaseOrder, PostInCompanyName);
+        CheckSessionForTimeoutAndError(SessionID, 5, PostInCompanyName);
+    end;
+
+    procedure PostSalesOrderInOtherCompany(SalesOrder: Record "Sales Header"; PostInCompanyName: Text[35])
+
+    var
+        SessionID: Integer;
+    begin
+        if PostInCompanyName = '' then
+            exit;
+        SessionID := RunPostSalesOrderInOtherCompany(SalesOrder, PostInCompanyName);
+        CheckSessionForTimeoutAndError(SessionID, 180, PostInCompanyName);
+    end;
+
+
     local procedure CheckSessionForTimeoutAndError(SessionID: Integer; SessionTimerSeconds: Integer; RunningInCompany: Text)
     //needs to be refactored so the error message is returned to the calling procedure - then the calling procedure can take corrective measures before making the error
     var
@@ -242,6 +364,83 @@ codeunit 50005 "IC Sync Management"
         SessionEventComment: Text;
     begin
         OK := StartSession(SessionID, 50015, RunInCompany, DefaultDim);
+        if not OK then
+            Error(GetLastErrorText());
+        Commit();
+    end;
+
+    local procedure RunInsertModifyItemTransInOtherCompany(ItemTrans: record "Item Translation"; RunInCompany: Text) SessionID: Integer
+    var
+        OK: Boolean;
+        SessionEventComment: Text;
+    begin
+        OK := StartSession(SessionID, 50016, RunInCompany, ItemTrans);
+        if not OK then
+            Error(GetLastErrorText());
+        Commit();
+    end;
+
+    local procedure RunInsertModifyExtendedTextHeaderInOtherCompany(ExtendedTxtHeader: record "Extended Text Header"; RunInCompany: Text) SessionID: Integer
+    var
+        OK: Boolean;
+        SessionEventComment: Text;
+    begin
+        OK := StartSession(SessionID, 50017, RunInCompany, ExtendedTxtHeader);
+        if not OK then
+            Error(GetLastErrorText());
+        Commit();
+    end;
+
+    local procedure RunInsertModifyExtendedTextLineInOtherCompany(ExtendedTxtLine: record "Extended Text Line"; RunInCompany: Text) SessionID: Integer
+    var
+        OK: Boolean;
+        SessionEventComment: Text;
+    begin
+        OK := StartSession(SessionID, 50018, RunInCompany, ExtendedTxtLine);
+        if not OK then
+            Error(GetLastErrorText());
+        Commit();
+    end;
+
+    local procedure RunDeleteItemInOtherCompany(Item: record "Item"; RunInCompany: Text) SessionID: Integer
+    var
+        OK: Boolean;
+        SessionEventComment: Text;
+    begin
+        OK := StartSession(SessionID, 50019, RunInCompany, Item);
+        if not OK then
+            Error(GetLastErrorText());
+        Commit();
+    end;
+
+    local procedure RunInsertModifyShipToAddressInOtherCompany(ShipToAddress: record "Ship-to Address"; RunInCompany: Text) SessionID: Integer
+    var
+        OK: Boolean;
+        SessionEventComment: Text;
+    begin
+        OK := StartSession(SessionID, 50023, RunInCompany, ShipToAddress);
+        if not OK then
+            Error(GetLastErrorText());
+        Commit();
+    end;
+
+    local procedure RunPostPurchaseOrderInOtherCompany(Purchaseorder: Record "Purchase Header"; RunInCompany: Text) SessionID: Integer
+    var
+        OK: Boolean;
+        SessionEventComment: Text;
+    begin
+        OK := StartSession(SessionID, Codeunit::"Post Purchase Order IC", RunInCompany, Purchaseorder);
+        if not OK then
+            Error(GetLastErrorText());
+        Commit();
+    end;
+
+    local procedure RunPostSalesOrderInOtherCompany(SalesOrder: Record "Sales Header"; RunInCompany: Text) SessionID: Integer
+    var
+        OK: Boolean;
+        SessionEventComment: Text;
+    begin
+        OK := StartSession(SessionID, Codeunit::"Post Sales Order IC", RunInCompany, SalesOrder);
         if not OK then
             Error(GetLastErrorText());
         Commit();

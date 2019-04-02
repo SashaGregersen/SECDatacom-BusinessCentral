@@ -31,7 +31,7 @@ pageextension 50035 "Synchronize Customer" extends "Sales & Receivables Setup"
                 ApplicationArea = all;
             }
 
-            field("Project Item Template"; "Stock Item Template")
+            field("Project Item Template"; "Project Item Template")
             {
                 ApplicationArea = all;
             }
@@ -50,6 +50,18 @@ pageextension 50035 "Synchronize Customer" extends "Sales & Receivables Setup"
 
     actions
     {
+        addafter("Customer Disc. Groups")
+        {
+            action("BNP Reporting Currencies")
+            {
+                trigger OnAction()
+                var
+                    BNPReporting: Page "BNP Reporting Currency";
+                begin
+                    BNPReporting.run;
+                end;
+            }
+        }
 
     }
 

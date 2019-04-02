@@ -11,54 +11,26 @@ pageextension 50017 "Expense Management Role Center" extends "Expense Management
         {
             action("Send Status Email to Approvers")
             {
-                trigger OnAction()
-                var
-                    SendExpenseStatusReport: Codeunit 6086353;
-                begin
-                    SendExpenseStatusReport.SendExpenseStatusReport();
-                end;
+                RunObject = codeunit "Send Expense Status Report";
             }
 
         }
+
 
         addafter("Send Status Email to Approvers")
         {
-            action("Send Reminder E-mail to Expense Users")
-            {
-                trigger OnAction()
-                var
-                    SendReminder: Codeunit 6086314;
-                begin
-                    SendReminder.Run();
-                end;
-            }
-        }
-
-        addafter("Send Reminder E-mail to Expense Users")
-        {
             action("Expense Approval E-mail")
             {
-                trigger OnAction()
-                var
-                    ExpenseApproval: Codeunit 6086313;
-                begin
-                    ExpenseApproval.Run();
-                end;
+                RunObject = codeunit "Expense Approval E-Mail";
             }
         }
 
         addafter("Expense Approval E-mail")
         {
-            action("")
+            action("Synchronize with Continia Online")
             {
-                trigger OnAction()
-                var
-                    ExpenseOnlineMgt: Codeunit 6086305;
-                begin
-                    ExpenseOnlineMgt.Run();
-                end;
+                RunObject = codeunit "EM Online Mgt.";
             }
         }
     }
-
 }
