@@ -261,6 +261,22 @@ codeunit 50005 "IC Sync Management"
             until CompanyTemp.Next() = 0;
     end;
 
+    procedure InsertModifyShipToAddressInOtherCompanies(ShipToAddress: Record "Ship-to Address")
+
+    var
+        CompanyTemp: Record Company temporary;
+        SessionID: Integer;
+    begin
+        GetCompaniesToSyncTo(CompanyTemp);
+        if CompanyTemp.Count() = 0 then
+            exit;
+        if CompanyTemp.FindSet() then
+            repeat
+                SessionID := RunInsertModifyShipToAddressInOtherCompany(ShipToAddress, CompanyTemp.Name);
+                CheckSessionForTimeoutAndError(SessionID, 5, CompanyTemp.Name);
+            until CompanyTemp.Next() = 0;
+    end;
+
     procedure PostPurchaseOrderInOtherCompany(PurchaseOrder: Record "Purchase Header"; PostInCompanyName: Text[35])
 
     var
@@ -392,6 +408,17 @@ codeunit 50005 "IC Sync Management"
         SessionEventComment: Text;
     begin
         OK := StartSession(SessionID, 50019, RunInCompany, Item);
+        if not OK then
+            Error(GetLastErrorText());
+        Commit();
+    end;
+
+    local procedure RunInsertModifyShipToAddressInOtherCompany(ShipToAddress: record "Ship-to Address"; RunInCompany: Text) SessionID: Integer
+    var
+        OK: Boolean;
+        SessionEventComment: Text;
+    begin
+        OK := StartSession(SessionID, 50023, RunInCompany, ShipToAddress);
         if not OK then
             Error(GetLastErrorText());
         Commit();

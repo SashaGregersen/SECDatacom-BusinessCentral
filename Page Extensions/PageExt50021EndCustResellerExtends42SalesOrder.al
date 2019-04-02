@@ -25,6 +25,21 @@ pageextension 50021 "End Customer and Reseller" extends 42
                 ApplicationArea = all;
                 Editable = false;
             }
+            field("End Customer Contact"; "End Customer Contact")
+            {
+                ApplicationArea = all;
+                Importance = Additional;
+            }
+            field("End Customer Phone No."; "End Customer Phone No.")
+            {
+                ApplicationArea = all;
+                Importance = Additional;
+            }
+            field("End Customer Email"; "End Customer Email")
+            {
+                ApplicationArea = all;
+                Importance = Additional;
+            }
         }
         addafter("reseller")
         {

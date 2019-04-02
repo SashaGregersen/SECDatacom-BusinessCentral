@@ -146,4 +146,28 @@ codeunit 50052 "Customer Event Handler"
         SyncMasterData.CheckPostCode(Rec, PostCode);
     end;
 
+    [EventSubscriber(ObjectType::table, database::"Ship-to Address", 'OnAfterinsertEvent', '', true, true)]
+    local procedure ItemSubstituionOnAfterInsertEvent(var Rec: Record "Ship-to Address"; runtrigger: Boolean)
+    var
+        SyncMasterData: Codeunit "Synchronize Master Data";
+    begin
+        if not runtrigger then
+            exit;
+        if rec.IsTemporary() then
+            exit;
+        SyncMasterData.SynchronizeShipToAddressToCompany(Rec);
+    end;
+
+    [EventSubscriber(ObjectType::table, database::"Ship-to Address", 'OnAfterModifyEvent', '', true, true)]
+    local procedure ItemSubstitutionOnAfterModifyEvent(var Rec: Record "Ship-to Address"; runtrigger: Boolean)
+    var
+        SyncMasterData: Codeunit "Synchronize Master Data";
+    begin
+        if not runtrigger then
+            exit;
+        if rec.IsTemporary() then
+            exit;
+        SyncMasterData.SynchronizeShipToAddressToCompany(Rec);
+    end;
+
 }

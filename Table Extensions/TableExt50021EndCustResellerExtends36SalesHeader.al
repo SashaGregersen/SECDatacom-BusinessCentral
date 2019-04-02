@@ -241,7 +241,43 @@ tableextension 50021 "End Customer and Reseller" extends 36
         {
             DataClassification = ToBeClassified;
         }
-        field(50015; "Ship-to Email"; Text[30])
+        field(50015; "Ship-to Email"; Text[80])
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(50016; "End Customer Contact"; Text[50])
+        {
+            DataClassification = ToBeClassified;
+            trigger OnValidate();
+            var
+                Contact: record Contact;
+            begin
+                If not Contact.get("End Customer Contact") then
+                    error('Not a contact')
+                else
+                    rec.validate("End Customer Contact", Contact.Name);
+
+            end;
+
+            trigger Onlookup();
+            var
+                Contact: record Contact;
+            begin
+                if not Contact.Get("End Customer Contact") then
+                    Clear("End Customer Contact");
+                Contact.SetRange("Company No.", Contact."Company No.");
+                IF page.RunModal(page::"Contact List", Contact, Contact."No.") = Action::LookupOK then begin
+                    Validate("End Customer Contact", Contact.Name);
+                    validate("End Customer Phone No.", Contact."Phone No.");
+                    Validate("End Customer Email", Contact."E-Mail");
+                end;
+            end;
+        }
+        field(50017; "End Customer Phone No."; Text[30])
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(50018; "End Customer Email"; Text[80])
         {
             DataClassification = ToBeClassified;
         }
