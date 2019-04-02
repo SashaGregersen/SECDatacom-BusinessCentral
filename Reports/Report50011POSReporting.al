@@ -303,6 +303,7 @@ report 50011 "POS Reporting"
             begin
                 GlSetup.get();
                 Sales_Invoice_Line.SetRange(type, Sales_Invoice_Line.type::Item);
+                "Sales Invoice Header".Setfilter("No.", '%1|%2', '103075', '103057');
             end;
 
             trigger OnAfterGetRecord()
@@ -326,6 +327,19 @@ report 50011 "POS Reporting"
         {
 
         } */
+    }
+    requestpage
+    {
+        layout
+        {
+            area(Content)
+            {
+                group(GroupName)
+                {
+
+                }
+            }
+        }
     }
 
     procedure SetEndCustReseller()
@@ -363,7 +377,15 @@ report 50011 "POS Reporting"
         end;
     end;
 
+    procedure SetRequestFilter(RequestFilter: text[100])
     var
+    begin
+        NewRequestFilter := RequestFilter;
+    end;
+
+    var
+        NewRequestFilter: Text[100];
+        SalesHeader: record "Sales Header";
         BidUnitPurchasePrice: Decimal;
         Currency: code[10];
         ShipmentNo: code[20];

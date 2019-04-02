@@ -12,6 +12,8 @@ codeunit 50020 "POS Report Export"
         // Close TempFile so that the SAVEASEXCEL function can write to it.  
         TempFile.CLOSE;
 
+        RequestFilter := REPORT.RunRequestPage(50011);
+        POSReport.SetRequestFilter(RequestFilter);
         REPORT.SAVEASEXCEL(50011, Name);
 
         TempFile.OPEN(Name);
@@ -191,5 +193,6 @@ codeunit 50020 "POS Report Export"
         ToFile: text;
         ReturnValue: Boolean;
         POSReport: Report "POS Reporting";
+        RequestFilter: text[100];
 
 }
