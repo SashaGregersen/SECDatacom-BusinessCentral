@@ -268,9 +268,21 @@ codeunit 50005 "IC Sync Management"
     begin
         if PostInCompanyName = '' then
             exit;
-        SessionID := RunPostPurchaseOrderInOtherCompanyy(PurchaseOrder, PostInCompanyName);
-        CheckSessionForTimeoutAndError(SessionID, 120, PostInCompanyName);
+        SessionID := RunPostPurchaseOrderInOtherCompany(PurchaseOrder, PostInCompanyName);
+        CheckSessionForTimeoutAndError(SessionID, 50, PostInCompanyName);
     end;
+
+    procedure PostSalesOrderInOtherCompany(SalesOrder: Record "Sales Header"; PostInCompanyName: Text[35])
+
+    var
+        SessionID: Integer;
+    begin
+        if PostInCompanyName = '' then
+            exit;
+        SessionID := RunPostSalesOrderInOtherCompany(SalesOrder, PostInCompanyName);
+        CheckSessionForTimeoutAndError(SessionID, 5, PostInCompanyName);
+    end;
+
 
     local procedure CheckSessionForTimeoutAndError(SessionID: Integer; SessionTimerSeconds: Integer; RunningInCompany: Text)
     //needs to be refactored so the error message is returned to the calling procedure - then the calling procedure can take corrective measures before making the error
@@ -385,12 +397,23 @@ codeunit 50005 "IC Sync Management"
         Commit();
     end;
 
-    local procedure RunPostPurchaseOrderInOtherCompanyy(Purchaseorder: Record "Purchase Header"; RunInCompany: Text) SessionID: Integer
+    local procedure RunPostPurchaseOrderInOtherCompany(Purchaseorder: Record "Purchase Header"; RunInCompany: Text) SessionID: Integer
     var
         OK: Boolean;
         SessionEventComment: Text;
     begin
         OK := StartSession(SessionID, Codeunit::"Post Purchase Order IC", RunInCompany, Purchaseorder);
+        if not OK then
+            Error(GetLastErrorText());
+        Commit();
+    end;
+
+    local procedure RunPostSalesOrderInOtherCompany(SalesOrder: Record "Sales Header"; RunInCompany: Text) SessionID: Integer
+    var
+        OK: Boolean;
+        SessionEventComment: Text;
+    begin
+        //OK := StartSession(SessionID, Codeunit::"Post Purchase Order IC", RunInCompany, Purchaseorder);
         if not OK then
             Error(GetLastErrorText());
         Commit();

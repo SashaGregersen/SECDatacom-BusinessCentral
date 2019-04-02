@@ -51,8 +51,15 @@ codeunit 50057 "IC Event Handler"
         end;
         if SalesHeaderOtherCompany."Reseller Name" <> '' then
             LocalSalesHeader.Validate("Reseller Name", SalesHeaderOtherCompany."Reseller Name");
-        LocalSalesHeader.Validate("Ship directly from supplier", SalesHeaderOtherCompany."Ship directly from supplier");
-        LocalSalesHeader.Validate("Drop-shipment", SalesHeaderOtherCompany."Drop-Shipment");
+        LocalSalesHeader."Ship directly from supplier" := SalesHeaderOtherCompany."Ship directly from supplier";
+        LocalSalesHeader."Drop-shipment" := SalesHeaderOtherCompany."Drop-Shipment";
+        LocalSalesHeader.SetShipToAddress(SalesHeaderOtherCompany."Ship-to Name", SalesHeaderOtherCompany."Ship-to Name 2",
+        SalesHeaderOtherCompany."Ship-to Address", SalesHeaderOtherCompany."Ship-to Address 2", SalesHeaderOtherCompany."Ship-to City",
+        SalesHeaderOtherCompany."Ship-to Post Code", SalesHeaderOtherCompany."Ship-to County", SalesHeaderOtherCompany."Ship-to Country/Region Code");
+        LocalSalesHeader."Ship-To-Code" := SalesHeaderOtherCompany."Ship-To-Code";
+        LocalSalesHeader."Ship-to Contact" := SalesHeaderOtherCompany."Ship-to Contact";
+        LocalSalesHeader."Ship-to Phone No." := SalesHeaderOtherCompany."Ship-to Phone No.";
+        LocalSalesHeader."Ship-to Email" := SalesHeaderOtherCompany."Ship-to Email";
         LocalSalesHeader.Modify(false);
     end;
 
@@ -155,6 +162,24 @@ codeunit 50057 "IC Event Handler"
             until SalesShptLine.Next() = 0;
     end;
 
+    local procedure UpdateShipmentsOnSalesOrderInOtherCompany(SalesShptHdrNo: Code[20]; OtherCompanyName: text[35])
+    var
+        SalesShptHeader: Record "Sales Shipment Header";
+        SalesShptLine: Record "Sales Shipment Line";
+        SOLineInOtherCompany: Record "sales Line";
+    begin
+        if not SalesShptHeader.Get(SalesShptHdrNo) then
+            exit;
+        SalesShptLine.SetRange("Document No.", SalesShptHeader."No.");
+        SOLineInOtherCompany.ChangeCompany(OtherCompanyName);
+        if SalesShptLine.FindSet() then
+            repeat
+                if SOLineInOtherCompany.Get(SOLineInOtherCompany."Document Type"::Order, SalesShptLine."IC SO No.", SalesShptLine."IC SO Line No.") then begin
+                    SOLineInOtherCompany."Qty. to Ship" := SalesShptLine.Quantity;
+                end;
+            until SalesShptLine.Next() = 0;
+    end;
+
     local procedure UpdateInvoiceOnPurchaseOrderInOtherCompany(SalesInvHdrNo: Code[20]; OtherCompanyName: text[35])
     var
         SalesInvHeader: Record "Sales Invoice Header";
@@ -175,6 +200,24 @@ codeunit 50057 "IC Event Handler"
                         POInOtherCompany."Vendor Invoice No." := SalesInvHdrNo;
                         POInOtherCompany.Modify(false);
                     end;
+                end;
+            until SalesInvLine.Next() = 0;
+    end;
+
+    local procedure UpdateInvoiceOnSalesOrderInOtherCompany(SalesInvHdrNo: Code[20]; OtherCompanyName: text[35])
+    var
+        SalesInvHeader: Record "Sales Invoice Header";
+        SalesInvLine: Record "Sales Invoice Line";
+        SOLineInOtherCompany: Record "sales Line";
+    begin
+        if not SalesInvHeader.Get(SalesInvHdrNo) then
+            exit;
+        SalesInvLine.SetRange("Document No.", SalesInvHeader."No.");
+        SOLineInOtherCompany.ChangeCompany(OtherCompanyName);
+        if SalesInvLine.FindSet() then
+            repeat
+                if SOLineInOtherCompany.Get(SOLineInOtherCompany."Document Type"::Order, SalesInvLine."IC SO No.", SalesInvLine."IC SO Line No.") then begin
+                    SOLineInOtherCompany."Qty. to Invoice" := SalesInvLine.Quantity;
                 end;
             until SalesInvLine.Next() = 0;
     end;
@@ -208,14 +251,44 @@ codeunit 50057 "IC Event Handler"
             until SalesinvLine.Next() = 0;
             exit;
         end;
+    end;
 
+    local procedure AddICSalesOrderToTempList(HeaderNo: Code[20]; OtherCompanyName: text[35]; var TempSOList: Record "Sales Header" temporary)
+    var
+        SalesShptLine: Record "Sales Shipment Line";
+        SalesInvLine: Record "Sales Invoice Line";
+        SalesCrMemoLine: Record "Sales Cr.Memo Line";
+        SalesOrderInOtherCompany: Record "Sales Header";
+    begin
+        SalesshptLine.SetRange("Document No.", HeaderNo);
+        if SalesshptLine.FindSet() then begin
+            repeat
+                SalesOrderInOtherCompany.ChangeCompany(OtherCompanyName);
+                if SalesOrderInOtherCompany.get(SalesOrderInOtherCompany."Document Type"::Order, SalesshptLine."IC SO No.") then begin
+                    TempSOList := SalesOrderInOtherCompany;
+                    if not TempSOList.Insert(false) then;
+                end;
+            until SalesshptLine.Next() = 0;
+            exit;
+        end;
+        SalesinvLine.SetRange("Document No.", HeaderNo);
+        if SalesinvLine.FindSet() then begin
+            repeat
+                SalesOrderInOtherCompany.ChangeCompany(OtherCompanyName);
+                if SalesOrderInOtherCompany.get(SalesOrderInOtherCompany."Document Type"::Order, SalesInvLine."IC SO No.") then begin
+                    TempSOList := SalesOrderInOtherCompany;
+                    if not TempSOList.Insert(false) then;
+                end;
+            until SalesinvLine.Next() = 0;
+            exit;
+        end;
         SalescrmemoLine.SetRange("Document No.", HeaderNo);
         if SalescrmemoLine.FindSet() then begin
             repeat
-                PurchOrderInOtherCompany.ChangeCompany(OtherCompanyName);
-                if PurchOrderInOtherCompany.get(PurchOrderInOtherCompany."Document Type"::Order, SalescrmemoLine."IC PO No.") then begin
-                    TempPOList := PurchOrderInOtherCompany;
-                    if not TempPOList.Insert(false) then;
+                SalesOrderInOtherCompany.ChangeCompany(OtherCompanyName);
+                if SalesOrderInOtherCompany.get(SalesOrderInOtherCompany."Document Type"::Order, SalescrmemoLine."IC SO No.") then begin
+                    TempSOList := SalesOrderInOtherCompany;
+                    if not TempSOList.Insert(false) then;
                 end;
             until SalescrmemoLine.Next() = 0;
             exit;
@@ -228,16 +301,22 @@ codeunit 50057 "IC Event Handler"
         ICpartner: Record "IC Partner";
         ICSyncMgt: Codeunit "IC Sync Management";
         TempICPurchOrder: Record "Purchase Header" temporary;
+        TempICSalesOrder: Record "Sales Header" temporary;
         ICPurchOrder: Record "Purchase Header";
+        ICSalesOrder: Record "Sales Header";
     begin
         if SalesHeader.Subsidiary <> '' then begin
             GetICPartner(ICpartner, SalesHeader.Subsidiary);
             UpdateReceiptsOnPurchaseOrderInOtherCompany(SalesShptHdrNo, ICpartner."Inbox Details");
             AddICPurchaseOrderToTempList(SalesShptHdrNo, ICpartner."Inbox Details", TempICPurchOrder);
+            UpdateShipmentsOnSalesOrderInOtherCompany(SalesShptHdrNo, ICpartner."Inbox Details");
+            AddICSalesOrderToTempList(SalesShptHdrNo, ICpartner."Inbox Details", TempICSalesOrder);
             //Add support for return orders
             if SalesInvHdrNo <> '' then begin
                 UpdateInvoiceOnPurchaseOrderInOtherCompany(SalesInvHdrNo, ICpartner."Inbox Details");
                 AddICPurchaseOrderToTempList(SalesInvHdrNo, ICpartner."Inbox Details", TempICPurchOrder);
+                UpdateInvoiceOnSalesOrderInOtherCompany(SalesInvHdrNo, ICpartner."Inbox Details");
+                AddICSalesOrderToTempList(SalesInvHdrNo, ICpartner."Inbox Details", TempICSalesOrder);
             end;
             if SalesCrMemoHdrNo <> '' then begin
                 UpdateInvoiceOnPurchaseOrderInOtherCompany(SalesCrMemoHdrNo, ICpartner."Inbox Details"); //remember to create the credit memo function  and update the case
@@ -247,6 +326,11 @@ codeunit 50057 "IC Event Handler"
                 repeat
                     ICPurchOrder := TempICPurchOrder;
                     ICSyncMgt.PostPurchaseOrderInOtherCompany(ICPurchOrder, ICpartner."Inbox Details");
+                until TempICPurchOrder.Next() = 0;
+            if TempICSalesOrder.FindSet() then
+                repeat
+                    ICSalesOrder := TempICSalesOrder;
+                    ICSyncMgt.PostSalesOrderInOtherCompany(ICSalesOrder, ICpartner."Inbox Details");
                 until TempICPurchOrder.Next() = 0;
         end;
     end;
