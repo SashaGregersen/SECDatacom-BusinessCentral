@@ -206,4 +206,16 @@ codeunit 50051 "Price Event Handler"
             until ToPurchaseLineDiscount.Next() = 0;
     end;
 
+    [EventSubscriber(ObjectType::Table, Database::"Sales Price Worksheet", 'OnAfterValidateEvent', 'Item No.', true, true)]
+    local procedure SalesPriceWorksheetOnAfterValidateItemNo(var Rec: Record "Sales Price Worksheet")
+    var
+        Item: Record Item;
+    begin
+        if Rec."Item No." = '' then exit;
+        if Item.Get(Rec."Item No.") then begin
+            Rec.Validate("Vendor Item No.", Item."Vendor Item No.");
+            Rec.Validate("Unit of Measure Code", Item."Sales Unit of Measure");
+        end;
+    end;
+
 }
