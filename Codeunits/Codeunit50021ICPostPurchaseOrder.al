@@ -16,9 +16,9 @@ codeunit 50021 "Post Purchase Order IC"
                 PurchLine.validate("Qty. to Receive", QtyToReceive);
                 if QtyToReceive <> 0 then
                     DoReceive := true;
-                PurchLine.validate("Qty. to Invoice", QtyToReceive);
-                if QtyToReceive <> 0 then
-                    DoReceive := true;
+                PurchLine.validate("Qty. to Invoice", QtyToInvoice);
+                if QtyToInvoice <> 0 then
+                    DoInvoice := true;
                 PurchLine.Modify(true);
             until PurchLine.Next() = 0;
         If PurchHeader.Status = PurchHeader.Status::Open then
