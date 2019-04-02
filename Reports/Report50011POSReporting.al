@@ -118,7 +118,8 @@ report 50011 "POS Reporting"
 
             dataitem(Sales_Invoice_Line; "Sales Invoice Line")
             {
-                DataItemLink = "Document No." = field ("No.");
+                DataItemLink = "Sell-To Customer No." = field ("Sell-to Customer No.");
+                RequestFilterFields = "IC Partner Code", "Shortcut Dimension 1 Code";
 
                 column(VAR_id; VARIDInt)
                 {
@@ -252,6 +253,14 @@ report 50011 "POS Reporting"
                     end;
 
                 }
+                trigger OnPreDataItem()
+                var
+
+                begin
+                    Sales_Invoice_Line.SetRange(type, Sales_Invoice_Line.type::Item);
+                    Sales_Invoice_Line.SetRange("Document No.", "Sales Invoice Header"."No.");
+                end;
+
                 trigger OnAfterGetRecord()
                 var
                     BidItemPrices: record "Bid Item Price";
@@ -303,7 +312,6 @@ report 50011 "POS Reporting"
             begin
                 GlSetup.get();
                 Sales_Invoice_Line.SetRange(type, Sales_Invoice_Line.type::Item);
-                "Sales Invoice Header".Setfilter("No.", '%1|%2', '103075', '103057');
             end;
 
             trigger OnAfterGetRecord()
@@ -377,14 +385,7 @@ report 50011 "POS Reporting"
         end;
     end;
 
-    procedure SetRequestFilter(RequestFilter: text[100])
     var
-    begin
-        NewRequestFilter := RequestFilter;
-    end;
-
-    var
-        NewRequestFilter: Text[100];
         SalesHeader: record "Sales Header";
         BidUnitPurchasePrice: Decimal;
         Currency: code[10];
