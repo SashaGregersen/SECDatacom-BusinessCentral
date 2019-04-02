@@ -12,6 +12,4 @@ tableextension 50014 "Vendor Item No." extends "Sales Price Worksheet"
             TableRelation = Vendor;
         }
     }
-
-
 }
