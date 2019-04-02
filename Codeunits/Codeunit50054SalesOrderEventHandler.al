@@ -396,9 +396,9 @@ codeunit 50054 "Sales Order Event Handler"
     begin
         if rec."Document Type" = rec."Document Type"::Order then
             if rec.Status = rec.Status::Released then begin
-                rec.TestField("Sell-to Contact");
-                rec.TestField("OIOUBL-Sell-to Contact E-Mail");
-                rec.TestField("OIOUBL-Sell-to Contact Phone No.");
+                rec.TestField("Ship-to Contact");
+                rec.TestField("Ship-to Phone No.");
+                rec.TestField("Ship-to Email");
             end;
     end;
 
@@ -414,9 +414,9 @@ codeunit 50054 "Sales Order Event Handler"
             exit;
 
         if SalesHeader.Status = SalesHeader.Status::Released then begin
-            SalesHeader.TestField("Sell-to Contact");
-            SalesHeader.TestField("OIOUBL-Sell-to Contact E-Mail");
-            SalesHeader.TestField("OIOUBL-Sell-to Contact Phone No.");
+            SalesHeader.TestField("Ship-to Contact");
+            SalesHeader.TestField("Ship-to Phone No.");
+            SalesHeader.TestField("Ship-to Email");
         end;
 
         SalesReceiveSetup.Get();

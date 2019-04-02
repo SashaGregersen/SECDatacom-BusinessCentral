@@ -344,16 +344,6 @@ codeunit 50003 "File Management Import"
                                         GlobalLineCounter := GlobalLineCounter + 1;
                                     until SalesLine.next = 0;
                             end else begin
-                                Clear(PurchasePrice);
-
-                                Clear(BidPrice);
-                                if not BidMgt.GetBestBidPrice(SalesLine."Bid No.", SalesLine."Sell-to Customer No.", SalesLine."No.", CurrencyCode, BidPrice) then
-                                    Clear(PurchasePrice)
-                                else begin
-                                    BidMgt.MakePurchasePriceFromBidPrice(BidPrice, PurchasePrice);
-                                    CurrencyCode := PurchasePrice."Currency Code";
-                                end;
-
                                 PurchOrder.get(PurchOrder."Document Type"::Order, TempCSVBuffer.Value);
                                 if PurchOrder."Buy-from Vendor No." = '' then begin
                                     PurchOrder.validate("Buy-from Vendor No.", VendorNo);
@@ -372,6 +362,15 @@ codeunit 50003 "File Management Import"
                                 SalesLine.SetRange(Type, SalesLine.Type::Item);
                                 if SalesLine.findset then begin
                                     repeat
+                                        Clear(PurchasePrice);
+                                        Clear(BidPrice);
+                                        if not BidMgt.GetBestBidPrice(SalesLine."Bid No.", SalesLine."Sell-to Customer No.", SalesLine."No.", CurrencyCode, BidPrice) then
+                                            Clear(PurchasePrice)
+                                        else begin
+                                            BidMgt.MakePurchasePriceFromBidPrice(BidPrice, PurchasePrice);
+                                            CurrencyCode := PurchasePrice."Currency Code";
+                                        end;
+
                                         SalesLine.CalcFields("Reserved Quantity");
                                         if SalesLine."Reserved Quantity" = 0 then begin
                                             PurchFromSales.CreatePurchLine(PurchOrder, SalesHeader, SalesLine, PurchasePrice."Direct Unit Cost", PurchLine);

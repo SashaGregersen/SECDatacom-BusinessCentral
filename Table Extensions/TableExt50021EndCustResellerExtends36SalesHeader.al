@@ -175,6 +175,8 @@ tableextension 50021 "End Customer and Reseller" extends 36
                         SetShipToAddress(ShipToAdress.Name, ShipToAdress."Name 2", ShipToAdress.Address, ShipToAdress."Address 2", ShipToAdress.City, ShipToAdress."Post Code", shiptoadress.County, shiptoadress."Country/Region Code");
                         rec.Validate("Ship-to Contact", ShipToAdress.Contact);
                         rec.validate("Ship-To-Code", ShipToAdress.Code);
+                        rec.validate("Ship-to Phone No.", ShipToAdress."Phone No.");
+                        rec.Validate("Ship-To Email", ShipToAdress."E-Mail");
                         rec.Modify(true);
                     end;
                 end else begin
@@ -185,6 +187,8 @@ tableextension 50021 "End Customer and Reseller" extends 36
                         SetShipToAddress(ShipToAdress.Name, ShipToAdress."Name 2", ShipToAdress.Address, ShipToAdress."Address 2", ShipToAdress.City, ShipToAdress."Post Code", shiptoadress.County, shiptoadress."Country/Region Code");
                         rec.Validate("Ship-to Contact", ShipToAdress.Contact);
                         rec.validate("Ship-To-Code", ShipToAdress.Code);
+                        rec.validate("Ship-to Phone No.", ShipToAdress."Phone No.");
+                        rec.Validate("Ship-To Email", ShipToAdress."E-Mail");
                         rec.Modify(true);
                     end;
                 end;
@@ -209,7 +213,6 @@ tableextension 50021 "End Customer and Reseller" extends 36
         {
             DataClassification = ToBeClassified;
         }
-
         field(50009; "Ship directly from supplier"; Boolean)
         {
             DataClassification = ToBeClassified;
@@ -234,6 +237,14 @@ tableextension 50021 "End Customer and Reseller" extends 36
             DataClassification = ToBeClassified;
             Editable = false;
         }
+        field(50014; "Ship-to Phone No."; Text[30])
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(50015; "Ship-to Email"; Text[30])
+        {
+            DataClassification = ToBeClassified;
+        }
 
     }
     procedure SetShipToAddressOnSalesOrder(Customer: record customer)
@@ -244,9 +255,13 @@ tableextension 50021 "End Customer and Reseller" extends 36
             SetShipToAddress(ShipToAdress.Name, ShipToAdress."Name 2", ShipToAdress.Address, ShipToAdress."Address 2", ShipToAdress.City, ShipToAdress."Post Code", shiptoadress.County, shiptoadress."Country/Region Code");
             rec.Validate("Ship-to Contact", ShipToAdress.Contact);
             rec.validate("Ship-To-Code", shiptoadress.Code);
+            rec.Validate("Ship-to Phone No.", ShipToAdress."Phone No.");
+            rec.Validate("Ship-To Email", ShipToAdress."E-Mail");
         end else begin
             SetShipToAddress(Customer.Name, customer."Name 2", customer.Address, Customer."Address 2", customer.City, Customer."Post Code", customer.County, customer."Country/Region Code");
             rec.Validate("Ship-to Contact", Customer.Contact);
+            rec.validate("Ship-to Phone No.", Customer."Phone No.");
+            rec.Validate("Ship-To Email", Customer."E-Mail");
         end;
     end;
 
@@ -259,11 +274,15 @@ tableextension 50021 "End Customer and Reseller" extends 36
             Clear("Ship-To-Code");
             SetShipToAddress(Customer.Name, Customer."Name 2", Customer.Address, Customer."Address 2", Customer.City, Customer."Post Code", Customer.County, Customer."Country/Region Code");
             rec.Validate("Ship-to Contact", Customer.Contact);
+            rec.validate("Ship-to Phone No.", Customer."Phone No.");
+            rec.Validate("Ship-to Email", Customer."E-Mail");
         end else begin
             Customer.Get(rec.Reseller);
             Clear("Ship-To-Code");
             SetShipToAddress(Customer.Name, customer."Name 2", customer.Address, Customer."Address 2", customer.City, Customer."Post Code", customer.County, customer."Country/Region Code");
             rec.Validate("Ship-to Contact", Customer.Contact);
+            rec.validate("Ship-to Phone No.", Customer."Phone No.");
+            rec.Validate("Ship-to Email", Customer."E-Mail");
         end;
     end;
 

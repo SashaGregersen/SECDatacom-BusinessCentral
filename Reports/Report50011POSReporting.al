@@ -118,7 +118,7 @@ report 50011 "POS Reporting"
 
             dataitem(Sales_Invoice_Line; "Sales Invoice Line")
             {
-                DataItemLink = "Sell-To Customer No." = field ("Sell-to Customer No.");
+                DataItemLink = "Document No." = field ("No.");
                 RequestFilterFields = "IC Partner Code", "Shortcut Dimension 1 Code";
 
                 column(VAR_id; VARIDInt)
@@ -210,7 +210,7 @@ report 50011 "POS Reporting"
                         ValueEntry: record "Value Entry";
                         ItemLedgEntry: record "Item Ledger Entry";
                     begin
-                        TempItemLedgEntrySales.DeleteAll();
+                        clear(TempItemLedgEntrySales);
                         ValueEntry.SetRange("Document No.", Sales_Invoice_Line."Document No.");
                         ValueEntry.SetRange("Document Line No.", Sales_Invoice_Line."Line No.");
                         if ValueEntry.FindSet() then begin
@@ -258,7 +258,7 @@ report 50011 "POS Reporting"
 
                 begin
                     Sales_Invoice_Line.SetRange(type, Sales_Invoice_Line.type::Item);
-                    Sales_Invoice_Line.SetRange("Document No.", "Sales Invoice Header"."No.");
+                    Sales_Invoice_Line.SetRange("Sell-to Customer No.", "Sales Invoice Header"."Sell-to Customer No.");
                 end;
 
                 trigger OnAfterGetRecord()
@@ -311,7 +311,7 @@ report 50011 "POS Reporting"
 
             begin
                 GlSetup.get();
-                Sales_Invoice_Line.SetRange(type, Sales_Invoice_Line.type::Item);
+                //Sales_Invoice_Line.SetRange(type, Sales_Invoice_Line.type::Item);
             end;
 
             trigger OnAfterGetRecord()

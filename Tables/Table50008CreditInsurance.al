@@ -18,6 +18,10 @@ table 50008 "Credit Insurance"
         {
             DataClassification = ToBeClassified;
         }
+        field(50006; "Atradius No."; Code[20])
+        {
+            DataClassification = ToBeClassified;
+        }
     }
 
     keys
