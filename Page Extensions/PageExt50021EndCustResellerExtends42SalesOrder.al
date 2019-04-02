@@ -97,6 +97,19 @@ pageextension 50021 "End Customer and Reseller" extends 42
                 Caption = 'Ship-to Code';
             }
         }
+        addafter("Ship-to Contact")
+        {
+            field("Ship-to Phone No."; "Ship-to Phone No.")
+            {
+                ApplicationArea = all;
+                Caption = 'Phone No.';
+            }
+            field("Ship-to Email"; "Ship-to Email")
+            {
+                ApplicationArea = all;
+                Caption = 'E-mail';
+            }
+        }
         modify("Sell-to Customer No.")
         {
             Visible = false;
