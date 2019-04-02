@@ -413,7 +413,7 @@ codeunit 50005 "IC Sync Management"
         OK: Boolean;
         SessionEventComment: Text;
     begin
-        //OK := StartSession(SessionID, Codeunit::"Post Purchase Order IC", RunInCompany, Purchaseorder);
+        OK := StartSession(SessionID, Codeunit::"Post Sales Order IC", RunInCompany, SalesOrder);
         if not OK then
             Error(GetLastErrorText());
         Commit();
