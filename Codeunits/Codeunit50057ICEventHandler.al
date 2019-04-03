@@ -313,6 +313,7 @@ codeunit 50057 "IC Event Handler"
         ICPurchOrder: Record "Purchase Header";
         ICSalesOrder: Record "Sales Header";
     begin
+
         if SalesHeader.Subsidiary <> '' then begin
             GetICPartner(ICpartner, SalesHeader.Subsidiary);
             UpdateReceiptsOnPurchaseOrderInOtherCompany(SalesShptHdrNo, ICpartner."Inbox Details");
