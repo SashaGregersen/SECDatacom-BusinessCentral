@@ -26,7 +26,7 @@ codeunit 50022 "Post Sales Order IC"
         if not SalesHeader.get(Rec."Document Type", Rec."No.") then
             Error('Sales Order %1 in company %2 Could not be updated', rec."No.", CompanyName())
         else begin
-            SalesHeader.Receive := DoShip;
+            SalesHeader.Ship := DoShip;
             SalesHeader.Invoice := DoInvoice;
         end;
         PostSales.Run(SalesHeader);
