@@ -16,8 +16,16 @@ tableextension 50021 "End Customer and Reseller" extends 36
                         error('Not an end-customer')
                     else begin
                         rec.validate("End Customer Name", customer.name);
+                        rec.validate("End Customer Contact", customer."Primary Contact No.");
                         SetDropShipment();
                     end;
+                end;
+                if "End Customer" = '' then begin
+                    clear("End Customer Name");
+                    clear("End Customer Contact");
+                    Clear("End Customer Contact Name");
+                    Clear("End Customer Email");
+                    Clear("End Customer Phone No.");
                 end;
             end;
 
@@ -41,6 +49,9 @@ tableextension 50021 "End Customer and Reseller" extends 36
                 customer: record customer;
                 shiptoadress: record "Ship-to Address";
             begin
+                if Reseller = '' then
+                    clear("Reseller Name");
+
                 If customer.get(Rec.Reseller) then
                     if customer."Customer Type" <> customer."Customer Type"::Reseller then
                         error('Not a reseller')
@@ -254,6 +265,9 @@ tableextension 50021 "End Customer and Reseller" extends 36
             begin
                 If not Contact.get("End Customer Contact") then
                     error('Not a contact');
+                Validate("End Customer Contact Name", Contact.Name);
+                validate("End Customer Phone No.", Contact."Phone No.");
+                Validate("End Customer Email", Contact."E-Mail");
             end;
 
             trigger Onlookup();
@@ -264,13 +278,8 @@ tableextension 50021 "End Customer and Reseller" extends 36
                 if not Contact.Get("End Customer Contact") then
                     Clear("End Customer Contact");
                 LookupContact("End Customer", Contact."No.", Contact);
-                if Contact."No." = '' then
-                    Contact.SETRANGE("No.", '');
                 IF page.RunModal(page::"Contact List", Contact, Contact."No.") = Action::LookupOK then begin
                     Validate("End Customer Contact", Contact."No.");
-                    Validate("End Customer Contact Name", Contact.Name);
-                    validate("End Customer Phone No.", Contact."Phone No.");
-                    Validate("End Customer Email", Contact."E-Mail");
                 end;
             end;
         }
