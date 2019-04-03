@@ -277,6 +277,7 @@ codeunit 50005 "IC Sync Management"
             until CompanyTemp.Next() = 0;
     end;
 
+
     procedure PostPurchaseOrderInOtherCompany(PurchaseOrder: Record "Purchase Header"; PostInCompanyName: Text[35])
 
     var
