@@ -66,23 +66,26 @@ pageextension 50009 "Item Adv. Pricing" extends "Item Card"
                 RunObject = Page "Sales Price Worksheet";
                 RunPageLink = "Item No." = field ("No."),
                               "Unit of Measure Code" = field ("Sales Unit of Measure"),
-                              "Minimum Quantity" = const (1);
-                /*
-                trigger OnAction()
+                              "Minimum Quantity" = const (0), "Currency Code" = field ("Vendor Currency");
+                //starting date = today
+                //sales type = all customers
+                //variant code  = listprice
+                //item no = item no
+                //unit of measure = item base unit of meaure
+                //min quantity = 0
+                //currency code = item."vendor currency"
+                //current unit price opdateres som standard 
+
+                /* trigger OnAction()
                 var
-                    SalesPriceWksPage : Page "Sales Price Worksheet";
-                    SalesPriceWks : Record "Sales Price Worksheet";
+                    SalesPriceWksPage: Page "Sales Price Worksheet";
+                    SalesPriceWks: Record "Sales Price Worksheet";
                 begin
-                    SalesPriceWks.SetRange("Item No.");
+                    SalesPriceWks.setrange("Item No.", Rec."No.");
+                    SalesPriceWks.SetValues(SalesPriceWks, Rec);
                     SalesPriceWksPage.SetTableView(SalesPriceWks);
-                    SalesPriceWksPage.SetValues("Sales Type","Sales Code",,"No.");
-                    ,Item No.,Variant Code,Unit of Measure Code,Minimum Quantity
-                    
                     SalesPriceWksPage.RunModal();
-
-                end;
-                */
-
+                end; */
 
                 /*
                 Yes	13	Sales Type	Option		
@@ -105,6 +108,7 @@ pageextension 50009 "Item Adv. Pricing" extends "Item Card"
             }
         }
     }
+    var
 
 
 }
