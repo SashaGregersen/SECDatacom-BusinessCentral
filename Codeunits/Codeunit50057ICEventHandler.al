@@ -44,6 +44,14 @@ codeunit 50057 "IC Event Handler"
             LocalSalesHeader."End Customer" := SalesHeaderOtherCompany."End Customer";
         if SalesHeaderOtherCompany."End Customer Name" <> '' then
             LocalSalesHeader.validate("End Customer Name", SalesHeaderOtherCompany."End Customer Name");
+        if SalesHeaderOtherCompany."End Customer Contact" <> '' then
+            LocalSalesHeader."End Customer Contact" := SalesHeaderOtherCompany."End Customer Contact";
+        if SalesHeaderOtherCompany."End Customer Contact Name" <> '' then
+            LocalSalesHeader."End Customer Contact Name" := SalesHeaderOtherCompany."End Customer Contact Name";
+        if SalesHeaderOtherCompany."End Customer Phone No." <> '' then
+            LocalSalesHeader."End Customer Phone No." := SalesHeaderOtherCompany."End Customer Phone No.";
+        if SalesHeaderOtherCompany."End Customer Email" <> '' then
+            LocalSalesHeader."End Customer Email" := SalesHeaderOtherCompany."End Customer Email";
         if LocalSalesHeader.Subsidiary <> '' then begin
             Customer.get(LocalSalesHeader.Subsidiary);
             LocalSalesHeader.validate("Subsidiary Name", Customer.Name);

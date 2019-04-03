@@ -48,6 +48,23 @@ codeunit 50005 "IC Sync Management"
             until CompanyRec.Next() = 0;
     end;
 
+    local procedure GetCompanyToSyncTo(var CompanyTemp: Record Company temporary)
+    var
+        CompanyRec: Record Company;
+        SalesReceiveSetup: Record "Sales & Receivables Setup";
+        GlSetup: record "General Ledger Setup";
+    begin
+        GlSetup.get();
+        SalesReceiveSetup.Get();
+        if not SalesReceiveSetup."Synchronize Customer" then
+            exit;
+        CompanyRec.SetRange(Name, GlSetup."Master Company");
+        if CompanyRec.FindFirst() then begin
+            CompanyTemp := CompanyRec;
+            if not CompanyTemp.Insert(false) then;
+        end;
+    end;
+
     local procedure GetCompaniesToDeleteItem(var CompanyTemp: Record Company temporary)
     var
         CompanyRec: Record Company;
@@ -267,14 +284,28 @@ codeunit 50005 "IC Sync Management"
         CompanyTemp: Record Company temporary;
         SessionID: Integer;
     begin
-        GetCompaniesToSyncTo(CompanyTemp);
+        GetCompanyToSyncTo(CompanyTemp);
         if CompanyTemp.Count() = 0 then
             exit;
-        if CompanyTemp.FindSet() then
-            repeat
-                SessionID := RunInsertModifyShipToAddressInOtherCompany(ShipToAddress, CompanyTemp.Name);
-                CheckSessionForTimeoutAndError(SessionID, 5, CompanyTemp.Name);
-            until CompanyTemp.Next() = 0;
+        if CompanyTemp.Find() then begin
+            SessionID := RunInsertModifyShipToAddressInOtherCompany(ShipToAddress, CompanyTemp.Name);
+            CheckSessionForTimeoutAndError(SessionID, 5, CompanyTemp.Name);
+        end;
+    end;
+
+    procedure InsertModifyPostCodeInOtherCompanies(PostCode: Record "Post Code")
+
+    var
+        CompanyTemp: Record Company temporary;
+        SessionID: Integer;
+    begin
+        GetCompanyToSyncTo(CompanyTemp);
+        if CompanyTemp.Count() = 0 then
+            exit;
+        if CompanyTemp.Find() then begin
+            SessionID := RunInsertModifyPostCodeInOtherCompany(PostCode, CompanyTemp.Name);
+            CheckSessionForTimeoutAndError(SessionID, 5, CompanyTemp.Name);
+        end;
     end;
 
 
@@ -420,6 +451,17 @@ codeunit 50005 "IC Sync Management"
         SessionEventComment: Text;
     begin
         OK := StartSession(SessionID, 50023, RunInCompany, ShipToAddress);
+        if not OK then
+            Error(GetLastErrorText());
+        Commit();
+    end;
+
+    local procedure RunInsertModifyPostCodeInOtherCompany(PostCode: record "Post Code"; RunInCompany: Text) SessionID: Integer
+    var
+        OK: Boolean;
+        SessionEventComment: Text;
+    begin
+        OK := StartSession(SessionID, 50024, RunInCompany, PostCode);
         if not OK then
             Error(GetLastErrorText());
         Commit();

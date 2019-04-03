@@ -70,7 +70,14 @@ report 50011 "POS Reporting"
             {
 
             }
-            // indsæt phone + email på kontakt hvis nye felter skal på 
+            column(Ship_to_Phone; "Phone No.")
+            {
+
+            }
+            column(Ship_to_Email; "Email")
+            {
+
+            }
             column(ResellEndCustName; ResellEndCustName)
             {
 
