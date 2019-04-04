@@ -588,6 +588,8 @@ codeunit 50013 "EDICygate"
         encoding: DotNet mscorlib_System_Text_Encoding;
         SalesShipHead: Record "Sales Shipment Header";
         GLSetup: Record "General Ledger Setup";
+        FreightAmt: Decimal;
+        VATAmountLine: Record "VAT Amount Line" temporary;
     begin
         SalesSetup.Get();
         GLSetup.Get();
@@ -826,6 +828,7 @@ codeunit 50013 "EDICygate"
         XMLElement2.AppendChild(XMLElement4);
 
         InvoiceLine.SetRange(Type, InvoiceLine.Type::Item);
+        InvoiceLine.SetFilter("Gen. Prod. Posting Group", '<>FREIGHT');
         if InvoiceLine.FindSet then
             repeat
                 if not Item.Get(InvoiceLine."No.") then
@@ -878,8 +881,112 @@ codeunit 50013 "EDICygate"
                 XMLElement1.AppendChild(XMLNode1);
             until InvoiceLine.Next() = 0;
 
-        XMLDoc.Save('c:\temp\cygate3.xml');
+        XMLElement4 := XMLDoc.CreateElement('InvoiceFees');
+        XMLElement2.AppendChild(XMLElement4);
 
+        FreightAmt := 0;
+        //Vare type fragt
+        InvoiceLine.SetRange(Type, InvoiceLine.Type::Item);
+        InvoiceLine.SetRange("Gen. Prod. Posting Group", 'FREIGHT');
+        if InvoiceLine.FindSet then
+            repeat
+                FreightAmt += InvoiceLine.GetLineAmountExclVAT();
+            until InvoiceLine.Next() = 0;
+
+        //Finans varegebyr mv.
+        InvoiceLine.SetFilter(Type, '<>%1', InvoiceLine.Type::Item);
+        InvoiceLine.SetRange("Gen. Prod. Posting Group");
+        if InvoiceLine.FindSet then
+            repeat
+                FreightAmt += InvoiceLine.GetLineAmountExclVAT();
+            until InvoiceLine.Next() = 0;
+
+        if FreightAmt <> 0 then begin
+            XMLNode1 := XMLDoc.CreateNode('element', 'Fee', '');
+            XMLNode1.InnerText(Format(FreightAmt));
+            XMLAttribute1 := XMLNode1.OwnerDocument().CreateAttribute('Code');
+            XMLAttribute1.Value('Freight');
+            XMLNode1.Attributes.SetNamedItem(XMLAttribute1);
+            XMLElement4.AppendChild(XMLNode1);
+        end;
+
+        //Momsspecifikation
+        XMLElement4 := XMLDoc.CreateElement('TaxSubTotals');
+        XMLElement2.AppendChild(XMLElement4);
+
+        VATAmountLine.DELETEALL;
+        InvoiceLine.SetRange(Type);
+        InvoiceLine.SetRange("Gen. Prod. Posting Group");
+        if InvoiceLine.FindSet() then
+            repeat
+                VATAmountLine.Init();
+                VATAmountLine."VAT Identifier" := InvoiceLine."VAT Identifier";
+                VATAmountLine."VAT Calculation Type" := InvoiceLine."VAT Calculation Type";
+                VATAmountLine."Tax Group Code" := InvoiceLine."Tax Group Code";
+                VATAmountLine."VAT %" := InvoiceLine."VAT %";
+                VATAmountLine."VAT Base" := InvoiceLine.Amount;
+                VATAmountLine."Amount Including VAT" := InvoiceLine."Amount Including VAT";
+                VATAmountLine."Line Amount" := InvoiceLine."Line Amount";
+                if InvoiceLine."Allow Invoice Disc." then
+                    VATAmountLine."Inv. Disc. Base Amount" := InvoiceLine."Line Amount";
+                VATAmountLine."Invoice Discount Amount" := InvoiceLine."Inv. Discount Amount";
+                VATAmountLine."VAT Clause Code" := InvoiceLine."VAT Clause Code";
+                VATAmountLine.InsertLine;
+            until InvoiceLine.Next() = 0;
+
+        if VATAmountLine.FindSet() then
+            repeat
+                XMLElement1 := XMLDoc.CreateElement('TaxSubTotal');
+                XMLElement4.AppendChild(XMLElement1);
+
+                XMLNode1 := XMLDoc.CreateNode('element', 'TaxRate', '');
+                XMLNode1.InnerText(Format(VATAmountLine."VAT %"));
+                XMLAttribute1 := XMLNode1.OwnerDocument().CreateAttribute('Code');
+                XMLAttribute1.Value(VATAmountLine."VAT Identifier");
+                XMLNode1.Attributes.SetNamedItem(XMLAttribute1);
+                XMLElement1.AppendChild(XMLNode1);
+
+                XMLNode1 := XMLDoc.CreateNode('element', 'TaxableAmount', '');
+                XMLNode1.InnerText(Format(VATAmountLine."VAT Base"));
+                XMLElement1.AppendChild(XMLNode1);
+
+                XMLNode1 := XMLDoc.CreateNode('element', 'TaxAmount', '');
+                XMLNode1.InnerText(Format(VATAmountLine."VAT Amount"));
+                XMLElement1.AppendChild(XMLNode1);
+            until VATAmountLine.Next() = 0;
+
+        XMLElement4 := XMLDoc.CreateElement('InvoiceTotal');
+        XMLElement2.AppendChild(XMLElement4);
+
+        InvoiceHead.CalcFields(Amount, "Amount Including VAT");
+
+        //Linjesum - varer
+        XMLNode1 := XMLDoc.CreateNode('element', 'NetAmount', '');
+        XMLNode1.InnerText(Format(InvoiceHead.Amount - FreightAmt));
+        XMLElement4.AppendChild(XMLNode1);
+
+        //Linjesum - fragt
+        XMLNode1 := XMLDoc.CreateNode('element', 'TotalFeeAmount', '');
+        XMLNode1.InnerText(Format(FreightAmt));
+        XMLElement4.AppendChild(XMLNode1);
+
+        //Linjesum - moms sum
+        XMLNode1 := XMLDoc.CreateNode('element', 'TotalTaxAmount', '');
+        XMLNode1.InnerText(Format(InvoiceHead."Amount Including VAT" - InvoiceHead.Amount));
+        XMLElement4.AppendChild(XMLNode1);
+
+        //Afrunding
+        XMLNode1 := XMLDoc.CreateNode('element', 'Rounding', '');
+        XMLNode1.InnerText('0');
+        XMLElement4.AppendChild(XMLNode1);
+
+        //Afrunding - sum incl moms
+        XMLNode1 := XMLDoc.CreateNode('element', 'InvoiceAmount', '');
+        XMLNode1.InnerText(Format(InvoiceHead."Amount Including VAT"));
+        XMLElement4.AppendChild(XMLNode1);
+
+        XMLDoc.Save('c:\temp\cygate3.xml');
+        exit;
         StringWriter := StringWriter.StringWriter();
         XmlWriter := XmlWriter.XmlTextWriter(StringWriter);
 
