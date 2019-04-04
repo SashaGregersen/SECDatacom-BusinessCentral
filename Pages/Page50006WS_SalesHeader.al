@@ -154,7 +154,7 @@ page 50006 "WS Sales Header"
                     ApplicationArea = All;
                     Caption = 'VendorOrderComment';
                 }
-                part("Cygate Sales Line"; "WS Sales Line")
+                part("Sales Lines"; "WS Sales Line")
                 {
                     ApplicationArea = Basic, Suite;
                     SubPageLink = "Document Type" = field ("Document Type"), "Document No." = field ("No.");
