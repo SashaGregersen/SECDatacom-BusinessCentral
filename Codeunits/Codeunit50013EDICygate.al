@@ -986,7 +986,7 @@ codeunit 50013 "EDICygate"
         XMLElement4.AppendChild(XMLNode1);
 
         XMLDoc.Save('c:\temp\cygate3.xml');
-        exit;
+        
         StringWriter := StringWriter.StringWriter();
         XmlWriter := XmlWriter.XmlTextWriter(StringWriter);
 
