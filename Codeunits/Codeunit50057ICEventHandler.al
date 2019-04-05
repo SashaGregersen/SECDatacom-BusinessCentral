@@ -334,6 +334,7 @@ codeunit 50057 "IC Event Handler"
                 UpdateInvoiceOnPurchaseOrderInOtherCompany(SalesCrMemoHdrNo, ICpartner."Inbox Details"); //remember to create the credit memo function  and update the case
                 AddICPurchaseOrderToTempList(SalesInvHdrNo, ICpartner."Inbox Details", TempICPurchOrder);
             end;
+            Commit();
             if TempICPurchOrder.FindSet() then
                 repeat
                     ICPurchOrder := TempICPurchOrder;
