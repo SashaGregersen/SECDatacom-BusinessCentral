@@ -138,6 +138,8 @@ codeunit 50057 "IC Event Handler"
     begin
         LocalSalesLine."IC PO No." := ICPurchLine."Document No.";
         LocalSalesLine."IC PO Line No." := ICPurchLine."Line No.";
+        LocalSalesLine.Validate("Bid No.", ICPurchLine."Bid No.");
+        LocalSalesLine.Validate("Unit Price", ICPurchLine."Direct Unit Cost");
     end;
 
     local procedure UpdateSalesLineWithICSOInfo(ICSalesline: Record "sales Line"; var LocalSalesLine: Record "Sales Line")
