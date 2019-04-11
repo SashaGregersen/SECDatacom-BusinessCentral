@@ -218,4 +218,9 @@ codeunit 50051 "Price Event Handler"
         end;
     end;
 
+    [EventSubscriber(ObjectType::Page, Page::"Sales Price Worksheet", 'OnNewRecordEvent', '', true, true)]
+    local procedure SalesPriceWorksheetOnNewRecord(var Rec: Record "Sales Price Worksheet"; BelowxRec: Boolean; var xRec: Record "Sales Price Worksheet")
+    begin
+        Rec.Validate("Starting Date", Today());
+    end;
 }
