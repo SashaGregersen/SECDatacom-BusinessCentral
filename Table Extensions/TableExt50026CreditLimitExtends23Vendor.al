@@ -1,4 +1,4 @@
-tableextension 50026 "Credit Limit" extends 23
+tableextension 50026 "Credit Limit" extends Vendor
 {
     fields
     {
@@ -10,6 +10,11 @@ tableextension 50026 "Credit Limit" extends 23
         {
             DataClassification = ToBeClassified;
             TableRelation = Currency;
+        }
+        field(50002; "Claims Vendor"; Code[20])
+        {
+            DataClassification = ToBeClassified;
+            TableRelation = Vendor;
         }
     }
 
