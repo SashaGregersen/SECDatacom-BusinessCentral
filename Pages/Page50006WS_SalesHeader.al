@@ -192,6 +192,7 @@ page 50006 "WS Sales Header"
             Cust.Validate(City, "End User City");
             Cust.Validate("Country/Region Code", "End User Country");
             Cust.Validate("Phone No.", "End User Phone No.");
+            Cust.Validate("Customer Type", Cust."Customer Type"::"End Customer");
             Cust.Modify(true);
         end;
         exit(Cust."No.");
