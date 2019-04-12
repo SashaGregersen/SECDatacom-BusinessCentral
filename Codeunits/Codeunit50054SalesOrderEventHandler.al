@@ -27,7 +27,8 @@ codeunit 50054 "Sales Order Event Handler"
     begin
         GlSetup.get();
         if (rec.Type = rec.type::Item) and (not rec.isicorder) then begin
-            Item.Get(rec."No.");
+            if not Item.Get(rec."No.") then
+                exit;
             if item."Default Location" <> '' then
                 rec.validate("Location Code", item."Default Location");
             if Item."Blocked from purchase" = true then begin

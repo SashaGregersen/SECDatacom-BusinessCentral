@@ -107,10 +107,7 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
 
             trigger Onvalidate()
             begin
-                if "Bid Unit Purchase Price" <> xRec."Bid Unit Purchase Price" then
-                    CalcAdvancedPrices;
-                if "Bid Unit Purchase Price" <> 0 then
-                    Claimable := true;
+                CalcAdvancedPrices;
             end;
         }
         field(50012; "Bid Purchase Discount"; Decimal)
@@ -216,9 +213,9 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
             Validate("Unit Price", 0);
         end;
         "Bid Sales Discount" := BidPrices."Bid Sales Discount Pct.";
+        Claimable := NewClaimableValue;
         Validate("Bid Unit Purchase Price", BidPrices."Bid Unit Purchase Price");
         "Bid Purchase Discount" := BidPrices."Bid Purchase Discount Pct.";
-        Claimable := NewClaimableValue;
     end;
 
     procedure CalcAdvancedPrices();
