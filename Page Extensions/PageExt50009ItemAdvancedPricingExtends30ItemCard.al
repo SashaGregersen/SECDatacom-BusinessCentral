@@ -58,31 +58,22 @@ pageextension 50009 "Item Adv. Pricing" extends "Item Card"
                     AdvPriceMgt.CreatePricesForICPartners("No.", "Vendor No.");
                 end;
             }
-            action(SalesPriceWorkSheet)
+            action(AddNewListPrice)
             {
-                Caption = 'Sales Price Worksheet';
+                Caption = 'Add New List Price';
                 Image = SalesPrices;
                 ApplicationArea = All;
-                RunObject = Page "Sales Price Worksheet";
-                RunPageLink = "Item No." = field ("No."),
-                              "Unit of Measure Code" = field ("Sales Unit of Measure"),
-                              "Minimum Quantity" = const (0),
-                              "Currency Code" = field ("Vendor Currency"),
-                              "Sales Type" = const ("All Customers"),
-                              "Variant Code" = const ('LISTPRICE'),
-                              "Unit of Measure Code" = field ("Base Unit of Measure");
-                //starting date = today - event trigger CU50051
 
-                /* trigger OnAction()
+                trigger OnAction()
                 var
                     SalesPriceWksPage: Page "Sales Price Worksheet";
                     SalesPriceWks: Record "Sales Price Worksheet";
                 begin
-                    SalesPriceWks.setrange("Item No.", Rec."No.");
-                    SalesPriceWks.SetValues(SalesPriceWks, Rec);
+                    SalesPriceWks.CreateNewListPriceFromItem(Rec);
+                    Commit();
                     SalesPriceWksPage.SetTableView(SalesPriceWks);
                     SalesPriceWksPage.RunModal();
-                end; */
+                end;
             }
         }
     }

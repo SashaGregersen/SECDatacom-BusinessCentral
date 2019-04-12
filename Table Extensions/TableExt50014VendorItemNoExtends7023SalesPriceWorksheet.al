@@ -38,16 +38,14 @@ tableextension 50014 "Vendor Item No." extends "Sales Price Worksheet"
     end;
 
     procedure CreateNewListPriceFromItem(Item: Record Item)
-    var
-        SalesPriceWksh: record "Sales Price Worksheet";
     begin
-        SalesPriceWksh.Validate("Sales Type", SalesPriceWksh."Sales Type"::"All Customers");
-        SalesPriceWksh.Validate("Item No.", Item."No.");
-        SalesPriceWksh.Validate("Variant Code", 'LISTPRICE');
-        SalesPriceWksh.Validate("Unit of Measure Code", Item."Base Unit of Measure");
-        SalesPriceWksh.Validate("Minimum Quantity", 0);
-        SalesPriceWksh.Validate("Currency Code", item."Vendor Currency");
-        SalesPriceWksh.Validate("Starting Date", Today());
-        SalesPriceWksh.Insert(true);
+        Validate("Sales Type", "Sales Type"::"All Customers");
+        Validate("Item No.", Item."No.");
+        Validate("Variant Code", 'LISTPRICE');
+        Validate("Unit of Measure Code", Item."Base Unit of Measure");
+        Validate("Minimum Quantity", 0);
+        Validate("Currency Code", item."Vendor Currency");
+        Validate("Starting Date", Today());
+        Insert(true);
     end;
 }
