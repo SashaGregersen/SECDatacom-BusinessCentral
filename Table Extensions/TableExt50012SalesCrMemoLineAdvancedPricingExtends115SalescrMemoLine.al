@@ -68,7 +68,7 @@ tableextension 50012 "Sales Cr.Memo Adv. Pricing" extends "Sales Cr.Memo Line"
             DataClassification = ToBeClassified;
             Editable = false;
         }
-        field(50025; "Purchase Price on Purchase Order"; Decimal)
+        field(50025; "Purch. Price on Purchase Order"; Decimal)
         {
             DataClassification = ToBeClassified;
             Editable = false;

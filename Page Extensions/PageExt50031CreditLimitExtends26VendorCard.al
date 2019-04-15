@@ -1,4 +1,4 @@
-pageextension 50031 "Credit Limit" extends 26
+pageextension 50031 "Credit Limit" extends "Vendor Card"
 {
     layout
     {
@@ -11,6 +11,10 @@ pageextension 50031 "Credit Limit" extends 26
             field("Credit Limit Currency"; "Credit Limit Currency")
             {
                 ApplicationArea = all;
+            }
+            field("Claims Vendor"; "Claims Vendor")
+            {
+                ApplicationArea = All;
             }
         }
     }
