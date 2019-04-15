@@ -68,7 +68,7 @@ tableextension 50043 "Sales Shipt. Line Adv. Pricing" extends "Sales Shipment Li
             DataClassification = ToBeClassified;
             Editable = false;
         }
-        field(50025; "Purchase Price on Purchase Order"; Decimal)
+        field(50025; "Purch. Price on Purchase Order"; Decimal)
         {
             DataClassification = ToBeClassified;
             Editable = false;

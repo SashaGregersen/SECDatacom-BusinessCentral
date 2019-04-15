@@ -4,31 +4,51 @@ pageextension 50022 "End Customer and Reseller 2" extends 41
     {
         addbefore("Sell-to Customer No.")
         {
+            field(Reseller; Reseller)
+            {
+                ApplicationArea = all;
+            }
             field("End Customer"; "End Customer")
             {
                 ApplicationArea = all;
             }
         }
-        addbefore("End Customer")
+        addafter("End Customer")
         {
-            field(Reseller; Reseller)
+            field("End Customer Name"; "End Customer Name")
             {
                 ApplicationArea = all;
+                Editable = false;
+            }
+            field("End Customer Contact"; "End Customer Contact")
+            {
+                ApplicationArea = all;
+                Importance = Additional;
+            }
+            field("End Customer Contact Name"; "End Customer Contact Name")
+            {
+                ApplicationArea = all;
+                Importance = Additional;
+            }
+            field("End Customer Phone No."; "End Customer Phone No.")
+            {
+                ApplicationArea = all;
+                Importance = Additional;
+            }
+            field("End Customer Email"; "End Customer Email")
+            {
+                ApplicationArea = all;
+                Importance = Additional;
             }
         }
         addafter("reseller")
         {
-            field(Subsidiary; Subsidiary)
+            field("Reseller Name"; "Reseller Name")
             {
                 ApplicationArea = all;
+                Editable = false;
             }
-        }
-        addafter(Subsidiary)
-        {
-            field("Financing Partner"; "Financing Partner")
-            {
-                ApplicationArea = all;
-            }
+
         }
 
         modify(ShippingOptions)

@@ -70,7 +70,14 @@ report 50011 "POS Reporting"
             {
 
             }
-            // indsæt phone + email på kontakt hvis nye felter skal på 
+            column(Ship_to_Phone; "Phone No.")
+            {
+
+            }
+            column(Ship_to_Email; "Email")
+            {
+
+            }
             column(ResellEndCustName; ResellEndCustName)
             {
 
@@ -402,7 +409,7 @@ report 50011 "POS Reporting"
         SerialNo: text[50];
         BidUnitPurchasePriceLCY: Decimal; //slettes
         CostPercentage: Decimal;
-        VARIDInt: Integer;
+        VARIDInt: Code[20];
         PurchOrderNo: code[20];
         PurchOrderPostDate: Date;
         PurchCostPrice: decimal;

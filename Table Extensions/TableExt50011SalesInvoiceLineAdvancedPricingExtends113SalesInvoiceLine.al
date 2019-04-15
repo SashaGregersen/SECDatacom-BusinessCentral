@@ -68,7 +68,7 @@ tableextension 50011 "Sales Invoice Line Adv.Pricing" extends "Sales Invoice Lin
             DataClassification = ToBeClassified;
             Editable = false;
         }
-        field(50025; "Purchase Price on Purchase Order"; Decimal)
+        field(50025; "Purch. Price on Purchase Order"; Decimal)
         {
             DataClassification = ToBeClassified;
             Editable = false;

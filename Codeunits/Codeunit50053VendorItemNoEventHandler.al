@@ -3,15 +3,6 @@ codeunit 50053 "Vendor Item No Event Handler"
     SingleInstance = true;
     EventSubscriberInstance = StaticAutomatic;
 
-    [EventSubscriber(ObjectType::Table, database::Item, 'OnAfterValidateEvent', 'Vendor Item No.', true, true)]
-    local procedure OnAfterValidateVendorItemNoOnItemCardEvent(var Rec: record Item)
-    var
-    begin
-        if rec."Vendor Item No." <> '' then begin
-            Rec.Validate("Vendor-Item-No.", Rec."Vendor Item No.");
-        end;
-    end;
-
     [EventSubscriber(ObjectType::table, database::"Purchase Line", 'OnAfterInsertEvent', '', true, true)]
 
     local procedure OnAfterInsertPurchaseLineEvent(var rec: record "Purchase Line"; runtrigger: Boolean)

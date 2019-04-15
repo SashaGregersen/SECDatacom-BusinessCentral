@@ -13,16 +13,7 @@ codeunit 50054 "Sales Order Event Handler"
         if CompanyName() <> GLSetup."Master Company" then
             exit;
 
-        salesheader.setrange("No.", rec."Document No.");
-        salesheader.SetRange("Document Type", rec."Document Type");
-        if salesheader.FindFirst() then
-            if salesheader.Subsidiary <> '' then begin
-                rec.SetRange("Document No.", salesheader."No.");
-                rec.SetRange("Document Type", salesheader."Document Type");
-                if rec.FindSet() then
-                    Error('You cannot change an intercompany order');
-            end;
-
+        TestIfLineCanBeChanged(rec);
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Sales Line", 'OnAfterValidateEvent', 'No.', true, true)]
@@ -36,7 +27,8 @@ codeunit 50054 "Sales Order Event Handler"
     begin
         GlSetup.get();
         if (rec.Type = rec.type::Item) and (not rec.isicorder) then begin
-            Item.Get(rec."No.");
+            if not Item.Get(rec."No.") then
+                exit;
             if item."Default Location" <> '' then
                 rec.validate("Location Code", item."Default Location");
             if Item."Blocked from purchase" = true then begin
@@ -61,15 +53,7 @@ codeunit 50054 "Sales Order Event Handler"
         if CompanyName() <> GlSetup."Master Company" then
             exit;
 
-        salesheader.setrange("No.", rec."Document No.");
-        salesheader.SetRange("Document Type", rec."Document Type");
-        if salesheader.FindFirst() then
-            if salesheader.Subsidiary <> '' then begin
-                rec.SetRange("Document No.", salesheader."No.");
-                rec.SetRange("Document Type", salesheader."Document Type");
-                if rec.FindSet() then
-                    Error('You cannot change an intercompany order');
-            end;
+        TestIfLineCanBeChanged(rec);
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Sales Line", 'OnAfterValidateEvent', 'Description', true, true)]
@@ -82,15 +66,7 @@ codeunit 50054 "Sales Order Event Handler"
         if CompanyName() <> GlSetup."Master Company" then
             exit;
 
-        salesheader.setrange("No.", rec."Document No.");
-        salesheader.SetRange("Document Type", rec."Document Type");
-        if salesheader.FindFirst() then
-            if salesheader.Subsidiary <> '' then begin
-                rec.SetRange("Document No.", salesheader."No.");
-                rec.SetRange("Document Type", salesheader."Document Type");
-                if rec.FindSet() then
-                    Error('You cannot change an intercompany order');
-            end;
+        TestIfLineCanBeChanged(rec);
 
     end;
 
@@ -104,15 +80,7 @@ codeunit 50054 "Sales Order Event Handler"
         if CompanyName() <> GlSetup."Master Company" then
             exit;
 
-        salesheader.setrange("No.", rec."Document No.");
-        salesheader.SetRange("Document Type", rec."Document Type");
-        if salesheader.FindFirst() then
-            if salesheader.Subsidiary <> '' then begin
-                rec.SetRange("Document No.", salesheader."No.");
-                rec.SetRange("Document Type", salesheader."Document Type");
-                if rec.FindSet() then
-                    Error('You cannot change an intercompany order');
-            end;
+        TestIfLineCanBeChanged(rec);
 
     end;
 
@@ -126,15 +94,7 @@ codeunit 50054 "Sales Order Event Handler"
         if CompanyName() <> GlSetup."Master Company" then
             exit;
 
-        salesheader.setrange("No.", rec."Document No.");
-        salesheader.SetRange("Document Type", rec."Document Type");
-        if salesheader.FindFirst() then
-            if salesheader.Subsidiary <> '' then begin
-                rec.SetRange("Document No.", salesheader."No.");
-                rec.SetRange("Document Type", salesheader."Document Type");
-                if rec.FindSet() then
-                    Error('You cannot change an intercompany order');
-            end;
+        TestIfLineCanBeChanged(rec);
 
     end;
 
@@ -148,15 +108,7 @@ codeunit 50054 "Sales Order Event Handler"
         if CompanyName() <> GlSetup."Master Company" then
             exit;
 
-        salesheader.setrange("No.", rec."Document No.");
-        salesheader.SetRange("Document Type", rec."Document Type");
-        if salesheader.FindFirst() then
-            if salesheader.Subsidiary <> '' then begin
-                rec.SetRange("Document No.", salesheader."No.");
-                rec.SetRange("Document Type", salesheader."Document Type");
-                if rec.FindSet() then
-                    Error('You cannot change an intercompany order');
-            end;
+        TestIfLineCanBeChanged(rec);
 
     end;
 
@@ -170,15 +122,7 @@ codeunit 50054 "Sales Order Event Handler"
         if CompanyName() <> GlSetup."Master Company" then
             exit;
 
-        salesheader.setrange("No.", rec."Document No.");
-        salesheader.SetRange("Document Type", rec."Document Type");
-        if salesheader.FindFirst() then
-            if salesheader.Subsidiary <> '' then begin
-                rec.SetRange("Document No.", salesheader."No.");
-                rec.SetRange("Document Type", salesheader."Document Type");
-                if rec.FindSet() then
-                    Error('You cannot change an intercompany order');
-            end;
+        TestIfLineCanBeChanged(rec);
 
     end;
 
@@ -192,15 +136,7 @@ codeunit 50054 "Sales Order Event Handler"
         if CompanyName() <> GlSetup."Master Company" then
             exit;
 
-        salesheader.setrange("No.", rec."Document No.");
-        salesheader.SetRange("Document Type", rec."Document Type");
-        if salesheader.FindFirst() then
-            if salesheader.Subsidiary <> '' then begin
-                rec.SetRange("Document No.", salesheader."No.");
-                rec.SetRange("Document Type", salesheader."Document Type");
-                if rec.FindSet() then
-                    Error('You cannot change an intercompany order');
-            end;
+        TestIfLineCanBeChanged(rec);
 
     end;
 
@@ -214,15 +150,7 @@ codeunit 50054 "Sales Order Event Handler"
         if CompanyName() <> GlSetup."Master Company" then
             exit;
 
-        salesheader.setrange("No.", rec."Document No.");
-        salesheader.SetRange("Document Type", rec."Document Type");
-        if salesheader.FindFirst() then
-            if salesheader.Subsidiary <> '' then begin
-                rec.SetRange("Document No.", salesheader."No.");
-                rec.SetRange("Document Type", salesheader."Document Type");
-                if rec.FindSet() then
-                    Error('You cannot change an intercompany order');
-            end;
+        TestIfLineCanBeChanged(rec);
 
     end;
 
@@ -236,15 +164,7 @@ codeunit 50054 "Sales Order Event Handler"
         if CompanyName() <> GlSetup."Master Company" then
             exit;
 
-        salesheader.setrange("No.", rec."Document No.");
-        salesheader.SetRange("Document Type", rec."Document Type");
-        if salesheader.FindFirst() then
-            if salesheader.Subsidiary <> '' then begin
-                rec.SetRange("Document No.", salesheader."No.");
-                rec.SetRange("Document Type", salesheader."Document Type");
-                if rec.FindSet() then
-                    Error('You cannot change an intercompany order');
-            end;
+        TestIfLineCanBeChanged(rec);
 
     end;
 
@@ -258,15 +178,7 @@ codeunit 50054 "Sales Order Event Handler"
         if CompanyName() <> GlSetup."Master Company" then
             exit;
 
-        salesheader.setrange("No.", rec."Document No.");
-        salesheader.SetRange("Document Type", rec."Document Type");
-        if salesheader.FindFirst() then
-            if salesheader.Subsidiary <> '' then begin
-                rec.SetRange("Document No.", salesheader."No.");
-                rec.SetRange("Document Type", salesheader."Document Type");
-                if rec.FindSet() then
-                    Error('You cannot change an intercompany order');
-            end;
+        TestIfLineCanBeChanged(rec);
 
     end;
 
@@ -280,15 +192,7 @@ codeunit 50054 "Sales Order Event Handler"
         if CompanyName() <> GlSetup."Master Company" then
             exit;
 
-        salesheader.setrange("No.", rec."Document No.");
-        salesheader.SetRange("Document Type", rec."Document Type");
-        if salesheader.FindFirst() then
-            if salesheader.Subsidiary <> '' then begin
-                rec.SetRange("Document No.", salesheader."No.");
-                rec.SetRange("Document Type", salesheader."Document Type");
-                if rec.FindSet() then
-                    Error('You cannot change an intercompany order');
-            end;
+        TestIfLineCanBeChanged(rec);
 
     end;
 
@@ -302,15 +206,7 @@ codeunit 50054 "Sales Order Event Handler"
         if CompanyName() <> GlSetup."Master Company" then
             exit;
 
-        salesheader.setrange("No.", rec."Document No.");
-        salesheader.SetRange("Document Type", rec."Document Type");
-        if salesheader.FindFirst() then
-            if salesheader.Subsidiary <> '' then begin
-                rec.SetRange("Document No.", salesheader."No.");
-                rec.SetRange("Document Type", salesheader."Document Type");
-                if rec.FindSet() then
-                    Error('You cannot change an intercompany order');
-            end;
+        TestIfLineCanBeChanged(rec);
 
     end;
 
@@ -324,15 +220,7 @@ codeunit 50054 "Sales Order Event Handler"
         if CompanyName() <> GlSetup."Master Company" then
             exit;
 
-        salesheader.setrange("No.", rec."Document No.");
-        salesheader.SetRange("Document Type", rec."Document Type");
-        if salesheader.FindFirst() then
-            if salesheader.Subsidiary <> '' then begin
-                rec.SetRange("Document No.", salesheader."No.");
-                rec.SetRange("Document Type", salesheader."Document Type");
-                if rec.FindSet() then
-                    Error('You cannot change an intercompany order');
-            end;
+        TestIfLineCanBeChanged(rec);
 
     end;
 
@@ -485,5 +373,22 @@ codeunit 50054 "Sales Order Event Handler"
         if CustChkCrLimit.SalesHeaderCheck(SalesHeader) then
             if not Confirm(Conf001) then
                 IsHandled := true;
+    end;
+
+    local procedure TestIfLineCanBeChanged(SalesLineToTest: Record "Sales Line")
+    var
+        SalesHeader: record "Sales Header";
+        LocalSalesLine: record "Sales Line";
+    begin
+        exit; //Need to be updated! Find a way to test if it is the IC flow that does this
+        If salesheader.get(SalesLineToTest."Document Type", SalesLineToTest."Document No.") then begin
+            if salesheader.Subsidiary <> '' then begin
+                LocalSalesLine.SetRange("Document No.", salesheader."No.");
+                LocalSalesLine.SetRange("Document Type", salesheader."Document Type");
+                LocalSalesLine.SetRange("Line No.", SalesLineToTest."Line No.");
+                if LocalSalesLine.FindSet() then
+                    Error('You cannot change an intercompany order');
+            end;
+        end;
     end;
 }

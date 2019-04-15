@@ -45,10 +45,11 @@ tableextension 50022 "End Customer and Reseller 2" extends 112
         {
             DataClassification = ToBeClassified;
         }
-        field(50015; "Email"; Text[30])
+        field(50015; "Email"; Text[80])
         {
             DataClassification = ToBeClassified;
         }
+
     }
 
     var

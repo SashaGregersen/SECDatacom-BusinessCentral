@@ -2,13 +2,6 @@ pageextension 50003 "Customer Card Advanced Pricing" extends "Customer Card"
 {
     layout
     {
-        addafter(GLN)
-        {
-            field("EAN No."; "EAN No.") //Nyt felt eksistere ikke
-            {
-
-            }
-        }
         modify("Credit Limit (LCY)")
         {
             Editable = false;
@@ -142,6 +135,13 @@ pageextension 50003 "Customer Card Advanced Pricing" extends "Customer Card"
                 RunObject = Page "VAR";
                 RunPageLink = "Customer No." = field ("No.");
             }
+            /*             action(SetOwningCompany)
+                        {
+                            Caption = 'SetOwningCompany)';
+                            Image = Company;
+                            RunObject = codeunit "Temp Hacks";
+                            //Remove before release to test
+                        } */
         }
 
     }

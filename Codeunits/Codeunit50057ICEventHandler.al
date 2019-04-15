@@ -44,6 +44,14 @@ codeunit 50057 "IC Event Handler"
             LocalSalesHeader."End Customer" := SalesHeaderOtherCompany."End Customer";
         if SalesHeaderOtherCompany."End Customer Name" <> '' then
             LocalSalesHeader.validate("End Customer Name", SalesHeaderOtherCompany."End Customer Name");
+        if SalesHeaderOtherCompany."End Customer Contact" <> '' then
+            LocalSalesHeader."End Customer Contact" := SalesHeaderOtherCompany."End Customer Contact";
+        if SalesHeaderOtherCompany."End Customer Contact Name" <> '' then
+            LocalSalesHeader."End Customer Contact Name" := SalesHeaderOtherCompany."End Customer Contact Name";
+        if SalesHeaderOtherCompany."End Customer Phone No." <> '' then
+            LocalSalesHeader."End Customer Phone No." := SalesHeaderOtherCompany."End Customer Phone No.";
+        if SalesHeaderOtherCompany."End Customer Email" <> '' then
+            LocalSalesHeader."End Customer Email" := SalesHeaderOtherCompany."End Customer Email";
         if LocalSalesHeader.Subsidiary <> '' then begin
             Customer.get(LocalSalesHeader.Subsidiary);
             LocalSalesHeader.validate("Subsidiary Name", Customer.Name);
@@ -130,6 +138,8 @@ codeunit 50057 "IC Event Handler"
     begin
         LocalSalesLine."IC PO No." := ICPurchLine."Document No.";
         LocalSalesLine."IC PO Line No." := ICPurchLine."Line No.";
+        LocalSalesLine.Validate("Bid No.", ICPurchLine."Bid No.");
+        LocalSalesLine.Validate("Unit Price", ICPurchLine."Direct Unit Cost");
     end;
 
     local procedure UpdateSalesLineWithICSOInfo(ICSalesline: Record "sales Line"; var LocalSalesLine: Record "Sales Line")
@@ -158,6 +168,7 @@ codeunit 50057 "IC Event Handler"
             repeat
                 if POLineInOtherCompany.Get(POLineInOtherCompany."Document Type"::Order, SalesShptLine."IC PO No.", SalesShptLine."IC PO Line No.") then begin
                     POLineInOtherCompany."Qty. to Receive" := SalesShptLine.Quantity;
+                    POLineInOtherCompany.Modify(false);
                 end;
             until SalesShptLine.Next() = 0;
     end;
@@ -176,6 +187,7 @@ codeunit 50057 "IC Event Handler"
             repeat
                 if SOLineInOtherCompany.Get(SOLineInOtherCompany."Document Type"::Order, SalesShptLine."IC SO No.", SalesShptLine."IC SO Line No.") then begin
                     SOLineInOtherCompany."Qty. to Ship" := SalesShptLine.Quantity;
+                    SOLineInOtherCompany.Modify(false);
                 end;
             until SalesShptLine.Next() = 0;
     end;
@@ -218,6 +230,7 @@ codeunit 50057 "IC Event Handler"
             repeat
                 if SOLineInOtherCompany.Get(SOLineInOtherCompany."Document Type"::Order, SalesInvLine."IC SO No.", SalesInvLine."IC SO Line No.") then begin
                     SOLineInOtherCompany."Qty. to Invoice" := SalesInvLine.Quantity;
+                    SOLineInOtherCompany.Modify(false);
                 end;
             until SalesInvLine.Next() = 0;
     end;
@@ -305,6 +318,7 @@ codeunit 50057 "IC Event Handler"
         ICPurchOrder: Record "Purchase Header";
         ICSalesOrder: Record "Sales Header";
     begin
+
         if SalesHeader.Subsidiary <> '' then begin
             GetICPartner(ICpartner, SalesHeader.Subsidiary);
             UpdateReceiptsOnPurchaseOrderInOtherCompany(SalesShptHdrNo, ICpartner."Inbox Details");
@@ -322,6 +336,7 @@ codeunit 50057 "IC Event Handler"
                 UpdateInvoiceOnPurchaseOrderInOtherCompany(SalesCrMemoHdrNo, ICpartner."Inbox Details"); //remember to create the credit memo function  and update the case
                 AddICPurchaseOrderToTempList(SalesInvHdrNo, ICpartner."Inbox Details", TempICPurchOrder);
             end;
+            Commit();
             if TempICPurchOrder.FindSet() then
                 repeat
                     ICPurchOrder := TempICPurchOrder;

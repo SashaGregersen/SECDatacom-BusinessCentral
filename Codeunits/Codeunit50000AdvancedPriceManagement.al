@@ -580,6 +580,8 @@ codeunit 50000 "Advanced Price Management"
         OldSalesPrice: Record "Sales Price";
         EndDate: Date;
     begin
+        If SalesPrice."Starting Date" = 0D then
+            exit;
         EndDate := CalcDate('<-1D>', SalesPrice."Starting Date");
         OldSalesPrice := SalesPrice;
         OldSalesPrice.SetRecFilter();

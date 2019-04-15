@@ -32,6 +32,19 @@ pageextension 50028 "End Customer and Reseller 8" extends 132
                     SalesInvoice.Run();
                 end;
             }
+            action("Export Cygate XML")
+            {
+                Caption = 'Export Cygate XML';
+                Image = CreateXMLFile;
+                ApplicationArea = All;
+                trigger OnAction()
+                var
+                    Cyg: Codeunit EDICygate;
+                begin
+                    Cyg.SendInvoiceNotice(rec);
+                end;
+
+            }
 
         }
     }

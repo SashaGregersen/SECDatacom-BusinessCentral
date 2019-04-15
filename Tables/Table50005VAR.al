@@ -4,7 +4,7 @@ table 50005 "VAR"
 
     fields
     {
-        field(1; "VAR id"; Integer)
+        field(1; "VAR id"; Code[20])
         {
             Caption = 'VAR id';
             DataClassification = ToBeClassified;
@@ -25,12 +25,9 @@ table 50005 "VAR"
 
     keys
     {
-        key(PK; "VAR id")
+        key(Pk; "Customer No.", "Vendor No.")
         {
             Clustered = true;
-        }
-        key(Key1; "Customer No.", "Vendor No.")
-        {
         }
     }
 
@@ -38,21 +35,19 @@ table 50005 "VAR"
     var
         VarRec: Record "VAR";
     begin
-        VarRec.SetCurrentKey("Customer No.", "Vendor No.");
-        VarRec.SetRange("Customer No.", "Customer No.");
         VarRec.SetRange("Vendor No.", "Vendor No.");
-        if VarRec.FindFirst() then Error('Combination of customer %1 and vendor %2 already exists', "Customer No.", "Vendor No.");
+        VarRec.SetRange("VAR id", "VAR id");
+        if VarRec.FindFirst() then Error('Combination of vendor %1 and var id %2 already exists', "Vendor No.", "VAR id");
     end;
 
     trigger OnModify()
     var
         VarRec: Record "VAR";
     begin
-        VarRec.SetCurrentKey("Customer No.", "Vendor No.");
-        VarRec.SetRange("Customer No.", "Customer No.");
         VarRec.SetRange("Vendor No.", "Vendor No.");
-        VarRec.SetFilter("VAR id", '<>%1', "VAR id");
-        if VarRec.FindFirst() then Error('Combination of customer %1 and vendor %2 already exists', "Customer No.", "Vendor No.");
+        VarRec.SetRange("VAR id", "VAR id");
+        VarRec.SetFilter("Customer No.", '<>%1', "Customer No.");
+        if VarRec.FindFirst() then Error('Combination of vendor %1 and var id %2 already exists', "Vendor No.", "VAR id");
     end;
 
     trigger OnDelete()

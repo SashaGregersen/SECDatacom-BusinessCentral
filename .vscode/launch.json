@@ -7,7 +7,7 @@
             "type": "al",
             "request": "launch",
             "server": "http://192.168.151.168:7089/NAVDEVBC",
-            "serverInstance": "NAVDEVBC",
+            "serverInstance": "DEVBC",
             "authentication": "Windows",
             "breakOnError": true,
             "breakOnRecordWrite": false,

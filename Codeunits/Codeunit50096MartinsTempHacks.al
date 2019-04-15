@@ -2,7 +2,7 @@ codeunit 50096 "Temp Hacks"
 {
     trigger OnRun()
     begin
-        //SetOwningCompany();
+        SetOwningCompany();
     end;
 
     local procedure SetOwningCompany()

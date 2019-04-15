@@ -131,6 +131,13 @@ codeunit 50002 "Synchronize Master Data"
         ICSyncMgt.InsertModifyShipToAddressInOtherCompanies(ShipToAddress);
     End;
 
+    procedure SynchronizePostCodeToCompany(PostCode: Record "Post Code")
+    var
+        ICSyncMgt: Codeunit "IC Sync Management";
+    begin
+        ICSyncMgt.InsertModifyPostCodeInOtherCompanies(PostCode);
+    End;
+
     procedure DeleteItemInOtherCompany(Item: Record "Item")
     var
         ICSyncMgt: Codeunit "IC Sync Management";
@@ -163,18 +170,6 @@ codeunit 50002 "Synchronize Master Data"
                 Customer2."Customer Price Group" := '';
             IF not Customer2.Insert(false) then
                 Customer2.Modify(false);
-            postcode.ChangeCompany(Company.Name);
-            if Customer2."Post Code" <> '' then
-                if not postcode.Get(customer2."Post Code", Customer2.City) then begin
-                    Postcode.Init();
-                    Postcode.ValidatePostCode(Customer2.City, Customer2."Post Code", Customer2.County, Customer2."Country/Region Code", false);
-                    Postcode.Code := Customer2."Post Code";
-                    Postcode.ValidateCity(Customer2.City, Customer2."Post Code", Customer2.County, Customer2."Country/Region Code", false);
-                    Postcode.City := Customer.City;
-                    Postcode.ValidateCountryCode(Customer2.City, Customer2."Post Code", Customer2.County, Customer2."Country/Region Code");
-                    Postcode."Country/Region Code" := Customer2."Country/Region Code";
-                    Postcode.Insert(true);
-                end;
         end;
 
     end;
