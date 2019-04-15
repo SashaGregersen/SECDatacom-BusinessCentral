@@ -98,6 +98,11 @@ tableextension 50043 "Sales Shipt. Line Adv. Pricing" extends "Sales Shipment Li
             DataClassification = ToBeClassified;
             Editable = false;
         }
+        field(50034; "Claim Document No."; Code[20])
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
     }
 
 }
