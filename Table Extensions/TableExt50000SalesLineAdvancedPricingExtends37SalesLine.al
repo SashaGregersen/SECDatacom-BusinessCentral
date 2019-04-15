@@ -163,7 +163,7 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
             DataClassification = ToBeClassified;
             Editable = false;
         }
-        field(500023; "Profit Amount"; Decimal)
+        field(50023; "Profit Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Editable = false;
