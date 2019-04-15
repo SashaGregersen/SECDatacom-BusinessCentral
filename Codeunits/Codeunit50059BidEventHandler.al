@@ -27,7 +27,7 @@ codeunit 50059 "Bid Event Handler"
         //Only works for invoicing at the moment - add support for credit memos later
         exit; //TEST without this
 
-
+        //Update to crate one purchase line per sales shipment line
         if not PurchSetup.Get() then
             exit;
         if PurchSetup."Claims Charge No." = '' then
