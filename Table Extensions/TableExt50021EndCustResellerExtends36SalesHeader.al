@@ -268,6 +268,11 @@ tableextension 50021 "End Customer and Reseller" extends 36
                 Validate("End Customer Contact Name", Contact.Name);
                 validate("End Customer Phone No.", Contact."Phone No.");
                 Validate("End Customer Email", Contact."E-Mail");
+                if "Drop-Shipment" then begin
+                    Validate("Ship-to Email", "End Customer Email");
+                    Validate("Ship-to Phone No.", "End Customer Phone No.");
+                    Validate("Ship-to Contact", "End Customer Contact Name");
+                end;
             end;
 
             trigger Onlookup();
