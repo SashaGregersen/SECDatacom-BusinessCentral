@@ -363,6 +363,9 @@ report 50007 "SEC Sales - Credit Memo"
             column(EndCustAddress; Endcustomer.Address)
             {
             }
+            Column(EndCustAddress2; Endcustomer."Address 2")
+            {
+            }
             column(EndCustPostcode; Endcustomer."Post code")
             {
             }

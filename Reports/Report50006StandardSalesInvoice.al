@@ -210,12 +210,26 @@ report 50006 "SEC - Sales Invoice"
             column(ShipToAddress8; ShipToAddr[8])
             {
             }
-            column(Ship_to_Post_Code; "Ship-to Post Code")
+            //>>NC Ship-to Variables
+            column(Ship_to_Name; "Ship-to Name")
+            {
+            }
+            Column(Ship_to_Address; "Ship-to Address")
+            {
+            }
+            Column(Ship_to_Address_2; "Ship-to Address 2")
+            {
+            }
+            Column(Ship_to_Post_Code; "Ship-to Post Code")
             {
             }
             Column(Ship_to_City; "Ship-to City")
             {
             }
+            Column(Ship_To_Country; ShipToCountryRegion.Name)
+            {
+            }
+            //<<NC
             column(PaymentTermsDescription; PaymentTerms.Description)
             {
             }
@@ -431,6 +445,9 @@ report 50006 "SEC - Sales Invoice"
             column(EndCustAddress; Endcustomer.Address)
             {
             }
+            Column(EndCustAddress2; Endcustomer."Address 2")
+            {
+            }
             column(EndCustPostcode; Endcustomer."Post code")
             {
             }
@@ -454,7 +471,7 @@ report 50006 "SEC - Sales Invoice"
             column(External_Document_No_; "External Document No.")
             {
             }
-            Column(External_Document_No_Lbl; Fieldcaption("External Document No."))
+            Column(External_Document_No_Lbl; ExternalDocNoLbl)
             {
             }
             //<<Misc columns
@@ -1143,6 +1160,19 @@ report 50006 "SEC - Sales Invoice"
                 end;
                 //<<NC
 
+                //>>NC - Getting Ship-to Country
+                if "Ship-to Address" <> '' then begin
+                    ShipToTemp.GET("Ship-to Address");
+                    if ShipToTemp."Country/Region Code" <> '' then
+                        ShipToCountryRegion.Get(ShipToTemp."Country/Region Code")
+                    else
+                        Clear(ShipToCountryRegion);
+                End else begin
+                    Clear(ShipToTemp);
+                    Clear(ShipToCountryRegion);
+                end;
+                //<<NC
+
                 //>>NC Determining EU Customers for special VAT text
                 if
                     "VAT Bus. Posting Group" <> '' then begin
@@ -1477,6 +1507,9 @@ report 50006 "SEC - Sales Invoice"
         IsCustEU: Boolean;
         VendorItemNoLbl: Label 'Vendor Item No.';
         EUCustLbl: label 'The invoice is subject to reverse charge on VAT';
+        ShipToTemp: Record "Ship-to Address";
+        ShipToCountryRegion: Record "Country/Region";
+        ExternalDocNoLbl: Label 'Your Order'
         //>> PM
         PmtSetup: Record "Payment Setup";
         PaymentID: Code[16];

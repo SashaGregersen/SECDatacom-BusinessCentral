@@ -206,6 +206,7 @@ report 50005 "SEC Sales - Order Conf."
             column(ShipToAddress8; ShipToAddr[8])
             {
             }
+            //>>NC Ship-to Variables
             column(Ship_to_Name; "Ship-to Name")
             {
             }
@@ -224,6 +225,7 @@ report 50005 "SEC Sales - Order Conf."
             Column(Ship_To_Country; ShipToCountryRegion.Name)
             {
             }
+            //<<NC
             column(PaymentTermsDescription; PaymentTerms.Description)
             {
             }
@@ -403,6 +405,9 @@ report 50005 "SEC Sales - Order Conf."
             {
             }
             column(EndCustAddress; Endcustomer.Address)
+            {
+            }
+            Column(EndCustAddress2; Endcustomer."Address 2")
             {
             }
             column(EndCustPostcode; Endcustomer."Post code")
