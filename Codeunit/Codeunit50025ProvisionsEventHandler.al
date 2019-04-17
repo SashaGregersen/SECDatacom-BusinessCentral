@@ -8,12 +8,17 @@ codeunit 50025 "Provisions Event Handler"
     var
         CheckGnlJnlLine: Codeunit "Gen. Jnl.-Check Line";
         GenJnlLine: record "Gen. Journal Line";
+        SRSetup: record "Sales & Receivables Setup";
     begin
-        GenJnlLine.setrange("Document No.", SalesHeader."No.");
+        SRSetup.get;
+        GenJnlLine.SetRange("Journal Template Name", SRSetup."Provision Journal Template");
+        GenJnlLine.SetRange("Journal Batch Name", SRSetup."Provision Journal Batch");
+        GenJnlLine.SetRange("Document No.", SalesHeader."No.");
         if GenJnlLine.FindSet() then
             repeat
                 GenJnlLine.validate("Document No.", SalesInvoiceHeader."No.");
                 GenJnlLine.Modify(false);
+                GenJnlLine.TestField("Balance (LCY)", 0);
                 CheckGnlJnlLine.run(GenJnlLine);
             until GenJnlLine.next = 0;
     end;
@@ -23,8 +28,12 @@ codeunit 50025 "Provisions Event Handler"
     var
         PostProvisionLine: Codeunit "Gen. Jnl.-Post Line";
         GenJnlLine: record "Gen. Journal Line";
+        SRSetup: record "Sales & Receivables Setup";
     begin
-        GenJnlLine.setrange("Document No.", SalesHeader."No.");
+        SRSetup.get;
+        GenJnlLine.SetRange("Journal Template Name", SRSetup."Provision Journal Template");
+        GenJnlLine.SetRange("Journal Batch Name", SRSetup."Provision Journal Batch");
+        GenJnlLine.setrange("Document No.", SalesInvHdrNo);
         if GenJnlLine.FindSet() then
             repeat
                 PostProvisionLine.run(GenJnlLine);

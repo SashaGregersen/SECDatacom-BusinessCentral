@@ -5,6 +5,7 @@ page 50013 "General Journal Provisions"
     UsageCategory = Administration;
     SourceTable = "Gen. Journal Line";
     AutoSplitKey = true;
+    PopulateAllFields = true;
 
     layout
     {
@@ -12,6 +13,10 @@ page 50013 "General Journal Provisions"
         {
             repeater(Group)
             {
+                field("Account Type"; "Account Type")
+                {
+                    ApplicationArea = All;
+                }
                 field("Account No."; "Account No.")
                 {
                     ApplicationArea = All;
@@ -31,6 +36,14 @@ page 50013 "General Journal Provisions"
                 {
                     ApplicationArea = All;
 
+                }
+                field("Bal. Account Type"; "Bal. Account Type")
+                {
+                    ApplicationArea = All;
+                }
+                field("Bal. Account No."; "Bal. Account No.")
+                {
+                    ApplicationArea = All;
                 }
                 field("Posting Date"; "Posting Date")
                 {
@@ -54,11 +67,8 @@ page 50013 "General Journal Provisions"
         DocNo: text;
     begin
         SRSetup.Get;
-        DocNo := rec.GetFilter("Document No.");
-        rec.validate("Document No.", DocNo);
-        Rec.validate("Journal Template Name", SRSetup."Provision Journal Template");
-        rec.validate("Journal Batch Name", SRSetup."Provision Journal Batch");
         rec.validate("Line No.", GetNewLineNo(SRSetup."Provision Journal Template", SRSetup."Provision Journal Batch"));
     end;
+
 
 }
