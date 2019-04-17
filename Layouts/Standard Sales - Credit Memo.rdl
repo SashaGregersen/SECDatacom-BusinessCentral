@@ -7084,6 +7084,9 @@ End Function
         <Field Name="EndCustAddress">
           <DataField>EndCustAddress</DataField>
         </Field>
+        <Field Name="EndCustAddress2">
+          <DataField>EndCustAddress2</DataField>
+        </Field>
         <Field Name="EndCustPostcode">
           <DataField>EndCustPostcode</DataField>
         </Field>
