@@ -18,6 +18,16 @@ tableextension 50027 "Synchronize Customer" extends "Sales & Receivables Setup"
         {
             DataClassification = ToBeClassified;
         }
+        field(50003; "Provision Journal Template"; code[10])
+        {
+            DataClassification = ToBeClassified;
+            TableRelation = "Gen. Journal Template";
+        }
+        field(50004; "Provision Journal Batch"; code[10])
+        {
+            DataClassification = ToBeClassified;
+            TableRelation = "Gen. Journal Batch".Name WHERE ("Journal Template Name" = FIELD ("Provision Journal Template"));
+        }
 
         field(50100; "Project Item Template"; code[10])
         {

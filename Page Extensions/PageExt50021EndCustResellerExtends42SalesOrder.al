@@ -243,6 +243,30 @@ pageextension 50021 "End Customer and Reseller" extends 42
                 end;
             }
         }
+
+        addafter("Create Purchase Order")
+        {
+            action("Add Provision")
+            {
+                image = AdjustEntries;
+
+                trigger OnAction()
+                var
+                    GnlJnlProvision: page "General Journal Provisions";
+                    GnlJnlLine: record "Gen. Journal Line";
+                    SRSetup: Record "Sales & Receivables Setup";
+                begin
+                    SRSetup.get;
+                    GnlJnlLine.Reset();
+                    GnlJnlLine.FilterGroup(2);
+                    GnlJnlLine.SetRange("Journal Template Name", SRSetup."Provision Journal Template");
+                    GnlJnlLine.SetRange("Journal Batch Name", SRSetup."Provision Journal Batch");
+                    GnlJnlLine.SetRange("Document No.", Rec."No.");
+                    GnlJnlLine.FilterGroup(0);
+                    page.RunModal(Page::"General Journal Provisions", GnlJnlLine);
+                end;
+            }
+        }
     }
     var
         SalesOrder: report 50005;
