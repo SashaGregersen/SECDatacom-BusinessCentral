@@ -1509,7 +1509,7 @@ report 50006 "SEC - Sales Invoice"
         EUCustLbl: label 'The invoice is subject to reverse charge on VAT';
         ShipToTemp: Record "Ship-to Address";
         ShipToCountryRegion: Record "Country/Region";
-        ExternalDocNoLbl: Label 'Your Order'
+        ExternalDocNoLbl: Label 'Your Order';
         //>> PM
         PmtSetup: Record "Payment Setup";
         PaymentID: Code[16];
