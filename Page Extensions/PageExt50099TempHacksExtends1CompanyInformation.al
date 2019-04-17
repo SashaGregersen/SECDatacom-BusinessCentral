@@ -14,6 +14,7 @@ pageextension 50099 "Temp Hacks" extends "Company Information"
             action(SetOwningCompany)
             {
                 ApplicationArea = all;
+                Image = ApplyTemplate;
 
                 trigger OnAction()
                 var

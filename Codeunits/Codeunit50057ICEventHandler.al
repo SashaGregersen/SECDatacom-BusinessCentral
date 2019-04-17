@@ -173,6 +173,36 @@ codeunit 50057 "IC Event Handler"
             until SalesShptLine.Next() = 0;
     end;
 
+    local procedure TransferSerialNosFromShipmentToOtherCompany(SalesShptHdrNo: Code[20]; OtherCompanyName: text[35])
+    var
+        SalesShptHeader: Record "Sales Shipment Header";
+        SalesShptLine: Record "Sales Shipment Line";
+        ItemLedgerEntry: Record "Item Ledger Entry";
+        SerialNoICExch: Record "Serial No. Intercompany Exch.";
+    begin
+        if not SalesShptHeader.Get(SalesShptHdrNo) then
+            exit;
+        SalesShptLine.SetRange("Document No.", SalesShptHeader."No.");
+        SerialNoICExch.ChangeCompany(OtherCompanyName);
+        if SalesShptLine.FindSet() then
+            repeat
+                ItemLedgerEntry.SetRange("Order No.", SalesShptLine."Document No.");
+                ItemLedgerEntry.SetRange("Order Line No.", SalesShptLine."Line No.");
+                ItemLedgerEntry.SetRange("Order Type", ItemLedgerEntry."Document Type"::"Sales Shipment");
+                ItemLedgerEntry.SetFilter("Serial No.", '<>%1', '');
+                if ItemLedgerEntry.FindSet() then
+                    repeat
+                        SerialNoICExch.init;
+                        SerialNoICExch."Order Type" := SerialNoICExch."Order Type"::"Purchase order";
+                        SerialNoICExch."Order No." := SalesShptLine."IC PO No.";
+                        SerialNoICExch."Line No." := SalesShptLine."IC PO Line No.";
+                        SerialNoICExch."Item No." := SalesShptLine."No.";
+                        SerialNoICExch."Serial No." := ItemLedgerEntry."Serial No.";
+                        SerialNoICExch.Insert(false);
+                    until ItemLedgerEntry.Next() = 0;
+            until SalesShptLine.Next() = 0;
+    end;
+
     local procedure UpdateShipmentsOnSalesOrderInOtherCompany(SalesShptHdrNo: Code[20]; OtherCompanyName: text[35])
     var
         SalesShptHeader: Record "Sales Shipment Header";
@@ -318,12 +348,13 @@ codeunit 50057 "IC Event Handler"
         ICPurchOrder: Record "Purchase Header";
         ICSalesOrder: Record "Sales Header";
     begin
-
         if SalesHeader.Subsidiary <> '' then begin
             GetICPartner(ICpartner, SalesHeader.Subsidiary);
             UpdateReceiptsOnPurchaseOrderInOtherCompany(SalesShptHdrNo, ICpartner."Inbox Details");
+            TransferSerialNosFromShipmentToOtherCompany(SalesShptHdrNo, ICpartner."Inbox Details");
             AddICPurchaseOrderToTempList(SalesShptHdrNo, ICpartner."Inbox Details", TempICPurchOrder);
             UpdateShipmentsOnSalesOrderInOtherCompany(SalesShptHdrNo, ICpartner."Inbox Details");
+            //NOT necessary to transfer serial nos. to SO - it is the same reservation entry as POS
             AddICSalesOrderToTempList(SalesShptHdrNo, ICpartner."Inbox Details", TempICSalesOrder);
             //Add support for return orders
             if SalesInvHdrNo <> '' then begin
@@ -340,6 +371,7 @@ codeunit 50057 "IC Event Handler"
             if TempICPurchOrder.FindSet() then
                 repeat
                     ICPurchOrder := TempICPurchOrder;
+                    //Update serialNos. in sub before posting
                     ICSyncMgt.PostPurchaseOrderInOtherCompany(ICPurchOrder, ICpartner."Inbox Details");
                 until TempICPurchOrder.Next() = 0;
             if TempICSalesOrder.FindSet() then

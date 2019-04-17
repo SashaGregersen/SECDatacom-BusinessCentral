@@ -93,7 +93,7 @@ codeunit 50012 "Import Serial Number Purchase"
             Message('All serial numbers imported');
     end;
 
-    local procedure UpdateReservationEntries(var TempItemLedgerEntry: record "Item Ledger Entry" temporary; PurchLine: Record "Purchase Line")
+    procedure UpdateReservationEntries(var TempItemLedgerEntry: record "Item Ledger Entry" temporary; PurchLine: Record "Purchase Line")
     var
         ReservationEntry: record "Reservation Entry";
         SerialNo: code[50];
