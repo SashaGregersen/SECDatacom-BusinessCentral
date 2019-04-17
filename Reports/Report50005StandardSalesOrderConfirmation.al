@@ -222,7 +222,7 @@ report 50005 "SEC Sales - Order Conf."
             Column(Ship_to_City; "Ship-to City")
             {
             }
-            Column(Ship_To_Country; ShipToCountryRegion.Name)
+            Column(Ship_to_Country; ShipToCountryRegion.Name)
             {
             }
             //<<NC
@@ -397,7 +397,7 @@ report 50005 "SEC Sales - Order Conf."
             column(ShowWorkDescription; ShowWorkDescription)
             {
             }
-            //Endcustomer columns
+            //>>NC Endcustomer columns and supression of price details
             column(Endcustomer_Lbl; FieldCaption("End Customer"))
             {
             }
@@ -422,6 +422,7 @@ report 50005 "SEC Sales - Order Conf."
             column(Suppress_Prices_on_Printouts; "Suppress Prices on Printouts")
             {
             }
+            //<<NC
             dataitem(Line; "Sales Line")
             {
                 DataItemLink = "Document No." = FIELD ("No.");
@@ -564,7 +565,6 @@ report 50005 "SEC Sales - Order Conf."
 
                 trigger OnAfterGetRecord()
                 var
-
 
                 begin
                     if Type = Type::"G/L Account" then
@@ -915,14 +915,9 @@ report 50005 "SEC Sales - Order Conf."
                 //<<NC
 
                 //>>NC - Getting Ship-to Country
-                if "Ship-to Address" <> '' then begin
-                    ShipToTemp.GET("Ship-to Address");
-                    if ShipToTemp."Country/Region Code" <> '' then
-                        ShipToCountryRegion.Get(ShipToTemp."Country/Region Code")
-                    else
-                        Clear(ShipToCountryRegion);
+                if "Ship-to Country/Region Code" <> '' then begin
+                    ShipToCountryRegion.Get("Ship-to Country/Region Code")
                 End else begin
-                    Clear(ShipToTemp);
                     Clear(ShipToCountryRegion);
                 end;
                 //<<NC
@@ -1170,7 +1165,6 @@ report 50005 "SEC Sales - Order Conf."
         Endcustomer: Record Customer;
         ResellerCountryRegion: Record "Country/Region";
         EndcustomerCountryRegion: Record "Country/Region";
-        ShipToTemp: Record "Ship-to Address";
         ShipToCountryRegion: Record "Country/Region";
         WorkDescriptionLine: Text;
 

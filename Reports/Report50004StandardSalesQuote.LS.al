@@ -199,26 +199,6 @@ report 50012 "SEC Sales - Quote LS"
             column(ShipToAddress8; ShipToAddr[8])
             {
             }
-            //>>NC Ship-to Variables
-            column(Ship_to_Name; "Ship-to Name")
-            {
-            }
-            Column(Ship_to_Address; "Ship-to Address")
-            {
-            }
-            Column(Ship_to_Address_2; "Ship-to Address 2")
-            {
-            }
-            Column(Ship_to_Post_Code; "Ship-to Post Code")
-            {
-            }
-            Column(Ship_to_City; "Ship-to City")
-            {
-            }
-            Column(Ship_To_Country; ShipToCountryRegion.Name)
-            {
-            }
-            //<<NC
             column(PaymentTermsDescription; PaymentTerms.Description)
             {
             }
@@ -418,6 +398,9 @@ report 50012 "SEC Sales - Quote LS"
             {
             }
             column(EndCustAddress; Endcustomer.Address)
+            {
+            }
+            Column(EndCustAddress2; Endcustomer."Address 2")
             {
             }
             column(EndCustPostcode; Endcustomer."Post code")
@@ -844,19 +827,6 @@ report 50012 "SEC Sales - Quote LS"
                 end;
                 //<<NC
 
-                //>>NC - Getting Ship-to Country in order to print Country Name instead of code
-                if "Ship-to Address" <> '' then begin
-                    ShipToTemp.GET("Ship-to Address");
-                    if ShipToTemp."Country/Region Code" <> '' then
-                        ShipToCountryRegion.Get(ShipToTemp."Country/Region Code")
-                    else
-                        Clear(ShipToCountryRegion);
-                End else begin
-                    Clear(ShipToTemp);
-                    Clear(ShipToCountryRegion);
-                end;
-                //<<NC
-
                 //>>NC Getting Reseller Country/Region in order to print Country Name instead of code
                 if "Sell-to Country/Region Code" <> '' then
                     ResellerCountryRegion.get("Sell-to Country/Region Code")
@@ -1120,8 +1090,6 @@ report 50012 "SEC Sales - Quote LS"
         Endcustomer: Record Customer;
         ResellerCountryRegion: Record "Country/Region";
         EndcustomerCountryRegion: Record "Country/Region";
-        ShipToTemp: Record "Ship-to Address";
-        ShipToCountryRegion: Record "Country/Region";
         PricePerLbl: Label 'Price per';
 
     local procedure InitLogInteraction()
