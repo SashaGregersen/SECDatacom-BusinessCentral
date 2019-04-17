@@ -178,7 +178,7 @@ codeunit 50010 "Bid Management"
         if PurchSetup."Claims Charge No." = '' then
             exit;
 
-        SalesCrMemoLine.SetRange("Document No.", SalesInvoiceHeader."No.");
+        SalesCrMemoLine.SetRange("Document No.", SalesCrMemoHeader."No.");
         SalesCrMemoLine.SetFilter(Quantity, '<>0');
         SalesCrMemoLine.SetRange(Claimable, true);
         SalesCrMemoLine.SetFilter("Claim Amount", '<>0');
@@ -189,13 +189,14 @@ codeunit 50010 "Bid Management"
                     exit;
                 if not Vendor.Get(bid."Vendor No.") then
                     exit;
+
                 if not ClaimsVendor.Get(Vendor."Claims Vendor") then
                     Error('Sales Credit Memo %1 uses Bid %2 from Vendor %3. Please add a value in the Claims Vendor field on Vendor %3', SalesCrMemoHeader."No.", ReturnRcptLine."Bid No.", Vendor."No.");
                 ReturnRcptLine.SetRange("return Order No.", SalesCrMemoLine."Order No.");
                 ReturnRcptLine.SetRange("return Order Line No.", SalesCrMemoLine."Order Line No.");
                 ReturnRcptLine.SetFilter("Claim Document No.", '');
                 if ReturnRcptLine.FindSet(true, false) then begin
-                    CreatePurchaseHeader(PurchHeader."Document Type"::"Credit Memo", SalesHeader."Posting Date", ClaimsVendor."No.", SalesCrMemoHeader."No.", SalesCrMemoHeader."Currency Code", PurchHeader);
+                    CreatePurchaseHeader(PurchHeader."Document Type"::Invoice, SalesHeader."Posting Date", ClaimsVendor."No.", SalesCrMemoHeader."No.", SalesCrMemoHeader."Currency Code", PurchHeader);
                     repeat
                         CreateItemChargePurchaseLine(PurchHeader, SalesCrMemoLine."Line No.", PurchSetup."Claims Charge No.", ReturnRcptLine."Claim Amount", PurchLine);
                         CreateItemChargeAssignPurchFromReturn(PurchLine, ReturnRcptLine, ItemChargeAssignment);
@@ -218,7 +219,12 @@ codeunit 50010 "Bid Management"
         PurchHeader.validate("Posting Date", postingdate);
         PurchHeader.Validate("Buy-from Vendor No.", VendorNo);
         PurchHeader.Validate("Currency Code", CurrenCode);
-        PurchHeader."Vendor Cr. Memo No." := ExtDocNo;
+        case PurchHeader."Document Type" of
+            PurchHeader."Document Type"::"Credit Memo":
+                PurchHeader."Vendor Cr. Memo No." := ExtDocNo;
+            PurchHeader."Document Type"::Invoice:
+                PurchHeader."Vendor Invoice No." := ExtDocNo;
+        end;
         PurchHeader.insert(true);
     end;
 
@@ -262,7 +268,7 @@ codeunit 50010 "Bid Management"
         ItemChargeAssignment."Line No." := PurchLine."Line No.";
         ItemChargeAssignment."Applies-to Doc. Line No." := ReturnRcptLine."Line No.";
         ItemChargeAssignment."Applies-to Doc. No." := ReturnRcptLine."Document No.";
-        ItemChargeAssignment."Applies-to Doc. Type" := ItemChargeAssignment."Applies-to Doc. Type"::"Sales Shipment";
+        ItemChargeAssignment."Applies-to Doc. Type" := ItemChargeAssignment."Applies-to Doc. Type"::"Return Receipt";
         ItemChargeAssignment.Validate("Item Charge No.", PurchLine."No.");
         ItemChargeAssignment.Validate("Item No.", ReturnRcptLine."No.");
         ItemChargeAssignment.Validate("Unit Cost", ReturnRcptLine."Claim Amount");
