@@ -263,7 +263,7 @@ tableextension 50021 "End Customer and Reseller" extends 36
             var
                 Contact: record Contact;
             begin
-                If not Contact.get("End Customer Contact") then
+                If ("End Customer Contact" <> '') and not Contact.get("End Customer Contact") then
                     error('Not a contact');
                 Validate("End Customer Contact Name", Contact.Name);
                 validate("End Customer Phone No.", Contact."Phone No.");

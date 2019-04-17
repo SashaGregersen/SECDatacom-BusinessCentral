@@ -347,10 +347,32 @@ report 50007 "SEC Sales - Credit Memo"
             column(VATClause_Lbl; VATClause.TableCaption)
             {
             }
-            Column(External_Document_No_Lbl; FieldCaption("External Document No."))
+            Column(External_Document_No_Lbl; ExternalDocumentNoLbl)
             {
             }
             column(External_Document_No_; "External Document No.")
+            {
+            }
+            //>>NC adding End customer fields
+            column(Endcustomer_Lbl; FieldCaption("End Customer"))
+            {
+            }
+            column(EndCustName; Endcustomer.Name)
+            {
+            }
+            column(EndCustAddress; Endcustomer.Address)
+            {
+            }
+            Column(EndCustAddress2; Endcustomer."Address 2")
+            {
+            }
+            column(EndCustPostcode; Endcustomer."Post code")
+            {
+            }
+            column(EndCustCity; Endcustomer.City)
+            {
+            }
+            column(EndCustCountry; EndcustomerCountryRegion.Name)
             {
             }
             column(Suppress_Prices_on_Printouts; "Suppress Prices on Printouts")
@@ -809,6 +831,18 @@ report 50007 "SEC Sales - Credit Memo"
 
                 CurrReport.Language := Language.GetLanguageID("Language Code");
 
+                //>> NC Endcustomer and Reseller GetData
+                if "End Customer" <> '' then begin
+                    Endcustomer.Get("End Customer");
+                    if Endcustomer."Country/Region Code" <> '' then
+                        EndcustomerCountryRegion.get(Endcustomer."Country/Region Code")
+                    else
+                        Clear(EndcustomerCountryRegion);
+                End else begin
+                    clear(Endcustomer);
+                    Clear(EndcustomerCountryRegion);
+                end;
+
                 FormatAddressFields(Header);
                 FormatDocumentFields(Header);
 
@@ -1021,7 +1055,11 @@ report 50007 "SEC Sales - Credit Memo"
         NoFilterSetErr: Label 'You must specify one or more filters to avoid accidently printing all documents.';
         GreetingLbl: Label 'Hello';
         ClosingLbl: Label 'Sincerely';
-        ExternalDocumentNo: Text;
+        //>>NC Global Variables 
+        ExternalDocumentNoLbl: Label 'Your Order';
+        EndcustomerCountryRegion: Record "Country/Region";
+        Endcustomer: Record Customer;
+        //<<NC
         BodyLbl: Label 'Thank you for your business. Your credit memo is attached to this message.';
 
     local procedure InitLogInteraction()

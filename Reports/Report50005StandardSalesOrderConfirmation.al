@@ -206,12 +206,26 @@ report 50005 "SEC Sales - Order Conf."
             column(ShipToAddress8; ShipToAddr[8])
             {
             }
-            column(Ship_to_Post_Code; "Ship-to Post Code")
+            //>>NC Ship-to Variables
+            column(Ship_to_Name; "Ship-to Name")
+            {
+            }
+            Column(Ship_to_Address; "Ship-to Address")
+            {
+            }
+            Column(Ship_to_Address_2; "Ship-to Address 2")
+            {
+            }
+            Column(Ship_to_Post_Code; "Ship-to Post Code")
             {
             }
             Column(Ship_to_City; "Ship-to City")
             {
             }
+            Column(Ship_To_Country; ShipToCountryRegion.Name)
+            {
+            }
+            //<<NC
             column(PaymentTermsDescription; PaymentTerms.Description)
             {
             }
@@ -393,13 +407,16 @@ report 50005 "SEC Sales - Order Conf."
             column(EndCustAddress; Endcustomer.Address)
             {
             }
+            Column(EndCustAddress2; Endcustomer."Address 2")
+            {
+            }
             column(EndCustPostcode; Endcustomer."Post code")
             {
             }
             column(EndCustCity; Endcustomer.City)
             {
             }
-            column(EndCustCountry; Endcustomer."Country/Region Code")
+            column(EndCustCountry; EndcustomerCountryRegion.Name)
             {
             }
             column(Suppress_Prices_on_Printouts; "Suppress Prices on Printouts")
@@ -897,6 +914,19 @@ report 50005 "SEC Sales - Order Conf."
                 end;
                 //<<NC
 
+                //>>NC - Getting Ship-to Country
+                if "Ship-to Address" <> '' then begin
+                    ShipToTemp.GET("Ship-to Address");
+                    if ShipToTemp."Country/Region Code" <> '' then
+                        ShipToCountryRegion.Get(ShipToTemp."Country/Region Code")
+                    else
+                        Clear(ShipToCountryRegion);
+                End else begin
+                    Clear(ShipToTemp);
+                    Clear(ShipToCountryRegion);
+                end;
+                //<<NC
+
                 if not IsReportInPreviewMode then
                     CODEUNIT.Run(CODEUNIT::"Sales-Printed", Header);
 
@@ -1140,6 +1170,8 @@ report 50005 "SEC Sales - Order Conf."
         Endcustomer: Record Customer;
         ResellerCountryRegion: Record "Country/Region";
         EndcustomerCountryRegion: Record "Country/Region";
+        ShipToTemp: Record "Ship-to Address";
+        ShipToCountryRegion: Record "Country/Region";
         WorkDescriptionLine: Text;
 
     local procedure InitLogInteraction()
