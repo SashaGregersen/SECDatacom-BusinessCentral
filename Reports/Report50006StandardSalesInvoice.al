@@ -1161,14 +1161,9 @@ report 50006 "SEC - Sales Invoice"
                 //<<NC
 
                 //>>NC - Getting Ship-to Country
-                if "Ship-to Address" <> '' then begin
-                    ShipToTemp.GET("Ship-to Address");
-                    if ShipToTemp."Country/Region Code" <> '' then
-                        ShipToCountryRegion.Get(ShipToTemp."Country/Region Code")
-                    else
-                        Clear(ShipToCountryRegion);
-                End else begin
-                    Clear(ShipToTemp);
+                if "ship-to Country/Region Code" <> '' then begin
+                    ShipToCountryRegion.Get("Ship-to Country/Region Code")
+                End else Begin
                     Clear(ShipToCountryRegion);
                 end;
                 //<<NC

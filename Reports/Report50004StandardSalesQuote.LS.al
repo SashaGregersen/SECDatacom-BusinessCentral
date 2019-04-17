@@ -1,10 +1,10 @@
-report 50005 "SEC Sales - Order Conf."
+report 50012 "SEC Sales - Quote LS"
 {
     // version NAVW113.00
 
-    RDLCLayout = './Layouts/Standard Sales - Order Conf.rdl';
-    //WordLayout = './Layouts/Standard Sales - Order Conf.docx';
-    Caption = 'Sales - Confirmation';
+    RDLCLayout = './Layouts/Standard Sales - QuoteLS.rdl';
+    //WordLayout = './Layouts/Standard Sales - Quote.docx';
+    Caption = 'Sales - Quote';
     DefaultLayout = RDLC;
     PreviewMode = PrintLayout;
     WordMergeDataItem = Header;
@@ -13,9 +13,9 @@ report 50005 "SEC Sales - Order Conf."
     {
         dataitem(Header; "Sales Header")
         {
-            DataItemTableView = SORTING ("Document Type", "No.") WHERE ("Document Type" = CONST (Order));
+            DataItemTableView = SORTING ("Document Type", "No.") WHERE ("Document Type" = CONST (Quote));
             RequestFilterFields = "No.", "Sell-to Customer No.", "No. Printed";
-            RequestFilterHeading = 'Sales Order';
+            RequestFilterHeading = 'Sales Quote';
             column(CompanyAddress1; CompanyAddr[1])
             {
             }
@@ -32,6 +32,12 @@ report 50005 "SEC Sales - Order Conf."
             {
             }
             column(CompanyAddress6; CompanyAddr[6])
+            {
+            }
+            column(CompanyAddress7; CompanyAddr[7])
+            {
+            }
+            column(CompanyAddress8; CompanyAddr[8])
             {
             }
             column(CompanyHomePage; CompanyInfo."Home Page")
@@ -148,19 +154,12 @@ report 50005 "SEC Sales - Order Conf."
             column(CustomerPostalBarCode; FormatAddr.PostalBarCode(1))
             {
             }
-            /*column(YourReference; "External Document No.")
-            {
-            }
-            column(YourReference_Lbl; FieldCaption("External Document No."))
-            {
-            }*/
             column(YourReference; "Your Reference")
             {
             }
-            column(YourReference_Lbl; FieldCaption("Your Reference"))
+            column(YourReference__Lbl; FieldCaption("Your Reference"))
             {
             }
-
             column(ShipmentMethodDescription; ShipmentMethod.Description)
             {
             }
@@ -168,12 +167,6 @@ report 50005 "SEC Sales - Order Conf."
             {
             }
             column(Shipment_Lbl; ShipmentLbl)
-            {
-            }
-            column(ShipmentDate; Format("Shipment Date", 0, 4))
-            {
-            }
-            column(ShipmentDate_Lbl; FieldCaption("Shipment Date"))
             {
             }
             column(ShowShippingAddress; ShowShippingAddr)
@@ -206,26 +199,6 @@ report 50005 "SEC Sales - Order Conf."
             column(ShipToAddress8; ShipToAddr[8])
             {
             }
-            //>>NC Ship-to Variables
-            column(Ship_to_Name; "Ship-to Name")
-            {
-            }
-            Column(Ship_to_Address; "Ship-to Address")
-            {
-            }
-            Column(Ship_to_Address_2; "Ship-to Address 2")
-            {
-            }
-            Column(Ship_to_Post_Code; "Ship-to Post Code")
-            {
-            }
-            Column(Ship_to_City; "Ship-to City")
-            {
-            }
-            Column(Ship_to_Country; ShipToCountryRegion.Name)
-            {
-            }
-            //<<NC
             column(PaymentTermsDescription; PaymentTerms.Description)
             {
             }
@@ -241,7 +214,7 @@ report 50005 "SEC Sales - Order Conf."
             column(DocumentCopyText; StrSubstNo(DocumentCaption, CopyText))
             {
             }
-            column(BilltoCustumerNo; "Bill-to Customer No.")
+            column(BilltoCustomerNo; "Bill-to Customer No.")
             {
             }
             column(BilltoCustomerNo_Lbl; FieldCaption("Bill-to Customer No."))
@@ -259,16 +232,16 @@ report 50005 "SEC Sales - Order Conf."
             column(DueDate_Lbl; FieldCaption("Due Date"))
             {
             }
+            column(QuoteValidToDate; Format("Quote Valid Until Date", 0, 4))
+            {
+            }
+            column(QuoteValidToDate_Lbl; QuoteValidToDateLbl)
+            {
+            }
             column(DocumentNo; "No.")
             {
             }
             column(DocumentNo_Lbl; InvNoLbl)
-            {
-            }
-            column(QuoteNo; "Quote No.")
-            {
-            }
-            column(QuoteNo_Lbl; FieldCaption("Quote No."))
             {
             }
             column(PricesIncludingVAT; "Prices Including VAT")
@@ -283,7 +256,7 @@ report 50005 "SEC Sales - Order Conf."
             column(SalesPerson_Lbl; SalespersonLbl)
             {
             }
-            column(SalesPersonText_Lbl; SalesPersonText)
+            column(SalesPersonBlank_Lbl; SalesPersonText)
             {
             }
             column(SalesPersonName; SalespersonPurchaser.Name)
@@ -310,7 +283,7 @@ report 50005 "SEC Sales - Order Conf."
             column(Sell_to_Post_Code; "Sell-to Post Code")
             {
             }
-            column(Sell_to_Country; ResellerCountryRegion.Name)
+            column(Sell_to_Country_Region_Code; ResellerCountryRegion.Name)
             {
             }
             column(VATRegistrationNo; GetCustomerVATRegistrationNumber)
@@ -337,6 +310,30 @@ report 50005 "SEC Sales - Order Conf."
             column(EMail_Lbl; EMailLbl)
             {
             }
+            column(Estimate_Lbl; EstimateLbl)
+            {
+            }
+            column(YourEstimate_Lbl; YourEstimateLbl)
+            {
+            }
+            column(EstimateBody_Lbl; EstimateBodyLbl)
+            {
+            }
+            column(From_Lbl; FromLbl)
+            {
+            }
+            column(EstimateFor_Lbl; EstimateForLbl)
+            {
+            }
+            column(Questions_Lbl; QuestionsLbl)
+            {
+            }
+            column(Contact_Lbl; CompanyInfo.GetContactUsText)
+            {
+            }
+            column(Thanks_Lbl; ThanksLbl)
+            {
+            }
             column(HomePage_Lbl; HomePageLbl)
             {
             }
@@ -361,7 +358,10 @@ report 50005 "SEC Sales - Order Conf."
             column(SalesInvoiceLineDiscount_Lbl; SalesInvLineDiscLbl)
             {
             }
-            column(Invoice_Lbl; SalesConfirmationLbl)
+            column(DocumentTitle_Lbl; SalesConfirmationLbl)
+            {
+            }
+            column(ShowWorkDescription; ShowWorkDescription)
             {
             }
             column(Subtotal_Lbl; SubtotalLbl)
@@ -391,13 +391,6 @@ report 50005 "SEC Sales - Order Conf."
             column(VATClause_Lbl; VATClause.TableCaption)
             {
             }
-            column(ExtDocNo_SalesHeader; "External Document No.")
-            {
-            }
-            column(ShowWorkDescription; ShowWorkDescription)
-            {
-            }
-            //>>NC Endcustomer columns and supression of price details
             column(Endcustomer_Lbl; FieldCaption("End Customer"))
             {
             }
@@ -422,7 +415,6 @@ report 50005 "SEC Sales - Order Conf."
             column(Suppress_Prices_on_Printouts; "Suppress Prices on Printouts")
             {
             }
-            //<<NC
             dataitem(Line; "Sales Line")
             {
                 DataItemLink = "Document No." = FIELD ("No.");
@@ -447,7 +439,7 @@ report 50005 "SEC Sales - Order Conf."
                 }
                 column(AmountIncludingVAT_Line_Lbl; FieldCaption("Amount Including VAT"))
                 {
-                    AutoFormatExpression = "Currency Code";
+                    AutoFormatExpression = Header."Currency Code";
                     AutoFormatType = 1;
                 }
                 column(Description_Line; Description)
@@ -479,7 +471,7 @@ report 50005 "SEC Sales - Order Conf."
                 column(ShipmentDate_Line; Format("Shipment Date"))
                 {
                 }
-                column(ShipmentDate_Line_Lbl; PostedShipmentDateLbl)
+                column(ShipmentDate_Lbl; PostedShipmentDateLbl)
                 {
                 }
                 column(Quantity_Line; FormattedQuantity)
@@ -522,68 +514,36 @@ report 50005 "SEC Sales - Order Conf."
                     AutoFormatExpression = "Currency Code";
                     AutoFormatType = 1;
                 }
-                column(CrossReferenceNo; "Cross-Reference No.")
+                column(Unit_Lbl; UnitLbl)
                 {
                 }
-                column(CrossReferenceNo_Lbl; FieldCaption("Cross-Reference No."))
+                column(Qty_Lbl; QtyLbl)
                 {
                 }
-                //Adding vendor item no column to the sales line
+                column(Price_Lbl; PriceLbl)
+                {
+                }
                 column(Vendor_Item_No; Item."Vendor Item No.")
                 {
                 }
-                dataitem(AssemblyLine; "Assembly Line")
+                column(PricePer_Lbl; PricePerLbl)
                 {
-                    DataItemTableView = SORTING ("Document No.", "Line No.");
-                    column(LineNo_AssemblyLine; "No.")
-                    {
-                    }
-                    column(Description_AssemblyLine; Description)
-                    {
-                    }
-                    column(Quantity_AssemblyLine; Quantity)
-                    {
-                        DecimalPlaces = 0 : 5;
-                    }
-                    column(UnitOfMeasure_AssemblyLine; GetUOMText("Unit of Measure Code"))
-                    {
-                    }
-                    column(VariantCode_AssemblyLine; "Variant Code")
-                    {
-                    }
-
-                    trigger OnPreDataItem()
-                    begin
-                        if not DisplayAssemblyInformation then
-                            CurrReport.Break;
-                        if not AsmInfoExistsForLine then
-                            CurrReport.Break;
-                        SetRange("Document Type", AsmHeader."Document Type");
-                        SetRange("Document No.", AsmHeader."No.");
-                    end;
                 }
 
                 trigger OnAfterGetRecord()
-                var
-
                 begin
                     if Type = Type::"G/L Account" then
                         "No." := '';
 
-                    //>>NC - Getting Vendor item no from the Item 
                     if Type = Type::Item then
                         Item.Get("No.")
                     else
                         Clear(Item);
-                    //<< NC
 
                     if "Line Discount %" = 0 then
                         LineDiscountPctText := ''
                     else
                         LineDiscountPctText := StrSubstNo('%1%', -Round("Line Discount %", 0.1));
-
-                    if DisplayAssemblyInformation then
-                        AsmInfoExistsForLine := AsmToOrderExists(AsmHeader);
 
                     TransHeaderAmount += PrevLineAmount;
                     PrevLineAmount := "Line Amount";
@@ -730,55 +690,12 @@ report 50005 "SEC Sales - Order Conf."
 
                     TotalVATBaseLCY += VATBaseLCY;
                     TotalVATAmountLCY += VATAmountLCY;
-
-                    if "VAT Clause Code" <> '' then begin
-                        VATClauseLine := VATAmountLine;
-                        if VATClauseLine.Insert then;
-                    end;
                 end;
 
                 trigger OnPreDataItem()
                 begin
                     TotalVATBaseLCY := 0;
                     TotalVATAmountLCY := 0;
-
-                    VATClauseLine.DeleteAll;
-                end;
-            }
-            dataitem(VATClauseLine; "VAT Amount Line")
-            {
-                UseTemporary = true;
-                column(VATIdentifier_VATClauseLine; "VAT Identifier")
-                {
-                }
-                column(Code_VATClauseLine; VATClause.Code)
-                {
-                }
-                column(Code_VATClauseLine_Lbl; VATClause.FieldCaption(Code))
-                {
-                }
-                column(Description_VATClauseLine; VATClause.Description)
-                {
-                }
-                column(Description2_VATClauseLine; VATClause."Description 2")
-                {
-                }
-                column(VATAmount_VATClauseLine; "VAT Amount")
-                {
-                    AutoFormatExpression = Header."Currency Code";
-                    AutoFormatType = 1;
-                }
-                column(NoOfVATClauses; Count)
-                {
-                }
-
-                trigger OnAfterGetRecord()
-                begin
-                    if "VAT Clause Code" = '' then
-                        CurrReport.Skip;
-                    if not VATClause.Get("VAT Clause Code") then
-                        CurrReport.Skip;
-                    VATClause.TranslateDescription(Header."Language Code");
                 end;
             }
             dataitem(ReportTotalsLine; "Report Totals Buffer")
@@ -888,7 +805,6 @@ report 50005 "SEC Sales - Order Conf."
                 CurrencyExchangeRate: Record "Currency Exchange Rate";
                 ArchiveManagement: Codeunit ArchiveManagement;
                 SalesPost: Codeunit "Sales-Post";
-
             begin
                 FirstLineHasBeenOutput := false;
                 Clear(Line);
@@ -898,10 +814,7 @@ report 50005 "SEC Sales - Order Conf."
                 SalesPost.GetSalesLines(Header, Line, 0);
                 Line.CalcVATAmountLines(0, Header, Line, VATAmountLine);
                 Line.UpdateVATOnLines(0, Header, Line, VATAmountLine);
-
-
-
-                //>>NC - Getting Endcustomer info    
+                //>>NC - Getting Endcustomer 
                 if "End Customer" <> '' then begin
                     Endcustomer.Get("End Customer");
                     if Endcustomer."Country/Region Code" <> '' then
@@ -914,16 +827,17 @@ report 50005 "SEC Sales - Order Conf."
                 end;
                 //<<NC
 
-                //>>NC - Getting Ship-to Country
-                if "Ship-to Country/Region Code" <> '' then begin
-                    ShipToCountryRegion.Get("Ship-to Country/Region Code")
-                End else begin
-                    Clear(ShipToCountryRegion);
-                end;
+                //>>NC Getting Reseller Country/Region in order to print Country Name instead of code
+                if "Sell-to Country/Region Code" <> '' then
+                    ResellerCountryRegion.get("Sell-to Country/Region Code")
+                else
+                    Clear(ResellerCountryRegion);
                 //<<NC
 
-                if not IsReportInPreviewMode then
-                    CODEUNIT.Run(CODEUNIT::"Sales-Printed", Header);
+
+
+                if IdentityManagement.IsInvAppId then
+                    "Language Code" := Language.GetUserLanguage;
 
                 CurrReport.Language := Language.GetLanguageID("Language Code");
 
@@ -948,16 +862,25 @@ report 50005 "SEC Sales - Order Conf."
 
                 if not IsReportInPreviewMode and
                    (CurrReport.UseRequestPage and ArchiveDocument or
-                    not CurrReport.UseRequestPage and SalesSetup."Archive Orders")
+                    not CurrReport.UseRequestPage and (SalesSetup."Archive Quotes" <> SalesSetup."Archive Quotes"::Never))
                 then
-                    ArchiveManagement.StoreSalesDocument(Header, LogInteraction);
+                    case SalesSetup."Archive Quotes" of
+                        SalesSetup."Archive Quotes"::Always:
+                            ArchiveManagement.ArchSalesDocumentNoConfirm(Header);
+                        SalesSetup."Archive Quotes"::Question:
+                            ArchiveManagement.ArchiveSalesDocument(Header);
+                    end;
 
                 TotalSubTotal := 0;
                 TotalInvDiscAmount := 0;
                 TotalAmount := 0;
                 TotalAmountVAT := 0;
                 TotalAmountInclVAT := 0;
-                TotalPaymentDiscOnVAT := 0;
+            end;
+
+            trigger OnPreDataItem()
+            begin
+                FirstLineHasBeenOutput := false;
             end;
         }
     }
@@ -980,17 +903,11 @@ report 50005 "SEC Sales - Order Conf."
                         Enabled = LogInteractionEnable;
                         ToolTip = 'Specifies that interactions with the contact are logged.';
                     }
-                    field(DisplayAsmInformation; DisplayAssemblyInformation)
-                    {
-                        ApplicationArea = Assembly;
-                        Caption = 'Show Assembly Components';
-                        ToolTip = 'Specifies if you want the report to include information about components that were used in linked assembly orders that supplied the item(s) being sold.';
-                    }
                     field(ArchiveDocument; ArchiveDocument)
                     {
                         ApplicationArea = Basic, Suite;
                         Caption = 'Archive Document';
-                        ToolTip = 'Specifies if the document is archived after you print it.';
+                        ToolTip = 'Specifies if the document is archived after you preview or print it.';
 
                         trigger OnValidate()
                         begin
@@ -1009,7 +926,7 @@ report 50005 "SEC Sales - Order Conf."
         trigger OnInit()
         begin
             LogInteractionEnable := true;
-            ArchiveDocument := SalesSetup."Archive Orders";
+            ArchiveDocument := SalesSetup."Archive Quotes" <> SalesSetup."Archive Quotes"::Never;
         end;
 
         trigger OnOpenPage()
@@ -1034,7 +951,6 @@ report 50005 "SEC Sales - Order Conf."
         TempBlobCompanyLogo.Insert;
     end;
 
-
     trigger OnPostReport()
     begin
         if LogInteraction and not IsReportInPreviewMode then
@@ -1043,15 +959,14 @@ report 50005 "SEC Sales - Order Conf."
                     Header.CalcFields("No. of Archived Versions");
                     if Header."Bill-to Contact No." <> '' then
                         SegManagement.LogDocument(
-                          3, Header."No.", Header."Doc. No. Occurrence",
-                          Header."No. of Archived Versions", DATABASE::Contact, Header."Bill-to Contact No."
-                          , Header."Salesperson Code", Header."Campaign No.", Header."Posting Description", Header."Opportunity No.")
+                          1, Header."No.", Header."Doc. No. Occurrence",
+                          Header."No. of Archived Versions", DATABASE::Contact, Header."Bill-to Contact No.",
+                          Header."Salesperson Code", Header."Campaign No.", Header."Posting Description", Header."Opportunity No.")
                     else
                         SegManagement.LogDocument(
-                          3, Header."No.", Header."Doc. No. Occurrence",
+                          1, Header."No.", Header."Doc. No. Occurrence",
                           Header."No. of Archived Versions", DATABASE::Customer, Header."Bill-to Customer No.",
                           Header."Salesperson Code", Header."Campaign No.", Header."Posting Description", Header."Opportunity No.");
-
                 until Header.Next = 0;
     end;
 
@@ -1067,8 +982,10 @@ report 50005 "SEC Sales - Order Conf."
     end;
 
     var
-        SalesConfirmationLbl: Label 'Order Confirmation';
-        SalespersonLbl: Label 'Our Ref.';
+        SalesConfirmationLbl: Label 'Sales Quote';
+        YourEstimateLbl: Label 'Your Estimate';
+        EstimateLbl: Label 'Estimate';
+        SalespersonLbl: Label 'Sales person';
         CompanyInfoBankAccNoLbl: Label 'Account No.';
         CompanyInfoBankNameLbl: Label 'Bank';
         CompanyInfoGiroNoLbl: Label 'Giro No.';
@@ -1078,7 +995,7 @@ report 50005 "SEC Sales - Order Conf."
         HomePageLbl: Label 'Home Page';
         InvDiscBaseAmtLbl: Label 'Invoice Discount Base Amount';
         InvDiscountAmtLbl: Label 'Invoice Discount';
-        InvNoLbl: Label 'Order No.';
+        InvNoLbl: Label 'No.';
         LineAmtAfterInvDiscLbl: Label 'Payment Discount on VAT';
         LocalCurrencyLbl: Label 'Local Currency';
         PageLbl: Label 'Page';
@@ -1091,6 +1008,7 @@ report 50005 "SEC Sales - Order Conf."
         ShptMethodDescLbl: Label 'Shipment Method';
         SubtotalLbl: Label 'Subtotal';
         TotalLbl: Label 'Total';
+        UnitLbl: Label 'Unit';
         VATAmtSpecificationLbl: Label 'VAT Amount Specification';
         VATAmtLbl: Label 'VAT Amount';
         VATAmountLCYLbl: Label 'VAT Amount (LCY)';
@@ -1099,23 +1017,24 @@ report 50005 "SEC Sales - Order Conf."
         VATClausesLbl: Label 'VAT Clause';
         VATIdentifierLbl: Label 'VAT Identifier';
         VATPercentageLbl: Label 'VAT %';
+        TempBlobWorkDescription: Record TempBlob;
+        TempBlobCompanyLogo: Record TempBlob temporary;
         GLSetup: Record "General Ledger Setup";
         ShipmentMethod: Record "Shipment Method";
         PaymentTerms: Record "Payment Terms";
         PaymentMethod: Record "Payment Method";
         SalespersonPurchaser: Record "Salesperson/Purchaser";
-        TempBlobCompanyLogo: Record TempBlob temporary;
         CompanyInfo: Record "Company Information";
         SalesSetup: Record "Sales & Receivables Setup";
         Cust: Record Customer;
         RespCenter: Record "Responsibility Center";
         Language: Record Language;
         VATClause: Record "VAT Clause";
-        AsmHeader: Record "Assembly Header";
-        TempBlobWorkDescription: Record TempBlob;
-        FormatAddr: Codeunit "Format Address";
+        FormatAddr: Codeunit 365;  //Format Address
         FormatDocument: Codeunit "Format Document";
-        SegManagement: Codeunit SegManagement;
+        SegManagement: Codeunit 5051; //SegManagement
+        IdentityManagement: Codeunit "Identity Management";
+        WorkDescriptionLine: Text;
         CustAddr: array[8] of Text[90];
         ShipToAddr: array[8] of Text[90];
         CompanyAddr: array[8] of Text[90];
@@ -1129,6 +1048,7 @@ report 50005 "SEC Sales - Order Conf."
         FormattedQuantity: Text;
         FormattedLineAmount: Text;
         MoreLines: Boolean;
+        ShowWorkDescription: Boolean;
         CopyText: Text[30];
         ShowShippingAddr: Boolean;
         ArchiveDocument: Boolean;
@@ -1142,8 +1062,6 @@ report 50005 "SEC Sales - Order Conf."
         TransHeaderAmount: Decimal;
         [InDataSet]
         LogInteractionEnable: Boolean;
-        DisplayAssemblyInformation: Boolean;
-        AsmInfoExistsForLine: Boolean;
         CompanyLogoPosition: Integer;
         FirstLineHasBeenOutput: Boolean;
         CalculatedExchRate: Decimal;
@@ -1155,22 +1073,28 @@ report 50005 "SEC Sales - Order Conf."
         TotalVATAmountLCY: Decimal;
         PrevLineAmount: Decimal;
         NoFilterSetErr: Label 'You must specify one or more filters to avoid accidently printing all documents.';
+        PmtDiscText: Text;
+        FromLbl: Label 'From';
+        EstimateForLbl: Label 'Estimate for';
+        QuestionsLbl: Label 'Questions?';
+        ThanksLbl: Label 'Thank You!';
         GreetingLbl: Label 'Hello';
         ClosingLbl: Label 'Sincerely';
-        PmtDiscTxt: Label 'If we receive the payment before %1, you are eligible for a 2% payment discount.', Comment = '%1 Discount Due Date %2 = value of Payment Discount % ';
-        BodyLbl: Label 'Thank you for your business. Your order confirmation is attached to this message.';
-        PmtDiscText: Text;
-        ShowWorkDescription: Boolean;
-        Item: Record Item;
+        PmtDiscTxt: Label 'If we receive the payment before %1, you are eligible for a 2% payment discount.', Comment = '%1 = Discount Due Date %2 = value of Payment Discount % ';
+        BodyLbl: Label 'Thank you for your business. Your quote is attached to this message.';
+        EstimateBodyLbl: Label 'As promised, here''s our estimate. Please see the attached estimate for details.';
+        QuoteValidToDateLbl: Label 'Valid until';
+        QtyLbl: Label 'Qty', Comment = 'Short form of Quantity';
+        PriceLbl: Label 'Price';
+        Item: record Item;
         Endcustomer: Record Customer;
         ResellerCountryRegion: Record "Country/Region";
         EndcustomerCountryRegion: Record "Country/Region";
-        ShipToCountryRegion: Record "Country/Region";
-        WorkDescriptionLine: Text;
+        PricePerLbl: Label 'Price per';
 
     local procedure InitLogInteraction()
     begin
-        LogInteraction := SegManagement.FindInteractTmplCode(3) <> '';
+        LogInteraction := SegManagement.FindInteractTmplCode(1) <> '';
     end;
 
     local procedure DocumentCaption(): Text[250]
@@ -1178,15 +1102,14 @@ report 50005 "SEC Sales - Order Conf."
         exit(SalesConfirmationLbl);
     end;
 
-    procedure InitializeRequest(NewLogInteraction: Boolean; DisplayAsmInfo: Boolean)
+    procedure InitializeRequest(NewLogInteraction: Boolean)
     begin
         LogInteraction := NewLogInteraction;
-        DisplayAssemblyInformation := DisplayAsmInfo;
     end;
 
     local procedure IsReportInPreviewMode(): Boolean
     var
-        MailManagement: Codeunit "Mail Management";
+        MailManagement: Codeunit 9520; //Mail Management
     begin
         exit(CurrReport.Preview or MailManagement.IsHandlingGetEmailBody);
     end;
@@ -1194,21 +1117,12 @@ report 50005 "SEC Sales - Order Conf."
     local procedure FormatDocumentFields(SalesHeader: Record "Sales Header")
     begin
         with SalesHeader do begin
-            FormatDocument.SetTotalLabels("Currency Code", TotalText, TotalInclVATText, TotalExclVATText);
+            FormatDocument.SetTotalLabels(GetCurrencySymbol, TotalText, TotalInclVATText, TotalExclVATText);
             FormatDocument.SetSalesPerson(SalespersonPurchaser, "Salesperson Code", SalesPersonText);
             FormatDocument.SetPaymentTerms(PaymentTerms, "Payment Terms Code", "Language Code");
             FormatDocument.SetPaymentMethod(PaymentMethod, "Payment Method Code", "Language Code");
             FormatDocument.SetShipmentMethod(ShipmentMethod, "Shipment Method Code", "Language Code");
         end;
-    end;
-
-    local procedure GetUOMText(UOMCode: Code[10]): Text[10]
-    var
-        UnitOfMeasure: Record "Unit of Measure";
-    begin
-        if not UnitOfMeasure.Get(UOMCode) then
-            exit(UOMCode);
-        exit(UnitOfMeasure.Description);
     end;
 
     local procedure CreateReportTotalLines()
@@ -1225,4 +1139,3 @@ report 50005 "SEC Sales - Order Conf."
             ReportTotalsLine.Add(VATAmountLine.VATAmountText, TotalAmountVAT, false, true, false);
     end;
 }
-
