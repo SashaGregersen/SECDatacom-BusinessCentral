@@ -45,6 +45,14 @@ pageextension 50035 "Synchronize Customer" extends "Sales & Receivables Setup"
             {
                 ApplicationArea = all;
             }
+            field("Provision Journal Template"; "Provision Journal Template")
+            {
+                ApplicationArea = all;
+            }
+            field("Provision Journal Batch"; "Provision Journal Batch")
+            {
+                ApplicationArea = all;
+            }
         }
     }
 

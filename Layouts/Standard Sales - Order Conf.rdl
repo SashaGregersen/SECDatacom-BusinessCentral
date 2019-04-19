@@ -578,7 +578,7 @@
                                                     <Value>=Fields!Ship_to_Address_2.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>8pt</FontSize>
+                                                      <FontSize>9pt</FontSize>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -680,21 +680,21 @@
                                                     <Value>=Fields!Ship_to_Post_Code.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>8pt</FontSize>
+                                                      <FontSize>9pt</FontSize>
                                                     </Style>
                                                   </TextRun>
                                                   <TextRun>
                                                     <Value xml:space="preserve"> </Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>8pt</FontSize>
+                                                      <FontSize>9pt</FontSize>
                                                     </Style>
                                                   </TextRun>
                                                   <TextRun>
                                                     <Value>=Fields!Ship_to_City.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>8pt</FontSize>
+                                                      <FontSize>9pt</FontSize>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -794,7 +794,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!Ship_To_Country.Value</Value>
+                                                    <Value>=Fields!Ship_to_Country.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>9pt</FontSize>
@@ -3811,7 +3811,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>='Vendor Item No.:' + (Fields!Vendor_Item_No.Value)</Value>
+                                                    <Value>="Vendor Item No.: " + (Fields!Vendor_Item_No.Value)</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -3823,7 +3823,7 @@
                                             </Paragraphs>
                                             <rd:DefaultName>Vendor_Item_No</rd:DefaultName>
                                             <Visibility>
-                                              <Hidden>=IIF(Fields!Vendor_Item_No.Value = '',TRUE,FALSE)</Hidden>
+                                              <Hidden>=IIF(Fields!Vendor_Item_No.Value = "",TRUE,FALSE)</Hidden>
                                             </Visibility>
                                             <Style>
                                               <Border>
@@ -4587,7 +4587,7 @@
                                 </Filter>
                               </Filters>
                               <Top>17.66936cm</Top>
-                              <Left>0.02485cm</Left>
+                              <Left>1.97343cm</Left>
                               <Height>1.55224cm</Height>
                               <Width>16.8cm</Width>
                               <ZIndex>2</ZIndex>
@@ -5518,7 +5518,7 @@
                                 </Filter>
                               </Filters>
                               <Top>15.76691cm</Top>
-                              <Left>0.02485cm</Left>
+                              <Left>3.6cm</Left>
                               <Height>1.76418cm</Height>
                               <Width>15.2cm</Width>
                               <ZIndex>3</ZIndex>
@@ -6885,8 +6885,8 @@ End Function
         <Field Name="Ship_to_City">
           <DataField>Ship_to_City</DataField>
         </Field>
-        <Field Name="Ship_To_Country">
-          <DataField>Ship_To_Country</DataField>
+        <Field Name="Ship_to_Country">
+          <DataField>Ship_to_Country</DataField>
         </Field>
         <Field Name="PaymentTermsDescription">
           <DataField>PaymentTermsDescription</DataField>
