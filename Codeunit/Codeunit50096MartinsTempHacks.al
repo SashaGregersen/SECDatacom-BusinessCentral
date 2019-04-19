@@ -1,8 +1,12 @@
 codeunit 50096 "Temp Hacks"
 {
     trigger OnRun()
+    var
+        Purchheader: Record "Purchase Header";
     begin
-        SetOwningCompany();
+        //SetOwningCompany();
+        if Purchheader.get(Purchheader."Document Type"::Order, '106060') then
+            Codeunit.Run(50026, Purchheader);
     end;
 
     local procedure SetOwningCompany()

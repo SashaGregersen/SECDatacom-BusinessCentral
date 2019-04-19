@@ -1,10 +1,11 @@
-codeunit 50025 "IC Update Serial Nos. on PO"
+codeunit 50026 "IC Update Serial Nos. on PO"
 {
     TableNo = "Purchase Header";
 
     trigger OnRun()
     var
         SerialExchange: Record "Serial No. Intercompany Exch.";
+        TempItemLedgerEntry: Record "Item Ledger Entry" temporary;
     begin
         if not PurchHeader.get(Rec."Document Type", Rec."No.") then
             Error('Purchase Order %1 does not exist in company %2', rec."No.", CompanyName());
@@ -18,19 +19,27 @@ codeunit 50025 "IC Update Serial Nos. on PO"
                 SerialExchange.SetRange("Line No.", PurchLine."Line No.");
                 if SerialExchange.FindSet() then
                     repeat
-                        CreateItemLedgerEntryTemp(SerialExchange);
-                        SerialNoOnPO.UpdateReservationEntries(TempItemLedgerEntry, PurchLine);
+                        CreateItemLedgerEntryTemp(SerialExchange, TempItemLedgerEntry);
                     until SerialExchange.Next() = 0;
+                if not TempItemLedgerEntry.IsEmpty then begin
+                    SerialNoOnPO.UpdateReservationEntries(TempItemLedgerEntry, PurchLine);
+                    SerialExchange.DeleteAll(true);
+                    TempItemLedgerEntry.DeleteAll();
+                end;
             until PurchLine.Next() = 0;
         //If PurchHeader.Status = PurchHeader.Status::Open then
         //    ReleasePurchDoc.PerformManualRelease(PurchHeader);
     end;
 
-    local procedure CreateItemLedgerEntryTemp(SerialExchange: Record "Serial No. Intercompany Exch.")
-    var
-        myInt: Integer;
+    local procedure CreateItemLedgerEntryTemp(SerialExchange: Record "Serial No. Intercompany Exch."; var TempItemLedgerEntry: Record "Item Ledger Entry" temporary)
     begin
-        TempItemLedgerEntry.Init;
+        if TempItemLedgerEntry.IsEmpty then begin
+            TempItemLedgerEntry.Init;
+            TempItemLedgerEntry."Entry No." := 1;
+        end else begin
+            TempItemLedgerEntry.FindLast();
+            TempItemLedgerEntry."Entry No." := TempItemLedgerEntry."Entry No." + 1;
+        end;
         TempItemLedgerEntry.Validate("Item No.", SerialExchange."Item No.");
         TempItemLedgerEntry.Validate("Serial No.", SerialExchange."Serial No.");
         TempItemLedgerEntry.Insert(true);
@@ -40,7 +49,7 @@ codeunit 50025 "IC Update Serial Nos. on PO"
         PurchHeader: Record "Purchase Header";
         PurchLine: Record "Purchase Line";
         SerialNoOnPO: Codeunit "Import Serial Number Purchase";
-        TempItemLedgerEntry: Record "Item Ledger Entry" temporary;
+
         ReleasePurchDoc: Codeunit "Release Purchase Document";
 
 }

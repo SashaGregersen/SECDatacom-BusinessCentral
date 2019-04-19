@@ -11,10 +11,11 @@ pageextension 50099 "Temp Hacks" extends "Company Information"
     {
         addafter("Jobs Setup")
         {
-            action(SetOwningCompany)
+            action(MAHATempHacks)
             {
                 ApplicationArea = all;
                 Image = ApplyTemplate;
+                Caption = 'Run MAHA Temp Hacks';
 
                 trigger OnAction()
                 var

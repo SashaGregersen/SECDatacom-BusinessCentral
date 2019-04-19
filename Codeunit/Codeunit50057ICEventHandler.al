@@ -186,9 +186,9 @@ codeunit 50057 "IC Event Handler"
         SerialNoICExch.ChangeCompany(OtherCompanyName);
         if SalesShptLine.FindSet() then
             repeat
-                ItemLedgerEntry.SetRange("Order No.", SalesShptLine."Document No.");
-                ItemLedgerEntry.SetRange("Order Line No.", SalesShptLine."Line No.");
-                ItemLedgerEntry.SetRange("Order Type", ItemLedgerEntry."Document Type"::"Sales Shipment");
+                ItemLedgerEntry.SetRange("Document No.", SalesShptLine."Document No.");
+                ItemLedgerEntry.SetRange("Document Line No.", SalesShptLine."Line No.");
+                ItemLedgerEntry.SetRange("Document Type", ItemLedgerEntry."Document Type"::"Sales Shipment");
                 ItemLedgerEntry.SetFilter("Serial No.", '<>%1', '');
                 if ItemLedgerEntry.FindSet() then
                     repeat
