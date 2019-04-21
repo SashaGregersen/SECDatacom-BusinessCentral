@@ -354,7 +354,7 @@ codeunit 50057 "IC Event Handler"
             TransferSerialNosFromShipmentToOtherCompany(SalesShptHdrNo, ICpartner."Inbox Details");
             AddICPurchaseOrderToTempList(SalesShptHdrNo, ICpartner."Inbox Details", TempICPurchOrder);
             UpdateShipmentsOnSalesOrderInOtherCompany(SalesShptHdrNo, ICpartner."Inbox Details");
-            //NOT necessary to transfer serial nos. to SO - it is the same reservation entry as POS
+            //NOT necessary to transfer serial nos. to SO - it is the same reservation entry as PO
             AddICSalesOrderToTempList(SalesShptHdrNo, ICpartner."Inbox Details", TempICSalesOrder);
             //Add support for return orders
             if SalesInvHdrNo <> '' then begin
@@ -371,7 +371,6 @@ codeunit 50057 "IC Event Handler"
             if TempICPurchOrder.FindSet() then
                 repeat
                     ICPurchOrder := TempICPurchOrder;
-                    //Update serialNos. in sub before posting
                     ICSyncMgt.PostPurchaseOrderInOtherCompany(ICPurchOrder, ICpartner."Inbox Details");
                 until TempICPurchOrder.Next() = 0;
             if TempICSalesOrder.FindSet() then

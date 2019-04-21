@@ -9,8 +9,6 @@ codeunit 50026 "IC Update Serial Nos. on PO"
     begin
         if not PurchHeader.get(Rec."Document Type", Rec."No.") then
             Error('Purchase Order %1 does not exist in company %2', rec."No.", CompanyName());
-        //If PurchHeader.Status = PurchHeader.Status::Released then
-        //    ReleasePurchDoc.PerformManualReopen(PurchHeader);
         PurchLine.SetRange("Document No.", PurchHeader."No.");
         if PurchLine.FindSet() then
             repeat
@@ -27,8 +25,6 @@ codeunit 50026 "IC Update Serial Nos. on PO"
                     TempItemLedgerEntry.DeleteAll();
                 end;
             until PurchLine.Next() = 0;
-        //If PurchHeader.Status = PurchHeader.Status::Open then
-        //    ReleasePurchDoc.PerformManualRelease(PurchHeader);
     end;
 
     local procedure CreateItemLedgerEntryTemp(SerialExchange: Record "Serial No. Intercompany Exch."; var TempItemLedgerEntry: Record "Item Ledger Entry" temporary)

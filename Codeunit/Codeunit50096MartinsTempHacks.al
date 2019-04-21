@@ -5,8 +5,8 @@ codeunit 50096 "Temp Hacks"
         Purchheader: Record "Purchase Header";
     begin
         //SetOwningCompany();
-        if Purchheader.get(Purchheader."Document Type"::Order, '106060') then
-            Codeunit.Run(50026, Purchheader);
+        if Purchheader.get(Purchheader."Document Type"::Order, '106061') then
+            Codeunit.Run(50021, Purchheader);
     end;
 
     local procedure SetOwningCompany()

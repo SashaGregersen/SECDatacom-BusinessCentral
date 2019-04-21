@@ -3,11 +3,14 @@ codeunit 50021 "Post Purchase Order IC"
     TableNo = "Purchase Header";
 
     trigger OnRun()
+    var
+        ICUpdateSerialNosonPO: Codeunit "IC Update Serial Nos. on PO";
     begin
         if not PurchHeader.get(Rec."Document Type", Rec."No.") then
             Error('Purchase Order %1 does not exist in company %2', rec."No.", CompanyName());
         If PurchHeader.Status = PurchHeader.Status::Released then
             ReleasePurchDoc.PerformManualReopen(PurchHeader);
+        ICUpdateSerialNosonPO.Run(PurchHeader);
         PurchLine.SetRange("Document No.", PurchHeader."No.");
         if PurchLine.FindSet(true, false) then
             repeat
