@@ -269,7 +269,7 @@ pageextension 50021 "End Customer and Reseller" extends 42
         }
     }
     var
-        SalesOrder: report 50005;
+        SalesOrder: report 50013;
         EdiDocument: Boolean;
 
     trigger OnAfterGetCurrRecord();

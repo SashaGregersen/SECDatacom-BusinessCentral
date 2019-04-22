@@ -2827,7 +2827,7 @@
                                     <Width>2.2cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>10.33985cm</Width>
+                                    <Width>13.26409cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
                                     <Width>2cm</Width>
@@ -3543,6 +3543,9 @@
                                               </Paragraph>
                                             </Paragraphs>
                                             <rd:DefaultName>LineDiscountPercentText_Line</rd:DefaultName>
+                                            <Visibility>
+                                              <Hidden>=IF(Fields!Suppress_Prices_on_Printouts.value = "True",true,false)</Hidden>
+                                            </Visibility>
                                             <Style>
                                               <Border>
                                                 <Color>LightGrey</Color>
@@ -4031,7 +4034,7 @@
                               <Top>8.04596cm</Top>
                               <Left>0.1491cm</Left>
                               <Height>2.61286cm</Height>
-                              <Width>24.53985cm</Width>
+                              <Width>27.46409cm</Width>
                               <ZIndex>1</ZIndex>
                               <Style>
                                 <Border>
@@ -4863,7 +4866,6 @@
                             </Border>
                           </Style>
                         </Rectangle>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
