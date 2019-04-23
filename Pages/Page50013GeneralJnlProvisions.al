@@ -88,10 +88,8 @@ page 50013 "General Journal Provisions"
     trigger OnNewRecord(BelowRec: Boolean)
     var
         SRSetup: Record "Sales & Receivables Setup";
-        AccNo: text;
     begin
         SRSetup.Get;
-        AccNo := rec.getfilter("Account No.");
         rec.validate("Line No.", GetNewLineNo(SRSetup."Provision Journal Template", SRSetup."Provision Journal Batch"));
     end;
 

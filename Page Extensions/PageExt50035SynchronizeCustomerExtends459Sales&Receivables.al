@@ -53,10 +53,15 @@ pageextension 50035 "Synchronize Customer" extends "Sales & Receivables Setup"
             {
                 ApplicationArea = all;
             }
-            field("Provision GL Account"; "Provision GL Account")
+            field("Provision Account No."; "Provision Account No.")
             {
                 ApplicationArea = all;
-                Caption = 'Provision G/L Account';
+                Caption = 'Provision Account No.';
+            }
+            field("Provision Balance Account No."; "Provision Balance Account No.")
+            {
+                ApplicationArea = all;
+                Caption = 'Provision Balance Account No.';
             }
         }
     }

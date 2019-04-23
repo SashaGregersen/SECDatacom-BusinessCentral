@@ -28,7 +28,12 @@ tableextension 50027 "Synchronize Customer" extends "Sales & Receivables Setup"
             DataClassification = ToBeClassified;
             TableRelation = "Gen. Journal Batch".Name WHERE ("Journal Template Name" = FIELD ("Provision Journal Template"));
         }
-        field(50005; "Provision GL Account"; code[20])
+        field(50005; "Provision Account No."; code[20])
+        {
+            DataClassification = ToBeClassified;
+            TableRelation = "G/L Account";
+        }
+        field(50006; "Provision Balance Account No."; code[20])
         {
             DataClassification = ToBeClassified;
             TableRelation = "G/L Account";
