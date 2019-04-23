@@ -261,6 +261,8 @@ pageextension 50021 "End Customer and Reseller" extends 42
                     GnlJnlLine.FilterGroup(2);
                     GnlJnlLine.SetRange("Journal Template Name", SRSetup."Provision Journal Template");
                     GnlJnlLine.SetRange("Journal Batch Name", SRSetup."Provision Journal Batch");
+                    GnlJnlLine.SetRange("Account Type", GnlJnlLine."Account Type"::"G/L Account");
+                    GnlJnlLine.Setrange("Account No.", SRSetup."Provision GL Account");
                     GnlJnlLine.SetRange("Document No.", Rec."No.");
                     GnlJnlLine.FilterGroup(0);
                     page.RunModal(Page::"General Journal Provisions", GnlJnlLine);

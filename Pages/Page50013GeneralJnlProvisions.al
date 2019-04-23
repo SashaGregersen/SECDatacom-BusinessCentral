@@ -61,12 +61,37 @@ page 50013 "General Journal Provisions"
 
 
     }
+
+    actions
+    {
+        area(Processing)
+        {
+            action(Dimensions)
+            {
+                ApplicationArea = Dimensions;
+                Image = Dimensions;
+                Promoted = true;
+                PromotedCategory = Category10;
+                ShortcutKey = 'Shift+Ctrl+D';
+                AccessByPermission = TableData Dimension = R;
+                ToolTip = 'View or edit dimensions, such as area, project, or department, that you can assign to sales and purchase documents to distribute costs and analyze transaction history';
+                trigger OnAction()
+                var
+                begin
+                    ShowDimensions();
+                    CurrPage.SAVERECORD;
+                end;
+            }
+        }
+
+    }
     trigger OnNewRecord(BelowRec: Boolean)
     var
         SRSetup: Record "Sales & Receivables Setup";
-        DocNo: text;
+        AccNo: text;
     begin
         SRSetup.Get;
+        AccNo := rec.getfilter("Account No.");
         rec.validate("Line No.", GetNewLineNo(SRSetup."Provision Journal Template", SRSetup."Provision Journal Batch"));
     end;
 
