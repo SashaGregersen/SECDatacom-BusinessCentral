@@ -190,7 +190,7 @@ report 50011 "POS Reporting"
                 }
                 column(Cost_Percentage; CostPercentage)
                 {
-                    //udregnet vha. (unit purch pric - bid unit purch price) / unit purch price    
+                    //udregnet vha. (unit purch price - bid unit purch price) / unit purch price    
                 }
                 dataitem(Copyloop; Integer)
                 {

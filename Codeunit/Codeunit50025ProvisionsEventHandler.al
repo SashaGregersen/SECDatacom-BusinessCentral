@@ -17,6 +17,7 @@ codeunit 50025 "Provisions Event Handler"
         if GenJnlLine.FindSet() then
             repeat
                 GenJnlLine.validate("Document No.", SalesInvoiceHeader."No.");
+                GenJnlLine.Validate("Posting Date", SalesInvoiceHeader."Posting Date");
                 GenJnlLine.Modify(false);
                 GenJnlLine.TestField("Balance (LCY)", 0);
                 CheckGnlJnlLine.run(GenJnlLine);
