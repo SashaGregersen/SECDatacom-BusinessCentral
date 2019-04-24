@@ -88,9 +88,14 @@ page 50013 "General Journal Provisions"
     trigger OnNewRecord(BelowRec: Boolean)
     var
         SRSetup: Record "Sales & Receivables Setup";
+        GlAccount: record "G/L Account";
     begin
         SRSetup.Get;
         rec.validate("Line No.", GetNewLineNo(SRSetup."Provision Journal Template", SRSetup."Provision Journal Batch"));
+        rec.validate("Account No.", SRSetup."Provision GL Account");
+        GlAccount.get("Account No.");
+        rec.validate(Description, GlAccount.Name);
+        rec.validate("Bal. Account No.", SRSetup."Provision Balance Account No.");
     end;
 
 
