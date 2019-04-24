@@ -375,6 +375,23 @@ codeunit 50054 "Sales Order Event Handler"
                 IsHandled := true;
     end;
 
+    [EventSubscriber(ObjectType::Table, database::"Reservation Entry", 'OnAfterModifyEvent', '', true, true)]
+    local procedure OnAfterModifyReservationEntry(VAR Rec: Record "Reservation Entry"; VAR xRec: Record "Reservation Entry"; RunTrigger: Boolean)
+    var
+        PartnerRecord: Record "Reservation Entry";
+    begin
+        IF Rec."Source Type" = 37 THEN BEGIN
+            IF Rec."Serial No." = '' THEN BEGIN
+                IF PartnerRecord.GET(Rec."Entry No.", NOT Rec.Positive) THEN BEGIN
+                    IF (PartnerRecord."Source Type" = 32) and (PartnerRecord."Serial No." <> '') THEN BEGIN
+                        Rec.VALIDATE("Serial No.", PartnerRecord."Serial No.");
+                        Rec.MODIFY(FALSE);
+                    END;
+                END;
+            END;
+        END;
+    end;
+
     local procedure TestIfLineCanBeChanged(SalesLineToTest: Record "Sales Line")
     var
         SalesHeader: record "Sales Header";

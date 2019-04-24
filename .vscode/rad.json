@@ -1,1 +1,1 @@
-﻿{"Added":[],"Modified":[],"Removed":[]}
+﻿{"Added":[{"Id":50013,"Kind":13,"Name":"SEC Sales - Order Conf. LS","PackagePath":"/src/Reports/Report50013StandardSalesOrderConfirmationLS.al"},{"Id":50016,"Kind":13,"Name":"SEC Sales - Shipment LS","PackagePath":"/src/Reports/Report50016SalesShipmentLS.al"},{"Id":50014,"Kind":13,"Name":"SEC - Sales Invoice LS","PackagePath":"/src/Reports/Report50014StandardSalesInvoiceLS.al"},{"Id":50015,"Kind":13,"Name":"SEC Sales - Credit Memo LS","PackagePath":"/src/Reports/Report50015StandardSalesCreditMemoLS.al"}],"Modified":[],"Removed":[]}
