@@ -104,34 +104,7 @@ pageextension 50022 "End Customer and Reseller 2" extends 41
             }
 
         }
-        addbefore(CalculateInvoiceDiscount)
-        {
-            action("Add Provision")
-            {
-                image = AdjustEntries;
 
-                trigger OnAction()
-                var
-                    GnlJnlProvision: page "General Journal Provisions";
-                    GnlJnlLine: record "Gen. Journal Line";
-                    SRSetup: Record "Sales & Receivables Setup";
-                begin
-                    SRSetup.get;
-                    GnlJnlLine.Reset();
-                    GnlJnlLine.FilterGroup(2);
-                    GnlJnlLine.SetRange("Journal Template Name", SRSetup."Provision Journal Template");
-                    GnlJnlLine.SetRange("Journal Batch Name", SRSetup."Provision Journal Batch");
-                    GnlJnlLine.SetRange("Account Type", GnlJnlLine."Account Type"::"G/L Account");
-                    GnlJnlLine.Setrange("Account No.", SRSetup."Provision Gl Account");
-                    GnlJnlLine.SetRange("Bal. Account Type", GnlJnlLine."Bal. Account Type"::"G/L Account");
-                    GnlJnlLine.Setrange("Bal. Account No.", SRSetup."Provision Balance Account No.");
-                    GnlJnlLine.Setrange("Posting Date", rec."Posting Date");
-                    GnlJnlLine.SetRange("Document No.", Rec."No.");
-                    GnlJnlLine.FilterGroup(0);
-                    page.RunModal(Page::"General Journal Provisions", GnlJnlLine);
-                end;
-            }
-        }
     }
 
 

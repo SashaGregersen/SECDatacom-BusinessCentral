@@ -85,9 +85,17 @@ page 50013 "General Journal Provisions"
         }
 
     }
+
+    trigger OnOpenPage()
+    var
+    begin
+        SRSetup.Get;
+        setrange("Account No.", SRSetup."Provision GL Account");
+        setrange("Bal. Account No.", SRSetup."Provision Balance Account No.");
+    end;
+
     trigger OnNewRecord(BelowRec: Boolean)
     var
-        SRSetup: Record "Sales & Receivables Setup";
         GlAccount: record "G/L Account";
     begin
         SRSetup.Get;
@@ -98,5 +106,7 @@ page 50013 "General Journal Provisions"
         rec.validate("Bal. Account No.", SRSetup."Provision Balance Account No.");
     end;
 
+    var
+        SRSetup: Record "Sales & Receivables Setup";
 
 }
