@@ -2,19 +2,19 @@ codeunit 50060 "POS Report"
 {
     trigger OnRun()
     begin
-        /* // Use the REPORT.RUNREQUESTPAGE function to run the request page to get report parameters  
-        XmlParameters := REPORT.RUNREQUESTPAGE(206);
+        // Use the REPORT.RUNREQUESTPAGE function to run the request page to get report parameters  
+        XmlParameters := REPORT.RUNREQUESTPAGE(50011);
         CurrentUser := USERID;
 
         // Save the request page parameters to the database table  
         WITH ReportParameters DO BEGIN
             // Cleanup  
-            IF GET(206, CurrentUser) THEN
+            IF GET(50011, CurrentUser) THEN
                 DELETE;
 
             SETAUTOCALCFIELDS(Parameters);
-            ReportId := 206;
-            UserId := CurrentUser;
+            "Report Id" := 50011;
+            "User Id" := CurrentUser;
             Parameters.CREATEOUTSTREAM(OStream, TEXTENCODING::UTF8);
             MESSAGE(XmlParameters);
             OStream.WRITETEXT(XmlParameters);
@@ -28,16 +28,16 @@ codeunit 50060 "POS Report"
         // Read the request page parameters from the database table  
         WITH ReportParameters DO BEGIN
             SETAUTOCALCFIELDS(Parameters);
-            GET(206, CurrentUser);
+            GET(50011, CurrentUser);
             Parameters.CREATEINSTREAM(IStream, TEXTENCODING::UTF8);
             IStream.READTEXT(XmlParameters);
         END;
 
         // Use the REPORT.SAVEAS function to save the report as a PDF file  
-        Content.CREATE('TestFile.pdf');
+        Content.CREATE(CreateFileName());
         Content.CREATEOUTSTREAM(OStream);
-        REPORT.SAVEAS(206, XmlParameters, REPORTFORMAT::Pdf, OStream);
-        Content.CLOSE; */
+        REPORT.SAVEAS(50011, XmlParameters, REPORTFORMAT::Excel, OStream);
+        Content.CLOSE;
     end;
 
     local procedure CreateFileName() Filelocation: Text
@@ -194,6 +194,13 @@ codeunit 50060 "POS Report"
     end;
 
     var
+        XmlParameters: text;
+        ReportParameters: record "Request Parameters";
+        OStream: OutStream;
+        IStream: InStream;
+        CurrentUser: code[100];
+        Content: file;
+        TempFileName: text;
         TempFile: file;
         Name: text[250];
         NewStream: InStream;
