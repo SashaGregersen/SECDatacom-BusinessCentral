@@ -2,7 +2,7 @@ report 50011 "POS Reporting"
 {
     UsageCategory = Administration;
     ApplicationArea = All;
-    ProcessingOnly = false;
+    ProcessingOnly = true;
     UseRequestPage = true;
     DefaultLayout = RDLC;
     RDLCLayout = './Layouts/POSReport.rdl';
