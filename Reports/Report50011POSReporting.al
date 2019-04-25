@@ -2,7 +2,7 @@ report 50011 "POS Reporting"
 {
     UsageCategory = Administration;
     ApplicationArea = All;
-    ProcessingOnly = false;
+    ProcessingOnly = true;
     UseRequestPage = true;
     DefaultLayout = RDLC;
     RDLCLayout = './Layouts/POSReport.rdl';
@@ -318,7 +318,6 @@ report 50011 "POS Reporting"
 
             begin
                 GlSetup.get();
-                //Sales_Invoice_Line.SetRange(type, Sales_Invoice_Line.type::Item);
             end;
 
             trigger OnAfterGetRecord()
