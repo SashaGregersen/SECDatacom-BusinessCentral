@@ -986,7 +986,7 @@ codeunit 50013 "EDICygate"
         XMLElement4.AppendChild(XMLNode1);
 
         XMLDoc.Save('c:\temp\cygate3.xml');
-        
+
         StringWriter := StringWriter.StringWriter();
         XmlWriter := XmlWriter.XmlTextWriter(StringWriter);
 
@@ -999,5 +999,69 @@ codeunit 50013 "EDICygate"
         ResultString := WebClient.UploadString(SalesSetup."Cygate Endpoint", 'POST', StringWriter.ToString());
 
         Message(ResultString);
+    end;
+
+    procedure GetParameters(var RecRef: RecordRef) ReportParameters: Text;
+    var
+        XMLDoc: DotNet System_Xml_XmlDocument;
+        Filters: Text;
+        FilterValue: Text;
+        FilterField: Text;
+    begin
+        Filters := RecRef.GetFilters;
+        if StrLen(Filters) = 0 then exit;
+
+        XMLDoc := XMLDoc.XmlDocument();
+        if IsNull(XMLDoc) then exit;
+
+        ReportParameters := '<?xml version="1.0" standalone="yes"?><ReportParameters><Options>';
+
+        //Get Fields
+        Filters := Filters + ',';
+        while (StrPos(Filters, ',') <> 0) do begin
+            FilterValue := SelectStr(1, Filters);
+            FilterField := COPYSTR(FilterValue, 1, STRPOS(FilterValue, ':') - 1);
+            Filters := COPYSTR(Filters, STRLEN(FilterValue) + 3);
+            ReportParameters := ReportParameters + '<Field name="' + FilterField + '" />';
+        end;
+
+        ReportParameters := ReportParameters + '</Options></ReportParameters>';
+        XMLDoc.LoadXml(ReportParameters);
+
+        //Set Values
+        Filters := RecRef.GetFilters;
+        Filters := Filters + ',';
+        while (StrPos(Filters, ',') <> 0) do begin
+            FilterValue := SelectStr(1, Filters);
+            FilterField := COPYSTR(FilterValue, 1, STRPOS(FilterValue, ':') - 1);
+            Filters := COPYSTR(Filters, STRLEN(FilterValue) + 3);
+
+            FilterValue := COPYSTR(FilterValue, STRLEN(FilterField) + 3);
+            SetRequestValue(XMLDoc, FilterField, XmlFieldFormat(FilterValue));
+        end;
+    end;
+
+    local procedure XmlFieldFormat(v: Variant): Text
+    begin
+        case true of
+            v.IsDate:
+                exit(Format(v, 0, 9));
+            v.IsCode,
+            v.IsText:
+                exit(v);
+        end;
+    end;
+
+    local procedure SetRequestValue(var XMLDoc: DotNet System_Xml_XmlDocument; FieldName: Text; FieldValue: Text): Boolean
+    var
+        XMLNode1: DotNet System_Xml_XmlNode;
+    begin
+        XMLNode1 := XMLDoc.SelectSingleNode(StrSubstNo('ReportParameters/Options/Field[@name="%1"]', FieldName));
+        if IsNull(XMLNode1) then
+            exit(false)
+        else begin
+            XMLNode1.InnerText := FieldValue;
+            exit(true);
+        end;
     end;
 }
