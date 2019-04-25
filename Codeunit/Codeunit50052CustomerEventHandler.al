@@ -196,4 +196,11 @@ codeunit 50052 "Customer Event Handler"
         SyncMasterData.SynchronizePostCodeToCompany(Rec);
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"E-Mail Template Mangement", 'SendMail_BeforePrint', '', true, true)]
+    local procedure EmailTemplMgt_SendMail_BeforePrint(var FilterRecord: RecordRef; var ReportParameters: Text)
+    var
+        EDICygate: Codeunit EDICygate;
+    begin
+        ReportParameters := EDICygate.GetParameters(FilterRecord);
+    end;
 }

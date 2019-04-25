@@ -58,24 +58,39 @@ page 50014 "PreReminders"
                 trigger OnAction()
                 var
                     Cust: Record Customer;
+                    tmpCust: Record Customer temporary;
                     CustLedg: Record "Cust. Ledger Entry";
+                    CustLedg2: Record "Cust. Ledger Entry";
                     EmailTemplateLine: Record "E-Mail Template Line";
                     RecRef: RecordRef;
                     HeaderDoc: Variant;
+                    EMailTemplateMgt: Codeunit "E-Mail Template Mangement";
                 begin
                     CurrPage.SetSelectionFilter(CustLedg);
                     if CustLedg.FindSet() then
                         repeat
-                        /*
-                        HeaderDoc := CustLedg;
-                        Cust.Get(CustLedg."Customer No.");
-                        if EMailTemplateLine.FindTemplate(50023, Cust."Language Code", RecRef) then begin
-                            EmailTemplateLine.OpenOutlookEMail(RecRef, HeaderDoc, 0);
-                        end;
-                        */
+                            Cust.Get(CustLedg."Customer No.");
+                            tmpCust := Cust;
+                            if tmpCust.Insert() then;
                         until CustLedg.Next() = 0;
+
+                    if tmpCust.FindSet() then
+                        repeat
+                            Clear(CustLedg2);
+                            CustLedg2.Copy(CustLedg);
+                            CustLedg2.SetRange("Customer No.", tmpCust."No.");
+                            HeaderDoc := CustLedg2;
+
+                            RecRef.GetTable(tmpCust);
+                            if EMailTemplateLine.FindTemplate(Report::PreReminders, tmpCust."Language Code", RecRef) then begin
+                                EMailTemplateMgt.SendMail(EmailTemplateLine, RecRef, HeaderDoc, '', false, false, 0);
+
+                                //EmailTemplateLine.OpenOutlookEMail(RecRef, HeaderDoc, 0);
+                            end;
+                        until tmpCust.Next() = 0;
                 end;
             }
         }
     }
+
 }
