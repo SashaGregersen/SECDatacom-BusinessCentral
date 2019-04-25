@@ -33,6 +33,11 @@ tableextension 50027 "Synchronize Customer" extends "Sales & Receivables Setup"
             DataClassification = ToBeClassified;
             TableRelation = "G/L Account";
         }
+        field(50006; "Provision Balance Account No."; code[20])
+        {
+            DataClassification = ToBeClassified;
+            TableRelation = "G/L Account";
+        }
 
         field(50100; "Project Item Template"; code[10])
         {
