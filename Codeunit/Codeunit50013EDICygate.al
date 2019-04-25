@@ -1008,6 +1008,8 @@ codeunit 50013 "EDICygate"
         FilterValue: Text;
         FilterField: Text;
     begin
+        if RecRef.Number <> Database::"Cust. Ledger Entry" then exit;
+
         Filters := RecRef.GetFilters;
         if StrLen(Filters) = 0 then exit;
 

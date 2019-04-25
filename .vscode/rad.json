@@ -1,5 +1,1 @@
-<<<<<<< HEAD
-﻿{"Added":[],"Modified":[{"Id":50006,"Kind":12,"Name":"WS Sales Header","PackagePath":"/src/Pages/Page50006WS_SalesHeader.al"}],"Removed":[]}
-=======
-﻿{"Added":[{"Id":50058,"Kind":16,"Name":"PreReminderBookkeeper","PackagePath":"/src/Page%20Extensions/PageExt50058BookkeeperRoleCenter.al"},{"Id":50024,"Kind":13,"Name":"PreReminders","PackagePath":"/src/Reports/Report50024PreReminder.al"},{"Id":50014,"Kind":12,"Name":"PreReminders","PackagePath":"/src/Pages/Page50014PreReminders.al"},{"Id":50023,"Kind":13,"Name":"Find PreReminders","PackagePath":"/src/Reports/Report50023FindPreReminder.al"}],"Modified":[{"Id":50000,"Kind":16,"Name":"SECNavigationArea","PackagePath":"/src/Page%20Extensions/PageExt50000SECNavigationAreaExtendsOrderRoleCenter.al"},{"Id":50011,"Kind":13,"Name":"POS Reporting","PackagePath":"/src/Reports/Report50011POSReporting.al"},{"Id":50060,"Kind":11,"Name":"POS Report","PackagePath":"/src/Codeunit/POSTestCodeunit.al"}],"Removed":[]}
->>>>>>> 7a4da0c99b74f0e7e788594ee9dba600f4d420de
+﻿{"Added":[],"Modified":[],"Removed":[]}
