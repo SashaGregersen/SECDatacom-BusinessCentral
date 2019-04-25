@@ -164,13 +164,25 @@ page 50006 "WS Sales Header"
         }
     }
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean;
+    var
+        EndCustNo: Code[20];
     begin
-        Validate("End Customer", CheckCreateCustomer());
+        Message('OnBeforeInsert');
+        EndCustNo := CheckCreateCustomer();
+        if EndCustNo <> '' then
+            Validate("End Customer", EndCustNo);
+        Message('OnAfterInsert');
     end;
 
     trigger OnModifyRecord(): Boolean;
+    var
+        EndCustNo: Code[20];
     begin
-        Validate("End Customer", CheckCreateCustomer());
+        Message('OnBeforeModify');
+        EndCustNo := CheckCreateCustomer();
+        if EndCustNo <> '' then
+            Validate("End Customer", EndCustNo);
+        Message('OnAfterModify');
     end;
 
     procedure CheckCreateCustomer(): Code[20];

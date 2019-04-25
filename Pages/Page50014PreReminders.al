@@ -79,7 +79,6 @@ page 50014 "PreReminders"
                             Clear(CustLedg2);
                             CustLedg2.Copy(CustLedg);
                             CustLedg2.SetRange("Customer No.", tmpCust."No.");
-                            //HeaderDoc := CustLedg2;
 
                             RecRef.GetTable(tmpCust);
 
