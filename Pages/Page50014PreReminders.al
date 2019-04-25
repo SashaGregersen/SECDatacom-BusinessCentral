@@ -79,13 +79,13 @@ page 50014 "PreReminders"
                             Clear(CustLedg2);
                             CustLedg2.Copy(CustLedg);
                             CustLedg2.SetRange("Customer No.", tmpCust."No.");
-                            HeaderDoc := CustLedg2;
+                            //HeaderDoc := CustLedg2;
 
                             RecRef.GetTable(tmpCust);
-                            if EMailTemplateLine.FindTemplate(Report::PreReminders, tmpCust."Language Code", RecRef) then begin
-                                EMailTemplateMgt.SendMail(EmailTemplateLine, RecRef, HeaderDoc, '', false, false, 0);
 
-                                //EmailTemplateLine.OpenOutlookEMail(RecRef, HeaderDoc, 0);
+                            if EMailTemplateLine.FindTemplate(Report::PreReminders, tmpCust."Language Code", RecRef) then begin
+                                RecRef.GetTable(CustLedg2);
+                                EMailTemplateMgt.SendMail(EmailTemplateLine, RecRef, HeaderDoc, '', false, false, 0);
                             end;
                         until tmpCust.Next() = 0;
                 end;
