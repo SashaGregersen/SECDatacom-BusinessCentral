@@ -12,6 +12,8 @@ codeunit 50020 "POS Report Export"
         // Close TempFile so that the SAVEASEXCEL function can write to it.  
         TempFile.CLOSE;
 
+        //RequestPageHelper.ShowRequestPageAndGetFilters(Newfilter, Existingfilters, EntityName, 36, 'POS Report');
+        //SalesHeader.GetFilters(SalesHeader."Posting Date",)
         REPORT.SAVEASEXCEL(50011, Name);
 
         TempFile.OPEN(Name);
@@ -192,5 +194,10 @@ codeunit 50020 "POS Report Export"
         ReturnValue: Boolean;
         POSReport: Report "POS Reporting";
         RequestFilter: text;
+        SalesHeader: record "Sales Header";
+        RequestPageHelper: Codeunit "Request Page Parameters Helper";
+        Newfilter: text;
+        Existingfilters: text;
+        EntityName: code[20];
 
 }

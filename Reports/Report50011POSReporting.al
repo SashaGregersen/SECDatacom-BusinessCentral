@@ -2,7 +2,7 @@ report 50011 "POS Reporting"
 {
     UsageCategory = Administration;
     ApplicationArea = All;
-    ProcessingOnly = true;
+    ProcessingOnly = false;
     UseRequestPage = true;
     DefaultLayout = RDLC;
     RDLCLayout = './Layouts/POSReport.rdl';
@@ -170,7 +170,7 @@ report 50011 "POS Reporting"
                 }
                 column(Unit_List_Price; UnitListPrice)
                 {
-                    //tages fra bid
+                    //tages fra bid eller salgslinjen
                 }
                 column(Bid_Purchase_Discount_Pct_; BidPurchaseDiscountPct)
                 {
@@ -264,8 +264,8 @@ report 50011 "POS Reporting"
                 var
 
                 begin
-                    Sales_Invoice_Line.SetRange(type, Sales_Invoice_Line.type::Item);
-                    Sales_Invoice_Line.SetRange("Sell-to Customer No.", "Sales Invoice Header"."Sell-to Customer No.");
+                    //Sales_Invoice_Line.SetRange(type, Sales_Invoice_Line.type::Item);
+                    //Sales_Invoice_Line.SetRange("Sell-to Customer No.", "Sales Invoice Header"."Sell-to Customer No.");
                 end;
 
                 trigger OnAfterGetRecord()
@@ -275,6 +275,8 @@ report 50011 "POS Reporting"
                     Bid: record bid;
                     VARID: record "VAR";
                 begin
+                    if Sales_Invoice_Line.Type <> Sales_Invoice_Line.type::Item then
+                        CurrReport.skip;
                     item.get("No.");
                     VendorItemNo := item."Vendor Item No.";
                     VARID.SetRange("Customer No.", "Sales Invoice Header".Reseller);
@@ -304,11 +306,13 @@ report 50011 "POS Reporting"
                         end;
                     end else begin
                         Currency := Item."Vendor Currency";
-                        //UnitListPrice := Sales_Invoice_Line."Unit Price";
+                        //UnitListPrice := Sales_Invoice_Line."Unit List Price VC";
                     end;
-                    if PurchCostPrice <> 0 then
+
+                    // Find PurchCostPrice på købslinjen 
+                    /* if PurchCostPrice <> 0 then
                         CostPercentage := (PurchCostPrice - BidItemPrices."Bid Unit Purchase Price")
-                        / PurchCostPrice;
+                        / PurchCostPrice; */
                 end;
 
             }
@@ -426,5 +430,6 @@ report 50011 "POS Reporting"
         ResellEndCustPhone: text[30];
         ResellEndCustEmail: text[80];
         GlSetup: record "General Ledger Setup";
+        Posreport: Codeunit "POS Report";
 
 }

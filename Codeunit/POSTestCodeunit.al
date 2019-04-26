@@ -33,7 +33,7 @@ codeunit 50060 "POS Report"
             IStream.READTEXT(XmlParameters);
         END;
 
-        // Use the REPORT.SAVEAS function to save the report as a PDF file  
+        // Use the REPORT.SAVEAS function to save the report as an Excel file  
         Content.CREATE(CreateFileName());
         Content.CREATEOUTSTREAM(OStream);
         REPORT.SAVEAS(50011, XmlParameters, REPORTFORMAT::Excel, OStream);
