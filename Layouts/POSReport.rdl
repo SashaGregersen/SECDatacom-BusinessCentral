@@ -3775,6 +3775,81 @@ End Function
   <DataSets>
     <DataSet Name="DataSet_Result">
       <Fields>
+        <Field Name="VAR_id">
+          <DataField>VAR_id</DataField>
+        </Field>
+        <Field Name="Shipment_No">
+          <DataField>Shipment_No</DataField>
+        </Field>
+        <Field Name="Shipment_Date">
+          <DataField>Shipment_Date</DataField>
+        </Field>
+        <Field Name="IC_Partner_Code">
+          <DataField>IC_Partner_Code</DataField>
+        </Field>
+        <Field Name="Vendor_Code">
+          <DataField>Vendor_Code</DataField>
+        </Field>
+        <Field Name="Posting_Date">
+          <DataField>Posting_Date</DataField>
+        </Field>
+        <Field Name="Item_No">
+          <DataField>Item_No</DataField>
+        </Field>
+        <Field Name="Vendor_Item_No_">
+          <DataField>Vendor_Item_No_</DataField>
+        </Field>
+        <Field Name="Description">
+          <DataField>Description</DataField>
+        </Field>
+        <Field Name="Bid_No_">
+          <DataField>Bid_No_</DataField>
+        </Field>
+        <Field Name="Unit_List_Price">
+          <DataField>Unit_List_Price</DataField>
+        </Field>
+        <Field Name="Unit_List_PriceFormat">
+          <DataField>Unit_List_PriceFormat</DataField>
+        </Field>
+        <Field Name="Bid_Purchase_Discount_Pct_">
+          <DataField>Bid_Purchase_Discount_Pct_</DataField>
+        </Field>
+        <Field Name="Bid_Purchase_Discount_Pct_Format">
+          <DataField>Bid_Purchase_Discount_Pct_Format</DataField>
+        </Field>
+        <Field Name="Bid_Unit_Purchase_Price">
+          <DataField>Bid_Unit_Purchase_Price</DataField>
+        </Field>
+        <Field Name="Bid_Unit_Purchase_PriceFormat">
+          <DataField>Bid_Unit_Purchase_PriceFormat</DataField>
+        </Field>
+        <Field Name="Currency">
+          <DataField>Currency</DataField>
+        </Field>
+        <Field Name="PurchCostPrice">
+          <DataField>PurchCostPrice</DataField>
+        </Field>
+        <Field Name="PurchCostPriceFormat">
+          <DataField>PurchCostPriceFormat</DataField>
+        </Field>
+        <Field Name="Cost_Percentage">
+          <DataField>Cost_Percentage</DataField>
+        </Field>
+        <Field Name="Cost_PercentageFormat">
+          <DataField>Cost_PercentageFormat</DataField>
+        </Field>
+        <Field Name="Quantity">
+          <DataField>Quantity</DataField>
+        </Field>
+        <Field Name="QuantityFormat">
+          <DataField>QuantityFormat</DataField>
+        </Field>
+        <Field Name="Purch_Order_No">
+          <DataField>Purch_Order_No</DataField>
+        </Field>
+        <Field Name="Purch_Order_Posting_Date">
+          <DataField>Purch_Order_Posting_Date</DataField>
+        </Field>
         <Field Name="Document_No">
           <DataField>Document_No</DataField>
         </Field>
@@ -3856,83 +3931,8 @@ End Function
         <Field Name="ResellEndCustContactPhone">
           <DataField>ResellEndCustContactPhone</DataField>
         </Field>
-        <Field Name="VAR_id">
-          <DataField>VAR_id</DataField>
-        </Field>
-        <Field Name="Shipment_No">
-          <DataField>Shipment_No</DataField>
-        </Field>
-        <Field Name="Shipment_Date">
-          <DataField>Shipment_Date</DataField>
-        </Field>
-        <Field Name="IC_Partner_Code">
-          <DataField>IC_Partner_Code</DataField>
-        </Field>
-        <Field Name="Vendor_Code">
-          <DataField>Vendor_Code</DataField>
-        </Field>
-        <Field Name="Posting_Date">
-          <DataField>Posting_Date</DataField>
-        </Field>
-        <Field Name="Item_No">
-          <DataField>Item_No</DataField>
-        </Field>
-        <Field Name="Vendor_Item_No_">
-          <DataField>Vendor_Item_No_</DataField>
-        </Field>
-        <Field Name="Description">
-          <DataField>Description</DataField>
-        </Field>
-        <Field Name="Bid_No_">
-          <DataField>Bid_No_</DataField>
-        </Field>
-        <Field Name="Unit_List_Price">
-          <DataField>Unit_List_Price</DataField>
-        </Field>
-        <Field Name="Unit_List_PriceFormat">
-          <DataField>Unit_List_PriceFormat</DataField>
-        </Field>
-        <Field Name="Bid_Purchase_Discount_Pct_">
-          <DataField>Bid_Purchase_Discount_Pct_</DataField>
-        </Field>
-        <Field Name="Bid_Purchase_Discount_Pct_Format">
-          <DataField>Bid_Purchase_Discount_Pct_Format</DataField>
-        </Field>
-        <Field Name="Bid_Unit_Purchase_Price">
-          <DataField>Bid_Unit_Purchase_Price</DataField>
-        </Field>
-        <Field Name="Bid_Unit_Purchase_PriceFormat">
-          <DataField>Bid_Unit_Purchase_PriceFormat</DataField>
-        </Field>
-        <Field Name="Currency">
-          <DataField>Currency</DataField>
-        </Field>
-        <Field Name="PurchCostPrice">
-          <DataField>PurchCostPrice</DataField>
-        </Field>
-        <Field Name="PurchCostPriceFormat">
-          <DataField>PurchCostPriceFormat</DataField>
-        </Field>
-        <Field Name="Cost_Percentage">
-          <DataField>Cost_Percentage</DataField>
-        </Field>
-        <Field Name="Cost_PercentageFormat">
-          <DataField>Cost_PercentageFormat</DataField>
-        </Field>
         <Field Name="SerialNo">
           <DataField>SerialNo</DataField>
-        </Field>
-        <Field Name="Quantity">
-          <DataField>Quantity</DataField>
-        </Field>
-        <Field Name="QuantityFormat">
-          <DataField>QuantityFormat</DataField>
-        </Field>
-        <Field Name="Purch_Order_No">
-          <DataField>Purch_Order_No</DataField>
-        </Field>
-        <Field Name="Purch_Order_Posting_Date">
-          <DataField>Purch_Order_Posting_Date</DataField>
         </Field>
       </Fields>
       <Query>

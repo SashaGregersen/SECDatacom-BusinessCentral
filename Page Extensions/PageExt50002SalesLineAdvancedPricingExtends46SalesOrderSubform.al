@@ -9,17 +9,18 @@ pageextension 50002 "Sales Line Bid" extends "Sales Order Subform"
             field("Bid No."; "Bid No.")
             {
                 ApplicationArea = All;
-
             }
             field("Bid Unit Sales Price"; "Bid Unit Sales Price")
             {
                 ApplicationArea = All;
-
             }
             field("Bid Sales Discount"; "Bid Sales Discount")
             {
                 ApplicationArea = All;
-
+            }
+            field("Unit List Price"; "Unit List Price")
+            {
+                ApplicationArea = all;
             }
             field("Unit Purchase Price"; "Unit Purchase Price")
             {
@@ -52,7 +53,6 @@ pageextension 50002 "Sales Line Bid" extends "Sales Order Subform"
             field(Claimable; Claimable)
             {
                 ApplicationArea = All;
-
             }
             field("Claim Amount"; "Claim Amount")
             {

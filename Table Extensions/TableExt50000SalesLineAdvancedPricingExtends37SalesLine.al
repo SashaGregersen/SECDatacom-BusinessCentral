@@ -184,6 +184,11 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
             DataClassification = ToBeClassified;
             Editable = false;
         }
+        field(50027; "Unit List Price"; Decimal)
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
         field(50030; "IC PO No."; Code[20])
         {
             DataClassification = ToBeClassified;
