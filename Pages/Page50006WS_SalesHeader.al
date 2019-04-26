@@ -12,10 +12,6 @@ page 50006 "WS Sales Header"
         {
             group(Generelt)
             {
-                field("No."; "No.")
-                {
-                    ApplicationArea = All;
-                }
                 field("Sell-To Customer No."; "Sell-to Customer No.")
                 {
                     ApplicationArea = All;
@@ -142,18 +138,6 @@ page 50006 "WS Sales Header"
                 {
                     ApplicationArea = All;
                 }
-                field(ShipComment; ShipComment)
-                {
-                    //Gemmes ikke i deres eksisterende løsning?
-                    ApplicationArea = All;
-                    Caption = 'ShipComment';
-                }
-                field(VendorOrderComment; VendorOrderComment)
-                {
-                    //Gemmes ikke i deres eksisterende løsning?
-                    ApplicationArea = All;
-                    Caption = 'VendorOrderComment';
-                }
                 part("Sales Lines"; "WS Sales Line")
                 {
                     ApplicationArea = Basic, Suite;
@@ -164,13 +148,21 @@ page 50006 "WS Sales Header"
         }
     }
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean;
+    var
+        EndCustNo: Code[20];
     begin
-        Validate("End Customer", CheckCreateCustomer());
+        EndCustNo := CheckCreateCustomer();
+        if EndCustNo <> '' then
+            Validate("End Customer", EndCustNo);
     end;
 
     trigger OnModifyRecord(): Boolean;
+    var
+        EndCustNo: Code[20];
     begin
-        Validate("End Customer", CheckCreateCustomer());
+        EndCustNo := CheckCreateCustomer();
+        if EndCustNo <> '' then
+            Validate("End Customer", EndCustNo);
     end;
 
     procedure CheckCreateCustomer(): Code[20];
@@ -178,6 +170,7 @@ page 50006 "WS Sales Header"
         Cust: Record Customer;
     begin
         if "End Customer" <> '' then exit("End Customer");
+        if "End User Name" = '' then exit('');
 
         Cust.SetRange(Address, "End User Address");
         Cust.SetRange("Post Code", "End User Post Code");

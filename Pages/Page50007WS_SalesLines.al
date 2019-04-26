@@ -35,12 +35,6 @@ page 50007 "WS Sales Line"
                 {
                     ApplicationArea = All;
                 }
-                field(ShipComment; ShipComment)
-                {
-                    //Gemmes ikke i deres eksisterende løsning?
-                    ApplicationArea = All;
-                    Caption = 'ShipComment';
-                }
                 field("DAF No."; "Bid No.")
                 {
                     ApplicationArea = All;
