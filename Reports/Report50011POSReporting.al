@@ -315,18 +315,19 @@ report 50011 "POS Reporting"
                         / PurchCostPrice; */
                 end;
 
+                trigger OnPostDataItem()
+                begin
+
+                end;
+
             }
 
             trigger OnPreDataItem()
-            var
-
             begin
                 GlSetup.get();
             end;
 
             trigger OnAfterGetRecord()
-            var
-
             begin
                 SetEndCustReseller();
             end;
@@ -345,19 +346,6 @@ report 50011 "POS Reporting"
         {
 
         } */
-    }
-    requestpage
-    {
-        layout
-        {
-            area(Content)
-            {
-                group(GroupName)
-                {
-
-                }
-            }
-        }
     }
 
     procedure SetEndCustReseller()
