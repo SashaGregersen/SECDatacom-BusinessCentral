@@ -228,7 +228,7 @@ report 50011 "POS Reporting"
                             Qty := Sales_Invoice_Line.Quantity;
                             SETRANGE(Number, 1, TempItemLedgEntrySales.count());
                         end;
-
+                        SetVendorFilter();
                     end;
 
                     trigger OnAfterGetRecord()
@@ -348,6 +348,24 @@ report 50011 "POS Reporting"
         } */
     }
 
+    requestpage
+    {
+        layout
+        {
+            area(Content)
+            {
+                group("POS Report")
+                {
+                    field(VendorCode; VendorCode)
+                    {
+                        Caption = 'Vendor Code';
+                    }
+
+                }
+            }
+        }
+    }
+
     procedure SetEndCustReseller()
     var
         Customer: record Customer;
@@ -383,7 +401,15 @@ report 50011 "POS Reporting"
         end;
     end;
 
+    local procedure SetVendorFilter()
     var
+
+    begin
+        Sales_Invoice_Line.SetFilter("Shortcut Dimension 1 Code", VendorCode);
+    end;
+
+    var
+        VendorCode: code[20];
         SalesHeader: record "Sales Header";
         BidUnitPurchasePrice: Decimal;
         Currency: code[10];
