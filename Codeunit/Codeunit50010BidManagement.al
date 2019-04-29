@@ -118,6 +118,7 @@ codeunit 50010 "Bid Management"
         DoPostPurchaseheader: Boolean;
         PurchPost: Codeunit "Purch.-Post";
         LineNo: Integer;
+        DCApprovalsBridge: Codeunit "DC Approvals Bridge";
     begin
         if not PurchSetup.Get() then
             exit;
@@ -153,6 +154,7 @@ codeunit 50010 "Bid Management"
                 end;
             until SalesInvLine.Next() = 0;
         if DoPostPurchaseheader then begin
+            DCApprovalsBridge.ForceApproval(PurchHeader);
             PurchPost.SetPreviewMode(false);
             PurchPost.SetSuppressCommit(false);
             PurchPost.Run(PurchHeader);
