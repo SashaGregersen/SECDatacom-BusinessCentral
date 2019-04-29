@@ -18,10 +18,6 @@ pageextension 50002 "Sales Line Bid" extends "Sales Order Subform"
             {
                 ApplicationArea = All;
             }
-            field("Unit List Price"; "Unit List Price")
-            {
-                ApplicationArea = all;
-            }
             field("Unit Purchase Price"; "Unit Purchase Price")
             {
                 ApplicationArea = All;

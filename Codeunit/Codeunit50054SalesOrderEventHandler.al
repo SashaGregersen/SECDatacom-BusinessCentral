@@ -31,6 +31,7 @@ codeunit 50054 "Sales Order Event Handler"
                 exit;
             if item."Default Location" <> '' then
                 rec.validate("Location Code", item."Default Location");
+            UpdateListPrice(rec, Item);
             if Item."Blocked from purchase" = true then begin
                 SubItem.SetRange("No.", Item."No.");
                 if not SubItem.IsEmpty() then begin
@@ -407,5 +408,24 @@ codeunit 50054 "Sales Order Event Handler"
                     Error('You cannot change an intercompany order');
             end;
         end;
+    end;
+
+    local procedure UpdateListPrice(SalesLine: Record "Sales Line"; Item: record Item)
+    var
+        SalesHeader: Record "Sales Header";
+        ListPrice: record "Sales Price";
+        ListPrice2: record "Sales Price";
+        Advpricemgt: Codeunit "Advanced Price Management";
+    begin
+        SalesHeader.get(SalesLine."Document Type", SalesLine."Document No.");
+        if Advpricemgt.FindListPriceForitem(SalesLine."No.", SalesHeader."Currency Code", ListPrice) then
+            SalesLine.validate("Unit List Price", ListPrice."Unit Price")
+        else
+            SalesLine.Validate("Unit List Price", 0);
+
+        if Advpricemgt.FindListPriceForitem(SalesLine."No.", Item."Vendor Currency", ListPrice2) then
+            SalesLine.validate("Unit List Price VC", ListPrice2."Unit Price")
+        else
+            SalesLine.Validate("Unit List Price VC", 0);
     end;
 }
