@@ -33,6 +33,9 @@ query 50008 "Top Customer Overview SEC"
             column(Salesperson_Code; "Salesperson Code")
             {
             }
+            column(Owning_Company; "Owning Company")
+            {
+            }
             dataitem(Salesperson_Purchaser; "Salesperson/Purchaser")
             {
                 DataItemLink = Code = Customer."Salesperson Code";
@@ -53,7 +56,7 @@ query 50008 "Top Customer Overview SEC"
     }
     trigger OnBeforeOpen()
     begin
-        //   customer.setfilter("Owning Company", CompanyName);
+        CurrQuery.SetFilter(Owning_Company, CompanyName);
     end;
 
 }
