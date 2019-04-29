@@ -50,11 +50,10 @@ query 50008 "Top Customer Overview SEC"
 
         }
 
-
     }
     trigger OnBeforeOpen()
     begin
-        customer.setfilter("Owning Company", CompanyName);
+        //   customer.setfilter("Owning Company", CompanyName);
     end;
 
 }
