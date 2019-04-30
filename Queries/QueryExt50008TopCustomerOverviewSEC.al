@@ -33,7 +33,7 @@ query 50008 "Top Customer Overview SEC"
             column(Salesperson_Code; "Salesperson Code")
             {
             }
-            column(Owning_Company; "Owning Company")
+            filter(Owning_Company; "Owning Company")
             {
             }
             dataitem(Salesperson_Purchaser; "Salesperson/Purchaser")

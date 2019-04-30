@@ -31,7 +31,7 @@ codeunit 50054 "Sales Order Event Handler"
                 exit;
             if item."Default Location" <> '' then
                 rec.validate("Location Code", item."Default Location");
-            UpdateListPrice(rec, Item);
+            UpdateListPriceAndDiscount(rec, Item);
             if Item."Blocked from purchase" = true then begin
                 SubItem.SetRange("No.", Item."No.");
                 if not SubItem.IsEmpty() then begin
@@ -410,7 +410,7 @@ codeunit 50054 "Sales Order Event Handler"
         end;
     end;
 
-    local procedure UpdateListPrice(SalesLine: Record "Sales Line"; Item: record Item)
+    procedure UpdateListPriceAndDiscount(var SalesLine: Record "Sales Line"; Item: record Item)
     var
         SalesHeader: Record "Sales Header";
         ListPrice: record "Sales Price";
@@ -422,10 +422,19 @@ codeunit 50054 "Sales Order Event Handler"
             SalesLine.validate("Unit List Price", ListPrice."Unit Price")
         else
             SalesLine.Validate("Unit List Price", 0);
+        if (ListPrice."Unit Price" <> 0) and (SalesLine."Unit Price" <> 0) then
+            SalesLine.validate("Reseller Discount", UpdateResellerDiscount(SalesLine, ListPrice));
 
         if Advpricemgt.FindListPriceForitem(SalesLine."No.", Item."Vendor Currency", ListPrice2) then
             SalesLine.validate("Unit List Price VC", ListPrice2."Unit Price")
         else
             SalesLine.Validate("Unit List Price VC", 0);
     end;
+
+    local procedure UpdateResellerDiscount(SalesLine: record "Sales Line"; Listprice: record "Sales Price"): Decimal
+    begin
+        exit(((Listprice."Unit Price" - SalesLine."Unit Price") / Listprice."Unit Price") * 100);
+    end;
+
+
 }
