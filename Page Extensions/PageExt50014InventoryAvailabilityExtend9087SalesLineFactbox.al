@@ -10,6 +10,7 @@ pageextension 50014 "Inventory Availability Sales" extends "Sales Line FactBox"
                 ApplicationArea = all;
             }
         }
+
     }
 
     actions
