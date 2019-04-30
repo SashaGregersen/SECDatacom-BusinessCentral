@@ -34,7 +34,7 @@ codeunit 50051 "Price Event Handler"
             SalesLine.validate("Line Amount Excl. VAT (LCY)", SalesLine."Line Amount");
             PriceEventHandler.UpdateListPriceAndDiscount(SalesLine, item);
         end;
-
+        SalesLine.CalcAdvancedPrices;
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Sales Line", 'OnAfterValidateEvent', 'Unit price', true, true)]
