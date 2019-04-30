@@ -94,6 +94,7 @@ query 50005 "PostedSalesInvoiceLines"
             {
 
             }
+            column(Profit_Amount_LCY; "Profit Amount LCY") { }
             column(Line_Amount_Excl__VAT__LCY_; "Line Amount Excl. VAT (LCY)")
             {
 

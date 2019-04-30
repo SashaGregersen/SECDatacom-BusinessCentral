@@ -6931,6 +6931,9 @@ End Function
         <Field Name="PaymentMethodDescription">
           <DataField>PaymentMethodDescription</DataField>
         </Field>
+        <Field Name="PaymentMethodExtDescription">
+          <DataField>PaymentMethodExtDescription</DataField>
+        </Field>
         <Field Name="PaymentMethodDescription_Lbl">
           <DataField>PaymentMethodDescription_Lbl</DataField>
         </Field>
