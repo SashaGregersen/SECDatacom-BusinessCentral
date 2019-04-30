@@ -172,19 +172,6 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
         {
             DataClassification = ToBeClassified;
             Editable = false;
-            trigger OnValidate()
-            var
-                SalesHeader: record "Sales Header";
-                CurrencyExcRate: record "Currency Exchange Rate";
-            begin
-                if "Profit Amount" <> 0 then begin
-                    Salesheader.get(Rec."Document Type", Rec."Document No.");
-                    if salesheader."Currency Code" <> '' then
-                        Rec.validate("Profit Amount LCY", CurrencyExcRate.ExchangeAmtFCYToLCY(salesheader."Posting Date", salesheader."Currency Code", Rec.Amount, salesheader."Currency Factor"))
-                    else
-                        Rec.validate("Profit Amount LCY", rec."Profit Amount");
-                end;
-            end;
         }
         field(50024; "Profit Margin"; decimal)
         {
