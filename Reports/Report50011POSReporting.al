@@ -2,7 +2,7 @@ report 50011 "POS Reporting"
 {
     UsageCategory = Administration;
     ApplicationArea = All;
-    ProcessingOnly = true;
+    ProcessingOnly = false;
     UseRequestPage = true;
     DefaultLayout = RDLC;
     RDLCLayout = './Layouts/POSReport.rdl';
@@ -10,204 +10,206 @@ report 50011 "POS Reporting"
 
     dataset
     {
-        dataitem("Sales Invoice Header"; "Sales Invoice Header")
+
+        dataitem(Sales_Invoice_Line; "Sales Invoice Line")
         {
-            RequestFilterFields = "Posting Date";
 
-            column(Document_No; "No.")
+            RequestFilterFields = "IC Partner Code";
+
+            column(VAR_id; VARIDInt)
             {
 
             }
-            column(External_Document_No; "External Document No.")
+            column(Shipment_No; ShipmentNo)
             {
 
             }
-            column(Sales_Order_No; "Order No.")
+            column(Shipment_Date; "Shipment Date")
             {
 
             }
-            column(Reseller; ResellerName)
+            column(IC_Partner_Code; "IC Partner Code")
             {
 
             }
-            column(End_Customer; EndCustomerName)
+            column(Vendor_Code; "Shortcut Dimension 1 Code")
             {
 
             }
-            column(Ship_to_Name; "Ship-to Name")
+            column(Posting_Date; "Posting Date")
             {
 
             }
-            column(Ship_to_Name_2; "Ship-to Name 2")
+            column(Item_No; "No.")
             {
 
             }
-            column(Ship_to_Address; "Ship-to Address")
+            column(Vendor_Item_No_; VendorItemNo)
             {
 
             }
-            column(Ship_to_Address_2; "Ship-to Address 2")
+            column(Description; Description)
             {
 
             }
-            column(Ship_to_City; "Ship-to City")
+            column(Bid_No_; VendorBidNo)
             {
 
             }
-            column(Ship_to_Post_Code; "Ship-to Post Code")
+            column(Unit_List_Price; UnitListPrice)
+            {
+                //tages fra bid eller salgslinjen
+            }
+            column(Bid_Purchase_Discount_Pct_; BidPurchaseDiscountPct)
+            {
+                //tages fra bid
+            }
+            column(Bid_Unit_Purchase_Price; BidUnitPurchasePrice)
+            {
+                //tages fra bid
+            }
+            column(Currency; Currency)
+            {
+                //tages fra bid eller vendor currency
+            }
+            column(PurchCostPrice; PurchCostPrice)
+            {
+                //skal hentes fra købslinjen
+            }
+            column(Cost_Percentage; CostPercentage)
+            {
+                //udregnet vha. (unit purch price - bid unit purch price) / unit purch price    
+            }
+            column(Quantity; Qty)
             {
 
             }
-            column(Ship_to_Country_Region_Code; "Ship-to Country/Region Code")
+            column(Purch_Order_No; PurchOrderNo)
             {
 
             }
-            column(Ship_to_County; "Ship-to County")
-            {
-
-            }
-            column(Ship_to_Contact; "Ship-to Contact")
-            {
-
-            }
-            column(Ship_to_Phone; "Phone No.")
-            {
-
-            }
-            column(Ship_to_Email; "Email")
-            {
-
-            }
-            column(ResellEndCustName; ResellEndCustName)
-            {
-
-            }
-            column(ResellEndCustName2; ResellEndCustName2)
-            {
-
-            }
-            column(ResellEndCustAddress; ResellEndCustAddress)
-            {
-
-            }
-            column(ResellEndCustAddress2; ResellEndCustAddress2)
-            {
-
-            }
-            column(ResellEndCustCity; ResellEndCustCity)
-            {
-
-            }
-            column(ResellEndCustPostCode; ResellEndCustPostCode)
-            {
-
-            }
-            column(ResellEndCustCountryRegion; ResellEndCustCountryRegion)
-            {
-
-            }
-            column(ResellEndCustCounty; ResellEndCustCounty)
-            {
-
-            }
-            column(ResellEndCustContact; ResellEndCustContact)
-            {
-
-            }
-            column(ResellEndCustContactEmail; ResellEndCustEmail)
-            {
-
-            }
-            column(ResellEndCustContactPhone; ResellEndCustPhone)
+            column(Purch_Order_Posting_Date; PurchOrderPostDate)
             {
 
             }
 
-            dataitem(Sales_Invoice_Line; "Sales Invoice Line")
+            dataitem("Sales Invoice Header"; "Sales Invoice Header")
             {
-                DataItemLink = "Document No." = field ("No.");
-                RequestFilterFields = "IC Partner Code", "Shortcut Dimension 1 Code";
+                DataItemLink = "No." = field ("Document No.");
+                RequestFilterFields = "Posting Date";
 
-                column(VAR_id; VARIDInt)
+                column(Document_No; "No.")
                 {
 
                 }
-                column(Shipment_No; ShipmentNo)
+                column(External_Document_No; "External Document No.")
                 {
 
                 }
-                column(Shipment_Date; "Shipment Date")
+                column(Sales_Order_No; "Order No.")
                 {
 
                 }
-                column(IC_Partner_Code; "IC Partner Code")
+                column(Reseller; ResellerName)
                 {
 
                 }
-                column(Vendor_Code; "Shortcut Dimension 1 Code")
+                column(End_Customer; EndCustomerName)
                 {
 
                 }
-                column(Posting_Date; "Posting Date")
+                column(Ship_to_Name; "Ship-to Name")
                 {
 
                 }
-                column(Item_No; "No.")
+                column(Ship_to_Name_2; "Ship-to Name 2")
                 {
 
                 }
-                column(Vendor_Item_No_; VendorItemNo)
+                column(Ship_to_Address; "Ship-to Address")
                 {
 
                 }
-                column(Description; Description)
+                column(Ship_to_Address_2; "Ship-to Address 2")
                 {
 
                 }
-                column(Bid_No_; VendorBidNo)
+                column(Ship_to_City; "Ship-to City")
                 {
 
                 }
-                column(Unit_List_Price; UnitListPrice)
+                column(Ship_to_Post_Code; "Ship-to Post Code")
                 {
-                    //tages fra bid
+
                 }
-                column(Bid_Purchase_Discount_Pct_; BidPurchaseDiscountPct)
+                column(Ship_to_Country_Region_Code; "Ship-to Country/Region Code")
                 {
-                    //tages fra bid
+
                 }
-                column(Bid_Unit_Purchase_Price; BidUnitPurchasePrice)
+                column(Ship_to_County; "Ship-to County")
                 {
-                    //tages fra bid
+
                 }
-                column(Currency; Currency)
+                column(Ship_to_Contact; "Ship-to Contact")
                 {
-                    //tages fra bid eller vendor currency
+
                 }
-                column(PurchCostPrice; PurchCostPrice)
+                column(Ship_to_Phone; "Phone No.")
                 {
-                    //skal hentes fra købslinjen
+
                 }
-                column(Cost_Percentage; CostPercentage)
+                column(Ship_to_Email; "Email")
                 {
-                    //udregnet vha. (unit purch price - bid unit purch price) / unit purch price    
+
+                }
+                column(ResellEndCustName; ResellEndCustName)
+                {
+
+                }
+                column(ResellEndCustName2; ResellEndCustName2)
+                {
+
+                }
+                column(ResellEndCustAddress; ResellEndCustAddress)
+                {
+
+                }
+                column(ResellEndCustAddress2; ResellEndCustAddress2)
+                {
+
+                }
+                column(ResellEndCustCity; ResellEndCustCity)
+                {
+
+                }
+                column(ResellEndCustPostCode; ResellEndCustPostCode)
+                {
+
+                }
+                column(ResellEndCustCountryRegion; ResellEndCustCountryRegion)
+                {
+
+                }
+                column(ResellEndCustCounty; ResellEndCustCounty)
+                {
+
+                }
+                column(ResellEndCustContact; ResellEndCustContact)
+                {
+
+                }
+                column(ResellEndCustContactEmail; ResellEndCustEmail)
+                {
+
+                }
+                column(ResellEndCustContactPhone; ResellEndCustPhone)
+                {
+
                 }
                 dataitem(Copyloop; Integer)
                 {
 
                     column(SerialNo; SerialNo)
-                    {
-
-                    }
-                    column(Quantity; Qty)
-                    {
-
-                    }
-                    column(Purch_Order_No; PurchOrderNo)
-                    {
-
-                    }
-                    column(Purch_Order_Posting_Date; PurchOrderPostDate)
                     {
 
                     }
@@ -218,17 +220,11 @@ report 50011 "POS Reporting"
                         ItemLedgEntry: record "Item Ledger Entry";
                     begin
                         clear(TempItemLedgEntrySales);
-                        ValueEntry.SetRange("Document No.", Sales_Invoice_Line."Document No.");
-                        ValueEntry.SetRange("Document Line No.", Sales_Invoice_Line."Line No.");
-                        if ValueEntry.FindSet() then begin
-                            repeat
-                                ItemLedgEntry.get(ValueEntry."Item Ledger Entry No.");
-                                POSReportExport.RetrieveEntriesFromPostedInv(TempItemLedgEntrySales, Sales_Invoice_Line.RowID1());
-                            until ValueEntry.next = 0;
-                            Qty := Sales_Invoice_Line.Quantity;
-                            SETRANGE(Number, 1, TempItemLedgEntrySales.count());
-                        end;
-
+                        POSReportExport.RetrieveEntriesFromPostedInv(TempItemLedgEntrySales, Sales_Invoice_Line.RowID1());
+                        if TempItemLedgEntrySales.Count = 0 then
+                            SetRange(Number, 0)
+                        else
+                            SetRange(Number, 1, TempItemLedgEntrySales.count());
                     end;
 
                     trigger OnAfterGetRecord()
@@ -240,121 +236,124 @@ report 50011 "POS Reporting"
                         PurchInvHeader: record "Purch. Inv. Header";
                         PostedSalesShipment: Record "Sales Shipment Header";
                     begin
-                        Qty := Sales_Invoice_Line.Quantity;
-                        if TempItemLedgEntrySales.Count() >= 1 then
-                            Qty := 1;
+                        SetEndCustReseller();
+                        if Number = 0 then
+                            CurrReport.skip;
                         if TempItemLedgEntrySales.findfirst then begin
-                            PostedSalesShipment.get(TempItemLedgEntrySales."Document No.");
-                            ShipmentNo := PostedSalesShipment."No.";
                             SerialNo := TempItemLedgEntrySales."Serial No.";
-                            POSReportExport.FindAppliedEntry(TempItemLedgEntrySales, TempItemLedgEntryPurchase);
-                            if PurchRcptHeader.get(TempItemLedgEntryPurchase."Document No.") then begin
-                                PurchInvHeader.SetRange("Order No.", PurchRcptHeader."Order No.");
-                                PurchInvHeader.FindFirst();
-                                PurchOrderNo := PurchInvHeader."No.";
-                                PurchOrderPostDate := PurchInvHeader."Posting Date";
-                            end;
                             TempItemLedgEntrySales.Delete();
                         end;
-
                     end;
 
                 }
-                trigger OnPreDataItem()
-                var
-
-                begin
-                    Sales_Invoice_Line.SetRange(type, Sales_Invoice_Line.type::Item);
-                    Sales_Invoice_Line.SetRange("Sell-to Customer No.", "Sales Invoice Header"."Sell-to Customer No.");
-                end;
-
-                trigger OnAfterGetRecord()
-                var
-                    BidItemPrices: record "Bid Item Price";
-                    Item: Record item;
-                    Bid: record bid;
-                    VARID: record "VAR";
-                begin
-                    item.get("No.");
-                    VendorItemNo := item."Vendor Item No.";
-                    VARID.SetRange("Customer No.", "Sales Invoice Header".Reseller);
-                    VARID.SetRange("Vendor No.", item."Vendor No.");
-                    if VARID.FindFirst() then
-                        VARIDInt := VARID."VAR id";
-
-                    if bid.get("Bid No.") then begin
-                        VendorBidNo := bid."Vendor Bid No.";
-                        if BidItemPrices.get(Sales_Invoice_Line."Bid No.",
-                        Sales_Invoice_Line."No.", Sales_Invoice_Line."Sell-to Customer No.", item."Vendor Currency")
-                        then begin
-                            UnitListPrice := BidItemPrices."Unit List Price";
-                            BidPurchaseDiscountPct := BidItemPrices."Bid Purchase Discount Pct.";
-                            Currency := BidItemPrices."Currency Code";
-                            BidUnitPurchasePrice := BidItemPrices."Bid Unit Purchase Price";
-                        end else begin
-                            BidItemPrices.setrange("Bid No.", Sales_Invoice_Line."Bid No.");
-                            BidItemPrices.setrange("item No.", Sales_Invoice_Line."No.");
-                            BidItemPrices.setrange("Currency Code", item."Vendor Currency");
-                            if BidItemPrices.FindFirst() then begin
-                                UnitListPrice := BidItemPrices."Unit List Price";
-                                BidPurchaseDiscountPct := BidItemPrices."Bid Purchase Discount Pct.";
-                                Currency := BidItemPrices."Currency Code";
-                                BidUnitPurchasePrice := BidItemPrices."Bid Unit Purchase Price";
-                            end;
-                        end;
-                    end else begin
-                        Currency := Item."Vendor Currency";
-                        //UnitListPrice := Sales_Invoice_Line."Unit Price";
-                    end;
-                    if PurchCostPrice <> 0 then
-                        CostPercentage := (PurchCostPrice - BidItemPrices."Bid Unit Purchase Price")
-                        / PurchCostPrice;
-                end;
 
             }
-
             trigger OnPreDataItem()
             var
 
             begin
-                GlSetup.get();
+                GlSetup.Get();
+                if VendorCode <> '' then
+                    SetVendorFilter();
             end;
 
             trigger OnAfterGetRecord()
             var
-
+                BidItemPrices: record "Bid Item Price";
+                Item: Record item;
+                Bid: record bid;
+                VARID: record "VAR";
+                TempItemLedgEntryPurchase: record "Item Ledger Entry" temporary;
+                PurchRcptHeader: record "Purch. Rcpt. Header";
+                PurchInvHeader: record "Purch. Inv. Header";
+                PostedSalesShipment: Record "Sales Shipment Header";
             begin
-                SetEndCustReseller();
+                if Sales_Invoice_Line.Type <> Sales_Invoice_Line.type::Item then
+                    CurrReport.skip;
+                Qty := Sales_Invoice_Line.Quantity;
+                item.get("No.");
+                VendorItemNo := item."Vendor Item No.";
+                VARID.SetRange("Customer No.", "Sales Invoice Header".Reseller);
+                VARID.SetRange("Vendor No.", item."Vendor No.");
+                if VARID.FindFirst() then
+                    VARIDInt := VARID."VAR id";
+
+                if bid.get("Bid No.") then begin
+                    VendorBidNo := bid."Vendor Bid No.";
+                    if BidItemPrices.get(Sales_Invoice_Line."Bid No.",
+                    Sales_Invoice_Line."No.", Sales_Invoice_Line."Sell-to Customer No.", item."Vendor Currency")
+                    then begin
+                        UnitListPrice := BidItemPrices."Unit List Price";
+                        BidPurchaseDiscountPct := BidItemPrices."Bid Purchase Discount Pct.";
+                        Currency := BidItemPrices."Currency Code";
+                        BidUnitPurchasePrice := BidItemPrices."Bid Unit Purchase Price";
+                    end else begin
+                        BidItemPrices.setrange("Bid No.", Sales_Invoice_Line."Bid No.");
+                        BidItemPrices.setrange("item No.", Sales_Invoice_Line."No.");
+                        BidItemPrices.setrange("Currency Code", item."Vendor Currency");
+                        if BidItemPrices.FindFirst() then begin
+                            UnitListPrice := BidItemPrices."Unit List Price";
+                            BidPurchaseDiscountPct := BidItemPrices."Bid Purchase Discount Pct.";
+                            Currency := BidItemPrices."Currency Code";
+                            BidUnitPurchasePrice := BidItemPrices."Bid Unit Purchase Price";
+                        end;
+                    end;
+                end else begin
+                    Currency := Item."Vendor Currency";
+                    UnitListPrice := Sales_Invoice_Line."Unit List Price VC";
+                end;
+
+                clear(TempItemLedgEntrySales);
+                POSReportExport.RetrieveEntriesFromPostedInv(TempItemLedgEntrySales, Sales_Invoice_Line.RowID1());
+                if TempItemLedgEntrySales.Count() >= 1 then
+                    Qty := 1
+                else
+                    Qty := Sales_Invoice_Line.Quantity;
+                if TempItemLedgEntrySales.findfirst then begin
+                    PostedSalesShipment.get(TempItemLedgEntrySales."Document No.");
+                    ShipmentNo := PostedSalesShipment."No.";
+                    SerialNo := TempItemLedgEntrySales."Serial No.";
+                    POSReportExport.FindAppliedEntry(TempItemLedgEntrySales, TempItemLedgEntryPurchase);
+                    if PurchRcptHeader.get(TempItemLedgEntryPurchase."Document No.") then begin
+                        PurchInvHeader.SetRange("Order No.", PurchRcptHeader."Order No.");
+                        PurchInvHeader.FindFirst();
+                        PurchOrderNo := PurchInvHeader."No.";
+                        PurchOrderPostDate := PurchInvHeader."Posting Date";
+                    end;
+                    TempItemLedgEntrySales.Delete();
+                end;
+
+                // Find PurchCostPrice på købslinjen 
+                /* if PurchCostPrice <> 0 then
+                    CostPercentage := (PurchCostPrice - BidItemPrices."Bid Unit Purchase Price")
+                    / PurchCostPrice; */
             end;
 
-            trigger OnPostDataItem()
-            var
-
-            begin
-
-            end;
 
         }
 
-
-        /* dataitem("Sales Cr.Memo Header"; "Sales Cr.Memo Header")
-        {
-
-        } */
     }
+
+
     requestpage
     {
         layout
         {
             area(Content)
             {
-                group(GroupName)
+                group("POS Report")
                 {
+                    field(VendorCode; VendorCode)
+                    {
+                        Caption = 'Vendor Code';
+                    }
 
                 }
             }
         }
     }
+
+
 
     procedure SetEndCustReseller()
     var
@@ -391,7 +390,15 @@ report 50011 "POS Reporting"
         end;
     end;
 
+    local procedure SetVendorFilter()
     var
+
+    begin
+        Sales_Invoice_Line.SetFilter("Shortcut Dimension 1 Code", VendorCode);
+    end;
+
+    var
+        VendorCode: code[20];
         SalesHeader: record "Sales Header";
         BidUnitPurchasePrice: Decimal;
         Currency: code[10];
@@ -406,13 +413,11 @@ report 50011 "POS Reporting"
         Qty: Decimal;
         POSReportExport: codeunit "POS Report Export";
         SerialNo: text[50];
-        BidUnitPurchasePriceLCY: Decimal; //slettes
         CostPercentage: Decimal;
         VARIDInt: Code[20];
         PurchOrderNo: code[20];
         PurchOrderPostDate: Date;
         PurchCostPrice: decimal;
-        PurchCostPriceLCY: decimal; //slettes
         ListPrice: Decimal;
         ResellEndCustName: text[50];
         ResellEndCustName2: text[50];

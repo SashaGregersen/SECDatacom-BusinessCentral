@@ -44,6 +44,11 @@ tableextension 50012 "Sales Cr.Memo Adv. Pricing" extends "Sales Cr.Memo Line"
             DataClassification = ToBeClassified;
             Editable = false;
         }
+        field(50019; "Reseller Discount"; Decimal)
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
         field(50020; "Calculated Purchase Price"; Decimal)
         {
             DataClassification = ToBeClassified;
@@ -74,6 +79,21 @@ tableextension 50012 "Sales Cr.Memo Adv. Pricing" extends "Sales Cr.Memo Line"
             Editable = false;
         }
         field(50026; "Line Amount Excl. VAT (LCY)"; Decimal)
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
+        field(50027; "Unit List Price"; Decimal)
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
+        field(50028; "Unit List Price VC"; Decimal)
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
+        field(50029; "Profit Amount LCY"; Decimal)
         {
             DataClassification = ToBeClassified;
             Editable = false;
