@@ -1,1 +1,1 @@
-﻿{"Added":[],"Modified":[{"Id":50001,"Kind":10,"Name":"Bid Item Price","PackagePath":"/src/Tables/Table50001BidPrices.al"},{"Id":50000,"Kind":17,"Name":"Sales Line Bid","PackagePath":"/src/Table%20Extensions/TableExt50000SalesLineAdvancedPricingExtends37SalesLine.al"},{"Id":50054,"Kind":11,"Name":"Sales Order Event Handler","PackagePath":"/src/Codeunit/Codeunit50054SalesOrderEventHandler.al"}],"Removed":[]}
+﻿{"Added":[],"Modified":[],"Removed":[]}
