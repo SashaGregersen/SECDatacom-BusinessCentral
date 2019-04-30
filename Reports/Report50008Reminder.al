@@ -719,6 +719,16 @@ report 50008 "SEC Reminder"
                 end else
                     PaymentID := PadStr('', PmtIDLength, '0');
                 // </PM>
+
+                PaymentMethodExtDescription := '';
+                Cust.Get("Customer No.");
+                if PaymentMethod.Get(Cust."Payment Method Code") then begin
+                    PaymentMethod.CalcFields("Invoice Text");
+                    if PaymentMethod."Invoice Text".HasValue then begin
+                        TempBlob.Blob := PaymentMethod."Invoice Text";
+                        PaymentMethodExtDescription := TempBlob.ReadAsTextWithCRLFLineSeparator();
+                    end;
+                end;
                 //<<NC
 
                 TotalVATAmount := "VAT Amount";
@@ -935,6 +945,10 @@ report 50008 "SEC Reminder"
         PmtSetup: Record "Payment Setup";
         PaymentID: Code[16];
         PmtIDLength: Integer;
+        PaymentMethodExtDescription: Text;
+        PaymentMethod: Record "Payment Method";
+        TempBlob: Record TempBlob temporary;
+        Cust: Record Customer;
         //<<NC
         ShowMIRLines: Boolean;
 

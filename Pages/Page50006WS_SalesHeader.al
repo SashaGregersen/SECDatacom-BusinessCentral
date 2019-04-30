@@ -12,7 +12,7 @@ page 50006 "WS Sales Header"
         {
             group(Generelt)
             {
-                field("Sell-To Customer No."; "Sell-to Customer No.")
+                field(Reseller; Reseller)
                 {
                     ApplicationArea = All;
                 }
@@ -36,41 +36,48 @@ page 50006 "WS Sales Header"
                 {
                     ApplicationArea = All;
                 }
-                field("Bill-to Name"; "Bill-to Name")
+                /*
+                field("End Customer"; "End Customer")
                 {
                     ApplicationArea = All;
                 }
-                field("Bill-to Name 2"; "Bill-to Name 2")
+                */
+                field("End User Name"; "End User Name")
                 {
                     ApplicationArea = All;
                 }
-                field("Bill-to Address"; "Bill-to Address")
+                field("End User Address"; "End User Address")
                 {
                     ApplicationArea = All;
                 }
-                field("Bill-to Address 2"; "Bill-to Address 2")
+                field("End User Address 2"; "End User Address 2")
                 {
                     ApplicationArea = All;
                 }
-                field("Bill-to Post Code"; "Bill-to Post Code")
+                field("End User Post Code"; "End User Post Code")
                 {
                     ApplicationArea = All;
-                }
-                field("Bill-to City"; "Bill-to City")
-                {
-                    ApplicationArea = All;
-                }
-                field("Bill-to Country/Region Code"; "Bill-to Country/Region Code")
-                {
-                    ApplicationArea = All;
-                }
-                field("Bill-to Contact"; "Bill-to Contact")
-                {
-                    ApplicationArea = All;
-                    trigger OnValidate();
+                    trigger OnValidate()
+                    var
+                        EndCustNo: Code[20];
                     begin
-                        "Sell-to Contact" := "Bill-to Contact";
+                        EndCustNo := CheckCreateCustomer();
+                        if ("End Customer" <> EndCustNo) and
+                           (EndCustNo <> '') then
+                            Validate("End Customer", EndCustNo);
                     end;
+                }
+                field("End User City"; "End User City")
+                {
+                    ApplicationArea = All;
+                }
+                field("End User Country"; "End User Country")
+                {
+                    ApplicationArea = All;
+                }
+                field("End User Phone No."; "End User Phone No.")
+                {
+                    ApplicationArea = All;
                 }
                 field("Ship-to Name"; "Ship-to Name")
                 {
@@ -104,40 +111,6 @@ page 50006 "WS Sales Header"
                 {
                     ApplicationArea = All;
                 }
-                /*
-                field("End Customer"; "End Customer")
-                {
-                    ApplicationArea = All;
-                }
-                */
-                field("End User Name"; "End User Name")
-                {
-                    ApplicationArea = All;
-                }
-                field("End User Address"; "End User Address")
-                {
-                    ApplicationArea = All;
-                }
-                field("End User Address 2"; "End User Address 2")
-                {
-                    ApplicationArea = All;
-                }
-                field("End User Post Code"; "End User Post Code")
-                {
-                    ApplicationArea = All;
-                }
-                field("End User City"; "End User City")
-                {
-                    ApplicationArea = All;
-                }
-                field("End User Country"; "End User Country")
-                {
-                    ApplicationArea = All;
-                }
-                field("End User Phone No."; "End User Phone No.")
-                {
-                    ApplicationArea = All;
-                }
                 part("Sales Lines"; "WS Sales Line")
                 {
                     ApplicationArea = Basic, Suite;
@@ -147,12 +120,14 @@ page 50006 "WS Sales Header"
             }
         }
     }
+
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean;
     var
         EndCustNo: Code[20];
     begin
         EndCustNo := CheckCreateCustomer();
-        if EndCustNo <> '' then
+        if ("End Customer" <> EndCustNo) and
+           (EndCustNo <> '') then
             Validate("End Customer", EndCustNo);
     end;
 
@@ -161,7 +136,8 @@ page 50006 "WS Sales Header"
         EndCustNo: Code[20];
     begin
         EndCustNo := CheckCreateCustomer();
-        if EndCustNo <> '' then
+        if ("End Customer" <> EndCustNo) and
+           (EndCustNo <> '') then
             Validate("End Customer", EndCustNo);
     end;
 

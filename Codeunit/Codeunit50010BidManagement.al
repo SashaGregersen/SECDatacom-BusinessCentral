@@ -143,6 +143,7 @@ codeunit 50010 "Bid Management"
                 SalesShipLine.SetFilter("Claim Document No.", '');
                 if SalesShipLine.FindSet(true, false) then begin
                     CreatePurchaseHeader(PurchHeader."Document Type"::"Credit Memo", SalesHeader."Posting Date", ClaimsVendor."No.", SalesInvoiceHeader."No.", SalesInvoiceHeader."Currency Code", PurchHeader);
+                    UpdatePostingDescOnPurchHeader(SalesInvLine."No.", SalesInvLine.Quantity, Bid."Vendor Bid No.", PurchHeader);
                     LineNo := 0;
                     repeat
                         LineNo := LineNo + 10000;
@@ -174,6 +175,7 @@ codeunit 50010 "Bid Management"
         SalesCrMemoLine: Record "Sales Cr.Memo Line";
         DoPostPurchaseheader: Boolean;
         PurchPost: Codeunit "Purch.-Post";
+        DCApprovalsBridge: Codeunit "DC Approvals Bridge";
     begin
         if not PurchSetup.Get() then
             exit;
@@ -199,6 +201,7 @@ codeunit 50010 "Bid Management"
                 ReturnRcptLine.SetFilter("Claim Document No.", '');
                 if ReturnRcptLine.FindSet(true, false) then begin
                     CreatePurchaseHeader(PurchHeader."Document Type"::Invoice, SalesHeader."Posting Date", ClaimsVendor."No.", SalesCrMemoHeader."No.", SalesCrMemoHeader."Currency Code", PurchHeader);
+                    UpdatePostingDescOnPurchHeader(SalesCrMemoLine."No.", SalesCrMemoLine.Quantity, Bid."Vendor Bid No.", PurchHeader);
                     repeat
                         CreateItemChargePurchaseLine(PurchHeader, SalesCrMemoLine."Line No.", PurchSetup."Claims Charge No.", ReturnRcptLine."Claim Amount", PurchLine);
                         CreateItemChargeAssignPurchFromReturn(PurchLine, ReturnRcptLine, ItemChargeAssignment);
@@ -208,6 +211,7 @@ codeunit 50010 "Bid Management"
                 end;
             until SalesCrMemoLine.Next() = 0;
         if DoPostPurchaseheader then begin
+            DCApprovalsBridge.ForceApproval(PurchHeader);
             PurchPost.SetPreviewMode(false);
             PurchPost.SetSuppressCommit(false);
             PurchPost.Run(PurchHeader);
@@ -288,6 +292,15 @@ codeunit 50010 "Bid Management"
     begin
         ReturnrcptLine."Claim Document No." := ClaimDocNo;
         ReturnrcptLine.Modify(false);
+    end;
+
+    local procedure UpdatePostingDescOnPurchHeader(ItemNo: Code[20]; Qty: Decimal; VendorBidNo: Text[100]; var PurchHeader: record "Purchase header")
+    var
+        Item: Record Item;
+    begin
+        If not Item.Get(ItemNo) then
+            Clear(Item);
+        PurchHeader."Posting Description" := CopyStr(StrSubstNo('%1 %2 %3', Format(Qty), Item."Vendor-Item-No.", VendorBidNo), 1, 100)
     end;
 
 }

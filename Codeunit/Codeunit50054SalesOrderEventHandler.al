@@ -24,6 +24,7 @@ codeunit 50054 "Sales Order Event Handler"
         SubItem: record "Item Substitution";
         GlSetup: Record "General Ledger Setup";
         ItemSub: page "Item Substitutions";
+        PriceEventHandler: codeunit "Price Event Handler";
     begin
         GlSetup.get();
         if (rec.Type = rec.type::Item) and (not rec.isicorder) then begin
@@ -31,7 +32,7 @@ codeunit 50054 "Sales Order Event Handler"
                 exit;
             if item."Default Location" <> '' then
                 rec.validate("Location Code", item."Default Location");
-            UpdateListPriceAndDiscount(rec, Item);
+            PriceEventHandler.UpdateListPriceAndDiscount(rec, Item);
             if Item."Blocked from purchase" = true then begin
                 SubItem.SetRange("No.", Item."No.");
                 if not SubItem.IsEmpty() then begin
@@ -410,31 +411,23 @@ codeunit 50054 "Sales Order Event Handler"
         end;
     end;
 
-    procedure UpdateListPriceAndDiscount(var SalesLine: Record "Sales Line"; Item: record Item)
+
+    [EventSubscriber(ObjectType::Table, Database::"Sales Header", 'OnAfterValidateEvent', 'Reseller', true, true)]
+    local procedure SalesHeaderOnAfterValidateResller(var Rec: record "Sales Header")
     var
-        SalesHeader: Record "Sales Header";
-        ListPrice: record "Sales Price";
-        ListPrice2: record "Sales Price";
-        Advpricemgt: Codeunit "Advanced Price Management";
+        AdvPaymentMethodSetup: Record "Advanced Payment Method Setup";
     begin
-        SalesHeader.get(SalesLine."Document Type", SalesLine."Document No.");
-        if Advpricemgt.FindListPriceForitem(SalesLine."No.", SalesHeader."Currency Code", ListPrice) then
-            SalesLine.validate("Unit List Price", ListPrice."Unit Price")
-        else
-            SalesLine.Validate("Unit List Price", 0);
-        if (ListPrice."Unit Price" <> 0) and (SalesLine."Unit Price" <> 0) then
-            SalesLine.validate("Reseller Discount", UpdateResellerDiscount(SalesLine, ListPrice));
-
-        if Advpricemgt.FindListPriceForitem(SalesLine."No.", Item."Vendor Currency", ListPrice2) then
-            SalesLine.validate("Unit List Price VC", ListPrice2."Unit Price")
-        else
-            SalesLine.Validate("Unit List Price VC", 0);
+        if AdvPaymentMethodSetup.Get(Rec."Customer Posting Group", Rec."Currency Code") then
+            Rec.Validate("Payment Method Code", AdvPaymentMethodSetup."Payment Method Code");
     end;
 
-    local procedure UpdateResellerDiscount(SalesLine: record "Sales Line"; Listprice: record "Sales Price"): Decimal
+    [EventSubscriber(ObjectType::Table, Database::"Sales Header", 'OnAfterValidateEvent', 'Currency Code', true, true)]
+    local procedure SalesHeaderOnAfterValidateCurrencyCode(var Rec: record "Sales Header")
+    var
+        AdvPaymentMethodSetup: Record "Advanced Payment Method Setup";
     begin
-        exit(((Listprice."Unit Price" - SalesLine."Unit Price") / Listprice."Unit Price") * 100);
+        if AdvPaymentMethodSetup.Get(Rec."Customer Posting Group", Rec."Currency Code") then
+            Rec.Validate("Payment Method Code", AdvPaymentMethodSetup."Payment Method Code");
     end;
-
 
 }
