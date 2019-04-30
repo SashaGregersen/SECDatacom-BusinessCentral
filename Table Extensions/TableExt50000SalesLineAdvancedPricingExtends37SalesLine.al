@@ -254,6 +254,7 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
     procedure CalcAdvancedPrices();
     var
         TransferPriceAmount: Decimal;
+        PriceEventHandler: Codeunit "Price Event Handler";
     begin
         if ("Bid Unit Purchase Price" = 0) and ("Transfer Price Markup" = 0) and ("KickBack Percentage" = 0) then begin
             "Calculated Purchase Price" := "Unit Purchase Price" * Quantity;
@@ -263,6 +264,7 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
             //"Purchase Price on Purchase Order" := "unit Purchase Price";
             Claimable := false;
             "Claim Amount" := 0;
+            PriceEventHandler.UpdateProfitAmountLCY(Rec);
             exit;
         end;
 
@@ -297,6 +299,8 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
         "Profit Amount" := "Line Amount" - "Calculated Purchase Price" - "Kickback Amount";
         if "Line Amount" <> 0 then
             "Profit Margin" := ("Profit Amount" / "Line Amount") * 100;
+
+        PriceEventHandler.UpdateProfitAmountLCY(Rec);
     end;
 
     procedure IsICOrder(): Boolean
