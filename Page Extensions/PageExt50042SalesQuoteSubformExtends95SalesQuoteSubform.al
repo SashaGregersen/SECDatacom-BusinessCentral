@@ -10,6 +10,14 @@ pageextension 50042 "Sales Quote Subform" extends "Sales Quote Subform"
             }
         }
 
+        addafter("Line Discount %")
+        {
+            field("Reseller Discount"; "Reseller Discount")
+            {
+                ApplicationArea = all;
+            }
+        }
+
     }
 
     actions

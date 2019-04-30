@@ -300,7 +300,7 @@ report 50011 "POS Reporting"
                     end;
                 end else begin
                     Currency := Item."Vendor Currency";
-                    //UnitListPrice := Sales_Invoice_Line."Unit List Price VC";
+                    UnitListPrice := Sales_Invoice_Line."Unit List Price VC";
                 end;
 
                 clear(TempItemLedgEntrySales);
