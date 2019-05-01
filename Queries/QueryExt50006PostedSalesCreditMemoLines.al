@@ -90,7 +90,7 @@ query 50006 "PostedSalesCreditMemoLines"
             {
 
             }
-            column(Profit_Amount; "Profit Amount")
+            column(Profit_Amount; "Profit Amount 1")
             {
 
             }

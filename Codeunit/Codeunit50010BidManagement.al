@@ -152,12 +152,12 @@ codeunit 50010 "Bid Management"
                         CreateItemChargeAssignPurchFromShipment(PurchLine, SalesShipLine, ItemChargeAssignment);
                         UpdateShimentLineWithClaimNo(SalesShipLine, PurchHeader."No.");
                     until SalesShipLine.Next() = 0;
-                    ReleasePurchDoc.PerformManualRelease(PurchHeader);
                     DoPostPurchaseheader := true;
                 end;
             until SalesInvLine.Next() = 0;
         if DoPostPurchaseheader then begin
             DCApprovalsBridge.ForceApproval(PurchHeader);
+            ReleasePurchDoc.PerformManualRelease(PurchHeader);
             PurchPost.SetPreviewMode(false);
             PurchPost.SetSuppressCommit(false);
             PurchPost.Run(PurchHeader);

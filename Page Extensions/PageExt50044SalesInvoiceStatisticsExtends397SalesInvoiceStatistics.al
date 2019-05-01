@@ -45,16 +45,16 @@ pageextension 50044 "Sales Invoice Statistics" extends "Sales Invoice Statistics
     var
         SRsetup: record "Sales & Receivables Setup";
         GlEntries: record "G/L Entry";
-        SalesLine: record "Sales Line";
+        SalesInvLine: record "Sales Invoice Line";
         ProfitAmount: Decimal;
         Amount: decimal;
     begin
-        SalesLine.setrange("Document No.", rec."No.");
-        if SalesLine.findset then
+        SalesInvLine.setrange("Document No.", rec."No.");
+        if SalesInvLine.findset then
             repeat
-                ProfitAmount := ProfitAmount + SalesLine."Profit Amount LCY";
-                Amount := Amount + SalesLine."Line Amount Excl. VAT (LCY)";
-            until SalesLine.next = 0;
+                ProfitAmount := ProfitAmount + SalesInVLine."Profit Amount LCY";
+                Amount := Amount + SalesInvLine."Line Amount Excl. VAT (LCY)";
+            until SalesInvLine.next = 0;
 
         SRsetup.get;
         GlEntries.setrange("Posting Date", Rec."Posting Date");
