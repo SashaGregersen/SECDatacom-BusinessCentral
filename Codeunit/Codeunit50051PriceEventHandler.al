@@ -280,7 +280,7 @@ codeunit 50051 "Price Event Handler"
                 SalesLine.validate("Line Amount Excl. VAT (LCY)", CurrencyExcRate.ExchangeAmtFCYToLCY(Today(), salesheader."Currency Code", SalesLine.Amount, Factor));
                 PriceEventHandler.UpdateListPriceAndDiscount(SalesLine, item);
             end else begin
-                SalesLine.validate("Line Amount Excl. VAT (LCY)", salesheader.Amount);
+                SalesLine.validate("Line Amount Excl. VAT (LCY)", SalesLine.Amount);
                 PriceEventHandler.UpdateListPriceAndDiscount(SalesLine, item);
             end;
         end;
