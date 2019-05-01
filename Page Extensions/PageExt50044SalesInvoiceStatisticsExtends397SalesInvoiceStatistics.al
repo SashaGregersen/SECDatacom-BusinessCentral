@@ -1,8 +1,8 @@
-pageextension 50020 "Sales Order Statistics" extends "Sales Order Statistics"
+pageextension 50044 "Sales Invoice Statistics" extends "Sales Invoice Statistics"
 {
     layout
     {
-        addafter("ProfitPct[1]")
+        addafter(ProfitPct)
         {
             field("Contribution Margin 1"; ContributionMargin)
             {
@@ -20,36 +20,12 @@ pageextension 50020 "Sales Order Statistics" extends "Sales Order Statistics"
             }
 
         }
-        addafter("ProfitPct[2]")
-        {
-            field("Contribution Margin 2"; ContributionMargin)
-            {
-                ToolTip = 'Shows contribution margin for the whole order';
-                ApplicationArea = all;
-                Caption = 'Corrected Profit %';
-                Editable = false;
-            }
-            field("Contribution Amount 2"; ContributionAmount)
-            {
-                ToolTip = 'Shows contribution amount for the whole order';
-                ApplicationArea = all;
-                Caption = 'Corrected Amount (LCY)';
-                Editable = false;
-            }
-        }
-        modify("AdjProfitLCY[1]")
+
+        modify(AdjustedProfitLCY)
         {
             Visible = false;
         }
-        modify("AdjProfitLCY[2]")
-        {
-            Visible = false;
-        }
-        modify("AdjProfitPct[1]")
-        {
-            Visible = false;
-        }
-        modify("AdjProfitPct[2]")
+        modify(AdjProfitPct)
         {
             Visible = false;
         }
@@ -68,13 +44,12 @@ pageextension 50020 "Sales Order Statistics" extends "Sales Order Statistics"
     trigger OnAfterGetCurrRecord()
     var
         SRsetup: record "Sales & Receivables Setup";
-        GlJournal: record "Gen. Journal Line";
+        GlEntries: record "G/L Entry";
         SalesLine: record "Sales Line";
         ProfitAmount: Decimal;
         Amount: decimal;
     begin
         SalesLine.setrange("Document No.", rec."No.");
-        SalesLine.SetRange("Document Type", rec."Document Type");
         if SalesLine.findset then
             repeat
                 ProfitAmount := ProfitAmount + SalesLine."Profit Amount LCY";
@@ -82,16 +57,27 @@ pageextension 50020 "Sales Order Statistics" extends "Sales Order Statistics"
             until SalesLine.next = 0;
 
         SRsetup.get;
-        GlJournal.setrange("Journal Batch Name", SRsetup."Provision Journal Batch");
-        GlJournal.SetRange("Journal Template Name", SRsetup."Provision Journal Template");
-        GlJournal.setrange("Document No.", rec."No.");
-        if GlJournal.FindSet() then
+        GlEntries.setrange("Posting Date", Rec."Posting Date");
+        GlEntries.setrange("Document No.", Rec."No.");
+        GlEntries.SetRange("G/L Account No.", SRsetup."Provision GL Account");
+        GlEntries.setrange("Bal. Account No.", SRsetup."Provision Balance Account No.");
+        if GlEntries.FindSet() then
             repeat
-                ProfitAmount := ProfitAmount + GlJournal."Amount (LCY)";
-            until GlJournal.next = 0;
+                ProfitAmount := ProfitAmount + ExchangeCurrencyAmountToLCY(Rec, GlEntries);
+            until GlEntries.next = 0;
         if (ProfitAmount <> 0) and (Amount <> 0) then begin
             ContributionAmount := (ProfitAmount / Amount);
             ContributionMargin := (ProfitAmount / Amount) * 100;
         end;
+    end;
+
+    Local procedure ExchangeCurrencyAmountToLCY(SalesInoive: record "Sales Invoice Header"; GLEntry: record "G/L Entry"): Decimal
+    var
+        CurrencyExcRate: record "Currency Exchange Rate";
+    begin
+        if rec."Currency Code" <> '' then
+            exit(CurrencyExcRate.ExchangeAmtFCYToLCY(rec."posting date", rec."Currency Code", GLEntry.amount, rec."Currency Factor"))
+        else
+            exit(GLEntry.amount);
     end;
 }

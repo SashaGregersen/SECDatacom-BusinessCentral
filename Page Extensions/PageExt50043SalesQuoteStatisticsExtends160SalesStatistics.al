@@ -1,8 +1,8 @@
-pageextension 50020 "Sales Order Statistics" extends "Sales Order Statistics"
+pageextension 50043 "Sales Statistics" extends "Sales Statistics"
 {
     layout
     {
-        addafter("ProfitPct[1]")
+        addafter("AdjProfitPct")
         {
             field("Contribution Margin 1"; ContributionMargin)
             {
@@ -20,36 +20,12 @@ pageextension 50020 "Sales Order Statistics" extends "Sales Order Statistics"
             }
 
         }
-        addafter("ProfitPct[2]")
-        {
-            field("Contribution Margin 2"; ContributionMargin)
-            {
-                ToolTip = 'Shows contribution margin for the whole order';
-                ApplicationArea = all;
-                Caption = 'Corrected Profit %';
-                Editable = false;
-            }
-            field("Contribution Amount 2"; ContributionAmount)
-            {
-                ToolTip = 'Shows contribution amount for the whole order';
-                ApplicationArea = all;
-                Caption = 'Corrected Amount (LCY)';
-                Editable = false;
-            }
-        }
-        modify("AdjProfitLCY[1]")
+
+        modify("AdjProfitLCY")
         {
             Visible = false;
         }
-        modify("AdjProfitLCY[2]")
-        {
-            Visible = false;
-        }
-        modify("AdjProfitPct[1]")
-        {
-            Visible = false;
-        }
-        modify("AdjProfitPct[2]")
+        modify(AdjProfitPct)
         {
             Visible = false;
         }

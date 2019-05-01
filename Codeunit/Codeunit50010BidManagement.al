@@ -119,6 +119,7 @@ codeunit 50010 "Bid Management"
         PurchPost: Codeunit "Purch.-Post";
         LineNo: Integer;
         DCApprovalsBridge: Codeunit "DC Approvals Bridge";
+        ReleasePurchDoc: Codeunit "Release Purchase Document";
     begin
         if not PurchSetup.Get() then
             exit;
@@ -151,6 +152,7 @@ codeunit 50010 "Bid Management"
                         CreateItemChargeAssignPurchFromShipment(PurchLine, SalesShipLine, ItemChargeAssignment);
                         UpdateShimentLineWithClaimNo(SalesShipLine, PurchHeader."No.");
                     until SalesShipLine.Next() = 0;
+                    ReleasePurchDoc.PerformManualRelease(PurchHeader);
                     DoPostPurchaseheader := true;
                 end;
             until SalesInvLine.Next() = 0;
