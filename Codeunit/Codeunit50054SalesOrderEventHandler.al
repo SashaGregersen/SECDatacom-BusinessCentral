@@ -411,7 +411,6 @@ codeunit 50054 "Sales Order Event Handler"
         end;
     end;
 
-
     [EventSubscriber(ObjectType::Table, Database::"Sales Header", 'OnAfterValidateEvent', 'Reseller', true, true)]
     local procedure SalesHeaderOnAfterValidateResller(var Rec: record "Sales Header")
     var
