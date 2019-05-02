@@ -22,6 +22,10 @@ pageextension 50059 DesignPaymentMethod extends "Payment Methods"
                     end;
                 end;
             }
+            field("Print FIK"; "Print FIK")
+            {
+                ApplicationArea = all;
+            }
         }
     }
     actions
