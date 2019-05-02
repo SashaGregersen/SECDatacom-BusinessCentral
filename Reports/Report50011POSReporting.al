@@ -316,9 +316,10 @@ report 50011 "POS Reporting"
                     POSReportExport.FindAppliedEntry(TempItemLedgEntrySales, TempItemLedgEntryPurchase);
                     if PurchRcptHeader.get(TempItemLedgEntryPurchase."Document No.") then begin
                         PurchInvHeader.SetRange("Order No.", PurchRcptHeader."Order No.");
-                        PurchInvHeader.FindFirst();
-                        PurchOrderNo := PurchInvHeader."No.";
-                        PurchOrderPostDate := PurchInvHeader."Posting Date";
+                        if PurchInvHeader.FindFirst() then begin
+                            PurchOrderNo := PurchInvHeader."No.";
+                            PurchOrderPostDate := PurchInvHeader."Posting Date";
+                        end;
                     end;
                     TempItemLedgEntrySales.Delete();
                 end;
