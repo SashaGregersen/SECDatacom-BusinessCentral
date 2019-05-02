@@ -19,7 +19,7 @@ tableextension 50046 "Design Payment Method" extends "Payment Method"
         CalcFields("Invoice Text");
         if not "Invoice Text".HasValue then exit;
 
-        TempBlob.Blob := PaymentMethod."Invoice Text";
+        TempBlob.Blob := "Invoice Text";
         PaymentMethodExtDescription := TempBlob.ReadAsTextWithCRLFLineSeparator();
     end;
 }
