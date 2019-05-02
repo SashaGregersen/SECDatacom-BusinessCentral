@@ -209,9 +209,14 @@ report 50007 "SEC Sales - Credit Memo"
             column(PaymentMethodDescription; PaymentMethod.Description)
             {
             }
-            column(PaymentMethodExtDescription; PaymentMethodExtDescription)
+            //>>NC
+            column(PaymentMethodExtDescription; PaymentMethod.GetPaymentMethodExtDescription)
             {
             }
+            column(PrintFIK; PaymentMethod."Print FIK")
+            {
+            }
+            //<<NC
             column(PaymentMethodDescription_Lbl; PaymentMethodDescLbl)
             {
             }
@@ -1062,8 +1067,6 @@ report 50007 "SEC Sales - Credit Memo"
         ExternalDocumentNoLbl: Label 'Your Order';
         EndcustomerCountryRegion: Record "Country/Region";
         Endcustomer: Record Customer;
-        PaymentMethodExtDescription: Text;
-        TempBlob: Record TempBlob temporary;
         //<<NC
         BodyLbl: Label 'Thank you for your business. Your credit memo is attached to this message.';
 
@@ -1168,15 +1171,6 @@ report 50007 "SEC Sales - Credit Memo"
 
             AppliesToText :=
               FormatDocument.SetText("Applies-to Doc. No." <> '', StrSubstNo('%1 %2', Format("Applies-to Doc. Type"), "Applies-to Doc. No."));
-
-            //>>NC
-            PaymentMethodExtDescription := '';
-            PaymentMethod.CalcFields("Invoice Text");
-            if PaymentMethod."Invoice Text".HasValue then begin
-                TempBlob.Blob := PaymentMethod."Invoice Text";
-                PaymentMethodExtDescription := TempBlob.ReadAsTextWithCRLFLineSeparator();
-            end;
-            //<<NC
         end;
     end;
 }

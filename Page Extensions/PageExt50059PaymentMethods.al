@@ -22,6 +22,22 @@ pageextension 50059 DesignPaymentMethod extends "Payment Methods"
                     end;
                 end;
             }
+            field("Print FIK"; "Print FIK")
+            {
+                ApplicationArea = all;
+            }
+        }
+    }
+    actions
+    {
+        addafter("T&ranslation")
+        {
+            action(AdvancedPaymentMethod)
+            {
+                Caption = 'Advanved Payment Method Setup';
+                RunObject = page "Advanced Payment Method Setup";
+                Promoted = true;
+            }
         }
     }
 }

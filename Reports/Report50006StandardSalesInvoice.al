@@ -240,7 +240,10 @@ report 50006 "SEC - Sales Invoice"
             {
             }
             //>>NC
-            column(PaymentMethodExtDescription; PaymentMethodExtDescription)
+            column(PaymentMethodExtDescription; PaymentMethod.GetPaymentMethodExtDescription)
+            {
+            }
+            column(PrintFIK; PaymentMethod."Print FIK")
             {
             }
             //<<NC
@@ -1510,8 +1513,6 @@ report 50006 "SEC - Sales Invoice"
         ShipToTemp: Record "Ship-to Address";
         ShipToCountryRegion: Record "Country/Region";
         ExternalDocNoLbl: Label 'Your Order';
-        TempBlob: Record TempBlob temporary;
-        PaymentMethodExtDescription: Text;
         //>> PM
         PmtSetup: Record "Payment Setup";
         PaymentID: Code[16];
@@ -1696,14 +1697,6 @@ report 50006 "SEC - Sales Invoice"
             FormatDocument.SetPaymentTerms(PaymentTerms, "Payment Terms Code", "Language Code");
             FormatDocument.SetPaymentMethod(PaymentMethod, "Payment Method Code", "Language Code");
             FormatDocument.SetShipmentMethod(ShipmentMethod, "Shipment Method Code", "Language Code");
-            //>>NC
-            PaymentMethodExtDescription := '';
-            PaymentMethod.CalcFields("Invoice Text");
-            if PaymentMethod."Invoice Text".HasValue then begin
-                TempBlob.Blob := PaymentMethod."Invoice Text";
-                PaymentMethodExtDescription := TempBlob.ReadAsTextWithCRLFLineSeparator();
-            end;
-            //<<NC
         end;
     end;
 
