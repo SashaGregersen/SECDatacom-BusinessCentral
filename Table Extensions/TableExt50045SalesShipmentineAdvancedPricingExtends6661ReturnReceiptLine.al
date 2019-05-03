@@ -62,6 +62,12 @@ tableextension 50045 "Ret. Receipt Line Adv. Pricing" extends "Return Receipt Li
         {
             DataClassification = ToBeClassified;
             Editable = false;
+            ObsoleteState = Removed;
+        }
+        field(50023; "Profit Amount 1"; Decimal)
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
         }
         field(50024; "Profit Margin"; decimal)
         {

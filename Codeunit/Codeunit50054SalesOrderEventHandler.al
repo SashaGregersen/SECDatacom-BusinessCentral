@@ -411,7 +411,22 @@ codeunit 50054 "Sales Order Event Handler"
         end;
     end;
 
+    [EventSubscriber(ObjectType::Table, Database::"Sales Header", 'OnAfterValidateEvent', 'Reseller', true, true)]
+    local procedure SalesHeaderOnAfterValidateResller(var Rec: record "Sales Header")
+    var
+        AdvPaymentMethodSetup: Record "Advanced Payment Method Setup";
+    begin
+        if AdvPaymentMethodSetup.Get(Rec."Customer Posting Group", Rec."Currency Code") then
+            Rec.Validate("Payment Method Code", AdvPaymentMethodSetup."Payment Method Code");
+    end;
 
-
+    [EventSubscriber(ObjectType::Table, Database::"Sales Header", 'OnAfterValidateEvent', 'Currency Code', true, true)]
+    local procedure SalesHeaderOnAfterValidateCurrencyCode(var Rec: record "Sales Header")
+    var
+        AdvPaymentMethodSetup: Record "Advanced Payment Method Setup";
+    begin
+        if AdvPaymentMethodSetup.Get(Rec."Customer Posting Group", Rec."Currency Code") then
+            Rec.Validate("Payment Method Code", AdvPaymentMethodSetup."Payment Method Code");
+    end;
 
 }

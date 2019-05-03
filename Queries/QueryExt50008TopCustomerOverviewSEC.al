@@ -33,6 +33,11 @@ query 50008 "Top Customer Overview SEC"
             column(Salesperson_Code; "Salesperson Code")
             {
             }
+            filter(Owning_Company; "Owning Company")
+            {
+            }
+            filter(Customer_Type; "Customer Type") { }
+            filter(Blocked; Blocked) { }
             dataitem(Salesperson_Purchaser; "Salesperson/Purchaser")
             {
                 DataItemLink = Code = Customer."Salesperson Code";
@@ -53,7 +58,9 @@ query 50008 "Top Customer Overview SEC"
     }
     trigger OnBeforeOpen()
     begin
-        //   customer.setfilter("Owning Company", CompanyName);
+        CurrQuery.SetFilter(Owning_Company, CompanyName);
+        CurrQuery.SetRange(Customer_Type, Customer_Type::Reseller);
+        CurrQuery.SetRange(Blocked, Blocked::" ");
     end;
 
 }

@@ -172,19 +172,6 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
         {
             DataClassification = ToBeClassified;
             Editable = false;
-            trigger OnValidate()
-            var
-                SalesHeader: record "Sales Header";
-                CurrencyExcRate: record "Currency Exchange Rate";
-            begin
-                if "Profit Amount" <> 0 then begin
-                    Salesheader.get(Rec."Document Type", Rec."Document No.");
-                    if salesheader."Currency Code" <> '' then
-                        Rec.validate("Profit Amount LCY", CurrencyExcRate.ExchangeAmtFCYToLCY(salesheader."Posting Date", salesheader."Currency Code", Rec.Amount, salesheader."Currency Factor"))
-                    else
-                        Rec.validate("Profit Amount LCY", rec."Profit Amount");
-                end;
-            end;
         }
         field(50024; "Profit Margin"; decimal)
         {
@@ -256,11 +243,11 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
         TransferPriceAmount: Decimal;
         PriceEventHandler: Codeunit "Price Event Handler";
     begin
-        if ("Bid Unit Purchase Price" = 0) and ("Transfer Price Markup" = 0) and ("KickBack Percentage" = 0) then begin
-            "Calculated Purchase Price" := "Unit Purchase Price" * Quantity;
-            "Profit Amount" := "Line Amount" - "Calculated Purchase Price";
-            if "Line Amount" <> 0 then
-                "Profit Margin" := ("Profit Amount" / "Line Amount") * 100;
+        if (rec."Bid Unit Purchase Price" = 0) and (rec."Transfer Price Markup" = 0) and (rec."KickBack Percentage" = 0) then begin
+            rec."Calculated Purchase Price" := rec."Unit Purchase Price" * rec.Quantity;
+            "Profit Amount" := rec."Line Amount" - rec."Calculated Purchase Price";
+            if rec."Line Amount" <> 0 then
+                rec."Profit Margin" := (rec."Profit Amount" / rec."Line Amount") * 100;
             //"Purchase Price on Purchase Order" := "unit Purchase Price";
             Claimable := false;
             "Claim Amount" := 0;

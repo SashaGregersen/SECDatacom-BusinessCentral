@@ -209,6 +209,14 @@ report 50007 "SEC Sales - Credit Memo"
             column(PaymentMethodDescription; PaymentMethod.Description)
             {
             }
+            //>>NC
+            column(PaymentMethodExtDescription; PaymentMethod.GetPaymentMethodExtDescription)
+            {
+            }
+            column(PrintFIK; PaymentMethod."Print FIK")
+            {
+            }
+            //<<NC
             column(PaymentMethodDescription_Lbl; PaymentMethodDescLbl)
             {
             }

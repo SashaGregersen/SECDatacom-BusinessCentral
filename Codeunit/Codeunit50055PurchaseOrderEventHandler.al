@@ -22,7 +22,7 @@ codeunit 50055 "Purchase Order Event Handler"
     begin
         if InvoicePostBuffer."Fixed Asset Line No." <> 0 then exit;
         InvoicePostBuffer."Fixed Asset Line No." := PurchaseLine."Line No."; //Bruges til opslit. Alternativt skal linjenummer/description laves rigtigt og primærnøglen rettes i tabellen
-        InvoicePostBuffer.Description := PurchaseLine.Description;
+        InvoicePostBuffer.Description := PurchaseLine.Description; // virker ikke med spring release da description er udvidet til 100
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Purch.-Post", 'OnBeforePostInvPostBuffer', '', true, true)]

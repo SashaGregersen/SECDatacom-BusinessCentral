@@ -67,6 +67,12 @@ tableextension 50012 "Sales Cr.Memo Adv. Pricing" extends "Sales Cr.Memo Line"
         {
             DataClassification = ToBeClassified;
             Editable = false;
+            ObsoleteState = Removed;
+        }
+        field(50023; "Profit Amount 1"; Decimal)
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
         }
         field(50024; "Profit Margin"; decimal)
         {

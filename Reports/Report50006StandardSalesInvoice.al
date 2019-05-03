@@ -239,6 +239,14 @@ report 50006 "SEC - Sales Invoice"
             column(PaymentMethodDescription; PaymentMethod.Description)
             {
             }
+            //>>NC
+            column(PaymentMethodExtDescription; PaymentMethod.GetPaymentMethodExtDescription)
+            {
+            }
+            column(PrintFIK; PaymentMethod."Print FIK")
+            {
+            }
+            //<<NC
             column(PaymentMethodDescription_Lbl; PaymentMethodDescLbl)
             {
             }
