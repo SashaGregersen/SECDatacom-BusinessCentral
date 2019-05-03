@@ -547,6 +547,7 @@ codeunit 50005 "IC Sync Management"
             exit('');
     END;
 
+
     var
         AdvPriceMgt: Codeunit "Advanced Price Management";
 }
