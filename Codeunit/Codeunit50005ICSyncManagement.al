@@ -308,6 +308,27 @@ codeunit 50005 "IC Sync Management"
         end;
     end;
 
+    procedure ModifyICSalesOrderInOtherCompany(var rec: record "Sales Line"; ICCompany: text[250])
+
+    var
+        CompanyTemp: Record Company temporary;
+        SessionID: Integer;
+
+    begin
+        SessionID := RunModifyICSalesOrderInOtherCompany(rec, ICCompany);
+        CheckSessionForTimeoutAndError(SessionID, 5, ICCompany);
+    end;
+
+    procedure ModifyICPurchaseOrderInOtherCompany(var rec: record "Purchase Line"; ICCompany: text[250])
+
+    var
+        CompanyTemp: Record Company temporary;
+        SessionID: Integer;
+
+    begin
+        SessionID := RunModifyICPurchaseOrderInOtherCompany(rec, ICCompany);
+        CheckSessionForTimeoutAndError(SessionID, 5, ICCompany);
+    end;
 
     procedure PostPurchaseOrderInOtherCompany(PurchaseOrder: Record "Purchase Header"; PostInCompanyName: Text[35])
 
@@ -462,6 +483,28 @@ codeunit 50005 "IC Sync Management"
         SessionEventComment: Text;
     begin
         OK := StartSession(SessionID, 50024, RunInCompany, PostCode);
+        if not OK then
+            Error(GetLastErrorText());
+        Commit();
+    end;
+
+    local procedure RunModifyICSalesOrderInOtherCompany(SalesLine: record "Sales Line"; RunInCompany: Text) SessionID: Integer
+    var
+        OK: Boolean;
+        SessionEventComment: Text;
+    begin
+        OK := StartSession(SessionID, 50025, RunInCompany, SalesLine);
+        if not OK then
+            Error(GetLastErrorText());
+        Commit();
+    end;
+
+    local procedure RunModifyICPurchaseOrderInOtherCompany(PurchLine: record "Purchase Line"; RunInCompany: Text) SessionID: Integer
+    var
+        OK: Boolean;
+        SessionEventComment: Text;
+    begin
+        OK := StartSession(SessionID, 50027, RunInCompany, PurchLine);
         if not OK then
             Error(GetLastErrorText());
         Commit();

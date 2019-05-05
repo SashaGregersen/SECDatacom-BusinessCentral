@@ -4,15 +4,16 @@ codeunit 50055 "Purchase Order Event Handler"
     SingleInstance = true;
     EventSubscriberInstance = StaticAutomatic;
 
-    [EventSubscriber(ObjectType::table, database::"Purchase Line", 'OnAfterValidateEvent', 'Qty. to Invoice', true, true)]
+    /* [EventSubscriber(ObjectType::table, database::"Purchase Line", 'OnAfterValidateEvent', 'Qty. to Invoice', true, true)]
 
     local procedure OnAfterModifyPurchLineEvent(var rec: record "Purchase Line")
     var
         ICSyncMgt: Codeunit "IC Sync Management";
         ReservationEntry: record "Reservation Entry";
+        SalesLine: record "Sales Line";
     begin
-        UpdatePurchLineQtyToInv(rec, ReservationEntry, false, '');
-    end;
+        UpdatePurchLineQtyToInv(rec, salesline, ReservationEntry, false, '');
+    end; */
 
     [EventSubscriber(ObjectType::table, database::"Purchase Line", 'OnAfterValidateEvent', 'No.', true, true)]
 
@@ -41,27 +42,33 @@ codeunit 50055 "Purchase Order Event Handler"
         GenJnlLine.Validate(Description, InvoicePostBuffer.Description);
     end;
 
-    procedure UpdatePurchLineQtyToInv(var PurchLine: record "Purchase Line"; ReservationEntry: Record "Reservation Entry"; ICorder: boolean; ICCompany: text[250])
+    procedure UpdatePurchLineQtyToInv(var rec: record "Purchase Line"; xrec: Record "sales Line"; ReservationEntry: Record "Reservation Entry"; ICorder: boolean; ICCompany: text[250])
     var
         NegativeReservEntry: Record "Reservation Entry";
     begin
-        if ICorder then
+        if ICorder then begin
             ReservationEntry.ChangeCompany(ICCompany);
-        ReservationEntry.SetRange("Item No.", PurchLine."No.");
-        ReservationEntry.SetRange("Source ID", PurchLine."Document No.");
-        ReservationEntry.SetRange("Source Subtype", PurchLine."Document Type");
-        ReservationEntry.SetRange("Source Ref. No.", PurchLine."Line No.");
+            NegativeReservEntry.ChangeCompany(ICCompany);
+        end;
+        ReservationEntry.SetRange("Item No.", rec."No.");
+        ReservationEntry.SetRange("Source ID", rec."Document No.");
+        ReservationEntry.SetRange("Source Subtype", rec."Document Type");
+        ReservationEntry.SetRange("Source Ref. No.", rec."Line No.");
         ReservationEntry.SetRange("Reservation Status", ReservationEntry."Reservation Status"::Reservation);
         ReservationEntry.SetRange(Binding, ReservationEntry.Binding::" ");
         ReservationEntry.SetRange(Positive, true);
         if ReservationEntry.FindSet() then
             repeat
-                ReservationEntry.validate("Qty. to Invoice (Base)", PurchLine."Qty. to Invoice");
-                ReservationEntry.Modify(true);
                 if ICorder then
-                    NegativeReservEntry.ChangeCompany(ICCompany);
+                    ReservationEntry.validate("Qty. to Invoice (Base)", xrec."Qty. to Invoice")
+                else
+                    ReservationEntry.validate("Qty. to Invoice (Base)", rec."Qty. to Invoice");
+                ReservationEntry.Modify(true);
                 if NegativeReservEntry.get(ReservationEntry."Entry No.", not ReservationEntry.Positive) then begin
-                    NegativeReservEntry.validate("Qty. to Invoice (Base)", PurchLine."Qty. to Invoice");
+                    if ICorder then
+                        NegativeReservEntry.validate("Qty. to Invoice (Base)", xrec."Qty. to Invoice")
+                    else
+                        NegativeReservEntry.validate("Qty. to Invoice (Base)", rec."Qty. to Invoice");
                     NegativeReservEntry.Modify(true);
                 end;
             until ReservationEntry.next = 0;

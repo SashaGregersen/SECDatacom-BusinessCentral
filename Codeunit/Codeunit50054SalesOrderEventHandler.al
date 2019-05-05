@@ -435,59 +435,61 @@ codeunit 50054 "Sales Order Event Handler"
     var
         ICpartner: record "IC Partner";
         SalesHeader: record "Sales Header";
+        ICEvents: codeunit "IC Event Handler";
         SalesLine: record "Sales Line";
         PurchLine: Record "Purchase Line";
-        ICEvents: codeunit "IC Event Handler";
-        ReservationEntry: record "Reservation Entry";
         PurchOrderEvents: codeunit "Purchase Order Event Handler";
+        ICSyncMgt: codeunit "IC Sync Management";
     begin
-        if UpdateSalesLineQtyToInv(rec, ReservationEntry, false, '') then begin
-            if (rec."IC SO No." <> '') and (rec."IC SO Line No." <> 0) and (rec."IC PO No." <> '') AND (rec."IC PO Line No." <> 0) then begin
-                SalesHeader.get(rec."Document Type", rec."Document No.");
-                if ICEvents.GetICPartner(ICpartner, SalesHeader.Subsidiary) then begin
-                    SalesLine.ChangeCompany(ICpartner."Inbox Details");
-                    SalesLine.get(rec."Document Type", rec."IC SO No.", rec."IC SO Line No.");
-                    /*  SalesLine."Qty. to Invoice" := rec."Qty. to Invoice";
-                     SalesLine.Modify(true); */
-                    UpdateSalesLineQtyToInv(SalesLine, ReservationEntry, true, ICpartner."Inbox Details");
-                    PurchLine.ChangeCompany(ICpartner."Inbox Details");
-                    PurchLine.get(rec."Document Type", rec."IC PO No.", rec."IC PO Line No.");
-                    /* PurchLine."Qty. to Invoice" := rec."Qty. to Invoice";
-                    PurchLine.Modify(true); */
-                    PurchOrderEvents.UpdatePurchLineQtyToInv(PurchLine, ReservationEntry, true, ICpartner."Inbox Details");
-                end;
+        if (rec."IC SO No." <> '') and (rec."IC SO Line No." <> 0) and (rec."IC PO No." <> '') AND (rec."IC PO Line No." <> 0) then begin
+            SalesHeader.get(rec."Document Type", rec."Document No.");
+            if ICEvents.GetICPartner(ICpartner, SalesHeader.Subsidiary) then begin
+                SalesLine.ChangeCompany(ICpartner."Inbox Details");
+                SalesLine.get(rec."Document Type", rec."IC SO No.", rec."IC SO Line No.");
+                SalesLine."Qty. to Invoice" := rec."Qty. to Invoice";
+                ICSyncMgt.ModifyICSalesOrderInOtherCompany(SalesLine, ICpartner."Inbox Details");
+                PurchLine.ChangeCompany(ICpartner."Inbox Details");
+                PurchLine.get(rec."Document Type", rec."IC PO No.", rec."IC PO Line No.");
+                PurchLine."Qty. to Invoice" := rec."Qty. to Invoice";
+                ICSyncMgt.ModifyICPurchaseOrderInOtherCompany(PurchLine, ICpartner."Inbox Details");
             end;
         end;
     end;
 
-    local procedure UpdateSalesLineQtyToInv(var SalesLine: record "Sales Line"; ReservationEntry: record "Reservation Entry"; ICOrder: Boolean; ICCompany: text[250]): Boolean
+    /* local procedure UpdateSalesLineQtyToInv(var rec: record "Sales Line"; xrec: record "Sales Line"; ICOrder: Boolean; ICCompany: text[250])
     var
         PositiveReservEntry: Record "Reservation Entry";
+        ReservationEntry: record "Reservation Entry";
     begin
-        if ICOrder then
+        if ICOrder then begin
             ReservationEntry.ChangeCompany(ICCompany);
-        ReservationEntry.SetRange("Item No.", SalesLine."No.");
-        ReservationEntry.SetRange("Source ID", SalesLine."Document No.");
-        ReservationEntry.SetRange("Source Subtype", SalesLine."Document Type");
-        ReservationEntry.SetRange("Source Ref. No.", SalesLine."Line No.");
+            PositiveReservEntry.ChangeCompany(ICCompany);
+        end;
+        ReservationEntry.SetRange("Item No.", rec."No.");
+        ReservationEntry.SetRange("Source ID", rec."Document No.");
+        ReservationEntry.SetRange("Source Subtype", rec."Document Type");
+        ReservationEntry.SetRange("Source Ref. No.", rec."Line No.");
         ReservationEntry.SetRange("Reservation Status", ReservationEntry."Reservation Status"::Reservation);
         ReservationEntry.SetRange(Binding, ReservationEntry.Binding::" ");
         ReservationEntry.SetRange(Positive, false);
         if ReservationEntry.FindSet() then begin
             repeat
-                ReservationEntry.validate("Qty. to Invoice (Base)", SalesLine."Qty. to Invoice");
-                ReservationEntry.Modify(true);
                 if ICOrder then
-                    PositiveReservEntry.ChangeCompany(ICCompany);
+                    ReservationEntry.validate("Qty. to Invoice (Base)", xrec."Qty. to Invoice")
+                else
+                    ReservationEntry.validate("Qty. to Invoice (Base)", rec."Qty. to Invoice");
+                ReservationEntry.Modify(true);
                 if PositiveReservEntry.get(ReservationEntry."Entry No.", not ReservationEntry.Positive) then begin
-                    PositiveReservEntry.validate("Qty. to Invoice (Base)", SalesLine."Qty. to Invoice");
+                    if ICOrder then
+                        PositiveReservEntry.validate("Qty. to Invoice (Base)", xrec."Qty. to Invoice")
+                    else
+                        PositiveReservEntry.validate("Qty. to Invoice (Base)", rec."Qty. to Invoice");
                     PositiveReservEntry.Modify(true);
                 end;
             until ReservationEntry.next = 0;
-            exit(true);
         end;
 
-    end;
+    end; */
 
 
 }
