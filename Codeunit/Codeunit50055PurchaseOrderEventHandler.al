@@ -4,6 +4,17 @@ codeunit 50055 "Purchase Order Event Handler"
     SingleInstance = true;
     EventSubscriberInstance = StaticAutomatic;
 
+    /* [EventSubscriber(ObjectType::table, database::"Purchase Line", 'OnAfterValidateEvent', 'Qty. to Invoice', true, true)]
+
+    local procedure OnAfterModifyPurchLineEvent(var rec: record "Purchase Line")
+    var
+        ICSyncMgt: Codeunit "IC Sync Management";
+        ReservationEntry: record "Reservation Entry";
+        SalesLine: record "Sales Line";
+    begin
+        UpdatePurchLineQtyToInv(rec, salesline, ReservationEntry, false, '');
+    end; */
+
     [EventSubscriber(ObjectType::table, database::"Purchase Line", 'OnAfterValidateEvent', 'No.', true, true)]
 
     local procedure OnAfterValidatePurchLineEvent(var rec: record "Purchase Line")
@@ -29,5 +40,37 @@ codeunit 50055 "Purchase Order Event Handler"
     local procedure OnBeforePostInvPostBuffer(VAR GenJnlLine: Record "Gen. Journal Line"; VAR InvoicePostBuffer: Record "Invoice Post. Buffer"; VAR PurchHeader: Record "Purchase Header"; VAR GenJnlPostLine: Codeunit "Gen. Jnl.-Post Line"; PreviewMode: Boolean; CommitIsSupressed: Boolean)
     begin
         GenJnlLine.Validate(Description, InvoicePostBuffer.Description);
+    end;
+
+    procedure UpdatePurchLineQtyToInv(var rec: record "Purchase Line"; xrec: Record "sales Line"; ReservationEntry: Record "Reservation Entry"; ICorder: boolean; ICCompany: text[250])
+    var
+        NegativeReservEntry: Record "Reservation Entry";
+    begin
+        if ICorder then begin
+            ReservationEntry.ChangeCompany(ICCompany);
+            NegativeReservEntry.ChangeCompany(ICCompany);
+        end;
+        ReservationEntry.SetRange("Item No.", rec."No.");
+        ReservationEntry.SetRange("Source ID", rec."Document No.");
+        ReservationEntry.SetRange("Source Subtype", rec."Document Type");
+        ReservationEntry.SetRange("Source Ref. No.", rec."Line No.");
+        ReservationEntry.SetRange("Reservation Status", ReservationEntry."Reservation Status"::Reservation);
+        ReservationEntry.SetRange(Binding, ReservationEntry.Binding::" ");
+        ReservationEntry.SetRange(Positive, true);
+        if ReservationEntry.FindSet() then
+            repeat
+                if ICorder then
+                    ReservationEntry.validate("Qty. to Invoice (Base)", xrec."Qty. to Invoice")
+                else
+                    ReservationEntry.validate("Qty. to Invoice (Base)", rec."Qty. to Invoice");
+                ReservationEntry.Modify(true);
+                if NegativeReservEntry.get(ReservationEntry."Entry No.", not ReservationEntry.Positive) then begin
+                    if ICorder then
+                        NegativeReservEntry.validate("Qty. to Invoice (Base)", xrec."Qty. to Invoice")
+                    else
+                        NegativeReservEntry.validate("Qty. to Invoice (Base)", rec."Qty. to Invoice");
+                    NegativeReservEntry.Modify(true);
+                end;
+            until ReservationEntry.next = 0;
     end;
 }
