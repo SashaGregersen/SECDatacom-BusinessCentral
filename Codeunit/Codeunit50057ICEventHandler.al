@@ -148,7 +148,7 @@ codeunit 50057 "IC Event Handler"
         LocalSalesLine."IC SO Line No." := ICsalesLine."Line No.";
     end;
 
-    local procedure GetICPartner(var ICpartner: Record "IC Partner"; CustomerNo: code[20]): Boolean
+    procedure GetICPartner(var ICpartner: Record "IC Partner"; CustomerNo: code[20]): Boolean
     begin
         ICpartner.SetRange("Customer No.", CustomerNo);
         exit(ICpartner.FindFirst());
