@@ -7,10 +7,359 @@
         <DataProvider>SQL</DataProvider>
         <ConnectString />
       </ConnectionProperties>
-      <rd:SecurityType>None</rd:SecurityType>
+      <rd:SecurityType>Windows</rd:SecurityType>
       <rd:DataSourceID>8d337ddc-36b3-41b9-8684-915a7e63de22</rd:DataSourceID>
     </DataSource>
   </DataSources>
+  <DataSets>
+    <DataSet Name="DataSet_Result">
+      <Query>
+        <DataSourceName>DataSource</DataSourceName>
+        <CommandText />
+      </Query>
+      <Fields>
+        <Field Name="No_SalesShptHeader">
+          <DataField>No_SalesShptHeader</DataField>
+        </Field>
+        <Field Name="PageCaption">
+          <DataField>PageCaption</DataField>
+        </Field>
+        <Field Name="CompanyInfo2Picture">
+          <DataField>CompanyInfo2Picture</DataField>
+        </Field>
+        <Field Name="CompanyInfo1Picture">
+          <DataField>CompanyInfo1Picture</DataField>
+        </Field>
+        <Field Name="CompanyInfo3Picture">
+          <DataField>CompanyInfo3Picture</DataField>
+        </Field>
+        <Field Name="SalesShptCopyText">
+          <DataField>SalesShptCopyText</DataField>
+        </Field>
+        <Field Name="ShipToAddr1">
+          <DataField>ShipToAddr1</DataField>
+        </Field>
+        <Field Name="CompanyAddr1">
+          <DataField>CompanyAddr1</DataField>
+        </Field>
+        <Field Name="ShipToAddr2">
+          <DataField>ShipToAddr2</DataField>
+        </Field>
+        <Field Name="CompanyAddr2">
+          <DataField>CompanyAddr2</DataField>
+        </Field>
+        <Field Name="ShipToAddr3">
+          <DataField>ShipToAddr3</DataField>
+        </Field>
+        <Field Name="CompanyAddr3">
+          <DataField>CompanyAddr3</DataField>
+        </Field>
+        <Field Name="ShipToAddr4">
+          <DataField>ShipToAddr4</DataField>
+        </Field>
+        <Field Name="CompanyAddr4">
+          <DataField>CompanyAddr4</DataField>
+        </Field>
+        <Field Name="ShipToAddr5">
+          <DataField>ShipToAddr5</DataField>
+        </Field>
+        <Field Name="CompanyInfoPhoneNo">
+          <DataField>CompanyInfoPhoneNo</DataField>
+        </Field>
+        <Field Name="ShipToAddr6">
+          <DataField>ShipToAddr6</DataField>
+        </Field>
+        <Field Name="CompanyInfoHomePage">
+          <DataField>CompanyInfoHomePage</DataField>
+        </Field>
+        <Field Name="CompanyInfoEmail">
+          <DataField>CompanyInfoEmail</DataField>
+        </Field>
+        <Field Name="CompanyInfoFaxNo">
+          <DataField>CompanyInfoFaxNo</DataField>
+        </Field>
+        <Field Name="CompanyInfoVATRegtnNo">
+          <DataField>CompanyInfoVATRegtnNo</DataField>
+        </Field>
+        <Field Name="CompanyInfoGiroNo">
+          <DataField>CompanyInfoGiroNo</DataField>
+        </Field>
+        <Field Name="CompanyInfoBankName">
+          <DataField>CompanyInfoBankName</DataField>
+        </Field>
+        <Field Name="CompanyInfoBankAccountNo">
+          <DataField>CompanyInfoBankAccountNo</DataField>
+        </Field>
+        <Field Name="SelltoCustNo_SalesShptHeader">
+          <DataField>SelltoCustNo_SalesShptHeader</DataField>
+        </Field>
+        <Field Name="DocDate_SalesShptHeader">
+          <DataField>DocDate_SalesShptHeader</DataField>
+        </Field>
+        <Field Name="SalesPersonText">
+          <DataField>SalesPersonText</DataField>
+        </Field>
+        <Field Name="SalesPurchPersonName">
+          <DataField>SalesPurchPersonName</DataField>
+        </Field>
+        <Field Name="ReferenceText">
+          <DataField>ReferenceText</DataField>
+        </Field>
+        <Field Name="YourRef_SalesShptHeader">
+          <DataField>YourRef_SalesShptHeader</DataField>
+        </Field>
+        <Field Name="ShipToAddr7">
+          <DataField>ShipToAddr7</DataField>
+        </Field>
+        <Field Name="ShipToAddr8">
+          <DataField>ShipToAddr8</DataField>
+        </Field>
+        <Field Name="CompanyAddr5">
+          <DataField>CompanyAddr5</DataField>
+        </Field>
+        <Field Name="CompanyAddr6">
+          <DataField>CompanyAddr6</DataField>
+        </Field>
+        <Field Name="ShptDate_SalesShptHeader">
+          <DataField>ShptDate_SalesShptHeader</DataField>
+        </Field>
+        <Field Name="OutputNo">
+          <DataField>OutputNo</DataField>
+        </Field>
+        <Field Name="ItemTrackingAppendixCaption">
+          <DataField>ItemTrackingAppendixCaption</DataField>
+        </Field>
+        <Field Name="PhoneNoCaption">
+          <DataField>PhoneNoCaption</DataField>
+        </Field>
+        <Field Name="VATRegNoCaption">
+          <DataField>VATRegNoCaption</DataField>
+        </Field>
+        <Field Name="GiroNoCaption">
+          <DataField>GiroNoCaption</DataField>
+        </Field>
+        <Field Name="BankNameCaption">
+          <DataField>BankNameCaption</DataField>
+        </Field>
+        <Field Name="BankAccNoCaption">
+          <DataField>BankAccNoCaption</DataField>
+        </Field>
+        <Field Name="ShipmentNoCaption">
+          <DataField>ShipmentNoCaption</DataField>
+        </Field>
+        <Field Name="ShipmentDateCaption">
+          <DataField>ShipmentDateCaption</DataField>
+        </Field>
+        <Field Name="HomePageCaption">
+          <DataField>HomePageCaption</DataField>
+        </Field>
+        <Field Name="EmailCaption">
+          <DataField>EmailCaption</DataField>
+        </Field>
+        <Field Name="DocumentDateCaption">
+          <DataField>DocumentDateCaption</DataField>
+        </Field>
+        <Field Name="SelltoCustNo_SalesShptHeaderCaption">
+          <DataField>SelltoCustNo_SalesShptHeaderCaption</DataField>
+        </Field>
+        <Field Name="OrderNoCaption_SalesShptHeader">
+          <DataField>OrderNoCaption_SalesShptHeader</DataField>
+        </Field>
+        <Field Name="OrderNo_SalesShptHeader">
+          <DataField>OrderNo_SalesShptHeader</DataField>
+        </Field>
+        <Field Name="ExternalDocumentNoCaption_SalesShptHeader">
+          <DataField>ExternalDocumentNoCaption_SalesShptHeader</DataField>
+        </Field>
+        <Field Name="ExternalDocumentNo_SalesShptHeader">
+          <DataField>ExternalDocumentNo_SalesShptHeader</DataField>
+        </Field>
+        <Field Name="Pref_Shipment_Address">
+          <DataField>Pref_Shipment_Address</DataField>
+        </Field>
+        <Field Name="Pref_Sender_Name">
+          <DataField>Pref_Sender_Name</DataField>
+        </Field>
+        <Field Name="Pref_Sender_Adress">
+          <DataField>Pref_Sender_Adress</DataField>
+        </Field>
+        <Field Name="Pref_Sender_Postcode">
+          <DataField>Pref_Sender_Postcode</DataField>
+        </Field>
+        <Field Name="Pref_Sender_City">
+          <DataField>Pref_Sender_City</DataField>
+        </Field>
+        <Field Name="Pref_Sender_Country">
+          <DataField>Pref_Sender_Country</DataField>
+        </Field>
+        <Field Name="Shipped_From_Lbl">
+          <DataField>Shipped_From_Lbl</DataField>
+        </Field>
+        <Field Name="DimText">
+          <DataField>DimText</DataField>
+        </Field>
+        <Field Name="HeaderDimensionsCaption">
+          <DataField>HeaderDimensionsCaption</DataField>
+        </Field>
+        <Field Name="Description_SalesShptLine">
+          <DataField>Description_SalesShptLine</DataField>
+        </Field>
+        <Field Name="ShowInternalInfo">
+          <DataField>ShowInternalInfo</DataField>
+        </Field>
+        <Field Name="ShowCorrectionLines">
+          <DataField>ShowCorrectionLines</DataField>
+        </Field>
+        <Field Name="Type_SalesShptLine">
+          <DataField>Type_SalesShptLine</DataField>
+        </Field>
+        <Field Name="AsmHeaderExists">
+          <DataField>AsmHeaderExists</DataField>
+        </Field>
+        <Field Name="DocumentNo_SalesShptLine">
+          <DataField>DocumentNo_SalesShptLine</DataField>
+        </Field>
+        <Field Name="LinNo">
+          <DataField>LinNo</DataField>
+        </Field>
+        <Field Name="Qty_SalesShptLine">
+          <DataField>Qty_SalesShptLine</DataField>
+        </Field>
+        <Field Name="Qty_SalesShptLineFormat">
+          <DataField>Qty_SalesShptLineFormat</DataField>
+        </Field>
+        <Field Name="UOM_SalesShptLine">
+          <DataField>UOM_SalesShptLine</DataField>
+        </Field>
+        <Field Name="No_SalesShptLine">
+          <DataField>No_SalesShptLine</DataField>
+        </Field>
+        <Field Name="LineNo_SalesShptLine">
+          <DataField>LineNo_SalesShptLine</DataField>
+        </Field>
+        <Field Name="Description_SalesShptLineCaption">
+          <DataField>Description_SalesShptLineCaption</DataField>
+        </Field>
+        <Field Name="Qty_SalesShptLineCaption">
+          <DataField>Qty_SalesShptLineCaption</DataField>
+        </Field>
+        <Field Name="UOM_SalesShptLineCaption">
+          <DataField>UOM_SalesShptLineCaption</DataField>
+        </Field>
+        <Field Name="No_SalesShptLineCaption">
+          <DataField>No_SalesShptLineCaption</DataField>
+        </Field>
+        <Field Name="Vendor_Item_No_Lbl">
+          <DataField>Vendor_Item_No_Lbl</DataField>
+        </Field>
+        <Field Name="Vendor_Item_No">
+          <DataField>Vendor_Item_No</DataField>
+        </Field>
+        <Field Name="DimText1">
+          <DataField>DimText1</DataField>
+        </Field>
+        <Field Name="LineDimensionsCaption">
+          <DataField>LineDimensionsCaption</DataField>
+        </Field>
+        <Field Name="PostedAsmLineItemNo">
+          <DataField>PostedAsmLineItemNo</DataField>
+        </Field>
+        <Field Name="PostedAsmLineDescription">
+          <DataField>PostedAsmLineDescription</DataField>
+        </Field>
+        <Field Name="PostedAsmLineQuantity">
+          <DataField>PostedAsmLineQuantity</DataField>
+        </Field>
+        <Field Name="PostedAsmLineQuantityFormat">
+          <DataField>PostedAsmLineQuantityFormat</DataField>
+        </Field>
+        <Field Name="PostedAsmLineUOMCode">
+          <DataField>PostedAsmLineUOMCode</DataField>
+        </Field>
+        <Field Name="BilltoCustNo_SalesShptHeader">
+          <DataField>BilltoCustNo_SalesShptHeader</DataField>
+        </Field>
+        <Field Name="CustAddr1">
+          <DataField>CustAddr1</DataField>
+        </Field>
+        <Field Name="CustAddr2">
+          <DataField>CustAddr2</DataField>
+        </Field>
+        <Field Name="CustAddr3">
+          <DataField>CustAddr3</DataField>
+        </Field>
+        <Field Name="CustAddr4">
+          <DataField>CustAddr4</DataField>
+        </Field>
+        <Field Name="CustAddr5">
+          <DataField>CustAddr5</DataField>
+        </Field>
+        <Field Name="CustAddr6">
+          <DataField>CustAddr6</DataField>
+        </Field>
+        <Field Name="CustAddr7">
+          <DataField>CustAddr7</DataField>
+        </Field>
+        <Field Name="CustAddr8">
+          <DataField>CustAddr8</DataField>
+        </Field>
+        <Field Name="BilltoAddressCaption">
+          <DataField>BilltoAddressCaption</DataField>
+        </Field>
+        <Field Name="BilltoCustNo_SalesShptHeaderCaption">
+          <DataField>BilltoCustNo_SalesShptHeaderCaption</DataField>
+        </Field>
+        <Field Name="TrackingSpecBufferNo">
+          <DataField>TrackingSpecBufferNo</DataField>
+        </Field>
+        <Field Name="TrackingSpecBufferDesc">
+          <DataField>TrackingSpecBufferDesc</DataField>
+        </Field>
+        <Field Name="TrackingSpecBufferLotNo">
+          <DataField>TrackingSpecBufferLotNo</DataField>
+        </Field>
+        <Field Name="TrackingSpecBufferSerNo">
+          <DataField>TrackingSpecBufferSerNo</DataField>
+        </Field>
+        <Field Name="TrackingSpecBufferQty">
+          <DataField>TrackingSpecBufferQty</DataField>
+        </Field>
+        <Field Name="TrackingSpecBufferQtyFormat">
+          <DataField>TrackingSpecBufferQtyFormat</DataField>
+        </Field>
+        <Field Name="ShowTotal">
+          <DataField>ShowTotal</DataField>
+        </Field>
+        <Field Name="ShowGroup">
+          <DataField>ShowGroup</DataField>
+        </Field>
+        <Field Name="QuantityCaption">
+          <DataField>QuantityCaption</DataField>
+        </Field>
+        <Field Name="SerialNoCaption">
+          <DataField>SerialNoCaption</DataField>
+        </Field>
+        <Field Name="LotNoCaption">
+          <DataField>LotNoCaption</DataField>
+        </Field>
+        <Field Name="DescriptionCaption">
+          <DataField>DescriptionCaption</DataField>
+        </Field>
+        <Field Name="NoCaption">
+          <DataField>NoCaption</DataField>
+        </Field>
+        <Field Name="Barcode_Lbl">
+          <DataField>Barcode_Lbl</DataField>
+        </Field>
+        <Field Name="Quantity1">
+          <DataField>Quantity1</DataField>
+        </Field>
+        <Field Name="Quantity1Format">
+          <DataField>Quantity1Format</DataField>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
   <ReportSections>
     <ReportSection>
       <Body>
@@ -19,7 +368,7 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>18.13631cm</Width>
+                  <Width>27.66132cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -37,7 +386,7 @@
                                     <Width>2.97177cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>5.72892cm</Width>
+                                    <Width>15.16455cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
                                     <Width>4.87655cm</Width>
@@ -685,7 +1034,13 @@
                                               </Paragraph>
                                             </Paragraphs>
                                             <rd:DefaultName>Vendor_Item_No_Lbl</rd:DefaultName>
+                                            <Visibility>
+                                              <Hidden>=IIF(Fields!Vendor_Item_No.Value = "",TRUE,FALSE)</Hidden>
+                                            </Visibility>
                                             <Style>
+                                              <Border>
+                                                <Style>None</Style>
+                                              </Border>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
@@ -1207,7 +1562,7 @@
                               </Filters>
                               <Top>0.03167cm</Top>
                               <Height>2.90336cm</Height>
-                              <Width>18.13631cm</Width>
+                              <Width>27.57194cm</Width>
                               <Visibility>
                                 <Hidden>=IIF(Fields!LineNo_SalesShptLine.Value &lt;&gt; 0,False,True)</Hidden>
                               </Visibility>
@@ -3064,17 +3419,17 @@ Cstr(Fields!Pref_Sender_Country.Value)
             <DataSetName>DataSet_Result</DataSetName>
             <Left>0.00001cm</Left>
             <Height>11.19711cm</Height>
-            <Width>18.13631cm</Width>
+            <Width>27.66132cm</Width>
             <Style />
           </Tablix>
         </ReportItems>
         <Height>11.25002cm</Height>
         <Style />
       </Body>
-      <Width>18.18033cm</Width>
+      <Width>27.73179cm</Width>
       <Page>
         <PageHeader>
-          <Height>9.78595cm</Height>
+          <Height>10.06112cm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -3083,7 +3438,7 @@ Cstr(Fields!Pref_Sender_Country.Value)
               <Value>=Convert.FromBase64String(Convert.ToBase64String(Fields!CompanyInfo2Picture.Value))</Value>
               <MIMEType>image/bmp</MIMEType>
               <Sizing>FitProportional</Sizing>
-              <Left>12.00001cm</Left>
+              <Left>21.73179cm</Left>
               <Height>14mm</Height>
               <Width>60mm</Width>
               <Visibility>
@@ -3101,7 +3456,7 @@ Cstr(Fields!Pref_Sender_Country.Value)
               <Value>=Convert.ToBase64String(Fields!CompanyInfo1Picture.Value)</Value>
               <MIMEType>image/bmp</MIMEType>
               <Sizing>FitProportional</Sizing>
-              <Left>6.00001cm</Left>
+              <Left>10.76251cm</Left>
               <Height>14mm</Height>
               <Width>60mm</Width>
               <ZIndex>1</ZIndex>
@@ -3133,7 +3488,7 @@ Cstr(Fields!Pref_Sender_Country.Value)
               <Top>5.00686cm</Top>
               <Left>0.00001cm</Left>
               <Height>11pt</Height>
-              <Width>11.46387cm</Width>
+              <Width>13.23658cm</Width>
               <ZIndex>2</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -3176,7 +3531,7 @@ Cstr(Fields!Pref_Sender_Country.Value)
               <Top>4.61881cm</Top>
               <Left>0.00001cm</Left>
               <Height>11pt</Height>
-              <Width>11.46387cm</Width>
+              <Width>13.23658cm</Width>
               <ZIndex>4</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -3202,7 +3557,7 @@ Cstr(Fields!Pref_Sender_Country.Value)
               <Top>5.41894cm</Top>
               <Left>0.00001cm</Left>
               <Height>11pt</Height>
-              <Width>11.46387cm</Width>
+              <Width>13.23658cm</Width>
               <ZIndex>5</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -3228,7 +3583,7 @@ Cstr(Fields!Pref_Sender_Country.Value)
               <Top>4.21345cm</Top>
               <Left>0.00001cm</Left>
               <Height>11pt</Height>
-              <Width>11.46386cm</Width>
+              <Width>13.23657cm</Width>
               <ZIndex>6</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -3254,7 +3609,7 @@ Cstr(Fields!Pref_Sender_Country.Value)
               <Top>3.8222cm</Top>
               <Left>0.00001cm</Left>
               <Height>11pt</Height>
-              <Width>11.46387cm</Width>
+              <Width>13.23658cm</Width>
               <ZIndex>7</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -3280,7 +3635,7 @@ Cstr(Fields!Pref_Sender_Country.Value)
               <Top>5.00753cm</Top>
               <Left>0.00001cm</Left>
               <Height>11pt</Height>
-              <Width>11.46387cm</Width>
+              <Width>13.23658cm</Width>
               <ZIndex>8</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -3306,7 +3661,7 @@ Cstr(Fields!Pref_Sender_Country.Value)
               <Top>3.03332cm</Top>
               <Left>0.00001cm</Left>
               <Height>11pt</Height>
-              <Width>11.46387cm</Width>
+              <Width>13.23658cm</Width>
               <ZIndex>9</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -3332,7 +3687,7 @@ Cstr(Fields!Pref_Sender_Country.Value)
               <Top>2.64174cm</Top>
               <Left>0.00001cm</Left>
               <Height>11pt</Height>
-              <Width>11.46387cm</Width>
+              <Width>13.23658cm</Width>
               <ZIndex>10</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -3357,8 +3712,8 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>5.41894cm</Top>
-              <Left>11.46389cm</Left>
+              <Top>5.86873cm</Top>
+              <Left>21.01535cm</Left>
               <Height>11pt</Height>
               <Width>6.67244cm</Width>
               <ZIndex>11</ZIndex>
@@ -3385,8 +3740,8 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>5.00686cm</Top>
-              <Left>11.46389cm</Left>
+              <Top>5.45665cm</Top>
+              <Left>21.01535cm</Left>
               <Height>11pt</Height>
               <Width>6.67244cm</Width>
               <ZIndex>12</ZIndex>
@@ -3413,8 +3768,8 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>4.61881cm</Top>
-              <Left>11.46389cm</Left>
+              <Top>5.0686cm</Top>
+              <Left>21.01535cm</Left>
               <Height>11pt</Height>
               <Width>6.67244cm</Width>
               <ZIndex>13</ZIndex>
@@ -3428,7 +3783,7 @@ Cstr(Fields!Pref_Sender_Country.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=IIF(Fields!Pref_Sender_Adress.value = "",Code.GetData(15,1) &amp; Code.GetData(16,1),Code.GetData(46,1))</Value>
+                      <Value>=IIF(Fields!Pref_Sender_Adress.value = "",Code.GetData(15,1),Code.GetData(46,1))</Value>
                       <Style>
                         <FontStyle>Normal</FontStyle>
                         <FontFamily>Segoe UI</FontFamily>
@@ -3442,7 +3797,7 @@ Cstr(Fields!Pref_Sender_Country.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>4.21345cm</Top>
-              <Left>11.46389cm</Left>
+              <Left>20.98889cm</Left>
               <Height>11pt</Height>
               <Width>6.67244cm</Width>
               <ZIndex>14</ZIndex>
@@ -3470,7 +3825,7 @@ Cstr(Fields!Pref_Sender_Country.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>3.8222cm</Top>
-              <Left>11.46389cm</Left>
+              <Left>20.98889cm</Left>
               <Height>11pt</Height>
               <Width>6.67244cm</Width>
               <ZIndex>15</ZIndex>
@@ -3498,7 +3853,7 @@ Cstr(Fields!Pref_Sender_Country.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>3.42003cm</Top>
-              <Left>11.46388cm</Left>
+              <Left>20.98888cm</Left>
               <Height>11pt</Height>
               <Width>6.67245cm</Width>
               <ZIndex>16</ZIndex>
@@ -3526,7 +3881,7 @@ Cstr(Fields!Pref_Sender_Country.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>2.64174cm</Top>
-              <Left>11.46388cm</Left>
+              <Left>20.98888cm</Left>
               <Height>11pt</Height>
               <Width>6.67245cm</Width>
               <ZIndex>17</ZIndex>
@@ -3548,8 +3903,8 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>8.19668cm</Top>
-              <Left>11.49562cm</Left>
+              <Top>8.64647cm</Top>
+              <Left>18.18958cm</Left>
               <Height>12.00019pt</Height>
               <Width>2.62217cm</Width>
               <ZIndex>18</ZIndex>
@@ -3573,8 +3928,8 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>7.77688cm</Top>
-              <Left>11.49562cm</Left>
+              <Top>8.22667cm</Top>
+              <Left>18.18958cm</Left>
               <Height>11.89972pt</Height>
               <Width>2.62217cm</Width>
               <ZIndex>19</ZIndex>
@@ -3599,8 +3954,8 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>7.38882cm</Top>
-              <Left>11.49562cm</Left>
+              <Top>7.83861cm</Top>
+              <Left>18.18958cm</Left>
               <Height>11.00013pt</Height>
               <Width>2.62217cm</Width>
               <ZIndex>20</ZIndex>
@@ -3625,8 +3980,8 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>7.00429cm</Top>
-              <Left>11.49562cm</Left>
+              <Top>7.45408cm</Top>
+              <Left>18.18958cm</Left>
               <Height>11pt</Height>
               <Width>2.62217cm</Width>
               <ZIndex>21</ZIndex>
@@ -3651,8 +4006,8 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>5.807cm</Top>
-              <Left>11.49562cm</Left>
+              <Top>6.25679cm</Top>
+              <Left>18.18958cm</Left>
               <Height>11pt</Height>
               <Width>2.62217cm</Width>
               <ZIndex>22</ZIndex>
@@ -3678,10 +4033,10 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>8.23196cm</Top>
-              <Left>14.11779cm</Left>
+              <Top>8.68175cm</Top>
+              <Left>21.01535cm</Left>
               <Height>11pt</Height>
-              <Width>4.06254cm</Width>
+              <Width>6.71644cm</Width>
               <ZIndex>23</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -3705,10 +4060,10 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>7.80862cm</Top>
-              <Left>14.11779cm</Left>
+              <Top>8.25841cm</Top>
+              <Left>21.01535cm</Left>
               <Height>11pt</Height>
-              <Width>4.06254cm</Width>
+              <Width>6.71644cm</Width>
               <ZIndex>24</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -3733,10 +4088,10 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>7.38882cm</Top>
-              <Left>14.11779cm</Left>
+              <Top>7.83861cm</Top>
+              <Left>21.01535cm</Left>
               <Height>11pt</Height>
-              <Width>4.06254cm</Width>
+              <Width>6.71644cm</Width>
               <ZIndex>25</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -3761,10 +4116,10 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>7.00429cm</Top>
-              <Left>14.11779cm</Left>
+              <Top>7.45408cm</Top>
+              <Left>21.01535cm</Left>
               <Height>11pt</Height>
-              <Width>4.01854cm</Width>
+              <Width>6.67244cm</Width>
               <ZIndex>26</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -3789,10 +4144,10 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>6.20735cm</Top>
-              <Left>14.11779cm</Left>
+              <Top>6.65714cm</Top>
+              <Left>21.01535cm</Left>
               <Height>11pt</Height>
-              <Width>4.06254cm</Width>
+              <Width>6.71644cm</Width>
               <ZIndex>27</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -3817,10 +4172,10 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>5.807cm</Top>
-              <Left>14.11779cm</Left>
+              <Top>6.25679cm</Top>
+              <Left>21.01535cm</Left>
               <Height>11pt</Height>
-              <Width>4.01854cm</Width>
+              <Width>6.67244cm</Width>
               <ZIndex>28</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -3847,9 +4202,9 @@ Cstr(Fields!Pref_Sender_Country.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>1.87678cm</Top>
-              <Left>0.00001cm</Left>
+              <Left>0.00002cm</Left>
               <Height>20pt</Height>
-              <Width>18.18032cm</Width>
+              <Width>27.73177cm</Width>
               <ZIndex>29</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -3874,10 +4229,10 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>9.06452cm</Top>
-              <Left>14.11779cm</Left>
+              <Top>9.51431cm</Top>
+              <Left>21.01535cm</Left>
               <Height>11pt</Height>
-              <Width>4.01854cm</Width>
+              <Width>6.67244cm</Width>
               <ZIndex>30</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -3900,8 +4255,8 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>9.06452cm</Top>
-              <Left>4.52583in</Left>
+              <Top>9.51431cm</Top>
+              <Left>7.16125in</Left>
               <Height>11pt</Height>
               <Width>2.62217cm</Width>
               <ZIndex>31</ZIndex>
@@ -3928,10 +4283,10 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>8.64824cm</Top>
-              <Left>14.11779cm</Left>
+              <Top>9.09803cm</Top>
+              <Left>21.01535cm</Left>
               <Height>11pt</Height>
-              <Width>4.05029cm</Width>
+              <Width>6.70419cm</Width>
               <ZIndex>32</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -3954,8 +4309,8 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>8.64824cm</Top>
-              <Left>4.52583in</Left>
+              <Top>9.09803cm</Top>
+              <Left>7.16125in</Left>
               <Height>11pt</Height>
               <Width>2.62217cm</Width>
               <ZIndex>33</ZIndex>
@@ -4011,7 +4366,7 @@ Cstr(Fields!Pref_Sender_Country.Value)
               <Top>6.20735cm</Top>
               <Left>3.71257cm</Left>
               <Height>11pt</Height>
-              <Width>7.77402cm</Width>
+              <Width>9.54673cm</Width>
               <ZIndex>35</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -4040,7 +4395,7 @@ Cstr(Fields!Pref_Sender_Country.Value)
               <Top>6.60918cm</Top>
               <Left>3.71257cm</Left>
               <Height>11pt</Height>
-              <Width>7.77403cm</Width>
+              <Width>9.54674cm</Width>
               <ZIndex>36</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -4066,7 +4421,7 @@ Cstr(Fields!Pref_Sender_Country.Value)
               <Top>7.42762cm</Top>
               <Left>3.71256cm</Left>
               <Height>8.90019pt</Height>
-              <Width>7.77402cm</Width>
+              <Width>9.54673cm</Width>
               <ZIndex>37</ZIndex>
               <Style>
                 <Border>
@@ -4122,7 +4477,7 @@ Cstr(Fields!Pref_Sender_Country.Value)
               <Top>7.00429cm</Top>
               <Left>3.71257cm</Left>
               <Height>11pt</Height>
-              <Width>7.77403cm</Width>
+              <Width>9.54674cm</Width>
               <ZIndex>39</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -4174,10 +4529,10 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>6.60918cm</Top>
-              <Left>14.11779cm</Left>
+              <Top>7.05897cm</Top>
+              <Left>21.01535cm</Left>
               <Height>11pt</Height>
-              <Width>4.01854cm</Width>
+              <Width>6.67244cm</Width>
               <ZIndex>41</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -4201,7 +4556,7 @@ Cstr(Fields!Pref_Sender_Country.Value)
               <Top>5.807cm</Top>
               <Left>0.00001cm</Left>
               <Height>10pt</Height>
-              <Width>11.48657cm</Width>
+              <Width>13.25928cm</Width>
               <ZIndex>42</ZIndex>
               <Style>
                 <Border>
@@ -4231,7 +4586,7 @@ Cstr(Fields!Pref_Sender_Country.Value)
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
               <Top>3.03332cm</Top>
-              <Left>11.46388cm</Left>
+              <Left>20.98888cm</Left>
               <Height>10pt</Height>
               <Width>6.71645cm</Width>
               <ZIndex>43</ZIndex>
@@ -4260,8 +4615,8 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>6.20735cm</Top>
-              <Left>11.49562cm</Left>
+              <Top>6.65714cm</Top>
+              <Left>18.18958cm</Left>
               <Height>11pt</Height>
               <Width>2.62217cm</Width>
               <ZIndex>44</ZIndex>
@@ -4290,8 +4645,8 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>6.60918cm</Top>
-              <Left>11.49562cm</Left>
+              <Top>7.05897cm</Top>
+              <Left>18.18958cm</Left>
               <Height>11pt</Height>
               <Width>2.62217cm</Width>
               <ZIndex>45</ZIndex>
@@ -4379,7 +4734,7 @@ Cstr(Fields!Pref_Sender_Country.Value)
               <Top>7.77688cm</Top>
               <Left>3.71257cm</Left>
               <Height>0.4198cm</Height>
-              <Width>7.77403cm</Width>
+              <Width>9.54674cm</Width>
               <ZIndex>48</ZIndex>
               <Style>
                 <Border>
@@ -4408,7 +4763,7 @@ Cstr(Fields!Pref_Sender_Country.Value)
               <Top>8.19668cm</Top>
               <Left>3.71257cm</Left>
               <Height>0.42334cm</Height>
-              <Width>7.77403cm</Width>
+              <Width>9.54674cm</Width>
               <ZIndex>49</ZIndex>
               <Style>
                 <Border>
@@ -4465,8 +4820,36 @@ Cstr(Fields!Pref_Sender_Country.Value)
               </Paragraphs>
               <Top>3.43414cm</Top>
               <Height>11pt</Height>
-              <Width>11.46387cm</Width>
+              <Width>13.23658cm</Width>
               <ZIndex>51</ZIndex>
+              <Style>
+                <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+            </Textbox>
+            <Textbox Name="CompanyAddr7">
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=IIF(Fields!Pref_Sender_Adress.value = "", Code.GetData(16,1),"")</Value>
+                      <Style>
+                        <FontStyle>Normal</FontStyle>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <Top>4.64031cm</Top>
+              <Left>20.98888cm</Left>
+              <Height>11pt</Height>
+              <Width>6.67244cm</Width>
+              <ZIndex>52</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -4487,6 +4870,12 @@ Cstr(Fields!Pref_Sender_Country.Value)
       </Page>
     </ReportSection>
   </ReportSections>
+  <ReportParametersLayout>
+    <GridLayoutDefinition>
+      <NumberOfColumns>4</NumberOfColumns>
+      <NumberOfRows>2</NumberOfRows>
+    </GridLayoutDefinition>
+  </ReportParametersLayout>
   <Code>Public Function BlankZero(ByVal Value As Decimal)
     if Value = 0 then
         Return ""
@@ -4551,353 +4940,4 @@ End Function
   <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
   <rd:ReportID>c6dcca5f-0dda-4ca8-b864-c8e1c84f14ee</rd:ReportID>
-  <DataSets>
-    <DataSet Name="DataSet_Result">
-      <Fields>
-        <Field Name="No_SalesShptHeader">
-          <DataField>No_SalesShptHeader</DataField>
-        </Field>
-        <Field Name="PageCaption">
-          <DataField>PageCaption</DataField>
-        </Field>
-        <Field Name="CompanyInfo2Picture">
-          <DataField>CompanyInfo2Picture</DataField>
-        </Field>
-        <Field Name="CompanyInfo1Picture">
-          <DataField>CompanyInfo1Picture</DataField>
-        </Field>
-        <Field Name="CompanyInfo3Picture">
-          <DataField>CompanyInfo3Picture</DataField>
-        </Field>
-        <Field Name="SalesShptCopyText">
-          <DataField>SalesShptCopyText</DataField>
-        </Field>
-        <Field Name="ShipToAddr1">
-          <DataField>ShipToAddr1</DataField>
-        </Field>
-        <Field Name="CompanyAddr1">
-          <DataField>CompanyAddr1</DataField>
-        </Field>
-        <Field Name="ShipToAddr2">
-          <DataField>ShipToAddr2</DataField>
-        </Field>
-        <Field Name="CompanyAddr2">
-          <DataField>CompanyAddr2</DataField>
-        </Field>
-        <Field Name="ShipToAddr3">
-          <DataField>ShipToAddr3</DataField>
-        </Field>
-        <Field Name="CompanyAddr3">
-          <DataField>CompanyAddr3</DataField>
-        </Field>
-        <Field Name="ShipToAddr4">
-          <DataField>ShipToAddr4</DataField>
-        </Field>
-        <Field Name="CompanyAddr4">
-          <DataField>CompanyAddr4</DataField>
-        </Field>
-        <Field Name="ShipToAddr5">
-          <DataField>ShipToAddr5</DataField>
-        </Field>
-        <Field Name="CompanyInfoPhoneNo">
-          <DataField>CompanyInfoPhoneNo</DataField>
-        </Field>
-        <Field Name="ShipToAddr6">
-          <DataField>ShipToAddr6</DataField>
-        </Field>
-        <Field Name="CompanyInfoHomePage">
-          <DataField>CompanyInfoHomePage</DataField>
-        </Field>
-        <Field Name="CompanyInfoEmail">
-          <DataField>CompanyInfoEmail</DataField>
-        </Field>
-        <Field Name="CompanyInfoFaxNo">
-          <DataField>CompanyInfoFaxNo</DataField>
-        </Field>
-        <Field Name="CompanyInfoVATRegtnNo">
-          <DataField>CompanyInfoVATRegtnNo</DataField>
-        </Field>
-        <Field Name="CompanyInfoGiroNo">
-          <DataField>CompanyInfoGiroNo</DataField>
-        </Field>
-        <Field Name="CompanyInfoBankName">
-          <DataField>CompanyInfoBankName</DataField>
-        </Field>
-        <Field Name="CompanyInfoBankAccountNo">
-          <DataField>CompanyInfoBankAccountNo</DataField>
-        </Field>
-        <Field Name="SelltoCustNo_SalesShptHeader">
-          <DataField>SelltoCustNo_SalesShptHeader</DataField>
-        </Field>
-        <Field Name="DocDate_SalesShptHeader">
-          <DataField>DocDate_SalesShptHeader</DataField>
-        </Field>
-        <Field Name="SalesPersonText">
-          <DataField>SalesPersonText</DataField>
-        </Field>
-        <Field Name="SalesPurchPersonName">
-          <DataField>SalesPurchPersonName</DataField>
-        </Field>
-        <Field Name="ReferenceText">
-          <DataField>ReferenceText</DataField>
-        </Field>
-        <Field Name="YourRef_SalesShptHeader">
-          <DataField>YourRef_SalesShptHeader</DataField>
-        </Field>
-        <Field Name="ShipToAddr7">
-          <DataField>ShipToAddr7</DataField>
-        </Field>
-        <Field Name="ShipToAddr8">
-          <DataField>ShipToAddr8</DataField>
-        </Field>
-        <Field Name="CompanyAddr5">
-          <DataField>CompanyAddr5</DataField>
-        </Field>
-        <Field Name="CompanyAddr6">
-          <DataField>CompanyAddr6</DataField>
-        </Field>
-        <Field Name="ShptDate_SalesShptHeader">
-          <DataField>ShptDate_SalesShptHeader</DataField>
-        </Field>
-        <Field Name="OutputNo">
-          <DataField>OutputNo</DataField>
-        </Field>
-        <Field Name="ItemTrackingAppendixCaption">
-          <DataField>ItemTrackingAppendixCaption</DataField>
-        </Field>
-        <Field Name="PhoneNoCaption">
-          <DataField>PhoneNoCaption</DataField>
-        </Field>
-        <Field Name="VATRegNoCaption">
-          <DataField>VATRegNoCaption</DataField>
-        </Field>
-        <Field Name="GiroNoCaption">
-          <DataField>GiroNoCaption</DataField>
-        </Field>
-        <Field Name="BankNameCaption">
-          <DataField>BankNameCaption</DataField>
-        </Field>
-        <Field Name="BankAccNoCaption">
-          <DataField>BankAccNoCaption</DataField>
-        </Field>
-        <Field Name="ShipmentNoCaption">
-          <DataField>ShipmentNoCaption</DataField>
-        </Field>
-        <Field Name="ShipmentDateCaption">
-          <DataField>ShipmentDateCaption</DataField>
-        </Field>
-        <Field Name="HomePageCaption">
-          <DataField>HomePageCaption</DataField>
-        </Field>
-        <Field Name="EmailCaption">
-          <DataField>EmailCaption</DataField>
-        </Field>
-        <Field Name="DocumentDateCaption">
-          <DataField>DocumentDateCaption</DataField>
-        </Field>
-        <Field Name="SelltoCustNo_SalesShptHeaderCaption">
-          <DataField>SelltoCustNo_SalesShptHeaderCaption</DataField>
-        </Field>
-        <Field Name="OrderNoCaption_SalesShptHeader">
-          <DataField>OrderNoCaption_SalesShptHeader</DataField>
-        </Field>
-        <Field Name="OrderNo_SalesShptHeader">
-          <DataField>OrderNo_SalesShptHeader</DataField>
-        </Field>
-        <Field Name="ExternalDocumentNoCaption_SalesShptHeader">
-          <DataField>ExternalDocumentNoCaption_SalesShptHeader</DataField>
-        </Field>
-        <Field Name="ExternalDocumentNo_SalesShptHeader">
-          <DataField>ExternalDocumentNo_SalesShptHeader</DataField>
-        </Field>
-        <Field Name="Pref_Shipment_Address">
-          <DataField>Pref_Shipment_Address</DataField>
-        </Field>
-        <Field Name="Pref_Sender_Name">
-          <DataField>Pref_Sender_Name</DataField>
-        </Field>
-        <Field Name="Pref_Sender_Adress">
-          <DataField>Pref_Sender_Adress</DataField>
-        </Field>
-        <Field Name="Pref_Sender_Postcode">
-          <DataField>Pref_Sender_Postcode</DataField>
-        </Field>
-        <Field Name="Pref_Sender_City">
-          <DataField>Pref_Sender_City</DataField>
-        </Field>
-        <Field Name="Pref_Sender_Country">
-          <DataField>Pref_Sender_Country</DataField>
-        </Field>
-        <Field Name="Shipped_From_Lbl">
-          <DataField>Shipped_From_Lbl</DataField>
-        </Field>
-        <Field Name="DimText">
-          <DataField>DimText</DataField>
-        </Field>
-        <Field Name="HeaderDimensionsCaption">
-          <DataField>HeaderDimensionsCaption</DataField>
-        </Field>
-        <Field Name="Description_SalesShptLine">
-          <DataField>Description_SalesShptLine</DataField>
-        </Field>
-        <Field Name="ShowInternalInfo">
-          <DataField>ShowInternalInfo</DataField>
-        </Field>
-        <Field Name="ShowCorrectionLines">
-          <DataField>ShowCorrectionLines</DataField>
-        </Field>
-        <Field Name="Type_SalesShptLine">
-          <DataField>Type_SalesShptLine</DataField>
-        </Field>
-        <Field Name="AsmHeaderExists">
-          <DataField>AsmHeaderExists</DataField>
-        </Field>
-        <Field Name="DocumentNo_SalesShptLine">
-          <DataField>DocumentNo_SalesShptLine</DataField>
-        </Field>
-        <Field Name="LinNo">
-          <DataField>LinNo</DataField>
-        </Field>
-        <Field Name="Qty_SalesShptLine">
-          <DataField>Qty_SalesShptLine</DataField>
-        </Field>
-        <Field Name="Qty_SalesShptLineFormat">
-          <DataField>Qty_SalesShptLineFormat</DataField>
-        </Field>
-        <Field Name="UOM_SalesShptLine">
-          <DataField>UOM_SalesShptLine</DataField>
-        </Field>
-        <Field Name="No_SalesShptLine">
-          <DataField>No_SalesShptLine</DataField>
-        </Field>
-        <Field Name="LineNo_SalesShptLine">
-          <DataField>LineNo_SalesShptLine</DataField>
-        </Field>
-        <Field Name="Description_SalesShptLineCaption">
-          <DataField>Description_SalesShptLineCaption</DataField>
-        </Field>
-        <Field Name="Qty_SalesShptLineCaption">
-          <DataField>Qty_SalesShptLineCaption</DataField>
-        </Field>
-        <Field Name="UOM_SalesShptLineCaption">
-          <DataField>UOM_SalesShptLineCaption</DataField>
-        </Field>
-        <Field Name="No_SalesShptLineCaption">
-          <DataField>No_SalesShptLineCaption</DataField>
-        </Field>
-        <Field Name="Vendor_Item_No_Lbl">
-          <DataField>Vendor_Item_No_Lbl</DataField>
-        </Field>
-        <Field Name="Vendor_Item_No">
-          <DataField>Vendor_Item_No</DataField>
-        </Field>
-        <Field Name="DimText1">
-          <DataField>DimText1</DataField>
-        </Field>
-        <Field Name="LineDimensionsCaption">
-          <DataField>LineDimensionsCaption</DataField>
-        </Field>
-        <Field Name="PostedAsmLineItemNo">
-          <DataField>PostedAsmLineItemNo</DataField>
-        </Field>
-        <Field Name="PostedAsmLineDescription">
-          <DataField>PostedAsmLineDescription</DataField>
-        </Field>
-        <Field Name="PostedAsmLineQuantity">
-          <DataField>PostedAsmLineQuantity</DataField>
-        </Field>
-        <Field Name="PostedAsmLineQuantityFormat">
-          <DataField>PostedAsmLineQuantityFormat</DataField>
-        </Field>
-        <Field Name="PostedAsmLineUOMCode">
-          <DataField>PostedAsmLineUOMCode</DataField>
-        </Field>
-        <Field Name="BilltoCustNo_SalesShptHeader">
-          <DataField>BilltoCustNo_SalesShptHeader</DataField>
-        </Field>
-        <Field Name="CustAddr1">
-          <DataField>CustAddr1</DataField>
-        </Field>
-        <Field Name="CustAddr2">
-          <DataField>CustAddr2</DataField>
-        </Field>
-        <Field Name="CustAddr3">
-          <DataField>CustAddr3</DataField>
-        </Field>
-        <Field Name="CustAddr4">
-          <DataField>CustAddr4</DataField>
-        </Field>
-        <Field Name="CustAddr5">
-          <DataField>CustAddr5</DataField>
-        </Field>
-        <Field Name="CustAddr6">
-          <DataField>CustAddr6</DataField>
-        </Field>
-        <Field Name="CustAddr7">
-          <DataField>CustAddr7</DataField>
-        </Field>
-        <Field Name="CustAddr8">
-          <DataField>CustAddr8</DataField>
-        </Field>
-        <Field Name="BilltoAddressCaption">
-          <DataField>BilltoAddressCaption</DataField>
-        </Field>
-        <Field Name="BilltoCustNo_SalesShptHeaderCaption">
-          <DataField>BilltoCustNo_SalesShptHeaderCaption</DataField>
-        </Field>
-        <Field Name="TrackingSpecBufferNo">
-          <DataField>TrackingSpecBufferNo</DataField>
-        </Field>
-        <Field Name="TrackingSpecBufferDesc">
-          <DataField>TrackingSpecBufferDesc</DataField>
-        </Field>
-        <Field Name="TrackingSpecBufferLotNo">
-          <DataField>TrackingSpecBufferLotNo</DataField>
-        </Field>
-        <Field Name="TrackingSpecBufferSerNo">
-          <DataField>TrackingSpecBufferSerNo</DataField>
-        </Field>
-        <Field Name="TrackingSpecBufferQty">
-          <DataField>TrackingSpecBufferQty</DataField>
-        </Field>
-        <Field Name="TrackingSpecBufferQtyFormat">
-          <DataField>TrackingSpecBufferQtyFormat</DataField>
-        </Field>
-        <Field Name="ShowTotal">
-          <DataField>ShowTotal</DataField>
-        </Field>
-        <Field Name="ShowGroup">
-          <DataField>ShowGroup</DataField>
-        </Field>
-        <Field Name="QuantityCaption">
-          <DataField>QuantityCaption</DataField>
-        </Field>
-        <Field Name="SerialNoCaption">
-          <DataField>SerialNoCaption</DataField>
-        </Field>
-        <Field Name="LotNoCaption">
-          <DataField>LotNoCaption</DataField>
-        </Field>
-        <Field Name="DescriptionCaption">
-          <DataField>DescriptionCaption</DataField>
-        </Field>
-        <Field Name="NoCaption">
-          <DataField>NoCaption</DataField>
-        </Field>
-        <Field Name="Barcode_Lbl">
-          <DataField>Barcode_Lbl</DataField>
-        </Field>
-        <Field Name="Quantity1">
-          <DataField>Quantity1</DataField>
-        </Field>
-        <Field Name="Quantity1Format">
-          <DataField>Quantity1Format</DataField>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>DataSource</DataSourceName>
-        <CommandText />
-      </Query>
-    </DataSet>
-  </DataSets>
 </Report>
