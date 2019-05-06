@@ -431,65 +431,29 @@ codeunit 50054 "Sales Order Event Handler"
 
     [EventSubscriber(ObjectType::table, database::"Sales Line", 'OnAfterValidateEvent', 'Qty. to Invoice', true, true)]
 
-    local procedure OnAfterValidateSalesLineEvent(var rec: record "Sales Line")
+    local procedure OnAfterValidateQtoToInvoiceEvent(var rec: record "Sales Line")
     var
-        ICpartner: record "IC Partner";
-        SalesHeader: record "Sales Header";
-        ICEvents: codeunit "IC Event Handler";
-        SalesLine: record "Sales Line";
-        PurchLine: Record "Purchase Line";
-        PurchOrderEvents: codeunit "Purchase Order Event Handler";
         ICSyncMgt: codeunit "IC Sync Management";
     begin
-        if (rec."IC SO No." <> '') and (rec."IC SO Line No." <> 0) and (rec."IC PO No." <> '') AND (rec."IC PO Line No." <> 0) then begin
-            SalesHeader.get(rec."Document Type", rec."Document No.");
-            if ICEvents.GetICPartner(ICpartner, SalesHeader.Subsidiary) then begin
-                SalesLine.ChangeCompany(ICpartner."Inbox Details");
-                SalesLine.get(rec."Document Type", rec."IC SO No.", rec."IC SO Line No.");
-                SalesLine."Qty. to Invoice" := rec."Qty. to Invoice";
-                ICSyncMgt.ModifyICSalesOrderInOtherCompany(SalesLine, ICpartner."Inbox Details");
-                PurchLine.ChangeCompany(ICpartner."Inbox Details");
-                PurchLine.get(rec."Document Type", rec."IC PO No.", rec."IC PO Line No.");
-                PurchLine."Qty. to Invoice" := rec."Qty. to Invoice";
-                ICSyncMgt.ModifyICPurchaseOrderInOtherCompany(PurchLine, ICpartner."Inbox Details");
-            end;
-        end;
+        ICSyncMgt.UpdateQtyToInvoiceInICCompany(rec);
     end;
 
-    /* local procedure UpdateSalesLineQtyToInv(var rec: record "Sales Line"; xrec: record "Sales Line"; ICOrder: Boolean; ICCompany: text[250])
-    var
-        PositiveReservEntry: Record "Reservation Entry";
-        ReservationEntry: record "Reservation Entry";
-    begin
-        if ICOrder then begin
-            ReservationEntry.ChangeCompany(ICCompany);
-            PositiveReservEntry.ChangeCompany(ICCompany);
-        end;
-        ReservationEntry.SetRange("Item No.", rec."No.");
-        ReservationEntry.SetRange("Source ID", rec."Document No.");
-        ReservationEntry.SetRange("Source Subtype", rec."Document Type");
-        ReservationEntry.SetRange("Source Ref. No.", rec."Line No.");
-        ReservationEntry.SetRange("Reservation Status", ReservationEntry."Reservation Status"::Reservation);
-        ReservationEntry.SetRange(Binding, ReservationEntry.Binding::" ");
-        ReservationEntry.SetRange(Positive, false);
-        if ReservationEntry.FindSet() then begin
-            repeat
-                if ICOrder then
-                    ReservationEntry.validate("Qty. to Invoice (Base)", xrec."Qty. to Invoice")
-                else
-                    ReservationEntry.validate("Qty. to Invoice (Base)", rec."Qty. to Invoice");
-                ReservationEntry.Modify(true);
-                if PositiveReservEntry.get(ReservationEntry."Entry No.", not ReservationEntry.Positive) then begin
-                    if ICOrder then
-                        PositiveReservEntry.validate("Qty. to Invoice (Base)", xrec."Qty. to Invoice")
-                    else
-                        PositiveReservEntry.validate("Qty. to Invoice (Base)", rec."Qty. to Invoice");
-                    PositiveReservEntry.Modify(true);
-                end;
-            until ReservationEntry.next = 0;
-        end;
+    [EventSubscriber(ObjectType::table, database::"Sales Line", 'OnAfterValidateEvent', 'Qty. to Ship', true, true)]
 
-    end; */
+    local procedure OnAfterValidateQtyToShipEvent(var rec: record "Sales Line")
+    var
+        ICSyncMgt: codeunit "IC Sync Management";
+    begin
+        ICSyncMgt.UpdateQtyToShipInICCompany(rec);
+    end;
+
+    [EventSubscriber(ObjectType::table, database::"Sales Line", 'OnAfterInitQtyToInvoice', '', true, true)]
+    local procedure OnAfterInitQtyToInvoice(SalesLine: Record "Sales Line"; CurrFieldNo: Integer)
+    var
+        ICSyncMgt: codeunit "IC Sync Management";
+    begin
+        ICSyncMgt.UpdateQtyToInvoiceInICCompany(SalesLine);
+    end;
 
 
 }

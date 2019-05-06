@@ -590,6 +590,56 @@ codeunit 50005 "IC Sync Management"
             exit('');
     END;
 
+    procedure UpdateQtyToInvoiceInICCompany(var SalesLine: Record "Sales Line")
+    var
+        ICpartner: record "IC Partner";
+        SalesHeader: record "Sales Header";
+        ICEvents: codeunit "IC Event Handler";
+        SalesLineOtherCompany: record "Sales Line";
+        PurchLineOtherCompany: Record "Purchase Line";
+        PurchOrderEvents: codeunit "Purchase Order Event Handler";
+        ICSyncMgt: codeunit "IC Sync Management";
+    begin
+        if (SalesLine."IC SO No." <> '') and (SalesLine."IC SO Line No." <> 0) and (SalesLine."IC PO No." <> '') AND (SalesLine."IC PO Line No." <> 0) then begin
+            SalesHeader.get(SalesLine."Document Type", SalesLine."Document No.");
+            if ICEvents.GetICPartner(ICpartner, SalesHeader.Subsidiary) then begin
+                SalesLineOtherCompany.ChangeCompany(ICpartner."Inbox Details");
+                SalesLineOtherCompany.get(SalesLine."Document Type", SalesLine."IC SO No.", SalesLine."IC SO Line No.");
+                SalesLineOtherCompany."Qty. to Invoice" := SalesLine."Qty. to Invoice";
+                ICSyncMgt.ModifyICSalesOrderInOtherCompany(SalesLineOtherCompany, ICpartner."Inbox Details");
+                PurchLineOtherCompany.ChangeCompany(ICpartner."Inbox Details");
+                PurchLineOtherCompany.get(SalesLine."Document Type", SalesLine."IC PO No.", SalesLine."IC PO Line No.");
+                PurchLineOtherCompany."Qty. to Invoice" := SalesLine."Qty. to Invoice";
+                ICSyncMgt.ModifyICPurchaseOrderInOtherCompany(PurchLineOtherCompany, ICpartner."Inbox Details");
+            end;
+        end;
+    end;
+
+    procedure UpdateQtyToShipInICCompany(var Salesline: record "Sales Line")
+    var
+        ICpartner: record "IC Partner";
+        SalesHeader: record "Sales Header";
+        ICEvents: codeunit "IC Event Handler";
+        SalesLineOtherCompany: record "Sales Line";
+        PurchLineOtherCompany: Record "Purchase Line";
+        PurchOrderEvents: codeunit "Purchase Order Event Handler";
+        ICSyncMgt: codeunit "IC Sync Management";
+    begin
+        if (Salesline."IC SO No." <> '') and (Salesline."IC SO Line No." <> 0) and (Salesline."IC PO No." <> '') AND (Salesline."IC PO Line No." <> 0) then begin
+            SalesHeader.get(Salesline."Document Type", Salesline."Document No.");
+            if ICEvents.GetICPartner(ICpartner, SalesHeader.Subsidiary) then begin
+                SalesLineOtherCompany.ChangeCompany(ICpartner."Inbox Details");
+                SalesLineOtherCompany.get(Salesline."Document Type", Salesline."IC SO No.", Salesline."IC SO Line No.");
+                SalesLineOtherCompany."Qty. to Ship" := Salesline."Qty. to Ship";
+                ICSyncMgt.ModifyICSalesOrderInOtherCompany(SalesLineOtherCompany, ICpartner."Inbox Details");
+                PurchLineOtherCompany.ChangeCompany(ICpartner."Inbox Details");
+                PurchLineOtherCompany.get(Salesline."Document Type", Salesline."IC PO No.", Salesline."IC PO Line No.");
+                PurchLineOtherCompany."Qty. to Receive" := Salesline."Qty. to Ship";
+                ICSyncMgt.ModifyICPurchaseOrderInOtherCompany(PurchLineOtherCompany, ICpartner."Inbox Details");
+            end;
+        end;
+    end;
+
 
     var
         AdvPriceMgt: Codeunit "Advanced Price Management";
