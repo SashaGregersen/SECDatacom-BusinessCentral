@@ -318,7 +318,7 @@ report 50011 "POS Reporting"
                                                                         //PurchHeader.get(PurchLine."Document No.");                                    
                                                                         //PurchOrderNo := PurchLine."Document No.";
                                                                         //PurchOrderPostDate := PurchHeader."Posting Date";
-                                        PurchOrderNo := 'Purchase Not Invoiced';
+                                        PurchOrderNo := 'Purch. Not Invoiced';
                                         PurchCostPrice := PurchLine."Unit Cost";
                                     end;
                                 end;
