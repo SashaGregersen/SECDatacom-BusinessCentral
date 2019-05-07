@@ -429,6 +429,21 @@ codeunit 50054 "Sales Order Event Handler"
             Rec.Validate("Payment Method Code", AdvPaymentMethodSetup."Payment Method Code");
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post (Yes/No)", 'OnBeforeConfirmSalesPost', '', true, true)]
+    local procedure OnBeforeConfirmSalesPost_PostYesNo(VAR SalesHeader: Record "Sales Header"; VAR HideDialog: Boolean; VAR IsHandled: Boolean; VAR DefaultOption: Integer; VAR PostAndSend: Boolean)
+    var
+        SelectionPage: Page "Sales Posting Options";
+    begin
+        Clear(SelectionPage);
+        SelectionPage.SetRecord(SalesHeader);
+        if SelectionPage.RunModal() = Action::OK then
+            SelectionPage.GetRecord(SalesHeader)
+        else
+            IsHandled := true;
+
+        HideDialog := true;
+    end;
+
     [EventSubscriber(ObjectType::table, database::"Sales Line", 'OnAfterValidateEvent', 'Qty. to Invoice', true, true)]
 
     local procedure OnAfterValidateQtoToInvoiceEvent(var rec: record "Sales Line")
