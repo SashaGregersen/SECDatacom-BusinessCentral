@@ -162,9 +162,6 @@
         <Field Name="YourReference__Lbl">
           <DataField>YourReference__Lbl</DataField>
         </Field>
-        <Field Name="ShipmentMethodCode">
-          <DataField>ShipmentMethodCode</DataField>
-        </Field>
         <Field Name="ShipmentMethodDescription">
           <DataField>ShipmentMethodDescription</DataField>
         </Field>
@@ -722,7 +719,7 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>27.68375cm</Width>
+                  <Width>27.7cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -737,22 +734,22 @@
                               <TablixBody>
                                 <TablixColumns>
                                   <TablixColumn>
-                                    <Width>3.69334cm</Width>
+                                    <Width>3.7368cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>4.54046cm</Width>
+                                    <Width>4.58392cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>3.66464cm</Width>
+                                    <Width>3.7081cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>6.8cm</Width>
+                                    <Width>6.84346cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>3.68518cm</Width>
+                                    <Width>3.72864cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>5.05562cm</Width>
+                                    <Width>5.09908cm</Width>
                                   </TablixColumn>
                                 </TablixColumns>
                                 <TablixRows>
@@ -2623,14 +2620,14 @@
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="DocumentNo_Lbl1">
+                                          <Textbox Name="Textbox716">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>Quote No.</Value>
+                                                    <Value />
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -2640,7 +2637,7 @@
                                                 <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>DocumentNo_Lbl1</rd:DefaultName>
+                                            <rd:DefaultName>Textbox716</rd:DefaultName>
                                             <Style>
                                               <Border>
                                                 <Color>LightGrey</Color>
@@ -2654,14 +2651,14 @@
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="DocumentNo1">
+                                          <Textbox Name="Textbox717">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!DocumentNo.Value</Value>
+                                                    <Value />
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -2673,7 +2670,7 @@
                                                 </Style>
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>DocumentNo1</rd:DefaultName>
+                                            <rd:DefaultName>Textbox717</rd:DefaultName>
                                             <Style>
                                               <Border>
                                                 <Color>LightGrey</Color>
@@ -2816,14 +2813,14 @@
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="DocumentDate_Lbl">
+                                          <Textbox Name="DocumentNo_Lbl1">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!DocumentDate_Lbl.Value</Value>
+                                                    <Value>Quote No.</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -2833,9 +2830,10 @@
                                                 <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>DocumentDate_Lbl</rd:DefaultName>
+                                            <rd:DefaultName>DocumentNo_Lbl1</rd:DefaultName>
                                             <Style>
                                               <Border>
+                                                <Color>LightGrey</Color>
                                                 <Style>None</Style>
                                               </Border>
                                               <PaddingLeft>5pt</PaddingLeft>
@@ -2846,14 +2844,14 @@
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="DocumentDate">
+                                          <Textbox Name="DocumentNo1">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!DocumentDate.Value</Value>
+                                                    <Value>=Fields!DocumentNo.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -2865,9 +2863,10 @@
                                                 </Style>
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>DocumentDate</rd:DefaultName>
+                                            <rd:DefaultName>DocumentNo1</rd:DefaultName>
                                             <Style>
                                               <Border>
+                                                <Color>LightGrey</Color>
                                                 <Style>None</Style>
                                               </Border>
                                               <PaddingLeft>5pt</PaddingLeft>
@@ -3009,14 +3008,14 @@
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="DueDate_Lbl">
+                                          <Textbox Name="DocumentDate_Lbl">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!DueDate_Lbl.Value</Value>
+                                                    <Value>=Fields!DocumentDate_Lbl.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -3026,7 +3025,7 @@
                                                 <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>DueDate_Lbl</rd:DefaultName>
+                                            <rd:DefaultName>DocumentDate_Lbl</rd:DefaultName>
                                             <Style>
                                               <Border>
                                                 <Style>None</Style>
@@ -3039,14 +3038,14 @@
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="DueDate">
+                                          <Textbox Name="DocumentDate">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!DueDate.Value</Value>
+                                                    <Value>=Fields!DocumentDate.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -3058,7 +3057,7 @@
                                                 </Style>
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>DueDate</rd:DefaultName>
+                                            <rd:DefaultName>DocumentDate</rd:DefaultName>
                                             <Style>
                                               <Border>
                                                 <Style>None</Style>
@@ -3200,14 +3199,14 @@
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="Textbox30">
+                                          <Textbox Name="DueDate_Lbl">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value />
+                                                    <Value>=Fields!DueDate_Lbl.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -3217,7 +3216,7 @@
                                                 <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>Textbox30</rd:DefaultName>
+                                            <rd:DefaultName>DueDate_Lbl</rd:DefaultName>
                                             <Style>
                                               <Border>
                                                 <Style>None</Style>
@@ -3230,14 +3229,14 @@
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="Textbox32">
+                                          <Textbox Name="DueDate">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value />
+                                                    <Value>=Fields!DueDate.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -3249,7 +3248,7 @@
                                                 </Style>
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>Textbox32</rd:DefaultName>
+                                            <rd:DefaultName>DueDate</rd:DefaultName>
                                             <Style>
                                               <Border>
                                                 <Style>None</Style>
@@ -3298,14 +3297,14 @@
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="ShipmentMethodCode">
+                                          <Textbox Name="ShipmentMethodDescription1">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!ShipmentMethodCode.Value</Value>
+                                                    <Value>=Fields!ShipmentMethodDescription.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -3317,7 +3316,7 @@
                                                 </Style>
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>ShipmentMethodCode</rd:DefaultName>
+                                            <rd:DefaultName>ShipmentMethodDescription1</rd:DefaultName>
                                             <Style>
                                               <Border>
                                                 <Color>LightGrey</Color>
@@ -3509,10 +3508,8 @@
                                 </TablixMembers>
                               </TablixRowHierarchy>
                               <DataSetName>DataSet_Result</DataSetName>
-                              <Top>0.40942cm</Top>
-                              <Left>0.17395cm</Left>
                               <Height>6.91902cm</Height>
-                              <Width>27.43924cm</Width>
+                              <Width>27.7cm</Width>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -3528,7 +3525,7 @@
                                     <Width>2.2cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>13.26409cm</Width>
+                                    <Width>13.5cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
                                     <Width>2cm</Width>
@@ -4363,6 +4360,7 @@
                                             </Style>
                                           </Textbox>
                                           <ColSpan>6</ColSpan>
+                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell />
@@ -4733,9 +4731,8 @@
                               <RepeatRowHeaders>true</RepeatRowHeaders>
                               <DataSetName>DataSet_Result</DataSetName>
                               <Top>8.04596cm</Top>
-                              <Left>0.1491cm</Left>
                               <Height>2.61286cm</Height>
-                              <Width>27.46409cm</Width>
+                              <Width>27.7cm</Width>
                               <ZIndex>1</ZIndex>
                               <Style>
                                 <Border>
@@ -5464,7 +5461,7 @@
                               <KeepTogether>true</KeepTogether>
                               <DataSetName>DataSet_Result</DataSetName>
                               <Top>10.80847cm</Top>
-                              <Left>20.61319cm</Left>
+                              <Left>20.7cm</Left>
                               <Height>2.946cm</Height>
                               <Width>7cm</Width>
                               <ZIndex>2</ZIndex>
@@ -5478,7 +5475,7 @@
                               <TablixBody>
                                 <TablixColumns>
                                   <TablixColumn>
-                                    <Width>27.41981cm</Width>
+                                    <Width>27.7cm</Width>
                                   </TablixColumn>
                                 </TablixColumns>
                                 <TablixRows>
@@ -5548,9 +5545,8 @@
                               </TablixRowHierarchy>
                               <DataSetName>DataSet_Result</DataSetName>
                               <Top>7.46957cm</Top>
-                              <Left>0.19338cm</Left>
                               <Height>0.4cm</Height>
-                              <Width>27.41981cm</Width>
+                              <Width>27.7cm</Width>
                               <ZIndex>3</ZIndex>
                               <Style>
                                 <Border>
@@ -5594,9 +5590,8 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>DataSet_Result</DataSetName>
-            <Top>0.22049cm</Top>
             <Height>14.24367cm</Height>
-            <Width>27.68375cm</Width>
+            <Width>27.7cm</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -5607,7 +5602,7 @@
         <Height>14.46416cm</Height>
         <Style />
       </Body>
-      <Width>27.68375cm</Width>
+      <Width>27.7cm</Width>
       <Page>
         <PageHeader>
           <Height>2.50354cm</Height>
