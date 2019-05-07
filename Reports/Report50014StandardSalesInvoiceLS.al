@@ -454,7 +454,7 @@ report 50014 "SEC - Sales Invoice LS"
             column(EndCustCity; Endcustomer.City)
             {
             }
-            column(EndCustCountry; Endcustomer."Country/Region Code")
+            column(EndCustCountry; EndcustomerCountryRegion.Name)
             {
             }
             //<<Encustomer columns
