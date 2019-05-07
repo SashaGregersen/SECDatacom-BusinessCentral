@@ -37,7 +37,7 @@ codeunit 50054 "Sales Order Event Handler"
                 SubItem.SetRange("No.", Item."No.");
                 if not SubItem.IsEmpty() then begin
                     If Confirm('Item %1 is blocked from purchase.\Do you wish to select a substitute item?', false, item."No.") then begin
-                        if page.RunModal(page::"Item Substitutions", SubItem) = action::LookupOK then begin //dette fungere ikke med en runmodal
+                        if page.RunModal(page::"Item Substitutions", SubItem) = action::LookupOK then begin
                             rec.Validate("No.", SubItem."Substitute No.");
                         end else
                             Error('There is no substitute items available');
@@ -429,7 +429,7 @@ codeunit 50054 "Sales Order Event Handler"
             Rec.Validate("Payment Method Code", AdvPaymentMethodSetup."Payment Method Code");
     end;
 
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post (Yes/No)", 'OnBeforeConfirmSalesPost', '', true, true)]
+    /* [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post (Yes/No)", 'OnBeforeConfirmSalesPost', '', true, true)]
     local procedure OnBeforeConfirmSalesPost_PostYesNo(VAR SalesHeader: Record "Sales Header"; VAR HideDialog: Boolean; VAR IsHandled: Boolean; VAR DefaultOption: Integer; VAR PostAndSend: Boolean)
     var
         SelectionPage: Page "Sales Posting Options";
@@ -442,7 +442,7 @@ codeunit 50054 "Sales Order Event Handler"
             IsHandled := true;
 
         HideDialog := true;
-    end;
+    end; */
 
     [EventSubscriber(ObjectType::table, database::"Sales Line", 'OnAfterValidateEvent', 'Qty. to Invoice', true, true)]
 
