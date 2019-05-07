@@ -20,7 +20,6 @@ codeunit 50011 "Item Substitution"
                     ReservEntry.SetRange(Quantity, Rec.Quantity);
                     ReservEntry.SetRange("Source Type", 246);
                     ReservEntry.SetRange("Source Subtype", 0);
-                    ReservEntry.SetRange("Source ID", 'INDKØB');
                     ReservEntry.SetRange("Source Ref. No.", Rec."Line No.");
                     if ReservEntry.FindFirst() then begin
                         Item.Get(SubItem."Substitute No.");
