@@ -10,7 +10,6 @@ report 50011 "POS Reporting"
 
     dataset
     {
-
         dataitem(Sales_Invoice_Line; "Sales Invoice Line")
         {
 
@@ -218,8 +217,6 @@ report 50011 "POS Reporting"
                     var
                         ValueEntry: record "Value Entry";
                     begin
-                        //clear(TempItemLedgEntrySales);
-                        //POSReportExport.RetrieveEntriesFromPostedInv(TempItemLedgEntrySales, Sales_Invoice_Line.RowID1());
                         if TempItemLedgEntrySales.Count = 0 then
                             SetRange(Number, 0)
                         else
@@ -290,7 +287,7 @@ report 50011 "POS Reporting"
                 clear(TempItemLedgEntrySales);
                 POSReportExport.RetrieveEntriesFromPostedInv(TempItemLedgEntrySales, Sales_Invoice_Line.RowID1()); //find serial numbers
 
-                if TempItemLedgEntrySales.Count() < 1 then begin // find købsinfo uden serienummer
+                if TempItemLedgEntrySales.Count() < 1 then begin // find purch info for lines w/o serial numbers
                     clear(ItemLedgEntryPurchase);
                     FindShipmentNo();
                     ValueEntry.setrange("Document Type", 2);
@@ -309,7 +306,7 @@ report 50011 "POS Reporting"
                             if PurchRcptLine.get(ItemLedgEntryPurchase."Document No.", ItemLedgEntryPurchase."Document Line No.") then begin
                                 PurchInvLine.setrange("Order No.", PurchRcptLine."Order No.");
                                 PurchInvLine.setrange("Order Line No.", PurchRcptLine."Order Line No.");
-                                if PurchInvLine.FindFirst() then begin
+                                if PurchInvLine.FindFirst() then begin //purchase invoice
                                     PurchOrderNo := PurchInvLine."Document No.";
                                     PurchOrderPostDate := PurchInvLine."Posting Date";
                                     PurchCostPrice := PurchInvLine."Unit Cost";
@@ -367,7 +364,7 @@ report 50011 "POS Reporting"
         if Customer.get("Sales Invoice Header"."End Customer") then
             EndCustomerName := Customer.name;
         if not "Sales Invoice Header"."Drop-Shipment" then begin
-            if Customer.get("Sales Invoice Header".Reseller) then begin
+            if Customer.get("Sales Invoice Header"."End Customer") then begin
                 ResellEndCustName := Customer.name;
                 ResellEndCustName2 := Customer."Name 2";
                 ResellEndCustAddress := Customer.Address;
@@ -379,7 +376,7 @@ report 50011 "POS Reporting"
                 ResellEndCustContact := Customer.Contact;
             end;
         end else begin
-            if Customer.get("Sales Invoice Header"."End Customer") then begin
+            if Customer.get("Sales Invoice Header".Reseller) then begin
                 ResellEndCustName := Customer.name;
                 ResellEndCustName2 := Customer."Name 2";
                 ResellEndCustAddress := Customer.Address;

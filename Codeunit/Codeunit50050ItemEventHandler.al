@@ -251,4 +251,5 @@ codeunit 50050 "Item Event handler"
             exit;
         SyncMasterData.SynchronizeExtendedTextLineToCompany(Rec);
     end;
+
 }
