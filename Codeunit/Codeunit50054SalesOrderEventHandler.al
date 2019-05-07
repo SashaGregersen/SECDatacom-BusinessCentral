@@ -404,7 +404,7 @@ codeunit 50054 "Sales Order Event Handler"
             if salesheader.Subsidiary <> '' then begin
                 LocalSalesLine.SetRange("Document No.", salesheader."No.");
                 LocalSalesLine.SetRange("Document Type", salesheader."Document Type");
-                //LocalSalesLine.SetRange("Line No.", SalesLineToTest."Line No.");
+                LocalSalesLine.SetRange("Line No.", SalesLineToTest."Line No.");
                 if LocalSalesLine.FindSet() then
                     Error('You cannot change an intercompany order');
             end;

@@ -164,7 +164,7 @@ report 50009 "SEC Sales - Shipment"
                     column(SelltoCustNo_SalesShptHeaderCaption; "Sales Shipment Header".FieldCaption("Sell-to Customer No."))
                     {
                     }
-                    column(OrderNoCaption_SalesShptHeader; 'Our Document No.')
+                    column(OrderNoCaption_SalesShptHeader; 'Sales Order No.')
                     {
                     }
                     column(OrderNo_SalesShptHeader; "Sales Shipment Header"."Order No.")
