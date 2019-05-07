@@ -35,16 +35,27 @@ page 50007 "WS Sales Line"
                 {
                     ApplicationArea = All;
                 }
-                field("DAF No."; "Bid No.")
+                field("VendorBidCode"; "VendorBidCode")
                 {
                     ApplicationArea = All;
-                    CaptionML = DAN = 'DAFnr.', ENU = 'DAF No.';
+                    CaptionML = DAN = 'VendorBidCode', ENU = 'VendorBidCode';
+                    trigger OnValidate()
+                    var
+                        Bid: Record Bid;
+                    begin
+                        if VendorBidCode = '' then exit;
+
+                        Bid.SetRange("Vendor Bid No.", VendorBidCode);
+                        Bid.FindFirst();
+                        Validate("Bid No.", Bid."No.");
+                    end;
                 }
             }
         }
     }
     var
         ShipComment: Text;
+        VendorBidCode: Text[100];
 
     trigger OnOpenPage()
     begin
