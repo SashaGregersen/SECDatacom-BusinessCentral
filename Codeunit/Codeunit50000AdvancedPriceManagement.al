@@ -206,6 +206,7 @@ codeunit 50000 "Advanced Price Management"
             Salesprice.SetRange("Item No.", PurchasePrice."Item No.");
             Salesprice.SetRange("Sales Type", Salesprice."Sales Type"::"All Customers");
             Salesprice.SetFilter("Variant Code", '<>LISTPRICE');
+            Salesprice.SetRange("Currency Code", PurchasePrice."Currency Code");
             FindPriceCurrencies(PurchaseLineDiscount."Currency Code", PurchaseLineDiscount."Currency Code" <> '', CurrencyTemp);
             if CurrencyTemp.FindFirst then begin
                 repeat
