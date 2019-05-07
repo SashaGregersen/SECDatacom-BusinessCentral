@@ -27,8 +27,28 @@ codeunit 50056 "Req Worksheet Event Handler"
             ReservationEntrySales.SetRange(Binding, ReservationEntryPurch.Binding::"Order-to-Order");
             if ReservationEntrySales.FindFirst() then begin
                 if Salesline.Get(PurchOrderLine."Document Type", ReservationEntrySales."Source ID", ReservationEntrySales."Source Ref. No.") then begin // source ID er her købsordrenummer
+                                                                                                                                                        //find købspris ud salgslinje
+                                                                                                                                                        /*VendorNo := AdvPriceMgt.GetVendorNoForItem(SalesLine."No.");
+                                                                                                                                                        Item.Get(SalesLine."No.");
+                                                                                                                                                        CurrencyCode := Item."Vendor Currency";
+                                                                                                                                                        Clear(PurchasePrice);
+                                                                                                                                                        if SalesLine."Bid No." <> '' then begin
+                                                                                                                                                            Clear(BidPrice);
+                                                                                                                                                            if not BidMgt.GetBestBidPrice(SalesLine."Bid No.", SalesLine."Sell-to Customer No.", SalesLine."No.", CurrencyCode, BidPrice) then
+                                                                                                                                                                Clear(PurchasePrice)
+                                                                                                                                                            else begin
+                                                                                                                                                                BidMgt.MakePurchasePriceFromBidPrice(BidPrice, PurchasePrice);
+                                                                                                                                                                CurrencyCode := PurchasePrice."Currency Code";
+                                                                                                                                                            end;
+                                                                                                                                                        end else begin
+                                                                                                                                                            Item.Get(SalesLine."No.");
+                                                                                                                                                            CurrencyCode := Item."Vendor Currency";
+                                                                                                                                                            if AdvPriceMgt.FindBestPurchasePrice(SalesLine."No.", VendorNo, CurrencyCode, SalesLine."Variant Code", PurchasePrice) then
+                                                                                                                                                                CurrencyCode := PurchasePrice."Currency Code";
+                                                                                                                                                        end;*/
                     if Salesline."Purch. Price on Purchase Order" <> PurchOrderLine."Direct Unit Cost" then
                         PurchOrderLine.Validate("Direct Unit Cost", Salesline."Purch. Order Line No.");
+                    //find købspris ud salgslinje
                     if PurchOrderLine."Vendor Item No." <> '' then
                         PurchOrderLine.Validate("Vendor-Item-No", PurchOrderLine."Vendor-Item-No");
                     if Salesline."Bid No." <> '' then
