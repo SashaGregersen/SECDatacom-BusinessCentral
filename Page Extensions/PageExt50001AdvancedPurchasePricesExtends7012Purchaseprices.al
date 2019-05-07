@@ -1,5 +1,7 @@
 pageextension 50001 "Advanced Purchase prices" extends "Purchase Prices"
 {
+
+    // denne page extension bør nok fjernes - der er hverken felter eller actions tilbage i den
     layout
     {
         //the new fields may be obsolete - review if they should be deleted
@@ -26,19 +28,19 @@ pageextension 50001 "Advanced Purchase prices" extends "Purchase Prices"
 
     actions
     {
-        addafter(CopyPrices)
-        {
-            action(UpdatePrices)
-            {
-                Caption = 'Update Prices';
-                Image = UpdateUnitCost;
-                trigger OnAction();
-                begin
-                    Message('Under Construction')
-                end;
+        /*         addafter(CopyPrices)
+                {
+                    action(UpdatePrices)
+                    {
+                        Caption = 'Update Prices';
+                        Image = UpdateUnitCost;
+                        trigger OnAction();
+                        begin
+                            Message('Under Construction')
+                        end;
 
-            }
-        }
+                    }
+                } */
     }
 
     var

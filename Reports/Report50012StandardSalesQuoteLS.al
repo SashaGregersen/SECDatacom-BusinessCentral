@@ -160,6 +160,9 @@ report 50012 "SEC Sales - Quote LS"
             column(YourReference__Lbl; FieldCaption("Your Reference"))
             {
             }
+            column(ShipmentMethodCode; ShipmentMethod.Code)
+            {
+            }
             column(ShipmentMethodDescription; ShipmentMethod.Description)
             {
             }

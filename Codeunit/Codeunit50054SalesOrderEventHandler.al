@@ -394,7 +394,7 @@ codeunit 50054 "Sales Order Event Handler"
         END;
     end;
 
-    local procedure TestIfLineCanBeChanged(SalesLineToTest: Record "Sales Line")
+    local procedure TestIfLineCanBeChanged(var SalesLineToTest: Record "Sales Line")
     var
         SalesHeader: record "Sales Header";
         LocalSalesLine: record "Sales Line";
@@ -404,7 +404,7 @@ codeunit 50054 "Sales Order Event Handler"
             if salesheader.Subsidiary <> '' then begin
                 LocalSalesLine.SetRange("Document No.", salesheader."No.");
                 LocalSalesLine.SetRange("Document Type", salesheader."Document Type");
-                LocalSalesLine.SetRange("Line No.", SalesLineToTest."Line No.");
+                //LocalSalesLine.SetRange("Line No.", SalesLineToTest."Line No.");
                 if LocalSalesLine.FindSet() then
                     Error('You cannot change an intercompany order');
             end;
@@ -443,4 +443,32 @@ codeunit 50054 "Sales Order Event Handler"
 
         HideDialog := true;
     end;
+
+    [EventSubscriber(ObjectType::table, database::"Sales Line", 'OnAfterValidateEvent', 'Qty. to Invoice', true, true)]
+
+    local procedure OnAfterValidateQtoToInvoiceEvent(var rec: record "Sales Line")
+    var
+        ICSyncMgt: codeunit "IC Sync Management";
+    begin
+        ICSyncMgt.UpdateQtyToInvoiceInICCompany(rec);
+    end;
+
+    [EventSubscriber(ObjectType::table, database::"Sales Line", 'OnAfterValidateEvent', 'Qty. to Ship', true, true)]
+
+    local procedure OnAfterValidateQtyToShipEvent(var rec: record "Sales Line")
+    var
+        ICSyncMgt: codeunit "IC Sync Management";
+    begin
+        ICSyncMgt.UpdateQtyToShipInICCompany(rec);
+    end;
+
+    [EventSubscriber(ObjectType::table, database::"Sales Line", 'OnAfterInitQtyToInvoice', '', true, true)]
+    local procedure OnAfterInitQtyToInvoice(SalesLine: Record "Sales Line"; CurrFieldNo: Integer)
+    var
+        ICSyncMgt: codeunit "IC Sync Management";
+    begin
+        ICSyncMgt.UpdateQtyToInvoiceInICCompany(SalesLine);
+    end;
+
+
 }

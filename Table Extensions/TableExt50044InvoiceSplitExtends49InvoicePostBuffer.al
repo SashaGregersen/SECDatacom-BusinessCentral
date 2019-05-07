@@ -6,7 +6,7 @@ tableextension 50044 "Invoice Split" extends "Invoice Post. Buffer"
         {
             DataClassification = ToBeClassified;
         }
-        field(50001; Description; Text[50])
+        field(50001; Description; Text[100])
         {
             DataClassification = ToBeClassified;
         }
