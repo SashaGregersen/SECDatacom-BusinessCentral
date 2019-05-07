@@ -46,10 +46,17 @@ codeunit 50050 "Item Event handler"
         InventorySetup: Record "Inventory Setup";
         SyncMasterData: Codeunit "Synchronize Master Data";
         AdvPriceMgt: Codeunit "Advanced Price Management";
+        Glsetup: record "General Ledger Setup";
     begin
         If not runtrigger then
             EXIT;
-        SyncMasterData.DeleteItemInOtherCompany(Rec);
+        if Glsetup.get() then begin
+            if InventorySetup.Get() then begin
+                if not InventorySetup."Synchronize Item" then
+                    error('You must delete items in %1', Glsetup."Master Company");
+            end;
+            SyncMasterData.DeleteItemInOtherCompany(Rec);
+        end;
     end;
 
     [EventSubscriber(ObjectType::table, database::"Item", 'OnAfterValidateEvent', 'Vendor No.', true, true)]
@@ -244,4 +251,5 @@ codeunit 50050 "Item Event handler"
             exit;
         SyncMasterData.SynchronizeExtendedTextLineToCompany(Rec);
     end;
+
 }

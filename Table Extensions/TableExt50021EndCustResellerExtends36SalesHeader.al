@@ -301,6 +301,11 @@ tableextension 50021 "End Customer and Reseller" extends 36
             DataClassification = ToBeClassified;
         }
 
+        field(50020; xShippingAdvice; Option)
+        {
+            OptionMembers = Partial,Complete;
+        }
+
     }
     procedure SetShipToAddressOnSalesOrder(Customer: record customer)
     var

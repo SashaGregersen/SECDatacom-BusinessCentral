@@ -404,7 +404,7 @@ codeunit 50054 "Sales Order Event Handler"
             if salesheader.Subsidiary <> '' then begin
                 LocalSalesLine.SetRange("Document No.", salesheader."No.");
                 LocalSalesLine.SetRange("Document Type", salesheader."Document Type");
-                //LocalSalesLine.SetRange("Line No.", SalesLineToTest."Line No.");
+                LocalSalesLine.SetRange("Line No.", SalesLineToTest."Line No.");
                 if LocalSalesLine.FindSet() then
                     Error('You cannot change an intercompany order');
             end;
@@ -427,6 +427,21 @@ codeunit 50054 "Sales Order Event Handler"
     begin
         if AdvPaymentMethodSetup.Get(Rec."Customer Posting Group", Rec."Currency Code") then
             Rec.Validate("Payment Method Code", AdvPaymentMethodSetup."Payment Method Code");
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post (Yes/No)", 'OnBeforeConfirmSalesPost', '', true, true)]
+    local procedure OnBeforeConfirmSalesPost_PostYesNo(VAR SalesHeader: Record "Sales Header"; VAR HideDialog: Boolean; VAR IsHandled: Boolean; VAR DefaultOption: Integer; VAR PostAndSend: Boolean)
+    var
+        SelectionPage: Page "Sales Posting Options";
+    begin
+        Clear(SelectionPage);
+        SelectionPage.SetRecord(SalesHeader);
+        if SelectionPage.RunModal() = Action::OK then
+            SelectionPage.GetRecord(SalesHeader)
+        else
+            IsHandled := true;
+
+        HideDialog := true;
     end;
 
     [EventSubscriber(ObjectType::table, database::"Sales Line", 'OnAfterValidateEvent', 'Qty. to Invoice', true, true)]
@@ -456,4 +471,56 @@ codeunit 50054 "Sales Order Event Handler"
     end;
 
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", 'OnBeforePostSalesDoc', '', true, true)]
+    local procedure SalesPost_OnBeforePostSalesDoc(var SalesHeader: Record "Sales Header"; CommitIsSuppressed: Boolean; PreviewMode: Boolean)
+    begin
+        SalesHeader.xShippingAdvice := SalesHeader."Shipping Advice";
+        SalesHeader."Shipping Advice" := SalesHeader."Shipping Advice"::Partial;
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", 'OnAfterCheckSalesDoc', '', true, true)]
+    local procedure SalesPost_OnAfterCheckSalesDoc(var SalesHeader: Record "Sales Header"; CommitIsSuppressed: Boolean; WhseShip: Boolean; WhseReceive: Boolean)
+    begin
+        SalesHeader."Shipping Advice" := SalesHeader.xShippingAdvice;
+    end;
+
+    //CheckShippingAdvice - new
+    [EventSubscriber(ObjectType::Table, Database::"Sales Header", 'OnCheckSalesPostRestrictions', '', true, true)]
+    local procedure SalesHeader_OnCheckSalesPostRestrictions(sender: Record "Sales Header")
+    var
+        SalesLine: Record "Sales Line";
+        Item: Record Item;
+        QtyToShipBaseTotal: Decimal;
+        Result: Boolean;
+        Location: Record Location;
+        ShippingAdviceErr: TextConst ENU = 'This document cannot be shipped completely. Change the value in the Shipping Advice field to Partial.',
+                                     DAN = 'Dette dokument kan leveres fuldt ud. Du kan ændre værdien i feltet Afsendelsesadvis til Delvis.';
+    begin
+        if (not sender.Ship) then exit;
+        if (sender.xShippingAdvice <> sender.xShippingAdvice::Complete) then exit;
+
+        if Location.FindSet() then
+            repeat
+                SalesLine.SetRange("Document Type", sender."Document Type");
+                SalesLine.SetRange("Document No.", sender."No.");
+                SalesLine.SetRange("Drop Shipment", false);
+                SalesLine.SetRange(Type, SalesLine.Type::Item);
+                SalesLine.SetRange("Location Code", Location.Code);
+
+                Result := true;
+                if SalesLine.FindSet() then
+                    repeat
+                        Item.Get(SalesLine."No.");
+                        if SalesLine.IsShipment and (Item.Type = Item.Type::Inventory) then begin
+                            QtyToShipBaseTotal += SalesLine."Qty. to Ship (Base)";
+                            if SalesLine."Quantity (Base)" <> SalesLine."Qty. to Ship (Base)" + SalesLine."Qty. Shipped (Base)" then
+                                Result := false;
+                        end;
+                    until SalesLine.Next() = 0;
+                if QtyToShipBaseTotal = 0 then
+                    Result := true;
+                if not Result then
+                    ERROR(ShippingAdviceErr);
+            until Location.Next() = 0;
+    end;
 }

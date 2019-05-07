@@ -3,7 +3,7 @@ report 50009 "SEC Sales - Shipment"
     // version NAVW113.00
 
     DefaultLayout = RDLC;
-    RDLCLayout = './Layouts/Sales - Shipment.rdl';
+    RDLCLayout = './Layouts/Sales - Shipment LS.rdl';
     Caption = 'Sales - Shipment';
     PreviewMode = PrintLayout;
 
@@ -164,7 +164,7 @@ report 50009 "SEC Sales - Shipment"
                     column(SelltoCustNo_SalesShptHeaderCaption; "Sales Shipment Header".FieldCaption("Sell-to Customer No."))
                     {
                     }
-                    column(OrderNoCaption_SalesShptHeader; 'Our Document No.')
+                    column(OrderNoCaption_SalesShptHeader; 'Sales Order No.')
                     {
                     }
                     column(OrderNo_SalesShptHeader; "Sales Shipment Header"."Order No.")

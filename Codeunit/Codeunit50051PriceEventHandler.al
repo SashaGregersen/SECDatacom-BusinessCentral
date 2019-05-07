@@ -26,6 +26,8 @@ codeunit 50051 "Price Event Handler"
         PriceEventHandler: Codeunit "Price Event Handler";
         Item: Record item;
     begin
+        if SalesLine.type <> SalesLine.type::Item then
+            exit;
         Salesheader.get(SalesLine."Document Type", SalesLine."Document No.");
         Item.get(SalesLine."No.");
         if salesheader."Currency Code" <> '' then begin
