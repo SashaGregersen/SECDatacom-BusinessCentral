@@ -1,1 +1,1 @@
-﻿{"Added":[],"Modified":[],"Removed":[]}
+﻿{"Added":[{"Id":50060,"Kind":16,"Name":"WarehousePickSubpage","PackagePath":"/src/Page%20Extensions/PageExt50060WarehousePickSubpage.al"},{"Id":50061,"Kind":16,"Name":"WarehousePutAwaySubpage","PackagePath":"/src/Page%20Extensions/PageExt50061WarehousePutAwaySubpage.al"},{"Id":50047,"Kind":17,"Name":"Warehouse Activity Line Ext","PackagePath":"/src/Table%20Extensions/TableExt50047WarehouseActivityLine.al"}],"Modified":[],"Removed":[]}
