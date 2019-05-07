@@ -262,9 +262,7 @@ report 50011 "POS Reporting"
 
             trigger OnAfterGetRecord()
             var
-                BidItemPrices: record "Bid Item Price";
                 Item: Record item;
-                Bid: record bid;
                 VARID: record "VAR";
                 ItemLedgEntrySales: record "Item Ledger Entry";
                 ItemLedgEntryPurchase: record "Item Ledger Entry";
@@ -292,9 +290,9 @@ report 50011 "POS Reporting"
                 clear(TempItemLedgEntrySales);
                 POSReportExport.RetrieveEntriesFromPostedInv(TempItemLedgEntrySales, Sales_Invoice_Line.RowID1()); //find serial numbers
 
-                if TempItemLedgEntrySales.Count() < 1 then begin
-                    // find købsinfo uden serienummer 
+                if TempItemLedgEntrySales.Count() < 1 then begin // find købsinfo uden serienummer
                     clear(ItemLedgEntryPurchase);
+                    FindShipmentNo();
                     ValueEntry.setrange("Document Type", 2);
                     ValueEntry.setrange("Document No.", Sales_Invoice_Line."Document No.");
                     ValueEntry.setrange("Document Line No.", Sales_Invoice_Line."Line No.");
@@ -307,9 +305,6 @@ report 50011 "POS Reporting"
                         (ItemLedgEntryPurchase."Entry Type" <> ItemLedgEntryPurchase."Entry Type"::Sale) then begin
                             PurchOrderNo := format(ItemLedgEntryPurchase."Entry Type");
                             PurchOrderPostDate := ItemLedgEntryPurchase."Posting Date";
-                            ItemLedgEntryPurchase.CalcFields("Cost Amount (Actual)");
-                            PurchCostPrice := ItemLedgEntryPurchase."Cost Amount (Actual)";
-                            Currency := GlSetup."LCY Code";
                         end else begin
                             if PurchRcptLine.get(ItemLedgEntryPurchase."Document No.", ItemLedgEntryPurchase."Document Line No.") then begin
                                 PurchInvLine.setrange("Order No.", PurchRcptLine."Order No.");
@@ -318,28 +313,27 @@ report 50011 "POS Reporting"
                                     PurchOrderNo := PurchInvLine."Document No.";
                                     PurchOrderPostDate := PurchInvLine."Posting Date";
                                     PurchCostPrice := PurchInvLine."Unit Cost";
+                                end else begin
+                                    PurchLine.SetRange("Document Type", PurchLine."Document Type"::Order);
+                                    PurchLine.SetRange("Document No.", PurchRcptLine."Order No.");
+                                    PurchLine.setrange("Line No.", PurchRcptLine."Order Line No.");
+                                    if PurchLine.FindFirst() then begin //purchase order
+                                                                        //PurchHeader.get(PurchLine."Document No.");                                    
+                                                                        //PurchOrderNo := PurchLine."Document No.";
+                                                                        //PurchOrderPostDate := PurchHeader."Posting Date";
+                                        PurchOrderNo := 'Purchase Not Invoiced';
+                                        PurchCostPrice := PurchLine."Unit Cost";
+                                    end;
                                 end;
-                            end else begin
-                                if PurchLine.get(1, PurchRcptLine."Order No.", PurchRcptLine."Order Line No.") then begin //purchase order
-                                                                                                                          //PurchHeader.get(PurchLine."Document No.");                                    
-                                                                                                                          //PurchOrderNo := PurchLine."Document No.";
-                                                                                                                          //PurchOrderPostDate := PurchHeader."Posting Date";
-                                    PurchCostPrice := PurchLine."Unit Cost";
-                                    ShipmentNo := PurchRcptLine."No.";
-                                end;
-                            end;
-                            if (PurchCostPrice <> 0) and (BidUnitPurchasePrice <> 0) then
-                                CostPercentage := (PurchCostPrice - BidUnitPurchasePrice) / PurchCostPrice; //er der en købskostpris procent når der ikke er bid?
+                                // Find PurchCostPrice on purchase
+                                if (PurchCostPrice <> 0) and (BidUnitPurchasePrice <> 0) then
+                                    CostPercentage := (PurchCostPrice - BidUnitPurchasePrice) / PurchCostPrice; //er der en købskostpris procent når der ikke er bid?
 
+                            end;
                         end;
                     end;
                 end;
-                // Find PurchCostPrice på købslinjen 
-                if (PurchCostPrice <> 0) and (BidUnitPurchasePrice <> 0) then
-                    CostPercentage := (PurchCostPrice - BidUnitPurchasePrice) / PurchCostPrice; //er der en købskostpris procent når der ikke er bid?
-
             end;
-
 
         }
 
@@ -368,7 +362,6 @@ report 50011 "POS Reporting"
     var
         Customer: record Customer;
     begin
-        Clear(Customer);
         if Customer.get("Sales Invoice Header".Reseller) then
             ResellerName := Customer.Name;
         if Customer.get("Sales Invoice Header"."End Customer") then
@@ -490,6 +483,16 @@ report 50011 "POS Reporting"
         // Find PurchCostPrice på købslinjen 
         if (PurchCostPrice <> 0) and (BidUnitPurchasePrice <> 0) then
             CostPercentage := (PurchCostPrice - BidUnitPurchasePrice) / PurchCostPrice; //er der en købskostpris procent når der ikke er bid?
+    end;
+
+    local procedure FindShipmentNo()
+    var
+        SalesShipLine: record "Sales Shipment Line";
+    begin
+        SalesShipLine.setrange("Order No.", Sales_Invoice_Line."Order No.");
+        SalesShipLine.setrange("Order Line No.", Sales_Invoice_Line."Order Line No.");
+        if SalesShipLine.FindFirst() then
+            ShipmentNo := SalesShipLine."Document No.";
     end;
 
     var
