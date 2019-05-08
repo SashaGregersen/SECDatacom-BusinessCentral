@@ -578,7 +578,7 @@
                             <Border>
                               <Style>None</Style>
                             </Border>
-                            <BackgroundColor>White</BackgroundColor>
+                            <BackgroundColor>Turquoise</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -603,11 +603,21 @@
             </TablixColumnHierarchy>
             <TablixRowHierarchy>
               <TablixMembers>
+                <TablixMember />
                 <TablixMember>
-                  <KeepWithGroup>After</KeepWithGroup>
-                </TablixMember>
-                <TablixMember>
-                  <Group Name="Details" />
+                  <Group Name="Document_No_">
+                    <GroupExpressions>
+                      <GroupExpression>=Fields!Document_No_.Value</GroupExpression>
+                    </GroupExpressions>
+                  </Group>
+                  <SortExpressions>
+                    <SortExpression>
+                      <Value>=Fields!Document_No_.Value</Value>
+                    </SortExpression>
+                  </SortExpressions>
+                  <TablixMembers>
+                    <TablixMember />
+                  </TablixMembers>
                 </TablixMember>
               </TablixMembers>
             </TablixRowHierarchy>
@@ -920,7 +930,7 @@
         <Height>6.37646cm</Height>
         <Style />
       </Body>
-      <Width>18.30538cm</Width>
+      <Width>18.28051cm</Width>
       <Page>
         <PageHeight>29.7cm</PageHeight>
         <PageWidth>21cm</PageWidth>
