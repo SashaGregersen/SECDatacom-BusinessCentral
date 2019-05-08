@@ -457,6 +457,12 @@ report 50010 "SEC Purchase Order"
                         column(VATIdentifier_PurchLineCaption; "Purchase Line".FieldCaption("VAT Identifier"))
                         {
                         }
+                        column(BidNo; "Purchase Line"."Bid No.")
+                        {
+                        }
+                        column(Claimable; "Purchase Line".Claimable)
+                        {
+                        }
                         dataitem(DimensionLoop2; "Integer")
                         {
                             DataItemTableView = SORTING (Number) WHERE (Number = FILTER (1 ..));
