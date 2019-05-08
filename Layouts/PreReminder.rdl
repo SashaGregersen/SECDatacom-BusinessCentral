@@ -662,7 +662,7 @@
               <rd:DefaultName>Name</rd:DefaultName>
               <Top>1.10278cm</Top>
               <Height>0.48283cm</Height>
-              <Width>15.06718cm</Width>
+              <Width>15.55666cm</Width>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -693,7 +693,7 @@
               <rd:DefaultName>Contact</rd:DefaultName>
               <Top>1.62089cm</Top>
               <Height>0.48283cm</Height>
-              <Width>15.06718cm</Width>
+              <Width>15.55666cm</Width>
               <ZIndex>1</ZIndex>
               <Style>
                 <Border>
@@ -725,7 +725,7 @@
               <rd:DefaultName>Address</rd:DefaultName>
               <Top>2.139cm</Top>
               <Height>0.48283cm</Height>
-              <Width>15.06718cm</Width>
+              <Width>15.55666cm</Width>
               <ZIndex>2</ZIndex>
               <Style>
                 <Border>
@@ -757,7 +757,7 @@
               <rd:DefaultName>Address_2</rd:DefaultName>
               <Top>2.6571cm</Top>
               <Height>0.48283cm</Height>
-              <Width>15.06718cm</Width>
+              <Width>15.55666cm</Width>
               <ZIndex>3</ZIndex>
               <Style>
                 <Border>
@@ -789,7 +789,7 @@
               <rd:DefaultName>Post_Code</rd:DefaultName>
               <Top>3.13993cm</Top>
               <Height>0.48283cm</Height>
-              <Width>15.06718cm</Width>
+              <Width>15.55666cm</Width>
               <ZIndex>4</ZIndex>
               <Style>
                 <Border>
@@ -821,7 +821,7 @@
               <rd:DefaultName>City</rd:DefaultName>
               <Top>3.62276cm</Top>
               <Height>0.48283cm</Height>
-              <Width>15.06718cm</Width>
+              <Width>15.55666cm</Width>
               <ZIndex>5</ZIndex>
               <Style>
                 <Border>
@@ -853,7 +853,7 @@
               <rd:DefaultName>County</rd:DefaultName>
               <Top>4.10559cm</Top>
               <Height>0.48283cm</Height>
-              <Width>15.06718cm</Width>
+              <Width>15.55666cm</Width>
               <ZIndex>6</ZIndex>
               <Style>
                 <Border>
@@ -990,7 +990,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>Date</Value>
+                      <Value>Date:</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -1004,9 +1004,9 @@
               </Paragraphs>
               <rd:DefaultName>Textbox6</rd:DefaultName>
               <Top>1.10278cm</Top>
-              <Left>15.24356cm</Left>
+              <Left>15.73304cm</Left>
               <Height>0.46771cm</Height>
-              <Width>1.40733cm</Width>
+              <Width>0.91786cm</Width>
               <ZIndex>10</ZIndex>
               <Style>
                 <Border>
@@ -1025,7 +1025,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>Page</Value>
+                      <Value>Page:</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -1039,9 +1039,9 @@
               </Paragraphs>
               <rd:DefaultName>Textbox6</rd:DefaultName>
               <Top>1.67632cm</Top>
-              <Left>15.24357cm</Left>
+              <Left>15.73304cm</Left>
               <Height>0.46771cm</Height>
-              <Width>1.40733cm</Width>
+              <Width>0.91786cm</Width>
               <ZIndex>11</ZIndex>
               <Style>
                 <Border>
@@ -1060,7 +1060,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>This is a text field where there could be some informative text on the content of this document etc. The quick brown fox jumps over the lazy dog.</Value>
+                      <Value>This is a text field where there could be some informative text on the content of this document etc. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog.</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -1074,7 +1074,7 @@
               <Top>4.8712cm</Top>
               <Left>0cm</Left>
               <Height>0.91498cm</Height>
-              <Width>17.42281cm</Width>
+              <Width>18.30916cm</Width>
               <ZIndex>12</ZIndex>
               <Style>
                 <Border>
