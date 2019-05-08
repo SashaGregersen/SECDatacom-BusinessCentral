@@ -12,6 +12,8 @@ report 50011 "POS Reporting"
     {
         dataitem("Sales Cr.Memo Line"; "Sales Cr.Memo Line")
         {
+            DataItemTableView = sorting ("Document No.");
+
             column(VAR_id2; VARIDInt)
             {
 
@@ -97,6 +99,7 @@ report 50011 "POS Reporting"
             dataitem("Sales Cr.Memo Header"; "Sales Cr.Memo Header")
             {
                 DataItemLink = "No." = field ("Document No.");
+
                 column(Document_No2; "No.")
                 {
 
@@ -206,7 +209,7 @@ report 50011 "POS Reporting"
 
                 }
                 dataitem(Copyloop2; Integer)
-                {
+                {                    
 
                     column(SerialNo2; SerialNo)
                     {
@@ -232,7 +235,7 @@ report 50011 "POS Reporting"
                         PurchInvHeader: record "Purch. Inv. Header";
                         PostedSalesShipment: Record "Sales Shipment Header";
                     begin
-                        SetEndCustReseller();
+                        SetEndCustResellerCreditMemo();
                         if Number = 0 then begin
                             qty := "Sales Cr.Memo Line".Quantity;
                             CurrReport.skip;
@@ -268,7 +271,7 @@ report 50011 "POS Reporting"
                     ClearValues();
                     if "Sales Cr.Memo Line".Type <> "Sales Cr.Memo Line".type::Item then
                         CurrReport.skip;
-                    item.get("No.");
+                    item.get("Sales Cr.Memo Line"."No.");
                     VendorItemNo := item."Vendor Item No.";
                     VARID.SetRange("Customer No.", "Sales Cr.Memo Header".Reseller);
                     VARID.SetRange("Vendor No.", item."Vendor No.");
@@ -541,7 +544,7 @@ report 50011 "POS Reporting"
                         PurchInvHeader: record "Purch. Inv. Header";
                         PostedSalesShipment: Record "Sales Shipment Header";
                     begin
-                        SetEndCustReseller();
+                        SetEndCustResellerSalesInv();
                         if Number = 0 then begin
                             qty := Sales_Invoice_Line.Quantity;
                             CurrReport.skip;
@@ -584,7 +587,7 @@ report 50011 "POS Reporting"
                 ClearValues();
                 if Sales_Invoice_Line.Type <> Sales_Invoice_Line.type::Item then
                     CurrReport.skip;
-                item.get("No.");
+                item.get(Sales_Invoice_Line."No.");
                 VendorItemNo := item."Vendor Item No.";
                 VARID.SetRange("Customer No.", "Sales Invoice Header".Reseller);
                 VARID.SetRange("Vendor No.", item."Vendor No.");
@@ -655,7 +658,7 @@ report 50011 "POS Reporting"
         {
             area(Content)
             {
-                group("POS Report")
+                group("Dimensions")
                 {
                     field(VendorCode; VendorCode)
                     {
@@ -667,7 +670,7 @@ report 50011 "POS Reporting"
         }
     }
 
-    procedure SetEndCustReseller()
+    procedure SetEndCustResellerSalesInv()
     var
         Customer: record Customer;
     begin
@@ -704,11 +707,49 @@ report 50011 "POS Reporting"
         end;
     end;
 
+    procedure SetEndCustResellerCreditMemo()
+    var
+        Customer: record Customer;
+    begin
+        if Customer.get("Sales Cr.Memo Header".Reseller) then
+            ResellerName := Customer.Name;
+        if Customer.get("Sales Cr.Memo Header"."End Customer") then
+            EndCustomerName := Customer.name;
+        if not "Sales Cr.Memo Header"."Drop-Shipment" then begin
+            if Customer.get("Sales Cr.Memo Header"."End Customer") then begin
+                ResellEndCustName := Customer.name;
+                ResellEndCustName2 := Customer."Name 2";
+                ResellEndCustAddress := Customer.Address;
+                ResellEndCustAddress2 := Customer."Address 2";
+                ResellEndCustCity := Customer.City;
+                ResellEndCustPostCode := Customer."Post Code";
+                ResellEndCustCounty := Customer.County;
+                ResellEndCustCountryRegion := Customer."Country/Region Code";
+                ResellEndCustContact := Customer.Contact;
+            end;
+        end else begin
+            if Customer.get("Sales Cr.Memo Header".Reseller) then begin
+                ResellEndCustName := Customer.name;
+                ResellEndCustName2 := Customer."Name 2";
+                ResellEndCustAddress := Customer.Address;
+                ResellEndCustAddress2 := Customer."Address 2";
+                ResellEndCustCity := Customer.City;
+                ResellEndCustPostCode := Customer."Post Code";
+                ResellEndCustCounty := Customer.County;
+                ResellEndCustCountryRegion := Customer."Country/Region Code";
+                ResellEndCustContact := Customer.Contact;
+                ResellEndCustPhone := Customer."Phone No.";
+                ResellEndCustEmail := Customer."E-Mail";
+            end;
+        end;
+    end;
+
     local procedure SetVendorFilter()
     var
 
     begin
         Sales_Invoice_Line.SetFilter("Shortcut Dimension 1 Code", VendorCode);
+        "Sales Cr.Memo Line".SetFilter("Shortcut Dimension 1 Code", VendorCode);
     end;
 
     local procedure SetPricesSalesInv(Item: record Item)

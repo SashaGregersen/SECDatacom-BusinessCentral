@@ -12096,6 +12096,12 @@ End Function</Code>
         <Field Name="VATIdentifier_PurchLineCaption">
           <DataField>VATIdentifier_PurchLineCaption</DataField>
         </Field>
+        <Field Name="BidNo">
+          <DataField>BidNo</DataField>
+        </Field>
+        <Field Name="Claimable">
+          <DataField>Claimable</DataField>
+        </Field>
         <Field Name="LineDimCaption">
           <DataField>LineDimCaption</DataField>
         </Field>
