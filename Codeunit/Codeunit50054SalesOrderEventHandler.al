@@ -444,7 +444,7 @@ codeunit 50054 "Sales Order Event Handler"
         HideDialog := true;
     end; */
 
-    [EventSubscriber(ObjectType::table, database::"Sales Line", 'OnAfterValidateEvent', 'Qty. to Invoice', true, true)]
+    /* [EventSubscriber(ObjectType::table, database::"Sales Line", 'OnAfterValidateEvent', 'Qty. to Invoice', true, true)]
 
     local procedure OnAfterValidateQtoToInvoiceEvent(var rec: record "Sales Line")
     var
@@ -468,7 +468,7 @@ codeunit 50054 "Sales Order Event Handler"
         ICSyncMgt: codeunit "IC Sync Management";
     begin
         ICSyncMgt.UpdateQtyToInvoiceInICCompany(SalesLine);
-    end;
+    end; */
 
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", 'OnBeforePostSalesDoc', '', true, true)]

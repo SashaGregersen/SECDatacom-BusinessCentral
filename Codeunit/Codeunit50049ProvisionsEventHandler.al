@@ -41,16 +41,19 @@ codeunit 50049 "Provisions Event Handler"
                     GenJnlLine.validate("Document No.", PostedInv."No.");
                     GenJnlLine.Validate("Posting Date", PostedInv."Posting Date");
                     GenJnlLine.Modify(false);
+                    PostProvisionLine.run(GenJnlLine);
+                    GenJnlLine.Delete(true);
                 end;
                 if SalesCrMemoHdrNo <> '' then begin
                     PostedCreditMemo.get(SalesCrMemoHdrNo);
                     GenJnlLine.validate("Document No.", PostedCreditMemo."No.");
                     GenJnlLine.Validate("Posting Date", PostedCreditMemo."Posting Date");
                     GenJnlLine.Modify(false);
+                    PostProvisionLine.run(GenJnlLine);
+                    GenJnlLine.Delete(true);
                 end;
-                PostProvisionLine.run(GenJnlLine);
-                GenJnlLine.Delete(true);
             until GenJnlLine.next = 0;
+
     end;
 
 

@@ -50,13 +50,9 @@ codeunit 50050 "Item Event handler"
     begin
         If not runtrigger then
             EXIT;
-        if Glsetup.get() then begin
-            if InventorySetup.Get() then begin
-                if not InventorySetup."Synchronize Item" then
-                    error('You must delete items in %1', Glsetup."Master Company");
-            end;
-            SyncMasterData.DeleteItemInOtherCompany(Rec);
-        end;
+
+        SyncMasterData.DeleteItemInOtherCompany(Rec);
+
     end;
 
     [EventSubscriber(ObjectType::table, database::"Item", 'OnAfterValidateEvent', 'Vendor No.', true, true)]

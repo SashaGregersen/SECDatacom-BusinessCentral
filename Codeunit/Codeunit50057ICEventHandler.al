@@ -168,6 +168,7 @@ codeunit 50057 "IC Event Handler"
             repeat
                 if POLineInOtherCompany.Get(POLineInOtherCompany."Document Type"::Order, SalesShptLine."IC PO No.", SalesShptLine."IC PO Line No.") then begin
                     POLineInOtherCompany."Qty. to Receive" := SalesShptLine.Quantity;
+                    POLineInOtherCompany."Qty. to Invoice" := 0;
                     POLineInOtherCompany.Modify(false);
                 end;
             until SalesShptLine.Next() = 0;
@@ -217,6 +218,7 @@ codeunit 50057 "IC Event Handler"
             repeat
                 if SOLineInOtherCompany.Get(SOLineInOtherCompany."Document Type"::Order, SalesShptLine."IC SO No.", SalesShptLine."IC SO Line No.") then begin
                     SOLineInOtherCompany."Qty. to Ship" := SalesShptLine.Quantity;
+                    SOLineInOtherCompany."Qty. to Invoice" := 0;
                     SOLineInOtherCompany.Modify(false);
                 end;
             until SalesShptLine.Next() = 0;

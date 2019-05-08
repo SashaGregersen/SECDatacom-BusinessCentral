@@ -76,7 +76,7 @@ codeunit 50005 "IC Sync Management"
             repeat
                 InventorySetup.ChangeCompany(CompanyRec.Name);
                 if InventorySetup.Get() then begin
-                    if InventorySetup."Receive Synchronized Items" then begin
+                    if InventorySetup."Receive Synchronized Items" and InventorySetup."Synchronize Item" then begin
                         CompanyTemp := CompanyRec;
                         if not CompanyTemp.Insert(false) then;
                     end;
@@ -308,7 +308,7 @@ codeunit 50005 "IC Sync Management"
         end;
     end;
 
-    procedure ModifyICSalesOrderInOtherCompany(var rec: record "Sales Line"; ICCompany: text[250])
+    /* procedure ModifyICSalesOrderInOtherCompany(var rec: record "Sales Line"; ICCompany: text[250])
 
     var
         CompanyTemp: Record Company temporary;
@@ -328,7 +328,7 @@ codeunit 50005 "IC Sync Management"
     begin
         SessionID := RunModifyICPurchaseOrderInOtherCompany(rec, ICCompany);
         CheckSessionForTimeoutAndError(SessionID, 5, ICCompany);
-    end;
+    end; */
 
     procedure PostPurchaseOrderInOtherCompany(PurchaseOrder: Record "Purchase Header"; PostInCompanyName: Text[35])
 
@@ -488,7 +488,7 @@ codeunit 50005 "IC Sync Management"
         Commit();
     end;
 
-    local procedure RunModifyICSalesOrderInOtherCompany(SalesLine: record "Sales Line"; RunInCompany: Text) SessionID: Integer
+    /* local procedure RunModifyICSalesOrderInOtherCompany(SalesLine: record "Sales Line"; RunInCompany: Text) SessionID: Integer
     var
         OK: Boolean;
         SessionEventComment: Text;
@@ -508,7 +508,7 @@ codeunit 50005 "IC Sync Management"
         if not OK then
             Error(GetLastErrorText());
         Commit();
-    end;
+    end; */
 
     local procedure RunPostPurchaseOrderInOtherCompany(Purchaseorder: Record "Purchase Header"; RunInCompany: Text) SessionID: Integer
     var
@@ -590,7 +590,7 @@ codeunit 50005 "IC Sync Management"
             exit('');
     END;
 
-    procedure UpdateQtyToInvoiceInICCompany(var SalesLine: Record "Sales Line")
+    /* procedure UpdateQtyToInvoiceInICCompany(var SalesLine: Record "Sales Line")
     var
         ICpartner: record "IC Partner";
         SalesHeader: record "Sales Header";
@@ -638,7 +638,7 @@ codeunit 50005 "IC Sync Management"
                 ICSyncMgt.ModifyICPurchaseOrderInOtherCompany(PurchLineOtherCompany, ICpartner."Inbox Details");
             end;
         end;
-    end;
+    end; */
 
 
     var

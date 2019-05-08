@@ -3775,6 +3775,168 @@ End Function
   <DataSets>
     <DataSet Name="DataSet_Result">
       <Fields>
+        <Field Name="VAR_id2">
+          <DataField>VAR_id2</DataField>
+        </Field>
+        <Field Name="Shipment_No2">
+          <DataField>Shipment_No2</DataField>
+        </Field>
+        <Field Name="Shipment_Date2">
+          <DataField>Shipment_Date2</DataField>
+        </Field>
+        <Field Name="IC_Partner_Code2">
+          <DataField>IC_Partner_Code2</DataField>
+        </Field>
+        <Field Name="Vendor_Code2">
+          <DataField>Vendor_Code2</DataField>
+        </Field>
+        <Field Name="Posting_Date2">
+          <DataField>Posting_Date2</DataField>
+        </Field>
+        <Field Name="Item_No2">
+          <DataField>Item_No2</DataField>
+        </Field>
+        <Field Name="Vendor_Item_No_2">
+          <DataField>Vendor_Item_No_2</DataField>
+        </Field>
+        <Field Name="Description2">
+          <DataField>Description2</DataField>
+        </Field>
+        <Field Name="Bid_No_2">
+          <DataField>Bid_No_2</DataField>
+        </Field>
+        <Field Name="Unit_List_Price2">
+          <DataField>Unit_List_Price2</DataField>
+        </Field>
+        <Field Name="Unit_List_Price2Format">
+          <DataField>Unit_List_Price2Format</DataField>
+        </Field>
+        <Field Name="Bid_Purchase_Discount_Pct_2">
+          <DataField>Bid_Purchase_Discount_Pct_2</DataField>
+        </Field>
+        <Field Name="Bid_Purchase_Discount_Pct_2Format">
+          <DataField>Bid_Purchase_Discount_Pct_2Format</DataField>
+        </Field>
+        <Field Name="Bid_Unit_Purchase_Price2">
+          <DataField>Bid_Unit_Purchase_Price2</DataField>
+        </Field>
+        <Field Name="Bid_Unit_Purchase_Price2Format">
+          <DataField>Bid_Unit_Purchase_Price2Format</DataField>
+        </Field>
+        <Field Name="Currency2">
+          <DataField>Currency2</DataField>
+        </Field>
+        <Field Name="PurchCostPrice2">
+          <DataField>PurchCostPrice2</DataField>
+        </Field>
+        <Field Name="PurchCostPrice2Format">
+          <DataField>PurchCostPrice2Format</DataField>
+        </Field>
+        <Field Name="Cost_Percentage2">
+          <DataField>Cost_Percentage2</DataField>
+        </Field>
+        <Field Name="Cost_Percentage2Format">
+          <DataField>Cost_Percentage2Format</DataField>
+        </Field>
+        <Field Name="Quantity2">
+          <DataField>Quantity2</DataField>
+        </Field>
+        <Field Name="Quantity2Format">
+          <DataField>Quantity2Format</DataField>
+        </Field>
+        <Field Name="Return_Shipment_No">
+          <DataField>Return_Shipment_No</DataField>
+        </Field>
+        <Field Name="Return_Shipment_Posting_Date">
+          <DataField>Return_Shipment_Posting_Date</DataField>
+        </Field>
+        <Field Name="Vendor_Authorization_No">
+          <DataField>Vendor_Authorization_No</DataField>
+        </Field>
+        <Field Name="Document_No2">
+          <DataField>Document_No2</DataField>
+        </Field>
+        <Field Name="External_Document_No2">
+          <DataField>External_Document_No2</DataField>
+        </Field>
+        <Field Name="Return_Order_No_">
+          <DataField>Return_Order_No_</DataField>
+        </Field>
+        <Field Name="Reseller2">
+          <DataField>Reseller2</DataField>
+        </Field>
+        <Field Name="End_Customer2">
+          <DataField>End_Customer2</DataField>
+        </Field>
+        <Field Name="Ship_to_Name2">
+          <DataField>Ship_to_Name2</DataField>
+        </Field>
+        <Field Name="Ship_to_Name_2_2">
+          <DataField>Ship_to_Name_2_2</DataField>
+        </Field>
+        <Field Name="Ship_to_Address2">
+          <DataField>Ship_to_Address2</DataField>
+        </Field>
+        <Field Name="Ship_to_Address_2_2">
+          <DataField>Ship_to_Address_2_2</DataField>
+        </Field>
+        <Field Name="Ship_to_City2">
+          <DataField>Ship_to_City2</DataField>
+        </Field>
+        <Field Name="Ship_to_Post_Code2">
+          <DataField>Ship_to_Post_Code2</DataField>
+        </Field>
+        <Field Name="Ship_to_Country_Region_Code2">
+          <DataField>Ship_to_Country_Region_Code2</DataField>
+        </Field>
+        <Field Name="Ship_to_County2">
+          <DataField>Ship_to_County2</DataField>
+        </Field>
+        <Field Name="Ship_to_Contact2">
+          <DataField>Ship_to_Contact2</DataField>
+        </Field>
+        <Field Name="Ship_to_Phone2">
+          <DataField>Ship_to_Phone2</DataField>
+        </Field>
+        <Field Name="Ship_to_Email2">
+          <DataField>Ship_to_Email2</DataField>
+        </Field>
+        <Field Name="ResellEndCustName1">
+          <DataField>ResellEndCustName1</DataField>
+        </Field>
+        <Field Name="ResellEndCustName2_2">
+          <DataField>ResellEndCustName2_2</DataField>
+        </Field>
+        <Field Name="ResellEndCustAddress1">
+          <DataField>ResellEndCustAddress1</DataField>
+        </Field>
+        <Field Name="ResellEndCustAddress2_2">
+          <DataField>ResellEndCustAddress2_2</DataField>
+        </Field>
+        <Field Name="ResellEndCustCity2">
+          <DataField>ResellEndCustCity2</DataField>
+        </Field>
+        <Field Name="ResellEndCustPostCode2">
+          <DataField>ResellEndCustPostCode2</DataField>
+        </Field>
+        <Field Name="ResellEndCustCountryRegion2">
+          <DataField>ResellEndCustCountryRegion2</DataField>
+        </Field>
+        <Field Name="ResellEndCustCounty2">
+          <DataField>ResellEndCustCounty2</DataField>
+        </Field>
+        <Field Name="ResellEndCustContact2">
+          <DataField>ResellEndCustContact2</DataField>
+        </Field>
+        <Field Name="ResellEndCustContactEmail2">
+          <DataField>ResellEndCustContactEmail2</DataField>
+        </Field>
+        <Field Name="ResellEndCustContactPhone2">
+          <DataField>ResellEndCustContactPhone2</DataField>
+        </Field>
+        <Field Name="SerialNo2">
+          <DataField>SerialNo2</DataField>
+        </Field>
         <Field Name="VAR_id">
           <DataField>VAR_id</DataField>
         </Field>
@@ -3849,6 +4011,9 @@ End Function
         </Field>
         <Field Name="Purch_Order_Posting_Date">
           <DataField>Purch_Order_Posting_Date</DataField>
+        </Field>
+        <Field Name="Vendor_Invoice_No">
+          <DataField>Vendor_Invoice_No</DataField>
         </Field>
         <Field Name="Document_No">
           <DataField>Document_No</DataField>

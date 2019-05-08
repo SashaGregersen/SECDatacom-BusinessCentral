@@ -7,45 +7,20 @@ page 50013 "General Journal Provisions"
     AutoSplitKey = true;
     PopulateAllFields = true;
 
+
     layout
     {
         area(Content)
         {
             repeater(Group)
             {
-                field("Account Type"; "Account Type")
-                {
-                    ApplicationArea = All;
-                }
-                field("Account No."; "Account No.")
-                {
-                    ApplicationArea = All;
 
-                }
-                field(Description; Description)
-                {
-                    ApplicationArea = All;
-
-                }
                 field("Debit Amount"; "Debit Amount")
                 {
                     ApplicationArea = All;
 
                 }
                 field("Credit Amount"; "Credit Amount")
-                {
-                    ApplicationArea = All;
-
-                }
-                field("Bal. Account Type"; "Bal. Account Type")
-                {
-                    ApplicationArea = All;
-                }
-                field("Bal. Account No."; "Bal. Account No.")
-                {
-                    ApplicationArea = All;
-                }
-                field("Posting Date"; "Posting Date")
                 {
                     ApplicationArea = All;
 
@@ -90,8 +65,8 @@ page 50013 "General Journal Provisions"
     var
     begin
         SRSetup.Get;
-        setrange("Account No.", SRSetup."Provision GL Account");
-        setrange("Bal. Account No.", SRSetup."Provision Balance Account No.");
+        setrange("Journal Template Name", SRSetup."Provision Journal Template");
+        setrange("Journal Batch Name", SRSetup."Provision Journal Batch");
     end;
 
     trigger OnNewRecord(BelowRec: Boolean)
