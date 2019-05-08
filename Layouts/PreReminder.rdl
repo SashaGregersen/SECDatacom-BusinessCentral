@@ -11,6 +11,79 @@
       <rd:DataSourceID>23a3593f-b9c9-4c66-a640-50ed52565acf</rd:DataSourceID>
     </DataSource>
   </DataSources>
+  <DataSets>
+    <DataSet Name="DataSet_Result">
+      <Query>
+        <DataSourceName>DataSource</DataSourceName>
+        <CommandText />
+      </Query>
+      <Fields>
+        <Field Name="Name">
+          <DataField>Name</DataField>
+        </Field>
+        <Field Name="Contact">
+          <DataField>Contact</DataField>
+        </Field>
+        <Field Name="Address">
+          <DataField>Address</DataField>
+        </Field>
+        <Field Name="Address_2">
+          <DataField>Address_2</DataField>
+        </Field>
+        <Field Name="Post_Code">
+          <DataField>Post_Code</DataField>
+        </Field>
+        <Field Name="City">
+          <DataField>City</DataField>
+        </Field>
+        <Field Name="County">
+          <DataField>County</DataField>
+        </Field>
+        <Field Name="Document_No_">
+          <DataField>Document_No_</DataField>
+        </Field>
+        <Field Name="Document_Date">
+          <DataField>Document_Date</DataField>
+        </Field>
+        <Field Name="Due_Date">
+          <DataField>Due_Date</DataField>
+        </Field>
+        <Field Name="Original_Amount">
+          <DataField>Original_Amount</DataField>
+        </Field>
+        <Field Name="Original_AmountFormat">
+          <DataField>Original_AmountFormat</DataField>
+        </Field>
+        <Field Name="Currency_Code">
+          <DataField>Currency_Code</DataField>
+        </Field>
+        <Field Name="Remaining_Amount">
+          <DataField>Remaining_Amount</DataField>
+        </Field>
+        <Field Name="Remaining_AmountFormat">
+          <DataField>Remaining_AmountFormat</DataField>
+        </Field>
+        <Field Name="Document_No_Cap">
+          <DataField>Document_No_Cap</DataField>
+        </Field>
+        <Field Name="Document_Date_Cap">
+          <DataField>Document_Date_Cap</DataField>
+        </Field>
+        <Field Name="Due_Date_Cap">
+          <DataField>Due_Date_Cap</DataField>
+        </Field>
+        <Field Name="Original_Amount_Cap">
+          <DataField>Original_Amount_Cap</DataField>
+        </Field>
+        <Field Name="Currency_Code_Cap">
+          <DataField>Currency_Code_Cap</DataField>
+        </Field>
+        <Field Name="Remaining_Amount_Cap">
+          <DataField>Remaining_Amount_Cap</DataField>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
   <ReportSections>
     <ReportSection>
       <Body>
@@ -565,7 +638,7 @@
       <Width>18.4676cm</Width>
       <Page>
         <PageHeader>
-          <Height>3.5681cm</Height>
+          <Height>6.28007cm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -587,6 +660,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Name</rd:DefaultName>
+              <Top>1.10278cm</Top>
               <Height>0.48283cm</Height>
               <Width>14.07583cm</Width>
               <Style>
@@ -617,7 +691,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Contact</rd:DefaultName>
-              <Top>0.51811cm</Top>
+              <Top>1.62089cm</Top>
               <Height>0.48283cm</Height>
               <Width>14.07583cm</Width>
               <ZIndex>1</ZIndex>
@@ -649,7 +723,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Address</rd:DefaultName>
-              <Top>1.03621cm</Top>
+              <Top>2.139cm</Top>
               <Height>0.48283cm</Height>
               <Width>14.07583cm</Width>
               <ZIndex>2</ZIndex>
@@ -681,13 +755,10 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Address_2</rd:DefaultName>
-              <Top>1.55432cm</Top>
+              <Top>2.6571cm</Top>
               <Height>0.48283cm</Height>
               <Width>14.07583cm</Width>
               <ZIndex>3</ZIndex>
-              <Visibility>
-                <Hidden>true</Hidden>
-              </Visibility>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -716,7 +787,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Post_Code</rd:DefaultName>
-              <Top>2.03715cm</Top>
+              <Top>3.13993cm</Top>
               <Height>0.48283cm</Height>
               <Width>14.07583cm</Width>
               <ZIndex>4</ZIndex>
@@ -748,7 +819,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>City</rd:DefaultName>
-              <Top>2.51998cm</Top>
+              <Top>3.62276cm</Top>
               <Height>0.48283cm</Height>
               <Width>14.07583cm</Width>
               <ZIndex>5</ZIndex>
@@ -780,7 +851,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>County</rd:DefaultName>
-              <Top>3.00281cm</Top>
+              <Top>4.10559cm</Top>
               <Height>0.48283cm</Height>
               <Width>14.07583cm</Width>
               <ZIndex>6</ZIndex>
@@ -815,9 +886,8 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox23</rd:DefaultName>
-              <Left>14.29949cm</Left>
               <Height>0.97042cm</Height>
-              <Width>4.13067cm</Width>
+              <Width>18.43016cm</Width>
               <ZIndex>7</ZIndex>
               <Style>
                 <Border>
@@ -849,10 +919,10 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox6</rd:DefaultName>
-              <Top>1.29328cm</Top>
-              <Left>14.45259cm</Left>
+              <Top>1.10278cm</Top>
+              <Left>15.99473cm</Left>
               <Height>0.46771cm</Height>
-              <Width>3.97757cm</Width>
+              <Width>2.43543cm</Width>
               <ZIndex>8</ZIndex>
               <Style>
                 <Border>
@@ -898,11 +968,114 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox31</rd:DefaultName>
-              <Top>1.86682cm</Top>
-              <Left>14.45259cm</Left>
+              <Top>1.67632cm</Top>
+              <Left>15.99473cm</Left>
               <Height>0.46771cm</Height>
-              <Width>3.97757cm</Width>
+              <Width>2.43543cm</Width>
               <ZIndex>9</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox8">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>Date</Value>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox6</rd:DefaultName>
+              <Top>1.10278cm</Top>
+              <Left>14.16406cm</Left>
+              <Height>0.46771cm</Height>
+              <Width>1.72483cm</Width>
+              <ZIndex>10</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox10">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>Page</Value>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox6</rd:DefaultName>
+              <Top>1.67632cm</Top>
+              <Left>14.16407cm</Left>
+              <Height>0.46771cm</Height>
+              <Width>1.72483cm</Width>
+              <ZIndex>11</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="County2">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>This is a text field where there could be some informative text on the content of this document etc. The quick brown fox jumps over the lazy dog.</Value>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>County</rd:DefaultName>
+              <Top>5.1887cm</Top>
+              <Left>0cm</Left>
+              <Height>0.91498cm</Height>
+              <Width>17.42281cm</Width>
+              <ZIndex>12</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -931,6 +1104,12 @@
       </Page>
     </ReportSection>
   </ReportSections>
+  <ReportParametersLayout>
+    <GridLayoutDefinition>
+      <NumberOfColumns>4</NumberOfColumns>
+      <NumberOfRows>2</NumberOfRows>
+    </GridLayoutDefinition>
+  </ReportParametersLayout>
   <Code>Public Function BlankZero(ByVal Value As Decimal)
     if Value = 0 then
         Return ""
@@ -970,77 +1149,4 @@ End Function
   <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
   <rd:ReportID>0eeb6585-38ae-40f1-885b-8d50088d51b4</rd:ReportID>
-  <DataSets>
-    <DataSet Name="DataSet_Result">
-      <Fields>
-        <Field Name="Name">
-          <DataField>Name</DataField>
-        </Field>
-        <Field Name="Contact">
-          <DataField>Contact</DataField>
-        </Field>
-        <Field Name="Address">
-          <DataField>Address</DataField>
-        </Field>
-        <Field Name="Address_2">
-          <DataField>Address_2</DataField>
-        </Field>
-        <Field Name="Post_Code">
-          <DataField>Post_Code</DataField>
-        </Field>
-        <Field Name="City">
-          <DataField>City</DataField>
-        </Field>
-        <Field Name="County">
-          <DataField>County</DataField>
-        </Field>
-        <Field Name="Document_No_">
-          <DataField>Document_No_</DataField>
-        </Field>
-        <Field Name="Document_Date">
-          <DataField>Document_Date</DataField>
-        </Field>
-        <Field Name="Due_Date">
-          <DataField>Due_Date</DataField>
-        </Field>
-        <Field Name="Original_Amount">
-          <DataField>Original_Amount</DataField>
-        </Field>
-        <Field Name="Original_AmountFormat">
-          <DataField>Original_AmountFormat</DataField>
-        </Field>
-        <Field Name="Currency_Code">
-          <DataField>Currency_Code</DataField>
-        </Field>
-        <Field Name="Remaining_Amount">
-          <DataField>Remaining_Amount</DataField>
-        </Field>
-        <Field Name="Remaining_AmountFormat">
-          <DataField>Remaining_AmountFormat</DataField>
-        </Field>
-        <Field Name="Document_No_Cap">
-          <DataField>Document_No_Cap</DataField>
-        </Field>
-        <Field Name="Document_Date_Cap">
-          <DataField>Document_Date_Cap</DataField>
-        </Field>
-        <Field Name="Due_Date_Cap">
-          <DataField>Due_Date_Cap</DataField>
-        </Field>
-        <Field Name="Original_Amount_Cap">
-          <DataField>Original_Amount_Cap</DataField>
-        </Field>
-        <Field Name="Currency_Code_Cap">
-          <DataField>Currency_Code_Cap</DataField>
-        </Field>
-        <Field Name="Remaining_Amount_Cap">
-          <DataField>Remaining_Amount_Cap</DataField>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>DataSource</DataSourceName>
-        <CommandText />
-      </Query>
-    </DataSet>
-  </DataSets>
 </Report>
