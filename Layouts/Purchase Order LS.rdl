@@ -847,7 +847,7 @@ Cstr(Fields!Var_ID.Value), 1)</Hidden>
                                     <Width>0.61922in</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>4.79337in</Width>
+                                    <Width>4.58504in</Width>
                                   </TablixColumn>
                                   <TablixColumn>
                                     <Width>0.63316in</Width>
@@ -859,7 +859,7 @@ Cstr(Fields!Var_ID.Value), 1)</Hidden>
                                     <Width>0.76047in</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>0.75859in</Width>
+                                    <Width>0.98776in</Width>
                                   </TablixColumn>
                                   <TablixColumn>
                                     <Width>0.98425in</Width>
@@ -3780,7 +3780,7 @@ Cstr(Fields!Var_ID.Value), 1)</Hidden>
                               </SortExpressions>
                               <Top>0.03167cm</Top>
                               <Height>6.84384cm</Height>
-                              <Width>10.72789in</Width>
+                              <Width>10.74872in</Width>
                               <ZIndex>1</ZIndex>
                               <Style />
                             </Tablix>
@@ -10077,6 +10077,7 @@ Cstr(Fields!Var_ID.Value), 1)</Hidden>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
+                                                      <Color>Red</Color>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -11139,10 +11140,10 @@ Cstr(Fields!Var_ID.Value), 1)</Hidden>
         <Height>31.3cm</Height>
         <Style />
       </Body>
-      <Width>27.41613cm</Width>
+      <Width>27.45062cm</Width>
       <Page>
         <PageHeader>
-          <Height>7.4cm</Height>
+          <Height>7.28006cm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -11265,10 +11266,10 @@ Cstr(Fields!Var_ID.Value), 1)</Hidden>
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>6.18328cm</Top>
-              <Left>23.43178cm</Left>
+              <Top>6.3385cm</Top>
+              <Left>23.43842cm</Left>
               <Height>11pt</Height>
-              <Width>3.95326cm</Width>
+              <Width>3.98432cm</Width>
               <ZIndex>4</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -11290,8 +11291,8 @@ Cstr(Fields!Var_ID.Value), 1)</Hidden>
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>6.11273cm</Top>
-              <Left>20.76544cm</Left>
+              <Top>6.3385cm</Top>
+              <Left>20.74587cm</Left>
               <Height>11pt</Height>
               <Width>2.58697cm</Width>
               <ZIndex>5</ZIndex>
@@ -11414,7 +11415,7 @@ Cstr(Fields!Var_ID.Value), 1)</Hidden>
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>5.75995cm</Top>
+              <Top>5.94339cm</Top>
               <Left>20.74587cm</Left>
               <Height>11pt</Height>
               <Width>2.63089cm</Width>
@@ -11439,7 +11440,7 @@ Cstr(Fields!Var_ID.Value), 1)</Hidden>
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>5.40718cm</Top>
+              <Top>5.53148cm</Top>
               <Left>20.74587cm</Left>
               <Height>11pt</Height>
               <Width>2.64534cm</Width>
@@ -11464,7 +11465,7 @@ Cstr(Fields!Var_ID.Value), 1)</Hidden>
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>5.00584cm</Top>
+              <Top>5.13989cm</Top>
               <Left>20.74587cm</Left>
               <Height>11pt</Height>
               <Width>2.64181cm</Width>
@@ -11489,7 +11490,7 @@ Cstr(Fields!Var_ID.Value), 1)</Hidden>
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>4.65306cm</Top>
+              <Top>4.71656cm</Top>
               <Left>20.74587cm</Left>
               <Height>11pt</Height>
               <Width>2.64534cm</Width>
@@ -11701,8 +11702,8 @@ Cstr(Fields!Var_ID.Value), 1)</Hidden>
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>5.71139cm</Top>
-              <Left>23.45613cm</Left>
+              <Top>5.93634cm</Top>
+              <Left>23.45612cm</Left>
               <Height>11pt</Height>
               <Width>3.95998cm</Width>
               <ZIndex>21</ZIndex>
@@ -11729,8 +11730,8 @@ Cstr(Fields!Var_ID.Value), 1)</Hidden>
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>5.35861cm</Top>
-              <Left>23.45966cm</Left>
+              <Top>5.52795cm</Top>
+              <Left>23.44928cm</Left>
               <Height>11pt</Height>
               <Width>3.95645cm</Width>
               <ZIndex>22</ZIndex>
@@ -11756,7 +11757,7 @@ Cstr(Fields!Var_ID.Value), 1)</Hidden>
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>5.00584cm</Top>
+              <Top>5.13989cm</Top>
               <Left>23.45613cm</Left>
               <Height>11pt</Height>
               <Width>3.95998cm</Width>
@@ -11783,7 +11784,7 @@ Cstr(Fields!Var_ID.Value), 1)</Hidden>
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>4.65306cm</Top>
+              <Top>4.72362cm</Top>
               <Left>23.45966cm</Left>
               <Height>11pt</Height>
               <Width>3.95645cm</Width>
@@ -12409,10 +12410,10 @@ Cstr(Fields!Var_ID.Value), 1)</Hidden>
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>6.60661cm</Top>
-              <Left>20.76544cm</Left>
+              <Top>6.73361cm</Top>
+              <Left>20.74587cm</Left>
               <Height>11pt</Height>
-              <Width>2.56051cm</Width>
+              <Width>2.58008cm</Width>
               <ZIndex>48</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -12436,10 +12437,10 @@ Cstr(Fields!Var_ID.Value), 1)</Hidden>
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>6.60661cm</Top>
-              <Left>23.43178cm</Left>
+              <Top>6.72655cm</Top>
+              <Left>23.44531cm</Left>
               <Height>11pt</Height>
-              <Width>3.95326cm</Width>
+              <Width>3.97743cm</Width>
               <ZIndex>49</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -12452,6 +12453,7 @@ Cstr(Fields!Var_ID.Value), 1)</Hidden>
         <PageWidth>29.7cm</PageWidth>
         <InteractiveHeight>11in</InteractiveHeight>
         <InteractiveWidth>8.5in</InteractiveWidth>
+        <LeftMargin>1cm</LeftMargin>
         <RightMargin>1cm</RightMargin>
         <TopMargin>1cm</TopMargin>
         <BottomMargin>3cm</BottomMargin>
