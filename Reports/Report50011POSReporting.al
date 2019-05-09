@@ -342,7 +342,7 @@ report 50011 "POS Reporting"
             {
 
             }
-            column(Shipment_No2; "Order No.")
+            column(Shipment_No2; ShipmentNo)
             {
 
             }
@@ -614,6 +614,7 @@ report 50011 "POS Reporting"
                         ValueEntry.setrange("Document Line No.", "Sales Cr.Memo Line"."Line No.");
                         if ValueEntry.FindFirst() then begin
                             ItemLedgEntrySales.get(ValueEntry."Item Ledger Entry No.");
+                            ShipmentNo := ItemLedgEntrySales."Document No.";
                             POSReportExport.FindAppliedEntry(ItemLedgEntrySales, ItemLedgEntryPurchase);
                             if ItemLedgEntryPurchase."Entry No." = 0 then
                                 exit;
