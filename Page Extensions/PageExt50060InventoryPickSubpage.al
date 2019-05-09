@@ -1,4 +1,4 @@
-pageextension 50060 WarehousePickSubpage extends "Whse. Pick Subform"
+pageextension 50060 InventoryPickSubpage extends "Invt. Pick Subform"
 {
     layout
     {
