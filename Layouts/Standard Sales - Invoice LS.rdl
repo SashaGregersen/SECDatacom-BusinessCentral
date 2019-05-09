@@ -8658,6 +8658,12 @@ End Function
         <Field Name="PaymentMethodDescription_Lbl">
           <DataField>PaymentMethodDescription_Lbl</DataField>
         </Field>
+        <Field Name="PaymentMethodExtDescription">
+          <DataField>PaymentMethodExtDescription</DataField>
+        </Field>
+        <Field Name="PrintFIK">
+          <DataField>PrintFIK</DataField>
+        </Field>
         <Field Name="BilltoCustumerNo">
           <DataField>BilltoCustumerNo</DataField>
         </Field>
