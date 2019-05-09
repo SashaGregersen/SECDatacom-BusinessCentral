@@ -242,6 +242,14 @@ report 50014 "SEC - Sales Invoice LS"
             column(PaymentMethodDescription_Lbl; PaymentMethodDescLbl)
             {
             }
+            //>>NC
+            column(PaymentMethodExtDescription; PaymentMethod.GetPaymentMethodExtDescription)
+            {
+            }
+            column(PrintFIK; PaymentMethod."Print FIK")
+            {
+            }
+            //<<NC
             column(BilltoCustumerNo; "Bill-to Customer No.")
             {
             }
