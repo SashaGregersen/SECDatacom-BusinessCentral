@@ -577,7 +577,6 @@ report 50011 "POS Reporting"
                     GlSetup.Get();
                     if VendorCode <> '' then
                         SetVendorFilter();
-                    "Sales Cr.Memo Line".CopyFilters(Sales_Invoice_Line); // kan man dette? 
                 end;
 
                 trigger OnAfterGetRecord()
@@ -588,6 +587,7 @@ report 50011 "POS Reporting"
                     ItemLedgEntryPurchase: record "Item Ledger Entry";
                     ReturnShipmentLine: record "Return Shipment Line";
                     ValueEntry: record "Value Entry";
+                    ValueEntry2: record "Value Entry";
                     ReturnShipmentHeader: record "Return Shipment Header";
                     PurchLine: record "Purchase Line";
                     PurchHeader: record "Purchase Header";
@@ -640,10 +640,11 @@ report 50011 "POS Reporting"
                                     CostPercentage := (PurchCostPrice - BidUnitPurchasePrice) / PurchCostPrice; //er der en købskostpris procent når der ikke er bid?
 
                             end;
-
                         end;
+
                     end;
                 end;
+
             }
         }
 
