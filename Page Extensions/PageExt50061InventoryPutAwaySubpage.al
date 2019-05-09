@@ -1,4 +1,4 @@
-pageextension 50061 WarehousePutAwaySubpage extends "Whse. Put-away Subform"
+pageextension 50061 InventoryPutAwaySubpage extends "Invt. Put-away Subform"
 {
     layout
     {

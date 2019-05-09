@@ -12,6 +12,7 @@ query 50010 Provision
             column(Amount; Amount) { }
             column(Global_Dimension_1_Code; "Global Dimension 1 Code") { }
             column(Journal_Batch_Name; "Journal Batch Name") { }
+
         }
     }
 
