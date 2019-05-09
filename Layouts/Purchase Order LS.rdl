@@ -1393,7 +1393,7 @@ Cstr(Fields!Var_ID.Value), 1)</Hidden>
                                             </Paragraphs>
                                             <rd:DefaultName>BidNo</rd:DefaultName>
                                             <Visibility>
-                                              <Hidden>=IIF(Fields!Claimable.Value)</Hidden>
+                                              <Hidden>=Fields!Claimable.Value</Hidden>
                                             </Visibility>
                                             <Style>
                                               <Border>
