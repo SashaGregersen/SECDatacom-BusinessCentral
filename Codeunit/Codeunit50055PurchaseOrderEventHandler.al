@@ -4,16 +4,6 @@ codeunit 50055 "Purchase Order Event Handler"
     SingleInstance = true;
     EventSubscriberInstance = StaticAutomatic;
 
-    /* [EventSubscriber(ObjectType::table, database::"Purchase Line", 'OnAfterValidateEvent', 'Qty. to Invoice', true, true)]
-
-    local procedure OnAfterModifyPurchLineEvent(var rec: record "Purchase Line")
-    var
-        ICSyncMgt: Codeunit "IC Sync Management";
-        ReservationEntry: record "Reservation Entry";
-        SalesLine: record "Sales Line";
-    begin
-        UpdatePurchLineQtyToInv(rec, salesline, ReservationEntry, false, '');
-    end; */
 
     [EventSubscriber(ObjectType::table, database::"Purchase Line", 'OnAfterValidateEvent', 'No.', true, true)]
 

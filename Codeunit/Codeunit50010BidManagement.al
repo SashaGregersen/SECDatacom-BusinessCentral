@@ -93,15 +93,20 @@ codeunit 50010 "Bid Management"
         exit(false);
     end;
 
-    procedure MakePurchasePriceFromBidPrice(BidPrice: Record "Bid Item Price"; var PurchasePrice: Record "Purchase Price")
+    procedure MakePurchasePriceFromBidPrice(BidPrice: Record "Bid Item Price"; var PurchasePrice: Record "Purchase Price"; salesline: record "Sales Line")
     var
         Bid: Record Bid;
+        AdvPriceMgt: Codeunit "Advanced Price Management";
     begin
         Bid.Get(BidPrice."Bid No.");
-        PurchasePrice."Item No." := BidPrice."item No.";
-        PurchasePrice."Currency Code" := BidPrice."Currency Code";
-        PurchasePrice."Vendor No." := Bid."Vendor No.";
-        PurchasePrice."Direct Unit Cost" := BidPrice."Bid Unit Purchase Price";
+        if BidPrice.Claimable then
+            AdvPriceMgt.FindBestPurchasePrice(SalesLine."No.", Bid."Vendor No.", BidPrice."Currency Code", SalesLine."Variant Code", PurchasePrice)
+        else begin
+            PurchasePrice."Item No." := BidPrice."item No.";
+            PurchasePrice."Currency Code" := BidPrice."Currency Code";
+            PurchasePrice."Vendor No." := Bid."Vendor No.";
+            PurchasePrice."Direct Unit Cost" := BidPrice."Bid Unit Purchase Price";
+        end;
     end;
 
     procedure MakeCreditClaimsPosting(VAR SalesHeader: Record "Sales Header"; VAR SalesShipmentHeader: Record "Sales Shipment Header"; VAR SalesInvoiceHeader: Record "Sales Invoice Header"; VAR SalesCrMemoHeader: Record "Sales Cr.Memo Header"; VAR ReturnReceiptHeader: Record "Return Receipt Header")

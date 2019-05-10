@@ -335,7 +335,7 @@ codeunit 50003 "File Management Import"
                                         if not BidMgt.GetBestBidPrice(SalesLine."Bid No.", SalesLine."Sell-to Customer No.", SalesLine."No.", CurrencyCode, BidPrice) then
                                             Clear(PurchasePrice)
                                         else begin
-                                            BidMgt.MakePurchasePriceFromBidPrice(BidPrice, PurchasePrice);
+                                            BidMgt.MakePurchasePriceFromBidPrice(BidPrice, PurchasePrice, SalesLine);
                                             CurrencyCode := PurchasePrice."Currency Code";
                                         end;
 
@@ -367,7 +367,7 @@ codeunit 50003 "File Management Import"
                                         if not BidMgt.GetBestBidPrice(SalesLine."Bid No.", SalesLine."Sell-to Customer No.", SalesLine."No.", CurrencyCode, BidPrice) then
                                             Clear(PurchasePrice)
                                         else begin
-                                            BidMgt.MakePurchasePriceFromBidPrice(BidPrice, PurchasePrice);
+                                            BidMgt.MakePurchasePriceFromBidPrice(BidPrice, PurchasePrice, SalesLine);
                                             CurrencyCode := PurchasePrice."Currency Code";
                                         end;
 
