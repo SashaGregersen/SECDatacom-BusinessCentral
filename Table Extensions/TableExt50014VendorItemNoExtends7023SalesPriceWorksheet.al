@@ -37,7 +37,7 @@ tableextension 50014 "Vendor Item No." extends "Sales Price Worksheet"
             Validate("Item No.", '');
     end;
 
-    procedure CreateNewListPriceFromItem(Item: Record Item)
+    procedure CreateNewListPriceFromItem(Item: Record Item; InsertRec: Boolean)
     begin
         Validate("Sales Type", "Sales Type"::"All Customers");
         Validate("Item No.", Item."No.");
@@ -46,6 +46,6 @@ tableextension 50014 "Vendor Item No." extends "Sales Price Worksheet"
         Validate("Minimum Quantity", 0);
         Validate("Currency Code", item."Vendor Currency");
         Validate("Starting Date", Today());
-        Insert(true);
+        IF InsertRec THEN Insert(true);
     end;
 }

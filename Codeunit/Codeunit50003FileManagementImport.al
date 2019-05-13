@@ -670,7 +670,7 @@ codeunit 50003 "File Management Import"
         WindowTitle: text;
         FileName: text;
         FileMgt: Codeunit "File Management";
-        TempCSVBuffer: Record "CSV Buffer";
+        TempCSVBuffer: Record "CSV Buffer" temporary;
         SalesPriceWS: Record "Sales Price Worksheet";
         TempDec: Decimal;
         TempDate: Date;
@@ -679,6 +679,7 @@ codeunit 50003 "File Management Import"
     begin
         WindowTitle := 'Select file';
         FileName := FileMgt.OpenFileDialog(WindowTitle, '', '');
+        FileName := FileMgt.UploadFileSilent(FileName);
         //FileName := 'C:\file.csv';
         TempCSVBuffer.LoadData(FileName, ',');
 
@@ -697,7 +698,7 @@ codeunit 50003 "File Management Import"
                         SalesPriceWS.VALIDATE("Vendor Item No.", TempCSVBuffer.Value);
                         Item.SETRANGE("No.", SalesPriceWS."Item No.");
                         Item.FINDFIRST;
-                        SalesPriceWS.CreateNewListPriceFromItem(Item);
+                        SalesPriceWS.CreateNewListPriceFromItem(Item, false);
                     END;
                 3:
                     BEGIN
