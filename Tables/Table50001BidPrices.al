@@ -152,6 +152,7 @@ table 50001 "Bid Item Price"
 
     trigger OnModify();
     begin
+
     end;
 
     trigger OnDelete();
