@@ -679,9 +679,10 @@ codeunit 50003 "File Management Import"
     begin
         WindowTitle := 'Select file';
         FileName := FileMgt.OpenFileDialog(WindowTitle, '', '');
-        //FileName := FileMgt.UploadFileSilent(FileName);
-        //FileName := 'C:\file.csv';
         TempCSVBuffer.LoadData(FileName, ',');
+        //Verify if csv input file will be seperated with , or ; Unncomment below and deleta above if ;
+        //TempCSVBuffer.init;
+        //SelectFileFromFileShare(TempCSVBuffer);
 
         IF TempCSVBuffer.FINDSET THEN
             REPEAT
