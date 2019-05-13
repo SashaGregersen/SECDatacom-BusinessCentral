@@ -3,8 +3,8 @@ codeunit 50054 "Sales Order Event Handler"
     SingleInstance = true;
     EventSubscriberInstance = StaticAutomatic;
 
-    [EventSubscriber(ObjectType::Table, database::"Sales Line", 'OnAfterValidateEvent', 'Type', true, true)]
-    local procedure SalesLineOnAfterValidateType(Var rec: record "Sales Line")
+    [EventSubscriber(ObjectType::Table, database::"Sales Line", 'OnBeforeValidateEvent', 'Type', true, true)]
+    local procedure SalesLineOnBeforeValidateType(Var rec: record "Sales Line")
     var
         salesheader: record "sales header";
         GLSetup: Record "General Ledger Setup";
@@ -13,8 +13,22 @@ codeunit 50054 "Sales Order Event Handler"
         if CompanyName() <> GLSetup."Master Company" then
             exit;
 
-        TestIfLineCanBeChanged(rec);
+        TestIfICLineCanBeChanged(rec);
     end;
+
+    [EventSubscriber(ObjectType::Table, database::"Sales Line", 'OnBeforeValidateEvent', 'No.', true, true)]
+    local procedure SalesLineOnBeforeValidateNo(Var rec: record "Sales Line")
+    var
+        salesheader: record "sales header";
+        GLSetup: Record "General Ledger Setup";
+    begin
+        GLSetup.get();
+        if CompanyName() <> GLSetup."Master Company" then
+            exit;
+
+        TestIfICLineCanBeChanged(rec);
+    end;
+
 
     [EventSubscriber(ObjectType::Table, database::"Sales Line", 'OnAfterValidateEvent', 'No.', true, true)]
     local procedure SalesLineOnAfterValidateNo(Var rec: record "Sales Line")
@@ -22,11 +36,9 @@ codeunit 50054 "Sales Order Event Handler"
         salesheader: record "sales header";
         Item: record item;
         SubItem: record "Item Substitution";
-        GlSetup: Record "General Ledger Setup";
         ItemSub: page "Item Substitutions";
         PriceEventHandler: codeunit "Price Event Handler";
     begin
-        GlSetup.get();
         if (rec.Type = rec.type::Item) and (not rec.isicorder) then begin
             if not Item.Get(rec."No.") then
                 exit;
@@ -51,11 +63,6 @@ codeunit 50054 "Sales Order Event Handler"
                 end;
             end;
         end;
-
-        if CompanyName() <> GlSetup."Master Company" then
-            exit;
-
-        TestIfLineCanBeChanged(rec);
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Sales Line", 'OnAfterValidateEvent', 'Description', true, true)]
@@ -68,7 +75,7 @@ codeunit 50054 "Sales Order Event Handler"
         if CompanyName() <> GlSetup."Master Company" then
             exit;
 
-        TestIfLineCanBeChanged(rec);
+        TestIfICLineCanBeChanged(rec);
 
     end;
 
@@ -82,7 +89,7 @@ codeunit 50054 "Sales Order Event Handler"
         if CompanyName() <> GlSetup."Master Company" then
             exit;
 
-        TestIfLineCanBeChanged(rec);
+        TestIfICLineCanBeChanged(rec);
 
     end;
 
@@ -96,7 +103,7 @@ codeunit 50054 "Sales Order Event Handler"
         if CompanyName() <> GlSetup."Master Company" then
             exit;
 
-        TestIfLineCanBeChanged(rec);
+        TestIfICLineCanBeChanged(rec);
 
     end;
 
@@ -110,7 +117,7 @@ codeunit 50054 "Sales Order Event Handler"
         if CompanyName() <> GlSetup."Master Company" then
             exit;
 
-        TestIfLineCanBeChanged(rec);
+        TestIfICLineCanBeChanged(rec);
 
     end;
 
@@ -124,7 +131,7 @@ codeunit 50054 "Sales Order Event Handler"
         if CompanyName() <> GlSetup."Master Company" then
             exit;
 
-        TestIfLineCanBeChanged(rec);
+        TestIfICLineCanBeChanged(rec);
 
     end;
 
@@ -138,7 +145,7 @@ codeunit 50054 "Sales Order Event Handler"
         if CompanyName() <> GlSetup."Master Company" then
             exit;
 
-        TestIfLineCanBeChanged(rec);
+        TestIfICLineCanBeChanged(rec);
 
     end;
 
@@ -152,7 +159,7 @@ codeunit 50054 "Sales Order Event Handler"
         if CompanyName() <> GlSetup."Master Company" then
             exit;
 
-        TestIfLineCanBeChanged(rec);
+        TestIfICLineCanBeChanged(rec);
 
     end;
 
@@ -166,7 +173,7 @@ codeunit 50054 "Sales Order Event Handler"
         if CompanyName() <> GlSetup."Master Company" then
             exit;
 
-        TestIfLineCanBeChanged(rec);
+        TestIfICLineCanBeChanged(rec);
 
     end;
 
@@ -180,7 +187,7 @@ codeunit 50054 "Sales Order Event Handler"
         if CompanyName() <> GlSetup."Master Company" then
             exit;
 
-        TestIfLineCanBeChanged(rec);
+        TestIfICLineCanBeChanged(rec);
 
     end;
 
@@ -194,7 +201,7 @@ codeunit 50054 "Sales Order Event Handler"
         if CompanyName() <> GlSetup."Master Company" then
             exit;
 
-        TestIfLineCanBeChanged(rec);
+        TestIfICLineCanBeChanged(rec);
 
     end;
 
@@ -208,7 +215,7 @@ codeunit 50054 "Sales Order Event Handler"
         if CompanyName() <> GlSetup."Master Company" then
             exit;
 
-        TestIfLineCanBeChanged(rec);
+        TestIfICLineCanBeChanged(rec);
 
     end;
 
@@ -222,7 +229,7 @@ codeunit 50054 "Sales Order Event Handler"
         if CompanyName() <> GlSetup."Master Company" then
             exit;
 
-        TestIfLineCanBeChanged(rec);
+        TestIfICLineCanBeChanged(rec);
 
     end;
 
@@ -394,19 +401,33 @@ codeunit 50054 "Sales Order Event Handler"
         END;
     end;
 
-    local procedure TestIfLineCanBeChanged(var SalesLineToTest: Record "Sales Line")
+    /* [EventSubscriber(ObjectType::Table, database::"Sales Line", 'OnBeforeValidateEvent', 'Quantity', true, true)]
+    local procedure TestICFieldsOnBeforeValidateQty(var Rec: Record "Sales Line")
+    var
+        ICPONO: code[20];
+        ICSONo: code[20];
+    begin
+        ICPONO := Rec."IC PO No.";
+        ICSONo := Rec."IC SO No.";
+    end; */
+
+    local procedure TestIfICLineCanBeChanged(var SalesLineToTest: Record "Sales Line")
     var
         SalesHeader: record "Sales Header";
         LocalSalesLine: record "Sales Line";
+        HandledICInboxSalesHeader: record "Handled IC Inbox Sales Header";
     begin
-        exit; //Need to be updated! Find a way to test if it is the IC flow that does this
-        If salesheader.get(SalesLineToTest."Document Type", SalesLineToTest."Document No.") then begin
-            if salesheader.Subsidiary <> '' then begin
-                LocalSalesLine.SetRange("Document No.", salesheader."No.");
-                LocalSalesLine.SetRange("Document Type", salesheader."Document Type");
-                LocalSalesLine.SetRange("Line No.", SalesLineToTest."Line No.");
-                if LocalSalesLine.FindSet() then
-                    Error('You cannot change an intercompany order');
+        //exit; //Need to be updated! Find a way to test if it is the IC flow that does this
+        HandledICInboxSalesHeader.setrange("No.", SalesLineToTest."IC PO No.");
+        if HandledICInboxSalesHeader.FindFirst() then begin
+            If salesheader.get(SalesLineToTest."Document Type", SalesLineToTest."Document No.") then begin
+                if salesheader.Subsidiary <> '' then begin
+                    LocalSalesLine.SetRange("Document No.", salesheader."No.");
+                    LocalSalesLine.SetRange("Document Type", salesheader."Document Type");
+                    LocalSalesLine.SetRange("Line No.", SalesLineToTest."Line No.");
+                    if LocalSalesLine.FindSet() then
+                        Error('You cannot change an intercompany order');
+                end;
             end;
         end;
     end;
