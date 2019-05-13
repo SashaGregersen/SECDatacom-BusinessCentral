@@ -679,7 +679,7 @@ codeunit 50003 "File Management Import"
     begin
         WindowTitle := 'Select file';
         FileName := FileMgt.OpenFileDialog(WindowTitle, '', '');
-        FileName := FileMgt.UploadFileSilent(FileName);
+        //FileName := FileMgt.UploadFileSilent(FileName);
         //FileName := 'C:\file.csv';
         TempCSVBuffer.LoadData(FileName, ',');
 
