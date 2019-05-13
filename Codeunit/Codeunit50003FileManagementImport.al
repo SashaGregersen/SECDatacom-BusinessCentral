@@ -663,4 +663,60 @@ codeunit 50003 "File Management Import"
         Clear(DimSetEntry);
         DimSetEntry.DeleteAll();
     end;
+
+
+    procedure ImportSalesPricesFromCSV()
+    var
+        WindowTitle: text;
+        FileName: text;
+        FileMgt: Codeunit "File Management";
+        TempCSVBuffer: Record "CSV Buffer";
+        SalesPriceWS: Record "Sales Price Worksheet";
+        TempDec: Decimal;
+        TempDate: Date;
+        Item: Record "Item";
+
+    begin
+        WindowTitle := 'Select file';
+        FileName := FileMgt.OpenFileDialog(WindowTitle, '', '');
+        //FileName := 'C:\file.csv';
+        TempCSVBuffer.LoadData(FileName, ',');
+
+        IF TempCSVBuffer.FINDSET THEN
+            REPEAT
+                TempCSVBuffer.NEXT
+            UNTIL TempCSVBuffer."Line No." = 2;
+        REPEAT
+            IF (TempCSVBuffer."Field No." = 1) THEN
+                SalesPriceWS.INIT;
+            CASE TempCSVBuffer."Field No." OF
+                1:
+                    SalesPriceWS.VALIDATE("Vendor No.", TempCSVBuffer.Value);
+                2:
+                    BEGIN
+                        SalesPriceWS.VALIDATE("Vendor Item No.", TempCSVBuffer.Value);
+                        Item.SETRANGE("No.", SalesPriceWS."Item No.");
+                        Item.FINDFIRST;
+                        SalesPriceWS.CreateNewListPriceFromItem(Item);
+                    END;
+                3:
+                    BEGIN
+                        EVALUATE(TempDec, TempCSVBuffer.Value);
+                        SalesPriceWS.VALIDATE("New Unit Price", TempDec);
+                    END;
+                4:
+                    IF NOT (TempCSVBuffer.Value = '') THEN
+                        SalesPriceWS.VALIDATE("Currency Code", TempCSVBuffer.Value);
+                5:
+                    BEGIN
+                        IF NOT (TempCSVBuffer.Value = '') THEN BEGIN
+                            EVALUATE(TempDate, TempCSVBuffer.Value);
+                            SalesPriceWS.VALIDATE("Starting Date", TempDate);
+                        END;
+                        IF NOT SalesPriceWS.INSERT THEN SalesPriceWS.MODIFY;
+                    END;
+            END;
+        UNTIL TempCSVBuffer.NEXT = 0;
+
+    end;
 }
