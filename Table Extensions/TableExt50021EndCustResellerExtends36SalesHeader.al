@@ -301,7 +301,7 @@ tableextension 50021 "End Customer and Reseller" extends 36
             DataClassification = ToBeClassified;
         }
 
-        field(50020; "SEC Shipping Advice"; Option)
+        field(50020; "xShippingAdvice"; Option)
         {
             Caption = 'Shipping Advice';
             OptionMembers = Partial,Complete;
