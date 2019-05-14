@@ -2,6 +2,17 @@ pageextension 50021 "End Customer and Reseller" extends 42
 {
     layout
     {
+        addafter("Shipping Advice")
+        {
+            field("SEC Shipping Advice"; "SEC Shipping Advice")
+            {
+                ApplicationArea = all;
+            }
+        }
+        modify("Shipping Advice")
+        {
+            Visible = false;
+        }
         addbefore("Sell-to Customer No.")
         {
             field("End Customer"; "End Customer")
@@ -151,6 +162,32 @@ pageextension 50021 "End Customer and Reseller" extends 42
 
     actions
     {
+        addafter("Create Inventor&y Put-away/Pick")
+        {
+            action(SECCreateInvtPutAwayPick)
+            {
+                Caption = 'Create Inventor&y Put-away/Pick';
+                Promoted = true;
+                PromotedCategory = Process;
+                Image = CreateInventoryPickup;
+                AccessByPermission = TableData "Posted Invt. Pick Header" = R;
+                Ellipsis = true;
+                ToolTip = 'Create an inventory put-away or inventory pick to handle items on the document according to a basic warehouse configuration that does not require warehouse receipt or shipment documents.';
+
+                trigger OnAction()
+                var
+                    SalesOrderAction: Codeunit "Sales Order Event Handler";
+                begin
+                    Message('virker');
+                    SalesOrderAction.SECCheckShippingAdvice(Rec);
+                    CreateInvtPutAwayPick();
+                end;
+            }
+        }
+        modify("Create Inventor&y Put-away/Pick")
+        {
+            Visible = false;
+        }
         addafter("Create Purchase Document")
         {
             action("Import Project Sale")
