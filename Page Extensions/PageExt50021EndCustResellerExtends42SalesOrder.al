@@ -4,7 +4,7 @@ pageextension 50021 "End Customer and Reseller" extends 42
     {
         addafter("Shipping Advice")
         {
-            field("SEC Shipping Advice"; "SEC Shipping Advice")
+            field("SEC Shipping Advice"; xShippingAdvice)
             {
                 ApplicationArea = all;
             }
