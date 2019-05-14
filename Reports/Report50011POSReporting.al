@@ -15,6 +15,10 @@ report 50011 "POS Reporting"
             RequestFilterHeading = 'Line Filters';
             RequestFilterFields = "IC Partner Code";
 
+            column(Document_Type; DocumentType)
+            {
+
+            }
             column(VAR_id; VARIDInt)
             {
 
@@ -241,7 +245,7 @@ report 50011 "POS Reporting"
                         if TempItemLedgEntrySales.findfirst then begin
                             qty := 1;
                             SerialNo := TempItemLedgEntrySales."Serial No.";
-                            UpdatePurchInfoSerialNumbersSalesInvLine(TempItemLedgEntrySales);
+                            UpdatePurchInfoSerialNumbersSalesInv(TempItemLedgEntrySales);
                             TempItemLedgEntrySales.Delete();
                         end;
                     end;
@@ -256,6 +260,7 @@ report 50011 "POS Reporting"
                 GlSetup.Get();
                 if VendorCode <> '' then
                     SetVendorFilter();
+                DocumentType := 'Invoice';
             end;
 
             trigger OnAfterGetRecord()
@@ -338,11 +343,15 @@ report 50011 "POS Reporting"
         {
             DataItemTableView = sorting ("Document No.");
 
+            column(Document_Type2; DocumentType)
+            {
+
+            }
             column(VAR_id2; VARIDInt)
             {
 
             }
-            column(Shipment_No2; "Order No.")
+            column(Shipment_No2; ShipmentNo)
             {
 
             }
@@ -380,7 +389,7 @@ report 50011 "POS Reporting"
             }
             column(Unit_List_Price2; UnitListPrice)
             {
-                //tages fra bid eller salgslinjen
+                //tages fra bid eller salgslinjen i vendor currency 
             }
             column(Bid_Purchase_Discount_Pct_2; BidPurchaseDiscountPct)
             {
@@ -396,7 +405,7 @@ report 50011 "POS Reporting"
             }
             column(PurchCostPrice2; PurchCostPrice)
             {
-                //skal hentes fra købslinjen
+                //hentes fra købslinjen
             }
             column(Cost_Percentage2; CostPercentage)
             {
@@ -577,6 +586,7 @@ report 50011 "POS Reporting"
                     GlSetup.Get();
                     if VendorCode <> '' then
                         SetVendorFilter();
+                    DocumentType := 'Credit Memo';
                 end;
 
                 trigger OnAfterGetRecord()
@@ -607,41 +617,12 @@ report 50011 "POS Reporting"
                     clear(TempItemLedgEntrySales);
                     POSReportExport.RetrieveEntriesFromPostedInv(TempItemLedgEntrySales, "Sales Cr.Memo Line".RowID1()); //find serial numbers
 
-                    if TempItemLedgEntrySales.Count() < 1 then begin // find purch info for lines w/o serial numbers
-                        clear(ItemLedgEntryPurchase);
-                        ValueEntry.setrange("Document Type", ValueEntry."Document Type"::"Sales Credit Memo");
-                        ValueEntry.setrange("Document No.", "Sales Cr.Memo Line"."Document No.");
-                        ValueEntry.setrange("Document Line No.", "Sales Cr.Memo Line"."Line No.");
-                        if ValueEntry.FindFirst() then begin
-                            ItemLedgEntrySales.get(ValueEntry."Item Ledger Entry No.");
-                            POSReportExport.FindAppliedEntry(ItemLedgEntrySales, ItemLedgEntryPurchase);
-                            if ItemLedgEntryPurchase."Entry No." = 0 then
-                                exit;
-                            if (ItemLedgEntryPurchase."Entry Type" <> ItemLedgEntryPurchase."Entry Type"::Purchase) and
-                            (ItemLedgEntryPurchase."Entry Type" <> ItemLedgEntryPurchase."Entry Type"::Sale) then begin
-                                PurchOrderNo := format(ItemLedgEntryPurchase."Entry Type");
-                                PurchOrderPostDate := ItemLedgEntryPurchase."Posting Date";
-                            end else begin
-                                if ReturnShipmentLine.get(ItemLedgEntryPurchase."Document No.", ItemLedgEntryPurchase."Document Line No.") then begin
-                                    ReturnShipmentHeader.get(ReturnShipmentLine."Document No.");
-                                    PurchOrderNo := ReturnShipmentHeader."No.";
-                                    PurchCostPrice := ReturnShipmentLine."Direct Unit Cost";
-                                    PurchOrderPostDate := ReturnShipmentLine."Posting Date";
-                                end else begin
-                                    if PurchLine.get(PurchLine."Document Type"::"Return Order", ItemLedgEntryPurchase."Document No.", ItemLedgEntryPurchase."Document Line No.") then begin
-                                        PurchHeader.get(PurchLine."Document Type", PurchLine."Document No.");
-                                        PurchOrderNo := PurchLine."Document No.";
-                                        PurchOrderPostDate := PurchHeader."Posting Date";
-                                        PurchCostPrice := PurchLine."Direct Unit Cost";
-                                    end;
-                                end;
-                                // Find PurchCostPrice on purchase
-                                if (PurchCostPrice <> 0) and (BidUnitPurchasePrice <> 0) then
-                                    CostPercentage := (PurchCostPrice - BidUnitPurchasePrice) / PurchCostPrice; //er der en købskostpris procent når der ikke er bid?
-
-                            end;
-                        end;
-
+                    ValueEntry.setrange("Document Type", ValueEntry."Document Type"::"Sales Credit Memo");
+                    ValueEntry.setrange("Document No.", "Sales Cr.Memo Line"."Document No.");
+                    ValueEntry.setrange("Document Line No.", "Sales Cr.Memo Line"."Line No.");
+                    if ValueEntry.FindFirst() then begin
+                        ItemLedgEntrySales.get(ValueEntry."Item Ledger Entry No.");
+                        ShipmentNo := ItemLedgEntrySales."Document No.";
                     end;
                 end;
 
@@ -825,7 +806,7 @@ report 50011 "POS Reporting"
         Clear(BidUnitPurchasePrice);
     end;
 
-    local procedure UpdatePurchInfoSerialNumbersSalesInvLine(TempItemLedEntrySales: record "Item Ledger Entry" temporary)
+    local procedure UpdatePurchInfoSerialNumbersSalesInv(TempItemLedEntrySales: record "Item Ledger Entry" temporary)
     var
         TempItemLedgEntryPurchase: record "Item Ledger Entry" temporary;
         PurchRcptLine: record "Purch. Rcpt. Line";
@@ -871,56 +852,35 @@ report 50011 "POS Reporting"
 
     local procedure UpdatePurchInfoSerialNumbersCreditMemo(TempItemLedEntrySales: record "Item Ledger Entry" temporary)
     var
-        TempItemLedgEntryPurchase: record "Item Ledger Entry" temporary;
-        ReturnShipmentheader: record "Return Shipment Header";
-        ReturnShipmentLine: record "Return Shipment Line";
+        ItemLedgerEntryPurch: record "Item Ledger Entry";
+        PurchRcptLine: record "Purch. Rcpt. Line";
+        PurchInvLine: record "Purch. Inv. Line";
         PurchLine: record "Purchase Line";
         PurchHeader: record "Purchase Header";
     begin
-        POSReportExport.FindAppliedEntry(TempItemLedgEntrySales, TempItemLedgEntryPurchase);
-        if ReturnShipmentLine.get(TempItemLedgEntryPurchase."Document No.", TempItemLedgEntryPurchase."Document Line No.") then begin
-            ReturnShipmentheader.get(ReturnShipmentLine."Document No.");
-            PurchOrderNo := ReturnShipmentheader."No.";
-            PurchOrderPostDate := ReturnShipmentLine."Posting Date";
-            PurchCostPrice := ReturnShipmentLine."Direct Unit Cost";
-        end else begin
-            if PurchLine.get(PurchLine."Document Type"::"Return Order", TempItemLedgEntryPurchase."Document No.", TempItemLedgEntryPurchase."Document Line No.") then begin
-                PurchHeader.get(PurchLine."Document Type", PurchLine."Document No.");
-                PurchOrderNo := PurchLine."Document No.";
-                PurchOrderPostDate := PurchHeader."Posting Date";
-                PurchCostPrice := PurchLine."Direct Unit Cost";
+        ItemLedgerEntryPurch.setrange("Document Type", ItemLedgerEntryPurch."Document Type"::"Purchase Receipt");
+        ItemLedgerEntryPurch.setrange("Serial No.", TempItemLedgEntrySales."Serial No.");
+        if ItemLedgerEntryPurch.FindFirst() then begin
+            if PurchRcptLine.get(ItemLedgerEntryPurch."Document No.", ItemLedgerEntryPurch."Document Line No.") then begin
+                PurchInvLine.setrange("Order No.", PurchRcptLine."Order No.");
+                PurchInvLine.SetRange("Order Line No.", PurchRcptLine."Order Line No.");
+                if PurchInvLine.findfirst then begin
+                    PurchOrderNo := PurchInvLine."Document No.";
+                    PurchCostPrice := PurchInvLine."Direct Unit Cost";
+                    PurchOrderPostDate := PurchInvLine."Posting Date";
+                end else begin
+                    if PurchLine.GET(Purchline."Document Type"::Order, PurchRcptLine."Order No.", PurchRcptLine."Order Line No.") then begin
+                        PurchHeader.get(PurchLine."Document Type", Purchline."Document No.");
+                        PurchOrderNo := PurchLine."Document No.";
+                        PurchCostPrice := PurchLine."Direct Unit Cost";
+                        PurchOrderPostDate := PurchHeader."Posting Date";
+                    end;
+                end;
+                if (PurchCostPrice <> 0) and (BidUnitPurchasePrice <> 0) then
+                    CostPercentage := (PurchCostPrice - BidUnitPurchasePrice) / PurchCostPrice;
             end;
         end;
 
-        /* ValueEntry.SetRange("Item Ledger Entry No.", TempItemLedgEntryPurchase."Entry No.");
-        ValueEntry.setrange("Document Type", 6); //purchase invoice
-        if ValueEntry.FindFirst() then begin
-            if PurchInvLine.get(ValueEntry."Document No.", ValueEntry."Document Line No.") then begin
-                PurchInvHeader.get(PurchInvLine."Document No.");
-                PurchOrderNo := PurchInvLine."Document No.";
-                PurchOrderPostDate := PurchInvLine."Posting Date";
-                PurchCostPrice := PurchInvLine."Unit Cost";
-                VendorInvNo := PurchInvHeader."Vendor Invoice No.";
-            end else begin
-                ValueEntry.SetRange("Document Type", 5); // purchase receipt
-                if ValueEntry.FindFirst() then
-                    if PurchRcptLine.get(ValueEntry."Document No.", ValueEntry."Document Line No.") then begin
-                        PurchLine.SetRange("Document Type", PurchLine."Document Type"::Order);
-                        PurchLine.SetRange("Document No.", PurchRcptLine."Order No.");
-                        PurchLine.setrange("Line No.", PurchRcptLine."Order Line No.");
-                        if PurchLine.FindFirst() then begin //purchase order                                                            
-                            PurchHeader.get(PurchLine."Document Type", PurchLine."Document No.");
-                            PurchOrderNo := PurchLine."Document No.";
-                            PurchOrderPostDate := PurchHeader."Posting Date";
-                            VendorInvNo := PurchHeader."Vendor Invoice No.";
-                            PurchCostPrice := PurchLine."Unit Cost";
-                        end;
-                    end;
-            end; */
-
-        // Find PurchCostPrice på købslinjen 
-        if (PurchCostPrice <> 0) and (BidUnitPurchasePrice <> 0) then
-            CostPercentage := (PurchCostPrice - BidUnitPurchasePrice) / PurchCostPrice;
     end;
 
     local procedure FindShipmentNo()
@@ -967,5 +927,6 @@ report 50011 "POS Reporting"
         ResellEndCustPhone: text[30];
         ResellEndCustEmail: text[80];
         GlSetup: record "General Ledger Setup";
+        DocumentType: text[20];
 
 }

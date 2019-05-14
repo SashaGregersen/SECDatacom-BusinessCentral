@@ -141,16 +141,16 @@ xmlport 50000 "Price File Export XML"
     begin
         SalesPrice.SetRange("Item No.", Item."No.");
         SalesPrice.SetRange("Sales Type", SalesPrice."Sales Type"::Customer);
-        SalesPrice.SetRange("Sales Code", FindDiscountGroup());
+        SalesPrice.SetRange("Sales Code", CustomerNo);
         SalesPrice.SetRange("Currency Code", CurrencyFilter);
+        SalesPrice.setrange("Ending Date", 0D);
         if salesprice.FindLast() then
-            exit(salesprice."Unit Price")
-        else
-            SalesPrice.SetRange("Sales Type", SalesPrice."Sales Type"::"Customer Price Group");
+            exit(salesprice."Unit Price");
+        SalesPrice.SetRange("Sales Code", FindDiscountGroup());
+        SalesPrice.SetRange("Sales Type", SalesPrice."Sales Type"::"Customer Price Group");
         if SalesPrice.FindLast() then
-            exit(SalesPrice."Unit Price")
-        else
-            SalesPrice.SetRange("Sales Type", SalesPrice."Sales Type"::"All Customers");
+            exit(SalesPrice."Unit Price");
+        SalesPrice.SetRange("Sales Type", SalesPrice."Sales Type"::"All Customers");
         if SalesPrice.FindLast() then
             exit(SalesPrice."Unit Price");
     end;

@@ -335,7 +335,7 @@ codeunit 50003 "File Management Import"
                                         if not BidMgt.GetBestBidPrice(SalesLine."Bid No.", SalesLine."Sell-to Customer No.", SalesLine."No.", CurrencyCode, BidPrice) then
                                             Clear(PurchasePrice)
                                         else begin
-                                            BidMgt.MakePurchasePriceFromBidPrice(BidPrice, PurchasePrice);
+                                            BidMgt.MakePurchasePriceFromBidPrice(BidPrice, PurchasePrice, SalesLine);
                                             CurrencyCode := PurchasePrice."Currency Code";
                                         end;
 
@@ -367,7 +367,7 @@ codeunit 50003 "File Management Import"
                                         if not BidMgt.GetBestBidPrice(SalesLine."Bid No.", SalesLine."Sell-to Customer No.", SalesLine."No.", CurrencyCode, BidPrice) then
                                             Clear(PurchasePrice)
                                         else begin
-                                            BidMgt.MakePurchasePriceFromBidPrice(BidPrice, PurchasePrice);
+                                            BidMgt.MakePurchasePriceFromBidPrice(BidPrice, PurchasePrice, SalesLine);
                                             CurrencyCode := PurchasePrice."Currency Code";
                                         end;
 
@@ -662,5 +662,63 @@ codeunit 50003 "File Management Import"
         Clear(tmpItem);
         Clear(DimSetEntry);
         DimSetEntry.DeleteAll();
+    end;
+
+
+    procedure ImportSalesPricesFromCSV()
+    var
+        WindowTitle: text;
+        FileName: text;
+        FileMgt: Codeunit "File Management";
+        TempCSVBuffer: Record "CSV Buffer" temporary;
+        SalesPriceWS: Record "Sales Price Worksheet";
+        TempDec: Decimal;
+        TempDate: Date;
+        Item: Record "Item";
+
+    begin
+        WindowTitle := 'Select file';
+        FileName := FileMgt.OpenFileDialog(WindowTitle, '', '');
+        TempCSVBuffer.LoadData(FileName, ',');
+        //Verify if csv input file will be seperated with , or ; Unncomment below and deleta above if ;
+        //TempCSVBuffer.init;
+        //SelectFileFromFileShare(TempCSVBuffer);
+
+        IF TempCSVBuffer.FINDSET THEN
+            REPEAT
+                TempCSVBuffer.NEXT
+            UNTIL TempCSVBuffer."Line No." = 2;
+        REPEAT
+            IF (TempCSVBuffer."Field No." = 1) THEN
+                SalesPriceWS.INIT;
+            CASE TempCSVBuffer."Field No." OF
+                1:
+                    SalesPriceWS.VALIDATE("Vendor No.", TempCSVBuffer.Value);
+                2:
+                    BEGIN
+                        SalesPriceWS.VALIDATE("Vendor Item No.", TempCSVBuffer.Value);
+                        Item.SETRANGE("No.", SalesPriceWS."Item No.");
+                        Item.FINDFIRST;
+                        SalesPriceWS.CreateNewListPriceFromItem(Item, false);
+                    END;
+                3:
+                    BEGIN
+                        EVALUATE(TempDec, TempCSVBuffer.Value);
+                        SalesPriceWS.VALIDATE("New Unit Price", TempDec);
+                    END;
+                4:
+                    IF NOT (TempCSVBuffer.Value = '') THEN
+                        SalesPriceWS.VALIDATE("Currency Code", TempCSVBuffer.Value);
+                5:
+                    BEGIN
+                        IF NOT (TempCSVBuffer.Value = '') THEN BEGIN
+                            EVALUATE(TempDate, TempCSVBuffer.Value);
+                            SalesPriceWS.VALIDATE("Starting Date", TempDate);
+                        END;
+                        IF NOT SalesPriceWS.INSERT THEN SalesPriceWS.MODIFY;
+                    END;
+            END;
+        UNTIL TempCSVBuffer.NEXT = 0;
+
     end;
 }

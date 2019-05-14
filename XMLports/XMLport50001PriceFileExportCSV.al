@@ -48,7 +48,7 @@ xmlport 50001 "Price File Export CSV"
 
                     trigger OnBeforePassVariable()
                     begin
-                        SalesPriceUnitPrice := Format(FindCheapestPrice(salesprice));
+                        SalesPriceUnitPrice := Format(FindCheapestPrice(salesprice, CustomerNo));
                     end;
 
                 }
@@ -101,6 +101,7 @@ xmlport 50001 "Price File Export CSV"
                     if not salesprice.FindSet() then
                         currXMLport.Skip();
                 end;
+
             }
 
         }
@@ -109,6 +110,7 @@ xmlport 50001 "Price File Export CSV"
     trigger OnPreXmlPort()
     begin
         GLSetup.get;
+        GLSetup.TestField("Master Company");
 
         if CustomerNo = '' then
             currXMLport.Skip();
@@ -137,22 +139,22 @@ xmlport 50001 "Price File Export CSV"
         CustomerNo := customer."No.";
     end;
 
-    procedure FindCheapestPrice(SalesPrice: record "Sales Price"): Decimal
+    procedure FindCheapestPrice(SalesPrice: record "Sales Price"; CustomerNo: code[20]): Decimal
     var
 
     begin
         SalesPrice.SetRange("Item No.", Item."No.");
         SalesPrice.SetRange("Sales Type", SalesPrice."Sales Type"::Customer);
-        SalesPrice.SetRange("Sales Code", FindDiscountGroup());
+        SalesPrice.SetRange("Sales Code", CustomerNo);
         SalesPrice.SetRange("Currency Code", CurrencyFilter);
+        SalesPrice.setrange("Ending Date", 0D);
         if salesprice.FindLast() then
-            exit(salesprice."Unit Price")
-        else
-            SalesPrice.SetRange("Sales Type", SalesPrice."Sales Type"::"Customer Price Group");
+            exit(salesprice."Unit Price");
+        SalesPrice.SetRange("Sales Code", FindDiscountGroup());
+        SalesPrice.SetRange("Sales Type", SalesPrice."Sales Type"::"Customer Price Group");
         if SalesPrice.FindLast() then
-            exit(SalesPrice."Unit Price")
-        else
-            SalesPrice.SetRange("Sales Type", SalesPrice."Sales Type"::"All Customers");
+            exit(SalesPrice."Unit Price");
+        SalesPrice.SetRange("Sales Type", SalesPrice."Sales Type"::"All Customers");
         if SalesPrice.FindLast() then
             exit(SalesPrice."Unit Price");
     end;

@@ -25,16 +25,26 @@ codeunit 50010 "Bid Management"
         GLSetup: Record "General Ledger Setup";
         GLSetupInOtherCompany: Record "General Ledger Setup";
         Item: Record Item;
+        ICPartner: record "IC Partner";
+        VendorNo: code[20];
     begin
+        ICPartner.ChangeCompany(CompanyNameToCopyTo);
+        ICPartner.SetRange("Inbox Details", CompanyName);
+        if ICPartner.FindFirst() then
+            VendorNo := ICPartner."Vendor No.";
         GLSetup.Get();
         GLSetupInOtherCompany.ChangeCompany(CompanyNameToCopyTo);
         GLSetupInOtherCompany.Get();
         BidToCopyTo.ChangeCompany(CompanyNameToCopyTo);
         if not BidToCopyTo.Get(BidToCopy."No.") then begin
             BidToCopyTo := BidToCopy;
+            BidToCopyTo."Vendor No." := VendorNo;
+            BidToCopyTo.Claimable := false;
             BidToCopyTo.Insert(false);
         end else begin
             BidToCopyTo.TransferFields(BidToCopy, false);
+            BidToCopyTo."Vendor No." := VendorNo;
+            BidToCopyTo.Claimable := false;
             BidToCopyTo.Modify(false);
         end;
         BidPrice.SetRange("Bid No.", BidToCopy."No.");
@@ -51,6 +61,7 @@ codeunit 50010 "Bid Management"
                     BidPriceToCopyTo.TransferFields(BidPrice, false);
                 if Item."Transfer Price %" <> 0 then
                     BidPriceToCopyTo.Validate("Bid Unit Purchase Price", bidprice."Bid Unit Purchase Price" * (1 + (Item."Transfer Price %" / 100)));
+                BidPriceToCopyTo.Claimable := false; // IC company should never claim 
                 BidPriceToCopyTo.Modify(false);
             until BidPrice.Next() = 0;
     end;
@@ -93,15 +104,20 @@ codeunit 50010 "Bid Management"
         exit(false);
     end;
 
-    procedure MakePurchasePriceFromBidPrice(BidPrice: Record "Bid Item Price"; var PurchasePrice: Record "Purchase Price")
+    procedure MakePurchasePriceFromBidPrice(BidPrice: Record "Bid Item Price"; var PurchasePrice: Record "Purchase Price"; salesline: record "Sales Line")
     var
         Bid: Record Bid;
+        AdvPriceMgt: Codeunit "Advanced Price Management";
     begin
         Bid.Get(BidPrice."Bid No.");
-        PurchasePrice."Item No." := BidPrice."item No.";
-        PurchasePrice."Currency Code" := BidPrice."Currency Code";
-        PurchasePrice."Vendor No." := Bid."Vendor No.";
-        PurchasePrice."Direct Unit Cost" := BidPrice."Bid Unit Purchase Price";
+        if BidPrice.Claimable then
+            AdvPriceMgt.FindBestPurchasePrice(SalesLine."No.", Bid."Vendor No.", BidPrice."Currency Code", SalesLine."Variant Code", PurchasePrice)
+        else begin
+            PurchasePrice."Item No." := BidPrice."item No.";
+            PurchasePrice."Currency Code" := BidPrice."Currency Code";
+            PurchasePrice."Vendor No." := Bid."Vendor No.";
+            PurchasePrice."Direct Unit Cost" := BidPrice."Bid Unit Purchase Price";
+        end;
     end;
 
     procedure MakeCreditClaimsPosting(VAR SalesHeader: Record "Sales Header"; VAR SalesShipmentHeader: Record "Sales Shipment Header"; VAR SalesInvoiceHeader: Record "Sales Invoice Header"; VAR SalesCrMemoHeader: Record "Sales Cr.Memo Header"; VAR ReturnReceiptHeader: Record "Return Receipt Header")

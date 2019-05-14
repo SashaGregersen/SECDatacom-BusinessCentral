@@ -340,8 +340,8 @@ codeunit 50057 "IC Event Handler"
         end;
     end;
 
-    [EventSubscriber(ObjectType::Codeunit, codeunit::"Sales-Post", 'OnAfterPostSalesDoc', '', true, true)]
-    local procedure OnAfterPostSalesDocOnPostSalesHeader(var SalesHeader: Record "Sales Header"; var GenJnlPostLine: Codeunit "Gen. Jnl.-Post Line"; SalesShptHdrNo: Code[20]; RetRcpHdrNo: Code[20]; SalesInvHdrNo: Code[20]; SalesCrMemoHdrNo: Code[20]; CommitIsSuppressed: Boolean)
+    [EventSubscriber(ObjectType::Codeunit, codeunit::"Sales-Post", 'OnRunOnBeforeFinalizePosting', '', true, true)]
+    local procedure OnRunOnBeforeFinalizePosting(VAR SalesHeader: Record "Sales Header"; VAR SalesShipmentHeader: Record "Sales Shipment Header"; VAR SalesInvoiceHeader: Record "Sales Invoice Header"; VAR SalesCrMemoHeader: Record "Sales Cr.Memo Header")
     var
         ICpartner: Record "IC Partner";
         ICSyncMgt: Codeunit "IC Sync Management";
@@ -352,22 +352,22 @@ codeunit 50057 "IC Event Handler"
     begin
         if SalesHeader.Subsidiary <> '' then begin
             GetICPartner(ICpartner, SalesHeader.Subsidiary);
-            UpdateReceiptsOnPurchaseOrderInOtherCompany(SalesShptHdrNo, ICpartner."Inbox Details");
-            TransferSerialNosFromShipmentToOtherCompany(SalesShptHdrNo, ICpartner."Inbox Details");
-            AddICPurchaseOrderToTempList(SalesShptHdrNo, ICpartner."Inbox Details", TempICPurchOrder);
-            UpdateShipmentsOnSalesOrderInOtherCompany(SalesShptHdrNo, ICpartner."Inbox Details");
+            UpdateReceiptsOnPurchaseOrderInOtherCompany(SalesShipmentHeader."No.", ICpartner."Inbox Details");
+            TransferSerialNosFromShipmentToOtherCompany(SalesShipmentHeader."No.", ICpartner."Inbox Details");
+            AddICPurchaseOrderToTempList(SalesShipmentHeader."No.", ICpartner."Inbox Details", TempICPurchOrder);
+            UpdateShipmentsOnSalesOrderInOtherCompany(SalesShipmentHeader."No.", ICpartner."Inbox Details");
             //NOT necessary to transfer serial nos. to SO - it is the same reservation entry as PO
-            AddICSalesOrderToTempList(SalesShptHdrNo, ICpartner."Inbox Details", TempICSalesOrder);
+            AddICSalesOrderToTempList(SalesShipmentHeader."No.", ICpartner."Inbox Details", TempICSalesOrder);
             //Add support for return orders
-            if SalesInvHdrNo <> '' then begin
-                UpdateInvoiceOnPurchaseOrderInOtherCompany(SalesInvHdrNo, ICpartner."Inbox Details");
-                AddICPurchaseOrderToTempList(SalesInvHdrNo, ICpartner."Inbox Details", TempICPurchOrder);
-                UpdateInvoiceOnSalesOrderInOtherCompany(SalesInvHdrNo, ICpartner."Inbox Details");
-                AddICSalesOrderToTempList(SalesInvHdrNo, ICpartner."Inbox Details", TempICSalesOrder);
+            if SalesInvoiceHeader."No." <> '' then begin
+                UpdateInvoiceOnPurchaseOrderInOtherCompany(SalesInvoiceHeader."No.", ICpartner."Inbox Details");
+                AddICPurchaseOrderToTempList(SalesInvoiceHeader."No.", ICpartner."Inbox Details", TempICPurchOrder);
+                UpdateInvoiceOnSalesOrderInOtherCompany(SalesInvoiceHeader."No.", ICpartner."Inbox Details");
+                AddICSalesOrderToTempList(SalesInvoiceHeader."No.", ICpartner."Inbox Details", TempICSalesOrder);
             end;
-            if SalesCrMemoHdrNo <> '' then begin
-                UpdateInvoiceOnPurchaseOrderInOtherCompany(SalesCrMemoHdrNo, ICpartner."Inbox Details"); //remember to create the credit memo function  and update the case
-                AddICPurchaseOrderToTempList(SalesInvHdrNo, ICpartner."Inbox Details", TempICPurchOrder);
+            if SalesCrMemoHeader."No." <> '' then begin
+                UpdateInvoiceOnPurchaseOrderInOtherCompany(SalesCrMemoHeader."No.", ICpartner."Inbox Details"); //remember to create the credit memo function  and update the case
+                AddICPurchaseOrderToTempList(SalesCrMemoHeader."No.", ICpartner."Inbox Details", TempICPurchOrder);
             end;
             Commit();
             if TempICPurchOrder.FindSet() then

@@ -19,12 +19,12 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>27.7cm</Width>
+                  <Width>27.93221cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>21.82662cm</Height>
+                  <Height>22.8525cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -3969,8 +3969,8 @@
                                 </Paragraph>
                               </Paragraphs>
                               <rd:DefaultName>CompanyLegalStatement</rd:DefaultName>
-                              <Top>21.27381cm</Top>
-                              <Left>0in</Left>
+                              <Top>22.23541cm</Top>
+                              <Left>0.09142in</Left>
                               <Height>11pt</Height>
                               <Width>27.7cm</Width>
                               <ZIndex>3</ZIndex>
@@ -4153,7 +4153,8 @@
                                 </Paragraph>
                               </Paragraphs>
                               <rd:DefaultName>EUCustLbl</rd:DefaultName>
-                              <Top>20.82374cm</Top>
+                              <Top>21.78534cm</Top>
+                              <Left>0.23221cm</Left>
                               <Height>0.41479cm</Height>
                               <Width>27.7cm</Width>
                               <ZIndex>6</ZIndex>
@@ -4194,6 +4195,9 @@
                               <Height>0.16656in</Height>
                               <Width>1.05cm</Width>
                               <ZIndex>7</ZIndex>
+                              <Visibility>
+                                <Hidden>=NOT First(Fields!PrintFIK.Value, "DataSet_Result")</Hidden>
+                              </Visibility>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -4225,6 +4229,9 @@
                               <Height>0.16656in</Height>
                               <Width>2.91547cm</Width>
                               <ZIndex>8</ZIndex>
+                              <Visibility>
+                                <Hidden>=NOT First(Fields!PrintFIK.Value, "DataSet_Result")</Hidden>
+                              </Visibility>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -4256,11 +4263,47 @@
                               <Height>0.16656in</Height>
                               <Width>3.57cm</Width>
                               <ZIndex>9</ZIndex>
+                              <Visibility>
+                                <Hidden>=NOT First(Fields!PrintFIK.Value, "DataSet_Result")</Hidden>
+                              </Visibility>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
                                 </Border>
                                 <PaddingRight>5pt</PaddingRight>
+                              </Style>
+                            </Textbox>
+                            <Textbox Name="PaymentMethodExtDescription">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=First(Fields!PaymentMethodExtDescription.Value)</Value>
+                                      <Style>
+                                        <FontFamily>Segoe UI</FontFamily>
+                                        <FontSize>8pt</FontSize>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>PaymentMethodExtDescription</rd:DefaultName>
+                              <Top>20.82374cm</Top>
+                              <Left>0.23221cm</Left>
+                              <Height>0.89104cm</Height>
+                              <Width>26.76779cm</Width>
+                              <ZIndex>10</ZIndex>
+                              <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
                               </Style>
                             </Textbox>
                           </ReportItems>
@@ -4300,8 +4343,8 @@
             </TablixRowHierarchy>
             <DataSetName>DataSet_Result</DataSetName>
             <Top>0.17639cm</Top>
-            <Height>21.82662cm</Height>
-            <Width>27.7cm</Width>
+            <Height>22.8525cm</Height>
+            <Width>27.93221cm</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -8169,10 +8212,10 @@
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>22.00301cm</Height>
+        <Height>23.10826cm</Height>
         <Style />
       </Body>
-      <Width>27.7cm</Width>
+      <Width>27.93221cm</Width>
       <Page>
         <PageHeader>
           <Height>2.50354cm</Height>
@@ -8657,6 +8700,12 @@ End Function
         </Field>
         <Field Name="PaymentMethodDescription_Lbl">
           <DataField>PaymentMethodDescription_Lbl</DataField>
+        </Field>
+        <Field Name="PaymentMethodExtDescription">
+          <DataField>PaymentMethodExtDescription</DataField>
+        </Field>
+        <Field Name="PrintFIK">
+          <DataField>PrintFIK</DataField>
         </Field>
         <Field Name="BilltoCustumerNo">
           <DataField>BilltoCustumerNo</DataField>

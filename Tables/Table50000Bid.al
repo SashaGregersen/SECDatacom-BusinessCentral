@@ -46,6 +46,17 @@ table 50000 "Bid"
         field(7; Claimable; Boolean)
         {
             DataClassification = ToBeClassified;
+            trigger OnValidate()
+            var
+                BidPrices: record "Bid Item Price";
+            begin
+                bidprices.setrange("Bid No.", "No.");
+                if bidprices.FindSet() then
+                    repeat
+                        bidprices.Claimable := Claimable;
+                        BidPrices.Modify(true);
+                    until bidprices.next = 0;
+            end;
         }
         field(8; "Project Sale"; Boolean)
         {
@@ -86,6 +97,7 @@ table 50000 "Bid"
 
     trigger OnModify();
     begin
+
     end;
 
     trigger OnDelete();
