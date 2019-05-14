@@ -46,11 +46,14 @@ page 50017 "Sales Posting Options"
 
     trigger OnOpenPage()
     begin
+        SetHideValidationDialog(true);
+
         if Status > Status::Open then begin
             xStatus := Status;
             Status := Status::Open;
         end;
 
+        xRec := Rec;
         Validate("Posting Date", WorkDate());
         Validate("Document Date", WorkDate());
         Validate("Shipment Date", WorkDate());

@@ -324,6 +324,8 @@ report 50010 "SEC Purchase Order"
                         begin
                             CurrReport.Break;
                         end;
+
+
                     }
                     dataitem(RoundLoop; "Integer")
                     {
@@ -460,6 +462,14 @@ report 50010 "SEC Purchase Order"
                         column(BidNo; "Purchase Line"."Bid No.")
                         {
                         }
+                        //>> NC
+                        column(VendorBidNo; Bid."Vendor Bid No.")
+                        {
+                        }
+                        column(VendorItemNo; "Purchase Line"."Vendor-Item-No")
+                        {
+                        }
+                        //<< NC
                         column(Claimable; "Purchase Line".Claimable)
                         {
                         }
@@ -528,6 +538,13 @@ report 50010 "SEC Purchase Order"
                             TotalSubTotal += "Purchase Line"."Line Amount";
                             TotalInvoiceDiscountAmount -= "Purchase Line"."Inv. Discount Amount";
                             TotalAmount += "Purchase Line".Amount;
+                            //>> NC
+                            begin
+                                Bid.SetRange("No.", "Purchase Line"."Bid No.");
+                                Bid.FindFirst();
+                            end;
+                            //<< NC
+
                         end;
 
                         trigger OnPostDataItem()
@@ -1227,6 +1244,7 @@ report 50010 "SEC Purchase Order"
         EndcustomerCountryRegion: Record "Country/Region";
         ResellerCountryRegion: Record "Country/Region";
         VarIDLbl: Label 'VAR ID:';
+        Bid: Record "Bid";
         //<< NC
         TotalPrepmtLineAmount: Decimal;
         VARRec: Record "VAR";

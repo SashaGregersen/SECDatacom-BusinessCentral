@@ -69,7 +69,7 @@ pageextension 50009 "Item Adv. Pricing" extends "Item Card"
                     SalesPriceWksPage: Page "Sales Price Worksheet";
                     SalesPriceWks: Record "Sales Price Worksheet";
                 begin
-                    SalesPriceWks.CreateNewListPriceFromItem(Rec);
+                    SalesPriceWks.CreateNewListPriceFromItem(Rec, true);
                     Commit();
                     SalesPriceWksPage.SetTableView(SalesPriceWks);
                     SalesPriceWksPage.RunModal();

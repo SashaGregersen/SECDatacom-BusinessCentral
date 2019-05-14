@@ -108,7 +108,7 @@ codeunit 50054 "Sales Order Event Handler"
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Sales Line", 'OnAfterValidateEvent', 'Unit Price', true, true)]
-    local procedure SalesLineOnAfterValidateUnitPrice(Var rec: record "Sales Line")
+    local procedure SalesLineOnAfterValidateUnitPrice(Var rec: record "Sales Line"; var xRec: Record "Sales Line"; CurrFieldNo: Integer)
     var
         salesheader: record "sales header";
         GlSetup: record "General Ledger Setup";
@@ -116,6 +116,8 @@ codeunit 50054 "Sales Order Event Handler"
         GlSetup.get();
         if CompanyName() <> GlSetup."Master Company" then
             exit;
+
+        if Rec."Unit Price" = xRec."Unit Price" then exit;
 
         TestIfICLineCanBeChanged(rec);
 
@@ -136,7 +138,7 @@ codeunit 50054 "Sales Order Event Handler"
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Sales Line", 'OnAfterValidateEvent', 'Line Discount %', true, true)]
-    local procedure SalesLineOnAfterValidateLineDiscount(Var rec: record "Sales Line")
+    local procedure SalesLineOnAfterValidateLineDiscount(Var rec: record "Sales Line"; var xRec: Record "Sales Line"; CurrFieldNo: Integer)
     var
         salesheader: record "sales header";
         GLSetup: Record "General Ledger Setup";
@@ -145,8 +147,9 @@ codeunit 50054 "Sales Order Event Handler"
         if CompanyName() <> GlSetup."Master Company" then
             exit;
 
-        TestIfICLineCanBeChanged(rec);
+        if Rec."Line Discount %" = xRec."Line Discount %" then exit; //Kunne opdatere bogf. dato
 
+        TestIfICLineCanBeChanged(rec);
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Sales Line", 'OnAfterValidateEvent', 'Bid No.', true, true)]
@@ -234,34 +237,37 @@ codeunit 50054 "Sales Order Event Handler"
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Sales Header", 'OnAfterValidateEvent', 'end customer', true, true)]
-    local procedure SalesHeaderOnAfterValidateEndCustomer(var rec: record "Sales Header")
+    local procedure SalesHeaderOnAfterValidateEndCustomer(var rec: record "Sales Header"; var xRec: Record "Sales Header"; CurrFieldNo: Integer)
     var
         GlSetup: Record "General Ledger Setup";
     begin
         GlSetup.get();
         if CompanyName() <> GlSetup."Master Company" then
             exit;
+
+        if Rec."End Customer" = xRec."End Customer" then exit;
 
         if rec.Subsidiary <> '' then
             Error('You cannot change an intercompany order');
-
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Sales Header", 'OnAfterValidateEvent', 'Reseller', true, true)]
-    local procedure SalesHeaderOnAfterValidateReseller(var rec: record "Sales Header")
+    local procedure SalesHeaderOnAfterValidateReseller(var rec: record "Sales Header"; var xRec: Record "Sales Header"; CurrFieldNo: Integer)
     var
         GlSetup: Record "General Ledger Setup";
     begin
         GlSetup.get();
         if CompanyName() <> GlSetup."Master Company" then
             exit;
+
+        if Rec."Reseller" = xRec."Reseller" then exit;
 
         if rec.Subsidiary <> '' then
             Error('You cannot change an intercompany order');
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Sales Header", 'OnAfterValidateEvent', 'subsidiary', true, true)]
-    local procedure SalesHeaderOnAfterValidateSubsidiary(var rec: record "Sales Header"; var xrec: Record "Sales Header")
+    local procedure SalesHeaderOnAfterValidateSubsidiary(var rec: record "Sales Header"; var xrec: Record "Sales Header"; CurrFieldNo: Integer)
     var
         GlSetup: Record "General Ledger Setup";
     begin
@@ -274,13 +280,15 @@ codeunit 50054 "Sales Order Event Handler"
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Sales Header", 'OnAfterValidateEvent', 'financing partner', true, true)]
-    local procedure SalesHeaderOnAfterValidateFinancingPartner(var rec: record "Sales Header")
+    local procedure SalesHeaderOnAfterValidateFinancingPartner(var rec: record "Sales Header"; var xRec: Record "Sales Header"; CurrFieldNo: Integer)
     var
         GlSetup: Record "General Ledger Setup";
     begin
         GlSetup.get();
         if CompanyName() <> GlSetup."Master Company" then
             exit;
+
+        if Rec."Financing Partner" = xRec."Financing Partner" then exit;
 
         if rec.Subsidiary <> '' then
             Error('You cannot change an intercompany order');
@@ -439,12 +447,15 @@ codeunit 50054 "Sales Order Event Handler"
             Rec.Validate("Payment Method Code", AdvPaymentMethodSetup."Payment Method Code");
     end;
 
-    /* [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post (Yes/No)", 'OnBeforeConfirmSalesPost', '', true, true)]
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post (Yes/No)", 'OnBeforeConfirmSalesPost', '', true, true)]
     local procedure OnBeforeConfirmSalesPost_PostYesNo(VAR SalesHeader: Record "Sales Header"; VAR HideDialog: Boolean; VAR IsHandled: Boolean; VAR DefaultOption: Integer; VAR PostAndSend: Boolean)
     var
         SelectionPage: Page "Sales Posting Options";
     begin
         Clear(SelectionPage);
+
+        SalesHeader.SetHideValidationDialog(true);
+
         SelectionPage.SetRecord(SalesHeader);
         if SelectionPage.RunModal() = Action::OK then
             SelectionPage.GetRecord(SalesHeader)
@@ -452,25 +463,33 @@ codeunit 50054 "Sales Order Event Handler"
             IsHandled := true;
 
         HideDialog := true;
-    end; */
-
-
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", 'OnBeforePostSalesDoc', '', true, true)]
-    local procedure SalesPost_OnBeforePostSalesDoc(var SalesHeader: Record "Sales Header"; CommitIsSuppressed: Boolean; PreviewMode: Boolean)
-    begin
-        SalesHeader.xShippingAdvice := SalesHeader."Shipping Advice";
-        SalesHeader."Shipping Advice" := SalesHeader."Shipping Advice"::Partial;
     end;
 
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", 'OnAfterCheckSalesDoc', '', true, true)]
-    local procedure SalesPost_OnAfterCheckSalesDoc(var SalesHeader: Record "Sales Header"; CommitIsSuppressed: Boolean; WhseShip: Boolean; WhseReceive: Boolean)
+    /*
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Whse.-Sales Release", 'OnAfterCreateWhseRequest', '', true, true)]
+    local procedure WhseSalesRelease_OnAfterCreateWhseRequest(var WhseRqst: Record "Warehouse Request"; var SalesHeader: Record "Sales Header"; var SalesLine: Record "Sales Line"; WhseType: Option Inbound,Outbound)
     begin
-        SalesHeader."Shipping Advice" := SalesHeader.xShippingAdvice;
+        if SalesHeader."SEC Shipping Advice" <> SalesHeader."SEC Shipping Advice"::Complete then exit;
+
+        WhseRqst."Shipping Advice" := WhseRqst."Shipping Advice"::Complete;
+        WhseRqst.Modify();
     end;
 
-    //CheckShippingAdvice - new
-    [EventSubscriber(ObjectType::Table, Database::"Sales Header", 'OnCheckSalesPostRestrictions', '', true, true)]
-    local procedure SalesHeader_OnCheckSalesPostRestrictions(sender: Record "Sales Header")
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Create Inventory Pick/Movement", 'OnAfterAutoCreatePickOrMove', '', true, true)]
+    local procedure CreateInvtPick_OnBeforeNewWhseActivLineInsertFromSales(VAR WarehouseActivityLine: Record "Warehouse Activity Line"; SalesLine: Record "Sales Line")
+    var
+        SalesHeader: Record "Sales Header";
+    begin
+        SalesHeader.Get(SalesLine."Document Type", SalesLine."Document No.");
+
+        if SalesHeader."SEC Shipping Advice" <> SalesHeader."SEC Shipping Advice"::Complete then exit;
+
+        WarehouseActivityLine."Shipping Advice" := WarehouseActivityLine."Shipping Advice"::Complete;
+    end;
+    */
+
+
+    procedure SECCheckShippingAdvice(SalesHeader: Record "Sales Header")
     var
         SalesLine: Record "Sales Line";
         Item: Record Item;
@@ -480,13 +499,12 @@ codeunit 50054 "Sales Order Event Handler"
         ShippingAdviceErr: TextConst ENU = 'This document cannot be shipped completely. Change the value in the Shipping Advice field to Partial.',
                                      DAN = 'Dette dokument kan leveres fuldt ud. Du kan ændre værdien i feltet Afsendelsesadvis til Delvis.';
     begin
-        if (not sender.Ship) then exit;
-        if (sender.xShippingAdvice <> sender.xShippingAdvice::Complete) then exit;
+        if SalesHeader."SEC Shipping Advice" <> SalesHeader."SEC Shipping Advice"::Complete then exit;
 
         if Location.FindSet() then
             repeat
-                SalesLine.SetRange("Document Type", sender."Document Type");
-                SalesLine.SetRange("Document No.", sender."No.");
+                SalesLine.SetRange("Document Type", SalesHeader."Document Type");
+                SalesLine.SetRange("Document No.", SalesHeader."No.");
                 SalesLine.SetRange("Drop Shipment", false);
                 SalesLine.SetRange(Type, SalesLine.Type::Item);
                 SalesLine.SetRange("Location Code", Location.Code);
