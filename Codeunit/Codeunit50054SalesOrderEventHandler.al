@@ -264,7 +264,7 @@ codeunit 50054 "Sales Order Event Handler"
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Sales Header", 'OnAfterValidateEvent', 'subsidiary', true, true)]
-    local procedure SalesHeaderOnAfterValidateSubsidiary(var rec: record "Sales Header"; var xrec: Record "Sales Header")
+    local procedure SalesHeaderOnAfterValidateSubsidiary(var rec: record "Sales Header"; var xrec: Record "Sales Header"; CurrFieldNo: Integer)
     var
         GlSetup: Record "General Ledger Setup";
     begin
@@ -277,13 +277,15 @@ codeunit 50054 "Sales Order Event Handler"
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Sales Header", 'OnAfterValidateEvent', 'financing partner', true, true)]
-    local procedure SalesHeaderOnAfterValidateFinancingPartner(var rec: record "Sales Header")
+    local procedure SalesHeaderOnAfterValidateFinancingPartner(var rec: record "Sales Header"; var xRec: Record "Sales Header"; CurrFieldNo: Integer)
     var
         GlSetup: Record "General Ledger Setup";
     begin
         GlSetup.get();
         if CompanyName() <> GlSetup."Master Company" then
             exit;
+
+        if Rec."Financing Partner" = xRec."Financing Partner" then exit;
 
         if rec.Subsidiary <> '' then
             Error('You cannot change an intercompany order');
