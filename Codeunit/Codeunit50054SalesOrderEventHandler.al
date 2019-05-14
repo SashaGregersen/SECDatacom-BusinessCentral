@@ -227,27 +227,30 @@ codeunit 50054 "Sales Order Event Handler"
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Sales Header", 'OnAfterValidateEvent', 'end customer', true, true)]
-    local procedure SalesHeaderOnAfterValidateEndCustomer(var rec: record "Sales Header")
+    local procedure SalesHeaderOnAfterValidateEndCustomer(var rec: record "Sales Header"; var xRec: Record "Sales Header"; CurrFieldNo: Integer)
     var
         GlSetup: Record "General Ledger Setup";
     begin
         GlSetup.get();
         if CompanyName() <> GlSetup."Master Company" then
             exit;
+
+        if Rec."End Customer" = xRec."End Customer" then exit;
 
         if rec.Subsidiary <> '' then
             Error('You cannot change an intercompany order');
-
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Sales Header", 'OnAfterValidateEvent', 'Reseller', true, true)]
-    local procedure SalesHeaderOnAfterValidateReseller(var rec: record "Sales Header")
+    local procedure SalesHeaderOnAfterValidateReseller(var rec: record "Sales Header"; var xRec: Record "Sales Header"; CurrFieldNo: Integer)
     var
         GlSetup: Record "General Ledger Setup";
     begin
         GlSetup.get();
         if CompanyName() <> GlSetup."Master Company" then
             exit;
+
+        if Rec."Reseller" = xRec."Reseller" then exit;
 
         if rec.Subsidiary <> '' then
             Error('You cannot change an intercompany order');
@@ -429,12 +432,16 @@ codeunit 50054 "Sales Order Event Handler"
             Rec.Validate("Payment Method Code", AdvPaymentMethodSetup."Payment Method Code");
     end;
 
-    /* [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post (Yes/No)", 'OnBeforeConfirmSalesPost', '', true, true)]
+    /*
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post (Yes/No)", 'OnBeforeConfirmSalesPost', '', true, true)]
     local procedure OnBeforeConfirmSalesPost_PostYesNo(VAR SalesHeader: Record "Sales Header"; VAR HideDialog: Boolean; VAR IsHandled: Boolean; VAR DefaultOption: Integer; VAR PostAndSend: Boolean)
     var
         SelectionPage: Page "Sales Posting Options";
     begin
         Clear(SelectionPage);
+
+        SalesHeader.SetHideValidationDialog(true);
+
         SelectionPage.SetRecord(SalesHeader);
         if SelectionPage.RunModal() = Action::OK then
             SelectionPage.GetRecord(SalesHeader)
@@ -442,7 +449,8 @@ codeunit 50054 "Sales Order Event Handler"
             IsHandled := true;
 
         HideDialog := true;
-    end; */
+    end;
+    */
 
     /* [EventSubscriber(ObjectType::table, database::"Sales Line", 'OnAfterValidateEvent', 'Qty. to Invoice', true, true)]
 
@@ -470,7 +478,7 @@ codeunit 50054 "Sales Order Event Handler"
         ICSyncMgt.UpdateQtyToInvoiceInICCompany(SalesLine);
     end; */
 
-
+    /*
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", 'OnAfterCheckAndUpdate', '', true, true)]
     local procedure SalesPost_OnAfterCheckAndUpdate(var SalesHeader: Record "Sales Header"; CommitIsSuppressed: Boolean; PreviewMode: Boolean)
     begin
@@ -485,6 +493,19 @@ codeunit 50054 "Sales Order Event Handler"
         WhseRqst."Shipping Advice" := WhseRqst."Shipping Advice"::Complete;
         WhseRqst.Modify();
     end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Create Inventory Pick/Movement", 'OnAfterAutoCreatePickOrMove', '', true, true)]
+    local procedure CreateInvtPick_OnBeforeNewWhseActivLineInsertFromSales(VAR WarehouseActivityLine: Record "Warehouse Activity Line"; SalesLine: Record "Sales Line")
+    var
+        SalesHeader: Record "Sales Header";
+    begin
+        SalesHeader.Get(SalesLine."Document Type", SalesLine."Document No.");
+
+        if SalesHeader."SEC Shipping Advice" <> SalesHeader."SEC Shipping Advice"::Complete then exit;
+
+        WarehouseActivityLine."Shipping Advice" := WarehouseActivityLine."Shipping Advice"::Complete;
+    end;
+    */
 
 
     procedure SECCheckShippingAdvice(SalesHeader: Record "Sales Header")
