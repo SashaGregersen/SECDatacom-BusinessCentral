@@ -464,9 +464,6 @@ codeunit 50054 "Sales Order Event Handler"
         SelectionPage: Page "Sales Posting Options";
     begin
         Clear(SelectionPage);
-
-        SalesHeader.SetHideValidationDialog(true);
-
         SelectionPage.SetRecord(SalesHeader);
         if SelectionPage.RunModal() = Action::OK then
             SelectionPage.GetRecord(SalesHeader)
@@ -476,29 +473,67 @@ codeunit 50054 "Sales Order Event Handler"
         HideDialog := true;
     end;
 
-    /*
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Whse.-Sales Release", 'OnAfterCreateWhseRequest', '', true, true)]
-    local procedure WhseSalesRelease_OnAfterCreateWhseRequest(var WhseRqst: Record "Warehouse Request"; var SalesHeader: Record "Sales Header"; var SalesLine: Record "Sales Line"; WhseType: Option Inbound,Outbound)
-    begin
-        if SalesHeader."SEC Shipping Advice" <> SalesHeader."SEC Shipping Advice"::Complete then exit;
-
-        WhseRqst."Shipping Advice" := WhseRqst."Shipping Advice"::Complete;
-        WhseRqst.Modify();
-    end;
-
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Create Inventory Pick/Movement", 'OnAfterAutoCreatePickOrMove', '', true, true)]
-    local procedure CreateInvtPick_OnBeforeNewWhseActivLineInsertFromSales(VAR WarehouseActivityLine: Record "Warehouse Activity Line"; SalesLine: Record "Sales Line")
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Create Inventory Pick/Movement", 'OnAfterCreateInventoryPickMovement', '', true, true)]
+    local procedure CreateInvtPick_OnAfterCreateInventoryPickMovement(VAR WarehouseRequest: Record "Warehouse Request"; LineCreated: Boolean)
     var
+        WhseActivHeader: Record "Warehouse Activity Header";
+        WhseActivLine: Record "Warehouse Activity Line";
+        TmpLocation: Record Location temporary;
         SalesHeader: Record "Sales Header";
+        SalesLine: Record "Sales Line";
     begin
-        SalesHeader.Get(SalesLine."Document Type", SalesLine."Document No.");
+        if WarehouseRequest."Source Document" <> WarehouseRequest."Source Document"::"Sales Order" then exit;
+        if WarehouseRequest."Source Subtype" <> WarehouseRequest."Source Subtype"::"1" then exit;
 
+        SECGetShippingAdviceLocations(WarehouseRequest, TmpLocation);
+
+
+
+        Result := true;
+        if SalesLine.FindSet() then
+            repeat
+                Item.Get(SalesLine."No.");
+                if SalesLine.IsShipment and (Item.Type = Item.Type::Inventory) then begin
+                    QtyToShipBaseTotal += SalesLine."Qty. to Ship (Base)";
+                    if SalesLine."Quantity (Base)" <> SalesLine."Qty. to Ship (Base)" + SalesLine."Qty. Shipped (Base)" then
+                        Result := false;
+                end;
+            until SalesLine.Next() = 0;
+
+        SECCheckShippingAdvice(SalesHeader, true, TmpLocation);
+
+        WhseActivHeader.SetRange("Source Document", WarehouseRequest."Source Document");
+        WhseActivHeader.SetRange("Source Type", WarehouseRequest."Source Type");
+        WhseActivHeader.SetRange("Source Subtype", WarehouseRequest."Source Subtype");
+
+        if TmpLocation.FindSet() then
+            repeat
+                WhseActivHeader.SetRange("Location Code", TmpLocation.Code);
+                if WhseActivHeader.FindFirst() then begin
+                    WhseActivHeader.Delete(true);
+                end;
+            until TmpLocation.Next() = 0;
+    end;
+
+    procedure SECGetShippingAdviceLocations(var WarehouseRequest: Record "Warehouse Request"; TmpLocation: Record Location)
+    var
+        Location: Record Location;
+        SalesHeader: Record "Sales Header";
+        SalesLine: Record "Sales Line";
+    begin
+        SalesHeader.Get(WarehouseRequest."Source Subtype", WarehouseRequest."Source No.");
         if SalesHeader."SEC Shipping Advice" <> SalesHeader."SEC Shipping Advice"::Complete then exit;
 
-        WarehouseActivityLine."Shipping Advice" := WarehouseActivityLine."Shipping Advice"::Complete;
-    end;
-    */
+        SalesLine.SetRange("Document Type", SalesHeader."Document Type");
+        SalesLine.SetRange("Document No.", SalesHeader."No.");
+        SalesLine.SetRange("Drop Shipment", false);
+        SalesLine.SetRange(Type, SalesLine.Type::Item);
+        SalesLine.SetRange("Location Code", Location.Code);
 
+        if Location.FindSet() then
+            repeat
+            until Location.Next() = 0;
+    end;
 
     procedure SECCheckShippingAdvice(SalesHeader: Record "Sales Header")
     var
@@ -533,7 +568,7 @@ codeunit 50054 "Sales Order Event Handler"
                 if QtyToShipBaseTotal = 0 then
                     Result := true;
                 if not Result then
-                    ERROR(ShippingAdviceErr);
+                    Error(ShippingAdviceErr);
             until Location.Next() = 0;
     end;
 }
