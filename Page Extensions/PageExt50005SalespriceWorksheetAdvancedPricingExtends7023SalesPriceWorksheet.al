@@ -38,6 +38,19 @@ pageextension 50005 "Price Wrksh. Adv. Pricing" extends "Sales Price Worksheet"
                     FileMgtImport.ImportSalesPricesFromCSV();
                 end;
             }
+            action("Import cost prices")
+            {
+                Image = ItemGroup;
+                trigger OnAction();
+                var
+                    FileMgtImport: Codeunit "File Management Import";
+                    PurchasePricePage: Page "Purchase Prices";
+                begin
+                    PurchasePricePage.RUN;
+                    FileMgtImport.ImportCostPricesFromCSV();
+                    CurrPage.CLOSE
+                end;
+            }
 
         }
     }

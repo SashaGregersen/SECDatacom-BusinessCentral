@@ -721,4 +721,63 @@ codeunit 50003 "File Management Import"
         UNTIL TempCSVBuffer.NEXT = 0;
 
     end;
+
+    procedure ImportCostPricesFromCSV()
+    var
+        WindowTitle: text;
+        FileName: text;
+        FileMgt: Codeunit "File Management";
+        TempCSVBuffer: Record "CSV Buffer" temporary;
+        PurchasePrice: Record "Purchase Price";
+        TempDec: Decimal;
+        TempDate: Date;
+        Item: Record "Item";
+    begin
+        WindowTitle := 'Select file';
+        FileName := FileMgt.OpenFileDialog(WindowTitle, '', '');
+        TempCSVBuffer.LoadData(FileName, ',');
+        //Verify if csv input file will be seperated with , or ; Unncomment below and deleta above if ;
+        //TempCSVBuffer.init;
+        //SelectFileFromFileShare(TempCSVBuffer);
+
+        IF TempCSVBuffer.FINDSET THEN
+            REPEAT
+                TempCSVBuffer.NEXT
+            UNTIL TempCSVBuffer."Line No." = 2;
+        REPEAT
+            IF (TempCSVBuffer."Field No." = 1) THEN
+                PurchasePrice.INIT;
+            CASE TempCSVBuffer."Field No." OF
+                1:
+                    PurchasePrice.VALIDATE("Vendor No.", TempCSVBuffer.Value);
+                2:
+                    BEGIN
+                        Item.SETRANGE("Vendor No.", PurchasePrice."Vendor No.");
+                        Item.SETRANGE("Vendor-Item-No.", TempCSVBuffer.Value);
+                        Item.FINDFIRST;
+                        PurchasePrice.VALIDATE("Item No.", Item."No.");
+                        PurchasePrice.VALIDATE("Unit of Measure Code", Item."Base Unit of Measure");
+                        PurchasePrice.VALIDATE("Minimum Quantity", 0);
+                    END;
+                3:
+                    BEGIN
+                        EVALUATE(TempDec, TempCSVBuffer.Value);
+                        PurchasePrice.VALIDATE("Direct Unit Cost", TempDec);
+                    END;
+                4:
+                    IF (TempCSVBuffer.Value = '') THEN
+                        PurchasePrice.VALIDATE("Currency Code", Item."Vendor Currency")
+                    ELSE
+                        PurchasePrice.VALIDATE("Currency Code", TempCSVBuffer.Value);
+                5:
+                    BEGIN
+                        IF NOT (TempCSVBuffer.Value = '') THEN BEGIN
+                            EVALUATE(TempDate, TempCSVBuffer.Value);
+                            PurchasePrice.VALIDATE("Starting Date", TempDate);
+                        END;
+                        IF NOT PurchasePrice.INSERT THEN PurchasePrice.MODIFY;
+                    END;
+            END;
+        UNTIL TempCSVBuffer.NEXT = 0;
+    end;
 }
