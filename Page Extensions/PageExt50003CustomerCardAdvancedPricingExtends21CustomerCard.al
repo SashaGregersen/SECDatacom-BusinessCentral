@@ -2,6 +2,17 @@ pageextension 50003 "Customer Card Advanced Pricing" extends "Customer Card"
 {
     layout
     {
+        modify("Shipping Advice")
+        {
+            Visible = false;
+        }
+        addafter("Shipping Advice")
+        {
+            field(xShippingAdvice; xShippingAdvice)
+            {
+                ApplicationArea = all;
+            }
+        }
         modify("Credit Limit (LCY)")
         {
             Editable = false;

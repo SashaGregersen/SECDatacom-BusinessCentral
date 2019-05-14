@@ -453,9 +453,6 @@ codeunit 50054 "Sales Order Event Handler"
         SelectionPage: Page "Sales Posting Options";
     begin
         Clear(SelectionPage);
-
-        SalesHeader.SetHideValidationDialog(true);
-
         SelectionPage.SetRecord(SalesHeader);
         if SelectionPage.RunModal() = Action::OK then
             SelectionPage.GetRecord(SalesHeader)
@@ -465,29 +462,69 @@ codeunit 50054 "Sales Order Event Handler"
         HideDialog := true;
     end;
 
-    /*
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Whse.-Sales Release", 'OnAfterCreateWhseRequest', '', true, true)]
-    local procedure WhseSalesRelease_OnAfterCreateWhseRequest(var WhseRqst: Record "Warehouse Request"; var SalesHeader: Record "Sales Header"; var SalesLine: Record "Sales Line"; WhseType: Option Inbound,Outbound)
+    [EventSubscriber(ObjectType::Table, Database::"Sales Header", 'OnAfterCopySellToCustomerAddressFieldsFromCustomer', '', true, true)]
+    local procedure SalesHeader_OnAfterCopySellToCustomerAddressFieldsFromCustomer(var SalesHeader: Record "Sales Header"; SellToCustomer: Record Customer; CurrentFieldNo: Integer)
     begin
-        if SalesHeader."SEC Shipping Advice" <> SalesHeader."SEC Shipping Advice"::Complete then exit;
-
-        WhseRqst."Shipping Advice" := WhseRqst."Shipping Advice"::Complete;
-        WhseRqst.Modify();
+        SalesHeader.xShippingAdvice := SellToCustomer.xShippingAdvice;
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Create Inventory Pick/Movement", 'OnAfterAutoCreatePickOrMove', '', true, true)]
-    local procedure CreateInvtPick_OnBeforeNewWhseActivLineInsertFromSales(VAR WarehouseActivityLine: Record "Warehouse Activity Line"; SalesLine: Record "Sales Line")
+    local procedure CreateInvtPick_OnAfterAutoCreatePickOrMove(var WarehouseRequest: Record "Warehouse Request"; LineCreated: Boolean)
     var
+        WhseActivHeader: Record "Warehouse Activity Header";
+        WhseActivLine: Record "Warehouse Activity Line";
+        TmpLocation: Record Location temporary;
         SalesHeader: Record "Sales Header";
+        SalesLine: Record "Sales Line";
     begin
-        SalesHeader.Get(SalesLine."Document Type", SalesLine."Document No.");
+        if WarehouseRequest."Source Document" <> WarehouseRequest."Source Document"::"Sales Order" then exit;
+        if WarehouseRequest."Source Subtype" <> WarehouseRequest."Source Subtype"::"1" then exit;
 
-        if SalesHeader."SEC Shipping Advice" <> SalesHeader."SEC Shipping Advice"::Complete then exit;
+        SECGetShippingAdviceLocations(WarehouseRequest, TmpLocation);
 
-        WarehouseActivityLine."Shipping Advice" := WarehouseActivityLine."Shipping Advice"::Complete;
+        WhseActivHeader.SetRange("Source Document", WarehouseRequest."Source Document");
+        WhseActivHeader.SetRange("Source Type", WarehouseRequest."Source Type");
+        WhseActivHeader.SetRange("Source Subtype", WarehouseRequest."Source Subtype");
+        WhseActivHeader.SetRange("Source No.", WarehouseRequest."Source No.");
+
+        if TmpLocation.FindSet() then
+            repeat
+                WhseActivHeader.SetRange("Location Code", TmpLocation.Code);
+                WhseActivHeader.FindFirst();
+                WhseActivHeader.Delete(true);
+            until TmpLocation.Next() = 0;
     end;
-    */
 
+    procedure SECGetShippingAdviceLocations(var WarehouseRequest: Record "Warehouse Request"; var TmpLocation: Record Location)
+    var
+        Location: Record Location;
+        WhseActivLine: Record "Warehouse Activity Line";
+        SalesHeader: Record "Sales Header";
+        SalesLine: Record "Sales Line";
+    begin
+        SalesHeader.Get(WarehouseRequest."Source Subtype", WarehouseRequest."Source No.");
+        if SalesHeader."xShippingAdvice" <> SalesHeader."xShippingAdvice"::Complete then exit;
+
+        if Location.FindSet() then
+            repeat
+                WhseActivLine.SetRange("Source Document", WarehouseRequest."Source Document");
+                WhseActivLine.SetRange("Source Type", WarehouseRequest."Source Type");
+                WhseActivLine.SetRange("Source Subtype", WarehouseRequest."Source Subtype");
+                WhseActivLine.SetRange("Source No.", WarehouseRequest."Source No.");
+                WhseActivLine.SetRange("Location Code", Location.Code);
+
+                if WhseActivLine.FindSet() then
+                    repeat
+                        SalesLine.Get(WhseActivLine."Source Subtype",
+                                        WhseActivLine."Source No.",
+                                        WhseActivLine."Source Line No.");
+                        if SalesLine."Qty. to Ship (Base)" <> WhseActivLine."Qty. (Base)" then begin
+                            TmpLocation := Location;
+                            if TmpLocation.Insert() then;
+                        end;
+                    until WhseActivLine.Next() = 0;
+            until Location.Next() = 0;
+    end;
 
     procedure SECCheckShippingAdvice(SalesHeader: Record "Sales Header")
     var
@@ -522,7 +559,7 @@ codeunit 50054 "Sales Order Event Handler"
                 if QtyToShipBaseTotal = 0 then
                     Result := true;
                 if not Result then
-                    ERROR(ShippingAdviceErr);
+                    Error(ShippingAdviceErr);
             until Location.Next() = 0;
     end;
 }
