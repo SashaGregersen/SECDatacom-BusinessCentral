@@ -4,12 +4,19 @@ pageextension 50009 "Item Adv. Pricing" extends "Item Card"
     {
         addafter("Vendor Item No.")
         {
+            field("Vendor-Item-No."; "Vendor-Item-No.")
+            {
+                ApplicationArea = all;
+            }
             field("Vendor Currency"; "Vendor Currency")
             {
                 ApplicationArea = All;
             }
         }
-
+        modify("Vendor Item No.")
+        {
+            Visible = false;
+        }
         addafter("Profit %")
         {
             field("Transfer Price %"; "Transfer Price %")
