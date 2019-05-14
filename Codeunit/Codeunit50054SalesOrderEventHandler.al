@@ -401,23 +401,12 @@ codeunit 50054 "Sales Order Event Handler"
         END;
     end;
 
-    /* [EventSubscriber(ObjectType::Table, database::"Sales Line", 'OnBeforeValidateEvent', 'Quantity', true, true)]
-    local procedure TestICFieldsOnBeforeValidateQty(var Rec: Record "Sales Line")
-    var
-        ICPONO: code[20];
-        ICSONo: code[20];
-    begin
-        ICPONO := Rec."IC PO No.";
-        ICSONo := Rec."IC SO No.";
-    end; */
-
     local procedure TestIfICLineCanBeChanged(var SalesLineToTest: Record "Sales Line")
     var
         SalesHeader: record "Sales Header";
         LocalSalesLine: record "Sales Line";
         HandledICInboxSalesHeader: record "Handled IC Inbox Sales Header";
     begin
-        //exit; //Need to be updated! Find a way to test if it is the IC flow that does this
         HandledICInboxSalesHeader.setrange("No.", SalesLineToTest."IC PO No.");
         if HandledICInboxSalesHeader.FindFirst() then begin
             If salesheader.get(SalesLineToTest."Document Type", SalesLineToTest."Document No.") then begin
