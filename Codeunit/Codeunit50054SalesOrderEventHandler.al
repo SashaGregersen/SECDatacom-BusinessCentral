@@ -487,21 +487,6 @@ codeunit 50054 "Sales Order Event Handler"
 
         SECGetShippingAdviceLocations(WarehouseRequest, TmpLocation);
 
-
-
-        Result := true;
-        if SalesLine.FindSet() then
-            repeat
-                Item.Get(SalesLine."No.");
-                if SalesLine.IsShipment and (Item.Type = Item.Type::Inventory) then begin
-                    QtyToShipBaseTotal += SalesLine."Qty. to Ship (Base)";
-                    if SalesLine."Quantity (Base)" <> SalesLine."Qty. to Ship (Base)" + SalesLine."Qty. Shipped (Base)" then
-                        Result := false;
-                end;
-            until SalesLine.Next() = 0;
-
-        SECCheckShippingAdvice(SalesHeader, true, TmpLocation);
-
         WhseActivHeader.SetRange("Source Document", WarehouseRequest."Source Document");
         WhseActivHeader.SetRange("Source Type", WarehouseRequest."Source Type");
         WhseActivHeader.SetRange("Source Subtype", WarehouseRequest."Source Subtype");
@@ -509,29 +494,38 @@ codeunit 50054 "Sales Order Event Handler"
         if TmpLocation.FindSet() then
             repeat
                 WhseActivHeader.SetRange("Location Code", TmpLocation.Code);
-                if WhseActivHeader.FindFirst() then begin
-                    WhseActivHeader.Delete(true);
-                end;
+                WhseActivHeader.FindFirst();
+                WhseActivHeader.Delete(true);
             until TmpLocation.Next() = 0;
     end;
 
     procedure SECGetShippingAdviceLocations(var WarehouseRequest: Record "Warehouse Request"; TmpLocation: Record Location)
     var
         Location: Record Location;
+        WhseActivLine: Record "Warehouse Activity Line";
         SalesHeader: Record "Sales Header";
         SalesLine: Record "Sales Line";
     begin
         SalesHeader.Get(WarehouseRequest."Source Subtype", WarehouseRequest."Source No.");
         if SalesHeader."SEC Shipping Advice" <> SalesHeader."SEC Shipping Advice"::Complete then exit;
 
-        SalesLine.SetRange("Document Type", SalesHeader."Document Type");
-        SalesLine.SetRange("Document No.", SalesHeader."No.");
-        SalesLine.SetRange("Drop Shipment", false);
-        SalesLine.SetRange(Type, SalesLine.Type::Item);
-        SalesLine.SetRange("Location Code", Location.Code);
-
         if Location.FindSet() then
             repeat
+                WhseActivLine.SetRange("Source Document", WarehouseRequest."Source Document");
+                WhseActivLine.SetRange("Source Type", WarehouseRequest."Source Type");
+                WhseActivLine.SetRange("Source Subtype", WarehouseRequest."Source Subtype");
+                WhseActivLine.SetRange("Location Code", Location.Code);
+                WhseActivLine.SetRange("Activity Type", WhseActivLine."Action Type"::Take);
+                if WhseActivLine.FindSet() then
+                    repeat
+                        SalesLine.Get(WhseActivLine."Source Subtype",
+                                        WhseActivLine."Source No.",
+                                        WhseActivLine."Source Line No.");
+                        if SalesLine."Qty. to Ship (Base)" <> WhseActivLine."Qty. (Base)" then begin
+                            TmpLocation := Location;
+                            if TmpLocation.Insert() then;
+                        end;
+                    until WhseActivLine.Next() = 0;
             until Location.Next() = 0;
     end;
 

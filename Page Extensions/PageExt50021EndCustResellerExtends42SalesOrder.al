@@ -177,9 +177,8 @@ pageextension 50021 "End Customer and Reseller" extends 42
                 trigger OnAction()
                 var
                     SalesOrderAction: Codeunit "Sales Order Event Handler";
-                    TmpLocation: Record Location temporary;
                 begin
-                    SalesOrderAction.SECCheckShippingAdvice(Rec, false, TmpLocation);
+                    SalesOrderAction.SECCheckShippingAdvice(Rec);
                     CreateInvtPutAwayPick();
                 end;
             }
