@@ -462,8 +462,14 @@ codeunit 50054 "Sales Order Event Handler"
         HideDialog := true;
     end;
 
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Create Inventory Pick/Movement", 'OnAfterCreateInventoryPickMovement', '', true, true)]
-    local procedure CreateInvtPick_OnAfterCreateInventoryPickMovement(VAR WarehouseRequest: Record "Warehouse Request"; LineCreated: Boolean)
+    [EventSubscriber(ObjectType::Table, Database::"Sales Header", 'OnAfterCopySellToCustomerAddressFieldsFromCustomer', '', true, true)]
+    local procedure SalesHeader_OnAfterCopySellToCustomerAddressFieldsFromCustomer(var SalesHeader: Record "Sales Header"; SellToCustomer: Record Customer; CurrentFieldNo: Integer)
+    begin
+        SalesHeader.xShippingAdvice := SellToCustomer.xShippingAdvice;
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Create Inventory Pick/Movement", 'OnAfterAutoCreatePickOrMove', '', true, true)]
+    local procedure CreateInvtPick_OnAfterAutoCreatePickOrMove(var WarehouseRequest: Record "Warehouse Request"; LineCreated: Boolean)
     var
         WhseActivHeader: Record "Warehouse Activity Header";
         WhseActivLine: Record "Warehouse Activity Line";
@@ -479,6 +485,7 @@ codeunit 50054 "Sales Order Event Handler"
         WhseActivHeader.SetRange("Source Document", WarehouseRequest."Source Document");
         WhseActivHeader.SetRange("Source Type", WarehouseRequest."Source Type");
         WhseActivHeader.SetRange("Source Subtype", WarehouseRequest."Source Subtype");
+        WhseActivHeader.SetRange("Source No.", WarehouseRequest."Source No.");
 
         if TmpLocation.FindSet() then
             repeat
@@ -488,7 +495,7 @@ codeunit 50054 "Sales Order Event Handler"
             until TmpLocation.Next() = 0;
     end;
 
-    procedure SECGetShippingAdviceLocations(var WarehouseRequest: Record "Warehouse Request"; TmpLocation: Record Location)
+    procedure SECGetShippingAdviceLocations(var WarehouseRequest: Record "Warehouse Request"; var TmpLocation: Record Location)
     var
         Location: Record Location;
         WhseActivLine: Record "Warehouse Activity Line";
@@ -496,15 +503,16 @@ codeunit 50054 "Sales Order Event Handler"
         SalesLine: Record "Sales Line";
     begin
         SalesHeader.Get(WarehouseRequest."Source Subtype", WarehouseRequest."Source No.");
-        if SalesHeader."SEC Shipping Advice" <> SalesHeader."SEC Shipping Advice"::Complete then exit;
+        if SalesHeader."xShippingAdvice" <> SalesHeader."xShippingAdvice"::Complete then exit;
 
         if Location.FindSet() then
             repeat
                 WhseActivLine.SetRange("Source Document", WarehouseRequest."Source Document");
                 WhseActivLine.SetRange("Source Type", WarehouseRequest."Source Type");
                 WhseActivLine.SetRange("Source Subtype", WarehouseRequest."Source Subtype");
+                WhseActivLine.SetRange("Source No.", WarehouseRequest."Source No.");
                 WhseActivLine.SetRange("Location Code", Location.Code);
-                WhseActivLine.SetRange("Activity Type", WhseActivLine."Action Type"::Take);
+
                 if WhseActivLine.FindSet() then
                     repeat
                         SalesLine.Get(WhseActivLine."Source Subtype",

@@ -59,6 +59,11 @@ tableextension 50020 CustomerType extends 18
             TableRelation = Company.Name;
             Editable = true; //ret til false
         }
+        field(50004; "xShippingAdvice"; Option)
+        {
+            Caption = 'Shipping Advice';
+            OptionMembers = Partial,Complete;
+        }
     }
 
 }
