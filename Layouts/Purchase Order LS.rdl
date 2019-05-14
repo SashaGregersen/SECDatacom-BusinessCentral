@@ -656,7 +656,7 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>27.33709cm</Width>
+                  <Width>27.3763cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -847,10 +847,10 @@ Cstr(Fields!Var_ID.Value), 1)</Hidden>
                               <TablixBody>
                                 <TablixColumns>
                                   <TablixColumn>
-                                    <Width>0.61922in</Width>
+                                    <Width>1.15047in</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>4.81421in</Width>
+                                    <Width>4.62671in</Width>
                                   </TablixColumn>
                                   <TablixColumn>
                                     <Width>0.63316in</Width>
@@ -862,7 +862,7 @@ Cstr(Fields!Var_ID.Value), 1)</Hidden>
                                     <Width>0.76047in</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>1.40443in</Width>
+                                    <Width>1.1336in</Width>
                                   </TablixColumn>
                                   <TablixColumn>
                                     <Width>0.98425in</Width>
@@ -3383,7 +3383,7 @@ Cstr(Fields!Var_ID.Value), 1)</Hidden>
                               </SortExpressions>
                               <Top>0.03167cm</Top>
                               <Height>6.84384cm</Height>
-                              <Width>10.65307in</Width>
+                              <Width>10.72599in</Width>
                               <ZIndex>1</ZIndex>
                               <Style />
                             </Tablix>
@@ -10736,7 +10736,7 @@ Cstr(Fields!Var_ID.Value), 1)</Hidden>
             <DataSetName>DataSet_Result</DataSetName>
             <Left>0.04795cm</Left>
             <Height>31.3cm</Height>
-            <Width>27.33709cm</Width>
+            <Width>27.3763cm</Width>
             <Style />
           </Tablix>
         </ReportItems>

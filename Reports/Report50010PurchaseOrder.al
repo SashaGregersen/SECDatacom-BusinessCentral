@@ -466,6 +466,9 @@ report 50010 "SEC Purchase Order"
                         column(VendorBidNo; Bid."Vendor Bid No.")
                         {
                         }
+                        column(VendorItemNo; "Purchase Line"."Vendor-Item-No")
+                        {
+                        }
                         //<< NC
                         column(Claimable; "Purchase Line".Claimable)
                         {
