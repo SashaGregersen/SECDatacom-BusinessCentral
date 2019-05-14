@@ -700,14 +700,14 @@ Cstr(Fields!Var_ID.Value), 1)</Hidden>
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="BidNo">
+                                          <Textbox Name="VendorBidNo">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!BidNo.Value</Value>
+                                                    <Value>=Fields!VendorBidNo.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -720,14 +720,12 @@ Cstr(Fields!Var_ID.Value), 1)</Hidden>
                                                 </Style>
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>BidNo</rd:DefaultName>
-                                            <Visibility>
-                                              <Hidden>=Fields!Claimable.Value</Hidden>
-                                            </Visibility>
+                                            <rd:DefaultName>VendorBidNo</rd:DefaultName>
                                             <Style>
                                               <Border>
                                                 <Style>None</Style>
                                               </Border>
+                                              <BackgroundColor>Turquoise</BackgroundColor>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingLeft>5pt</PaddingLeft>
                                               <PaddingRight>5pt</PaddingRight>
@@ -2746,7 +2744,7 @@ Cstr(Fields!Var_ID.Value), 1)</Hidden>
                               </SortExpressions>
                               <Top>0.03167cm</Top>
                               <Height>6.84384cm</Height>
-                              <Width>10.65306in</Width>
+                              <Width>10.65307in</Width>
                               <ZIndex>1</ZIndex>
                               <Style />
                             </Tablix>
@@ -11933,6 +11931,9 @@ End Function</Code>
         </Field>
         <Field Name="BidNo">
           <DataField>BidNo</DataField>
+        </Field>
+        <Field Name="VendorBidNo">
+          <DataField>VendorBidNo</DataField>
         </Field>
         <Field Name="Claimable">
           <DataField>Claimable</DataField>
