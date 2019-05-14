@@ -44,8 +44,9 @@ tableextension 50014 "Vendor Item No." extends "Sales Price Worksheet"
         Validate("Variant Code", 'LISTPRICE');
         Validate("Unit of Measure Code", Item."Base Unit of Measure");
         Validate("Minimum Quantity", 0);
-        Validate("Currency Code", item."Vendor Currency");
+        Validate("Currency Code", Item."Vendor Currency");
         Validate("Starting Date", Today());
-        IF InsertRec THEN Insert(true);
+        if InsertRec then
+            if Insert(true) then;
     end;
 }
