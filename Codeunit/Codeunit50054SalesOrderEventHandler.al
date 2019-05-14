@@ -108,7 +108,7 @@ codeunit 50054 "Sales Order Event Handler"
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Sales Line", 'OnAfterValidateEvent', 'Unit Price', true, true)]
-    local procedure SalesLineOnAfterValidateUnitPrice(Var rec: record "Sales Line")
+    local procedure SalesLineOnAfterValidateUnitPrice(Var rec: record "Sales Line"; var xRec: Record "Sales Line"; CurrFieldNo: Integer)
     var
         salesheader: record "sales header";
         GlSetup: record "General Ledger Setup";
@@ -116,6 +116,8 @@ codeunit 50054 "Sales Order Event Handler"
         GlSetup.get();
         if CompanyName() <> GlSetup."Master Company" then
             exit;
+
+        if Rec."Unit Price" = xRec."Unit Price" then exit;
 
         TestIfICLineCanBeChanged(rec);
 
@@ -136,7 +138,7 @@ codeunit 50054 "Sales Order Event Handler"
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Sales Line", 'OnAfterValidateEvent', 'Line Discount %', true, true)]
-    local procedure SalesLineOnAfterValidateLineDiscount(Var rec: record "Sales Line")
+    local procedure SalesLineOnAfterValidateLineDiscount(Var rec: record "Sales Line"; var xRec: Record "Sales Line"; CurrFieldNo: Integer)
     var
         salesheader: record "sales header";
         GLSetup: Record "General Ledger Setup";
@@ -145,8 +147,9 @@ codeunit 50054 "Sales Order Event Handler"
         if CompanyName() <> GlSetup."Master Company" then
             exit;
 
-        TestIfICLineCanBeChanged(rec);
+        if Rec."Line Discount %" = xRec."Line Discount %" then exit; //Kunne opdatere bogf. dato
 
+        TestIfICLineCanBeChanged(rec);
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Sales Line", 'OnAfterValidateEvent', 'Bid No.', true, true)]
@@ -455,7 +458,6 @@ codeunit 50054 "Sales Order Event Handler"
             Rec.Validate("Payment Method Code", AdvPaymentMethodSetup."Payment Method Code");
     end;
 
-    /*
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post (Yes/No)", 'OnBeforeConfirmSalesPost', '', true, true)]
     local procedure OnBeforeConfirmSalesPost_PostYesNo(VAR SalesHeader: Record "Sales Header"; VAR HideDialog: Boolean; VAR IsHandled: Boolean; VAR DefaultOption: Integer; VAR PostAndSend: Boolean)
     var
@@ -473,7 +475,6 @@ codeunit 50054 "Sales Order Event Handler"
 
         HideDialog := true;
     end;
-    */
 
     /*
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Whse.-Sales Release", 'OnAfterCreateWhseRequest', '', true, true)]
