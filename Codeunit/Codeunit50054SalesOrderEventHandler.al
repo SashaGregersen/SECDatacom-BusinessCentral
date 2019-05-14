@@ -499,7 +499,7 @@ codeunit 50054 "Sales Order Event Handler"
         ShippingAdviceErr: TextConst ENU = 'This document cannot be shipped completely. Change the value in the Shipping Advice field to Partial.',
                                      DAN = 'Dette dokument kan leveres fuldt ud. Du kan ændre værdien i feltet Afsendelsesadvis til Delvis.';
     begin
-        if SalesHeader."SEC Shipping Advice" <> SalesHeader."SEC Shipping Advice"::Complete then exit;
+        if SalesHeader.xShippingAdvice <> SalesHeader.xShippingAdvice::Complete then exit;
 
         if Location.FindSet() then
             repeat
