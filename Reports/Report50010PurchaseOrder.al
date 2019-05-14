@@ -541,7 +541,8 @@ report 50010 "SEC Purchase Order"
                             //>> NC
                             begin
                                 Bid.SetRange("No.", "Purchase Line"."Bid No.");
-                                Bid.FindFirst();
+                                if not Bid.FindFirst() then
+                                    Bid."Vendor Bid No." := '';
                             end;
                             //<< NC
 
