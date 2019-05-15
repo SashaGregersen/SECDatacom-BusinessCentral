@@ -11,10 +11,15 @@ codeunit 50053 "Vendor Item No Event Handler"
     begin
         If not runtrigger then
             EXIT;
-        if rec."Vendor Item No." <> '' then begin
+        /* if rec."Vendor Item No." <> '' then begin
             Rec.Validate("Vendor-Item-No", Rec."Vendor Item No.");
             rec.Modify(true);
-        end;
+        end; */
+        if rec.type = rec.type::Item then
+            if item.get(rec."No.") then begin
+                rec.validate("Vendor-Item-No", item."Vendor-Item-No.");
+                rec.Modify(true);
+            end;
     end;
 
     [EventSubscriber(ObjectType::table, database::"Purchase Line", 'OnAfterModifyEvent', '', true, true)]
@@ -25,20 +30,30 @@ codeunit 50053 "Vendor Item No Event Handler"
     begin
         If not runtrigger then
             EXIT;
-        if rec."Vendor Item No." <> '' then begin
-            Rec.Validate("Vendor-Item-No", Rec."Vendor Item No.");
-            rec.Modify(false);
-        end;
+        /*  if rec."Vendor Item No." <> '' then begin
+             Rec.Validate("Vendor-Item-No", Rec."Vendor Item No.");
+             rec.Modify(false);
+         end; */
+        if rec.type = rec.type::Item then
+            if item.get(rec."No.") then begin
+                rec.validate("Vendor-Item-No", item."Vendor-Item-No.");
+                rec.Modify(false);
+            end;
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Item Vendor", 'OnAfterModifyEvent', '', true, true)]
     local procedure OnAfterModifyVendorItemNoOnItemVendorEvent(var Rec: record "Item Vendor"; runtrigger: Boolean)
     var
+        Item: Record item;
     begin
         if not runtrigger then
             exit;
-        if rec."Vendor Item No." <> '' then begin
+        /* if rec."Vendor Item No." <> '' then begin
             Rec.Validate("Vendor-Item-No.", Rec."Vendor Item No.");
+            rec.Modify(false);
+        end; */
+        if item.get(rec."Item No.") then begin
+            rec.validate("Vendor-Item-No.", item."Vendor-Item-No.");
             rec.Modify(false);
         end;
     end;
@@ -46,35 +61,53 @@ codeunit 50053 "Vendor Item No Event Handler"
     [EventSubscriber(ObjectType::Table, database::"Requisition Line", 'OnAfterValidateEvent', 'Vendor Item No.', true, true)]
     local procedure OnAfterValidateVendorItemNoOnReqLineEvent(var Rec: record "Requisition Line")
     var
+        Item: record Item;
     begin
-        if rec."Vendor Item No." <> '' then begin
+        /* if rec."Vendor Item No." <> '' then begin
             Rec.Validate("Vendor-Item-No", Rec."Vendor Item No.");
             rec.Modify(true);
-        end;
+        end; */
+        if rec.type = rec.type::Item then
+            if item.get(rec."No.") then begin
+                rec.validate("Vendor-Item-No", item."Vendor-Item-No.");
+                rec.Modify(true);
+            end;
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Requisition Line", 'OnAfterInsertEvent', '', true, true)]
     local procedure OnAfterInsertReqLineEvent(var Rec: record "Requisition Line"; runtrigger: Boolean)
     var
+        Item: record item;
     begin
         if not runtrigger then
             exit;
-        if rec."Vendor Item No." <> '' then begin
+        /* if rec."Vendor Item No." <> '' then begin
             Rec.Validate("Vendor-Item-No", Rec."Vendor Item No.");
             rec.Modify(true);
-        end;
+        end; */
+        if rec.type = rec.type::Item then
+            if item.get(rec."No.") then begin
+                rec.validate("Vendor-Item-No", item."Vendor-Item-No.");
+                rec.Modify(true);
+            end;
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Requisition Line", 'OnAfterModifyEvent', '', true, true)]
     local procedure OnAfterModifyReqLineEvent(var Rec: record "Requisition Line"; runtrigger: Boolean)
     var
+        Item: Record Item;
     begin
         if not runtrigger then
             exit;
-        if rec."Vendor Item No." <> '' then begin
+        /* if rec."Vendor Item No." <> '' then begin
             Rec.Validate("Vendor-Item-No", Rec."Vendor Item No.");
             rec.Modify(false);
-        end;
+        end; */
+        if rec.type = rec.type::Item then
+            if item.get(rec."No.") then begin
+                rec.validate("Vendor-Item-No", item."Vendor-Item-No.");
+                rec.Modify(false);
+            end;
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Stockkeeping Unit", 'OnAfterModifyEvent', '', true, true)]

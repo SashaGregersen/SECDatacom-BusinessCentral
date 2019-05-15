@@ -7,6 +7,7 @@ pageextension 50063 "Vendor Item 1" extends "Item Vendor Catalog"
             field("Vendor-Item-No."; "Vendor-Item-No.")
             {
                 ApplicationArea = all;
+                Caption = 'Vendor Item No.';
             }
         }
         modify("Vendor Item No.")

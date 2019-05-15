@@ -7,6 +7,7 @@ pageextension 50067 "Vendor Item 5" extends "Service Item Card"
             field("Vendor-Item-No"; "Vendor-Item-No")
             {
                 ApplicationArea = all;
+                Caption = 'Vendor Item No.';
             }
         }
         modify("Vendor Item No.")

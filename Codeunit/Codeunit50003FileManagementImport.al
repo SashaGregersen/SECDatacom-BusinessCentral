@@ -137,7 +137,7 @@ codeunit 50003 "File Management Import"
                                 Error('Vendor Item No. is missing on line %1', TempCSVBuffer."Line No.");
                             Bid.Get(BidNo);
                             item.SetRange("Vendor No.", bid."Vendor No.");
-                            Item.Setrange("Vendor Item No.", TempCSVBuffer.Value);
+                            Item.Setrange("Vendor-Item-No.", TempCSVBuffer.Value);
                             if Item.FindFirst() then
                                 BidPrices.Validate("item No.", Item."No.")
                             else
@@ -224,7 +224,7 @@ codeunit 50003 "File Management Import"
         if TempCSVBuffer.FindSet() then
             repeat
                 Item.SetRange("Vendor No.", Bid."Vendor No.");
-                Item.Setrange("Vendor Item No.", TempCSVBuffer.Value);
+                Item.Setrange("Vendor-Item-No.", TempCSVBuffer.Value);
                 if not Item.FindFirst() then begin
                     Clear(ConfigTemplateHeader);
                     TempCSVBufferTemplate.SetRange("Line No.", TempCSVBuffer."Line No.");
@@ -238,7 +238,7 @@ codeunit 50003 "File Management Import"
                     Clear(Item);
                     Item.Insert(true);
                     Item.Validate("Vendor No.", Bid."Vendor No.");
-                    Item.Validate("Vendor Item No.", TempCSVBuffer.Value);
+                    Item.Validate("Vendor-Item-No.", TempCSVBuffer.Value);
                     Item.Modify(true);
                     ItemRecRef.GetTable(Item);
 
@@ -466,7 +466,7 @@ codeunit 50003 "File Management Import"
                                 Error('Vendor Item No. is missing on line %1', TempCSVBuffer."Line No.");
                             Bid.Get(BidNo);
                             Item.SetRange("Vendor No.", bid."Vendor No.");
-                            Item.Setrange("Vendor Item No.", TempCSVBuffer.Value);
+                            Item.Setrange("Vendor-Item-No.", TempCSVBuffer.Value);
                             if Item.FindFirst() then
                                 BidPrices.Validate("item No.", Item."No.")
                             else
@@ -560,8 +560,7 @@ codeunit 50003 "File Management Import"
                         end;
                     7:
                         begin
-                            //Field 32 pt. da denne opdaterer 50004
-                            Item."Vendor Item No." := TempCSVBuffer.Value;
+                            Item."Vendor-Item-No." := TempCSVBuffer.Value;
                         end;
                     8:
                         begin
@@ -614,16 +613,16 @@ codeunit 50003 "File Management Import"
             exit;
 
         Item.SetRange("Vendor No.", tmpItem."Vendor No.");
-        Item.Setrange("Vendor Item No.", tmpItem."Vendor Item No.");
+        Item.Setrange("Vendor-Item-No.", tmpItem."Vendor-Item-No.");
         if Item.FindFirst() then
-            Error('Combination of Vendor %1 and Vendor Item No. %2 already exists', tmpItem."Vendor No.", tmpItem."Vendor Item No.");
+            Error('Combination of Vendor %1 and Vendor Item No. %2 already exists', tmpItem."Vendor No.", tmpItem."Vendor-Item-No.");
 
         Clear(Item);
         Item.Insert(true);
         Item.Validate(Description, tmpItem.Description);
         Item.Validate("Description 2", tmpItem."Description 2");
         Item.Validate("Vendor No.", tmpItem."Vendor No.");
-        Item.Validate("Vendor Item No.", tmpItem."Vendor Item No.");
+        Item.Validate("Vendor-Item-No.", tmpItem."Vendor-Item-No.");
         Item.Validate("Item Disc. Group", tmpItem."Item Disc. Group");
         Item.Validate("Net Weight", tmpItem."Net Weight");
         Item.Validate("Transfer Price %", tmpItem."Transfer Price %");

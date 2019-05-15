@@ -7,6 +7,7 @@ pageextension 50009 "Item Adv. Pricing" extends "Item Card"
             field("Vendor-Item-No."; "Vendor-Item-No.")
             {
                 ApplicationArea = all;
+                Caption = 'Vendor Item No.';
             }
             field("Vendor Currency"; "Vendor Currency")
             {

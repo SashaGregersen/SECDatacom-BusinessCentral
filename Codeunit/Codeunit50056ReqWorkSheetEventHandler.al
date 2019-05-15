@@ -54,8 +54,8 @@ codeunit 50056 "Req Worksheet Event Handler"
                     end;
                     PurchOrderLine.validate("Currency Code", CurrencyCode);
                     PurchOrderLine.Validate("Direct Unit Cost", PurchasePrice."Direct Unit Cost");
-                    if PurchOrderLine."Vendor Item No." <> '' then
-                        PurchOrderLine.Validate("Vendor-Item-No", PurchOrderLine."Vendor-Item-No");
+                    /* if PurchOrderLine."Vendor-Item-No" <> '' then
+                        PurchOrderLine.Validate("Vendor-Item-No", PurchOrderLine."Vendor-Item-No"); */
                     if Salesline."Bid No." <> '' then
                         PurchOrderLine.Validate("Bid No.", Salesline."Bid No.");
                     PurchOrderLine.Modify(true);

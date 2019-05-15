@@ -300,7 +300,7 @@ codeunit 50013 "EDICygate"
                 XMLElement1.AppendChild(XMLNode1);
 
                 XMLNode1 := XMLDoc.CreateNode('element', 'ManufacturerPartNumber', '');
-                XMLNode1.InnerText(Item."Vendor Item No.");
+                XMLNode1.InnerText(Item."Vendor-Item-No.");
                 XMLElement1.AppendChild(XMLNode1);
 
                 XMLElement4 := XMLDoc.CreateElement('SchedulingDetails');
@@ -527,7 +527,7 @@ codeunit 50013 "EDICygate"
                 XMLElement7.AppendChild(XMLNode1);
 
                 XMLNode1 := XMLDoc.CreateNode('element', 'ManufacturerPartNumber', '');
-                XMLNode1.InnerText(Item."Vendor Item No.");
+                XMLNode1.InnerText(Item."Vendor-Item-No.");
                 XMLElement7.AppendChild(XMLNode1);
 
                 XMLNode1 := XMLDoc.CreateNode('element', 'EANCode', '');
@@ -850,7 +850,7 @@ codeunit 50013 "EDICygate"
                 XMLElement1.AppendChild(XMLNode1);
 
                 XMLNode1 := XMLDoc.CreateNode('element', 'ManufacturerPartNumber', '');
-                XMLNode1.InnerText(Item."Vendor Item No.");
+                XMLNode1.InnerText(Item."Vendor-Item-No.");
                 XMLElement1.AppendChild(XMLNode1);
 
                 XMLNode1 := XMLDoc.CreateNode('element', 'Description', '');

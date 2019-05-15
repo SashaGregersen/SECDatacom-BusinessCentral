@@ -415,6 +415,7 @@ codeunit 50054 "Sales Order Event Handler"
         LocalSalesLine: record "Sales Line";
         HandledICInboxSalesHeader: record "Handled IC Inbox Sales Header";
     begin
+        exit; //Find a way around 
         HandledICInboxSalesHeader.setrange("No.", SalesLineToTest."IC PO No.");
         if HandledICInboxSalesHeader.FindFirst() then begin
             If salesheader.get(SalesLineToTest."Document Type", SalesLineToTest."Document No.") then begin

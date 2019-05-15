@@ -14,6 +14,7 @@ pageextension 50011 "Substitute Items" extends "Req. Worksheet"
             field("Vendor-Item-No"; "Vendor-Item-No")
             {
                 ApplicationArea = all;
+                Caption = 'Vendor Item No.';
             }
         }
         modify("Vendor Item No.")
