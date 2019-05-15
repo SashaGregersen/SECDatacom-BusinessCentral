@@ -123,6 +123,7 @@ table 50001 "Bid Item Price"
         field(50021; "Claimable"; Boolean)
         {
             DataClassification = ToBeClassified;
+
         }
     }
 

@@ -23,28 +23,33 @@ report 50017 "One Time Bid"
                 }
                 trigger OnPreDataItem()
                 var
-
+                    Claim: Boolean;
+                    BidPurchDiscPct: Decimal;
+                    BidUnitPurchPrice: Decimal;
                 begin
                     Bid.init;
                     "No." := '';
-                    "Bid Item Price".init;
-                end;
-
-                trigger OnAfterGetRecord()
-                var
-
-                begin
                     validate("Vendor No.", VendorNo);
                     Validate("One Time Bid", true);
-                    validate("Vendor Bid No.", "Vendor Bid No.");
-                    validate(Description, Description);
-                    validate(Claimable, Claimable);
+                    validate("Vendor Bid No.", GetFilter("Vendor Bid No."));
+                    validate(Description, GetFilter(Description));
+                    if getfilter(Claimable) <> '' then begin
+                        Evaluate(Claim, getfilter(Claimable));
+                        validate(Claimable, Claim);
+                    end;
                     Insert(true);
+                    "Bid Item Price".init;
                     "Bid Item Price".validate("Bid No.", Bid."No.");
                     "Bid Item Price".validate("item No.", ItemNo);
-                    "Bid Item Price".validate("item No.", CustomerNo);
-                    "Bid Item Price".validate("Bid Purchase Discount Pct.", "Bid Item Price"."Bid Purchase Discount Pct.");
-                    "Bid Item Price".validate("Bid Unit Purchase Price", "Bid Item Price"."Bid Unit Purchase Price");
+                    "Bid Item Price".validate("Customer No.", CustomerNo);
+                    if "Bid Item Price".GetFilter("Bid Purchase Discount Pct.") <> '' then begin
+                        Evaluate(BidPurchDiscPct, "Bid Item Price".GetFilter("Bid Purchase Discount Pct."));
+                        "Bid Item Price".validate("Bid Purchase Discount Pct.", BidPurchDiscPct);
+                    end;
+                    if "Bid Item Price".GetFilter("Bid Unit Purchase Price") <> '' then begin
+                        Evaluate(BidUnitPurchPrice, "Bid Item Price".GetFilter("Bid Unit Purchase Price"));
+                        "Bid Item Price".validate("Bid Unit Purchase Price", BidUnitPurchPrice);
+                    end;
                     "Bid Item Price".Insert(true);
                 end;
 
@@ -80,36 +85,6 @@ report 50017 "One Time Bid"
     begin
         CustomerNo := NewCustomerNo;
     end;
-
-    /* requestpage
-    {
-        layout
-        {
-            area(Content)
-            {
-                group(GroupName)
-                {
-                    field(Name; SourceExpression)
-                    {
-                        ApplicationArea = All;
-
-                    }
-                }
-            }
-        }
-
-        actions
-        {
-            area(processing)
-            {
-                action(ActionName)
-                {
-                    ApplicationArea = All;
-
-                }
-            }
-        }
-    } */
 
     var
         VendorNo: code[20];

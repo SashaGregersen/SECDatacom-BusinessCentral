@@ -82,9 +82,20 @@ pageextension 50002 "Sales Line Bid" extends "Sales Order Subform"
 
                 trigger OnAction()
                 var
-
+                    SalesHeader: record "Sales Header";
+                    OneTimeBid: Report "One Time Bid";
+                    Item: Record item;
                 begin
-
+                    if type <> type::Item then
+                        Error('Can only be used on items');
+                    SalesHeader.get("Document Type", "Document No.");
+                    Item.Get("No.");
+                    OneTimeBid.SetCustomerNo(SalesHeader.Reseller);
+                    OneTimeBid.SetItemNo("No.");
+                    OneTimeBid.SetVendorNo(Item."Vendor No.");
+                    OneTimeBid.SetTableView(Rec);
+                    OneTimeBid.Run();
+                    //Report.Run(50017, true, false, Rec);
                 end;
             }
         }
