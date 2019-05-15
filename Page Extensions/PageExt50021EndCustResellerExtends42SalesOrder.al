@@ -178,7 +178,6 @@ pageextension 50021 "End Customer and Reseller" extends 42
                 var
                     SalesOrderAction: Codeunit "Sales Order Event Handler";
                 begin
-                    Message('virker');
                     SalesOrderAction.SECCheckShippingAdvice(Rec);
                     CreateInvtPutAwayPick();
                 end;
