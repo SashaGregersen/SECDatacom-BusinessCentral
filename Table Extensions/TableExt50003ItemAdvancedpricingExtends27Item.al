@@ -28,10 +28,10 @@ tableextension 50003 "Item Adv. Pricing" extends Item
         {
             DataClassification = ToBeClassified;
 
-            trigger OnValidate()
+            /* trigger OnValidate()
             begin
                 Validate("Vendor Item No.", CopyStr("Vendor-Item-No.", 1, 20));
-            end;
+            end; */
         }
 
         field(50005; "Blocked from purchase"; boolean)
@@ -48,7 +48,7 @@ tableextension 50003 "Item Adv. Pricing" extends Item
 
     Fieldgroups
     {
-        addlast(DropDown; "Vendor Item No.")
+        addlast(DropDown; "Vendor-Item-No.")
         {
 
         }

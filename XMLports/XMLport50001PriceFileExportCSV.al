@@ -27,7 +27,7 @@ xmlport 50001 "Price File Export CSV"
                 {
 
                 }
-                fieldelement(VendItemNo; item."Vendor Item No.")
+                fieldelement(VendItemNo; item."Vendor-Item-No.")
                 {
 
                 }

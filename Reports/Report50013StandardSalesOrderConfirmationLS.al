@@ -529,7 +529,7 @@ report 50013 "SEC Sales - Order Conf. LS"
                 {
                 }
                 //Adding vendor item no column to the sales line
-                column(Vendor_Item_No; Item."Vendor Item No.")
+                column(Vendor_Item_No; Item."Vendor-Item-No.")
                 {
                 }
                 dataitem(AssemblyLine; "Assembly Line")

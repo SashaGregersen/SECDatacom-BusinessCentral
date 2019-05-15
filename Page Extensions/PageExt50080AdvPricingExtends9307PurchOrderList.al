@@ -17,7 +17,7 @@ pageextension 50080 "Adv. Pricing" extends "Purchase Order List"
 
                 trigger OnAction()
                 begin
-                    Codeunit.Run(50021, Rec);
+                    Codeunit.Run(50021, Rec); //fjernes
                 end;
             }
         }

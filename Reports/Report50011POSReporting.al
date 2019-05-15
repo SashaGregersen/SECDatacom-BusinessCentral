@@ -282,7 +282,7 @@ report 50011 "POS Reporting"
                 if Sales_Invoice_Line.Type <> Sales_Invoice_Line.type::Item then
                     CurrReport.skip;
                 item.get(Sales_Invoice_Line."No.");
-                VendorItemNo := item."Vendor Item No.";
+                VendorItemNo := item."Vendor-Item-No.";
                 VARID.SetRange("Customer No.", "Sales Invoice Header".Reseller);
                 VARID.SetRange("Vendor No.", item."Vendor No.");
                 if VARID.FindFirst() then
@@ -606,7 +606,7 @@ report 50011 "POS Reporting"
                     if "Sales Cr.Memo Line".Type <> "Sales Cr.Memo Line".type::Item then
                         CurrReport.skip;
                     item.get("Sales Cr.Memo Line"."No.");
-                    VendorItemNo := item."Vendor Item No.";
+                    VendorItemNo := item."Vendor-Item-No.";
                     VARID.SetRange("Customer No.", "Sales Cr.Memo Header".Reseller);
                     VARID.SetRange("Vendor No.", item."Vendor No.");
                     if VARID.FindFirst() then

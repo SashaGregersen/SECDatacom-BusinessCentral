@@ -22,7 +22,7 @@ xmlport 50000 "Price File Export XML"
                 {
 
                 }
-                fieldelement(VendItemNo; item."Vendor Item No.")
+                fieldelement(VendItemNo; item."Vendor-Item-No.")
                 {
 
                 }

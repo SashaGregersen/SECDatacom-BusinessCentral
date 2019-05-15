@@ -632,7 +632,7 @@ report 50014 "SEC - Sales Invoice LS"
                 column(Vendor_Item_No_Lbl; VendorItemNoLbl)
                 {
                 }
-                column(Vendor_Item_No; Item."Vendor Item No.")
+                column(Vendor_Item_No; Item."Vendor-Item-No.")
                 {
                 }
                 dataitem(ShipmentLine; "Sales Shipment Buffer")

@@ -19,7 +19,7 @@ pageextension 50099 "Temp Hacks" extends "Company Information"
 
                 trigger OnAction()
                 var
-                    TempHacks: Codeunit "Temp Hacks";
+                    TempHacks: Codeunit "Temp Hacks"; //fjernes
                 begin
                     TempHacks.Run();
                 end;
