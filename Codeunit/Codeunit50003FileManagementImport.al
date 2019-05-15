@@ -722,13 +722,12 @@ codeunit 50003 "File Management Import"
 
     end;
 
-    procedure ImportCostPricesFromCSV()
+    procedure ImportCostPricesFromCSV(Var PurchasePrice: record "Purchase Price")
     var
         WindowTitle: text;
         FileName: text;
         FileMgt: Codeunit "File Management";
         TempCSVBuffer: Record "CSV Buffer" temporary;
-        PurchasePrice: Record "Purchase Price";
         TempDec: Decimal;
         TempDate: Date;
         Item: Record "Item";
@@ -776,8 +775,10 @@ codeunit 50003 "File Management Import"
                             PurchasePrice.VALIDATE("Starting Date", TempDate);
                         END;
                         IF NOT PurchasePrice.INSERT THEN PurchasePrice.MODIFY;
+                        PurchasePrice.MARK(TRUE);
                     END;
             END;
         UNTIL TempCSVBuffer.NEXT = 0;
+        PurchasePrice.MARKEDONLY(TRUE);
     end;
 }
