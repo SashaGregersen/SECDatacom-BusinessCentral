@@ -18,16 +18,18 @@ codeunit 50053 "Vendor Item No Event Handler"
             end;
     end;
 
-    [EventSubscriber(ObjectType::table, database::"Purchase Line", 'OnAfterValidateEvent', 'No.', true, true)]
+    [EventSubscriber(ObjectType::table, database::"Purchase Line", 'OnAfterModifyEvent', '', true, true)]
 
-    local procedure OnAfterModifyPurchaseLineEvent(var rec: record "Purchase Line")
+    local procedure OnAfterModifyPurchaseLineEvent(var rec: record "Purchase Line"; runtrigger: Boolean)
     var
         Item: record item;
     begin
+        If not runtrigger then
+            EXIT;
         if rec.type = rec.type::Item then
             if item.get(rec."No.") then begin
                 rec.validate("Vendor-Item-No", item."Vendor-Item-No.");
-                rec.Modify(true);
+                rec.Modify(false);
             end;
     end;
 
@@ -38,7 +40,6 @@ codeunit 50053 "Vendor Item No Event Handler"
     begin
         if item.get(rec."Item No.") then begin
             rec.validate("Vendor-Item-No.", item."Vendor-Item-No.");
-            rec.Modify(false);
         end;
     end;
 
@@ -59,11 +60,9 @@ codeunit 50053 "Vendor Item No Event Handler"
     var
         Item: Record Item;
     begin
-
         if rec.type = rec.type::Item then
             if item.get(rec."No.") then begin
                 rec.validate("Vendor-Item-No", item."Vendor-Item-No.");
-                rec.Modify(false);
             end;
     end;
 
