@@ -19,7 +19,10 @@ table 50001 "Bid Item Price"
                 ItemFilter := GetFilter("item No.");
                 if ItemFilter <> '' then begin
                     Item.Get(ItemFilter);
-                    Bid.SetRange("Vendor No.", Item."Vendor No.");
+                    if Item."IC partner Vendor No." <> '' then
+                        bid.SetRange("Vendor No.", item."IC partner Vendor No.")
+                    else
+                        Bid.SetRange("Vendor No.", Item."Vendor No.");
                 end;
                 if Page.RunModal(50000, Bid) = Action::LookupOK then
                     Validate("Bid No.", Bid."No.");

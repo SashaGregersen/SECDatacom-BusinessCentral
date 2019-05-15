@@ -269,7 +269,7 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
 
         If "Bid Unit Purchase Price" <> 0 then begin
             "Calculated Purchase Price" := ("Bid Unit Purchase Price" * Quantity) + TransferPriceAmount;
-            //if not Claimable then
+            //if not Claimable then            //    
             //    "Purchase Price on Purchase Order" := "Bid Unit Purchase Price"
             //else
             //    "Purchase Price on Purchase Order" := "Unit Purchase Price";

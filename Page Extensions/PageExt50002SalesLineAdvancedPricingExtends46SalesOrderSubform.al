@@ -95,7 +95,6 @@ pageextension 50002 "Sales Line Bid" extends "Sales Order Subform"
                     OneTimeBid.SetVendorNo(Item."Vendor No.");
                     OneTimeBid.SetTableView(Rec);
                     OneTimeBid.Run();
-                    //Report.Run(50017, true, false, Rec);
                 end;
             }
         }

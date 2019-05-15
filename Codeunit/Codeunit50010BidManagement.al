@@ -61,7 +61,7 @@ codeunit 50010 "Bid Management"
                     BidPriceToCopyTo.TransferFields(BidPrice, false);
                 if Item."Transfer Price %" <> 0 then
                     BidPriceToCopyTo.Validate("Bid Unit Purchase Price", bidprice."Bid Unit Purchase Price" * (1 + (Item."Transfer Price %" / 100)));
-                BidPriceToCopyTo.Claimable := false; // IC company should never claim 
+                BidPriceToCopyTo.Claimable := false; // To find correct purchase price in IC companies in create purchase order
                 BidPriceToCopyTo.Modify(false);
             until BidPrice.Next() = 0;
     end;
