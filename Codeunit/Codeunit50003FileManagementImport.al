@@ -678,7 +678,7 @@ codeunit 50003 "File Management Import"
     begin
         WindowTitle := 'Select file';
         FileName := FileMgt.OpenFileDialog(WindowTitle, '', '');
-        TempCSVBuffer.LoadData(FileName, ',');
+        TempCSVBuffer.LoadData(FileName, ';');
         //Verify if csv input file will be seperated with , or ; Unncomment below and deleta above if ;
         //TempCSVBuffer.init;
         //SelectFileFromFileShare(TempCSVBuffer);
@@ -733,7 +733,7 @@ codeunit 50003 "File Management Import"
     begin
         WindowTitle := 'Select file';
         FileName := FileMgt.OpenFileDialog(WindowTitle, '', '');
-        TempCSVBuffer.LoadData(FileName, ',');
+        TempCSVBuffer.LoadData(FileName, ';');
         //Verify if csv input file will be seperated with , or ; Unncomment below and deleta above if ;
         //TempCSVBuffer.init;
         //SelectFileFromFileShare(TempCSVBuffer);
@@ -779,5 +779,163 @@ codeunit 50003 "File Management Import"
             END;
         UNTIL TempCSVBuffer.NEXT = 0;
         PurchasePrice.MARKEDONLY(TRUE);
+    end;
+
+    Procedure ImportBidPricesFromCSV()
+    var
+        TempCSVBuffer: record "CSV Buffer";
+        VendorNo: code[20];
+        VendorItemNo: text[60];
+        VendorBidNo: text[100];
+        Bid: record bid;
+        Item: Record item;
+        CustomerNo: code[20];
+        CurrencyCode: code[20];
+        NewBidUnitSalesPrice: Decimal;
+        NewBidSalesDiscount: Decimal;
+        NewBidUnitPurchasePrice: Decimal;
+        NewBidPurchaseDiscount: Decimal;
+        Claimable: Boolean;
+        ExpiryDate: date;
+        BidPrices: record "Bid Item Price";
+    begin
+        TempCSVBuffer.LockTable();
+        TempCSVBuffer.DeleteAll();
+        SelectFileFromFileShare(TempCSVBuffer);
+
+        TempCSVBuffer.SetFilter("Line No.", '<>%1', 1);
+        if TempCSVBuffer.FindSet() then
+            repeat
+                case TempCSVBuffer."Field No." of
+                    1:
+                        begin
+                            VendorNo := TempCSVBuffer.value;
+                        end;
+                    2:
+                        begin
+                            if TempCSVBuffer.value <> item."Vendor Item No." then begin
+                                VendorItemNo := TempCSVBuffer.value;
+                                Item.setrange("Vendor No.", VendorNo);
+                                Item.SetRange("Vendor-Item-No.", VendorItemNo);
+                                if not item.FindFirst() then
+                                    Error('The vendor item no. %1 does not exists', TempCSVBuffer.Value);
+                            end;
+                        end;
+                    3:
+                        begin
+                            if TempCSVBuffer.value <> bid."Vendor Bid No." then begin
+                                VendorBidNo := TempCSVBuffer.value;
+                                Bid.setrange("Vendor Bid No.", VendorBidNo);
+                                Bid.SetRange("Vendor No.", VendorNo);
+                            end;
+                        end;
+                    4:
+                        begin
+                            CustomerNo := TempCSVBuffer.value;
+                        end;
+                    5:
+                        begin
+                            if TempCSVBuffer.Value <> '' then
+                                CurrencyCode := TempCSVBuffer.Value
+                            else
+                                CurrencyCode := Item."Vendor Currency";
+                        end;
+                    6:
+                        begin
+                            if TempCSVBuffer.Value <> '' Then
+                                Evaluate(NewBidUnitSalesPrice, TempCSVBuffer.value)
+                            else
+                                NewBidUnitSalesPrice := 0;
+                        end;
+                    7:
+                        begin
+                            if TempCSVBuffer.Value <> '' Then
+                                Evaluate(NewBidSalesDiscount, TempCSVBuffer.value)
+                            else
+                                NewBidSalesDiscount := 0;
+                        end;
+                    8:
+                        begin
+                            if TempCSVBuffer.Value <> '' Then
+                                Evaluate(NewBidUnitPurchasePrice, TempCSVBuffer.value)
+                            else
+                                NewBidUnitPurchasePrice := 0;
+                        end;
+                    9:
+                        begin
+                            if TempCSVBuffer.Value <> '' Then
+                                Evaluate(NewBidPurchaseDiscount, TempCSVBuffer.value)
+                            else
+                                NewBidPurchaseDiscount := 0;
+                        end;
+                    10:
+                        begin
+                            if TempCSVBuffer.Value <> '' Then
+                                Evaluate(Claimable, TempCSVBuffer.value)
+                            else
+                                Claimable := false;
+                        end;
+                    11:
+                        begin
+                            if TempCSVBuffer.Value <> '' Then
+                                Evaluate(ExpiryDate, TempCSVBuffer.Value);
+                            if not bid.FindFirst() then
+                                CreateNewBid(Bid, VendorNo, VendorBidNo, Claimable, ExpiryDate);
+
+                            BidPrices.SetRange("Bid No.", Bid."No.");
+                            BidPrices.SetRange("item No.", Item."No.");
+                            BidPrices.setrange("Customer No.", CustomerNo);
+                            BidPrices.SetRange("Currency Code", CurrencyCode);
+                            if BidPrices.FindFirst() then
+                                UpdateBidPrices(BidPrices, NewBidUnitSalesPrice, NewBidSalesDiscount, NewBidUnitPurchasePrice, NewBidPurchaseDiscount, Claimable, ExpiryDate)
+                            else
+                                CreateNewBidPrices(Bid, Item, CustomerNo, CurrencyCode, BidPrices, NewBidUnitSalesPrice, NewBidSalesDiscount, NewBidUnitPurchasePrice, NewBidPurchaseDiscount, Claimable, ExpiryDate);
+                        end;
+                end;
+            until TempCSVBuffer.next = 0;
+    end;
+
+    local procedure CreateNewBid(var bid: record Bid; VendorNo: code[20]; VendorBidNo: Text[100]; Claimable: Boolean; ExpiryDate: Date)
+    begin
+        Bid.init;
+        Bid."No." := '';
+        Bid.validate("Vendor Bid No.", VendorBidNo);
+        Bid.Validate("Vendor No.", VendorNo);
+        bid.Validate(Claimable, Claimable);
+        bid.Validate("Expiry Date", ExpiryDate);
+        Bid.Insert(true);
+    end;
+
+    Local Procedure UpdateBidPrices(BidPrice: record "Bid Item Price"; NewBidUnitSalesPrice: decimal; NewBidSalesDiscount: Decimal; NewBidUnitPurchasePrice: Decimal; NewBidPurchaseDiscount: Decimal; Claimable: boolean; ExpiryDate: Date)
+    var
+    begin
+        BidPrice.Validate("Bid Unit Sales Price", NewBidUnitSalesPrice);
+        BidPrice.Validate("Bid Sales Discount Pct.", NewBidSalesDiscount);
+        BidPrice.Validate("Bid Unit Purchase Price", NewBidUnitPurchasePrice);
+        BidPrice.Validate("Bid Purchase Discount Pct.", NewBidPurchaseDiscount);
+        BidPrice.Validate(Claimable, Claimable);
+        BidPrice.Validate("Expiry Date", ExpiryDate);
+        BidPrice.Modify(true);
+    end;
+
+    local procedure CreateNewBidPrices(Bid: record Bid; Item: record Item; CustomerNo: code[20]; CurrencyCode: code[10]; BidPrice: record "Bid Item Price"; NewBidUnitSalesPrice: decimal; NewBidSalesDiscount: Decimal; NewBidUnitPurchasePrice: Decimal; NewBidPurchaseDiscount: Decimal; Claimable: boolean; ExpiryDate: Date)
+    var
+    begin
+        BidPrice.Init();
+        BidPrice.validate("Bid No.", Bid."No.");
+        BidPrice.Validate("item No.", Item."No.");
+        BidPrice.Validate("Customer No.", CustomerNo);
+        BidPrice.Validate("Currency Code", CurrencyCode);
+        if NewBidUnitSalesPrice <> 0 then
+            BidPrice.Validate("Bid Unit Sales Price", NewBidUnitSalesPrice);
+        if NewBidSalesDiscount <> 0 then
+            BidPrice.Validate("Bid Sales Discount Pct.", NewBidSalesDiscount);
+        if NewBidUnitPurchasePrice <> 0 then
+            BidPrice.Validate("Bid Unit Purchase Price", NewBidUnitPurchasePrice);
+        if NewBidPurchaseDiscount <> 0 then
+            BidPrice.Validate("Bid Purchase Discount Pct.", NewBidPurchaseDiscount);
+        BidPrice.validate(Claimable, Claimable);
+        BidPrice.Validate("Expiry Date", ExpiryDate);
+        BidPrice.Insert(true);
     end;
 }

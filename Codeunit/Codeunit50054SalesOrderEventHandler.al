@@ -413,11 +413,13 @@ codeunit 50054 "Sales Order Event Handler"
     var
         SalesHeader: record "Sales Header";
         LocalSalesLine: record "Sales Line";
-        HandledICInboxSalesHeader: record "Handled IC Inbox Sales Header";
+        HandledICInboxSalesLine: record "Handled IC Inbox Sales Line";
     begin
         exit; //Find a way around 
-        HandledICInboxSalesHeader.setrange("No.", SalesLineToTest."IC PO No.");
-        if HandledICInboxSalesHeader.FindFirst() then begin
+        HandledICInboxSalesLine.setrange("Document No.", SalesLineToTest."IC PO No.");
+        HandledICInboxSalesLine.SetRange("Document Type", SalesLineToTest."Document Type");
+        HandledICInboxSalesLine.SetRange("Line No.", SalesLineToTest."IC PO Line No.");
+        if HandledICInboxSalesLine.FindFirst() then begin
             If salesheader.get(SalesLineToTest."Document Type", SalesLineToTest."Document No.") then begin
                 if salesheader.Subsidiary <> '' then begin
                     LocalSalesLine.SetRange("Document No.", salesheader."No.");

@@ -50,6 +50,16 @@ page 50000 "Bid List"
     {
         area(processing)
         {
+            action("Import Bid Prices")
+            {
+                Image = ImportExcel;
+                trigger OnAction()
+                var
+                    FilMgt: Codeunit "File Management Import";
+                begin
+                    FilMgt.ImportBidPricesFromCSV();
+                end;
+            }
             action("Show Prices")
             {
                 trigger OnAction();
