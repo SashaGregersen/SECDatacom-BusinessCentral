@@ -60,7 +60,7 @@ codeunit 50010 "Bid Management"
                 end else
                     BidPriceToCopyTo.TransferFields(BidPrice, false);
                 if Item."Transfer Price %" <> 0 then
-                    BidPriceToCopyTo.Validate("Bid Unit Purchase Price", bidprice."Bid Unit Purchase Price" * (1 - (Item."Transfer Price %" / 100)));
+                    BidPriceToCopyTo.Validate("Bid Unit Purchase Price", bidprice."Bid Unit Purchase Price" / (1 - (Item."Transfer Price %" / 100)));
                 BidPriceToCopyTo.Claimable := false; // To find correct purchase price in IC companies in create purchase order
                 BidPriceToCopyTo.Modify(false);
             until BidPrice.Next() = 0;
@@ -160,7 +160,6 @@ codeunit 50010 "Bid Management"
                 SalesShipLine.SetFilter("Claim Document No.", '');
                 if SalesShipLine.FindSet(true, false) then begin
                     CreatePurchaseHeader(PurchHeader."Document Type"::"Credit Memo", SalesHeader."Posting Date", ClaimsVendor."No.", SalesInvoiceHeader."No.", SalesInvoiceHeader."Currency Code", PurchHeader);
-                    UpdatePostingDescOnPurchHeader(SalesInvLine."No.", SalesInvLine.Quantity, Bid."Vendor Bid No.", PurchHeader);
                     LineNo := 0;
                     repeat
                         LineNo := LineNo + 10000;
@@ -174,6 +173,7 @@ codeunit 50010 "Bid Management"
         if DoPostPurchaseheader then begin
             DCApprovalsMgt.ForceApproval(PurchHeader, false);
             ReleasePurchDoc.PerformManualRelease(PurchHeader);
+            UpdatePostingDescOnPurchHeader(SalesInvLine."No.", SalesInvLine.Quantity, Bid."Vendor Bid No.", PurchHeader);
             PurchPost.SetPreviewMode(false);
             PurchPost.SetSuppressCommit(false);
             PurchPost.Run(PurchHeader);

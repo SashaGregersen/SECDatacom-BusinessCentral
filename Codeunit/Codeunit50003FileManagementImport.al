@@ -676,12 +676,10 @@ codeunit 50003 "File Management Import"
         Item: Record "Item";
 
     begin
-        WindowTitle := 'Select file';
-        FileName := FileMgt.OpenFileDialog(WindowTitle, '', '');
-        TempCSVBuffer.LoadData(FileName, ';');
+        TempCSVBuffer.LockTable();
+        TempCSVBuffer.DeleteAll();
+        SelectFileFromFileShare(TempCSVBuffer);
         //Verify if csv input file will be seperated with , or ; Unncomment below and deleta above if ;
-        //TempCSVBuffer.init;
-        //SelectFileFromFileShare(TempCSVBuffer);
 
         IF TempCSVBuffer.FINDSET THEN
             REPEAT
@@ -731,12 +729,10 @@ codeunit 50003 "File Management Import"
         TempDate: Date;
         Item: Record "Item";
     begin
-        WindowTitle := 'Select file';
-        FileName := FileMgt.OpenFileDialog(WindowTitle, '', '');
-        TempCSVBuffer.LoadData(FileName, ';');
+        TempCSVBuffer.LockTable();
+        TempCSVBuffer.DeleteAll();
+        SelectFileFromFileShare(TempCSVBuffer);
         //Verify if csv input file will be seperated with , or ; Unncomment below and deleta above if ;
-        //TempCSVBuffer.init;
-        //SelectFileFromFileShare(TempCSVBuffer);
 
         IF TempCSVBuffer.FINDSET THEN
             REPEAT
