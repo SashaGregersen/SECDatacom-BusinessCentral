@@ -156,6 +156,18 @@ pageextension 50021 "End Customer and Reseller" extends 42
                 ApplicationArea = all;
                 Caption = 'Sell-to Customer Name';
             }
+            field("Purchase Currency Method"; "Purchase Currency Method")
+            {
+                ApplicationArea = all;
+                Importance = Promoted;
+                Editable = Subsidiary <> '';
+            }
+            field("Purchase Currency Code"; "Purchase Currency Code")
+            {
+                ApplicationArea = all;
+                Importance = Promoted;
+                Editable = ("Purchase Currency Method" = "Purchase Currency Method"::"Same Currency") and (Subsidiary <> '');
+            }
         }
 
     }

@@ -23,6 +23,7 @@ codeunit 50004 "Create Purchase Order"
         TempPurchHeader: Record "Purchase Header" temporary;
         ReleasePurchDoc: Codeunit "Release Purchase Document";
         Bid: Record Bid;
+        CurrExchRate: Record "Currency Exchange Rate";
     begin
         GlobalLineCounter := 0;
         SalesLine.SetRange("Document No.", SalesHeader."No.");
@@ -35,7 +36,15 @@ codeunit 50004 "Create Purchase Order"
                 if QtyToPurchase <> 0 then begin
                     VendorNo := AdvPriceMgt.GetVendorNoForItem(SalesLine."No.");
                     Item.Get(SalesLine."No.");
-                    CurrencyCode := Item."Vendor Currency";
+                    case SalesHeader."Purchase Currency Method" of
+                        SalesHeader."Purchase Currency Method"::"Local Currency":
+                            CurrencyCode := '';
+                        SalesHeader."Purchase Currency Method"::"Vendor Currency":
+                            CurrencyCode := Item."Vendor Currency";
+                        SalesHeader."Purchase Currency Method"::"Same Currency":
+                            CurrencyCode := SalesHeader."Purchase Currency Code";
+                    end;
+
                     Clear(PurchasePrice);
                     if SalesLine."Bid No." <> '' then begin
                         Clear(BidPrice);
@@ -43,13 +52,15 @@ codeunit 50004 "Create Purchase Order"
                             Clear(PurchasePrice)
                         else begin
                             BidMgt.MakePurchasePriceFromBidPrice(BidPrice, PurchasePrice, SalesLine);
-                            CurrencyCode := PurchasePrice."Currency Code";
                         end;
                     end else begin
-                        Item.Get(SalesLine."No.");
-                        CurrencyCode := Item."Vendor Currency";
-                        if AdvPriceMgt.FindBestPurchasePrice(SalesLine."No.", VendorNo, CurrencyCode, SalesLine."Variant Code", PurchasePrice) then
-                            CurrencyCode := PurchasePrice."Currency Code";
+                        AdvPriceMgt.FindBestPurchasePrice(SalesLine."No.", VendorNo, CurrencyCode, SalesLine."Variant Code", PurchasePrice);
+                    end;
+                    if PurchasePrice."Currency Code" <> CurrencyCode then begin
+                        PurchasePrice."Direct Unit Cost" := CurrExchRate.ExchangeAmount(PurchasePrice."Direct Unit Cost",
+                                                                                        PurchasePrice."Currency Code",
+                                                                                        CurrencyCode, WorkDate());
+                        PurchasePrice."Currency Code" := CurrencyCode;
                     end;
 
                     if PurchasePrice."Direct Unit Cost" <> 0 then begin

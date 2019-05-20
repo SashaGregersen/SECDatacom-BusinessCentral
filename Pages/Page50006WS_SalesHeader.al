@@ -24,7 +24,7 @@ page 50006 "WS Sales Header"
                 {
                     ApplicationArea = All;
                 }
-                field("Shipping Advice"; "Shipping Advice")
+                field("Shipping Advice"; "xShippingAdvice")
                 {
                     ApplicationArea = All;
                 }
