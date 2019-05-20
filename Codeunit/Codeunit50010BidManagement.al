@@ -60,7 +60,7 @@ codeunit 50010 "Bid Management"
                 end else
                     BidPriceToCopyTo.TransferFields(BidPrice, false);
                 if Item."Transfer Price %" <> 0 then
-                    BidPriceToCopyTo.Validate("Bid Unit Purchase Price", bidprice."Bid Unit Purchase Price" * (1 + (Item."Transfer Price %" / 100)));
+                    BidPriceToCopyTo.Validate("Bid Unit Purchase Price", bidprice."Bid Unit Purchase Price" * (1 - (Item."Transfer Price %" / 100)));
                 BidPriceToCopyTo.Claimable := false; // To find correct purchase price in IC companies in create purchase order
                 BidPriceToCopyTo.Modify(false);
             until BidPrice.Next() = 0;
@@ -318,7 +318,7 @@ codeunit 50010 "Bid Management"
     begin
         If not Item.Get(ItemNo) then
             Clear(Item);
-        PurchHeader."Posting Description" := CopyStr(StrSubstNo('%1 %2 %3', Format(Qty), Item."Vendor-Item-No.", VendorBidNo), 1, 100)
+        PurchHeader."Posting Description" := CopyStr(StrSubstNo('%1 %2 %3', Format(Qty), Item."Vendor-Item-No.", VendorBidNo), 1, 100);
     end;
 
 }
