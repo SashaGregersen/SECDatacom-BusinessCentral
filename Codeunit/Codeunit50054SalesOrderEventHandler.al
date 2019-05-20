@@ -504,6 +504,7 @@ codeunit 50054 "Sales Order Event Handler"
         WhseActivLine: Record "Warehouse Activity Line";
         SalesHeader: Record "Sales Header";
         SalesLine: Record "Sales Line";
+        ItemCheckAvail: Codeunit "Item-Check Avail.";
     begin
         SalesHeader.Get(WarehouseRequest."Source Subtype", WarehouseRequest."Source No.");
         if SalesHeader."xShippingAdvice" <> SalesHeader."xShippingAdvice"::Complete then exit;
@@ -516,16 +517,18 @@ codeunit 50054 "Sales Order Event Handler"
                 WhseActivLine.SetRange("Source No.", WarehouseRequest."Source No.");
                 WhseActivLine.SetRange("Location Code", Location.Code);
 
-                if WhseActivLine.FindSet() then
+                SalesLine.SetRange("Document Type", SalesHeader."Document Type");
+                SalesLine.SetRange("Document No.", SalesHeader."No.");
+                SalesLine.SetRange("Location Code", Location.Code);
+                if SalesLine.FindSet() then
                     repeat
-                        SalesLine.Get(WhseActivLine."Source Subtype",
-                                        WhseActivLine."Source No.",
-                                        WhseActivLine."Source Line No.");
-                        if SalesLine."Qty. to Ship (Base)" <> WhseActivLine."Qty. (Base)" then begin
+                        WhseActivLine.SetRange("Source Line No.", SalesLine."Line No.");
+                        if (not WhseActivLine.FindFirst()) or
+                           (SalesLine."Qty. to Ship (Base)" <> WhseActivLine."Qty. (Base)") then begin
                             TmpLocation := Location;
                             if TmpLocation.Insert() then;
                         end;
-                    until WhseActivLine.Next() = 0;
+                    until SalesLine.Next() = 0;
             until Location.Next() = 0;
     end;
 
