@@ -416,7 +416,6 @@ codeunit 50054 "Sales Order Event Handler"
         HandledICInboxSalesLine: record "Handled IC Inbox Sales Line";
     begin
         HandledICInboxSalesLine.setrange("Document No.", SalesLineToTest."IC PO No.");
-        HandledICInboxSalesLine.SetRange("Document Type", SalesLineToTest."Document Type");
         HandledICInboxSalesLine.SetRange("Line No.", SalesLineToTest."IC PO Line No.");
         if HandledICInboxSalesLine.FindFirst() then begin
             If salesheader.get(SalesLineToTest."Document Type", SalesLineToTest."Document No.") then begin
