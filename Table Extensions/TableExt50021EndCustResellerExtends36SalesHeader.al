@@ -307,6 +307,25 @@ tableextension 50021 "End Customer and Reseller" extends 36
             OptionMembers = Partial,Complete;
         }
 
+        field(50021; "Purchase Currency Method"; Option)
+        {
+            Caption = 'Purchase Currency Method';
+            OptionMembers = "Vendor Currency","Local Currency","Same Currency";
+            trigger OnValidate()
+            begin
+                case "Purchase Currency Method" of
+                    "Purchase Currency Method"::"Local Currency":
+                        "Purchase Currency Code" := '';
+                    "Purchase Currency Method"::"Vendor Currency":
+                        "Purchase Currency Code" := '';
+                end;
+            end;
+        }
+        field(50022; "Purchase Currency Code"; Code[10])
+        {
+            Caption = 'Purchase Currency Code';
+            TableRelation = Currency;
+        }
     }
     procedure SetShipToAddressOnSalesOrder(Customer: record customer)
     var
