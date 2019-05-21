@@ -193,7 +193,8 @@ codeunit 50010 "Bid Management"
         SalesCrMemoLine: Record "Sales Cr.Memo Line";
         DoPostPurchaseheader: Boolean;
         PurchPost: Codeunit "Purch.-Post";
-        DCApprovalsBridge: Codeunit "DC Approvals Bridge";
+        DCApprovalsMgt: Codeunit "DC Approval Management";
+        ReleasePurchDoc: Codeunit "Release Purchase Document";
     begin
         if not PurchSetup.Get() then
             exit;
@@ -219,7 +220,6 @@ codeunit 50010 "Bid Management"
                 ReturnRcptLine.SetFilter("Claim Document No.", '');
                 if ReturnRcptLine.FindSet(true, false) then begin
                     CreatePurchaseHeader(PurchHeader."Document Type"::Invoice, SalesHeader."Posting Date", ClaimsVendor."No.", SalesCrMemoHeader."No.", SalesCrMemoHeader."Currency Code", PurchHeader);
-                    UpdatePostingDescOnPurchHeader(SalesCrMemoLine."No.", SalesCrMemoLine.Quantity, Bid."Vendor Bid No.", PurchHeader);
                     repeat
                         CreateItemChargePurchaseLine(PurchHeader, SalesCrMemoLine."Line No.", PurchSetup."Claims Charge No.", ReturnRcptLine."Claim Amount", PurchLine);
                         CreateItemChargeAssignPurchFromReturn(PurchLine, ReturnRcptLine, ItemChargeAssignment);
@@ -229,7 +229,9 @@ codeunit 50010 "Bid Management"
                 end;
             until SalesCrMemoLine.Next() = 0;
         if DoPostPurchaseheader then begin
-            DCApprovalsBridge.ForceApproval(PurchHeader);
+            DCApprovalsMgt.ForceApproval(PurchHeader, false);
+            ReleasePurchDoc.PerformManualRelease(PurchHeader);
+            UpdatePostingDescOnPurchHeader(SalesCrMemoLine."No.", SalesCrMemoLine.Quantity, Bid."Vendor Bid No.", PurchHeader);
             PurchPost.SetPreviewMode(false);
             PurchPost.SetSuppressCommit(false);
             PurchPost.Run(PurchHeader);
@@ -242,7 +244,7 @@ codeunit 50010 "Bid Management"
         PurchHeader.Validate("Document Type", DocType);
         PurchHeader.validate("Posting Date", postingdate);
         PurchHeader.Validate("Buy-from Vendor No.", VendorNo);
-        PurchHeader.Validate("Currency Code", CurrenCode);
+        PurchHeader.Validate("Currency Code", CurrenCode); //ændres til vendor currency
         case PurchHeader."Document Type" of
             PurchHeader."Document Type"::"Credit Memo":
                 PurchHeader."Vendor Cr. Memo No." := ExtDocNo;
@@ -262,7 +264,7 @@ codeunit 50010 "Bid Management"
         PurchLine.Validate(Type, PurchLine.Type::"Charge (Item)");
         PurchLine.Validate("No.", ChargeNo);
         PurchLine.Validate(Quantity, 1);
-        PurchLine.Validate("Direct Unit Cost", UnitCost);
+        PurchLine.Validate("Direct Unit Cost", UnitCost); //omregnes til vendor currency hvis forskellig fra vendor currency
         PurchLine.Modify(true);
     end;
 
@@ -278,7 +280,7 @@ codeunit 50010 "Bid Management"
         ItemChargeAssignment."Applies-to Doc. Type" := ItemChargeAssignment."Applies-to Doc. Type"::"Sales Shipment";
         ItemChargeAssignment.Validate("Item Charge No.", PurchLine."No.");
         ItemChargeAssignment.Validate("Item No.", SalesShipLine."No.");
-        ItemChargeAssignment.Validate("Unit Cost", SalesShipLine."Claim Amount");
+        ItemChargeAssignment.Validate("Unit Cost", SalesShipLine."Claim Amount"); //omregnes til vendor currency hvis forskellig fra vendor currency
         ItemChargeAssignment.Validate("Qty. to Assign", 1);
         ItemChargeAssignment.Insert(true);
     end;
@@ -295,7 +297,7 @@ codeunit 50010 "Bid Management"
         ItemChargeAssignment."Applies-to Doc. Type" := ItemChargeAssignment."Applies-to Doc. Type"::"Return Receipt";
         ItemChargeAssignment.Validate("Item Charge No.", PurchLine."No.");
         ItemChargeAssignment.Validate("Item No.", ReturnRcptLine."No.");
-        ItemChargeAssignment.Validate("Unit Cost", ReturnRcptLine."Claim Amount");
+        ItemChargeAssignment.Validate("Unit Cost", ReturnRcptLine."Claim Amount"); //omregnes til vendor currency hvis forskellig fra vendor currency
         ItemChargeAssignment.Validate("Qty. to Assign", 1);
         ItemChargeAssignment.Insert(true);
     end;
