@@ -48,6 +48,7 @@ dotnet
         type(System.Xml.Xsl.XslCompiledTransform; System_Xml_Xsl_XslCompiledTransform) { } //"'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.System.Xml.Xsl.XslCompiledTransform"
         type(System.Xml.XmlTextWriter; System_Xml_XmlTextWriter) { }
         type(System.Xml.XmlElement; System_Xml_XmlElement) { }
+        type(System.Xml.XmlNamespaceManager; System_Xml_XmlNamespaceManger) { } //'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'
     }
 }
 

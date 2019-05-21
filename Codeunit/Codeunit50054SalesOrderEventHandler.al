@@ -567,4 +567,31 @@ codeunit 50054 "Sales Order Event Handler"
                     Error(ShippingAdviceErr);
             until Location.Next() = 0;
     end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"OIOUBL-Export Sales Invoice", 'OIOUBL_OnBeforeExportSalesInvoice', '', true, true)]
+    local procedure OIOUBL_OnBeforeExportSalesInvoice(var XMLdocOut: XmlDocument)
+    var
+        namespaceManager: XmlNamespaceManager;
+        RootElement: XmlElement;
+        XMLElement1: XmlElement;
+        XMLNode1: XmlNode;
+        XMLNode2: XmlNode;
+        ns: Text;
+    begin
+        namespaceManager.NameTable(XMLdocOut.NameTable);
+        namespaceManager.AddNamespace('Invoice', 'urn:oasis:names:specification:ubl:schema:xsd:Invoice-2 UBL-Invoice-2.0.xsd');
+        namespaceManager.AddNamespace('xsi', 'http://www.w3.org/2001/XMLSchema-instance');
+        namespaceManager.AddNamespace('cac', 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2');
+        namespaceManager.AddNamespace('cbc', 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2');
+
+        XMLdocOut.GetRoot(RootElement);
+        RootElement.GetNamespaceOfPrefix('cbc', ns);
+        RootElement.SelectSingleNode('cbc:InvoiceTypeCode', XMLNode1);
+
+        XMLElement1 := XmlElement.Create('cbc:Note',
+                                         ns,
+                                         XmlAttribute.Create('languageID', 'da'),
+                                         'Dette er en test');
+        XMLNode1.AddAfterSelf(XMLElement1);
+    end;
 }
