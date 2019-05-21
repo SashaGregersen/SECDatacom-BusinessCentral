@@ -103,22 +103,6 @@ tableextension 50021 "End Customer and Reseller" extends 36
                     end;
                 end;
             end;
-
-            trigger Onlookup();
-            var
-                Customer: Record Customer;
-                ICpartner: Record "IC Partner";
-                ICPartner2: record "IC Partner";
-                ICPartnerList: page "ic partner list";
-            begin
-                if Rec.Subsidiary <> '' then begin
-                    ICPartner2.SetRange("Customer No.", Rec.Subsidiary);
-                    ICPartner2.FindFirst();
-                    ICpartner.Get(ICPartner2.Code);
-                end;
-                IF page.RunModal(page::"IC Partner List", ICpartner, ICpartner.Code) = Action::LookupOK then
-                    Validate("subsidiary", ICpartner."Customer No.");
-            end;
         }
 
         field(50004; "Financing Partner"; code[20])

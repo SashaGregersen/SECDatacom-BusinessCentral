@@ -136,6 +136,7 @@ codeunit 50010 "Bid Management"
         LineNo: Integer;
         DCApprovalsMgt: Codeunit "DC Approval Management";
         ReleasePurchDoc: Codeunit "Release Purchase Document";
+        ClaimAmountVendCurrency: Decimal;
     begin
         if not PurchSetup.Get() then
             exit;
@@ -159,12 +160,14 @@ codeunit 50010 "Bid Management"
                 SalesShipLine.SetRange("Order Line No.", SalesInvLine."Order Line No.");
                 SalesShipLine.SetFilter("Claim Document No.", '');
                 if SalesShipLine.FindSet(true, false) then begin
-                    CreatePurchaseHeader(PurchHeader."Document Type"::"Credit Memo", SalesHeader."Posting Date", ClaimsVendor."No.", SalesInvoiceHeader."No.", SalesInvoiceHeader."Currency Code", PurchHeader);
+                    Clear(ClaimAmountVendCurrency);
+                    CreatePurchaseHeader(PurchHeader."Document Type"::"Credit Memo", SalesHeader."Posting Date", ClaimsVendor."No.", SalesInvoiceHeader."No.", PurchHeader);
                     LineNo := 0;
                     repeat
                         LineNo := LineNo + 10000;
-                        CreateItemChargePurchaseLine(PurchHeader, LineNo, PurchSetup."Claims Charge No.", SalesShipLine."Claim Amount", PurchLine);
-                        CreateItemChargeAssignPurchFromShipment(PurchLine, SalesShipLine, ItemChargeAssignment);
+                        ClaimAmountVendCurrency := ExchangeClaimAmountSalesShip(SalesShipmentHeader, SalesShipLine, PurchHeader, SalesShipLine."Claim Amount");
+                        CreateItemChargePurchaseLine(PurchHeader, LineNo, PurchSetup."Claims Charge No.", ClaimAmountVendCurrency, PurchLine);
+                        CreateItemChargeAssignPurchFromShipment(PurchLine, SalesShipLine, ItemChargeAssignment, ClaimAmountVendCurrency);
                         UpdateShimentLineWithClaimNo(SalesShipLine, PurchHeader."No.");
                     until SalesShipLine.Next() = 0;
                     DoPostPurchaseheader := true;
@@ -195,6 +198,7 @@ codeunit 50010 "Bid Management"
         PurchPost: Codeunit "Purch.-Post";
         DCApprovalsMgt: Codeunit "DC Approval Management";
         ReleasePurchDoc: Codeunit "Release Purchase Document";
+        ClaimAmountVendCurrency: Decimal;
     begin
         if not PurchSetup.Get() then
             exit;
@@ -212,17 +216,18 @@ codeunit 50010 "Bid Management"
                     exit;
                 if not Vendor.Get(bid."Vendor No.") then
                     exit;
-
                 if not ClaimsVendor.Get(Vendor."Claims Vendor") then
                     Error('Sales Credit Memo %1 uses Bid %2 from Vendor %3. Please add a value in the Claims Vendor field on Vendor %3', SalesCrMemoHeader."No.", ReturnRcptLine."Bid No.", Vendor."No.");
                 ReturnRcptLine.SetRange("return Order No.", SalesCrMemoLine."Order No.");
                 ReturnRcptLine.SetRange("return Order Line No.", SalesCrMemoLine."Order Line No.");
                 ReturnRcptLine.SetFilter("Claim Document No.", '');
                 if ReturnRcptLine.FindSet(true, false) then begin
-                    CreatePurchaseHeader(PurchHeader."Document Type"::Invoice, SalesHeader."Posting Date", ClaimsVendor."No.", SalesCrMemoHeader."No.", SalesCrMemoHeader."Currency Code", PurchHeader);
+                    Clear(ClaimAmountVendCurrency);
+                    CreatePurchaseHeader(PurchHeader."Document Type"::Invoice, SalesHeader."Posting Date", ClaimsVendor."No.", SalesCrMemoHeader."No.", PurchHeader);
                     repeat
-                        CreateItemChargePurchaseLine(PurchHeader, SalesCrMemoLine."Line No.", PurchSetup."Claims Charge No.", ReturnRcptLine."Claim Amount", PurchLine);
-                        CreateItemChargeAssignPurchFromReturn(PurchLine, ReturnRcptLine, ItemChargeAssignment);
+                        ClaimAmountVendCurrency := ExchangeClaimAmountReturnRcpt(ReturnReceiptHeader, ReturnRcptLine, PurchHeader, ReturnRcptLine."Claim Amount");
+                        CreateItemChargePurchaseLine(PurchHeader, SalesCrMemoLine."Line No.", PurchSetup."Claims Charge No.", ClaimAmountVendCurrency, PurchLine);
+                        CreateItemChargeAssignPurchFromReturn(PurchLine, ReturnRcptLine, ItemChargeAssignment, ClaimAmountVendCurrency);
                         UpdateReturnRecptLineWithClaimNo(ReturnRcptLine, PurchHeader."No.");
                     until ReturnRcptLine.Next() = 0;
                     DoPostPurchaseheader := true;
@@ -238,13 +243,13 @@ codeunit 50010 "Bid Management"
         end;
     end;
 
-    local procedure CreatePurchaseHeader(DocType: Integer; PostingDate: date; VendorNo: Code[20]; ExtDocNo: Code[20]; CurrenCode: code[20]; var PurchHeader: Record "Purchase Header")
+    local procedure CreatePurchaseHeader(DocType: Integer; PostingDate: date; VendorNo: Code[20]; ExtDocNo: Code[20]; var PurchHeader: Record "Purchase Header")
     begin
         PurchHeader.Init();
         PurchHeader.Validate("Document Type", DocType);
         PurchHeader.validate("Posting Date", postingdate);
         PurchHeader.Validate("Buy-from Vendor No.", VendorNo);
-        PurchHeader.Validate("Currency Code", CurrenCode); //ændres til vendor currency
+        //PurchHeader.Validate("Currency Code", CurrenCode); //ændres til vendor currency
         case PurchHeader."Document Type" of
             PurchHeader."Document Type"::"Credit Memo":
                 PurchHeader."Vendor Cr. Memo No." := ExtDocNo;
@@ -264,11 +269,11 @@ codeunit 50010 "Bid Management"
         PurchLine.Validate(Type, PurchLine.Type::"Charge (Item)");
         PurchLine.Validate("No.", ChargeNo);
         PurchLine.Validate(Quantity, 1);
-        PurchLine.Validate("Direct Unit Cost", UnitCost); //omregnes til vendor currency hvis forskellig fra vendor currency
+        PurchLine.Validate("Direct Unit Cost", UnitCost);
         PurchLine.Modify(true);
     end;
 
-    local procedure CreateItemChargeAssignPurchFromShipment(PurchLine: Record "Purchase Line"; SalesShipLine: Record "Sales Shipment Line"; var ItemChargeAssignment: Record "Item Charge Assignment (Purch)")
+    local procedure CreateItemChargeAssignPurchFromShipment(PurchLine: Record "Purchase Line"; SalesShipLine: Record "Sales Shipment Line"; var ItemChargeAssignment: Record "Item Charge Assignment (Purch)"; ClaimAmount: decimal)
     begin
         ItemChargeAssignment.Init();
         ItemChargeAssignment."Document Line No." := PurchLine."Line No.";
@@ -280,12 +285,12 @@ codeunit 50010 "Bid Management"
         ItemChargeAssignment."Applies-to Doc. Type" := ItemChargeAssignment."Applies-to Doc. Type"::"Sales Shipment";
         ItemChargeAssignment.Validate("Item Charge No.", PurchLine."No.");
         ItemChargeAssignment.Validate("Item No.", SalesShipLine."No.");
-        ItemChargeAssignment.Validate("Unit Cost", SalesShipLine."Claim Amount"); //omregnes til vendor currency hvis forskellig fra vendor currency
+        ItemChargeAssignment.Validate("Unit Cost", ClaimAmount);
         ItemChargeAssignment.Validate("Qty. to Assign", 1);
         ItemChargeAssignment.Insert(true);
     end;
 
-    local procedure CreateItemChargeAssignPurchFromReturn(PurchLine: Record "Purchase Line"; ReturnRcptLine: Record "Return Receipt Line"; var ItemChargeAssignment: Record "Item Charge Assignment (Purch)")
+    local procedure CreateItemChargeAssignPurchFromReturn(PurchLine: Record "Purchase Line"; ReturnRcptLine: Record "Return Receipt Line"; var ItemChargeAssignment: Record "Item Charge Assignment (Purch)"; ClaimAmount: Decimal)
     begin
         ItemChargeAssignment.Init();
         ItemChargeAssignment."Document Line No." := PurchLine."Line No.";
@@ -297,7 +302,7 @@ codeunit 50010 "Bid Management"
         ItemChargeAssignment."Applies-to Doc. Type" := ItemChargeAssignment."Applies-to Doc. Type"::"Return Receipt";
         ItemChargeAssignment.Validate("Item Charge No.", PurchLine."No.");
         ItemChargeAssignment.Validate("Item No.", ReturnRcptLine."No.");
-        ItemChargeAssignment.Validate("Unit Cost", ReturnRcptLine."Claim Amount"); //omregnes til vendor currency hvis forskellig fra vendor currency
+        ItemChargeAssignment.Validate("Unit Cost", ClaimAmount);
         ItemChargeAssignment.Validate("Qty. to Assign", 1);
         ItemChargeAssignment.Insert(true);
     end;
@@ -321,6 +326,38 @@ codeunit 50010 "Bid Management"
         If not Item.Get(ItemNo) then
             Clear(Item);
         PurchHeader."Posting Description" := CopyStr(StrSubstNo('%1 %2 %3', Format(Qty), Item."Vendor-Item-No.", VendorBidNo), 1, 100);
+    end;
+
+    local procedure ExchangeClaimAmountSalesShip(SalesShipmentHeader: record "Sales Shipment Header"; SalesShipLine: record "Sales Shipment Line"; PurchHeader: record "Purchase Header"; ClaimAmount: Decimal): Decimal
+    var
+        GlSetup: record "General Ledger Setup";
+        CurrencyExchangeRate: record "Currency Exchange Rate";
+    begin
+        If SalesShipmentHeader."Currency Code" = PurchHeader."Currency Code" then
+            exit(SalesShipLine."Claim Amount");
+        GlSetup.get;
+        if SalesShipmentHeader."Currency Code" = GlSetup."LCY Code" then
+            //from LCYTOFCY 
+            Exit(CurrencyExchangeRate.ExchangeAmtLCYToFCY(SalesShipmentHeader."Posting Date", PurchHeader."Currency Code", SalesShipLine."Claim Amount", SalesShipmentHeader."Currency Factor"))
+        else
+            //from FCYToFCY
+            Exit(CurrencyExchangeRate.ExchangeAmtFCYToFCY(SalesShipmentHeader."Posting Date", SalesShipmentHeader."Currency Code", PurchHeader."Currency Code", SalesShipLine."Claim Amount"));
+    end;
+
+    local procedure ExchangeClaimAmountReturnRcpt(ReturnRcptHeader: record "Return Receipt Header"; ReturnRcptLine: record "Return Receipt Line"; PurchHeader: record "Purchase Header"; ClaimAmount: Decimal): Decimal
+    var
+        GlSetup: record "General Ledger Setup";
+        CurrencyExchangeRate: record "Currency Exchange Rate";
+    begin
+        If ReturnRcptHeader."Currency Code" = PurchHeader."Currency Code" then
+            exit(ReturnRcptLine."Claim Amount");
+        GlSetup.get;
+        if ReturnRcptHeader."Currency Code" = GlSetup."LCY Code" then
+            //from LCYTOFCY 
+            Exit(CurrencyExchangeRate.ExchangeAmtLCYToFCY(ReturnRcptHeader."Posting Date", PurchHeader."Currency Code", ReturnRcptLine."Claim Amount", ReturnRcptHeader."Currency Factor"))
+        else
+            //from FCYToFCY
+            Exit(CurrencyExchangeRate.ExchangeAmtFCYToFCY(ReturnRcptHeader."Posting Date", ReturnRcptHeader."Currency Code", PurchHeader."Currency Code", ReturnRcptLine."Claim Amount"));
     end;
 
 }
