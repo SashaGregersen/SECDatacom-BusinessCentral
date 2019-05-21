@@ -568,7 +568,7 @@ codeunit 50054 "Sales Order Event Handler"
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"OIOUBL-Export Sales Invoice", 'OIOUBL_OnBeforeExportSalesInvoice', '', true, true)]
-    local procedure OIOUBL_OnBeforeExportSalesInvoice(var XMLdocOut: XmlDocument)
+    local procedure OIOUBL_OnBeforeExportSalesInvoice(var XMLdocOut: XmlDocument; SalesInvoiceHeader: Record "Sales Invoice Header")
     var
         namespaceManager: XmlNamespaceManager;
         RootElement: XmlElement;
@@ -576,7 +576,14 @@ codeunit 50054 "Sales Order Event Handler"
         XMLNode1: XmlNode;
         XMLNode2: XmlNode;
         ns: Text;
+        PaymentMethod: Record "Payment Method";
+        Invoice: Report "SEC - Sales Invoice LS";
+        PmtSetup: Record "Payment Setup";
+        PmtIDLength: Integer;
+        PaymentID: Code[16];
     begin
+        if not PaymentMethod.Get(SalesInvoiceHeader."Payment Method Code") then exit;
+
         namespaceManager.NameTable(XMLdocOut.NameTable);
         namespaceManager.AddNamespace('Invoice', 'urn:oasis:names:specification:ubl:schema:xsd:Invoice-2 UBL-Invoice-2.0.xsd');
         namespaceManager.AddNamespace('xsi', 'http://www.w3.org/2001/XMLSchema-instance');
@@ -585,12 +592,70 @@ codeunit 50054 "Sales Order Event Handler"
 
         XMLdocOut.GetRoot(RootElement);
         RootElement.GetNamespaceOfPrefix('cbc', ns);
-        RootElement.SelectSingleNode('cbc:InvoiceTypeCode', XMLNode1);
 
-        XMLElement1 := XmlElement.Create('cbc:Note',
-                                         ns,
-                                         XmlAttribute.Create('languageID', 'da'),
-                                         'Dette er en test');
-        XMLNode1.AddAfterSelf(XMLElement1);
+        //Udvidet beskrivelse
+        if PaymentMethod."Invoice Text".HasValue then begin
+            RootElement.SelectSingleNode('cbc:InvoiceTypeCode', namespaceManager, XMLNode1);
+
+            XMLElement1 := XmlElement.Create('Note',
+                                            ns,
+                                            XmlAttribute.Create('languageID', 'da'),
+                                            PaymentMethod.GetPaymentMethodExtDescription());
+            XMLNode1.AddAfterSelf(XMLElement1);
+        end;
+
+        //Print FIK
+        if PaymentMethod."Print FIK" then begin
+            PmtSetup.Get;
+            RootElement.SelectSingleNode('cac:PaymentMeans', namespaceManager, XMLNode2);
+
+            XMLNode2.SelectSingleNode('cbc:PaymentMeansCode', namespaceManager, XMLNode1);
+            XMLElement1 := XmlElement.Create('PaymentMeansCode',
+                                            ns,
+                                            '93');
+            XMLNode2.ReplaceWith(XMLElement1);
+
+            XMLNode2.SelectSingleNode('cbc:PaymentChannelCode', namespaceManager, XMLNode1);
+            XMLElement1 := XmlElement.Create('PaymentChannelCode',
+                                            ns,
+                                            'DK:FIK');
+            XMLNode2.ReplaceWith(XMLElement1);
+
+            case PmtSetup."IK Card Type" of
+                '01':
+                    PmtIDLength := 0;
+                '04':
+                    PmtIDLength := 16;
+                '15':
+                    PmtIDLength := 16;
+                '41':
+                    PmtIDLength := 10;
+                '71':
+                    PmtIDLength := 15;
+                '73':
+                    PmtIDLength := 0;
+                '75':
+                    PmtIDLength := 16;
+                else
+                    PmtIDLength := 0;
+            end;
+
+            if PmtIDLength > 0 then begin
+                PaymentID := PadStr('', PmtIDLength - 2 - StrLen(SalesInvoiceHeader."No."), '0') + SalesInvoiceHeader."No." + '2';
+                PaymentID := PaymentID + Invoice.Modulus10(PaymentID);
+            end else
+                PaymentID := PadStr('', PmtIDLength, '0');
+
+            XMLNode2.SelectSingleNode('cac:PayeeFinancialAccount', XMLNode1);
+            XMLElement1 := XmlElement.Create('PaymentID',
+                                            ns,
+                                            PmtSetup."IK Card Type");//Kortart
+            XMLNode2.AddAfterSelf(XMLElement1);
+
+            XMLElement1 := XmlElement.Create('InstructionID',
+                                            ns,
+                                            PaymentID);//15 numeriske tegn
+            XMLNode2.AddAfterSelf(XMLElement1);
+        end;
     end;
 }
