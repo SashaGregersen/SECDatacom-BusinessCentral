@@ -155,6 +155,7 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
         field(50021; "Claimable"; Boolean)
         {
             DataClassification = ToBeClassified;
+            Editable = false;
 
             trigger Onvalidate();
             begin
