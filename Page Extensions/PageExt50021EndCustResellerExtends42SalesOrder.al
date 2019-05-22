@@ -160,13 +160,13 @@ pageextension 50021 "End Customer and Reseller" extends 42
             {
                 ApplicationArea = all;
                 Importance = Promoted;
-                Editable = Subsidiary <> '';
+                Editable = Subsidiary <> ''; // skal ændres til TRUE
             }
             field("Purchase Currency Code"; "Purchase Currency Code")
             {
                 ApplicationArea = all;
                 Importance = Promoted;
-                Editable = ("Purchase Currency Method" = "Purchase Currency Method"::"Same Currency") and (Subsidiary <> '');
+                Editable = ("Purchase Currency Method" = "Purchase Currency Method"::"Same Currency") and (Subsidiary <> ''); // subsidiary skal væk
             }
         }
 
