@@ -716,7 +716,7 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>27.73589cm</Width>
+                  <Width>27.47131cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -743,7 +743,7 @@
                                     <Width>6.41806cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>2.5cm</Width>
+                                    <Width>2.23542cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
                                     <Width>3.74021cm</Width>
@@ -4561,7 +4561,7 @@
                               <Top>0.07056cm</Top>
                               <Left>0.26458cm</Left>
                               <Height>8.0832cm</Height>
-                              <Width>27.41485cm</Width>
+                              <Width>27.15027cm</Width>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -4580,7 +4580,7 @@
                                     <Width>13.87943cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>1.8cm</Width>
+                                    <Width>1.53542cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
                                     <Width>2cm</Width>
@@ -6118,7 +6118,7 @@
                               <Top>8.38923cm</Top>
                               <Left>0.26458cm</Left>
                               <Height>2.2848cm</Height>
-                              <Width>27.47131cm</Width>
+                              <Width>27.20673cm</Width>
                               <ZIndex>1</ZIndex>
                               <Style>
                                 <Border>
@@ -6536,7 +6536,7 @@
                                 </Filter>
                               </Filters>
                               <Top>15.97658cm</Top>
-                              <Left>10.87943cm</Left>
+                              <Left>10.61485cm</Left>
                               <Height>1.55224cm</Height>
                               <Width>16.8cm</Width>
                               <ZIndex>2</ZIndex>
@@ -7467,7 +7467,7 @@
                                 </Filter>
                               </Filters>
                               <Top>14.03601cm</Top>
-                              <Left>12.47943cm</Left>
+                              <Left>12.21485cm</Left>
                               <Height>1.76418cm</Height>
                               <Width>15.2cm</Width>
                               <ZIndex>3</ZIndex>
@@ -8200,7 +8200,7 @@
                               <KeepTogether>true</KeepTogether>
                               <DataSetName>DataSet_Result</DataSetName>
                               <Top>10.91362cm</Top>
-                              <Left>20.67943cm</Left>
+                              <Left>20.41485cm</Left>
                               <Height>2.946cm</Height>
                               <Width>7cm</Width>
                               <ZIndex>4</ZIndex>
@@ -8229,8 +8229,9 @@
                               </Paragraphs>
                               <rd:DefaultName>CompanyLegalStatement</rd:DefaultName>
                               <Top>17.70521cm</Top>
+                              <Left>0.46278cm</Left>
                               <Height>11pt</Height>
-                              <Width>27.67943cm</Width>
+                              <Width>26.95207cm</Width>
                               <ZIndex>5</ZIndex>
                               <Style>
                                 <Border>
@@ -8280,7 +8281,7 @@
             <Top>0.17639cm</Top>
             <Left>0.01959cm</Left>
             <Height>18.46818cm</Height>
-            <Width>27.73589cm</Width>
+            <Width>27.47131cm</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -8291,7 +8292,7 @@
         <Height>18.75041cm</Height>
         <Style />
       </Body>
-      <Width>27.75548cm</Width>
+      <Width>27.4909cm</Width>
       <Page>
         <PageHeader>
           <Height>1.22389cm</Height>
