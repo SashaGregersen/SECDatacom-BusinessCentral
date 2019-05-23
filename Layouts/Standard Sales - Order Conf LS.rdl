@@ -4825,14 +4825,14 @@
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="UnitPrice1">
+                                          <Textbox Name="UnitListPrice">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!UnitPrice.Value</Value>
+                                                    <Value>=Fields!UnitListPrice.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -4845,7 +4845,10 @@
                                                 </Style>
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>UnitPrice1</rd:DefaultName>
+                                            <rd:DefaultName>UnitListPrice</rd:DefaultName>
+                                            <Visibility>
+                                              <Hidden>=IIF(Fields!Suppress_Prices_on_Printouts.value = "True",true, IIF(Fields!UnitListPrice.Value = 0,TRUE,FALSE))</Hidden>
+                                            </Visibility>
                                             <Style>
                                               <Border>
                                                 <Color>LightGrey</Color>
@@ -4896,14 +4899,14 @@
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="LineDiscountPercentText_Line">
+                                          <Textbox Name="Reseller_Discount">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!LineDiscountPercentText_Line.Value</Value>
+                                                    <Value>=Fields!Reseller_Discount.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -4916,9 +4919,9 @@
                                                 </Style>
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>LineDiscountPercentText_Line</rd:DefaultName>
+                                            <rd:DefaultName>Reseller_Discount</rd:DefaultName>
                                             <Visibility>
-                                              <Hidden>=IIF(Fields!Suppress_Prices_on_Printouts.value = "True",true,false)</Hidden>
+                                              <Hidden>=IIF(Fields!Suppress_Prices_on_Printouts.value = "True",true, IIF(Fields!ResellerDiscount.Value = 0,TRUE,FALSE))</Hidden>
                                             </Visibility>
                                             <Style>
                                               <Border>
