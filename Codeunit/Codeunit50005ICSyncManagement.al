@@ -92,6 +92,7 @@ codeunit 50005 "IC Sync Management"
         ICPartnerInOtherCompany: Record "IC Partner";
         SalesPrice: Record "Sales Price";
         PurchasePrice: Record "Purchase Price";
+        Item: record item;
     begin
         ICPartner.SetFilter("Inbox Details", '<>%1', '');
         if ICPartner.FindSet() then

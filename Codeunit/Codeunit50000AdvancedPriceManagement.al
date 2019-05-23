@@ -288,11 +288,6 @@ codeunit 50000 "Advanced Price Management"
         ItemDiscountGroup: record "Item Discount Group";
     begin
         Item.Get(ItemNo);
-        if ItemDiscountGroup.get(Item."Item Disc. Group") then
-            if ItemDiscountGroup."Use Orginal Vendor in Subs" then begin
-                ICSyncMgt.CopyPurchasePricesToOtherCompanies(Item."No.");
-                exit;
-            end;
         if Item."Transfer Price %" = 0 then
             exit;
         if ICPartner.FindSet() then
@@ -336,7 +331,12 @@ codeunit 50000 "Advanced Price Management"
                     end;
                 end;
             until ICPartner.Next() = 0;
-        ICSyncMgt.CopyTransferPurchasePricesToOtherCompanies(Item."No.");
+        if ItemDiscountGroup.get(Item."Item Disc. Group") then begin
+            if ItemDiscountGroup."Use Orginal Vendor in Subs" then
+                ICSyncMgt.CopyPurchasePricesToOtherCompanies(Item."No.")
+            else
+                ICSyncMgt.CopyTransferPurchasePricesToOtherCompanies(Item."No.");
+        end;
     end;
 
     local procedure CreatePricesForItemFromItemDiscountGroups(Item: Record Item)
