@@ -6,10 +6,16 @@ codeunit 50007 "IC Sync Item"
     var
         ItemUOM: Record "Item Unit of Measure";
         ICpartner: Record "IC Partner";
+        ItemDiscountGroup: record "Item Discount Group";
     begin
+
         ICpartner.SetFilter("Vendor No.", '<>%1', '');
         if ICpartner.FindFirst() then
-            Rec.Validate("IC partner Vendor No.", ICpartner."Vendor No.");
+            if not ItemDiscountGroup.get(rec."Item Disc. Group") then
+                Rec.Validate("IC partner Vendor No.", ICpartner."Vendor No.")
+            else
+                if not ItemDiscountGroup."Use Orginal Vendor in Subs" then
+                    Rec.Validate("IC partner Vendor No.", ICpartner."Vendor No.");
         if not rec.Insert(true) then
             rec.Modify(true);
         if Rec."Base Unit of Measure" <> '' then begin

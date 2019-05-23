@@ -84,7 +84,7 @@ codeunit 50005 "IC Sync Management"
             until CompanyRec.Next() = 0;
     end;
 
-    procedure CopyPurchasePricesToOtherCompanies(ItemNo: code[20])
+    procedure CopyTransferPurchasePricesToOtherCompanies(ItemNo: code[20])
     //Add the specific sales prices from parent company as specific purchase prices in the child company
 
     var
@@ -108,6 +108,51 @@ codeunit 50005 "IC Sync Management"
                             PurchasePrice.Init();
                             PurchasePrice."Item No." := SalesPrice."Item No.";
                             PurchasePrice."Vendor No." := ICPartnerInOtherCompany."Vendor No.";
+                            PurchasePrice."Unit of Measure Code" := SalesPrice."Unit of Measure Code";
+                            if SalesPrice."Currency Code" <> '' then begin
+                                if SalesPrice."Currency Code" = ICPartner."Currency Code" then
+                                    PurchasePrice."Currency Code" := ''
+                                else
+                                    PurchasePrice."Currency Code" := SalesPrice."Currency Code";
+                            end else
+                                PurchasePrice."Currency Code" := ICPartnerInOtherCompany."Currency Code";
+                            PurchasePrice."Starting Date" := SalesPrice."Starting Date";
+                            PurchasePrice."Ending Date" := SalesPrice."Ending Date";
+                            PurchasePrice."Minimum Quantity" := SalesPrice."Minimum Quantity";
+                            PurchasePrice."Direct Unit Cost" := SalesPrice."Unit Price";
+                            if not PurchasePrice.Insert(false) then
+                                PurchasePrice.Modify(false);
+                        end;
+                    until SalesPrice.Next() = 0;
+            until ICPartner.Next() = 0;
+    end;
+
+    procedure CopyPurchasePricesToOtherCompanies(ItemNo: code[20])
+    //Add the specific sales prices from parent company as specific purchase prices in the child company
+
+    var
+        ICPartner: Record "IC Partner";
+        ICPartnerInOtherCompany: Record "IC Partner";
+        SalesPrice: Record "Sales Price";
+        PurchasePrice: Record "Purchase Price";
+        Item: record Item;
+    begin
+        Item.get(ItemNo);
+        ICPartner.SetFilter("Inbox Details", '<>%1', '');
+        if ICPartner.FindSet() then
+            repeat
+                SalesPrice.SetRange("Item No.", ItemNo);
+                SalesPrice.SetRange("Sales Type", SalesPrice."Sales Type"::Customer);
+                SalesPrice.SetRange("Sales Code", ICPartner."Customer No.");
+                if SalesPrice.FindSet() then
+                    repeat
+                        ICPartnerInOtherCompany.ChangeCompany(ICPartner."Inbox Details");
+                        ICPartnerInOtherCompany.SetRange("Inbox Details", CompanyName());
+                        if ICPartnerInOtherCompany.FindFirst() then begin
+                            PurchasePrice.ChangeCompany(ICPartner."Inbox Details");
+                            PurchasePrice.Init();
+                            PurchasePrice."Item No." := SalesPrice."Item No.";
+                            PurchasePrice."Vendor No." := Item."Vendor No.";
                             PurchasePrice."Unit of Measure Code" := SalesPrice."Unit of Measure Code";
                             if SalesPrice."Currency Code" <> '' then begin
                                 if SalesPrice."Currency Code" = ICPartner."Currency Code" then
