@@ -4308,7 +4308,6 @@
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
-                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                     </TablixCells>
@@ -4731,7 +4730,7 @@
                                         <TablixMembers>
                                           <TablixMember>
                                             <Visibility>
-                                              <Hidden>true</Hidden>
+                                              <Hidden>=Fields!Type_Line.Value &lt;&gt; " "</Hidden>
                                             </Visibility>
                                           </TablixMember>
                                           <TablixMember>
@@ -4740,7 +4739,11 @@
                                             </Visibility>
                                           </TablixMember>
                                           <TablixMember />
-                                          <TablixMember />
+                                          <TablixMember>
+                                            <Visibility>
+                                              <Hidden>true</Hidden>
+                                            </Visibility>
+                                          </TablixMember>
                                         </TablixMembers>
                                       </TablixMember>
                                     </TablixMembers>
@@ -5584,6 +5587,7 @@
                             </Border>
                           </Style>
                         </Rectangle>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
