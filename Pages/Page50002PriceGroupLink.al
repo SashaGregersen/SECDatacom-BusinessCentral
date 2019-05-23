@@ -9,32 +9,17 @@ page 50002 "Price Group Links"
         {
             repeater(Group)
             {
-                field("Customer No.";"Customer No.")
+                field("Customer No."; "Customer No.")
                 {
                     ApplicationArea = all;
                     Editable = false;
                 }
-                field("Customer Discount Group Code";"Customer Discount Group Code")
+                field("Customer Discount Group Code"; "Customer Discount Group Code")
                 {
                     ApplicationArea = all;
                 }
             }
         }
-        area(factboxes)
-        {
-        }
-    }
 
-    actions
-    {
-        area(processing)
-        {
-            action(ActionName)
-            {
-                trigger OnAction();
-                begin
-                end;
-            }
-        }
     }
 }
