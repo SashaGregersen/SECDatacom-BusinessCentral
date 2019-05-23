@@ -48,6 +48,7 @@ dotnet
         type(System.Xml.Xsl.XslCompiledTransform; System_Xml_Xsl_XslCompiledTransform) { } //"'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.System.Xml.Xsl.XslCompiledTransform"
         type(System.Xml.XmlTextWriter; System_Xml_XmlTextWriter) { }
         type(System.Xml.XmlElement; System_Xml_XmlElement) { }
+        type(System.Xml.XmlNamespaceManager; System_Xml_XmlNamespaceManger) { } //'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'
     }
 }
 
@@ -288,7 +289,7 @@ codeunit 50013 "EDICygate"
                 XMLElement1.AppendChild(XMLNode1);
 
                 XMLNode1 := XMLDoc.CreateNode('element', 'OrderedQuantity', '');
-                XMLNode1.InnerText(FORMAT(SalesLine.Quantity));
+                XMLNode1.InnerText(FORMAT(SalesLine.Quantity, 0, 9));
                 XMLElement1.AppendChild(XMLNode1);
 
                 XMLNode1 := XMLDoc.CreateNode('element', 'OrderedUnitPrice', '');
@@ -317,7 +318,7 @@ codeunit 50013 "EDICygate"
                 XMLElement1.AppendChild(XMLNode1);
 
                 XMLNode1 := XMLDoc.CreateNode('element', 'Quantity', '');
-                XMLNode1.InnerText(FORMAT(SalesLine."Qty. to Ship"));
+                XMLNode1.InnerText(FORMAT(SalesLine."Qty. to Ship", 0, 9));
                 XMLElement1.AppendChild(XMLNode1);
 
                 XMLNode1 := XMLDoc.CreateNode('element', 'DeliveryDate', '');
@@ -519,7 +520,7 @@ codeunit 50013 "EDICygate"
                 XMLElement7.AppendChild(XMLNode1);
 
                 XMLNode1 := XMLDoc.CreateNode('element', 'DeliveredQuantity', '');
-                XMLNode1.InnerText(FORMAT(ShipLine.Quantity));
+                XMLNode1.InnerText(FORMAT(ShipLine.Quantity, 0, 9));
                 XMLElement7.AppendChild(XMLNode1);
 
                 XMLNode1 := XMLDoc.CreateNode('element', 'VendorPartNumber', '');
@@ -858,26 +859,26 @@ codeunit 50013 "EDICygate"
                 XMLElement1.AppendChild(XMLNode1);
 
                 XMLNode1 := XMLDoc.CreateNode('element', 'InvoicedQuantity', '');
-                XMLNode1.InnerText(FORMAT(InvoiceLine.Quantity));
+                XMLNode1.InnerText(FORMAT(InvoiceLine.Quantity, 0, 9));
                 XMLElement1.AppendChild(XMLNode1);
 
                 XMLNode1 := XMLDoc.CreateNode('element', 'TaxRate', '');
-                XMLNode1.InnerText(Format(InvoiceLine."VAT %"));
+                XMLNode1.InnerText(Format(InvoiceLine."VAT %", 0, 9));
                 XMLAttribute1 := XMLNode1.OwnerDocument().CreateAttribute('Code');
                 XMLAttribute1.Value(InvoiceLine."VAT Identifier");
                 XMLNode1.Attributes.SetNamedItem(XMLAttribute1);
                 XMLElement1.AppendChild(XMLNode1);
 
                 XMLNode1 := XMLDoc.CreateNode('element', 'TaxTotalAmount', '');
-                XMLNode1.InnerText(Format(InvoiceLine.GetLineAmountInclVAT() - InvoiceLine.GetLineAmountExclVAT()));
+                XMLNode1.InnerText(Format(InvoiceLine.GetLineAmountInclVAT() - InvoiceLine.GetLineAmountExclVAT(), 0, 9));
                 XMLElement1.AppendChild(XMLNode1);
 
                 XMLNode1 := XMLDoc.CreateNode('element', 'PricePerUnit', '');
-                XMLNode1.InnerText(FORMAT(InvoiceLine."Unit Price"));
+                XMLNode1.InnerText(FORMAT(InvoiceLine."Unit Price", 0, 9));
                 XMLElement1.AppendChild(XMLNode1);
 
                 XMLNode1 := XMLDoc.CreateNode('element', 'OrderRowTotalExclTax', '');
-                XMLNode1.InnerText(Format(InvoiceLine.GetLineAmountExclVAT()));
+                XMLNode1.InnerText(Format(InvoiceLine.GetLineAmountExclVAT(), 0, 9));
                 XMLElement1.AppendChild(XMLNode1);
             until InvoiceLine.Next() = 0;
 
@@ -903,7 +904,7 @@ codeunit 50013 "EDICygate"
 
         if FreightAmt <> 0 then begin
             XMLNode1 := XMLDoc.CreateNode('element', 'Fee', '');
-            XMLNode1.InnerText(Format(FreightAmt));
+            XMLNode1.InnerText(Format(FreightAmt, 0, 9));
             XMLAttribute1 := XMLNode1.OwnerDocument().CreateAttribute('Code');
             XMLAttribute1.Value('Freight');
             XMLNode1.Attributes.SetNamedItem(XMLAttribute1);
@@ -940,18 +941,18 @@ codeunit 50013 "EDICygate"
                 XMLElement4.AppendChild(XMLElement1);
 
                 XMLNode1 := XMLDoc.CreateNode('element', 'TaxRate', '');
-                XMLNode1.InnerText(Format(VATAmountLine."VAT %"));
+                XMLNode1.InnerText(Format(VATAmountLine."VAT %", 0, 9));
                 XMLAttribute1 := XMLNode1.OwnerDocument().CreateAttribute('Code');
                 XMLAttribute1.Value(VATAmountLine."VAT Identifier");
                 XMLNode1.Attributes.SetNamedItem(XMLAttribute1);
                 XMLElement1.AppendChild(XMLNode1);
 
                 XMLNode1 := XMLDoc.CreateNode('element', 'TaxableAmount', '');
-                XMLNode1.InnerText(Format(VATAmountLine."VAT Base"));
+                XMLNode1.InnerText(Format(VATAmountLine."VAT Base", 0, 9));
                 XMLElement1.AppendChild(XMLNode1);
 
                 XMLNode1 := XMLDoc.CreateNode('element', 'TaxAmount', '');
-                XMLNode1.InnerText(Format(VATAmountLine."VAT Amount"));
+                XMLNode1.InnerText(Format(VATAmountLine."VAT Amount", 0, 9));
                 XMLElement1.AppendChild(XMLNode1);
             until VATAmountLine.Next() = 0;
 
@@ -962,17 +963,17 @@ codeunit 50013 "EDICygate"
 
         //Linjesum - varer
         XMLNode1 := XMLDoc.CreateNode('element', 'NetAmount', '');
-        XMLNode1.InnerText(Format(InvoiceHead.Amount - FreightAmt));
+        XMLNode1.InnerText(Format(InvoiceHead.Amount - FreightAmt, 0, 9));
         XMLElement4.AppendChild(XMLNode1);
 
         //Linjesum - fragt
         XMLNode1 := XMLDoc.CreateNode('element', 'TotalFeeAmount', '');
-        XMLNode1.InnerText(Format(FreightAmt));
+        XMLNode1.InnerText(Format(FreightAmt, 0, 9));
         XMLElement4.AppendChild(XMLNode1);
 
         //Linjesum - moms sum
         XMLNode1 := XMLDoc.CreateNode('element', 'TotalTaxAmount', '');
-        XMLNode1.InnerText(Format(InvoiceHead."Amount Including VAT" - InvoiceHead.Amount));
+        XMLNode1.InnerText(Format(InvoiceHead."Amount Including VAT" - InvoiceHead.Amount, 0, 9));
         XMLElement4.AppendChild(XMLNode1);
 
         //Afrunding
@@ -982,7 +983,7 @@ codeunit 50013 "EDICygate"
 
         //Afrunding - sum incl moms
         XMLNode1 := XMLDoc.CreateNode('element', 'InvoiceAmount', '');
-        XMLNode1.InnerText(Format(InvoiceHead."Amount Including VAT"));
+        XMLNode1.InnerText(Format(InvoiceHead."Amount Including VAT", 0, 9));
         XMLElement4.AppendChild(XMLNode1);
 
         XMLDoc.Save('c:\temp\cygate3.xml');
@@ -1051,6 +1052,8 @@ codeunit 50013 "EDICygate"
             v.IsCode,
             v.IsText:
                 exit(v);
+            v.IsDecimal:
+                exit(Format(v, 0, 9));
         end;
     end;
 
