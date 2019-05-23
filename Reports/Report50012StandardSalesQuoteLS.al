@@ -496,6 +496,12 @@ report 50012 "SEC Sales - Quote LS"
                 column(UnitPrice_Lbl; FieldCaption("Unit Price"))
                 {
                 }
+                column(UnitListPrice_Lbl; FieldCaption("Unit List Price"))
+                {
+                }
+                column(ResellerDiscount_Lbl; FieldCaption("Reseller Discount"))
+                {
+                }
                 column(UnitOfMeasure; "Unit of Measure")
                 {
                 }
