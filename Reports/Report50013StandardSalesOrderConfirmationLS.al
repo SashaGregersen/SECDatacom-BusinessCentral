@@ -499,7 +499,14 @@ report 50013 "SEC Sales - Order Conf. LS"
                 column(UnitPrice_Lbl; FieldCaption("Unit Price"))
                 {
                 }
+
                 column(UnitOfMeasure; "Unit of Measure")
+                {
+                }
+                column(UnitListPrice; "Unit List Price")
+                {
+                }
+                column(Reseller_Discount; "Reseller Discount")
                 {
                 }
                 column(UnitOfMeasure_Lbl; FieldCaption("Unit of Measure"))

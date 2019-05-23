@@ -97,19 +97,6 @@ pageextension 50002 "Sales Line Bid" extends "Sales Order Subform"
                     OneTimeBid.Run();
                 end;
             }
-            action(AddTransActionType)
-            {
-                Caption = 'Add Transaction Type';
-                Image = ChangeDimensions;
-                ApplicationArea = all;
-
-                trigger OnAction()
-                var
-                    SalesOrderHandler: Codeunit "Sales Order Event Handler";
-                begin
-                    SalesOrderHandler.AddTransactionTypeToSalesDocument(Rec);
-                end;
-            }
         }
     }
 
