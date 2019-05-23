@@ -491,8 +491,8 @@ codeunit 50054 "Sales Order Event Handler"
         if TmpLocation.FindSet() then
             repeat
                 WhseActivHeader.SetRange("Location Code", TmpLocation.Code);
-                WhseActivHeader.FindFirst();
-                WhseActivHeader.Delete(true);
+                if WhseActivHeader.FindFirst() then
+                    WhseActivHeader.Delete(true);
             until TmpLocation.Next() = 0;
     end;
 
@@ -573,11 +573,12 @@ codeunit 50054 "Sales Order Event Handler"
         namespaceManager: XmlNamespaceManager;
         RootElement: XmlElement;
         XMLElement1: XmlElement;
+        XMLElement2: XmlElement;
         XMLNode1: XmlNode;
         XMLNode2: XmlNode;
-        ns: Text;
+        cbc: Text;
+        cac: Text;
         PaymentMethod: Record "Payment Method";
-        Invoice: Report "SEC - Sales Invoice LS";
         PmtSetup: Record "Payment Setup";
         PmtIDLength: Integer;
         PaymentID: Code[16];
@@ -591,14 +592,15 @@ codeunit 50054 "Sales Order Event Handler"
         namespaceManager.AddNamespace('cbc', 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2');
 
         XMLdocOut.GetRoot(RootElement);
-        RootElement.GetNamespaceOfPrefix('cbc', ns);
+        RootElement.GetNamespaceOfPrefix('cbc', cbc);
+        RootElement.GetNamespaceOfPrefix('cac', cac);
 
         //Udvidet beskrivelse
         if PaymentMethod."Invoice Text".HasValue then begin
             RootElement.SelectSingleNode('cbc:InvoiceTypeCode', namespaceManager, XMLNode1);
 
             XMLElement1 := XmlElement.Create('Note',
-                                            ns,
+                                            cbc,
                                             XmlAttribute.Create('languageID', 'da'),
                                             PaymentMethod.GetPaymentMethodExtDescription());
             XMLNode1.AddAfterSelf(XMLElement1);
@@ -611,15 +613,17 @@ codeunit 50054 "Sales Order Event Handler"
 
             XMLNode2.SelectSingleNode('cbc:PaymentMeansCode', namespaceManager, XMLNode1);
             XMLElement1 := XmlElement.Create('PaymentMeansCode',
-                                            ns,
+                                            cbc,
                                             '93');
-            XMLNode2.ReplaceWith(XMLElement1);
+            XMLNode1.ReplaceWith(XMLElement1);
 
             XMLNode2.SelectSingleNode('cbc:PaymentChannelCode', namespaceManager, XMLNode1);
             XMLElement1 := XmlElement.Create('PaymentChannelCode',
-                                            ns,
+                                            cbc,
                                             'DK:FIK');
-            XMLNode2.ReplaceWith(XMLElement1);
+            XMLElement1.Add(XmlAttribute.Create('listAgencyID', '320'));
+            XMLElement1.Add(XmlAttribute.Create('listID', 'urn:oioubl:codelist:paymentchannelcode-1.1'));
+            XMLNode1.ReplaceWith(XMLElement1);
 
             case PmtSetup."IK Card Type" of
                 '01':
@@ -642,20 +646,69 @@ codeunit 50054 "Sales Order Event Handler"
 
             if PmtIDLength > 0 then begin
                 PaymentID := PadStr('', PmtIDLength - 2 - StrLen(SalesInvoiceHeader."No."), '0') + SalesInvoiceHeader."No." + '2';
-                PaymentID := PaymentID + Invoice.Modulus10(PaymentID);
+                PaymentID := PaymentID + Modulus10(PaymentID);
             end else
                 PaymentID := PadStr('', PmtIDLength, '0');
 
-            XMLNode2.SelectSingleNode('cac:PayeeFinancialAccount', XMLNode1);
+            XMLElement1 := XmlElement.Create('CreditAccount',
+                                            cac); //Kreditornummer
+
+            XMLElement1.Add(XmlElement.Create('AccountID', cbc, PmtSetup."FIK/GIRO-No."));
+            XMLNode1.AddAfterSelf(XMLElement1);
+
             XMLElement1 := XmlElement.Create('PaymentID',
-                                            ns,
+                                            cbc,
                                             PmtSetup."IK Card Type");//Kortart
-            XMLNode2.AddAfterSelf(XMLElement1);
+            XMLNode1.AddAfterSelf(XMLElement1);
+
+            /*
+            XMLElement1 := XmlElement.Create('InstructionNote',
+                                            ns,
+                                            PaymentID);//15 numeriske tegn
+            XMLNode1.AddAfterSelf(XMLElement1);
 
             XMLElement1 := XmlElement.Create('InstructionID',
                                             ns,
+                                            PmtSetup."FIK/GIRO-No.");//15 numeriske tegn
+            XMLNode1.AddAfterSelf(XMLElement1);
+            */
+            XMLElement1 := XmlElement.Create('InstructionID',
+                                            cbc,
                                             PaymentID);//15 numeriske tegn
-            XMLNode2.AddAfterSelf(XMLElement1);
+            XMLNode1.AddAfterSelf(XMLElement1);
+
         end;
+    end;
+
+    procedure Modulus10(TestNumber: Code[16]): Code[16]
+    var
+        Counter: Integer;
+        Accumulator: Integer;
+        WeightNo: Integer;
+        SumStr: Text[30];
+    begin
+        // <PM>
+        WeightNo := 2;
+        SumStr := '';
+        for Counter := StrLen(TestNumber) downto 1 do begin
+            Evaluate(Accumulator, CopyStr(TestNumber, Counter, 1));
+            Accumulator := Accumulator * WeightNo;
+            SumStr := SumStr + Format(Accumulator);
+            if WeightNo = 1 then
+                WeightNo := 2
+            else
+                WeightNo := 1;
+        end;
+        Accumulator := 0;
+        for Counter := 1 to StrLen(SumStr) do begin
+            Evaluate(WeightNo, CopyStr(SumStr, Counter, 1));
+            Accumulator := Accumulator + WeightNo;
+        end;
+        Accumulator := 10 - (Accumulator mod 10);
+        if Accumulator = 10 then
+            exit('0')
+        else
+            exit(Format(Accumulator));
+        // </PM>
     end;
 }
