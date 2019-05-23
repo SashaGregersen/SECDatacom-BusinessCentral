@@ -168,6 +168,9 @@ report 50014 "SEC - Sales Invoice LS"
             column(ShipmentMethodDescription; ShipmentMethod.Description)
             {
             }
+            column(ShipmentMethodCode; ShipmentMethod.Code)
+            {
+            }
             column(ShipmentMethodDescription_Lbl; ShptMethodDescLbl)
             {
             }
