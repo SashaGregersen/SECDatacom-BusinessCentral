@@ -107,7 +107,7 @@ pageextension 50002 "Sales Line Bid" extends "Sales Order Subform"
                 var
                     SalesOrderHandler: Codeunit "Sales Order Event Handler";
                 begin
-                    SalesOrderHandler.AddTransactionTypeToSalesDocument(Rec);
+                    //SalesOrderHandler.AddTransactionTypeToSalesDocument(Rec);
                 end;
             }
         }

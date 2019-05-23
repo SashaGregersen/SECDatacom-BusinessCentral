@@ -69,6 +69,7 @@ codeunit 50054 "Sales Order Event Handler"
             end;
             salesheader.get(rec."Document Type", rec."Document No.");
             bid.setrange("Vendor No.", Item."Vendor No.");
+            bid.SetFilter("Expiry Date", '<=%1', Today);
             if bid.FindSet() then begin
                 if BidMgt.GetBestBidPrice(bid."No.", salesheader.Reseller, item."No.", item."Vendor Currency", BidItemPrices) then begin
                     BidMessage := StrSubstNo('One or more bids exist for the item %1', Item."No.");
