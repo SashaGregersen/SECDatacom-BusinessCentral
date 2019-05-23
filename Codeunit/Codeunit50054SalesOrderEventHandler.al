@@ -704,4 +704,18 @@ codeunit 50054 "Sales Order Event Handler"
             exit(Format(Accumulator));
         // </PM>
     end;
+
+    [EventSubscriber(ObjectType::Page, Page::"WS Sales Header", 'OnAfterValidateEvent', 'Ship-to Name', true, true)]
+    local procedure SalesHeaderReseller_OnAfterValidate(var Rec: Record "Sales Header"; var xRec: Record "Sales Header")
+    begin
+        if Rec."Ship-to Name" = '' then exit;
+        Rec."Ship-to Name 2" := '';
+        Rec."Ship-to Address" := '';
+        Rec."Ship-to Address 2" := '';
+        Rec."Ship-to City" := '';
+        Rec."Ship-to Post Code" := '';
+        Rec."Ship-to County" := '';
+        Rec."Ship-to Country/Region Code" := '';
+        Rec."Ship-to Contact" := '';
+    end;
 }
