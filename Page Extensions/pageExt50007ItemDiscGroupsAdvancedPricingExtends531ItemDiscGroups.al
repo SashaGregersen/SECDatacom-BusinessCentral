@@ -2,7 +2,14 @@ pageextension 50007 "Item Dsc. Group Adv. Pricing" extends "Item Disc. Groups"
 {
     layout
     {
-        // Add changes to page layout here
+        addafter(Description)
+        {
+            field("Use Orginal Vendor in Subs"; "Use Orginal Vendor in Subs")
+            {
+                ApplicationArea = all;
+                Caption = 'Use Original Vendor in Subs';
+            }
+        }
     }
 
     actions

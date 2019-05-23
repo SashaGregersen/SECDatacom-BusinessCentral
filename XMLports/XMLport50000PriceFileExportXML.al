@@ -50,7 +50,7 @@ xmlport 50000 "Price File Export XML"
                     trigger OnBeforePassVariable()
                     begin
                         if CurrencyFilter = '' then
-                            CurrencyCode := 'DKK'
+                            CurrencyCode := GLSetup."LCY Code"
                         else
                             CurrencyCode := CurrencyFilter;
                     end;
