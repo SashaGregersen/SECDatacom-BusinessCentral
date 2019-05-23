@@ -38,6 +38,11 @@ codeunit 50054 "Sales Order Event Handler"
         SubItem: record "Item Substitution";
         ItemSub: page "Item Substitutions";
         PriceEventHandler: codeunit "Price Event Handler";
+        BidNotification: Notification;
+        Bid: record bid;
+        BidItemPrices: record "Bid Item Price";
+        BidMgt: codeunit "Bid Management";
+        BidMessage: text;
     begin
         if (rec.Type = rec.type::Item) and (not rec.isicorder) then begin
             if not Item.Get(rec."No.") then
@@ -62,6 +67,17 @@ codeunit 50054 "Sales Order Event Handler"
                     end;
                 end;
             end;
+            salesheader.get(rec."Document Type", rec."Document No.");
+            bid.setrange("Vendor No.", Item."Vendor No.");
+            if bid.FindSet() then begin
+                if BidMgt.GetBestBidPrice(bid."No.", salesheader.Reseller, item."No.", item."Vendor Currency", BidItemPrices) then begin
+                    BidMessage := StrSubstNo('One or more bids exist for the item %1', Item."No.");
+                    BidNotification.Message(BidMessage);
+                    BidNotification.Scope := NotificationScope::LocalScope;
+                    BidNotification.Send();
+                end;
+            end;
+
         end;
     end;
 
