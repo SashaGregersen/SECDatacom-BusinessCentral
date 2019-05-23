@@ -32,6 +32,19 @@ pageextension 50028 "End Customer and Reseller 8" extends 132
                     SalesInvoice.Run();
                 end;
             }
+            action(AddTransActionType)
+            {
+                Caption = 'Add Transaction Type';
+                Image = ChangeDimensions;
+                ApplicationArea = all;
+
+                trigger OnAction()
+                var
+                    SalesOrderHandler: Codeunit "Sales Order Event Handler";
+                begin
+                    SalesOrderHandler.AddTransactionTypeToPostedSalesDocument(Rec);
+                end;
+            }
             action("Export Cygate XML")
             {
                 Caption = 'Export Cygate XML';

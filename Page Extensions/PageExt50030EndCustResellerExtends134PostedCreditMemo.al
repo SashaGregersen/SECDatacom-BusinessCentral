@@ -30,7 +30,19 @@ pageextension 50030 "End Customer and Reseller 10" extends 134
                     SalesCrMemo.Run();
                 end;
             }
+            action(AddTransActionType)
+            {
+                Caption = 'Add Transaction Type';
+                Image = ChangeDimensions;
+                ApplicationArea = all;
 
+                trigger OnAction()
+                var
+                    SalesOrderHandler: Codeunit "Sales Order Event Handler";
+                begin
+                    SalesOrderHandler.AddTransactionTypeToPostedSalesDocument(Rec);
+                end;
+            }
         }
     }
 
