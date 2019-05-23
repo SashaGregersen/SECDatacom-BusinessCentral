@@ -8304,7 +8304,7 @@
                   <Value>=System.Convert.ToBase64String(Fields!CompanyPicture.Value)</Value>
                   <MIMEType>image/bmp</MIMEType>
                   <Sizing>FitProportional</Sizing>
-                  <Top>0.03528cm</Top>
+                  <Top>0.14111cm</Top>
                   <Left>0.635cm</Left>
                   <Height>4mm</Height>
                   <Width>60mm</Width>
@@ -8332,6 +8332,7 @@
                 </Line>
               </ReportItems>
               <KeepTogether>true</KeepTogether>
+              <Top>0.05292cm</Top>
               <Left>0.03625cm</Left>
               <Height>0.55292cm</Height>
               <Width>9.2cm</Width>
@@ -8348,7 +8349,7 @@
                   <Value>=System.Convert.ToBase64String(Fields!CompanyPicture.Value)</Value>
                   <MIMEType>image/bmp</MIMEType>
                   <Sizing>FitProportional</Sizing>
-                  <Top>0.03528cm</Top>
+                  <Top>0.17639cm</Top>
                   <Left>0.42333cm</Left>
                   <Height>4mm</Height>
                   <Width>60mm</Width>
@@ -8376,9 +8377,10 @@
                 </Line>
               </ReportItems>
               <KeepTogether>true</KeepTogether>
+              <Top>0.05292cm</Top>
               <Left>18.4cm</Left>
-              <Height>0.55292cm</Height>
-              <Width>9.00896cm</Width>
+              <Height>0.57639cm</Height>
+              <Width>8.90312cm</Width>
               <ZIndex>1</ZIndex>
               <Style>
                 <Border>
@@ -8393,7 +8395,7 @@
                   <Value>=System.Convert.ToBase64String(Fields!CompanyPicture.Value)</Value>
                   <MIMEType>image/bmp</MIMEType>
                   <Sizing>FitProportional</Sizing>
-                  <Top>0.03528cm</Top>
+                  <Top>0.14111cm</Top>
                   <Left>0.03625cm</Left>
                   <Height>4mm</Height>
                   <Width>60mm</Width>
@@ -8421,6 +8423,7 @@
                 </Line>
               </ReportItems>
               <KeepTogether>true</KeepTogether>
+              <Top>0.05292cm</Top>
               <Left>9.2cm</Left>
               <Height>0.55292cm</Height>
               <Width>9.2cm</Width>
