@@ -102,6 +102,19 @@ pageextension 50022 "End Customer and Reseller 2" extends 41
                     SalesQuote.Run();
                 end;
             }
+            action(AddTransActionType)
+            {
+                Caption = 'Add Transaction Type';
+                Image = ChangeDimensions;
+                ApplicationArea = all;
+
+                trigger OnAction()
+                var
+                    SalesOrderHandler: Codeunit "Sales Order Event Handler";
+                begin
+                    SalesOrderHandler.AddTransactionTypeToSalesDocument(Rec);
+                end;
+            }
 
         }
 
