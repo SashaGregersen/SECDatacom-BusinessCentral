@@ -8304,6 +8304,7 @@
                   <Value>=System.Convert.ToBase64String(Fields!CompanyPicture.Value)</Value>
                   <MIMEType>image/bmp</MIMEType>
                   <Sizing>FitProportional</Sizing>
+                  <Top>0.03528cm</Top>
                   <Left>0.635cm</Left>
                   <Height>4mm</Height>
                   <Width>60mm</Width>
@@ -8332,7 +8333,7 @@
               </ReportItems>
               <KeepTogether>true</KeepTogether>
               <Left>0.03625cm</Left>
-              <Height>0.5cm</Height>
+              <Height>0.55292cm</Height>
               <Width>9.2cm</Width>
               <Style>
                 <Border>
@@ -8347,6 +8348,7 @@
                   <Value>=System.Convert.ToBase64String(Fields!CompanyPicture.Value)</Value>
                   <MIMEType>image/bmp</MIMEType>
                   <Sizing>FitProportional</Sizing>
+                  <Top>0.03528cm</Top>
                   <Left>0.42333cm</Left>
                   <Height>4mm</Height>
                   <Width>60mm</Width>
@@ -8375,7 +8377,7 @@
               </ReportItems>
               <KeepTogether>true</KeepTogether>
               <Left>18.4cm</Left>
-              <Height>0.5cm</Height>
+              <Height>0.55292cm</Height>
               <Width>9.00896cm</Width>
               <ZIndex>1</ZIndex>
               <Style>
@@ -8391,6 +8393,8 @@
                   <Value>=System.Convert.ToBase64String(Fields!CompanyPicture.Value)</Value>
                   <MIMEType>image/bmp</MIMEType>
                   <Sizing>FitProportional</Sizing>
+                  <Top>0.03528cm</Top>
+                  <Left>0.03625cm</Left>
                   <Height>4mm</Height>
                   <Width>60mm</Width>
                   <Visibility>
@@ -8418,7 +8422,7 @@
               </ReportItems>
               <KeepTogether>true</KeepTogether>
               <Left>9.2cm</Left>
-              <Height>0.5cm</Height>
+              <Height>0.55292cm</Height>
               <Width>9.2cm</Width>
               <ZIndex>2</ZIndex>
               <Style>
