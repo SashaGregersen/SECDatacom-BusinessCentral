@@ -4425,7 +4425,7 @@
                                     </TablixCells>
                                   </TablixRow>
                                   <TablixRow>
-                                    <Height>0.6cm</Height>
+                                    <Height>0.25604cm</Height>
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
@@ -4742,11 +4742,7 @@
                                             </Visibility>
                                           </TablixMember>
                                           <TablixMember />
-                                          <TablixMember>
-                                            <Visibility>
-                                              <Hidden>true</Hidden>
-                                            </Visibility>
-                                          </TablixMember>
+                                          <TablixMember />
                                         </TablixMembers>
                                       </TablixMember>
                                     </TablixMembers>
@@ -4757,7 +4753,7 @@
                               <DataSetName>DataSet_Result</DataSetName>
                               <Top>8.04596cm</Top>
                               <Left>0.1491cm</Left>
-                              <Height>2.61286cm</Height>
+                              <Height>2.2689cm</Height>
                               <Width>27.46409cm</Width>
                               <ZIndex>1</ZIndex>
                               <Style>
@@ -5486,7 +5482,7 @@
                               <RepeatRowHeaders>true</RepeatRowHeaders>
                               <KeepTogether>true</KeepTogether>
                               <DataSetName>DataSet_Result</DataSetName>
-                              <Top>10.80847cm</Top>
+                              <Top>10.49125cm</Top>
                               <Left>20.61319cm</Left>
                               <Height>2.946cm</Height>
                               <Width>7cm</Width>
@@ -5590,6 +5586,7 @@
                             </Border>
                           </Style>
                         </Rectangle>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
