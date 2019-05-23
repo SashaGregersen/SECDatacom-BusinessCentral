@@ -716,7 +716,7 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>27.7cm</Width>
+                  <Width>27.67943cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -749,7 +749,7 @@
                                     <Width>3.74021cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>5.11065cm</Width>
+                                    <Width>5.09687cm</Width>
                                   </TablixColumn>
                                 </TablixColumns>
                                 <TablixRows>
@@ -4560,7 +4560,7 @@
                               <DataSetName>DataSet_Result</DataSetName>
                               <Top>0.07056cm</Top>
                               <Height>8.0832cm</Height>
-                              <Width>27.69321cm</Width>
+                              <Width>27.67943cm</Width>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -5315,6 +5315,7 @@
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
+                                                      <Format>#,0.00;(#,0.00)</Format>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -5417,6 +5418,7 @@
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
+                                                      <Format>#,0.00;(#,0.00)</Format>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -8273,8 +8275,9 @@
             </TablixRowHierarchy>
             <DataSetName>DataSet_Result</DataSetName>
             <Top>0.17639cm</Top>
+            <Left>0.03625cm</Left>
             <Height>19.31485cm</Height>
-            <Width>27.7cm</Width>
+            <Width>27.67943cm</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -8285,7 +8288,7 @@
         <Height>19.49124cm</Height>
         <Style />
       </Body>
-      <Width>27.7cm</Width>
+      <Width>27.79506cm</Width>
       <Page>
         <PageHeader>
           <Height>1.49812cm</Height>
@@ -8299,6 +8302,7 @@
                   <Value>=System.Convert.ToBase64String(Fields!CompanyPicture.Value)</Value>
                   <MIMEType>image/bmp</MIMEType>
                   <Sizing>FitProportional</Sizing>
+                  <Left>0.635cm</Left>
                   <Height>4mm</Height>
                   <Width>60mm</Width>
                   <Visibility>
@@ -8369,7 +8373,7 @@
               <KeepTogether>true</KeepTogether>
               <Left>18.4cm</Left>
               <Height>0.5cm</Height>
-              <Width>9.3cm</Width>
+              <Width>9.00896cm</Width>
               <ZIndex>1</ZIndex>
               <Style>
                 <Border>
