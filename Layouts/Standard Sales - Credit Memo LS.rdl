@@ -8248,7 +8248,6 @@
                             </Border>
                           </Style>
                         </Rectangle>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -8290,7 +8289,7 @@
         <Height>18.80332cm</Height>
         <Style />
       </Body>
-      <Width>27.79506cm</Width>
+      <Width>27.71568cm</Width>
       <Page>
         <PageHeader>
           <Height>1.49812cm</Height>
