@@ -4,6 +4,8 @@ page 50018 "Cygate Price List"
     ApplicationArea = All;
     UsageCategory = Lists;
     SourceTable = Item;
+    SourceTableView = where ("Blocked from purchase" = const (false), "Use on Website" = const (true));
+    Editable = false;
 
     layout
     {
@@ -23,7 +25,7 @@ page 50018 "Cygate Price List"
                 {
                     ApplicationArea = all;
                 }
-                field("List Price"; ListPrice)
+                field("List Price"; Format(ListPrice, 0, 9))
                 {
                     ApplicationArea = all;
                 }
@@ -43,7 +45,7 @@ page 50018 "Cygate Price List"
                 {
                     ApplicationArea = all;
                 }
-                field("Reseller Price"; ResellerPrice)
+                field("Reseller Price"; Format(ResellerPrice, 0, 9))
                 {
                     ApplicationArea = all;
                 }
@@ -62,12 +64,46 @@ page 50018 "Cygate Price List"
 
         }
     }
-    trigger OnOpenPage()
+    trigger OnFindRecord(which: Text): Boolean
     var
 
     begin
+        ItemTemp.copy(Rec);
+        if ItemTemp.find(which) then begin
+            Rec := ItemTemp;
+            exit(true);
+        end else
+            exit(false);
+    end;
+
+    trigger OnNextRecord(Steps: integer): Integer
+    var
+        LocResultSteps: Integer;
+    begin
+        ItemTemp.copy(Rec);
+        LocResultSteps := ItemTemp.next(Steps);
+        if LocResultSteps <> 0 then
+            rec := ItemTemp;
+        exit(LocResultSteps);
+    end;
+
+    trigger OnOpenPage()
+    var
+        SalesPrice: record "Sales Price";
+        Item: record Item;
+    begin
         GlSetup.get;
         SalesReceiveSetup.get;
+        if Item.FindSet() then
+            repeat
+                SalesPrice.SetRange("Item No.", Item."No.");
+                if SalesPrice.FindSet() then
+                    repeat
+                        Item.get(SalesPrice."Item No.");
+                        ItemTemp := Item;
+                        if not ItemTemp.Insert(false) then;
+                    until SalesPrice.next = 0;
+            until Item.next = 0;
     end;
 
     trigger OnAfterGetRecord()
@@ -79,8 +115,8 @@ page 50018 "Cygate Price List"
     begin
         Customer.get(SalesReceiveSetup."Cygate Customer No.");
         CygateCurrency := Customer."Currency Code";
-        ListPrice := FindListPrice(SalesPrice);
-        ResellerPrice := FindResellerPrice(salesprice, SalesReceiveSetup."Cygate Customer No.");
+        ListPrice := round(FindListPrice(SalesPrice), 0.01);
+        ResellerPrice := Round(FindResellerPrice(salesprice, SalesReceiveSetup."Cygate Customer No."), 0.01);
         MainCategoryCode := GetMainCategoryCode;
         SubCategoryCode := GetSubCategoryCode;
         if ItemCategory.Get(rec."Item Category Code") then begin
@@ -101,7 +137,6 @@ page 50018 "Cygate Price List"
         SalesPrice.SetRange("Sales Type", SalesPrice."Sales Type"::"All Customers");
         if SalesPrice.FindLast() then
             exit(SalesPrice."Unit Price");
-        exit(0);
     end;
 
     procedure FindResellerPrice(SalesPrice: record "Sales Price"; CustomerNo: code[20]): Decimal
@@ -175,4 +210,5 @@ page 50018 "Cygate Price List"
         GlSetup: record "General Ledger Setup";
         SalesReceiveSetup: record "Sales & Receivables Setup";
         CygateCurrency: code[10];
+        ItemTemp: record item temporary;
 }

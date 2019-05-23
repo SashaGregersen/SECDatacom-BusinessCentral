@@ -10,7 +10,7 @@ codeunit 50050 "Item Event handler"
         SyncMasterData: Codeunit "Synchronize Master Data";
         AdvPriceMgt: Codeunit "Advanced Price Management";
     begin
-        If not runtrigger then
+        If not runtrigger and rec.IsTemporary then
             EXIT;
         if Rec."Item Disc. Group" <> '' then
             AdvPriceMgt.UpdateItemPurchaseDicountsFromItemDiscGroup(Rec);
@@ -30,7 +30,7 @@ codeunit 50050 "Item Event handler"
         SyncMasterData: Codeunit "Synchronize Master Data";
         AdvPriceMgt: Codeunit "Advanced Price Management";
     begin
-        If not runtrigger then
+        If not runtrigger and rec.IsTemporary then
             EXIT;
         if Rec."Item Disc. Group" <> '' then
             AdvPriceMgt.UpdateItemPurchaseDicountsFromItemDiscGroup(Rec);

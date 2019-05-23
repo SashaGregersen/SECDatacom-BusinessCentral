@@ -285,8 +285,8 @@ codeunit 50000 "Advanced Price Management"
         ImplementPrices: Report "Implement Price Change";
         Suggestprices: report "Suggest Sales Price on Wksh.";
         ICSyncMgt: Codeunit "IC Sync Management";
+        ItemDiscountGroup: record "Item Discount Group";
     begin
-
         Item.Get(ItemNo);
         if Item."Transfer Price %" = 0 then
             exit;
@@ -331,7 +331,12 @@ codeunit 50000 "Advanced Price Management"
                     end;
                 end;
             until ICPartner.Next() = 0;
-        ICSyncMgt.CopyPurchasePricesToOtherCompanies(Item."No.");
+        if ItemDiscountGroup.get(Item."Item Disc. Group") then begin
+            if ItemDiscountGroup."Use Orginal Vendor in Subs" then
+                ICSyncMgt.CopyPurchasePricesToOtherCompanies(Item."No.")
+            else
+                ICSyncMgt.CopyTransferPurchasePricesToOtherCompanies(Item."No.");
+        end;
     end;
 
     local procedure CreatePricesForItemFromItemDiscountGroups(Item: Record Item)
