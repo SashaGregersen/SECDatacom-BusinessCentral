@@ -721,7 +721,7 @@
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>19.31485cm</Height>
+                  <Height>18.46818cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -8226,7 +8226,8 @@
                                 </Paragraph>
                               </Paragraphs>
                               <rd:DefaultName>CompanyLegalStatement</rd:DefaultName>
-                              <Top>18.91796cm</Top>
+                              <Top>18.02271cm</Top>
+                              <Left>0cm</Left>
                               <Height>11pt</Height>
                               <Width>27.67943cm</Width>
                               <ZIndex>5</ZIndex>
@@ -8247,6 +8248,7 @@
                             </Border>
                           </Style>
                         </Rectangle>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -8276,7 +8278,7 @@
             <DataSetName>DataSet_Result</DataSetName>
             <Top>0.17639cm</Top>
             <Left>0.03625cm</Left>
-            <Height>19.31485cm</Height>
+            <Height>18.46818cm</Height>
             <Width>27.67943cm</Width>
             <Style>
               <Border>
@@ -8285,7 +8287,7 @@
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>19.49124cm</Height>
+        <Height>18.80332cm</Height>
         <Style />
       </Body>
       <Width>27.79506cm</Width>
@@ -8329,6 +8331,7 @@
                 </Line>
               </ReportItems>
               <KeepTogether>true</KeepTogether>
+              <Left>0.03625cm</Left>
               <Height>0.5cm</Height>
               <Width>9.2cm</Width>
               <Style>
