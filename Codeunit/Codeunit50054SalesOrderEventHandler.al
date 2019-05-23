@@ -607,9 +607,9 @@ codeunit 50054 "Sales Order Event Handler"
         end;
 
         //Print FIK
+        RootElement.SelectSingleNode('cac:PaymentMeans', namespaceManager, XMLNode2);
         if PaymentMethod."Print FIK" then begin
             PmtSetup.Get;
-            RootElement.SelectSingleNode('cac:PaymentMeans', namespaceManager, XMLNode2);
 
             XMLNode2.SelectSingleNode('cbc:PaymentMeansCode', namespaceManager, XMLNode1);
             XMLElement1 := XmlElement.Create('PaymentMeansCode',
@@ -650,33 +650,26 @@ codeunit 50054 "Sales Order Event Handler"
             end else
                 PaymentID := PadStr('', PmtIDLength, '0');
 
+            XMLNode2.SelectSingleNode('cbc:PaymentChannelCode', namespaceManager, XMLNode1);
             XMLElement1 := XmlElement.Create('CreditAccount',
                                             cac); //Kreditornummer
-
-            XMLElement1.Add(XmlElement.Create('AccountID', cbc, PmtSetup."FIK/GIRO-No."));
             XMLNode1.AddAfterSelf(XMLElement1);
+            XMLElement1.Add(XmlElement.Create('AccountID', cbc, PmtSetup."FIK/GIRO-No."));
 
             XMLElement1 := XmlElement.Create('PaymentID',
                                             cbc,
                                             PmtSetup."IK Card Type");//Kortart
             XMLNode1.AddAfterSelf(XMLElement1);
 
-            /*
-            XMLElement1 := XmlElement.Create('InstructionNote',
-                                            ns,
-                                            PaymentID);//15 numeriske tegn
-            XMLNode1.AddAfterSelf(XMLElement1);
-
-            XMLElement1 := XmlElement.Create('InstructionID',
-                                            ns,
-                                            PmtSetup."FIK/GIRO-No.");//15 numeriske tegn
-            XMLNode1.AddAfterSelf(XMLElement1);
-            */
             XMLElement1 := XmlElement.Create('InstructionID',
                                             cbc,
                                             PaymentID);//15 numeriske tegn
             XMLNode1.AddAfterSelf(XMLElement1);
 
+            XMLNode2.SelectSingleNode('cac:PayeeFinancialAccount', namespaceManager, XMLNode1);
+            XMLNode1.Remove();
+        end else begin
+            XMLNode2.Remove();
         end;
     end;
 
