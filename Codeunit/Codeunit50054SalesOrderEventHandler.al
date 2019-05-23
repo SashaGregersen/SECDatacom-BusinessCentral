@@ -718,4 +718,288 @@ codeunit 50054 "Sales Order Event Handler"
         Rec."Ship-to Country/Region Code" := '';
         Rec."Ship-to Contact" := '';
     end;
+
+    procedure AddTransactionTypeToSalesDocument(var SalesHeader: Record "Sales Header");
+    var
+        SalesSetup: Record "Sales & Receivables Setup";
+        DimVal: Record "Dimension Value";
+    begin
+        SalesSetup.Get();
+        if SalesSetup."Transaction Type" = '' then exit;
+
+        DimVal.SetRange("Dimension Code", SalesSetup."Transaction Type");
+        if Page.RunModal(Page::"Dimension Value List", DimVal) <> Action::LookupOK then exit;
+
+
+        //Tilføj til alle bogf. bilag AddTransactionTypeToPostedSalesDocuments(v, DimVal.Code);
+    end;
+
+    procedure AddTransactionTypeToPostedSalesDocument(v: Variant)
+    var
+        SalesSetup: Record "Sales & Receivables Setup";
+        DimVal: Record "Dimension Value";
+    begin
+        SalesSetup.Get();
+        if SalesSetup."Transaction Type" = '' then exit;
+
+        DimVal.SetRange("Dimension Code", SalesSetup."Transaction Type");
+        if Page.RunModal(Page::"Dimension Value List", DimVal) = Action::LookupOK then
+            AddTransactionTypeToPostedSalesDocuments(v, DimVal.Code);
+    end;
+
+    procedure AddTransactionTypeToPostedSalesDocuments(v: Variant; NewDimValCode: Code[20])
+    var
+        SalesSetup: Record "Sales & Receivables Setup";
+        DataTypeMgt: Codeunit "Data Type Management";
+        RecRef: RecordRef;
+        DocumentNo: Code[20];
+        PostingDate: Date;
+        DimSetEntry: Record "Dimension Set Entry" temporary;
+        DimMgt: Codeunit DimensionManagement;
+        DimSetID: Integer;
+        SalesShipmentHeader: Record "Sales Shipment Header";
+        SalesShipmentLine: Record "Sales Shipment Line";
+        SalesInvoiceHeader: Record "Sales Invoice Header";
+        SalesInvoiceLine: Record "Sales Invoice Line";
+        SalesCrMemoHeader: Record "Sales Cr.Memo Header";
+        SalesCrMemoLine: Record "Sales Cr.Memo Line";
+        ReturnReceiptHeader: Record "Return Receipt Header";
+        ReturnReceiptLine: Record "Return Receipt Line";
+        GLEntry: Record "G/L Entry";
+        CustEntry: Record "Cust. Ledger Entry";
+        ItemLedgEntry: Record "Item Ledger Entry";
+        ValueEntry: Record "Value Entry";
+    begin
+        SalesSetup.Get();
+        if SalesSetup."Transaction Type" = '' then exit;
+
+        DimSetEntry.Reset();
+        DimSetEntry.DeleteAll();
+
+        DataTypeMgt.GetRecordRef(v, RecRef);
+        case RecRef.Number of
+            110:
+                begin
+                    SalesShipmentHeader.SetPosition(RecRef.GetPosition());
+                    DocumentNo := SalesShipmentHeader."No.";
+                    PostingDate := SalesShipmentHeader."Posting Date";
+                    DimMgt.GetDimensionSet(DimSetEntry, SalesShipmentHeader."Dimension Set ID");
+                end;
+            112:
+                begin
+                    SalesInvoiceHeader.SetPosition(RecRef.GetPosition());
+                    DocumentNo := SalesInvoiceHeader."No.";
+                    PostingDate := SalesInvoiceHeader."Posting Date";
+                    DimMgt.GetDimensionSet(DimSetEntry, SalesInvoiceHeader."Dimension Set ID");
+                end;
+            114:
+                begin
+                    SalesCrMemoHeader.SetPosition(RecRef.GetPosition());
+                    DocumentNo := SalesCrMemoHeader."No.";
+                    PostingDate := SalesCrMemoHeader."Posting Date";
+                    DimMgt.GetDimensionSet(DimSetEntry, SalesCrMemoHeader."Dimension Set ID");
+                end;
+            6660:
+                begin
+                    ReturnReceiptHeader.SetPosition(RecRef.GetPosition());
+                    DocumentNo := ReturnReceiptHeader."No.";
+                    PostingDate := ReturnReceiptHeader."Posting Date";
+                    DimMgt.GetDimensionSet(DimSetEntry, ReturnReceiptHeader."Dimension Set ID");
+                end;
+        end;
+
+        DimSetEntry.Init();
+        DimSetEntry."Dimension Set ID" := 0;
+        DimSetEntry.Validate("Dimension Code", SalesSetup."Transaction Type");
+        DimSetEntry.Validate("Dimension Value Code", NewDimValCode);
+        DimSetEntry.Insert(true);
+        DimSetID := DimMgt.GetDimensionSetID(DimSetEntry);
+
+        GLEntry.SetRange("Document No.", DocumentNo);
+        GLEntry.SetRange("Posting Date", PostingDate);
+
+        CustEntry.SetRange("Document No.", DocumentNo);
+        CustEntry.SetRange("Posting Date", PostingDate);
+
+        ItemLedgEntry.SetRange("Document No.", DocumentNo);
+        ItemLedgEntry.SetRange("Posting Date", PostingDate);
+
+        ValueEntry.SetRange("Document No.", DocumentNo);
+        ValueEntry.SetRange("Posting Date", PostingDate);
+
+        case RecRef.Number of
+            110:
+                begin
+                    GLEntry.SetRange("Dimension Set ID", SalesShipmentHeader."Dimension Set ID");
+                    CustEntry.SetRange("Dimension Set ID", SalesShipmentHeader."Dimension Set ID");
+                    ItemLedgEntry.SetRange("Dimension Set ID", SalesShipmentHeader."Dimension Set ID");
+                    ValueEntry.SetRange("Dimension Set ID", SalesShipmentHeader."Dimension Set ID");
+
+                    SalesShipmentHeader."Dimension Set ID" := DimSetID;
+                    SalesShipmentHeader.Modify();
+
+                    GLEntry.ModifyAll("Dimension Set ID", DimSetID);
+                    CustEntry.ModifyAll("Dimension Set ID", DimSetID);
+                    ItemLedgEntry.ModifyAll("Dimension Set ID", DimSetID);
+                    ValueEntry.ModifyAll("Dimension Set ID", DimSetID);
+
+                    SalesShipmentLine.SetRange("Document No.", SalesShipmentHeader."No.");
+                    if SalesShipmentLine.FindSet() then
+                        repeat
+                            DimSetEntry.Reset();
+                            DimSetEntry.DeleteAll();
+                            DimMgt.GetDimensionSet(DimSetEntry, SalesShipmentLine."Dimension Set ID");
+
+                            DimSetEntry.Init();
+                            DimSetEntry."Dimension Set ID" := 0;
+                            DimSetEntry.Validate("Dimension Code", SalesSetup."Transaction Type");
+                            DimSetEntry.Validate("Dimension Value Code", NewDimValCode);
+                            DimSetEntry.Insert(true);
+                            DimSetID := DimMgt.GetDimensionSetID(DimSetEntry);
+
+                            GLEntry.SetRange("Dimension Set ID", SalesShipmentHeader."Dimension Set ID");
+                            CustEntry.SetRange("Dimension Set ID", SalesShipmentHeader."Dimension Set ID");
+                            ItemLedgEntry.SetRange("Dimension Set ID", SalesShipmentHeader."Dimension Set ID");
+                            ValueEntry.SetRange("Dimension Set ID", SalesShipmentHeader."Dimension Set ID");
+
+                            SalesShipmentLine."Dimension Set ID" := DimSetID;
+                            SalesShipmentLine.Modify();
+
+                            GLEntry.ModifyAll("Dimension Set ID", DimSetID);
+                            CustEntry.ModifyAll("Dimension Set ID", DimSetID);
+                            ItemLedgEntry.ModifyAll("Dimension Set ID", DimSetID);
+                            ValueEntry.ModifyAll("Dimension Set ID", DimSetID);
+                        until SalesShipmentLine.Next() = 0;
+                end;
+            112:
+                begin
+                    GLEntry.SetRange("Dimension Set ID", SalesShipmentHeader."Dimension Set ID");
+                    CustEntry.SetRange("Dimension Set ID", SalesShipmentHeader."Dimension Set ID");
+                    ItemLedgEntry.SetRange("Dimension Set ID", SalesShipmentHeader."Dimension Set ID");
+                    ValueEntry.SetRange("Dimension Set ID", SalesShipmentHeader."Dimension Set ID");
+
+                    SalesInvoiceHeader."Dimension Set ID" := DimSetID;
+                    SalesInvoiceHeader.Modify();
+
+                    GLEntry.ModifyAll("Dimension Set ID", DimSetID);
+                    CustEntry.ModifyAll("Dimension Set ID", DimSetID);
+                    ItemLedgEntry.ModifyAll("Dimension Set ID", DimSetID);
+                    ValueEntry.ModifyAll("Dimension Set ID", DimSetID);
+
+                    SalesInvoiceLine.SetRange("Document No.", SalesInvoiceHeader."No.");
+                    if SalesInvoiceLine.FindSet() then
+                        repeat
+                            DimSetEntry.Reset();
+                            DimSetEntry.DeleteAll();
+                            DimMgt.GetDimensionSet(DimSetEntry, SalesInvoiceLine."Dimension Set ID");
+
+                            DimSetEntry.Init();
+                            DimSetEntry."Dimension Set ID" := 0;
+                            DimSetEntry.Validate("Dimension Code", SalesSetup."Transaction Type");
+                            DimSetEntry.Validate("Dimension Value Code", NewDimValCode);
+                            DimSetEntry.Insert(true);
+                            DimSetID := DimMgt.GetDimensionSetID(DimSetEntry);
+
+                            GLEntry.SetRange("Dimension Set ID", SalesShipmentHeader."Dimension Set ID");
+                            CustEntry.SetRange("Dimension Set ID", SalesShipmentHeader."Dimension Set ID");
+                            ItemLedgEntry.SetRange("Dimension Set ID", SalesShipmentHeader."Dimension Set ID");
+                            ValueEntry.SetRange("Dimension Set ID", SalesShipmentHeader."Dimension Set ID");
+
+                            SalesInvoiceLine."Dimension Set ID" := DimSetID;
+                            SalesInvoiceLine.Modify();
+
+                            GLEntry.ModifyAll("Dimension Set ID", DimSetID);
+                            CustEntry.ModifyAll("Dimension Set ID", DimSetID);
+                            ItemLedgEntry.ModifyAll("Dimension Set ID", DimSetID);
+                            ValueEntry.ModifyAll("Dimension Set ID", DimSetID);
+                        until SalesInvoiceLine.Next() = 0;
+                end;
+            114:
+                begin
+                    GLEntry.SetRange("Dimension Set ID", SalesShipmentHeader."Dimension Set ID");
+                    CustEntry.SetRange("Dimension Set ID", SalesShipmentHeader."Dimension Set ID");
+                    ItemLedgEntry.SetRange("Dimension Set ID", SalesShipmentHeader."Dimension Set ID");
+                    ValueEntry.SetRange("Dimension Set ID", SalesShipmentHeader."Dimension Set ID");
+
+                    SalesCrMemoHeader."Dimension Set ID" := DimSetID;
+                    SalesCrMemoHeader.Modify();
+
+                    GLEntry.ModifyAll("Dimension Set ID", DimSetID);
+                    CustEntry.ModifyAll("Dimension Set ID", DimSetID);
+                    ItemLedgEntry.ModifyAll("Dimension Set ID", DimSetID);
+                    ValueEntry.ModifyAll("Dimension Set ID", DimSetID);
+
+                    SalesCrMemoLine.SetRange("Document No.", SalesCrMemoHeader."No.");
+                    if SalesCrMemoLine.FindSet() then
+                        repeat
+                            DimSetEntry.Reset();
+                            DimSetEntry.DeleteAll();
+                            DimMgt.GetDimensionSet(DimSetEntry, SalesCrMemoLine."Dimension Set ID");
+
+                            DimSetEntry.Init();
+                            DimSetEntry."Dimension Set ID" := 0;
+                            DimSetEntry.Validate("Dimension Code", SalesSetup."Transaction Type");
+                            DimSetEntry.Validate("Dimension Value Code", NewDimValCode);
+                            DimSetEntry.Insert(true);
+                            DimSetID := DimMgt.GetDimensionSetID(DimSetEntry);
+
+                            GLEntry.SetRange("Dimension Set ID", SalesShipmentHeader."Dimension Set ID");
+                            CustEntry.SetRange("Dimension Set ID", SalesShipmentHeader."Dimension Set ID");
+                            ItemLedgEntry.SetRange("Dimension Set ID", SalesShipmentHeader."Dimension Set ID");
+                            ValueEntry.SetRange("Dimension Set ID", SalesShipmentHeader."Dimension Set ID");
+
+                            SalesCrMemoLine."Dimension Set ID" := DimSetID;
+                            SalesCrMemoLine.Modify();
+
+                            GLEntry.ModifyAll("Dimension Set ID", DimSetID);
+                            CustEntry.ModifyAll("Dimension Set ID", DimSetID);
+                            ItemLedgEntry.ModifyAll("Dimension Set ID", DimSetID);
+                            ValueEntry.ModifyAll("Dimension Set ID", DimSetID);
+                        until SalesCrMemoLine.Next() = 0;
+                end;
+            6660:
+                begin
+                    GLEntry.SetRange("Dimension Set ID", SalesShipmentHeader."Dimension Set ID");
+                    CustEntry.SetRange("Dimension Set ID", SalesShipmentHeader."Dimension Set ID");
+                    ItemLedgEntry.SetRange("Dimension Set ID", SalesShipmentHeader."Dimension Set ID");
+                    ValueEntry.SetRange("Dimension Set ID", SalesShipmentHeader."Dimension Set ID");
+
+                    ReturnReceiptHeader."Dimension Set ID" := DimSetID;
+                    ReturnReceiptHeader.Modify();
+
+                    GLEntry.ModifyAll("Dimension Set ID", DimSetID);
+                    CustEntry.ModifyAll("Dimension Set ID", DimSetID);
+                    ItemLedgEntry.ModifyAll("Dimension Set ID", DimSetID);
+                    ValueEntry.ModifyAll("Dimension Set ID", DimSetID);
+
+                    ReturnReceiptLine.SetRange("Document No.", ReturnReceiptHeader."No.");
+                    if ReturnReceiptLine.FindSet() then
+                        repeat
+                            DimSetEntry.Reset();
+                            DimSetEntry.DeleteAll();
+                            DimMgt.GetDimensionSet(DimSetEntry, ReturnReceiptLine."Dimension Set ID");
+
+                            DimSetEntry.Init();
+                            DimSetEntry."Dimension Set ID" := 0;
+                            DimSetEntry.Validate("Dimension Code", SalesSetup."Transaction Type");
+                            DimSetEntry.Validate("Dimension Value Code", NewDimValCode);
+                            DimSetEntry.Insert(true);
+                            DimSetID := DimMgt.GetDimensionSetID(DimSetEntry);
+
+                            GLEntry.SetRange("Dimension Set ID", SalesShipmentHeader."Dimension Set ID");
+                            CustEntry.SetRange("Dimension Set ID", SalesShipmentHeader."Dimension Set ID");
+                            ItemLedgEntry.SetRange("Dimension Set ID", SalesShipmentHeader."Dimension Set ID");
+                            ValueEntry.SetRange("Dimension Set ID", SalesShipmentHeader."Dimension Set ID");
+
+                            ReturnReceiptLine."Dimension Set ID" := DimSetID;
+                            ReturnReceiptLine.Modify();
+
+                            GLEntry.ModifyAll("Dimension Set ID", DimSetID);
+                            CustEntry.ModifyAll("Dimension Set ID", DimSetID);
+                            ItemLedgEntry.ModifyAll("Dimension Set ID", DimSetID);
+                            ValueEntry.ModifyAll("Dimension Set ID", DimSetID);
+                        until ReturnReceiptLine.Next() = 0;
+                end;
+        end;
+    end;
 }

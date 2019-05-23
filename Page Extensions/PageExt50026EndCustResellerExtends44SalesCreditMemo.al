@@ -144,6 +144,19 @@ pageextension 50026 "End Customer and Reseller 6" extends 44
                     page.RunModal(Page::"General Journal Provisions", GnlJnlLine);
                 end;
             }
+            action(AddTransActionType)
+            {
+                Caption = 'Add Transaction Type';
+                Image = ChangeDimensions;
+                ApplicationArea = all;
+
+                trigger OnAction()
+                var
+                    SalesOrderHandler: Codeunit "Sales Order Event Handler";
+                begin
+                    SalesOrderHandler.AddTransactionTypeToSalesDocument(Rec);
+                end;
+            }
         }
     }
 

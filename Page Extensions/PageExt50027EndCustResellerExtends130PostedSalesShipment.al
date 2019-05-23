@@ -32,6 +32,19 @@ pageextension 50027 "End Customer and Reseller 7" extends 130
                     SalesShipment.Run();
                 end;
             }
+            action(AddTransActionType)
+            {
+                Caption = 'Add Transaction Type';
+                Image = ChangeDimensions;
+                ApplicationArea = all;
+
+                trigger OnAction()
+                var
+                    SalesOrderHandler: Codeunit "Sales Order Event Handler";
+                begin
+                    SalesOrderHandler.AddTransactionTypeToPostedSalesDocument(Rec);
+                end;
+            }
 
         }
     }
