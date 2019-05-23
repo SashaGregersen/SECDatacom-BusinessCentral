@@ -8519,6 +8519,18 @@ End Function
         <Field Name="UnitOfMeasure">
           <DataField>UnitOfMeasure</DataField>
         </Field>
+        <Field Name="UnitListPrice">
+          <DataField>UnitListPrice</DataField>
+        </Field>
+        <Field Name="UnitListPriceFormat">
+          <DataField>UnitListPriceFormat</DataField>
+        </Field>
+        <Field Name="Reseller_Discount">
+          <DataField>Reseller_Discount</DataField>
+        </Field>
+        <Field Name="Reseller_DiscountFormat">
+          <DataField>Reseller_DiscountFormat</DataField>
+        </Field>
         <Field Name="UnitOfMeasure_Lbl">
           <DataField>UnitOfMeasure_Lbl</DataField>
         </Field>
