@@ -584,7 +584,7 @@ codeunit 50054 "Sales Order Event Handler"
             until Location.Next() = 0;
     end;
 
-    /* [EventSubscriber(ObjectType::Codeunit, Codeunit::"OIOUBL-Export Sales Invoice", 'OIOUBL_OnBeforeExportSalesInvoice', '', true, true)]
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"OIOUBL-Export Sales Invoice", 'OIOUBL_OnBeforeExportSalesInvoice', '', true, true)]
     local procedure OIOUBL_OnBeforeExportSalesInvoice(var XMLdocOut: XmlDocument; SalesInvoiceHeader: Record "Sales Invoice Header")
     var
         namespaceManager: XmlNamespaceManager;
@@ -688,7 +688,7 @@ codeunit 50054 "Sales Order Event Handler"
         end else begin
             XMLNode2.Remove();
         end;
-    end; */
+    end;
 
     procedure Modulus10(TestNumber: Code[16]): Code[16]
     var
