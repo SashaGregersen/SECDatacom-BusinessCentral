@@ -3219,8 +3219,8 @@
                               <RepeatRowHeaders>true</RepeatRowHeaders>
                               <KeepTogether>true</KeepTogether>
                               <DataSetName>DataSet_Result</DataSetName>
-                              <Top>10.83884cm</Top>
-                              <Left>20.2068cm</Left>
+                              <Top>10.91822cm</Top>
+                              <Left>20.4052cm</Left>
                               <Height>2.946cm</Height>
                               <Width>6.8952cm</Width>
                               <ZIndex>2</ZIndex>
@@ -3561,6 +3561,7 @@
                             </Border>
                           </Style>
                         </Rectangle>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>

@@ -230,6 +230,9 @@ report 50010 "SEC Purchase Order"
                     column(ShipmentMethodDesc; ShipmentMethod.Description)
                     {
                     }
+                    column(ShipmentMethodCode; ShipmentMethod.Code)
+                    {
+                    }
                     column(PrepmtPaymentTermsDesc; PrepmtPaymentTerms.Description)
                     {
                     }
