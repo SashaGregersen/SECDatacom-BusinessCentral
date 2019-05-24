@@ -32,7 +32,9 @@ codeunit 50000 "Advanced Price Management"
             repeat
                 CreatePricesForItemFromItemDiscountGroups(ItemTemp);               //lav priser basesert på sales discounts for hver vare 
                 if ItemTemp."Vendor No." <> '' then
-                    CreatePricesForICPartners(ItemTemp."No.", ItemTemp."Vendor No.");  //lav transfer priser for partnere og flyt tdem til andre selskaber
+                    CreatePricesForICPartners(ItemTemp."No.", ItemTemp."Vendor No.")  //lav transfer priser for partnere og flyt tdem til andre selskaber
+
+
             until ItemTemp.Next() = 0;
     end;
 
@@ -288,8 +290,13 @@ codeunit 50000 "Advanced Price Management"
         ItemDiscountGroup: record "Item Discount Group";
     begin
         Item.Get(ItemNo);
-        if Item."Transfer Price %" = 0 then
-            exit;
+        if Item."Transfer Price %" = 0 then begin
+            if ItemDiscountGroup.get(item."Item Disc. Group") then begin
+                if not ItemDiscountGroup."Use Orginal Vendor in Subs" then
+                    exit;
+            end else
+                exit;
+        end;
         if ICPartner.FindSet() then
             repeat
                 if ICPartner."Customer No." <> '' then begin
@@ -303,7 +310,10 @@ codeunit 50000 "Advanced Price Management"
                         Salesprice."Item No." := PurchasePrice."Item No.";
                         Salesprice."Unit of Measure Code" := PurchasePrice."Unit of Measure Code";
                         Salesprice."Minimum Quantity" := PurchasePrice."Minimum Quantity";
-                        Salesprice."Unit Price" := round(PurchasePrice."Direct Unit Cost" / ((100 - Item."Transfer Price %") / 100));
+                        if not ItemDiscountGroup."Use Orginal Vendor in Subs" then
+                            Salesprice."Unit Price" := round(PurchasePrice."Direct Unit Cost" / ((100 - Item."Transfer Price %") / 100))
+                        else
+                            SalesPrice."Unit Price" := PurchasePrice."Direct Unit Cost";
                         if not Salesprice.Insert(true) then
                             Salesprice.Modify(true);
 
@@ -331,12 +341,10 @@ codeunit 50000 "Advanced Price Management"
                     end;
                 end;
             until ICPartner.Next() = 0;
-        if ItemDiscountGroup.get(Item."Item Disc. Group") then begin
-            if ItemDiscountGroup."Use Orginal Vendor in Subs" then
-                ICSyncMgt.CopyPurchasePricesToOtherCompanies(Item."No.")
-            else
-                ICSyncMgt.CopyTransferPurchasePricesToOtherCompanies(Item."No.");
-        end;
+        if ItemDiscountGroup."Use Orginal Vendor in Subs" then
+            ICSyncMgt.CopyPurchasePricesToOtherCompanies(Item."No.")
+        else
+            ICSyncMgt.CopyTransferPurchasePricesToOtherCompanies(Item."No.");
     end;
 
     local procedure CreatePricesForItemFromItemDiscountGroups(Item: Record Item)

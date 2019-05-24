@@ -147,7 +147,7 @@ codeunit 50004 "Create Purchase Order"
         PurchLine.Validate("No.", SalesLine."No.");
         PurchLine.Validate("Location Code", SalesLine."Location Code");
         PurchLine.Validate(Quantity, (SalesLine.Quantity - SalesLine."Reserved Quantity"));
-        PurchLine.Validate("Expected Receipt Date", SalesLine."Shipment Date"); //vend med SEC 
+        PurchLine.Validate("Expected Receipt Date", SalesLine."Shipment Date");
         if SalesLine."Bid No." <> '' then
             PurchLine.Validate("Bid No.", SalesLine."Bid No.");
         PurchLine.Validate("Direct Unit Cost", PurchasePrice);
