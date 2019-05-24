@@ -3384,8 +3384,8 @@
                                   </FilterValues>
                                 </Filter>
                               </Filters>
-                              <Top>13.93245cm</Top>
-                              <Left>4.70959in</Left>
+                              <Top>13.98537cm</Top>
+                              <Left>4.76267in</Left>
                               <Height>1.76418cm</Height>
                               <Width>15.2cm</Width>
                               <ZIndex>1</ZIndex>
@@ -4463,6 +4463,7 @@
                             </Border>
                           </Style>
                         </Rectangle>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
