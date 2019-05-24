@@ -13,43 +13,36 @@ report 50017 "One Time Bid"
             dataitem(Bid; Bid)
             {
                 DataItemLink = "No." = field ("Bid No.");
-                RequestFilterFields = "Vendor Bid No.", Description, Claimable;
 
                 dataitem("Bid Item Price"; "Bid Item Price")
                 {
                     DataItemLink = "Bid No." = field ("No.");
-                    RequestFilterFields = "Bid Purchase Discount Pct.", "Bid Unit Purchase Price";
 
                 }
                 trigger OnPreDataItem()
                 var
-                    Claim: Boolean;
-                    BidPurchDiscPct: Decimal;
-                    BidUnitPurchPrice: Decimal;
+
                 begin
                     Bid.init;
                     "No." := '';
                     validate("Vendor No.", VendorNo);
                     Validate("One Time Bid", true);
-                    validate("Vendor Bid No.", GetFilter("Vendor Bid No."));
-                    validate(Description, GetFilter(Description));
-                    if getfilter(Claimable) <> '' then begin
-                        Evaluate(Claim, getfilter(Claimable));
-                        validate(Claimable, Claim);
-                    end;
+                    validate("Vendor Bid No.", VendorBidNo);
+                    validate(Description, Description);
+                    validate(Claimable, Claim);
                     Insert(true);
                     "Bid Item Price".init;
                     "Bid Item Price".validate("Bid No.", Bid."No.");
                     "Bid Item Price".validate("item No.", ItemNo);
                     "Bid Item Price".validate("Customer No.", CustomerNo);
-                    if "Bid Item Price".GetFilter("Bid Purchase Discount Pct.") <> '' then begin
-                        Evaluate(BidPurchDiscPct, "Bid Item Price".GetFilter("Bid Purchase Discount Pct."));
-                        "Bid Item Price".validate("Bid Purchase Discount Pct.", BidPurchDiscPct);
-                    end;
-                    if "Bid Item Price".GetFilter("Bid Unit Purchase Price") <> '' then begin
-                        Evaluate(BidUnitPurchPrice, "Bid Item Price".GetFilter("Bid Unit Purchase Price"));
+                    if BidPurchDiscount <> 0 then
+                        "Bid Item Price".validate("Bid Purchase Discount Pct.", BidPurchDiscount);
+                    if BidUnitPurchPrice <> 0 then
                         "Bid Item Price".validate("Bid Unit Purchase Price", BidUnitPurchPrice);
-                    end;
+                    if BidSalesDiscount <> 0 then
+                        "Bid Item Price".validate("Bid Sales Discount Pct.", BidSalesDiscount);
+                    if BidUnitSalesPrice <> 0 then
+                        "Bid Item Price".validate("Bid Unit Sales Price", BidUnitSalesPrice);
                     "Bid Item Price".Insert(true);
                 end;
 
@@ -63,6 +56,47 @@ report 50017 "One Time Bid"
             }
         }
 
+    }
+    requestpage
+    {
+        layout
+        {
+            area(Content)
+            {
+                group(GroupName)
+                {
+                    field("Vendor Bid No."; VendorBidNo)
+                    {
+
+                    }
+                    field("Description"; Description)
+                    {
+
+                    }
+                    field("Claimable"; Claim)
+                    {
+
+                    }
+                    field("Bid Purchase Discount"; BidPurchDiscount)
+                    {
+
+                    }
+                    field("Bid Unit Purchase Price"; BidUnitPurchPrice)
+                    {
+
+                    }
+                    field("Bid Sales Discount"; BidSalesDiscount)
+                    {
+
+                    }
+                    field("Bid Unit Sales Price"; BidUnitSalesPrice)
+                    {
+
+                    }
+
+                }
+            }
+        }
     }
 
     procedure SetVendorNo(NewVendorNo: code[20])
@@ -90,4 +124,13 @@ report 50017 "One Time Bid"
         VendorNo: code[20];
         ItemNo: code[20];
         CustomerNo: code[20];
+        VendorBidNo: text[100];
+        Description: text;
+        Claim: Boolean;
+        BidPurchDiscount: Decimal;
+        BidUnitPurchPrice: Decimal;
+        BidSalesDiscount: Decimal;
+        BidUnitSalesPrice: Decimal;
+
+
 }
