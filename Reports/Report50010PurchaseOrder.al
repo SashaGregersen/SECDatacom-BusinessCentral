@@ -226,7 +226,7 @@ report 50010 "SEC Purchase Order"
                     }
                     column(PaymentTermsDesc; PaymentTerms.Description)
                     {
-                    }g
+                    }
                     column(ShipmentMethodDesc; ShipmentMethod.Description)
                     {
                     }
