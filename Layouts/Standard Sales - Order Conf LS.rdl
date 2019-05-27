@@ -4558,7 +4558,7 @@
                                     </TablixCells>
                                   </TablixRow>
                                   <TablixRow>
-                                    <Height>0.38806cm</Height>
+                                    <Height>0.20285cm</Height>
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
@@ -4892,7 +4892,6 @@
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
-                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell>
@@ -4971,7 +4970,7 @@
                                     </TablixCells>
                                   </TablixRow>
                                   <TablixRow>
-                                    <Height>0.513cm</Height>
+                                    <Height>0.32779cm</Height>
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
@@ -5080,7 +5079,7 @@
                                     </TablixCells>
                                   </TablixRow>
                                   <TablixRow>
-                                    <Height>0.52062cm</Height>
+                                    <Height>0.44124cm</Height>
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
@@ -5404,7 +5403,7 @@
                               <DataSetName>DataSet_Result</DataSetName>
                               <Top>7.94523cm</Top>
                               <Left>0.07343cm</Left>
-                              <Height>2.40974cm</Height>
+                              <Height>1.95995cm</Height>
                               <Width>27.30665cm</Width>
                               <ZIndex>1</ZIndex>
                               <Style>
@@ -7816,6 +7815,7 @@
                             </Border>
                           </Style>
                         </Rectangle>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
