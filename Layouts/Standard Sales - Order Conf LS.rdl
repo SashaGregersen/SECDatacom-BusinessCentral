@@ -4558,7 +4558,7 @@
                                     </TablixCells>
                                   </TablixRow>
                                   <TablixRow>
-                                    <Height>0.20285cm</Height>
+                                    <Height>0.28222cm</Height>
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
@@ -4970,7 +4970,7 @@
                                     </TablixCells>
                                   </TablixRow>
                                   <TablixRow>
-                                    <Height>0.32779cm</Height>
+                                    <Height>0.43362cm</Height>
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
@@ -5386,7 +5386,11 @@
                                               <Hidden>=Fields!Type_Line.Value = " "</Hidden>
                                             </Visibility>
                                           </TablixMember>
-                                          <TablixMember />
+                                          <TablixMember>
+                                            <Visibility>
+                                              <Hidden>=IIF(Fields!Vendor_Item_No.Value = "",TRUE,FALSE)</Hidden>
+                                            </Visibility>
+                                          </TablixMember>
                                         </TablixMembers>
                                       </TablixMember>
                                       <TablixMember>
@@ -5403,7 +5407,7 @@
                               <DataSetName>DataSet_Result</DataSetName>
                               <Top>7.94523cm</Top>
                               <Left>0.07343cm</Left>
-                              <Height>1.95995cm</Height>
+                              <Height>2.14515cm</Height>
                               <Width>27.30665cm</Width>
                               <ZIndex>1</ZIndex>
                               <Style>
@@ -7815,7 +7819,6 @@
                             </Border>
                           </Style>
                         </Rectangle>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
