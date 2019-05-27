@@ -3,10 +3,13 @@ codeunit 50096 "Temp Hacks"
     trigger OnRun()
     var
         Purchheader: Record "Purchase Header";
+        JobQueue: Record "Job Queue Entry";
     begin
+
         //SetOwningCompany();
-        if Purchheader.get(Purchheader."Document Type"::Order, '106061') then
-            Codeunit.Run(50021, Purchheader);
+        //if Purchheader.get(Purchheader."Document Type"::Order, '106061') then
+        //Codeunit.Run(50021, Purchheader);
+        TestCurrencyUpdate();
     end;
 
     local procedure SetOwningCompany()
@@ -23,6 +26,13 @@ codeunit 50096 "Temp Hacks"
             until Customer.Next() = 0;
         Window.Close();
         Message('Done');
+    end;
+
+    Local procedure TestCurrencyUpdate()
+    var
+        Item: record item;
+    begin
+        report.run(Report::"Update Prices with Currencies", false, false, item);
     end;
 
     var

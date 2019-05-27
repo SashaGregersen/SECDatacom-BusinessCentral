@@ -101,6 +101,17 @@ page 50000 "Bid List"
                     CurrPage.Update(true);
                 end;
             }
+            action("Copy bid")
+            {
+                ApplicationArea = all;
+
+                trigger OnAction()
+                var
+
+                begin
+
+                end;
+            }
             action("Copy To Other Companies")
             {
                 ApplicationArea = All;

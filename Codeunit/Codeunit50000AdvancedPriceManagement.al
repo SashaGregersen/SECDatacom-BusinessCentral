@@ -506,7 +506,8 @@ codeunit 50000 "Advanced Price Management"
             repeat
                 if Currency.Code <> ExceptThisOne then begin
                     CurrencyTemp := Currency;
-                    if not CurrencyTemp.Insert then;
+                    //if not CurrencyTemp.Insert then;
+                    CurrencyTemp.Insert();
                 end;
             until Currency.next = 0;
         end;

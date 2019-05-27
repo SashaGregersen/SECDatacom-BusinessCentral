@@ -26,7 +26,7 @@ report 50001 "Update Prices with Currencies"
             begin
                 repeat
                     CurrencyTemp.SetRange(Code, "Vendor Currency");
-                    if not CurrencyTemp.Find() then
+                    if not CurrencyTemp.FindFirst() then
                         exit;
                     VendCurr := "Vendor Currency";
                     Salesprice.SetRange("Item No.", "No.");
