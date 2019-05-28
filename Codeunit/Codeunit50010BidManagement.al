@@ -364,11 +364,41 @@ codeunit 50010 "Bid Management"
             Exit(CurrencyExchangeRate.ExchangeAmtFCYToFCY(ReturnRcptHeader."Posting Date", ReturnRcptHeader."Currency Code", PurchHeader."Currency Code", ReturnRcptLine."Claim Amount"));
     end;
 
-    procedure CopyBidToCustomer(bid: record bid)
+    procedure CopyBidToCustomer(Bid: record "Bid")
     var
-        Customer: page "Customer List";
+        Customer: record customer;
+        BidPrices: record "Bid Item Price";
     begin
+        /* Customer.setrange("Customer Type", Customer."Customer Type"::Reseller);
+        if Page.RunModal(page::"Customer List", Customer) = "Action"::LookupOK then begin
+            Customer.MarkedOnly(true);
+            if Customer.FindSet() then
+                repeat
+                    BidPrices.setrange("Bid No.", bid."No.");
+                    if BidPrices.FindSet() then begin
+                        repeat
+                            CreateBid(Customer."No.", BidPrices, Bid);
+                        until BidPrices.next = 0;
+                    end;
+                until Customer.next = 0;
+        end; */
+    end;
 
+    local procedure CreateBid(CustNo: code[20]; BidPrices: record "Bid Item Price"; Bid: record Bid)
+    var
+        NewBid: record Bid;
+        NewBidPrice: record "Bid Item Price";
+    begin
+        NewBid.init;
+        NewBid := Bid;
+        NewBid."No." := '';
+        NewBid.Insert(true);
+
+        NewBidPrice.Init();
+        NewBidPrice := BidPrices;
+        NewBidPrice."Bid No." := NewBid."No.";
+        NewBidPrice.validate("Customer No.", CustNo);
+        NewBidPrice.Insert(true);
     end;
 
 }
