@@ -750,6 +750,10 @@ codeunit 50054 "Sales Order Event Handler"
         DimSetEntry: Record "Dimension Set Entry" temporary;
         DimMgt: Codeunit DimensionManagement;
         DimSetID: Integer;
+        SalesShipmentHeader: Record "Sales Shipment Header";
+        SalesInvoiceHeader: Record "Sales Invoice Header";
+        SalesCrMemoHeader: Record "Sales Cr.Memo Header";
+        ReturnReceiptHeader: Record "Return Receipt Header";
     begin
         SalesSetup.Get();
         if SalesSetup."Transaction Type" = '' then exit;
@@ -765,19 +769,52 @@ codeunit 50054 "Sales Order Event Handler"
         DimSetEntry.Insert(true);
         DimSetID := DimMgt.GetDimensionSetID(DimSetEntry);
 
+        SalesHeader."Dimension Set ID" := DimSetID;
+        SalesHeader.Modify();
+
         SalesLine.SetRange("Document Type", SalesHeader."Document Type");
         SalesLine.SetRange("Document No.", SalesHeader."No.");
+        if SalesLine.FindSet() then
+            repeat
+                DimSetEntry.Reset();
+                DimSetEntry.DeleteAll();
+                DimMgt.GetDimensionSet(DimSetEntry, SalesLine."Dimension Set ID");
 
-        /*
-        begin
-            SalesShipmentHeader.SetPosition(RecRef.GetPosition());
-            DocumentNo := SalesShipmentHeader."No.";
-            PostingDate := SalesShipmentHeader."Posting Date";
-            DimMgt.GetDimensionSet(DimSetEntry, SalesShipmentHeader."Dimension Set ID");
-        end;
-        */
+                DimSetEntry.Init();
+                DimSetEntry."Dimension Set ID" := 0;
+                DimSetEntry.Validate("Dimension Code", SalesSetup."Transaction Type");
+                DimSetEntry.Validate("Dimension Value Code", DimVal.Code);
+                DimSetEntry.Insert(true);
+                DimSetID := DimMgt.GetDimensionSetID(DimSetEntry);
 
-        //Tilføj til alle bogf. bilag AddTransactionTypeToPostedSalesDocuments(v, DimVal.Code);
+                SalesLine."Dimension Set ID" := DimSetID;
+                SalesLine.Modify();
+            until SalesLine.Next() = 0;
+
+        SalesShipmentHeader.SetRange("Order No.", SalesHeader."No.");
+        SalesInvoiceHeader.SetRange("Order No.", SalesHeader."No.");
+        SalesCrMemoHeader.SetRange("Return Order No.", SalesHeader."No.");
+        ReturnReceiptHeader.SetRange("Return Order No.", SalesHeader."No.");
+
+        if SalesShipmentHeader.FindSet() then
+            repeat
+                AddTransactionTypeToPostedSalesDocuments(SalesShipmentHeader, DimVal.Code);
+            until SalesShipmentHeader.Next() = 0;
+
+        if ReturnReceiptHeader.FindSet() then
+            repeat
+                AddTransactionTypeToPostedSalesDocuments(ReturnReceiptHeader, DimVal.Code);
+            until ReturnReceiptHeader.Next() = 0;
+
+        if SalesInvoiceHeader.FindSet() then
+            repeat
+                AddTransactionTypeToPostedSalesDocuments(SalesInvoiceHeader, DimVal.Code);
+            until SalesInvoiceHeader.Next() = 0;
+
+        if SalesCrMemoHeader.FindSet() then
+            repeat
+                AddTransactionTypeToPostedSalesDocuments(SalesCrMemoHeader, DimVal.Code);
+            until SalesCrMemoHeader.Next() = 0;
     end;
 
     procedure AddTransactionTypeToPostedSalesDocument(v: Variant)
