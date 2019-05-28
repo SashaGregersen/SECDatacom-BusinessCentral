@@ -293,7 +293,7 @@ codeunit 50013 "EDICygate"
                 XMLElement1.AppendChild(XMLNode1);
 
                 XMLNode1 := XMLDoc.CreateNode('element', 'OrderedUnitPrice', '');
-                XMLNode1.InnerText(FORMAT(SalesLine."Unit Price", 0, '<Integer><Decimals>'));
+                XMLNode1.InnerText(FORMAT(SalesLine."Unit Price", 0, 9));
                 XMLElement1.AppendChild(XMLNode1);
 
                 XMLNode1 := XMLDoc.CreateNode('element', 'VendorPartNumber', '');
@@ -326,7 +326,7 @@ codeunit 50013 "EDICygate"
                 XMLElement1.AppendChild(XMLNode1);
 
                 XMLNode1 := XMLDoc.CreateNode('element', 'UnitPrice', '');
-                XMLNode1.InnerText(FORMAT(SalesLine."Unit Price", 0, '<Integer><Decimals>'));
+                XMLNode1.InnerText(FORMAT(SalesLine."Unit Price", 0, 9));
                 XMLElement1.AppendChild(XMLNode1);
             until SalesLine.Next = 0;
 
