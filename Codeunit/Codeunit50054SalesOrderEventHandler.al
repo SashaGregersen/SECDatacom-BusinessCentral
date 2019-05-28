@@ -746,6 +746,10 @@ codeunit 50054 "Sales Order Event Handler"
     var
         SalesSetup: Record "Sales & Receivables Setup";
         DimVal: Record "Dimension Value";
+        SalesLine: Record "Sales Line";
+        DimSetEntry: Record "Dimension Set Entry" temporary;
+        DimMgt: Codeunit DimensionManagement;
+        DimSetID: Integer;
     begin
         SalesSetup.Get();
         if SalesSetup."Transaction Type" = '' then exit;
@@ -753,6 +757,24 @@ codeunit 50054 "Sales Order Event Handler"
         DimVal.SetRange("Dimension Code", SalesSetup."Transaction Type");
         if Page.RunModal(Page::"Dimension Value List", DimVal) <> Action::LookupOK then exit;
 
+        DimMgt.GetDimensionSet(DimSetEntry, SalesHeader."Dimension Set ID");
+        DimSetEntry.Init();
+        DimSetEntry."Dimension Set ID" := 0;
+        DimSetEntry.Validate("Dimension Code", SalesSetup."Transaction Type");
+        DimSetEntry.Validate("Dimension Value Code", DimVal.Code);
+        DimSetEntry.Insert(true);
+        DimSetID := DimMgt.GetDimensionSetID(DimSetEntry);
+
+        SalesLine.SetRange("Document Type", SalesHeader."Document Type");
+        SalesLine.SetRange("Document No.", SalesHeader."No.");
+
+
+        begin
+            SalesShipmentHeader.SetPosition(RecRef.GetPosition());
+            DocumentNo := SalesShipmentHeader."No.";
+            PostingDate := SalesShipmentHeader."Posting Date";
+            DimMgt.GetDimensionSet(DimSetEntry, SalesShipmentHeader."Dimension Set ID");
+        end;
 
         //Tilføj til alle bogf. bilag AddTransactionTypeToPostedSalesDocuments(v, DimVal.Code);
     end;

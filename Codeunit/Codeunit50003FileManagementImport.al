@@ -642,7 +642,10 @@ codeunit 50003 "File Management Import"
         ItemRecRef: RecordRef;
         DimensionsTemplate: Record "Dimensions Template";
         DefDim: Record "Default Dimension";
+        GLSetup: Record "General Ledger Setup";
     begin
+        GLSetup.Get;
+
         if not DimSetEntry.IsTemporary() then
             exit; //DimSetEntry SKAL være temporer
 
@@ -686,12 +689,27 @@ codeunit 50003 "File Management Import"
                         DefDim.Validate("Table ID", Database::Item);
                         DefDim.Validate("No.", Item."No.");
                         DefDim.Validate("Dimension Code", DimSetEntry."Dimension Code");
-                        DefDim.Insert(true);
+                        if DefDim.Insert(true) then;
                     end;
                     DefDim.Validate("Dimension Value Code", DimSetEntry."Dimension Value Code");
                     DefDim.Modify(true);
                 end;
             until DimSetEntry.Next() = 0;
+
+        DefDim.Reset();
+        DefDim.SetRange("Table ID", Database::Item);
+        DefDim.SetRange("No.", Item."No.");
+        DefDim.SetRange("Dimension Code", GLSetup."Global Dimension 1 Code");
+
+        if not DefDim.FindFirst() then begin
+            DefDim.Init;
+            DefDim.Validate("Table ID", Database::Item);
+            DefDim.Validate("No.", Item."No.");
+            DefDim.Validate("Dimension Code", GLSetup."Global Dimension 1 Code");
+            DefDim.Validate("Dimension Value Code", tmpItem."Global Dimension 1 Code");
+            if not DefDim.Insert(true) then
+                DefDim.Modify(true);
+        end;
 
         //Nulstil så vi ved det er næste record
         Clear(ConfigTemplateHeader);
