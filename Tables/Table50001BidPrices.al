@@ -75,6 +75,18 @@ table 50001 "Bid Item Price"
                     UpdateListprice();
             end;
         }
+        field(12; "Entry No."; Integer)
+        {
+            DataClassification = ToBeClassified;
+
+            trigger OnValidate()
+            var
+
+            begin
+                if "Entry No." = 0 then
+                    GetNextEntryNo(Rec);
+            end;
+        }
         field(50001; "Bid Unit Sales Price"; Decimal)
         {
             DataClassification = ToBeClassified;
@@ -128,6 +140,7 @@ table 50001 "Bid Item Price"
             DataClassification = ToBeClassified;
 
         }
+
     }
 
     keys
@@ -135,6 +148,10 @@ table 50001 "Bid Item Price"
         key(PK; "Bid No.", "item No.", "Customer No.", "Currency Code")
         {
             Clustered = true;
+        }
+        key(EntryNo; "Entry No.")
+        {
+
         }
     }
 
@@ -152,6 +169,7 @@ table 50001 "Bid Item Price"
             "Expiry Date" := Bid."Expiry Date";
             Claimable := Bid.Claimable;
         end;
+        Validate("Entry No.");
     end;
 
     trigger OnModify();
@@ -235,6 +253,16 @@ table 50001 "Bid Item Price"
         end;
         BidPrices.SetRange("Currency Code");
         BidPrices.MarkedOnly(true);
+    end;
+
+    local procedure GetNextEntryNo(rec: record "Bid Item Price")
+    var
+        BidItemPrices: record "Bid Item Price";
+    begin
+        if BidItemPrices.FindLast() then
+            rec."Entry No." := BidItemPrices."Entry No." + 1
+        else
+            rec."Entry No." := 1;
     end;
 
 }
