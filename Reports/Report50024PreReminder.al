@@ -7,10 +7,7 @@ report 50024 "PreReminders"
 
     dataset
     {
-        Dataitem("General Ledger Setup"; "General Ledger Setup")
-        {
-            column(LCY_Code; "LCY Code") { }
-        }
+
         dataitem(Customer; Customer)
         {
             Column(No_; "No.") { }
@@ -43,6 +40,10 @@ report 50024 "PreReminders"
                 column(Original_Amount_Cap; FieldCaption("Original Amount")) { }
                 column(Currency_Code_Cap; FieldCaption("Currency Code")) { }
                 column(Remaining_Amount_Cap; FieldCaption("Remaining Amount")) { }
+            }
+            Dataitem("General Ledger Setup"; "General Ledger Setup")
+            {
+                column(LCY_Code; "LCY Code") { }
             }
         }
     }
