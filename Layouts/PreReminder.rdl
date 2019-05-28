@@ -11,6 +11,91 @@
       <rd:DataSourceID>23a3593f-b9c9-4c66-a640-50ed52565acf</rd:DataSourceID>
     </DataSource>
   </DataSources>
+  <DataSets>
+    <DataSet Name="DataSet_Result">
+      <Query>
+        <DataSourceName>DataSource</DataSourceName>
+        <CommandText />
+      </Query>
+      <Fields>
+        <Field Name="LCY_Code">
+          <DataField>LCY_Code</DataField>
+        </Field>
+        <Field Name="No_">
+          <DataField>No_</DataField>
+        </Field>
+        <Field Name="Name">
+          <DataField>Name</DataField>
+        </Field>
+        <Field Name="Contact">
+          <DataField>Contact</DataField>
+        </Field>
+        <Field Name="Address">
+          <DataField>Address</DataField>
+        </Field>
+        <Field Name="Address_2">
+          <DataField>Address_2</DataField>
+        </Field>
+        <Field Name="Post_Code">
+          <DataField>Post_Code</DataField>
+        </Field>
+        <Field Name="City">
+          <DataField>City</DataField>
+        </Field>
+        <Field Name="County">
+          <DataField>County</DataField>
+        </Field>
+        <Field Name="Document_No_">
+          <DataField>Document_No_</DataField>
+        </Field>
+        <Field Name="External_Document_No_">
+          <DataField>External_Document_No_</DataField>
+        </Field>
+        <Field Name="Document_Date">
+          <DataField>Document_Date</DataField>
+        </Field>
+        <Field Name="Due_Date">
+          <DataField>Due_Date</DataField>
+        </Field>
+        <Field Name="Original_Amount">
+          <DataField>Original_Amount</DataField>
+        </Field>
+        <Field Name="Original_AmountFormat">
+          <DataField>Original_AmountFormat</DataField>
+        </Field>
+        <Field Name="Currency_Code">
+          <DataField>Currency_Code</DataField>
+        </Field>
+        <Field Name="Remaining_Amount">
+          <DataField>Remaining_Amount</DataField>
+        </Field>
+        <Field Name="Remaining_AmountFormat">
+          <DataField>Remaining_AmountFormat</DataField>
+        </Field>
+        <Field Name="Document_No_Cap">
+          <DataField>Document_No_Cap</DataField>
+        </Field>
+        <Field Name="ExternalDocumentCap">
+          <DataField>ExternalDocumentCap</DataField>
+        </Field>
+        <Field Name="Document_Date_Cap">
+          <DataField>Document_Date_Cap</DataField>
+        </Field>
+        <Field Name="Due_Date_Cap">
+          <DataField>Due_Date_Cap</DataField>
+        </Field>
+        <Field Name="Original_Amount_Cap">
+          <DataField>Original_Amount_Cap</DataField>
+        </Field>
+        <Field Name="Currency_Code_Cap">
+          <DataField>Currency_Code_Cap</DataField>
+        </Field>
+        <Field Name="Remaining_Amount_Cap">
+          <DataField>Remaining_Amount_Cap</DataField>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
   <ReportSections>
     <ReportSection>
       <Body>
@@ -19,7 +104,10 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>1.47917in</Width>
+                  <Width>1.17539in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1.15092in</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>1.39583in</Width>
@@ -85,6 +173,48 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
+                        <Textbox Name="Textbox3">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>External Document No </Value>
+                                  <Style>
+                                    <FontFamily>Segoe UI</FontFamily>
+                                    <FontSize>8pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Color>#666666</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Left</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox3</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <BottomBorder>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                              <Width>1pt</Width>
+                            </BottomBorder>
+                            <BackgroundColor>White</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
                         <Textbox Name="Textbox4">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
@@ -102,7 +232,7 @@
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Right</TextAlign>
+                                <TextAlign>Left</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -144,7 +274,7 @@
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Right</TextAlign>
+                                <TextAlign>Left</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -186,7 +316,7 @@
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Right</TextAlign>
+                                <TextAlign>Left</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -228,7 +358,7 @@
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Center</TextAlign>
+                                <TextAlign>Left</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -335,6 +465,43 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
+                        <Textbox Name="External_Document_No_">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!External_Document_No_.Value</Value>
+                                  <Style>
+                                    <FontFamily>Segoe UI</FontFamily>
+                                    <FontSize>8pt</FontSize>
+                                    <FontWeight>Normal</FontWeight>
+                                    <Color>#333333</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Left</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>External_Document_No_</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <BackgroundColor>White</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
                         <Textbox Name="Document_Date">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
@@ -352,7 +519,9 @@
                                   </Style>
                                 </TextRun>
                               </TextRuns>
-                              <Style />
+                              <Style>
+                                <TextAlign>Left</TextAlign>
+                              </Style>
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Document_Date</rd:DefaultName>
@@ -388,7 +557,9 @@
                                   </Style>
                                 </TextRun>
                               </TextRuns>
-                              <Style />
+                              <Style>
+                                <TextAlign>Left</TextAlign>
+                              </Style>
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Due_Date</rd:DefaultName>
@@ -424,7 +595,9 @@
                                   </Style>
                                 </TextRun>
                               </TextRuns>
-                              <Style />
+                              <Style>
+                                <TextAlign>Left</TextAlign>
+                              </Style>
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Original_Amount</rd:DefaultName>
@@ -450,7 +623,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!Currency_Code.Value</Value>
+                                  <Value>=IIF(Fields!Currency_Code.Value = "", Fields!LCY_Code.Value, Fields!Currency_Code.Value)</Value>
                                   <Style>
                                     <FontFamily>Segoe UI</FontFamily>
                                     <FontSize>8pt</FontSize>
@@ -460,7 +633,7 @@
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Center</TextAlign>
+                                <TextAlign>Left</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -497,7 +670,9 @@
                                   </Style>
                                 </TextRun>
                               </TextRuns>
-                              <Style />
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Remaining_Amount</rd:DefaultName>
@@ -519,6 +694,7 @@
             </TablixBody>
             <TablixColumnHierarchy>
               <TablixMembers>
+                <TablixMember />
                 <TablixMember />
                 <TablixMember />
                 <TablixMember />
@@ -549,9 +725,9 @@
             </TablixRowHierarchy>
             <DataSetName>DataSet_Result</DataSetName>
             <Top>0.075in</Top>
-            <Left>0in</Left>
+            <Left>0.01389in</Left>
             <Height>0.41666in</Height>
-            <Width>7.25597in</Width>
+            <Width>8.10311in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -562,7 +738,7 @@
         <Height>2.51882cm</Height>
         <Style />
       </Body>
-      <Width>18.4676cm</Width>
+      <Width>20.96544cm</Width>
       <Page>
         <PageHeader>
           <Height>10.98966cm</Height>
@@ -588,6 +764,7 @@
               </Paragraphs>
               <rd:DefaultName>Name</rd:DefaultName>
               <Top>2.69028cm</Top>
+              <Left>0.03528cm</Left>
               <Height>0.48283cm</Height>
               <Width>15.55666cm</Width>
               <Style>
@@ -619,6 +796,7 @@
               </Paragraphs>
               <rd:DefaultName>Contact</rd:DefaultName>
               <Top>3.20839cm</Top>
+              <Left>0.03528cm</Left>
               <Height>0.48283cm</Height>
               <Width>15.55666cm</Width>
               <ZIndex>1</ZIndex>
@@ -651,6 +829,7 @@
               </Paragraphs>
               <rd:DefaultName>Address</rd:DefaultName>
               <Top>3.7265cm</Top>
+              <Left>0.03528cm</Left>
               <Height>0.48283cm</Height>
               <Width>15.55666cm</Width>
               <ZIndex>2</ZIndex>
@@ -683,41 +862,10 @@
               </Paragraphs>
               <rd:DefaultName>Address_2</rd:DefaultName>
               <Top>4.2446cm</Top>
+              <Left>0.03528cm</Left>
               <Height>0.48283cm</Height>
               <Width>15.55666cm</Width>
               <ZIndex>3</ZIndex>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <PaddingLeft>2pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
-              </Style>
-            </Textbox>
-            <Textbox Name="Post_Code">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>=First(Fields!Post_Code.Value, "DataSet_Result")</Value>
-                      <Style>
-                        <FontFamily>Segoe UI</FontFamily>
-                        <FontSize>8pt</FontSize>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style />
-                </Paragraph>
-              </Paragraphs>
-              <rd:DefaultName>Post_Code</rd:DefaultName>
-              <Top>4.72743cm</Top>
-              <Height>0.48283cm</Height>
-              <Width>1.42791cm</Width>
-              <ZIndex>4</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -735,7 +883,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=First(Fields!City.Value, "DataSet_Result")</Value>
+                      <Value>=First(Fields!Post_Code.Value, "DataSet_Result") +" " + First(Fields!City.Value, "DataSet_Result")</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -746,11 +894,11 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>City</rd:DefaultName>
-              <Top>4.72743cm</Top>
-              <Left>1.46319cm</Left>
+              <Top>4.76271cm</Top>
+              <Left>0.03528cm</Left>
               <Height>0.48283cm</Height>
-              <Width>14.09347cm</Width>
-              <ZIndex>5</ZIndex>
+              <Width>15.55666cm</Width>
+              <ZIndex>4</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -780,9 +928,10 @@
               </Paragraphs>
               <rd:DefaultName>County</rd:DefaultName>
               <Top>5.28082cm</Top>
+              <Left>0.03528cm</Left>
               <Height>0.48283cm</Height>
               <Width>15.55666cm</Width>
-              <ZIndex>6</ZIndex>
+              <ZIndex>5</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -815,7 +964,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>PreReminder</Value>
+                      <Value>Notification of Upcoming Payments</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>16pt</FontSize>
@@ -829,9 +978,10 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox23</rd:DefaultName>
+              <Left>0.03528cm</Left>
               <Height>2.35514cm</Height>
               <Width>18.43016cm</Width>
-              <ZIndex>7</ZIndex>
+              <ZIndex>6</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -863,10 +1013,10 @@
               </Paragraphs>
               <rd:DefaultName>Textbox6</rd:DefaultName>
               <Top>2.69028cm</Top>
-              <Left>16.7488cm</Left>
+              <Left>16.78408cm</Left>
               <Height>0.46771cm</Height>
               <Width>1.68136cm</Width>
-              <ZIndex>8</ZIndex>
+              <ZIndex>7</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -912,10 +1062,10 @@
               </Paragraphs>
               <rd:DefaultName>Textbox31</rd:DefaultName>
               <Top>3.26382cm</Top>
-              <Left>16.7488cm</Left>
+              <Left>16.78408cm</Left>
               <Height>0.46771cm</Height>
               <Width>1.68136cm</Width>
-              <ZIndex>9</ZIndex>
+              <ZIndex>8</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -947,10 +1097,10 @@
               </Paragraphs>
               <rd:DefaultName>Textbox6</rd:DefaultName>
               <Top>2.69028cm</Top>
-              <Left>15.73304cm</Left>
+              <Left>15.76832cm</Left>
               <Height>0.46771cm</Height>
               <Width>0.91786cm</Width>
-              <ZIndex>10</ZIndex>
+              <ZIndex>9</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -982,10 +1132,10 @@
               </Paragraphs>
               <rd:DefaultName>Textbox6</rd:DefaultName>
               <Top>3.26382cm</Top>
-              <Left>15.73304cm</Left>
+              <Left>15.76832cm</Left>
               <Height>0.46771cm</Height>
               <Width>0.91786cm</Width>
-              <ZIndex>11</ZIndex>
+              <ZIndex>10</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1111,8 +1261,42 @@
               </Paragraphs>
               <rd:DefaultName>County</rd:DefaultName>
               <Top>7.49058cm</Top>
+              <Left>0.03528cm</Left>
               <Height>2.84644cm</Height>
               <Width>18.30916cm</Width>
+              <ZIndex>11</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="County3">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=First(Fields!No_.Value, "DataSet_Result")</Value>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>County</rd:DefaultName>
+              <Top>5.79893cm</Top>
+              <Left>0.03528cm</Left>
+              <Height>0.45637cm</Height>
+              <Width>15.55666cm</Width>
               <ZIndex>12</ZIndex>
               <Style>
                 <Border>
@@ -1142,6 +1326,12 @@
       </Page>
     </ReportSection>
   </ReportSections>
+  <ReportParametersLayout>
+    <GridLayoutDefinition>
+      <NumberOfColumns>4</NumberOfColumns>
+      <NumberOfRows>2</NumberOfRows>
+    </GridLayoutDefinition>
+  </ReportParametersLayout>
   <Code>Public Function BlankZero(ByVal Value As Decimal)
     if Value = 0 then
         Return ""
@@ -1181,77 +1371,4 @@ End Function
   <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
   <rd:ReportID>0eeb6585-38ae-40f1-885b-8d50088d51b4</rd:ReportID>
-  <DataSets>
-    <DataSet Name="DataSet_Result">
-      <Fields>
-        <Field Name="Name">
-          <DataField>Name</DataField>
-        </Field>
-        <Field Name="Contact">
-          <DataField>Contact</DataField>
-        </Field>
-        <Field Name="Address">
-          <DataField>Address</DataField>
-        </Field>
-        <Field Name="Address_2">
-          <DataField>Address_2</DataField>
-        </Field>
-        <Field Name="Post_Code">
-          <DataField>Post_Code</DataField>
-        </Field>
-        <Field Name="City">
-          <DataField>City</DataField>
-        </Field>
-        <Field Name="County">
-          <DataField>County</DataField>
-        </Field>
-        <Field Name="Document_No_">
-          <DataField>Document_No_</DataField>
-        </Field>
-        <Field Name="Document_Date">
-          <DataField>Document_Date</DataField>
-        </Field>
-        <Field Name="Due_Date">
-          <DataField>Due_Date</DataField>
-        </Field>
-        <Field Name="Original_Amount">
-          <DataField>Original_Amount</DataField>
-        </Field>
-        <Field Name="Original_AmountFormat">
-          <DataField>Original_AmountFormat</DataField>
-        </Field>
-        <Field Name="Currency_Code">
-          <DataField>Currency_Code</DataField>
-        </Field>
-        <Field Name="Remaining_Amount">
-          <DataField>Remaining_Amount</DataField>
-        </Field>
-        <Field Name="Remaining_AmountFormat">
-          <DataField>Remaining_AmountFormat</DataField>
-        </Field>
-        <Field Name="Document_No_Cap">
-          <DataField>Document_No_Cap</DataField>
-        </Field>
-        <Field Name="Document_Date_Cap">
-          <DataField>Document_Date_Cap</DataField>
-        </Field>
-        <Field Name="Due_Date_Cap">
-          <DataField>Due_Date_Cap</DataField>
-        </Field>
-        <Field Name="Original_Amount_Cap">
-          <DataField>Original_Amount_Cap</DataField>
-        </Field>
-        <Field Name="Currency_Code_Cap">
-          <DataField>Currency_Code_Cap</DataField>
-        </Field>
-        <Field Name="Remaining_Amount_Cap">
-          <DataField>Remaining_Amount_Cap</DataField>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>DataSource</DataSourceName>
-        <CommandText />
-      </Query>
-    </DataSet>
-  </DataSets>
 </Report>
