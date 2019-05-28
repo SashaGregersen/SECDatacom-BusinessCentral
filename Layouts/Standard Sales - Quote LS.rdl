@@ -3181,7 +3181,7 @@
                                     </TablixCells>
                                   </TablixRow>
                                   <TablixRow>
-                                    <Height>0.38806cm</Height>
+                                    <Height>0.12348cm</Height>
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
@@ -3459,7 +3459,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!UnitListPrice.Value</Value>
+                                                    <Value>=FormatNumber(Fields!UnitListPrice.Value,2)</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -3496,7 +3496,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!UnitPrice.Value</Value>
+                                                    <Value>=FormatNumber(Fields!UnitPrice.Value,2)</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -3559,7 +3559,6 @@
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
-                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell>
@@ -3602,7 +3601,7 @@
                                     </TablixCells>
                                   </TablixRow>
                                   <TablixRow>
-                                    <Height>0.39861cm</Height>
+                                    <Height>0.47798cm</Height>
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
@@ -3711,7 +3710,7 @@
                                     </TablixCells>
                                   </TablixRow>
                                   <TablixRow>
-                                    <Height>0.25604cm</Height>
+                                    <Height>0.12375cm</Height>
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
@@ -4027,7 +4026,11 @@
                                               <Hidden>=Fields!Type_Line.Value = " "</Hidden>
                                             </Visibility>
                                           </TablixMember>
-                                          <TablixMember />
+                                          <TablixMember>
+                                            <Visibility>
+                                              <Hidden>=IIF(Fields!Vendor_Item_No.Value = "",TRUE,FALSE)</Hidden>
+                                            </Visibility>
+                                          </TablixMember>
                                           <TablixMember />
                                         </TablixMembers>
                                       </TablixMember>
@@ -4039,7 +4042,7 @@
                               <DataSetName>DataSet_Result</DataSetName>
                               <Top>8.04596cm</Top>
                               <Left>0.1491cm</Left>
-                              <Height>2.2689cm</Height>
+                              <Height>1.9514cm</Height>
                               <Width>27.46409cm</Width>
                               <ZIndex>1</ZIndex>
                               <Style>
@@ -4872,6 +4875,7 @@
                             </Border>
                           </Style>
                         </Rectangle>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
