@@ -668,7 +668,6 @@ codeunit 50003 "File Management Import"
         Item.Validate("Transfer Price %", tmpItem."Transfer Price %");
         Item.Validate("Use on Website", tmpItem."Use on Website");
         Item.Validate("Default Location", tmpItem."Default Location");
-        Item.Validate("Global Dimension 1 Code", tmpItem."Global Dimension 1 Code");
         Item.Modify(true);
 
         ItemRecRef.GetTable(Item);
