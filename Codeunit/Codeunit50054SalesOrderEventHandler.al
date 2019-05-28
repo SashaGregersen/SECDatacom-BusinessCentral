@@ -472,7 +472,8 @@ codeunit 50054 "Sales Order Event Handler"
     begin
         Clear(SelectionPage);
         SelectionPage.SetRecord(SalesHeader);
-        if SelectionPage.RunModal() = Action::OK then
+        SelectionPage.LookupMode(true);
+        if SelectionPage.RunModal() = Action::LookupOK then
             SelectionPage.GetRecord(SalesHeader)
         else
             IsHandled := true;
