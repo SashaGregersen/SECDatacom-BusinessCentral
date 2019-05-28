@@ -8,7 +8,6 @@ codeunit 50007 "IC Sync Item"
         ICpartner: Record "IC Partner";
         ItemDiscountGroup: record "Item Discount Group";
     begin
-
         ICpartner.SetFilter("Vendor No.", '<>%1', '');
         if ICpartner.FindFirst() then
             if not ItemDiscountGroup.get(rec."Item Disc. Group") then

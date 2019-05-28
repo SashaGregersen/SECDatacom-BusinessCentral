@@ -84,7 +84,8 @@ page 50014 "PreReminders"
 
                             if EMailTemplateLine.FindTemplate(Report::PreReminders, tmpCust."Language Code", RecRef) then begin
                                 RecRef.GetTable(CustLedg2);
-                                EMailTemplateMgt.SendMail(EmailTemplateLine, RecRef, HeaderDoc, '', false, false, 0);
+                                HeaderDoc := tmpCust;
+                                EMailTemplateMgt.SendMail(EmailTemplateLine, RecRef, HeaderDoc, '', true, false, 0);
                             end;
                         until tmpCust.Next() = 0;
                 end;
