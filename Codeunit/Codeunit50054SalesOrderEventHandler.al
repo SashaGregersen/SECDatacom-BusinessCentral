@@ -768,13 +768,14 @@ codeunit 50054 "Sales Order Event Handler"
         SalesLine.SetRange("Document Type", SalesHeader."Document Type");
         SalesLine.SetRange("Document No.", SalesHeader."No.");
 
-
+        /*
         begin
             SalesShipmentHeader.SetPosition(RecRef.GetPosition());
             DocumentNo := SalesShipmentHeader."No.";
             PostingDate := SalesShipmentHeader."Posting Date";
             DimMgt.GetDimensionSet(DimSetEntry, SalesShipmentHeader."Dimension Set ID");
         end;
+        */
 
         //Tilføj til alle bogf. bilag AddTransactionTypeToPostedSalesDocuments(v, DimVal.Code);
     end;
