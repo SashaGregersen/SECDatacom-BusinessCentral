@@ -107,9 +107,9 @@ page 50000 "Bid List"
 
                 trigger OnAction()
                 var
-
+                    BidMgt: codeunit "Bid Management";
                 begin
-
+                    BidMgt.CopyBidToCustomer(Rec);
                 end;
             }
             action("Copy To Other Companies")
