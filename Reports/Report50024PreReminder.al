@@ -7,10 +7,12 @@ report 50024 "PreReminders"
 
     dataset
     {
+
         dataitem("Customer Ledger Entry"; "Cust. Ledger Entry")
         {
             DataItemTableView = SORTING ("Customer No.", Open, Positive, "Due Date", "Currency Code") where (Open = const (true));
             RequestFilterFields = "Customer No.", "Due Date", "Document Type";
+            column("No_"; Cust."No.") { }
             column(Name; Cust.Name) { }
             column(Contact; Cust.Contact) { }
             column(Address; Cust.Address) { }
@@ -19,17 +21,30 @@ report 50024 "PreReminders"
             column(City; Cust.City) { }
             column(County; Cust.County) { }
             column(Document_No_; "Document No.") { }
+            column(External_Document_No_; "External Document No.") { }
             column(Document_Date; "Document Date") { }
             column(Due_Date; "Due Date") { }
             column(Original_Amount; "Original Amount") { }
-            column(Currency_Code; "Currency Code") { }
+            column(Currency_Code; currencycode) { }
             column(Remaining_Amount; "Remaining Amount") { }
             column(Document_No_Cap; FieldCaption("Document No.")) { }
+            column(ExternalDocumentCap; FieldCaption("External Document No.")) { }
             column(Document_Date_Cap; FieldCaption("Document Date")) { }
             column(Due_Date_Cap; FieldCaption("Due Date")) { }
             column(Original_Amount_Cap; FieldCaption("Original Amount")) { }
             column(Currency_Code_Cap; FieldCaption("Currency Code")) { }
             column(Remaining_Amount_Cap; FieldCaption("Remaining Amount")) { }
+
+            trigger OnAfterGetRecord()
+            var
+
+            begin
+                GLSetup.get;
+                if "Currency Code" = '' then
+                    currencycode := GLSetup."LCY Code"
+                else
+                    currencycode := "Currency Code";
+            end;
 
             trigger OnPreDataItem()
             begin
@@ -39,5 +54,7 @@ report 50024 "PreReminders"
         }
     }
     var
+        currencycode: code[20];
+        GLSetup: record "General ledger Setup";
         Cust: Record Customer;
 }
