@@ -369,7 +369,7 @@ codeunit 50010 "Bid Management"
         Customer: record customer;
         BidPrices: record "Bid Item Price";
     begin
-        /* Customer.setrange("Customer Type", Customer."Customer Type"::Reseller);
+        Customer.setrange("Customer Type", Customer."Customer Type"::Reseller);
         if Page.RunModal(page::"Customer List", Customer) = "Action"::LookupOK then begin
             Customer.MarkedOnly(true);
             if Customer.FindSet() then
@@ -381,7 +381,7 @@ codeunit 50010 "Bid Management"
                         until BidPrices.next = 0;
                     end;
                 until Customer.next = 0;
-        end; */
+        end;
     end;
 
     local procedure CreateBid(CustNo: code[20]; BidPrices: record "Bid Item Price"; Bid: record Bid)
