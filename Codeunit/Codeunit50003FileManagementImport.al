@@ -585,7 +585,7 @@ codeunit 50003 "File Management Import"
                                 DimSetEntry."Dimension Set ID" := 0;
                                 DimSetEntry.Validate("Dimension Code", DimCodeArr[TempCSVBuffer."Field No." - 11]);
                                 DimSetEntry.Validate("Dimension Value Code", TempCSVBuffer.Value);
-                                DimSetEntry.Insert(true);
+                                if DimSetEntry.Insert(true) then;
                             end;
                         end;
                 end;

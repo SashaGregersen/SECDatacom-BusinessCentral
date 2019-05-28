@@ -16,14 +16,14 @@ codeunit 50007 "IC Sync Item"
             else
                 if not ItemDiscountGroup."Use Orginal Vendor in Subs" then
                     Rec.Validate("IC partner Vendor No.", ICpartner."Vendor No.");
-        if not rec.Insert(true) then
-            rec.Modify(true);
+        if not rec.Insert(false) then
+            rec.Modify(false);
         if Rec."Base Unit of Measure" <> '' then begin
             if not ItemUOM.Get(rec."No.", rec."Base Unit of Measure") then begin
                 ItemUOM."Item No." := Rec."No.";
                 ItemUOM.Code := rec."Base Unit of Measure";
                 ItemUOM."Qty. per Unit of Measure" := 1;
-                ItemUOM.Insert(true);
+                ItemUOM.Insert(false);
             end;
         end;
     end;
