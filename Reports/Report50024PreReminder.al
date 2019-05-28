@@ -31,7 +31,7 @@ report 50024 "PreReminders"
                 column(Document_Date; "Document Date") { }
                 column(Due_Date; "Due Date") { }
                 column(Original_Amount; "Original Amount") { }
-                column(Currency_Code; "Currency Code") { }
+                column(Currency_Code; currencycode) { }
                 column(Remaining_Amount; "Remaining Amount") { }
                 column(Document_No_Cap; FieldCaption("Document No.")) { }
                 column(ExternalDocumentCap; FieldCaption("External Document No.")) { }
@@ -41,10 +41,20 @@ report 50024 "PreReminders"
                 column(Currency_Code_Cap; FieldCaption("Currency Code")) { }
                 column(Remaining_Amount_Cap; FieldCaption("Remaining Amount")) { }
             }
-            Dataitem("General Ledger Setup"; "General Ledger Setup")
-            {
-                column(LCY_Code; "LCY Code") { }
-            }
+            trigger OnAfterGetRecord()
+            var
+
+            begin
+                GLSetup.get;
+                if "Currency Code" = '' then
+                    currencycode := GLSetup."LCY Code"
+                else
+                    currencycode := "Currency Code";
+            end;
         }
+
     }
+    var
+        currencycode: code[20];
+        GLSetup: record "General ledger Setup";
 }

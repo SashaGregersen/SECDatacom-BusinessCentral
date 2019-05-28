@@ -1283,9 +1283,6 @@ End Function
   <DataSets>
     <DataSet Name="DataSet_Result">
       <Fields>
-        <Field Name="LCY_Code">
-          <DataField>LCY_Code</DataField>
-        </Field>
         <Field Name="No_">
           <DataField>No_</DataField>
         </Field>
@@ -1357,6 +1354,9 @@ End Function
         </Field>
         <Field Name="Remaining_Amount_Cap">
           <DataField>Remaining_Amount_Cap</DataField>
+        </Field>
+        <Field Name="LCY_Code">
+          <DataField>LCY_Code</DataField>
         </Field>
       </Fields>
       <Query>
