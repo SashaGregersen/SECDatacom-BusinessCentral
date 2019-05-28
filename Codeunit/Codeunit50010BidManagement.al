@@ -27,6 +27,7 @@ codeunit 50010 "Bid Management"
         Item: Record Item;
         ICPartner: record "IC Partner";
         VendorNo: code[20];
+        ItemDiscGroup: record "Item Discount Group";
     begin
         ICPartner.ChangeCompany(CompanyNameToCopyTo);
         ICPartner.SetRange("Inbox Details", CompanyName);
@@ -38,12 +39,10 @@ codeunit 50010 "Bid Management"
         BidToCopyTo.ChangeCompany(CompanyNameToCopyTo);
         if not BidToCopyTo.Get(BidToCopy."No.") then begin
             BidToCopyTo := BidToCopy;
-            BidToCopyTo."Vendor No." := VendorNo;
             BidToCopyTo.Claimable := false;
             BidToCopyTo.Insert(false);
         end else begin
             BidToCopyTo.TransferFields(BidToCopy, false);
-            BidToCopyTo."Vendor No." := VendorNo;
             BidToCopyTo.Claimable := false;
             BidToCopyTo.Modify(false);
         end;
@@ -63,6 +62,11 @@ codeunit 50010 "Bid Management"
                     BidPriceToCopyTo.Validate("Bid Unit Purchase Price", bidprice."Bid Unit Purchase Price" / (1 - (Item."Transfer Price %" / 100)));
                 BidPriceToCopyTo.Claimable := false; // To find correct purchase price in IC companies in create purchase order
                 BidPriceToCopyTo.Modify(false);
+                if ItemDiscGroup.get(item."Item Disc. Group") then
+                    if not ItemDiscGroup."Use Orginal Vendor in Subs" then begin
+                        BidToCopyTo."Vendor No." := VendorNo;
+                        BidToCopyTo.Modify(false);
+                    end;
             until BidPrice.Next() = 0;
     end;
 

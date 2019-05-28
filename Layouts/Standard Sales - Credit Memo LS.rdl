@@ -19,12 +19,12 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>27.7cm</Width>
+                  <Width>27.41485cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>19.31485cm</Height>
+                  <Height>18.46818cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -40,19 +40,19 @@
                                     <Width>3.88112cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>2.2948cm</Width>
+                                    <Width>2.03022cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
                                     <Width>6.41806cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>2.5cm</Width>
+                                    <Width>2.23542cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
                                     <Width>3.74021cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>5.11065cm</Width>
+                                    <Width>5.09687cm</Width>
                                   </TablixColumn>
                                 </TablixColumns>
                                 <TablixRows>
@@ -3862,8 +3862,9 @@
                               </TablixRowHierarchy>
                               <DataSetName>DataSet_Result</DataSetName>
                               <Top>0.07056cm</Top>
+                              <Left>0.26458cm</Left>
                               <Height>8.0832cm</Height>
-                              <Width>27.69321cm</Width>
+                              <Width>27.15027cm</Width>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -3879,13 +3880,13 @@
                                     <Width>2.2cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>14.08755cm</Width>
+                                    <Width>13.87943cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>1.8cm</Width>
+                                    <Width>1.87084cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>2cm</Width>
+                                    <Width>1.60812cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
                                     <Width>1.6cm</Width>
@@ -4618,6 +4619,7 @@
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
+                                                      <Format>#,0.00;(#,0.00)</Format>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -4720,6 +4722,7 @@
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
+                                                      <Format>#,0.00;(#,0.00)</Format>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -5416,8 +5419,9 @@
                               <RepeatRowHeaders>true</RepeatRowHeaders>
                               <DataSetName>DataSet_Result</DataSetName>
                               <Top>8.38923cm</Top>
+                              <Left>0.26458cm</Left>
                               <Height>2.2848cm</Height>
-                              <Width>27.67943cm</Width>
+                              <Width>27.15027cm</Width>
                               <ZIndex>1</ZIndex>
                               <Style>
                                 <Border>
@@ -5834,8 +5838,8 @@
                                   </FilterValues>
                                 </Filter>
                               </Filters>
-                              <Top>16.29408cm</Top>
-                              <Left>10.87943cm</Left>
+                              <Top>15.97658cm</Top>
+                              <Left>10.61485cm</Left>
                               <Height>1.55224cm</Height>
                               <Width>16.8cm</Width>
                               <ZIndex>2</ZIndex>
@@ -6765,8 +6769,8 @@
                                   </FilterValues>
                                 </Filter>
                               </Filters>
-                              <Top>14.35351cm</Top>
-                              <Left>12.47943cm</Left>
+                              <Top>14.03601cm</Top>
+                              <Left>12.21485cm</Left>
                               <Height>1.76418cm</Height>
                               <Width>15.2cm</Width>
                               <ZIndex>3</ZIndex>
@@ -7498,8 +7502,8 @@
                               <RepeatRowHeaders>true</RepeatRowHeaders>
                               <KeepTogether>true</KeepTogether>
                               <DataSetName>DataSet_Result</DataSetName>
-                              <Top>11.23112cm</Top>
-                              <Left>20.67943cm</Left>
+                              <Top>10.91362cm</Top>
+                              <Left>20.41485cm</Left>
                               <Height>2.946cm</Height>
                               <Width>7cm</Width>
                               <ZIndex>4</ZIndex>
@@ -7527,9 +7531,10 @@
                                 </Paragraph>
                               </Paragraphs>
                               <rd:DefaultName>CompanyLegalStatement</rd:DefaultName>
-                              <Top>18.91796cm</Top>
+                              <Top>17.70521cm</Top>
+                              <Left>0.46278cm</Left>
                               <Height>11pt</Height>
-                              <Width>27.67943cm</Width>
+                              <Width>26.95207cm</Width>
                               <ZIndex>5</ZIndex>
                               <Style>
                                 <Border>
@@ -7576,8 +7581,9 @@
             </TablixRowHierarchy>
             <DataSetName>DataSet_Result</DataSetName>
             <Top>0.17639cm</Top>
-            <Height>19.31485cm</Height>
-            <Width>27.7cm</Width>
+            <Left>0.01959cm</Left>
+            <Height>18.46818cm</Height>
+            <Width>27.41485cm</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -7585,13 +7591,13 @@
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>19.49124cm</Height>
+        <Height>18.75041cm</Height>
         <Style />
       </Body>
-      <Width>27.7cm</Width>
+      <Width>27.50882cm</Width>
       <Page>
         <PageHeader>
-          <Height>2.50354cm</Height>
+          <Height>1.22389cm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -7602,6 +7608,8 @@
                   <Value>=System.Convert.ToBase64String(Fields!CompanyPicture.Value)</Value>
                   <MIMEType>image/bmp</MIMEType>
                   <Sizing>FitProportional</Sizing>
+                  <Top>0.14111cm</Top>
+                  <Left>0.635cm</Left>
                   <Height>4mm</Height>
                   <Width>60mm</Width>
                   <Visibility>
@@ -7628,7 +7636,9 @@
                 </Line>
               </ReportItems>
               <KeepTogether>true</KeepTogether>
-              <Height>0.5cm</Height>
+              <Top>0.05292cm</Top>
+              <Left>0.11195cm</Left>
+              <Height>0.55292cm</Height>
               <Width>9.2cm</Width>
               <Style>
                 <Border>
@@ -7643,6 +7653,7 @@
                   <Value>=System.Convert.ToBase64String(Fields!CompanyPicture.Value)</Value>
                   <MIMEType>image/bmp</MIMEType>
                   <Sizing>FitProportional</Sizing>
+                  <Top>0.17639cm</Top>
                   <Left>0.42333cm</Left>
                   <Height>4mm</Height>
                   <Width>60mm</Width>
@@ -7670,9 +7681,10 @@
                 </Line>
               </ReportItems>
               <KeepTogether>true</KeepTogether>
-              <Left>18.4cm</Left>
-              <Height>0.5cm</Height>
-              <Width>9.3cm</Width>
+              <Top>0.05292cm</Top>
+              <Left>18.47569cm</Left>
+              <Height>0.57639cm</Height>
+              <Width>8.90312cm</Width>
               <ZIndex>1</ZIndex>
               <Style>
                 <Border>
@@ -7687,6 +7699,8 @@
                   <Value>=System.Convert.ToBase64String(Fields!CompanyPicture.Value)</Value>
                   <MIMEType>image/bmp</MIMEType>
                   <Sizing>FitProportional</Sizing>
+                  <Top>0.14111cm</Top>
+                  <Left>0.06271cm</Left>
                   <Height>4mm</Height>
                   <Width>60mm</Width>
                   <Visibility>
@@ -7713,8 +7727,9 @@
                 </Line>
               </ReportItems>
               <KeepTogether>true</KeepTogether>
-              <Left>9.2cm</Left>
-              <Height>0.5cm</Height>
+              <Top>0.05292cm</Top>
+              <Left>9.27569cm</Left>
+              <Height>0.55292cm</Height>
               <Width>9.2cm</Width>
               <ZIndex>2</ZIndex>
               <Style>
@@ -7776,8 +7791,8 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Page_Lbl</rd:DefaultName>
-              <Top>2cm</Top>
-              <Left>22.1cm</Left>
+              <Top>0.83583cm</Top>
+              <Left>22.15512cm</Left>
               <Height>11pt</Height>
               <Width>4.8cm</Width>
               <ZIndex>3</ZIndex>

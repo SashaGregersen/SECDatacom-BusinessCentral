@@ -814,7 +814,7 @@ codeunit 50003 "File Management Import"
                                 Item.setrange("Vendor No.", VendorNo);
                                 Item.SetRange("Vendor-Item-No.", VendorItemNo);
                                 if not item.FindFirst() then
-                                    Error('The vendor item no. %1 does not exists', TempCSVBuffer.Value);
+                                    Error('The vendor no. %1 or vendor item no. %2 does not exists', VendorNo, TempCSVBuffer.Value);
                             end;
                         end;
                     3:

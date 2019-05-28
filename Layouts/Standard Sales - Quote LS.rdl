@@ -3181,7 +3181,7 @@
                                     </TablixCells>
                                   </TablixRow>
                                   <TablixRow>
-                                    <Height>0.38806cm</Height>
+                                    <Height>0.12348cm</Height>
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
@@ -3459,10 +3459,11 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!UnitPrice.Value</Value>
+                                                    <Value>=FormatNumber(Fields!UnitListPrice.Value,2)</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
+                                                      <Format>#,0.00;(#,0.00)</Format>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -3472,6 +3473,9 @@
                                               </Paragraph>
                                             </Paragraphs>
                                             <rd:DefaultName>Textbox10</rd:DefaultName>
+                                            <Visibility>
+                                              <Hidden>=IIF(Fields!UnitListPrice.Value = 0,TRUE,FALSE)</Hidden>
+                                            </Visibility>
                                             <Style>
                                               <Border>
                                                 <Color>LightGrey</Color>
@@ -3492,10 +3496,11 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!UnitPrice.Value</Value>
+                                                    <Value>=FormatNumber(Fields!UnitPrice.Value,2)</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
+                                                      <Format>#,0.00;(#,0.00)</Format>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -3528,10 +3533,11 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!LineDiscountPercentText_Line.Value</Value>
+                                                    <Value>=Fields!ResellerDiscount.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
+                                                      <Format>#,0.00;(#,0.00)</Format>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -3542,7 +3548,7 @@
                                             </Paragraphs>
                                             <rd:DefaultName>LineDiscountPercentText_Line</rd:DefaultName>
                                             <Visibility>
-                                              <Hidden>=IF(Fields!Suppress_Prices_on_Printouts.value = "True",true,false)</Hidden>
+                                              <Hidden>=IIF(Fields!Suppress_Prices_on_Printouts.value = "True",true, IIF(Fields!ResellerDiscount.Value = 0,TRUE,FALSE))</Hidden>
                                             </Visibility>
                                             <Style>
                                               <Border>
@@ -3568,6 +3574,7 @@
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
+                                                      <Format>#,0.00;(#,0.00)</Format>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -3594,7 +3601,7 @@
                                     </TablixCells>
                                   </TablixRow>
                                   <TablixRow>
-                                    <Height>0.39861cm</Height>
+                                    <Height>0.47798cm</Height>
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
@@ -3703,7 +3710,7 @@
                                     </TablixCells>
                                   </TablixRow>
                                   <TablixRow>
-                                    <Height>0.6cm</Height>
+                                    <Height>0.12375cm</Height>
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
@@ -4019,7 +4026,11 @@
                                               <Hidden>=Fields!Type_Line.Value = " "</Hidden>
                                             </Visibility>
                                           </TablixMember>
-                                          <TablixMember />
+                                          <TablixMember>
+                                            <Visibility>
+                                              <Hidden>=IIF(Fields!Vendor_Item_No.Value = "",TRUE,FALSE)</Hidden>
+                                            </Visibility>
+                                          </TablixMember>
                                           <TablixMember />
                                         </TablixMembers>
                                       </TablixMember>
@@ -4031,7 +4042,7 @@
                               <DataSetName>DataSet_Result</DataSetName>
                               <Top>8.04596cm</Top>
                               <Left>0.1491cm</Left>
-                              <Height>2.61286cm</Height>
+                              <Height>1.9514cm</Height>
                               <Width>27.46409cm</Width>
                               <ZIndex>1</ZIndex>
                               <Style>
@@ -4760,7 +4771,7 @@
                               <RepeatRowHeaders>true</RepeatRowHeaders>
                               <KeepTogether>true</KeepTogether>
                               <DataSetName>DataSet_Result</DataSetName>
-                              <Top>10.80847cm</Top>
+                              <Top>10.49125cm</Top>
                               <Left>20.61319cm</Left>
                               <Height>2.946cm</Height>
                               <Width>7cm</Width>
@@ -4864,6 +4875,7 @@
                             </Border>
                           </Style>
                         </Rectangle>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -4907,7 +4919,7 @@
       <Width>27.68375cm</Width>
       <Page>
         <PageHeader>
-          <Height>2.50354cm</Height>
+          <Height>1.17097cm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -5095,7 +5107,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox193</rd:DefaultName>
-              <Top>2cm</Top>
+              <Top>0.64111cm</Top>
               <Left>22.1cm</Left>
               <Height>11pt</Height>
               <Width>4.9cm</Width>
@@ -5638,6 +5650,18 @@ End Function
         </Field>
         <Field Name="UnitPrice_Lbl">
           <DataField>UnitPrice_Lbl</DataField>
+        </Field>
+        <Field Name="UnitListPrice">
+          <DataField>UnitListPrice</DataField>
+        </Field>
+        <Field Name="UnitListPriceFormat">
+          <DataField>UnitListPriceFormat</DataField>
+        </Field>
+        <Field Name="ResellerDiscount">
+          <DataField>ResellerDiscount</DataField>
+        </Field>
+        <Field Name="ResellerDiscountFormat">
+          <DataField>ResellerDiscountFormat</DataField>
         </Field>
         <Field Name="UnitOfMeasure">
           <DataField>UnitOfMeasure</DataField>
