@@ -1,5 +1,6 @@
 tableextension 50014 "Vendor Item No." extends "Sales Price Worksheet"
 {
+    //NC.00.01 SDG Change to add new list price 
     fields
     {
         field(50000; "Vendor Item No."; text[60])
@@ -40,7 +41,9 @@ tableextension 50014 "Vendor Item No." extends "Sales Price Worksheet"
     procedure CreateNewListPriceFromItem(Item: Record Item; InsertRec: Boolean)
     begin
         Validate("Sales Type", "Sales Type"::"All Customers");
-        Validate("Item No.", Item."No.");
+        //Validate("Item No.", Item."No."); //SDG 27-05-19        
+        Validate("Vendor No.", Item."Vendor No."); //SDG 27-05-19
+        Validate("Vendor Item No.", Item."Vendor-Item-No."); //SDG 27-05-19
         Validate("Variant Code", 'LISTPRICE');
         Validate("Unit of Measure Code", Item."Base Unit of Measure");
         Validate("Minimum Quantity", 0);

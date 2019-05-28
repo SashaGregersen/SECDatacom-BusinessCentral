@@ -364,4 +364,11 @@ codeunit 50010 "Bid Management"
             Exit(CurrencyExchangeRate.ExchangeAmtFCYToFCY(ReturnRcptHeader."Posting Date", ReturnRcptHeader."Currency Code", PurchHeader."Currency Code", ReturnRcptLine."Claim Amount"));
     end;
 
+    procedure CopyBidToCustomer(bid: record bid)
+    var
+        Customer: page "Customer List";
+    begin
+
+    end;
+
 }

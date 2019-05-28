@@ -25,7 +25,7 @@ tableextension 50003 "Item Adv. Pricing" extends Item
 
         field(50004; "Vendor-Item-No."; Text[60])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
 
         field(50005; "Blocked from purchase"; boolean)
