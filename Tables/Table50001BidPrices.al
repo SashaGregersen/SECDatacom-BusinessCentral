@@ -169,7 +169,7 @@ table 50001 "Bid Item Price"
             "Expiry Date" := Bid."Expiry Date";
             Claimable := Bid.Claimable;
         end;
-        Validate("Entry No.");
+        //Validate("Entry No.");
     end;
 
     trigger OnModify();
@@ -263,6 +263,7 @@ table 50001 "Bid Item Price"
             rec."Entry No." := BidItemPrices."Entry No." + 1
         else
             rec."Entry No." := 1;
+        rec.Modify(true);
     end;
 
 }
