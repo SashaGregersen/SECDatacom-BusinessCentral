@@ -101,17 +101,6 @@ page 50000 "Bid List"
                     CurrPage.Update(true);
                 end;
             }
-            action("Copy bid")
-            {
-                ApplicationArea = all;
-
-                trigger OnAction()
-                var
-                    BidMgt: codeunit "Bid Management";
-                begin
-                    BidMgt.CopyBidToCustomer(Rec);
-                end;
-            }
             action("Copy To Other Companies")
             {
                 ApplicationArea = All;
@@ -121,6 +110,17 @@ page 50000 "Bid List"
                     BidMgt: Codeunit "Bid Management";
                 begin
                     BidMgt.CopyBidToOtherCompanies(Rec);
+                end;
+            }
+            action("Copy bid")
+            {
+                ApplicationArea = all;
+
+                trigger OnAction()
+                var
+                    BidMgt: codeunit "Bid Management";
+                begin
+                    BidMgt.CopyBidToCustomer(Rec);
                 end;
             }
         }

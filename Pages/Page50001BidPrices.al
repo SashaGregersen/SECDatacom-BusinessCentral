@@ -75,6 +75,7 @@ page 50001 "Bid Prices"
                     Message('Bid No. %1 created', Bid."No.");
                 end;
             }
+
         }
     }
 
