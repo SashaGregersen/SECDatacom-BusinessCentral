@@ -130,6 +130,7 @@ table 50001 "Bid Item Price"
         field(50021; "Claimable"; Boolean)
         {
             DataClassification = ToBeClassified;
+            Editable = false;
 
         }
 
@@ -154,7 +155,8 @@ table 50001 "Bid Item Price"
     trigger OnInsert();
     var
         Bid: Record Bid;
-
+        Bid2: record bid;
+        Bidprices: record "Bid Item Price";
     begin
         TestField("Bid No.");
         If Bid.Get("Bid No.") then begin
@@ -162,23 +164,56 @@ table 50001 "Bid Item Price"
             Claimable := Bid.Claimable;
             "Entry No." := bid."Entry No.";
         end;
-
     end;
 
     trigger OnModify();
     var
         BidPrices: record "Bid Item Price";
+        Bid: record bid;
+        Bid2: record bid;
     begin
-        /* BidPrices.setrange("Entry No.", rec."Entry No.");
-        if BidPrices.FindSet() then
-            repeat
-                BidPrices := Rec;
-                BidPrices.Modify(false);
-            until BidPrices.next = 0; */
+        If Bid.Get("Bid No.") then begin
+            Bid2.setrange("Vendor Bid No.", bid."Vendor Bid No.");
+            if bid2.FindSet() then
+                repeat
+                    BidPrices.setrange("Entry No.", Bid2."Entry No.");
+                    BidPrices.SetFilter("Customer No.", '<>%1', '');
+                    BidPrices.SetRange("item No.", rec."item No.");
+                    BidPrices.setrange("Currency Code", rec."Currency Code");
+                    BidPrices.setfilter("Bid No.", '<>%1', rec."Bid No.");
+                    if BidPrices.FindSet() then
+                        repeat
+                            BidPrices.validate("Bid Unit Purchase Price", rec."Bid Unit Purchase Price");
+                            BidPrices.validate("Bid Purchase Discount Pct.", rec."Bid Purchase Discount Pct.");
+                            BidPrices.validate("Bid Unit Sales Price", rec."Bid Unit sales Price");
+                            BidPrices.validate("Bid Sales Discount Pct.", rec."Bid Sales Discount Pct.");
+                            BidPrices.Modify(false);
+                        until BidPrices.next = 0;
+                until bid2.next = 0;
+        end;
     end;
 
     trigger OnDelete();
+    var
+        BidPrices: record "Bid Item Price";
+        Bid: record bid;
+        Bid2: record bid;
     begin
+        If Bid.Get("Bid No.") then begin
+            Bid2.setrange("Vendor Bid No.", bid."Vendor Bid No.");
+            if bid2.FindSet() then
+                repeat
+                    BidPrices.setrange("Entry No.", Bid2."Entry No.");
+                    BidPrices.SetFilter("Customer No.", '<>%1', '');
+                    BidPrices.SetRange("item No.", rec."item No.");
+                    BidPrices.setrange("Currency Code", rec."Currency Code");
+                    BidPrices.setfilter("Bid No.", '<>%1', rec."Bid No.");
+                    if BidPrices.FindSet() then
+                        repeat
+                            BidPrices.delete(false);
+                        until BidPrices.next = 0;
+                until bid2.next = 0;
+        end;
     end;
 
     trigger OnRename();
@@ -237,7 +272,7 @@ table 50001 "Bid Item Price"
                 if (not BidPrices.AlreadyUsed(SalesHeaderNo)) and (not BidPrices.HasExpired(OnDate)) then
                     BidPrices.Mark(true);
             until BidPrices.Next() = 0;
-        BidPrices.setrange("Customer No.");
+        BidPrices.setrange("Customer No.", '');
         if BidPrices.FindFirst() then
             repeat
                 if (not BidPrices.AlreadyUsed(SalesHeaderNo)) and (not BidPrices.HasExpired(OnDate)) then
@@ -251,6 +286,7 @@ table 50001 "Bid Item Price"
                         BidPrices.Mark(true);
                 until BidPrices.Next() = 0;
         end;
+        BidPrices.setrange("Customer No.");
         BidPrices.SetRange("Currency Code");
         BidPrices.MarkedOnly(true);
     end;

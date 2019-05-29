@@ -369,6 +369,8 @@ codeunit 50010 "Bid Management"
         Customer: record customer;
         BidPrices: record "Bid Item Price";
         CustList: page "Customer List";
+        BidCount: integer;
+        Newbid: record bid;
     begin
         bid.TestField("Vendor Bid No.");
         Customer.setrange("Customer Type", Customer."Customer Type"::Reseller);
@@ -378,29 +380,39 @@ codeunit 50010 "Bid Management"
 
         if Customer.FindSet() then
             repeat
+                clear(BidCount);
                 BidPrices.setrange("Bid No.", bid."No.");
                 BidPrices.SetFilter("Customer No.", '<>%1', '');
+                BidPrices.SetRange("Entry No.", Bid."Entry No.");
                 if BidPrices.FindSet() then begin
                     repeat
-                        CreateBidAndBidPrices(Customer."No.", BidPrices, Bid);
+                        if BidCount = 0 then
+                            CreateBid(Bid, Newbid);
+                        CreateBidPrices(Customer."No.", BidPrices, NewBid);
+                        BidCount := BidCount + 1;
                     until BidPrices.next = 0;
                 end;
             until Customer.next = 0;
     end;
 
-    local procedure CreateBidAndBidPrices(CustNo: code[20]; BidPrices: record "Bid Item Price"; Bid: record Bid)
+    local procedure CreateBid(Bid: record bid; var NewBid: record Bid)
     var
-        NewBid: record Bid;
-        NewBidPrice: record "Bid Item Price";
+
     begin
         NewBid.init;
         NewBid := Bid;
         NewBid."No." := '';
+        NewBid.Description := '';
         NewBid.Insert(true);
+    end;
 
+    local procedure CreateBidPrices(CustNo: code[20]; BidPrices: record "Bid Item Price"; Bid: record Bid)
+    var
+        NewBidPrice: record "Bid Item Price";
+    begin
         NewBidPrice.Init();
         NewBidPrice := BidPrices;
-        NewBidPrice."Bid No." := NewBid."No.";
+        NewBidPrice."Bid No." := Bid."No.";
         NewBidPrice.validate("Customer No.", CustNo);
         NewBidPrice.Insert(true);
     end;

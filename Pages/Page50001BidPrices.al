@@ -49,6 +49,10 @@ page 50001 "Bid Prices"
                 {
                     ApplicationArea = all;
                 }
+                field(Claimable; Claimable)
+                {
+                    ApplicationArea = all;
+                }
             }
         }
     }
