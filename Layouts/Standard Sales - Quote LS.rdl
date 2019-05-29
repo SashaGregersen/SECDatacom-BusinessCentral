@@ -3474,7 +3474,7 @@
                                             </Paragraphs>
                                             <rd:DefaultName>Textbox10</rd:DefaultName>
                                             <Visibility>
-                                              <Hidden>=IIF(Fields!UnitListPrice.Value = 0,TRUE,FALSE)</Hidden>
+                                              <Hidden>=IIF(Fields!Suppress_Prices_on_Printouts.value = "True",true, IIF(Fields!UnitListPrice.Value = 0,TRUE,FALSE))</Hidden>
                                             </Visibility>
                                             <Style>
                                               <Border>
@@ -3485,6 +3485,7 @@
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
+                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell>
@@ -4875,7 +4876,6 @@
                             </Border>
                           </Style>
                         </Rectangle>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>

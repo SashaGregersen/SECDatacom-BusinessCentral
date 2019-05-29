@@ -24,7 +24,7 @@
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>13.97174cm</Height>
+                  <Height>14.57119cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -843,7 +843,6 @@
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
-                                                      <FontWeight>Bold</FontWeight>
                                                       <Format>d</Format>
                                                     </Style>
                                                   </TextRun>
@@ -881,7 +880,6 @@
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
-                                                      <FontWeight>Bold</FontWeight>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -923,7 +921,6 @@
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
-                                                      <FontWeight>Bold</FontWeight>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -961,7 +958,6 @@
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
-                                                      <FontWeight>Bold</FontWeight>
                                                       <Format>d</Format>
                                                     </Style>
                                                   </TextRun>
@@ -1004,7 +1000,6 @@
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
-                                                      <FontWeight>Bold</FontWeight>
                                                       <Format>N</Format>
                                                     </Style>
                                                   </TextRun>
@@ -1047,7 +1042,6 @@
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
-                                                      <FontWeight>Bold</FontWeight>
                                                       <Format>N</Format>
                                                     </Style>
                                                   </TextRun>
@@ -3808,25 +3802,29 @@
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="Textbox3">
-                                            <CanGrow>true</CanGrow>
+                                          <Textbox Name="IssuedReminderLine2Desc">
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value />
+                                                    <Value>=Fields!Desc1_IssuedReminderLine.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
-                                                      <FontWeight>Bold</FontWeight>
+                                                      <FontSize>8pt</FontSize>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
-                                                <Style />
+                                                <Style>
+                                                  <FontFamily>Segoe UI</FontFamily>
+                                                  <FontSize>8pt</FontSize>
+                                                </Style>
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>Textbox3</rd:DefaultName>
                                             <Style>
+                                              <Border />
+                                              <FontFamily>Segoe UI</FontFamily>
+                                              <FontSize>8pt</FontSize>
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
@@ -6886,8 +6884,8 @@
                                 </TablixMembers>
                               </TablixRowHierarchy>
                               <DataSetName>DataSet_Result</DataSetName>
-                              <Top>4.67079cm</Top>
-                              <Left>0.03072cm</Left>
+                              <Top>4.80308cm</Top>
+                              <Left>0.01534cm</Left>
                               <Height>2.78694cm</Height>
                               <Width>17.94201cm</Width>
                               <ZIndex>1</ZIndex>
@@ -9294,8 +9292,8 @@
                                 </TablixMembers>
                               </TablixRowHierarchy>
                               <DataSetName>DataSet_Result</DataSetName>
-                              <Top>7.49097cm</Top>
-                              <Left>0.03072cm</Left>
+                              <Top>7.70264cm</Top>
+                              <Left>0.01534cm</Left>
                               <Height>3.17498cm</Height>
                               <Width>17.94205cm</Width>
                               <ZIndex>2</ZIndex>
@@ -9399,29 +9397,26 @@
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="IssuedReminderLine2Desc">
+                                          <Textbox Name="Textbox84">
+                                            <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!Desc1_IssuedReminderLine.Value</Value>
+                                                    <Value />
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
-                                                <Style>
-                                                  <FontFamily>Segoe UI</FontFamily>
-                                                  <FontSize>8pt</FontSize>
-                                                </Style>
+                                                <Style />
                                               </Paragraph>
                                             </Paragraphs>
+                                            <rd:DefaultName>Textbox84</rd:DefaultName>
                                             <Style>
                                               <Border />
-                                              <FontFamily>Segoe UI</FontFamily>
-                                              <FontSize>8pt</FontSize>
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
@@ -9816,7 +9811,7 @@ Cstr(Fields!PmtSetup__FIK_GIRO_No________.Value)
                                 </TablixMembers>
                               </TablixRowHierarchy>
                               <DataSetName>DataSet_Result</DataSetName>
-                              <Top>13.11538cm</Top>
+                              <Top>13.26618cm</Top>
                               <Height>0.70556cm</Height>
                               <Width>17.95724cm</Width>
                               <ZIndex>5</ZIndex>
@@ -10415,8 +10410,7 @@ Cstr(Fields!PmtSetup__FIK_GIRO_No________.Value)
                                   </FilterValues>
                                 </Filter>
                               </Filters>
-                              <Top>10.82233cm</Top>
-                              <Left>0.01535cm</Left>
+                              <Top>10.97313cm</Top>
                               <Height>2.11666cm</Height>
                               <Width>17.94189cm</Width>
                               <ZIndex>6</ZIndex>
@@ -10464,7 +10458,7 @@ Cstr(Fields!PmtSetup__FIK_GIRO_No________.Value)
             </TablixRowHierarchy>
             <DataSetName>DataSet_Result</DataSetName>
             <Left>0.02794cm</Left>
-            <Height>13.97174cm</Height>
+            <Height>14.57119cm</Height>
             <Width>18cm</Width>
             <Style>
               <FontFamily>Segoe UI</FontFamily>
@@ -10495,6 +10489,9 @@ Cstr(Fields!PmtSetup__FIK_GIRO_No________.Value)
             <Height>0.16656in</Height>
             <Width>1.05cm</Width>
             <ZIndex>1</ZIndex>
+            <Visibility>
+              <Hidden>true</Hidden>
+            </Visibility>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -10526,6 +10523,9 @@ Cstr(Fields!PmtSetup__FIK_GIRO_No________.Value)
             <Height>0.16656in</Height>
             <Width>2.91547cm</Width>
             <ZIndex>2</ZIndex>
+            <Visibility>
+              <Hidden>true</Hidden>
+            </Visibility>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -10557,6 +10557,9 @@ Cstr(Fields!PmtSetup__FIK_GIRO_No________.Value)
             <Height>0.16656in</Height>
             <Width>3.57cm</Width>
             <ZIndex>3</ZIndex>
+            <Visibility>
+              <Hidden>true</Hidden>
+            </Visibility>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -10565,16 +10568,16 @@ Cstr(Fields!PmtSetup__FIK_GIRO_No________.Value)
             </Style>
           </Textbox>
         </ReportItems>
-        <Height>16.70847cm</Height>
+        <Height>14.9093cm</Height>
         <Style>
           <FontFamily>Segoe UI</FontFamily>
           <FontSize>8pt</FontSize>
         </Style>
       </Body>
-      <Width>18.91994cm</Width>
+      <Width>18.68182cm</Width>
       <Page>
         <PageHeader>
-          <Height>9.41211cm</Height>
+          <Height>9.12107cm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -11409,9 +11412,9 @@ Cstr(Fields!PmtSetup__FIK_GIRO_No________.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>244.14999pt</Top>
-              <Left>2.85622cm</Left>
+              <Left>3.07953cm</Left>
               <Height>11pt</Height>
-              <Width>8.1556cm</Width>
+              <Width>7.93229cm</Width>
               <ZIndex>26</ZIndex>
               <Style>
                 <FontFamily>Segoe UI</FontFamily>
@@ -11441,7 +11444,7 @@ Cstr(Fields!PmtSetup__FIK_GIRO_No________.Value)
               </Paragraphs>
               <Top>223.25pt</Top>
               <Height>11pt</Height>
-              <Width>2.67983cm</Width>
+              <Width>3.00897cm</Width>
               <ZIndex>27</ZIndex>
               <Style>
                 <Border />
@@ -11471,9 +11474,9 @@ Cstr(Fields!PmtSetup__FIK_GIRO_No________.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>223.25pt</Top>
-              <Left>2.85622cm</Left>
+              <Left>3.07953cm</Left>
               <Height>11pt</Height>
-              <Width>8.1556cm</Width>
+              <Width>7.93229cm</Width>
               <ZIndex>28</ZIndex>
               <Style>
                 <FontFamily>Segoe UI</FontFamily>
@@ -11503,7 +11506,7 @@ Cstr(Fields!PmtSetup__FIK_GIRO_No________.Value)
               </Paragraphs>
               <Top>234.14999pt</Top>
               <Height>11pt</Height>
-              <Width>2.67983cm</Width>
+              <Width>3.00897cm</Width>
               <ZIndex>29</ZIndex>
               <Style>
                 <Border />
@@ -11535,9 +11538,9 @@ Cstr(Fields!PmtSetup__FIK_GIRO_No________.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>234.14999pt</Top>
-              <Left>2.85622cm</Left>
+              <Left>3.07953cm</Left>
               <Height>11pt</Height>
-              <Width>8.1556cm</Width>
+              <Width>7.93229cm</Width>
               <ZIndex>30</ZIndex>
               <Style>
                 <FontFamily>Segoe UI</FontFamily>
@@ -11744,7 +11747,7 @@ Cstr(Fields!PmtSetup__FIK_GIRO_No________.Value)
               <rd:DefaultName>Textbox2</rd:DefaultName>
               <Top>245.05pt</Top>
               <Height>11pt</Height>
-              <Width>2.67983cm</Width>
+              <Width>3.00897cm</Width>
               <ZIndex>37</ZIndex>
               <Style>
                 <Border>
@@ -11777,6 +11780,9 @@ Cstr(Fields!PmtSetup__FIK_GIRO_No________.Value)
               <Height>11pt</Height>
               <Width>2.90319cm</Width>
               <ZIndex>38</ZIndex>
+              <Visibility>
+                <Hidden>true</Hidden>
+              </Visibility>
               <Style>
                 <Border />
                 <FontFamily>Segoe UI</FontFamily>
@@ -11809,6 +11815,9 @@ Cstr(Fields!PmtSetup__FIK_GIRO_No________.Value)
               <Height>11pt</Height>
               <Width>3.7778cm</Width>
               <ZIndex>39</ZIndex>
+              <Visibility>
+                <Hidden>true</Hidden>
+              </Visibility>
               <Style>
                 <Border />
                 <FontFamily>Segoe UI</FontFamily>
@@ -11841,6 +11850,9 @@ Cstr(Fields!PmtSetup__FIK_GIRO_No________.Value)
               <Height>11pt</Height>
               <Width>2.88555cm</Width>
               <ZIndex>40</ZIndex>
+              <Visibility>
+                <Hidden>true</Hidden>
+              </Visibility>
               <Style>
                 <Border />
                 <FontFamily>Segoe UI</FontFamily>
@@ -11873,6 +11885,9 @@ Cstr(Fields!PmtSetup__FIK_GIRO_No________.Value)
               <Height>11pt</Height>
               <Width>3.7778cm</Width>
               <ZIndex>41</ZIndex>
+              <Visibility>
+                <Hidden>true</Hidden>
+              </Visibility>
               <Style>
                 <Border />
                 <FontFamily>Segoe UI</FontFamily>

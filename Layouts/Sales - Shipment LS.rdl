@@ -2921,7 +2921,7 @@ Cstr(Fields!Pref_Sender_Country.Value)
       <Width>27.34383cm</Width>
       <Page>
         <PageHeader>
-          <Height>10.06112cm</Height>
+          <Height>8.92341cm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -3395,8 +3395,8 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>8.71526cm</Top>
-              <Left>18.26897cm</Left>
+              <Top>7.94797cm</Top>
+              <Left>18.33056cm</Left>
               <Height>12.00019pt</Height>
               <Width>2.62217cm</Width>
               <ZIndex>18</ZIndex>
@@ -3420,8 +3420,8 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>8.29546cm</Top>
-              <Left>18.26897cm</Left>
+              <Top>7.52817cm</Top>
+              <Left>18.33056cm</Left>
               <Height>11.89972pt</Height>
               <Width>2.62217cm</Width>
               <ZIndex>19</ZIndex>
@@ -3446,8 +3446,8 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>7.9074cm</Top>
-              <Left>18.26897cm</Left>
+              <Top>7.14011cm</Top>
+              <Left>18.33056cm</Left>
               <Height>11.00013pt</Height>
               <Width>2.62217cm</Width>
               <ZIndex>20</ZIndex>
@@ -3472,37 +3472,11 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>7.42762cm</Top>
-              <Left>18.26897cm</Left>
+              <Top>6.66033cm</Top>
+              <Left>18.33056cm</Left>
               <Height>11pt</Height>
               <Width>2.62217cm</Width>
               <ZIndex>21</ZIndex>
-              <Style>
-                <VerticalAlign>Middle</VerticalAlign>
-              </Style>
-            </Textbox>
-            <Textbox Name="CompanyInfoPhoneNoCaption1">
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value EvaluationMode="Constant" />
-                      <Style>
-                        <FontStyle>Normal</FontStyle>
-                        <FontFamily>Segoe UI</FontFamily>
-                        <FontSize>8pt</FontSize>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style />
-                </Paragraph>
-              </Paragraphs>
-              <Top>6.23033cm</Top>
-              <Left>18.26897cm</Left>
-              <Height>11pt</Height>
-              <Width>2.62217cm</Width>
-              <ZIndex>22</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -3525,11 +3499,11 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>8.75054cm</Top>
-              <Left>21.06827cm</Left>
+              <Top>7.98325cm</Top>
+              <Left>21.12986cm</Left>
               <Height>11pt</Height>
               <Width>6.21265cm</Width>
-              <ZIndex>23</ZIndex>
+              <ZIndex>22</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -3552,11 +3526,11 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>8.3272cm</Top>
-              <Left>21.05946cm</Left>
+              <Top>7.55991cm</Top>
+              <Left>21.12105cm</Left>
               <Height>11pt</Height>
               <Width>6.22146cm</Width>
-              <ZIndex>24</ZIndex>
+              <ZIndex>23</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -3580,11 +3554,11 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>7.92504cm</Top>
-              <Left>21.05946cm</Left>
+              <Top>7.15775cm</Top>
+              <Left>21.12105cm</Left>
               <Height>11pt</Height>
               <Width>6.22146cm</Width>
-              <ZIndex>25</ZIndex>
+              <ZIndex>24</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -3608,67 +3582,11 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>7.45937cm</Top>
-              <Left>21.05946cm</Left>
+              <Top>6.69208cm</Top>
+              <Left>21.12105cm</Left>
               <Height>11pt</Height>
               <Width>6.22146cm</Width>
-              <ZIndex>26</ZIndex>
-              <Style>
-                <VerticalAlign>Middle</VerticalAlign>
-              </Style>
-            </Textbox>
-            <Textbox Name="CompanyInfoFaxNo1">
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value EvaluationMode="Constant" />
-                      <Style>
-                        <FontStyle>Normal</FontStyle>
-                        <FontFamily>Segoe UI</FontFamily>
-                        <FontSize>8pt</FontSize>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Right</TextAlign>
-                  </Style>
-                </Paragraph>
-              </Paragraphs>
-              <Top>6.63068cm</Top>
-              <Left>21.06827cm</Left>
-              <Height>11pt</Height>
-              <Width>6.21265cm</Width>
-              <ZIndex>27</ZIndex>
-              <Style>
-                <VerticalAlign>Middle</VerticalAlign>
-              </Style>
-            </Textbox>
-            <Textbox Name="CompanyInfoPhoneNo1">
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value EvaluationMode="Constant" />
-                      <Style>
-                        <FontStyle>Normal</FontStyle>
-                        <FontFamily>Segoe UI</FontFamily>
-                        <FontSize>8pt</FontSize>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Right</TextAlign>
-                  </Style>
-                </Paragraph>
-              </Paragraphs>
-              <Top>6.23033cm</Top>
-              <Left>21.05946cm</Left>
-              <Height>11pt</Height>
-              <Width>6.22146cm</Width>
-              <ZIndex>28</ZIndex>
+              <ZIndex>25</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -3697,7 +3615,7 @@ Cstr(Fields!Pref_Sender_Country.Value)
               <Left>0.07941cm</Left>
               <Height>20pt</Height>
               <Width>27.20151cm</Width>
-              <ZIndex>29</ZIndex>
+              <ZIndex>26</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -3721,11 +3639,11 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>9.16682cm</Top>
-              <Left>21.06827cm</Left>
+              <Top>8.39953cm</Top>
+              <Left>21.12986cm</Left>
               <Height>11pt</Height>
               <Width>6.21265cm</Width>
-              <ZIndex>30</ZIndex>
+              <ZIndex>27</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -3747,94 +3665,11 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>9.16682cm</Top>
-              <Left>7.1925in</Left>
+              <Top>8.39953cm</Top>
+              <Left>7.21675in</Left>
               <Height>11pt</Height>
               <Width>2.62217cm</Width>
-              <ZIndex>31</ZIndex>
-              <Style>
-                <VerticalAlign>Middle</VerticalAlign>
-              </Style>
-            </Textbox>
-            <Textbox Name="PurchHeaderBuyfromVendNoCptn">
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value />
-                      <Style>
-                        <FontStyle>Normal</FontStyle>
-                        <FontFamily>Segoe UI</FontFamily>
-                        <FontSize>8pt</FontSize>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style />
-                </Paragraph>
-              </Paragraphs>
-              <Top>6.18089cm</Top>
-              <Left>0.0794cm</Left>
-              <Height>11pt</Height>
-              <Width>3.71255cm</Width>
-              <ZIndex>32</ZIndex>
-              <Style>
-                <VerticalAlign>Middle</VerticalAlign>
-              </Style>
-            </Textbox>
-            <Textbox Name="PurchaseHeaderBuyfromVendorNo1">
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value />
-                      <Style>
-                        <FontStyle>Normal</FontStyle>
-                        <FontFamily>Segoe UI</FontFamily>
-                        <FontSize>8pt</FontSize>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Left</TextAlign>
-                  </Style>
-                </Paragraph>
-              </Paragraphs>
-              <Top>6.18089cm</Top>
-              <Left>3.79196cm</Left>
-              <Height>11pt</Height>
-              <Width>14.28277cm</Width>
-              <ZIndex>33</ZIndex>
-              <Style>
-                <VerticalAlign>Middle</VerticalAlign>
-              </Style>
-            </Textbox>
-            <Textbox Name="DocumentDate">
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value />
-                      <Style>
-                        <FontStyle>Normal</FontStyle>
-                        <FontFamily>Segoe UI</FontFamily>
-                        <FontSize>8pt</FontSize>
-                        <Format>g</Format>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Left</TextAlign>
-                  </Style>
-                </Paragraph>
-              </Paragraphs>
-              <Top>6.58272cm</Top>
-              <Left>3.79196cm</Left>
-              <Height>11pt</Height>
-              <Width>14.28278cm</Width>
-              <ZIndex>34</ZIndex>
+              <ZIndex>28</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -3856,11 +3691,11 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>7.40116cm</Top>
-              <Left>3.79195cm</Left>
+              <Top>6.63387cm</Top>
+              <Left>3.85354cm</Left>
               <Height>8.90019pt</Height>
               <Width>14.28277cm</Width>
-              <ZIndex>35</ZIndex>
+              <ZIndex>29</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -3885,94 +3720,13 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>7.36236cm</Top>
-              <Left>0.0794cm</Left>
+              <Top>6.59507cm</Top>
+              <Left>0.14099cm</Left>
               <Height>11pt</Height>
               <Width>3.71255cm</Width>
-              <ZIndex>36</ZIndex>
+              <ZIndex>30</ZIndex>
               <Style>
                 <Border />
-                <VerticalAlign>Middle</VerticalAlign>
-              </Style>
-            </Textbox>
-            <Textbox Name="SalesShipmentHeaderNo">
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value />
-                      <Style>
-                        <FontStyle>Normal</FontStyle>
-                        <FontFamily>Segoe UI</FontFamily>
-                        <FontSize>8pt</FontSize>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style />
-                </Paragraph>
-              </Paragraphs>
-              <Top>6.97783cm</Top>
-              <Left>3.79196cm</Left>
-              <Height>11pt</Height>
-              <Width>14.28278cm</Width>
-              <ZIndex>37</ZIndex>
-              <Style>
-                <VerticalAlign>Middle</VerticalAlign>
-              </Style>
-            </Textbox>
-            <Textbox Name="SalesShipmentHeaderNoCptn">
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value />
-                      <Style>
-                        <FontStyle>Normal</FontStyle>
-                        <FontFamily>Segoe UI</FontFamily>
-                        <FontSize>8pt</FontSize>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style />
-                </Paragraph>
-              </Paragraphs>
-              <Top>6.97783cm</Top>
-              <Left>0.0794cm</Left>
-              <Height>11pt</Height>
-              <Width>3.71255cm</Width>
-              <ZIndex>38</ZIndex>
-              <Style>
-                <Border />
-                <VerticalAlign>Middle</VerticalAlign>
-              </Style>
-            </Textbox>
-            <Textbox Name="CompanyInfoEmail">
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value EvaluationMode="Constant" />
-                      <Style>
-                        <FontStyle>Normal</FontStyle>
-                        <FontFamily>Segoe UI</FontFamily>
-                        <FontSize>8pt</FontSize>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Right</TextAlign>
-                  </Style>
-                </Paragraph>
-              </Paragraphs>
-              <Top>7.06426cm</Top>
-              <Left>21.06827cm</Left>
-              <Height>11pt</Height>
-              <Width>6.21265cm</Width>
-              <ZIndex>39</ZIndex>
-              <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
             </Textbox>
@@ -3995,7 +3749,7 @@ Cstr(Fields!Pref_Sender_Country.Value)
               <Left>0.0794cm</Left>
               <Height>10pt</Height>
               <Width>17.99532cm</Width>
-              <ZIndex>40</ZIndex>
+              <ZIndex>31</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -4027,96 +3781,7 @@ Cstr(Fields!Pref_Sender_Country.Value)
               <Left>21.06827cm</Left>
               <Height>10pt</Height>
               <Width>6.21265cm</Width>
-              <ZIndex>41</ZIndex>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-              </Style>
-            </Textbox>
-            <Textbox Name="CompanyInfoHomePageCaption1">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value EvaluationMode="Constant" />
-                      <Style>
-                        <FontFamily>Segoe UI</FontFamily>
-                        <FontSize>8pt</FontSize>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Left</TextAlign>
-                  </Style>
-                </Paragraph>
-              </Paragraphs>
-              <Top>6.63068cm</Top>
-              <Left>18.26897cm</Left>
-              <Height>11pt</Height>
-              <Width>2.62217cm</Width>
-              <ZIndex>42</ZIndex>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <VerticalAlign>Top</VerticalAlign>
-              </Style>
-            </Textbox>
-            <Textbox Name="CompanyInfoEmailCaption1">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value EvaluationMode="Constant" />
-                      <Style>
-                        <FontStyle>Normal</FontStyle>
-                        <FontFamily>Segoe UI</FontFamily>
-                        <FontSize>8pt</FontSize>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style />
-                </Paragraph>
-              </Paragraphs>
-              <Top>7.03251cm</Top>
-              <Left>18.26897cm</Left>
-              <Height>11pt</Height>
-              <Width>2.62217cm</Width>
-              <ZIndex>43</ZIndex>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-              </Style>
-            </Textbox>
-            <Textbox Name="DocumentDateCaption">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value />
-                      <Style>
-                        <FontStyle>Normal</FontStyle>
-                        <FontFamily>Segoe UI</FontFamily>
-                        <FontSize>8pt</FontSize>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style />
-                </Paragraph>
-              </Paragraphs>
-              <Top>6.58272cm</Top>
-              <Left>0.0794cm</Left>
-              <Height>11pt</Height>
-              <Width>3.71256cm</Width>
-              <ZIndex>44</ZIndex>
+              <ZIndex>32</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -4140,11 +3805,11 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>7.75042cm</Top>
-              <Left>0.0794cm</Left>
+              <Top>6.98313cm</Top>
+              <Left>0.14099cm</Left>
               <Height>0.4198cm</Height>
               <Width>3.71257cm</Width>
-              <ZIndex>45</ZIndex>
+              <ZIndex>33</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -4169,11 +3834,11 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>7.75042cm</Top>
-              <Left>3.79196cm</Left>
+              <Top>6.98313cm</Top>
+              <Left>3.85355cm</Left>
               <Height>0.4198cm</Height>
               <Width>14.28278cm</Width>
-              <ZIndex>46</ZIndex>
+              <ZIndex>34</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -4198,11 +3863,11 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>8.17022cm</Top>
-              <Left>3.79196cm</Left>
+              <Top>7.40293cm</Top>
+              <Left>3.85355cm</Left>
               <Height>0.42334cm</Height>
               <Width>14.28278cm</Width>
-              <ZIndex>47</ZIndex>
+              <ZIndex>35</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -4227,11 +3892,11 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>8.17022cm</Top>
-              <Left>0.07941cm</Left>
+              <Top>7.40293cm</Top>
+              <Left>0.141cm</Left>
               <Height>0.42334cm</Height>
               <Width>3.71256cm</Width>
-              <ZIndex>48</ZIndex>
+              <ZIndex>36</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -4260,7 +3925,7 @@ Cstr(Fields!Pref_Sender_Country.Value)
               <Left>0.07939cm</Left>
               <Height>11pt</Height>
               <Width>20.81175cm</Width>
-              <ZIndex>49</ZIndex>
+              <ZIndex>37</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -4288,7 +3953,7 @@ Cstr(Fields!Pref_Sender_Country.Value)
               <Left>21.06827cm</Left>
               <Height>11pt</Height>
               <Width>6.21265cm</Width>
-              <ZIndex>50</ZIndex>
+              <ZIndex>38</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>

@@ -705,9 +705,10 @@ codeunit 50003 "File Management Import"
             DefDim.Validate("Table ID", Database::Item);
             DefDim.Validate("No.", Item."No.");
             DefDim.Validate("Dimension Code", GLSetup."Global Dimension 1 Code");
-            DefDim.Validate("Dimension Value Code", tmpItem."Global Dimension 1 Code");
-            if not DefDim.Insert(true) then
-                DefDim.Modify(true);
+        end;
+        DefDim.Validate("Dimension Value Code", tmpItem."Global Dimension 1 Code");
+        if not DefDim.Insert(true) then begin
+            DefDim.Modify(true);
         end;
 
         //Nulstil så vi ved det er næste record
