@@ -1,1 +1,1 @@
-﻿{"Added":[],"Modified":[],"Removed":[]}
+﻿{"Added":[],"Modified":[{"Id":50010,"Kind":11,"Name":"Bid Management","PackagePath":"/src/Codeunit/Codeunit50010BidManagement.al"},{"Id":50000,"Kind":11,"Name":"Advanced Price Management","PackagePath":"/src/Codeunit/Codeunit50000AdvancedPriceManagement.al"}],"Removed":[]}
