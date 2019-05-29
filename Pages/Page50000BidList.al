@@ -38,6 +38,10 @@ page 50000 "Bid List"
                 {
                     ApplicationArea = All;
                 }
+                field(Deactivate; Deactivate)
+                {
+                    ApplicationArea = all;
+                }
             }
 
         }
