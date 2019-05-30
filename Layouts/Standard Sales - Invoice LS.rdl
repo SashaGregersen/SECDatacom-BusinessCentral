@@ -4344,7 +4344,7 @@
                               <Width>1.05cm</Width>
                               <ZIndex>6</ZIndex>
                               <Visibility>
-                                <Hidden>=IIF(Fields!PrintFIK.Value = "Yes",true, IIF(Fields!PaymentMethodExtDescription.Value = "",TRUE,FALSE))</Hidden>
+                                <Hidden>=IIF(Fields!PrintFIK.Value = "yes", TRUE, IIF(Fields!PaymentMethodExtDescription.Value = "",TRUE,FALSE))</Hidden>
                               </Visibility>
                               <Style>
                                 <Border>
@@ -6211,7 +6211,7 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox43">
+                        <Textbox Name="Textbox9">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -6227,7 +6227,7 @@
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox43</rd:DefaultName>
+                          <rd:DefaultName>Textbox9</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -6435,7 +6435,7 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox44">
+                        <Textbox Name="Textbox7">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -6451,7 +6451,7 @@
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox44</rd:DefaultName>
+                          <rd:DefaultName>Textbox7</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
