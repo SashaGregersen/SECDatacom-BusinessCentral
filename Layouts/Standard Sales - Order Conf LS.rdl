@@ -773,7 +773,7 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>27.68937cm</Width>
+                  <Width>27.50416cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -7914,7 +7914,7 @@
             <DataSetName>DataSet_Result</DataSetName>
             <Top>0.38032cm</Top>
             <Height>18.62014cm</Height>
-            <Width>27.68937cm</Width>
+            <Width>27.50416cm</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -7925,7 +7925,7 @@
         <Height>19.00046cm</Height>
         <Style />
       </Body>
-      <Width>27.68937cm</Width>
+      <Width>27.50416cm</Width>
       <Page>
         <PageHeader>
           <Height>1.26cm</Height>
