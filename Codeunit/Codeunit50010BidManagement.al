@@ -368,23 +368,27 @@ codeunit 50010 "Bid Management"
     var
         Customer: record customer;
         BidPrices: record "Bid Item Price";
+        CustList: page "Customer List";
     begin
+        bid.TestField("Vendor Bid No.");
         Customer.setrange("Customer Type", Customer."Customer Type"::Reseller);
-        if Page.RunModal(page::"Customer List", Customer) = "Action"::LookupOK then begin
-            Customer.MarkedOnly(true);
-            if Customer.FindSet() then
-                repeat
-                    BidPrices.setrange("Bid No.", bid."No.");
-                    if BidPrices.FindSet() then begin
-                        repeat
-                            CreateBid(Customer."No.", BidPrices, Bid);
-                        until BidPrices.next = 0;
-                    end;
-                until Customer.next = 0;
-        end;
+        CustList.SetTableView(Customer);
+        CustList.RunModal();
+        CustList.SetSelectionFilter(Customer);
+
+        if Customer.FindSet() then
+            repeat
+                BidPrices.setrange("Bid No.", bid."No.");
+                BidPrices.SetFilter("Customer No.", '<>%1', '');
+                if BidPrices.FindSet() then begin
+                    repeat
+                        CreateBidAndBidPrices(Customer."No.", BidPrices, Bid);
+                    until BidPrices.next = 0;
+                end;
+            until Customer.next = 0;
     end;
 
-    local procedure CreateBid(CustNo: code[20]; BidPrices: record "Bid Item Price"; Bid: record Bid)
+    local procedure CreateBidAndBidPrices(CustNo: code[20]; BidPrices: record "Bid Item Price"; Bid: record Bid)
     var
         NewBid: record Bid;
         NewBidPrice: record "Bid Item Price";

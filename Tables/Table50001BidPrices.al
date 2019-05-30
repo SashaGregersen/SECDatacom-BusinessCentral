@@ -78,14 +78,6 @@ table 50001 "Bid Item Price"
         field(12; "Entry No."; Integer)
         {
             DataClassification = ToBeClassified;
-
-            trigger OnValidate()
-            var
-
-            begin
-                if "Entry No." = 0 then
-                    GetNextEntryNo(Rec);
-            end;
         }
         field(50001; "Bid Unit Sales Price"; Decimal)
         {
@@ -168,13 +160,21 @@ table 50001 "Bid Item Price"
         If Bid.Get("Bid No.") then begin
             "Expiry Date" := Bid."Expiry Date";
             Claimable := Bid.Claimable;
+            "Entry No." := bid."Entry No.";
         end;
-        //Validate("Entry No.");
+
     end;
 
     trigger OnModify();
+    var
+        BidPrices: record "Bid Item Price";
     begin
-
+        /* BidPrices.setrange("Entry No.", rec."Entry No.");
+        if BidPrices.FindSet() then
+            repeat
+                BidPrices := Rec;
+                BidPrices.Modify(false);
+            until BidPrices.next = 0; */
     end;
 
     trigger OnDelete();
@@ -255,15 +255,5 @@ table 50001 "Bid Item Price"
         BidPrices.MarkedOnly(true);
     end;
 
-    local procedure GetNextEntryNo(rec: record "Bid Item Price")
-    var
-        BidItemPrices: record "Bid Item Price";
-    begin
-        if BidItemPrices.FindLast() then
-            rec."Entry No." := BidItemPrices."Entry No." + 1
-        else
-            rec."Entry No." := 1;
-        rec.Modify(true);
-    end;
 
 }
