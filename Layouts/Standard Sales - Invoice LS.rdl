@@ -4272,7 +4272,7 @@
                               <Width>1.05cm</Width>
                               <ZIndex>4</ZIndex>
                               <Visibility>
-                                <Hidden>=NOT First(Fields!PrintFIK.Value, "DataSet_Result")</Hidden>
+                                <Hidden>=IIF(Fields!PrintFIK.Value = "Yes",true, IIF(IsNothing(First(Fields!PaymentMethodExtDescription.Value, "DataSet_Result")),TRUE,FALSE))</Hidden>
                               </Visibility>
                               <Style>
                                 <Border>
