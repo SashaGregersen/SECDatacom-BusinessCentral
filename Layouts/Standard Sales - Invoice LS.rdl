@@ -4343,9 +4343,6 @@
                               <Height>0.16656in</Height>
                               <Width>1.05cm</Width>
                               <ZIndex>6</ZIndex>
-                              <Visibility>
-                                <Hidden>=IIF(Fields!PrintFIK.Value = "yes", TRUE, IIF(Fields!PaymentMethodDescription.Value = "",TRUE,FALSE))</Hidden>
-                              </Visibility>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -4377,9 +4374,6 @@
                               <Height>0.16656in</Height>
                               <Width>2.91547cm</Width>
                               <ZIndex>7</ZIndex>
-                              <Visibility>
-                                <Hidden>=IIF(Fields!PrintFIK.Value = "Yes",true, IIF(Fields!PaymentMethodExtDescription.Value = "",TRUE,FALSE))</Hidden>
-                              </Visibility>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
