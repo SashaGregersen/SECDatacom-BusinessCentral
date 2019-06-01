@@ -471,11 +471,11 @@ codeunit 50003 "File Management Import"
         if Bid."Vendor Bid No." = '' then begin
             TempCSVBuffer.SetFilter("Line No.", '<>%1', 1);
 
-            TempCSVBuffer.SetRange("Field No.", 7);
+            TempCSVBuffer.SetRange("Field No.", 8);
             if TempCSVBuffer.FindFirst then
                 Bid.Validate("Vendor Bid No.", TempCSVBuffer.Value);
 
-            TempCSVBuffer.SetRange("Field No.", 8);
+            TempCSVBuffer.SetRange("Field No.", 9);
             if TempCSVBuffer.FindFirst then begin
                 if TempCSVBuffer.value <> '' then begin
                     Evaluate(Claim, TempCSVBuffer.Value);
@@ -491,7 +491,7 @@ codeunit 50003 "File Management Import"
                 if TempCSVBuffer."Field No." = 1 then begin
                     BidPrices.init;
                     BidPrices.Validate("Bid No.", BidNo);
-                    BidPrices.Validate("Customer No.", SalesHeader."End Customer");
+                    BidPrices.Validate("Customer No.", SalesHeader."Reseller");
                 end;
                 case TempCSVBuffer."Field No." of
                     1:
