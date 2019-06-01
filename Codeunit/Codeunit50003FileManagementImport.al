@@ -125,12 +125,9 @@ codeunit 50003 "File Management Import"
                 if TempCSVBuffer."Field No." = 1 then begin
                     BidPrices.init;
                     BidPrices.Validate("Bid No.", BidNo);
+                    BidPrices.validate("Customer No.", TempCSVBuffer.Value);
                 end;
                 case TempCSVBuffer."Field No." of
-                    2:
-                        begin
-                            BidPrices.Validate("Customer No.", TempCSVBuffer.Value);
-                        end;
                     6:
                         begin
                             if TempCSVBuffer.value = '' then
@@ -277,7 +274,7 @@ codeunit 50003 "File Management Import"
                     end;
                     TempCSVBufferDescription.SetRange("Line No.", TempCSVBuffer."Line No.");
                     if TempCSVBufferDescription.FindFirst() then begin
-                        if TempCSVBufferGlobalDim1.Value <> '' then begin
+                        if TempCSVBufferDescription.Value <> '' then begin
                             Item.Validate(Description, TempCSVBufferDescription.Value);
                             Item.Modify(true);
                         end;
