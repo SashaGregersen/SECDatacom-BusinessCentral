@@ -485,7 +485,7 @@ codeunit 50003 "File Management Import"
             Bid.Modify(true);
         end;
 
-        TempCSVBuffer.SetFilter("Field No.", '%1..%2', 1, 5);
+        TempCSVBuffer.SetFilter("Field No.", '%1..%2', 1, 6);
         if TempCSVBuffer.FindSet() then
             repeat
                 if TempCSVBuffer."Field No." = 1 then begin
