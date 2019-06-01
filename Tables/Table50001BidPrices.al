@@ -46,7 +46,7 @@ table 50001 "Bid Item Price"
         field(3; "Customer No."; code[20])
         {
             DataClassification = ToBeClassified;
-            TableRelation = Customer."No.";
+            TableRelation = Customer."No." WHERE ("Customer Type" = CONST (Reseller));
         }
         field(4; "Expiry Date"; date)
         {

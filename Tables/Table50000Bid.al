@@ -183,7 +183,6 @@ table 50000 "Bid"
             rec."Entry No." := Bid2."Entry No." + 1
         else
             rec."Entry No." := 1;
-        //rec.Modify(true);
     end;
 
 }
