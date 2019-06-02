@@ -4340,7 +4340,7 @@
                               <Width>3.57cm</Width>
                               <ZIndex>6</ZIndex>
                               <Visibility>
-                                <Hidden>=IIF(First(Fields!PrintFIK.Value,"")= "No" , True , False)</Hidden>
+                                <Hidden>=IIF (First(Fields!PrintFIK.Value, "DataSet_Result")= "No" , True , False)</Hidden>
                               </Visibility>
                               <Style>
                                 <Border>
