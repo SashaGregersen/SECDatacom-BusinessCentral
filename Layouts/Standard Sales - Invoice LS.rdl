@@ -4333,9 +4333,6 @@
                               <Height>0.16656in</Height>
                               <Width>3.57cm</Width>
                               <ZIndex>6</ZIndex>
-                              <Visibility>
-                                <Hidden>=IIF(First(Fields!PrintFIK.Value, "DataSet_Result") = "No",true,false)</Hidden>
-                              </Visibility>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -4385,7 +4382,6 @@
                             </Border>
                           </Style>
                         </Rectangle>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
