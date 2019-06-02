@@ -7,7 +7,6 @@ report 50017 "One Time Bid"
 
     dataset
     {
-
         dataitem("Sales Line"; "Sales Line")
         {
             dataitem(Bid; Bid)
@@ -54,9 +53,21 @@ report 50017 "One Time Bid"
                     "Sales Line".Modify(true);
                 end;
             }
+
+            trigger OnAfterGetRecord()
+            var
+
+            begin
+                if ("Sales Line"."Document No." <> SalesLine2."Document No.") or ("Sales Line"."Document Type" <> SalesLine2."Document Type") or ("Sales Line"."Line No." <> SalesLine2."Line No.") then
+                    CurrReport.skip;
+            end;
+
         }
 
+
     }
+
+
     requestpage
     {
         layout
@@ -99,6 +110,13 @@ report 50017 "One Time Bid"
         }
     }
 
+    procedure SetSalesLineFilter(SalesLine: Record "Sales Line")
+    var
+
+    begin
+        SalesLine2 := SalesLine;
+    end;
+
     procedure SetVendorNo(NewVendorNo: code[20])
     var
 
@@ -131,6 +149,7 @@ report 50017 "One Time Bid"
         BidUnitPurchPrice: Decimal;
         BidSalesDiscount: Decimal;
         BidUnitSalesPrice: Decimal;
+        SalesLine2: record "Sales Line";
 
 
 }

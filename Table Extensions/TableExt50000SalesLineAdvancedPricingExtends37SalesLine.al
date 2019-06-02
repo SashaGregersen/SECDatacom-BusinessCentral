@@ -17,6 +17,8 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
                 BidPrices.GetPricesForItem("Document No.", "No.", "Currency Code", "Sell-to Customer No.", "Posting Date", BidPrices);
                 if Page.RunModal(50001, BidPrices) = "Action"::LookupOK then begin
                     Bid.Get(BidPrices."Bid No.");
+                    if bid.Deactivate then
+                        Error('The bid is deactivated and cannot be used');
                     "Bid No." := Bid."No.";
                     if ("Currency Code" = BidPrices."Currency Code") then
                         updateBidPrices(BidPrices, Bid.Claimable, Bid."Project Sale")
@@ -26,7 +28,8 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
                         updateBidPrices(BidPrices, Bid.Claimable, Bid."Project Sale");
                     end;
                 end else
-                    Validate("Bid No.", '');
+                    if "Bid No." = '' then
+                        Validate("Bid No.", '');
             end;
 
             trigger Onvalidate();

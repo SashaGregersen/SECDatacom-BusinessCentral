@@ -70,14 +70,16 @@ codeunit 50054 "Sales Order Event Handler"
             salesheader.get(rec."Document Type", rec."Document No.");
             bid.setrange("Vendor No.", Item."Vendor No.");
             bid.SetFilter("Expiry Date", '>=%1|%2', Today, 0D);
+            bid.setrange(Deactivate, false);
             if bid.FindSet() then
                 repeat
                     BidItemPrices.SetRange("Bid No.", Bid."No.");
                     BidItemPrices.SetRange("item No.", Item."No.");
                     BidItemPrices.SetFilter("Expiry Date", '>=%1|%2', Today, 0D);
+                    BidItemPrices.setfilter("Customer No.", '%1|%2', salesheader.Reseller, '');
                     BidItemPrices.SetRange("Currency Code", Item."Vendor Currency");
                     if BidItemPrices.FindSet() then begin
-                        BidMessage := StrSubstNo('One or more bids exist for the item %1', Item."No.");
+                        BidMessage := StrSubstNo('One or more bids exist on item %1', Item."No.");
                         BidNotification.Message(BidMessage);
                         BidNotification.Scope := NotificationScope::LocalScope;
                         BidNotification.Send();

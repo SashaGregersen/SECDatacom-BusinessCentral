@@ -110,12 +110,17 @@ table 50000 "Bid"
     var
         Bid: record bid;
     begin
-        /*  bid.setrange("Vendor Bid No.");
-         if bid.FindSet() then
-             repeat
-                 Bid := rec;
-                 bid.Modify(false);
-             until bid.Next() = 0; */
+        bid.setrange("Vendor Bid No.", rec."Vendor Bid No.");
+        bid.SetFilter("No.", '<>%1', rec."No.");
+        if bid.FindSet() then
+            repeat
+                bid."One Time Bid" := "One Time Bid";
+                bid."Project Sale" := "Project Sale";
+                bid."Vendor No." := "Vendor No.";
+                bid.validate(Claimable, rec.Claimable);
+                bid.validate("Expiry Date", rec."Expiry Date");
+                bid.Modify(false);
+            until bid.Next() = 0;
     end;
 
     trigger OnDelete();
@@ -178,7 +183,6 @@ table 50000 "Bid"
             rec."Entry No." := Bid2."Entry No." + 1
         else
             rec."Entry No." := 1;
-        //rec.Modify(true);
     end;
 
 }

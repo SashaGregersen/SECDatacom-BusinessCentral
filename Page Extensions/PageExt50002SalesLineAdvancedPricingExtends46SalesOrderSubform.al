@@ -85,6 +85,7 @@ pageextension 50002 "Sales Line Bid" extends "Sales Order Subform"
                     SalesHeader: record "Sales Header";
                     OneTimeBid: Report "One Time Bid";
                     Item: Record item;
+                    SalesLine: record "Sales Line";
                 begin
                     if type <> type::Item then
                         Error('Can only be used on items');
@@ -93,6 +94,7 @@ pageextension 50002 "Sales Line Bid" extends "Sales Order Subform"
                     OneTimeBid.SetCustomerNo(SalesHeader.Reseller);
                     OneTimeBid.SetItemNo("No.");
                     OneTimeBid.SetVendorNo(Item."Vendor No.");
+                    OneTimeBid.SetSalesLineFilter(Rec);
                     OneTimeBid.SetTableView(Rec);
                     OneTimeBid.Run();
                 end;

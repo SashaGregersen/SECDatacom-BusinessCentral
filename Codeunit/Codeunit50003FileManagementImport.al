@@ -125,12 +125,9 @@ codeunit 50003 "File Management Import"
                 if TempCSVBuffer."Field No." = 1 then begin
                     BidPrices.init;
                     BidPrices.Validate("Bid No.", BidNo);
+                    BidPrices.validate("Customer No.", TempCSVBuffer.Value);
                 end;
                 case TempCSVBuffer."Field No." of
-                    2:
-                        begin
-                            BidPrices.Validate("Customer No.", TempCSVBuffer.Value);
-                        end;
                     6:
                         begin
                             if TempCSVBuffer.value = '' then
@@ -277,7 +274,7 @@ codeunit 50003 "File Management Import"
                     end;
                     TempCSVBufferDescription.SetRange("Line No.", TempCSVBuffer."Line No.");
                     if TempCSVBufferDescription.FindFirst() then begin
-                        if TempCSVBufferGlobalDim1.Value <> '' then begin
+                        if TempCSVBufferDescription.Value <> '' then begin
                             Item.Validate(Description, TempCSVBufferDescription.Value);
                             Item.Modify(true);
                         end;
@@ -474,11 +471,11 @@ codeunit 50003 "File Management Import"
         if Bid."Vendor Bid No." = '' then begin
             TempCSVBuffer.SetFilter("Line No.", '<>%1', 1);
 
-            TempCSVBuffer.SetRange("Field No.", 7);
+            TempCSVBuffer.SetRange("Field No.", 8);
             if TempCSVBuffer.FindFirst then
                 Bid.Validate("Vendor Bid No.", TempCSVBuffer.Value);
 
-            TempCSVBuffer.SetRange("Field No.", 8);
+            TempCSVBuffer.SetRange("Field No.", 9);
             if TempCSVBuffer.FindFirst then begin
                 if TempCSVBuffer.value <> '' then begin
                     Evaluate(Claim, TempCSVBuffer.Value);
@@ -488,13 +485,13 @@ codeunit 50003 "File Management Import"
             Bid.Modify(true);
         end;
 
-        TempCSVBuffer.SetFilter("Field No.", '%1..%2', 1, 5);
+        TempCSVBuffer.SetFilter("Field No.", '%1..%2', 1, 6);
         if TempCSVBuffer.FindSet() then
             repeat
                 if TempCSVBuffer."Field No." = 1 then begin
                     BidPrices.init;
                     BidPrices.Validate("Bid No.", BidNo);
-                    BidPrices.Validate("Customer No.", SalesHeader."End Customer");
+                    BidPrices.Validate("Customer No.", SalesHeader."Reseller");
                 end;
                 case TempCSVBuffer."Field No." of
                     1:
