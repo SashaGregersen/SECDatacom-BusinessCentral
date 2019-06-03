@@ -2426,6 +2426,9 @@
                                             <KeepWithGroup>After</KeepWithGroup>
                                           </TablixMember>
                                           <TablixMember>
+                                            <Visibility>
+                                              <Hidden>=IIF(Fields!Vendor_Item_No.Value) &lt;&gt; ""</Hidden>
+                                            </Visibility>
                                             <KeepWithGroup>After</KeepWithGroup>
                                           </TablixMember>
                                           <TablixMember>
