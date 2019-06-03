@@ -1278,7 +1278,6 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                             </Style>
                                           </Textbox>
                                           <ColSpan>2</ColSpan>
-                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell />
@@ -1588,6 +1587,9 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               </Paragraph>
                                             </Paragraphs>
                                             <rd:DefaultName>VendorBidNo</rd:DefaultName>
+                                            <Visibility>
+                                              <Hidden>=IIF(Fields!BidNo.Value = "",True, IIF(Fields!Claimable.Value=true,true,false))</Hidden>
+                                            </Visibility>
                                             <Style>
                                               <Border>
                                                 <Style>None</Style>
@@ -1597,6 +1599,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
+                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell>
@@ -3153,6 +3156,9 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                     <KeepTogether>true</KeepTogether>
                                   </TablixMember>
                                   <TablixMember>
+                                    <Visibility>
+                                      <Hidden>true</Hidden>
+                                    </Visibility>
                                     <KeepWithGroup>After</KeepWithGroup>
                                     <RepeatOnNewPage>true</RepeatOnNewPage>
                                     <KeepTogether>true</KeepTogether>
@@ -3190,9 +3196,6 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                         <KeepWithGroup>After</KeepWithGroup>
                                       </TablixMember>
                                       <TablixMember>
-                                        <Visibility>
-                                          <Hidden>=IIF(Fields!BidNo.Value = "",True, IIF(Fields!Claimable.Value=true,true,false))</Hidden>
-                                        </Visibility>
                                         <KeepWithGroup>After</KeepWithGroup>
                                       </TablixMember>
                                       <TablixMember>
@@ -3206,6 +3209,9 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                             </Visibility>
                                           </TablixMember>
                                         </TablixMembers>
+                                        <Visibility>
+                                          <Hidden>true</Hidden>
+                                        </Visibility>
                                         <DataElementName>Detail_Collection</DataElementName>
                                         <DataElementOutput>Output</DataElementOutput>
                                         <KeepTogether>true</KeepTogether>
