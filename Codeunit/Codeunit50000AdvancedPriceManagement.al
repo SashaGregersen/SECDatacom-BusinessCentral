@@ -264,6 +264,7 @@ codeunit 50000 "Advanced Price Management"
     begin
         FindPriceCurrencies('', true, CurrencyTemp);
         SalesDiscountGroup.CopyFilters(DiscontGroupFilters);
+        SalesDiscountGroup.SetFilter("Ending Date", '=%1', 0D);
         if SalesDiscountGroup.FindSet then
             repeat
                 if FindItemsInItemDiscGroup(ItemTemp, SalesDiscountGroup.Code) then begin
