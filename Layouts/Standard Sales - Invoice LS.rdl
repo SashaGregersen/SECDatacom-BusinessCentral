@@ -4274,6 +4274,9 @@
                               <Height>0.16656in</Height>
                               <Width>1.05cm</Width>
                               <ZIndex>4</ZIndex>
+                              <Visibility>
+                                <Hidden>=NOT First(Fields!PrintFIK.Value, "DataSet_Result")</Hidden>
+                              </Visibility>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -4305,6 +4308,9 @@
                               <Height>0.16656in</Height>
                               <Width>2.91547cm</Width>
                               <ZIndex>5</ZIndex>
+                              <Visibility>
+                                <Hidden>=NOT First(Fields!PrintFIK.Value, "DataSet_Result")</Hidden>
+                              </Visibility>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -4336,6 +4342,9 @@
                               <Height>0.16656in</Height>
                               <Width>3.57cm</Width>
                               <ZIndex>6</ZIndex>
+                              <Visibility>
+                                <Hidden>=NOT First(Fields!PrintFIK.Value, "DataSet_Result")</Hidden>
+                              </Visibility>
                               <Style>
                                 <Border>
                                   <Style>None</Style>

@@ -249,7 +249,7 @@ report 50014 "SEC - Sales Invoice LS"
             column(PaymentMethodExtDescription; PaymentMethod.GetPaymentMethodExtDescription)
             {
             }
-            column(PrintFIK; PaymentMethod."Print FIK")
+            column(PrintFIK; PrintFIK)
             {
             }
             //<<NC
@@ -1262,6 +1262,12 @@ report 50014 "SEC - Sales Invoice LS"
                     PaymentID := PaymentID + Modulus10(PaymentID);
                 end else
                     PaymentID := PadStr('', PmtIDLength, '0');
+
+                if PaymentMethod.Code = '' then
+                    PrintFIK := True
+                else
+                    PrintFIk := PaymentMethod."Print FIK";
+
                 // </PM>
                 //<<NC
 
@@ -1271,6 +1277,7 @@ report 50014 "SEC - Sales Invoice LS"
                 TotalAmountVAT := 0;
                 TotalAmountInclVAT := 0;
                 TotalPaymentDiscOnVAT := 0;
+
 
             end;
 
@@ -1520,6 +1527,8 @@ report 50014 "SEC - Sales Invoice LS"
         PmtSetup: Record "Payment Setup";
         PaymentID: Code[16];
         PmtIDLength: Integer;
+        PrintFIK: Boolean;
+
         //<<PM
         //<<NC variables
         PricePerLbl: Label 'Price per';
