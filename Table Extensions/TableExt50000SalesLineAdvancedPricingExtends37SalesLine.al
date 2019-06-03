@@ -260,10 +260,11 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
         end;
 
         if "KickBack Percentage" <> 0 then
-            If "Bid Unit Sales Price" <> 0 then
+            /* If "Bid Unit Sales Price" <> 0 then
                 "Kickback Amount" := ("Bid Unit Sales Price" * Quantity) * ("KickBack Percentage" / 100)
             else
-                "Kickback Amount" := ("Unit Price" * Quantity) * ("kickback percentage" / 100);
+                "Kickback Amount" := ("Unit Price" * Quantity) * ("kickback percentage" / 100); */
+                "Kickback Amount" := "Line Amount" * ("KickBack Percentage" / 100); //SDG 03-06-19
 
         if "Transfer Price Markup" <> 0 then
             If "Bid Unit Purchase Price" <> 0 then
