@@ -4231,10 +4231,12 @@
                                               <Border />
                                               <FontFamily>Segoe UI</FontFamily>
                                               <FontSize>8pt</FontSize>
+                                              <VerticalAlign>Top</VerticalAlign>
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
                                           <ColSpan>27</ColSpan>
+                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell />
@@ -4773,7 +4775,6 @@ Cstr(Fields!PmtSetup__FIK_GIRO_No________.Value)
                             <FontSize>8pt</FontSize>
                           </Style>
                         </Rectangle>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
