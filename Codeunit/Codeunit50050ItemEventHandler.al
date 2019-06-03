@@ -82,6 +82,8 @@ codeunit 50050 "Item Event handler"
     begin
         if not ItemDiscGroup.Get(Rec."Item Disc. Group") then
             exit;
+        if ItemDiscGroup."Use Orginal Vendor in Subs" then
+            rec.Validate("IC partner Vendor No.", '');
         ItemDiscPct.SetRange("Item Disc. Group Code", ItemDiscGroup.Code);
         ItemDiscPct.SetAscending("Start Date", false);
         if not ItemDiscPct.FindLast() then

@@ -44,13 +44,10 @@ report 50024 "PreReminders"
                     currencycode := GLSetup."LCY Code"
                 else
                     currencycode := "Currency Code";
-            end;
-
-            trigger OnPreDataItem()
-            begin
-                if FindFirst() then
+                if "Customer No." <> '' then
                     Cust.Get("Customer No.");
             end;
+
         }
     }
     var

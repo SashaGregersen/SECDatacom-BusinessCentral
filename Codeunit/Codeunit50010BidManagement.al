@@ -253,7 +253,7 @@ codeunit 50010 "Bid Management"
         PurchHeader.Validate("Document Type", DocType);
         PurchHeader.validate("Posting Date", postingdate);
         PurchHeader.Validate("Buy-from Vendor No.", VendorNo);
-        //PurchHeader.Validate("Currency Code", CurrenCode); //ændres til vendor currency
+        //PurchHeader.Validate("Currency Code", CurrenCode); //ændret til vendor currency
         case PurchHeader."Document Type" of
             PurchHeader."Document Type"::"Credit Memo":
                 PurchHeader."Vendor Cr. Memo No." := ExtDocNo;
