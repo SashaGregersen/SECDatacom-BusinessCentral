@@ -3097,6 +3097,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                             </Style>
                                           </Textbox>
                                           <ColSpan>7</ColSpan>
+                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell />
@@ -3140,7 +3141,11 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                               </TablixBody>
                               <TablixColumnHierarchy>
                                 <TablixMembers>
-                                  <TablixMember />
+                                  <TablixMember>
+                                    <Visibility>
+                                      <Hidden>true</Hidden>
+                                    </Visibility>
+                                  </TablixMember>
                                   <TablixMember />
                                   <TablixMember />
                                   <TablixMember />
