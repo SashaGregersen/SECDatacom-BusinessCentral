@@ -3758,6 +3758,7 @@
                                             </Style>
                                           </Textbox>
                                           <ColSpan>28</ColSpan>
+                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell />
@@ -4067,14 +4068,14 @@
                                               </TablixMember>
                                               <TablixMember>
                                                 <Visibility>
-                                                  <Hidden>=iif(Fields!TotalVATAmt.Value&lt;&gt;0,FALSE,TRUE)</Hidden>
+                                                  <Hidden>true</Hidden>
                                                 </Visibility>
                                                 <KeepWithGroup>Before</KeepWithGroup>
                                                 <KeepTogether>true</KeepTogether>
                                               </TablixMember>
                                               <TablixMember>
                                                 <Visibility>
-                                                  <Hidden>=iif(Fields!TotalVATAmt.Value&lt;&gt;0,FALSE,TRUE)</Hidden>
+                                                  <Hidden>true</Hidden>
                                                 </Visibility>
                                                 <KeepWithGroup>Before</KeepWithGroup>
                                               </TablixMember>
@@ -4236,7 +4237,6 @@
                                             </Style>
                                           </Textbox>
                                           <ColSpan>27</ColSpan>
-                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell />
