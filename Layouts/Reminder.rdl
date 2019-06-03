@@ -19,7 +19,7 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>18.04099cm</Width>
+                  <Width>18.1732cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -3304,7 +3304,7 @@
                                     </TablixCells>
                                   </TablixRow>
                                   <TablixRow>
-                                    <Height>0.17638cm</Height>
+                                    <Height>0.58985cm</Height>
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
@@ -3331,6 +3331,7 @@
                                             </Style>
                                           </Textbox>
                                           <ColSpan>28</ColSpan>
+                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell />
@@ -3640,14 +3641,14 @@
                                               </TablixMember>
                                               <TablixMember>
                                                 <Visibility>
-                                                  <Hidden>=iif(Fields!TotalVATAmt.Value&lt;&gt;0,FALSE,TRUE)</Hidden>
+                                                  <Hidden>true</Hidden>
                                                 </Visibility>
                                                 <KeepWithGroup>Before</KeepWithGroup>
                                                 <KeepTogether>true</KeepTogether>
                                               </TablixMember>
                                               <TablixMember>
                                                 <Visibility>
-                                                  <Hidden>=iif(Fields!TotalVATAmt.Value&lt;&gt;0,FALSE,TRUE)</Hidden>
+                                                  <Hidden>true</Hidden>
                                                 </Visibility>
                                                 <KeepWithGroup>Before</KeepWithGroup>
                                               </TablixMember>
@@ -3682,7 +3683,7 @@
                                 </Filter>
                               </Filters>
                               <Left>0.04622cm</Left>
-                              <Height>4.58608cm</Height>
+                              <Height>4.99955cm</Height>
                               <Width>17.95724cm</Width>
                               <Style>
                                 <FontFamily>Segoe UI</FontFamily>
@@ -3780,26 +3781,31 @@
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="Textbox84">
-                                            <CanGrow>true</CanGrow>
+                                          <Textbox Name="IssuedReminderLine2Desc">
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value />
+                                                    <Value>=Fields!Desc1_IssuedReminderLine.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
-                                                <Style />
+                                                <Style>
+                                                  <FontFamily>Segoe UI</FontFamily>
+                                                  <FontSize>8pt</FontSize>
+                                                </Style>
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>Textbox84</rd:DefaultName>
+                                            <ZIndex>4</ZIndex>
                                             <Style>
                                               <Border />
+                                              <FontFamily>Segoe UI</FontFamily>
+                                              <FontSize>8pt</FontSize>
+                                              <VerticalAlign>Top</VerticalAlign>
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
@@ -4205,37 +4211,6 @@ Cstr(Fields!PmtSetup__FIK_GIRO_No________.Value)
                                 </Border>
                               </Style>
                             </Tablix>
-                            <Textbox Name="IssuedReminderLine2Desc">
-                              <KeepTogether>true</KeepTogether>
-                              <Paragraphs>
-                                <Paragraph>
-                                  <TextRuns>
-                                    <TextRun>
-                                      <Value>=Fields!Desc1_IssuedReminderLine.Value</Value>
-                                      <Style>
-                                        <FontFamily>Segoe UI</FontFamily>
-                                        <FontSize>8pt</FontSize>
-                                      </Style>
-                                    </TextRun>
-                                  </TextRuns>
-                                  <Style>
-                                    <FontFamily>Segoe UI</FontFamily>
-                                    <FontSize>8pt</FontSize>
-                                  </Style>
-                                </Paragraph>
-                              </Paragraphs>
-                              <Top>4.82316cm</Top>
-                              <Left>0.05795cm</Left>
-                              <Height>0.35278cm</Height>
-                              <Width>17.95739cm</Width>
-                              <ZIndex>4</ZIndex>
-                              <Style>
-                                <Border />
-                                <FontFamily>Segoe UI</FontFamily>
-                                <FontSize>8pt</FontSize>
-                                <PaddingRight>5pt</PaddingRight>
-                              </Style>
-                            </Textbox>
                             <Textbox Name="textbox414">
                               <CanGrow>true</CanGrow>
                               <KeepTogether>true</KeepTogether>
@@ -4259,7 +4234,7 @@ Cstr(Fields!PmtSetup__FIK_GIRO_No________.Value)
                               <Left>0.01683in</Left>
                               <Height>0.16656in</Height>
                               <Width>1.05cm</Width>
-                              <ZIndex>5</ZIndex>
+                              <ZIndex>4</ZIndex>
                               <Visibility>
                                 <Hidden>true</Hidden>
                               </Visibility>
@@ -4293,7 +4268,7 @@ Cstr(Fields!PmtSetup__FIK_GIRO_No________.Value)
                               <Left>4.00821cm</Left>
                               <Height>0.16656in</Height>
                               <Width>3.57cm</Width>
-                              <ZIndex>6</ZIndex>
+                              <ZIndex>5</ZIndex>
                               <Visibility>
                                 <Hidden>true</Hidden>
                               </Visibility>
@@ -4327,7 +4302,7 @@ Cstr(Fields!PmtSetup__FIK_GIRO_No________.Value)
                               <Left>1.09274cm</Left>
                               <Height>0.16656in</Height>
                               <Width>2.91547cm</Width>
-                              <ZIndex>7</ZIndex>
+                              <ZIndex>6</ZIndex>
                               <Visibility>
                                 <Hidden>true</Hidden>
                               </Visibility>
@@ -4335,6 +4310,34 @@ Cstr(Fields!PmtSetup__FIK_GIRO_No________.Value)
                                 <Border>
                                   <Style>None</Style>
                                 </Border>
+                                <PaddingRight>5pt</PaddingRight>
+                              </Style>
+                            </Textbox>
+                            <Textbox Name="Textbox84">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value />
+                                      <Style>
+                                        <FontFamily>Segoe UI</FontFamily>
+                                        <FontSize>8pt</FontSize>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Textbox84</rd:DefaultName>
+                              <Top>6.22545cm</Top>
+                              <Left>0.23143cm</Left>
+                              <Height>0.35278cm</Height>
+                              <Width>17.94177cm</Width>
+                              <ZIndex>7</ZIndex>
+                              <Style>
+                                <Border />
                                 <PaddingRight>5pt</PaddingRight>
                               </Style>
                             </Textbox>
@@ -4375,14 +4378,14 @@ Cstr(Fields!PmtSetup__FIK_GIRO_No________.Value)
             <DataSetName>DataSet_Result</DataSetName>
             <Left>0.02794cm</Left>
             <Height>6.97765cm</Height>
-            <Width>18.04099cm</Width>
+            <Width>18.1732cm</Width>
             <Style>
               <FontFamily>Segoe UI</FontFamily>
               <FontSize>8pt</FontSize>
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>6.97765cm</Height>
+        <Height>10.47015cm</Height>
         <Style>
           <FontFamily>Segoe UI</FontFamily>
           <FontSize>8pt</FontSize>
