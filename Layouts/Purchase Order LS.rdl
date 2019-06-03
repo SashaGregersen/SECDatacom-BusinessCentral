@@ -2998,9 +2998,6 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                         <KeepWithGroup>After</KeepWithGroup>
                                       </TablixMember>
                                       <TablixMember>
-                                        <Visibility>
-                                          <Hidden>=IIF(Fields!Claimable.Value = "True",TRUE,FALSE)</Hidden>
-                                        </Visibility>
                                         <KeepWithGroup>After</KeepWithGroup>
                                       </TablixMember>
                                       <TablixMember>
@@ -3148,7 +3145,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                               <Top>0.03167cm</Top>
                               <Left>0.00632cm</Left>
                               <Height>7.19662cm</Height>
-                              <Width>10.79812in</Width>
+                              <Width>10.79813in</Width>
                               <ZIndex>1</ZIndex>
                               <Style />
                             </Tablix>
@@ -10434,7 +10431,6 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                           <KeepTogether>true</KeepTogether>
                           <Style />
                         </Rectangle>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
