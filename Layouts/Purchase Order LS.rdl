@@ -857,10 +857,10 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                     <Width>0.03125in</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>4.81759in</Width>
+                                    <Width>4.46958in</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>2.58279in</Width>
+                                    <Width>2.90571in</Width>
                                   </TablixColumn>
                                   <TablixColumn>
                                     <Width>0.03125in</Width>
@@ -1258,7 +1258,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Left(Fields!Desc_PurchLine.Value,25)</Value>
+                                                    <Value>=Left(Fields!Desc_PurchLine.Value,40)</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -1278,6 +1278,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                             </Style>
                                           </Textbox>
                                           <ColSpan>2</ColSpan>
+                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell />
@@ -1587,9 +1588,6 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               </Paragraph>
                                             </Paragraphs>
                                             <rd:DefaultName>VendorBidNo</rd:DefaultName>
-                                            <Visibility>
-                                              <Hidden>=IIF(Fields!Claimable.Value=true,true,false)</Hidden>
-                                            </Visibility>
                                             <Style>
                                               <Border>
                                                 <Style>None</Style>
@@ -1599,7 +1597,6 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
-                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell>
@@ -2080,7 +2077,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value />
+                                                    <Value>Bid No</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -2147,7 +2144,8 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="textbox8">
+                                          <Textbox Name="Textbox8">
+                                            <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
@@ -2164,11 +2162,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                                 <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>textbox8</rd:DefaultName>
-                                            <ZIndex>35</ZIndex>
-                                            <Visibility>
-                                              <Hidden>=iif(SUM(Fields!TotalInclVAT.Value)=0,true,false)</Hidden>
-                                            </Visibility>
+                                            <rd:DefaultName>Textbox8</rd:DefaultName>
                                             <Style>
                                               <PaddingRight>0.0625in</PaddingRight>
                                               <PaddingBottom>2pt</PaddingBottom>
@@ -3196,6 +3190,9 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                         <KeepWithGroup>After</KeepWithGroup>
                                       </TablixMember>
                                       <TablixMember>
+                                        <Visibility>
+                                          <Hidden>=IIF(Fields!BidNo.Value = "",True, IIF(Fields!Claimable.Value=true,true,false))</Hidden>
+                                        </Visibility>
                                         <KeepWithGroup>After</KeepWithGroup>
                                       </TablixMember>
                                       <TablixMember>
@@ -3343,7 +3340,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                               <Top>0.03167cm</Top>
                               <Left>0.00632cm</Left>
                               <Height>7.19662cm</Height>
-                              <Width>10.79428in</Width>
+                              <Width>10.76919in</Width>
                               <ZIndex>1</ZIndex>
                               <Style />
                             </Tablix>
