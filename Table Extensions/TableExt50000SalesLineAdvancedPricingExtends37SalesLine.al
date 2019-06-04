@@ -230,7 +230,7 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
         }
     }
 
-    local procedure updateBidPrices(BidPrices: Record "Bid Item Price"; NewClaimableValue: Boolean; IsProjectSales: Boolean)
+    procedure updateBidPrices(BidPrices: Record "Bid Item Price"; NewClaimableValue: Boolean; IsProjectSales: Boolean)
     begin
         validate("Bid Unit Sales Price", BidPrices."Bid Unit Sales Price");
         If IsProjectSales and (BidPrices."Bid Unit Sales Price" = 0) then begin

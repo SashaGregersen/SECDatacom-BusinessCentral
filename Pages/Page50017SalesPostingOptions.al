@@ -71,8 +71,6 @@ page 50017 "Sales Posting Options"
 
     procedure SetPostOption()
     begin
-        if (not Ship) and (not Invoice) then
-            Ship := true;
 
         if Ship then
             PostOption := PostOption::Ship;
@@ -88,9 +86,15 @@ page 50017 "Sales Posting Options"
     begin
         case PostOption of
             PostOption::Post:
-                Invoice := true;
+                begin
+                    Invoice := true;
+                    ship := false;
+                end;
             PostOption::Ship:
-                Ship := true;
+                begin
+                    Ship := true;
+                    Invoice := false;
+                end;
             PostOption::"Ship&Post":
                 begin
                     Invoice := true;
