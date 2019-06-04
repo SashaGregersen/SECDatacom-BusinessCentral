@@ -433,7 +433,8 @@ codeunit 50054 "Sales Order Event Handler"
                 END;
             END;
         END;
-        IF (rec."Source Type" = 32) THEN BEGIN
+        // dette kan vi ikke da bogføringen af inventory put away fejler
+        /* IF (rec."Source Type" = 32) THEN BEGIN 
             IF Rec."Serial No." <> '' THEN BEGIN
                 IF PartnerRecord.GET(Rec."Entry No.", NOT Rec.Positive) THEN BEGIN
                     IF (PartnerRecord."Source Type" = 37) and (PartnerRecord."Serial No." = '') THEN BEGIN
@@ -442,7 +443,7 @@ codeunit 50054 "Sales Order Event Handler"
                     END;
                 END;
             END;
-        END;
+        END; */
     end;
 
     local procedure TestIfICLineCanBeChanged(var SalesLineToTest: Record "Sales Line")
