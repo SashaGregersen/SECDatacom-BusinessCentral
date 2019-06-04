@@ -6,14 +6,15 @@ pageextension 50054 "Import Item List" extends "Item List"
         {
             Visible = false;
         }
-        addafter("No.")
+
+        addafter("Vendor Item No.")
         {
             field("Vendor-Item-No."; "Vendor-Item-No.")
             {
                 ApplicationArea = all;
-                Caption = 'Vendor Item No.';
             }
         }
+
     }
 
     actions
