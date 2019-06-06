@@ -726,13 +726,13 @@ codeunit 50003 "File Management Import"
         TempDec: Decimal;
         TempDate: Date;
         Item: Record "Item";
-
+        SkipRecord: Boolean;
     begin
         TempCSVBuffer.LockTable();
         TempCSVBuffer.DeleteAll();
+        SkipRecord := false;
         SelectFileFromFileShare(TempCSVBuffer);
         //Verify if csv input file will be seperated with , or ; Unncomment below and deleta above if ;
-
         IF TempCSVBuffer.FINDSET THEN
             REPEAT
                 TempCSVBuffer.NEXT
@@ -746,25 +746,34 @@ codeunit 50003 "File Management Import"
                 2:
                     BEGIN
                         SalesPriceWS.VALIDATE("Vendor Item No.", TempCSVBuffer.Value);
-                        Item.SETRANGE("No.", SalesPriceWS."Item No.");
-                        Item.FINDFIRST;
-                        SalesPriceWS.CreateNewListPriceFromItem(Item, false);
+                        if SalesPriceWS."Item No." = '' then
+                            SkipRecord := true;
+                        if not SkipRecord then begin
+                            Item.SETRANGE("No.", SalesPriceWS."Item No.");
+                            Item.FINDFIRST;
+                            SalesPriceWS.CreateNewListPriceFromItem(Item, false);
+                        end;
                     END;
                 3:
                     BEGIN
-                        EVALUATE(TempDec, TempCSVBuffer.Value);
-                        SalesPriceWS.VALIDATE("New Unit Price", TempDec);
+                        if not SkipRecord then begin
+                            EVALUATE(TempDec, TempCSVBuffer.Value);
+                            SalesPriceWS.VALIDATE("New Unit Price", TempDec);
+                        end;
                     END;
                 4:
-                    IF NOT (TempCSVBuffer.Value = '') THEN
+                    IF (TempCSVBuffer.Value <> '') and (not SkipRecord) THEN
                         SalesPriceWS.VALIDATE("Currency Code", TempCSVBuffer.Value);
                 5:
                     BEGIN
-                        IF NOT (TempCSVBuffer.Value = '') THEN BEGIN
+                        IF (TempCSVBuffer.Value <> '') and (not SkipRecord) THEN BEGIN
                             EVALUATE(TempDate, TempCSVBuffer.Value);
                             SalesPriceWS.VALIDATE("Starting Date", TempDate);
                         END;
-                        IF NOT SalesPriceWS.INSERT THEN SalesPriceWS.MODIFY;
+                        if not SkipRecord then
+                            IF NOT SalesPriceWS.INSERT THEN
+                                SalesPriceWS.MODIFY;
+                        SkipRecord := false;
                     END;
             END;
         UNTIL TempCSVBuffer.NEXT = 0;
@@ -780,9 +789,11 @@ codeunit 50003 "File Management Import"
         TempDec: Decimal;
         TempDate: Date;
         Item: Record "Item";
+        SkipRecord: Boolean;
     begin
         TempCSVBuffer.LockTable();
         TempCSVBuffer.DeleteAll();
+        SkipRecord := false;
         SelectFileFromFileShare(TempCSVBuffer);
         //Verify if csv input file will be seperated with , or ; Unncomment below and deleta above if ;
 
@@ -800,29 +811,41 @@ codeunit 50003 "File Management Import"
                     BEGIN
                         Item.SETRANGE("Vendor No.", PurchasePrice."Vendor No.");
                         Item.SETRANGE("Vendor-Item-No.", TempCSVBuffer.Value);
-                        Item.FINDFIRST;
-                        PurchasePrice.VALIDATE("Item No.", Item."No.");
-                        PurchasePrice.VALIDATE("Unit of Measure Code", Item."Base Unit of Measure");
-                        PurchasePrice.VALIDATE("Minimum Quantity", 0);
+                        if not Item.FINDFIRST then
+                            SkipRecord := true;
+                        if not SkipRecord then begin
+                            PurchasePrice.VALIDATE("Item No.", Item."No.");
+                            PurchasePrice.VALIDATE("Unit of Measure Code", Item."Base Unit of Measure");
+                            PurchasePrice.VALIDATE("Minimum Quantity", 0);
+                        end;
                     END;
                 3:
                     BEGIN
-                        EVALUATE(TempDec, TempCSVBuffer.Value);
-                        PurchasePrice.VALIDATE("Direct Unit Cost", TempDec);
+                        if not SkipRecord then begin
+                            EVALUATE(TempDec, TempCSVBuffer.Value);
+                            PurchasePrice.VALIDATE("Direct Unit Cost", TempDec);
+                        end;
                     END;
                 4:
-                    IF (TempCSVBuffer.Value = '') THEN
-                        PurchasePrice.VALIDATE("Currency Code", Item."Vendor Currency")
-                    ELSE
-                        PurchasePrice.VALIDATE("Currency Code", TempCSVBuffer.Value);
+                    begin
+                        if not SkipRecord then
+                            IF (TempCSVBuffer.Value <> '') THEN
+                                PurchasePrice.VALIDATE("Currency Code", Item."Vendor Currency")
+                            ELSE
+                                PurchasePrice.VALIDATE("Currency Code", TempCSVBuffer.Value);
+                    end;
                 5:
                     BEGIN
-                        IF NOT (TempCSVBuffer.Value = '') THEN BEGIN
+                        IF (TempCSVBuffer.Value <> '') and (not SkipRecord) THEN BEGIN
                             EVALUATE(TempDate, TempCSVBuffer.Value);
                             PurchasePrice.VALIDATE("Starting Date", TempDate);
                         END;
-                        IF NOT PurchasePrice.INSERT THEN PurchasePrice.MODIFY;
-                        PurchasePrice.MARK(TRUE);
+                        if not SkipRecord then begin
+                            IF NOT PurchasePrice.INSERT THEN
+                                PurchasePrice.MODIFY;
+                            PurchasePrice.MARK(TRUE);
+                        end;
+                        SkipRecord := false;
                     END;
             END;
         UNTIL TempCSVBuffer.NEXT = 0;
