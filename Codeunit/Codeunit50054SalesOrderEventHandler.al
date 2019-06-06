@@ -418,8 +418,8 @@ codeunit 50054 "Sales Order Event Handler"
                 IsHandled := true;
     end;
 
-    [EventSubscriber(ObjectType::Table, database::"Reservation Entry", 'OnAfterModifyEvent', '', true, true)]
-    local procedure OnAfterModifyReservationEntry(VAR Rec: Record "Reservation Entry"; VAR xRec: Record "Reservation Entry"; RunTrigger: Boolean)
+    [EventSubscriber(ObjectType::Table, database::"Reservation Entry", 'OnAfterInsertEvent', '', true, true)]
+    local procedure OnAfterInsertReservationEntry(VAR Rec: Record "Reservation Entry"; RunTrigger: Boolean)
     var
         PartnerRecord: Record "Reservation Entry";
     begin
@@ -428,22 +428,54 @@ codeunit 50054 "Sales Order Event Handler"
                 IF PartnerRecord.GET(Rec."Entry No.", NOT Rec.Positive) THEN BEGIN
                     IF (PartnerRecord."Source Type" = 32) and (PartnerRecord."Serial No." <> '') THEN BEGIN
                         Rec.VALIDATE("Serial No.", PartnerRecord."Serial No.");
+                        rec.UpdateItemTracking();
                         Rec.MODIFY(FALSE);
                     END;
                 END;
             END;
         END;
-        // dette kan vi ikke da bogføringen af inventory put away fejler
-        /* IF (rec."Source Type" = 32) THEN BEGIN 
+        IF (rec."Source Type" = 32) THEN BEGIN
             IF Rec."Serial No." <> '' THEN BEGIN
                 IF PartnerRecord.GET(Rec."Entry No.", NOT Rec.Positive) THEN BEGIN
                     IF (PartnerRecord."Source Type" = 37) and (PartnerRecord."Serial No." = '') THEN BEGIN
-                        Rec.VALIDATE("Serial No.", Rec."Serial No.");
+                        PartnerRecord.VALIDATE("Serial No.", Rec."Serial No.");
+                        PartnerRecord.UpdateItemTracking();
+                        PartnerRecord.MODIFY(FALSE);
+                    END;
+                END;
+            END;
+        END;
+    end;
+
+    [EventSubscriber(ObjectType::Table, database::"Reservation Entry", 'OnAfterModifyEvent', '', true, true)]
+    local procedure OnAfterModifyReservationEntry(VAR Rec: Record "Reservation Entry"; VAR xRec: Record "Reservation Entry"; RunTrigger: Boolean)
+    var
+        PartnerRecord: Record "Reservation Entry";
+    begin
+        if not RunTrigger then
+            exit;
+        IF (Rec."Source Type" = 37) THEN BEGIN
+            IF Rec."Serial No." = '' THEN BEGIN
+                IF PartnerRecord.GET(Rec."Entry No.", NOT Rec.Positive) THEN BEGIN
+                    IF (PartnerRecord."Source Type" = 32) and (PartnerRecord."Serial No." <> '') THEN BEGIN
+                        Rec.VALIDATE("Serial No.", PartnerRecord."Serial No.");
+                        rec.UpdateItemTracking();
                         Rec.MODIFY(FALSE);
                     END;
                 END;
             END;
-        END; */
+        END;
+        IF (rec."Source Type" = 32) THEN BEGIN
+            IF Rec."Serial No." <> '' THEN BEGIN
+                IF PartnerRecord.GET(Rec."Entry No.", NOT Rec.Positive) THEN BEGIN
+                    IF (PartnerRecord."Source Type" = 37) and (PartnerRecord."Serial No." = '') THEN BEGIN
+                        PartnerRecord.VALIDATE("Serial No.", Rec."Serial No.");
+                        PartnerRecord.UpdateItemTracking();
+                        PartnerRecord.MODIFY(FALSE);
+                    END;
+                END;
+            END;
+        END;
     end;
 
     local procedure TestIfICLineCanBeChanged(var SalesLineToTest: Record "Sales Line")
