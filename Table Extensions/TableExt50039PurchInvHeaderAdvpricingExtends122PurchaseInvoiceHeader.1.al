@@ -12,6 +12,16 @@ tableextension 50039 "Purch. Inv. Hdr. Adv. Pricing" extends "Purch. Inv. Header
             DataClassification = ToBeClassified;
             Editable = false;
         }
+        field(50002; "End Customer Contact"; code[20])
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
+        field(50003; "Reseller Contact"; code[20])
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
     }
 
 }

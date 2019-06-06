@@ -123,6 +123,8 @@ codeunit 50004 "Create Purchase Order"
         end;
         PurchHeader."End Customer" := SalesHeader."End Customer";
         PurchHeader.Reseller := SalesHeader.Reseller;
+        PurchHeader."End Customer Contact No." := SalesHeader."End Customer Contact";
+        PurchHeader."Reseller Contact No." := SalesHeader."Sell-to Contact No.";
         PurchHeader.Modify(true);
         exit(StrSubstNo('Purchase Order %1 created', PurchHeader."No."));
     end;

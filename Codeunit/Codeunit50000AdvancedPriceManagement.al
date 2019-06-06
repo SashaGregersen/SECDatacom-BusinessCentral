@@ -518,17 +518,19 @@ codeunit 50000 "Advanced Price Management"
         end;
     end;
 
-    procedure ExchangeAmtLCYToFCYAndFCYToLCY(SalesPrice: record "Sales Price"; CurrencyFactorCode: code[10])
+    procedure ExchangeAmtFCYToLCY(SalesPrice: record "Sales Price"; SalesPrice2: record "sales price"; CurrencyFactorCode: code[10])
     var
         CurrencyExcRate: Record "Currency Exchange Rate";
+        Currency: record Currency;
         Factor: Decimal;
         FromLCYToFCY: Decimal;
     begin
         Factor := CurrencyExcRate.GetCurrentCurrencyFactor(CurrencyFactorCode);
-        CurrencyExcRate.findlast;
-        FromLCYToFCY := CurrencyExcRate.ExchangeAmtLCYToFCY(CurrencyExcRate."Starting Date", CurrencyFactorCode, Salesprice."Unit Price", Factor);
-        Salesprice.Validate("Unit Price", CurrencyExcRate.ExchangeAmtFCYToLCY(CurrencyExcRate."Starting Date", CurrencyFactorCode, FromLCYToFCY, Factor));
-        Salesprice.Modify(true);
+        //CurrencyExcRate.findlast;
+        //FromLCYToFCY := CurrencyExcRate.ExchangeAmtLCYToFCY(CurrencyExcRate."Starting Date", CurrencyFactorCode, Salesprice."Unit Price", Factor);
+        Salesprice2.Validate("Unit Price", CurrencyExcRate.ExchangeAmtFCYToLCY(CurrencyExcRate."Starting Date", CurrencyFactorCode, SalesPrice."Unit Price", Factor));
+        Salesprice2.Modify(true);
+
     end;
 
     procedure ExchangeAmtFCYToFCY(SalesPrice: Record "Sales Price"; SalesPrice2: Record "Sales Price")
@@ -537,7 +539,9 @@ codeunit 50000 "Advanced Price Management"
         Factor: Decimal;
         FromLCYToFCY: Decimal;
     begin
-        Salesprice2.Validate("Unit Price", CurrencyExcRate.ExchangeAmtFCYToFCY(Today(), SalesPrice."Currency Code", SalesPrice2."Currency Code", SalesPrice."Unit Price"));
+        CurrencyExcRate.setrange("Currency Code", SalesPrice."Currency Code");
+        CurrencyExcRate.findlast;
+        Salesprice2.Validate("Unit Price", CurrencyExcRate.ExchangeAmtFCYToFCY(CurrencyExcRate."Starting Date", SalesPrice."Currency Code", SalesPrice2."Currency Code", SalesPrice."Unit Price"));
         SalesPrice2.Modify(true);
     end;
 
@@ -547,7 +551,7 @@ codeunit 50000 "Advanced Price Management"
         Factor: Decimal;
     begin
         Factor := CurrencyExcRate.GetCurrentCurrencyFactor(SalesPriceFCY."Currency Code");
-        CurrencyExcRate.findlast;
+        //CurrencyExcRate.findlast;
         SalesPriceFCY.Validate("Unit Price", CurrencyExcRate.ExchangeAmtLCYToFCY(CurrencyExcRate."Starting Date", SalesPriceFCY."Currency Code", SalesPriceLCY."Unit Price", Factor));
         SalesPriceFCY.Modify(true);
     end;

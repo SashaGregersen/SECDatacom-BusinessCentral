@@ -40,7 +40,7 @@ report 50001 "Update Prices with Currencies"
                                 repeat
                                     IF LocalCurrency <> VendCurr then
                                         if salesprice2."Currency Code" = LocalCurrency then
-                                            AdvancedPriceManage.ExchangeAmtLCYToFCYAndFCYToLCY(salesprice2, VendCurr)
+                                            AdvancedPriceManage.ExchangeAmtFCYToLCY(Salesprice, salesprice2, VendCurr)
                                         else
                                             AdvancedPriceManage.ExchangeAmtFCYToFCY(Salesprice, salesprice2);
 
