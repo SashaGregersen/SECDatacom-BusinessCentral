@@ -27,9 +27,9 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
                         BidPrices."Bid Unit Purchase Price" := CurrExchRate.ExchangeAmount(BidPrices."Bid Unit Purchase Price", BidPrices."Currency Code", "Currency Code", "Posting Date");
                         updateBidPrices(BidPrices, Bid.Claimable, Bid."Project Sale");
                     end;
-                end else
-                    if "Bid No." = '' then
-                        Validate("Bid No.", '');
+                end;
+                /* if "Bid No." = '' then
+                    "Bid No." := ''; */
             end;
 
             trigger Onvalidate();
