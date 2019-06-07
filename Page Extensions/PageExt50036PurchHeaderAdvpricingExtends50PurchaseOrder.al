@@ -164,8 +164,8 @@ pageextension 50036 "Purch. Header Adv. pricing" extends "Purchase Order"
     var
 
     begin
-        ContactEndCust.get("End Customer Contact No.");
-        ContactReseller.get("Reseller Contact No.");
+        if ContactEndCust.get("End Customer Contact No.") then;
+        if ContactReseller.get("Reseller Contact No.") then;
     end;
 
     var
