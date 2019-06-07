@@ -381,6 +381,7 @@ codeunit 50054 "Sales Order Event Handler"
     begin
         EdiProfile.SetRange(Type, EdiProfile.Type::Customer);
         EdiProfile.SetRange("No.", SalesHeader."Sell-to Customer No.");
+        EdiProfile.setfilter("EDI Object", '<>%1', 0);
         if not EdiProfile.FindFirst then exit;
 
         if SalesShptHdrNo <> '' then begin
