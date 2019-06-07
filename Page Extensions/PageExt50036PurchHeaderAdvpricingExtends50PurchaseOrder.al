@@ -2,6 +2,13 @@ pageextension 50036 "Purch. Header Adv. pricing" extends "Purchase Order"
 {
     layout
     {
+        addafter("Ship-to Country/Region Code")
+        {
+            field("Ship-To Comment"; "Ship-To Comment")
+            {
+                ApplicationArea = all;
+            }
+        }
         addafter("Ship-to Contact")
         {
             field("End Customer"; "End Customer")

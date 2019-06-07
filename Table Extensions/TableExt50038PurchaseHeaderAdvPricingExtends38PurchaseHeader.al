@@ -22,6 +22,10 @@ tableextension 50038 "Purch. Header Adv. Pricing" extends "Purchase Header"
             DataClassification = ToBeClassified;
             Editable = false;
         }
+        field(50004; "Ship-To Comment"; Text[100])
+        {
+            DataClassification = ToBeClassified;
+        }
     }
 
 }

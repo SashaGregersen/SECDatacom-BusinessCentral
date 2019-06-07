@@ -143,6 +143,10 @@ pageextension 50021 "End Customer and Reseller" extends 42
                 ApplicationArea = all;
                 Caption = 'E-mail';
             }
+            field("Ship-to Comment"; "Ship-to Comment")
+            {
+                ApplicationArea = all;
+            }
         }
         modify("Sell-to Customer No.")
         {

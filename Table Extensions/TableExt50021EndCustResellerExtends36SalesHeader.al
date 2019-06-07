@@ -310,6 +310,10 @@ tableextension 50021 "End Customer and Reseller" extends 36
             Caption = 'Purchase Currency Code';
             TableRelation = Currency;
         }
+        field(50023; "Ship-to Comment"; text[50])
+        {
+            DataClassification = CustomerContent;
+        }
     }
     procedure SetShipToAddressOnSalesOrder(Customer: record customer)
     var
