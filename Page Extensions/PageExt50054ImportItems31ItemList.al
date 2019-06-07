@@ -2,17 +2,18 @@ pageextension 50054 "Import Item List" extends "Item List"
 {
     layout
     {
-        modify("Vendor Item No.")
-        {
-            Visible = false;
-        }
 
         addafter("Vendor Item No.")
         {
             field("Vendor-Item-No."; "Vendor-Item-No.")
             {
                 ApplicationArea = all;
+                Caption = 'Vendor Item No.';
             }
+        }
+        modify("Vendor Item No.")
+        {
+            Visible = false;
         }
 
     }

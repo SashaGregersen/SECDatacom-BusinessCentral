@@ -64,15 +64,6 @@ codeunit 50050 "Item Event handler"
             Rec.Validate("Vendor Currency", Vendor."Currency Code");
     end;
 
-    /* [EventSubscriber(ObjectType::table, database::"Item", 'OnAfterValidateEvent', 'Vendor Item No.', true, true)]
-    local procedure ItemOnAfterValidateVendorItemNo(var Rec: Record "Item")
-    var
-        Vendor: Record Vendor;
-    begin
-        rec."Vendor-Item-No." := Rec."Vendor Item No.";
-    end; */
-
-
     [EventSubscriber(ObjectType::table, database::"Item", 'OnAfterValidateEvent', 'Item Disc. Group', true, true)]
     local procedure ItemOnAfterValidateItemDiscGroup(var Rec: Record "Item")
     var
