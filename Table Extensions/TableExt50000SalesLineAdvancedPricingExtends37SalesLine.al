@@ -87,7 +87,8 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
                 if "Bid Unit Sales Price" <> 0 then
                     validate("Unit Price", "Bid unit Sales Price")
                 else
-                    Validate(Quantity); //code here that finds the original sales price without bid
+                    if "Bid Unit Sales Price" <> xRec."Bid Unit Sales Price" then
+                        Validate(Quantity); //code here that finds the original sales price without bid
             end;
         }
         field(50002; "Bid Sales Discount"; Decimal)
@@ -232,8 +233,8 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
 
     procedure updateBidPrices(BidPrices: Record "Bid Item Price"; NewClaimableValue: Boolean; IsProjectSales: Boolean)
     begin
-        if BidPrices."Bid Unit Sales Price" <> "Bid Unit Sales Price" then
-            validate("Bid Unit Sales Price", BidPrices."Bid Unit Sales Price");
+        //if BidPrices."Bid Unit Sales Price" <> "Bid Unit Sales Price" then
+        validate("Bid Unit Sales Price", BidPrices."Bid Unit Sales Price");
         If IsProjectSales and (BidPrices."Bid Unit Sales Price" = 0) then begin
             Validate("Unit Price", 0);
         end;
