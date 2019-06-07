@@ -262,7 +262,7 @@ codeunit 50004 "Create Purchase Order"
             exit(ReservationEntry."Entry No." + 1)
     end;
 
-    local procedure GetVendorBidNo(BidNo: Code[20]): code[20]
+    local procedure GetVendorBidNo(BidNo: Code[20]): Text[100]
     var
         Bid: record "Bid";
     begin
