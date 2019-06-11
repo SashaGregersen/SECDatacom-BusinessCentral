@@ -42,6 +42,16 @@ tableextension 50022 "End Customer and Reseller 2" extends 112
             DataClassification = ToBeClassified;
             Editable = false;
         }
+        field(50010; "Reseller Name"; text[50])
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
+        field(50011; "End Customer Name"; text[50])
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
         field(50014; "Phone No."; Text[30])
         {
             DataClassification = ToBeClassified;
