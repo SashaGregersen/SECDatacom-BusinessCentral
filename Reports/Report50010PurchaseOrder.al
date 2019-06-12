@@ -91,6 +91,18 @@ report 50010 "SEC Purchase Order"
             column(EndCustCountry; EndcustomerCountryRegion.Name)
             {
             }
+            column(End_Customer_Contact_No_; "End Customer Contact No.")
+            {
+
+            }
+            column(End_Customer_Phone_No_; EndCustPhone)
+            {
+
+            }
+            column(End_Customer_Email_No_; EndCustEmail)
+            {
+
+            }
             column(Reseller_Lbl; FieldCaption("Reseller"))
             {
             }
@@ -1003,9 +1015,16 @@ report 50010 "SEC Purchase Order"
                         EndcustomerCountryRegion.get(Endcustomer."Country/Region Code")
                     else
                         Clear(EndcustomerCountryRegion);
+                    if "End Customer Contact No." <> '' then begin
+                        Contact.get("End Customer Contact No.");
+                        EndCustEmail := Contact."E-Mail";
+                        EndCustPhone := Contact."Phone No.";
+                    end;
                 End else begin
                     clear(Endcustomer);
                     Clear(EndcustomerCountryRegion);
+                    Clear(EndCustEmail);
+                    Clear(EndCustPhone);
                 end;
 
                 if "Reseller" <> '' then begin
@@ -1249,6 +1268,9 @@ report 50010 "SEC Purchase Order"
         ResellerCountryRegion: Record "Country/Region";
         VarIDLbl: Label 'VAR ID:';
         Bid: Record "Bid";
+        EndCustPhone: text[30];
+        EndCustEmail: text[80];
+        Contact: record contact;
         //<< NC
         TotalPrepmtLineAmount: Decimal;
         VARRec: Record "VAR";

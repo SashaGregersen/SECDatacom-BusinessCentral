@@ -62,9 +62,11 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
                                         updateBidPrices(BidPrices, BidPrices.Claimable, Bid."Project Sale");
                                         exit;
                                     end;
-                                    BidPrices."Bid Unit Sales Price" := CurrExchRate.ExchangeAmount(BidPrices."Bid Unit Sales Price", BidPrices."Currency Code", "Currency Code", "Posting Date");
-                                    BidPrices."Bid Unit Purchase Price" := CurrExchRate.ExchangeAmount(BidPrices."Bid Unit Purchase Price", BidPrices."Currency Code", "Currency Code", "Posting Date");
-                                    updateBidPrices(BidPrices, BidPrices.Claimable, Bid."Project Sale");
+                                    if not Bid."Project Sale" then begin
+                                        BidPrices."Bid Unit Sales Price" := CurrExchRate.ExchangeAmount(BidPrices."Bid Unit Sales Price", BidPrices."Currency Code", "Currency Code", "Posting Date");
+                                        BidPrices."Bid Unit Purchase Price" := CurrExchRate.ExchangeAmount(BidPrices."Bid Unit Purchase Price", BidPrices."Currency Code", "Currency Code", "Posting Date");
+                                        updateBidPrices(BidPrices, BidPrices.Claimable, Bid."Project Sale");
+                                    end;
                                 end
                             end;
                         end;

@@ -5396,6 +5396,15 @@ End Function</Code>
         <Field Name="EndCustCountry">
           <DataField>EndCustCountry</DataField>
         </Field>
+        <Field Name="End_Customer_Contact_No_">
+          <DataField>End_Customer_Contact_No_</DataField>
+        </Field>
+        <Field Name="End_Customer_Phone_No_">
+          <DataField>End_Customer_Phone_No_</DataField>
+        </Field>
+        <Field Name="End_Customer_Email_No_">
+          <DataField>End_Customer_Email_No_</DataField>
+        </Field>
         <Field Name="Reseller_Lbl">
           <DataField>Reseller_Lbl</DataField>
         </Field>
