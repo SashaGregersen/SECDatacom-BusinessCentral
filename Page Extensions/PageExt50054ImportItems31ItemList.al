@@ -3,7 +3,7 @@ pageextension 50054 "Import Item List" extends "Item List"
     layout
     {
 
-        addafter("Vendor Item No.")
+        /* addafter("Vendor Item No.") // removed due to Microsoft mulitipath search error
         {
             field("Vendor-Item-No."; "Vendor-Item-No.")
             {
@@ -14,7 +14,7 @@ pageextension 50054 "Import Item List" extends "Item List"
         modify("Vendor Item No.")
         {
             Visible = false;
-        }
+        } */
 
     }
 
