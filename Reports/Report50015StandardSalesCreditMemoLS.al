@@ -476,6 +476,7 @@ report 50015 "SEC Sales - Credit Memo LS"
                     AutoFormatExpression = Header."Currency Code";
                     AutoFormatType = 1;
                 }
+
                 dataitem(ShipmentLine; "Sales Shipment Buffer")
                 {
                     DataItemTableView = SORTING ("Document No.", "Line No.", "Entry No.");
