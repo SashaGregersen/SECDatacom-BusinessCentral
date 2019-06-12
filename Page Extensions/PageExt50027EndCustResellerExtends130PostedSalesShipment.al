@@ -7,6 +7,7 @@ pageextension 50027 "End Customer and Reseller 7" extends 130
             field("End Customer"; "End Customer")
             {
                 ApplicationArea = all;
+                Editable = false;
             }
         }
         addbefore("End Customer")
@@ -14,6 +15,15 @@ pageextension 50027 "End Customer and Reseller 7" extends 130
             field(Reseller; Reseller)
             {
                 ApplicationArea = all;
+                Editable = false;
+            }
+        }
+        addafter("Ship-to Country/Region Code")
+        {
+            field("Ship-to Comment"; "Ship-to Comment")
+            {
+                ApplicationArea = all;
+                Editable = false;
             }
         }
 

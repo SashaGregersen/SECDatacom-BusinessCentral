@@ -235,10 +235,12 @@ tableextension 50021 "End Customer and Reseller" extends 36
         field(50014; "Ship-to Phone No."; Text[30])
         {
             DataClassification = ToBeClassified;
+            Editable = false;
         }
         field(50015; "Ship-to Email"; Text[80])
         {
             DataClassification = ToBeClassified;
+            Editable = false;
         }
         field(50016; "End Customer Contact"; Text[50])
         {
@@ -310,6 +312,11 @@ tableextension 50021 "End Customer and Reseller" extends 36
             Caption = 'Purchase Currency Code';
             TableRelation = Currency;
         }
+        field(50023; "Ship-to Comment"; text[50])
+        {
+            DataClassification = CustomerContent;
+        }
+
     }
     procedure SetShipToAddressOnSalesOrder(Customer: record customer)
     var

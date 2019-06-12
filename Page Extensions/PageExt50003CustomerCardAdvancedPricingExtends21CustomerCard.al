@@ -146,13 +146,7 @@ pageextension 50003 "Customer Card Advanced Pricing" extends "Customer Card"
                 RunObject = Page "VAR";
                 RunPageLink = "Customer No." = field ("No.");
             }
-            /*             action(SetOwningCompany)
-                        {
-                            Caption = 'SetOwningCompany)';
-                            Image = Company;
-                            RunObject = codeunit "Temp Hacks";
-                            //Remove before release to test
-                        } */
+
         }
 
     }

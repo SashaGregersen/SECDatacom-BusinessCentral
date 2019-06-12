@@ -8,6 +8,7 @@ pageextension 50028 "End Customer and Reseller 8" extends 132
             field("End Customer"; "End Customer")
             {
                 ApplicationArea = all;
+                Editable = false;
             }
         }
         addbefore("End Customer")
@@ -15,6 +16,7 @@ pageextension 50028 "End Customer and Reseller 8" extends 132
             field(Reseller; Reseller)
             {
                 ApplicationArea = all;
+                Editable = false;
             }
         }
 
@@ -24,14 +26,14 @@ pageextension 50028 "End Customer and Reseller 8" extends 132
     {
         addlast(Processing)
         {
-            action(ShowMyReport)
+            /* action(ShowMyReport)
             {
                 Image = ItemGroup;
                 trigger OnAction();
                 begin
                     SalesInvoice.Run();
                 end;
-            }
+            } */
             action(AddTransActionType)
             {
                 Caption = 'Add Transaction Type';

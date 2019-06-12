@@ -1,7 +1,7 @@
 report 50017 "One Time Bid"
 {
-    UsageCategory = Administration;
-    ApplicationArea = All;
+    UsageCategory = None;
+    //ApplicationArea = All;
     ProcessingOnly = true;
     UseRequestPage = true;
 

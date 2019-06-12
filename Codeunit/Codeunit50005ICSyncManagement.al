@@ -76,7 +76,7 @@ codeunit 50005 "IC Sync Management"
             repeat
                 InventorySetup.ChangeCompany(CompanyRec.Name);
                 if InventorySetup.Get() then begin
-                    if InventorySetup."Receive Synchronized Items" and InventorySetup."Synchronize Item" then begin
+                    if InventorySetup."Receive Synchronized Items" or InventorySetup."Synchronize Item" then begin
                         CompanyTemp := CompanyRec;
                         if not CompanyTemp.Insert(false) then;
                     end;
@@ -313,14 +313,20 @@ codeunit 50005 "IC Sync Management"
     var
         CompanyTemp: Record Company temporary;
         SessionID: Integer;
+        //ItemOtherCompany: record item;
     begin
         GetCompaniesToDeleteItem(CompanyTemp);
         if CompanyTemp.Count() = 0 then
             exit;
+
         if CompanyTemp.FindSet() then
             repeat
                 SessionID := RunDeleteItemInOtherCompany(Item, CompanyTemp.Name);
                 CheckSessionForTimeoutAndError(SessionID, 5, CompanyTemp.Name);
+                /* ItemOtherCompany.ChangeCompany(CompanyTemp.Name);
+                if ItemOtherCompany.get(item."No.") then begin
+                    ItemOtherCompany.delete(false);
+                end; */
             until CompanyTemp.Next() = 0;
     end;
 
@@ -362,7 +368,7 @@ codeunit 50005 "IC Sync Management"
         if PostInCompanyName = '' then
             exit;
         SessionID := RunPostPurchaseOrderInOtherCompany(PurchaseOrder, PostInCompanyName);
-        CheckSessionForTimeoutAndError(SessionID, 5, PostInCompanyName);
+        CheckSessionForTimeoutAndError(SessionID, 180, PostInCompanyName);
     end;
 
     procedure PostSalesOrderInOtherCompany(SalesOrder: Record "Sales Header"; PostInCompanyName: Text[35])

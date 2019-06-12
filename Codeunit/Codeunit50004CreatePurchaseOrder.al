@@ -112,6 +112,7 @@ codeunit 50004 "Create Purchase Order"
             SalesHeader."Ship-to Address", SalesHeader."Ship-to Address 2", SalesHeader."Ship-to City",
             SalesHeader."Ship-to Post Code", SalesHeader."Ship-to County", SalesHeader."Ship-to Country/Region Code");
             PurchHeader.validate("Ship-to Contact", SalesHeader."Ship-to Contact");
+            PurchHeader.validate("Ship-To Comment", SalesHeader."Ship-to Comment");
         end else begin
             if SalesHeader.Subsidiary <> '' then begin
                 CompanyInfo.get();
@@ -119,10 +120,13 @@ codeunit 50004 "Create Purchase Order"
                 CompanyInfo."Ship-to Address 2", CompanyInfo."Ship-to City", CompanyInfo."Ship-to Post Code",
                 CompanyInfo."Ship-to County", CompanyInfo."Ship-to Country/Region Code");
                 PurchHeader.validate("Ship-to Contact", CompanyInfo."Ship-to Contact");
+                PurchHeader.validate("Ship-To Comment", SalesHeader."Ship-to Comment");
             end;
         end;
         PurchHeader."End Customer" := SalesHeader."End Customer";
         PurchHeader.Reseller := SalesHeader.Reseller;
+        PurchHeader."End Customer Contact No." := SalesHeader."End Customer Contact";
+        PurchHeader."Reseller Contact No." := SalesHeader."Sell-to Contact No.";
         PurchHeader.Modify(true);
         exit(StrSubstNo('Purchase Order %1 created', PurchHeader."No."));
     end;
@@ -258,7 +262,7 @@ codeunit 50004 "Create Purchase Order"
             exit(ReservationEntry."Entry No." + 1)
     end;
 
-    local procedure GetVendorBidNo(BidNo: Code[20]): code[20]
+    local procedure GetVendorBidNo(BidNo: Code[20]): Text[100]
     var
         Bid: record "Bid";
     begin

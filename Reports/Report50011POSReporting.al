@@ -669,6 +669,8 @@ report 50011 "POS Reporting"
                 ResellEndCustCounty := Customer.County;
                 ResellEndCustCountryRegion := Customer."Country/Region Code";
                 ResellEndCustContact := Customer.Contact;
+                ResellEndCustPhone := Customer."Phone No.";
+                ResellEndCustEmail := Customer."E-Mail";
             end;
         end else begin
             if Customer.get("Sales Invoice Header".Reseller) then begin
@@ -706,6 +708,8 @@ report 50011 "POS Reporting"
                 ResellEndCustCounty := Customer.County;
                 ResellEndCustCountryRegion := Customer."Country/Region Code";
                 ResellEndCustContact := Customer.Contact;
+                ResellEndCustPhone := Customer."Phone No.";
+                ResellEndCustEmail := Customer."E-Mail";
             end;
         end else begin
             if Customer.get("Sales Cr.Memo Header".Reseller) then begin

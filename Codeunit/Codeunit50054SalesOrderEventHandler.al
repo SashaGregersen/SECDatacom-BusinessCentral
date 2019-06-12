@@ -109,6 +109,8 @@ codeunit 50054 "Sales Order Event Handler"
         salesheader: record "sales header";
         GlSetup: Record "General Ledger Setup";
     begin
+        if rec."Bid No." <> '' then
+            rec.validate("Bid No.", rec."Bid No.");
         GlSetup.get();
         if CompanyName() <> GlSetup."Master Company" then
             exit;
@@ -379,6 +381,7 @@ codeunit 50054 "Sales Order Event Handler"
     begin
         EdiProfile.SetRange(Type, EdiProfile.Type::Customer);
         EdiProfile.SetRange("No.", SalesHeader."Sell-to Customer No.");
+        EdiProfile.setfilter("EDI Object", '<>%1', 0);
         if not EdiProfile.FindFirst then exit;
 
         if SalesShptHdrNo <> '' then begin
@@ -416,17 +419,60 @@ codeunit 50054 "Sales Order Event Handler"
                 IsHandled := true;
     end;
 
+    [EventSubscriber(ObjectType::Table, database::"Reservation Entry", 'OnAfterInsertEvent', '', true, true)]
+    local procedure OnAfterInsertReservationEntry(VAR Rec: Record "Reservation Entry"; RunTrigger: Boolean)
+    var
+        PartnerRecord: Record "Reservation Entry";
+    begin
+        IF (Rec."Source Type" = 37) THEN BEGIN
+            IF Rec."Serial No." = '' THEN BEGIN
+                IF PartnerRecord.GET(Rec."Entry No.", NOT Rec.Positive) THEN BEGIN
+                    IF (PartnerRecord."Source Type" = 32) and (PartnerRecord."Serial No." <> '') THEN BEGIN
+                        Rec.VALIDATE("Serial No.", PartnerRecord."Serial No.");
+                        rec.UpdateItemTracking();
+                        Rec.MODIFY(FALSE);
+                    END;
+                END;
+            END;
+        END;
+        IF (rec."Source Type" = 32) THEN BEGIN
+            IF Rec."Serial No." <> '' THEN BEGIN
+                IF PartnerRecord.GET(Rec."Entry No.", NOT Rec.Positive) THEN BEGIN
+                    IF (PartnerRecord."Source Type" = 37) and (PartnerRecord."Serial No." = '') THEN BEGIN
+                        PartnerRecord.VALIDATE("Serial No.", Rec."Serial No.");
+                        PartnerRecord.UpdateItemTracking();
+                        PartnerRecord.MODIFY(FALSE);
+                    END;
+                END;
+            END;
+        END;
+    end;
+
     [EventSubscriber(ObjectType::Table, database::"Reservation Entry", 'OnAfterModifyEvent', '', true, true)]
     local procedure OnAfterModifyReservationEntry(VAR Rec: Record "Reservation Entry"; VAR xRec: Record "Reservation Entry"; RunTrigger: Boolean)
     var
         PartnerRecord: Record "Reservation Entry";
     begin
-        IF Rec."Source Type" = 37 THEN BEGIN
+        if not RunTrigger then
+            exit;
+        IF (Rec."Source Type" = 37) THEN BEGIN
             IF Rec."Serial No." = '' THEN BEGIN
                 IF PartnerRecord.GET(Rec."Entry No.", NOT Rec.Positive) THEN BEGIN
                     IF (PartnerRecord."Source Type" = 32) and (PartnerRecord."Serial No." <> '') THEN BEGIN
                         Rec.VALIDATE("Serial No.", PartnerRecord."Serial No.");
+                        rec.UpdateItemTracking();
                         Rec.MODIFY(FALSE);
+                    END;
+                END;
+            END;
+        END;
+        IF (rec."Source Type" = 32) THEN BEGIN
+            IF Rec."Serial No." <> '' THEN BEGIN
+                IF PartnerRecord.GET(Rec."Entry No.", NOT Rec.Positive) THEN BEGIN
+                    IF (PartnerRecord."Source Type" = 37) and (PartnerRecord."Serial No." = '') THEN BEGIN
+                        PartnerRecord.VALIDATE("Serial No.", Rec."Serial No.");
+                        PartnerRecord.UpdateItemTracking();
+                        PartnerRecord.MODIFY(FALSE);
                     END;
                 END;
             END;
@@ -476,6 +522,7 @@ codeunit 50054 "Sales Order Event Handler"
     local procedure OnBeforeConfirmSalesPost_PostYesNo(VAR SalesHeader: Record "Sales Header"; VAR HideDialog: Boolean; VAR IsHandled: Boolean; VAR DefaultOption: Integer; VAR PostAndSend: Boolean)
     var
         SelectionPage: Page "Sales Posting Options";
+        SalesOrderAction: Codeunit "Sales Order Event Handler";
     begin
         Clear(SelectionPage);
         SelectionPage.SetRecord(SalesHeader);
@@ -486,6 +533,8 @@ codeunit 50054 "Sales Order Event Handler"
             IsHandled := true;
 
         HideDialog := true;
+
+        SalesOrderAction.SECCheckShippingAdvice(SalesHeader);
     end;
 
     [EventSubscriber(ObjectType::Table, Database::"Sales Header", 'OnAfterCopySellToCustomerAddressFieldsFromCustomer', '', true, true)]
@@ -563,7 +612,7 @@ codeunit 50054 "Sales Order Event Handler"
         Result: Boolean;
         Location: Record Location;
         ShippingAdviceErr: TextConst ENU = 'This document cannot be shipped completely. Change the value in the Shipping Advice field to Partial.',
-                                     DAN = 'Dette dokument kan leveres fuldt ud. Du kan ændre værdien i feltet Afsendelsesadvis til Delvis.';
+                                     DAN = 'Dette dokument kan ikke leveres fuldt ud. Du kan ændre værdien i feltet Afsendelsesadvis til Delvis.';
     begin
         if SalesHeader.xShippingAdvice <> SalesHeader.xShippingAdvice::Complete then exit;
 

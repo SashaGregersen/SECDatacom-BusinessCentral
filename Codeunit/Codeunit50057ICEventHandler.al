@@ -143,9 +143,13 @@ codeunit 50057 "IC Event Handler"
     end;
 
     local procedure UpdateSalesLineWithICSOInfo(ICSalesline: Record "sales Line"; var LocalSalesLine: Record "Sales Line")
+    var
+        Item: Record Item;
     begin
+        //if item.get(LocalSalesLine."No.") then;
         LocalSalesLine."IC SO No." := ICsalesLine."Document No.";
         LocalSalesLine."IC SO Line No." := ICsalesLine."Line No.";
+        LocalSalesLine.Validate("Location Code", ICSalesline."Location Code");
     end;
 
     procedure GetICPartner(var ICpartner: Record "IC Partner"; CustomerNo: code[20]): Boolean
@@ -340,8 +344,8 @@ codeunit 50057 "IC Event Handler"
         end;
     end;
 
-    [EventSubscriber(ObjectType::Codeunit, codeunit::"Sales-Post", 'OnRunOnBeforeFinalizePosting', '', true, true)]
-    local procedure OnRunOnBeforeFinalizePosting(VAR SalesHeader: Record "Sales Header"; VAR SalesShipmentHeader: Record "Sales Shipment Header"; VAR SalesInvoiceHeader: Record "Sales Invoice Header"; VAR SalesCrMemoHeader: Record "Sales Cr.Memo Header")
+    [EventSubscriber(ObjectType::Codeunit, codeunit::"Sales-Post", 'OnAfterFinalizePosting', '', true, true)]
+    local procedure OnAfterFinalizePostingEvent(VAR SalesHeader: Record "Sales Header"; VAR SalesShipmentHeader: Record "Sales Shipment Header"; VAR SalesInvoiceHeader: Record "Sales Invoice Header"; VAR SalesCrMemoHeader: Record "Sales Cr.Memo Header"; var ReturnReceiptHeader: Record "Return Receipt Header"; var GenJnlPostLine: Codeunit "Gen. Jnl.-Post Line"; CommitIsSuppressed: Boolean; PreviewMode: Boolean)
     var
         ICpartner: Record "IC Partner";
         ICSyncMgt: Codeunit "IC Sync Management";

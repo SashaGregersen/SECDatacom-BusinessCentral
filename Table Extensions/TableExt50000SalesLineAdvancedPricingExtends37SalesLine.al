@@ -27,9 +27,9 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
                         BidPrices."Bid Unit Purchase Price" := CurrExchRate.ExchangeAmount(BidPrices."Bid Unit Purchase Price", BidPrices."Currency Code", "Currency Code", "Posting Date");
                         updateBidPrices(BidPrices, Bid.Claimable, Bid."Project Sale");
                     end;
-                end else
-                    if "Bid No." = '' then
-                        Validate("Bid No.", '');
+                end;
+                /* if "Bid No." = '' then
+                    "Bid No." := ''; */
             end;
 
             trigger Onvalidate();
@@ -87,7 +87,8 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
                 if "Bid Unit Sales Price" <> 0 then
                     validate("Unit Price", "Bid unit Sales Price")
                 else
-                    Validate(Quantity); //code here that finds the original sales price without bid
+                    if "Bid Unit Sales Price" <> xRec."Bid Unit Sales Price" then
+                        Validate(Quantity); //code here that finds the original sales price without bid
             end;
         }
         field(50002; "Bid Sales Discount"; Decimal)
@@ -230,8 +231,9 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
         }
     }
 
-    local procedure updateBidPrices(BidPrices: Record "Bid Item Price"; NewClaimableValue: Boolean; IsProjectSales: Boolean)
+    procedure updateBidPrices(BidPrices: Record "Bid Item Price"; NewClaimableValue: Boolean; IsProjectSales: Boolean)
     begin
+        //if BidPrices."Bid Unit Sales Price" <> "Bid Unit Sales Price" then
         validate("Bid Unit Sales Price", BidPrices."Bid Unit Sales Price");
         If IsProjectSales and (BidPrices."Bid Unit Sales Price" = 0) then begin
             Validate("Unit Price", 0);

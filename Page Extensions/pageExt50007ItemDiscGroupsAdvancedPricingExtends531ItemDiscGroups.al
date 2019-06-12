@@ -42,6 +42,4 @@ pageextension 50007 "Item Dsc. Group Adv. Pricing" extends "Item Disc. Groups"
 
     }
 
-    var
-        myInt: Integer;
 }

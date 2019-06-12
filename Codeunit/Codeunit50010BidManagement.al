@@ -339,6 +339,7 @@ codeunit 50010 "Bid Management"
     begin
         If SalesShipmentHeader."Currency Code" = PurchHeader."Currency Code" then
             exit(SalesShipLine."Claim Amount");
+
         GlSetup.get;
         if SalesShipmentHeader."Currency Code" = GlSetup."LCY Code" then
             //from LCYTOFCY 
