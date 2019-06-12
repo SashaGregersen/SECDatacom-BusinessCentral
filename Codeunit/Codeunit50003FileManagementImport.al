@@ -82,22 +82,26 @@ codeunit 50003 "File Management Import"
                                 SalesHeader.Validate("Drop-Shipment", Dropship);
                             end;
                         end;
-                    11:
+                    10:
+                        begin
+                            SalesHeader.validate("Currency Code", TempCSVBuffer.Value);
+                        end;
+                    12:
                         begin
                             SalesHeader.validate(SalesHeader."Currency Code", TempCSVBuffer.Value);
                         end;
-                    12:
+                    13:
                         begin
                             if TempCSVBuffer.value = '' then
                                 Error('Vendor No. is missing on line %1', TempCSVBuffer."Line No.");
                             Bid.Validate("Vendor No.", TempCSVBuffer.value);
                         end;
-                    13:
+                    14:
                         begin
                             if TempCSVBuffer.value <> '' then
                                 Bid.Validate("Vendor Bid No.", TempCSVBuffer.Value);
                         end;
-                    14:
+                    15:
                         begin
                             if TempCSVBuffer.value <> '' then begin
                                 Evaluate(Claim, TempCSVBuffer.Value);
@@ -158,14 +162,14 @@ codeunit 50003 "File Management Import"
                                 BidPrices.Validate("Bid Unit Sales Price", UnitPriceSell);
                             end;
                         end;
-                    10:
+                    11:
                         begin
                             if TempCSVBuffer.value <> '' then begin
                                 Evaluate(UnitPriceBuy, TempCSVBuffer.Value);
                                 BidPrices.Validate("Bid Unit Purchase Price", UnitPriceBuy);
                             end;
                         end;
-                    11:
+                    12:
                         begin
                             if TempCSVBuffer.value <> '' then
                                 BidPrices.Validate("Currency Code", TempCSVBuffer.Value);
@@ -200,7 +204,7 @@ codeunit 50003 "File Management Import"
 
         TempCSVBuffer.SetFilter("Line No.", '<>%1', 1);
 
-        TempCSVBuffer.SetRange("Field No.", 12 - ImportTypeDiff);
+        TempCSVBuffer.SetRange("Field No.", 13 - ImportTypeDiff);
 
         if BidNo = '' then begin
             if TempCSVBuffer.FindFirst then begin
@@ -216,7 +220,7 @@ codeunit 50003 "File Management Import"
             Bid.Get(BidNo);
 
         //Gem templates!
-        TempCSVBuffer.SetRange("Field No.", 17 - ImportTypeDiff);
+        TempCSVBuffer.SetRange("Field No.", 18 - ImportTypeDiff);
         if TempCSVBuffer.FindSet() then
             repeat
                 TempCSVBufferTemplate.Copy(TempCSVBuffer);
@@ -224,7 +228,7 @@ codeunit 50003 "File Management Import"
             until TempCSVBuffer.Next() = 0;
 
         //Gem Global Dim1
-        TempCSVBuffer.SetRange("Field No.", 16 - ImportTypeDiff);
+        TempCSVBuffer.SetRange("Field No.", 17 - ImportTypeDiff);
         if TempCSVBuffer.FindSet() then
             repeat
                 TempCSVBufferGlobalDim1.Copy(TempCSVBuffer);
@@ -347,19 +351,19 @@ codeunit 50003 "File Management Import"
         if TempCSVBuffer.FindSet() then
             repeat
                 case (TempCSVBuffer."Field No." + ImportTypeDiff) of
-                    11:
+                    12:
                         begin
                             CurrencyCode := TempCSVBuffer.value;
                         end;
-                    12:
+                    13:
                         begin
                             VendorNo := TempCSVBuffer.Value;
                         end;
-                    13:
+                    14:
                         begin
                             VendorBidNo := TempCSVBuffer.value;
                         end;
-                    15:
+                    16:
                         begin
                             if TempCSVBuffer.Value = '' then begin
                                 PurchFromSales.CreatePurchHeader(SalesHeader, VendorNo, CurrencyCode, VendorBidNo, PurchOrder);
@@ -441,7 +445,7 @@ codeunit 50003 "File Management Import"
 
     begin
         case TempCSVBuffer."Field No." of
-            15:
+            16:
                 begin
                     if TempCSVBuffer.value = '' then
                         error('Purchase order number is missing in Excel sheet');
@@ -475,11 +479,11 @@ codeunit 50003 "File Management Import"
         if Bid."Vendor Bid No." = '' then begin
             TempCSVBuffer.SetFilter("Line No.", '<>%1', 1);
 
-            TempCSVBuffer.SetRange("Field No.", 8);
+            TempCSVBuffer.SetRange("Field No.", 9);
             if TempCSVBuffer.FindFirst then
                 Bid.Validate("Vendor Bid No.", TempCSVBuffer.Value);
 
-            TempCSVBuffer.SetRange("Field No.", 9);
+            TempCSVBuffer.SetRange("Field No.", 10);
             if TempCSVBuffer.FindFirst then begin
                 if TempCSVBuffer.value <> '' then begin
                     Evaluate(Claim, TempCSVBuffer.Value);
@@ -488,8 +492,11 @@ codeunit 50003 "File Management Import"
             end;
             Bid.Modify(true);
         end;
+        TempCSVBuffer.SetRange("Field No.", 5);
+        if TempCSVBuffer.FindFirst then
+            SalesHeader.validate("Currency Code", TempCSVBuffer.Value);
 
-        TempCSVBuffer.SetFilter("Field No.", '%1..%2', 1, 6);
+        TempCSVBuffer.SetFilter("Field No.", '%1..%2', 1, 7);
         if TempCSVBuffer.FindSet() then
             repeat
                 if TempCSVBuffer."Field No." = 1 then begin
@@ -524,14 +531,14 @@ codeunit 50003 "File Management Import"
                                 BidPrices.Validate("Bid Unit Sales Price", UnitPriceSell);
                             end;
                         end;
-                    5:
+                    6:
                         begin
                             if TempCSVBuffer.value <> '' then begin
                                 Evaluate(UnitPriceBuy, TempCSVBuffer.Value);
                                 BidPrices.Validate("Bid Unit Purchase Price", UnitPriceBuy);
                             end;
                         end;
-                    6:
+                    7:
                         begin
                             if TempCSVBuffer.value <> '' then
                                 BidPrices.Validate("Currency Code", TempCSVBuffer.Value);

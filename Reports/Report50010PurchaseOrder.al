@@ -1017,6 +1017,7 @@ report 50010 "SEC Purchase Order"
                         Clear(EndcustomerCountryRegion);
                     if "End Customer Contact No." <> '' then begin
                         Contact.get("End Customer Contact No.");
+                        EndCustName := Contact.Name;
                         EndCustEmail := Contact."E-Mail";
                         EndCustPhone := Contact."Phone No.";
                     end;
@@ -1025,6 +1026,7 @@ report 50010 "SEC Purchase Order"
                     Clear(EndcustomerCountryRegion);
                     Clear(EndCustEmail);
                     Clear(EndCustPhone);
+                    Clear(EndCustName);
                 end;
 
                 if "Reseller" <> '' then begin
@@ -1270,6 +1272,7 @@ report 50010 "SEC Purchase Order"
         Bid: Record "Bid";
         EndCustPhone: text[30];
         EndCustEmail: text[80];
+        EndCustName: text[100];
         Contact: record contact;
         //<< NC
         TotalPrepmtLineAmount: Decimal;
