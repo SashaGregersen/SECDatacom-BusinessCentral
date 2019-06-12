@@ -3731,7 +3731,7 @@
                                     </TablixCells>
                                   </TablixRow>
                                   <TablixRow>
-                                    <Height>0.35278cm</Height>
+                                    <Height>0.58985cm</Height>
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
@@ -3869,7 +3869,7 @@
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="Textbox3">
+                                          <Textbox Name="Desc1_IssuedReminderLine">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
@@ -3886,7 +3886,7 @@
                                                 <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>Textbox3</rd:DefaultName>
+                                            <rd:DefaultName>Desc1_IssuedReminderLine</rd:DefaultName>
                                             <Style>
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
@@ -4302,6 +4302,7 @@
                                   </TablixMember>
                                 </TablixMembers>
                               </TablixRowHierarchy>
+                              <DataSetName>DataSet_Result</DataSetName>
                               <Filters>
                                 <Filter>
                                   <FilterExpression>=IsNothing(Fields!Type_IssuedReminderLine.Value)</FilterExpression>
@@ -4312,7 +4313,7 @@
                                 </Filter>
                               </Filters>
                               <Left>0.04622cm</Left>
-                              <Height>5.0097cm</Height>
+                              <Height>5.24677cm</Height>
                               <Width>17.95724cm</Width>
                               <Style>
                                 <FontFamily>Segoe UI</FontFamily>
@@ -4410,7 +4411,7 @@
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="Textbox14">
+                                          <Textbox Name="Textbox4">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
@@ -4427,7 +4428,7 @@
                                                 <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>Textbox14</rd:DefaultName>
+                                            <rd:DefaultName>Textbox4</rd:DefaultName>
                                             <Style>
                                               <Border />
                                               <VerticalAlign>Top</VerticalAlign>
@@ -4782,7 +4783,6 @@ Cstr(Fields!PmtSetup__FIK_GIRO_No________.Value)
                             <FontSize>8pt</FontSize>
                           </Style>
                         </Rectangle>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
