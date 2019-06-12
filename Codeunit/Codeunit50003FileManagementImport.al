@@ -82,6 +82,10 @@ codeunit 50003 "File Management Import"
                                 SalesHeader.Validate("Drop-Shipment", Dropship);
                             end;
                         end;
+                    11:
+                        begin
+                            SalesHeader.validate(SalesHeader."Currency Code", TempCSVBuffer.Value);
+                        end;
                     12:
                         begin
                             if TempCSVBuffer.value = '' then

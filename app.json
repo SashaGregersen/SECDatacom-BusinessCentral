@@ -4,7 +4,7 @@
   "publisher": "Netcompany",
   "brief": "",
   "description": "",
-  "version": "1.0.7.7",
+  "version": "1.0.7.8",
   "showMyCode": true,
   "privacyStatement": "",
   "EULA": "",
@@ -17,7 +17,7 @@
       "appId": "ac762be1-e90f-4a72-b519-612a5e3ddc2e",
       "name": "OIOUBL",
       "publisher": "Microsoft",
-      "version": "1.0.29537.3"
+      "version": "1.0.29537.4"
     },    
     {
       "appId": "644f7e5b-a81c-408a-aaa2-766e655a80a3",
