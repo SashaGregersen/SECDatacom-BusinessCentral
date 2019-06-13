@@ -791,7 +791,7 @@ codeunit 50003 "File Management Import"
 
     end;
 
-    procedure ImportCostPricesFromCSV(Var PurchasePrice: record "Purchase Price")
+    procedure ImportCostPricesFromCSV(Var PurchasePrice: record "Purchase Price"; var TempItem: Record item temporary)
     var
         WindowTitle: text;
         FileName: text;
@@ -806,7 +806,6 @@ codeunit 50003 "File Management Import"
         TempCSVBuffer.DeleteAll();
         SkipRecord := false;
         SelectFileFromFileShare(TempCSVBuffer);
-        //Verify if csv input file will be seperated with , or ; Unncomment below and deleta above if ;
 
         IF TempCSVBuffer.FINDSET THEN
             REPEAT
@@ -822,8 +821,14 @@ codeunit 50003 "File Management Import"
                     BEGIN
                         Item.SETRANGE("Vendor No.", PurchasePrice."Vendor No.");
                         Item.SETRANGE("Vendor-Item-No.", TempCSVBuffer.Value);
-                        if not Item.FINDFIRST then
+                        if not Item.FINDFIRST then begin
+                            /* TempItem.init;
+                            TempItem."No." := '';
+                            TempItem."Vendor No." := PurchasePrice."Vendor No.";
+                            TempItem."Vendor-Item-No." := TempCSVBuffer.value;
+                            if TempItem.Insert(true) then; */
                             SkipRecord := true;
+                        end;
                         if not SkipRecord then begin
                             PurchasePrice.VALIDATE("Item No.", Item."No.");
                             PurchasePrice.VALIDATE("Unit of Measure Code", Item."Base Unit of Measure");

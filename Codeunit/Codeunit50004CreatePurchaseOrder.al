@@ -63,7 +63,7 @@ codeunit 50004 "Create Purchase Order"
                         PurchasePrice."Currency Code" := CurrencyCode;
                     end;
 
-                    if PurchasePrice."Direct Unit Cost" <> 0 then begin
+                    if PurchasePrice."Direct Unit Cost" <> 0 then begin //check på <> 0 bør fjernes
                         if not FindTempPurchaseHeader(VendorNo, CurrencyCode, TempPurchHeader) then begin
                             MessageTxt := MessageTxt + CreatePurchHeader(SalesHeader, VendorNo, CurrencyCode, GetVendorBidNo(SalesLine."Bid No."), PurchHeader) + '/';
                             TempPurchHeader := PurchHeader;
@@ -106,7 +106,7 @@ codeunit 50004 "Create Purchase Order"
         PurchHeader.Validate("Buy-from Vendor No.", VendorNo);
         PurchHeader.Validate("Currency Code", CurrencyCode);
         if VendorBidNo <> '' then
-            PurchHeader.Validate("Vendor Shipment No.", VendorBidNo);
+            PurchHeader.Validate("Vendor Shipment No.", COPYSTR(VendorBidNo, 1, 35));
         if (SalesHeader."Ship directly from supplier") then begin
             PurchHeader.SetShipToAddress(SalesHeader."Ship-to Name", SalesHeader."Ship-to Name 2",
             SalesHeader."Ship-to Address", SalesHeader."Ship-to Address 2", SalesHeader."Ship-to City",
