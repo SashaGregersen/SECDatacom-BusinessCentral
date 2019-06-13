@@ -13,7 +13,7 @@ report 50011 "POS Reporting"
         dataitem(Sales_Invoice_Line; "Sales Invoice Line")
         {
             RequestFilterHeading = 'Line Filters';
-            RequestFilterFields = "IC Partner Code";
+            RequestFilterFields = "Posting Date";
 
             column(Document_Type; DocumentType)
             {
@@ -31,7 +31,11 @@ report 50011 "POS Reporting"
             {
 
             }
-            column(IC_Partner_Code; "IC Partner Code")
+            /* column(IC_Partner_Code; "IC Partner Code")
+            {
+
+            } */
+            column(IC_Partner_Code; ICPartnerCode)
             {
 
             }
@@ -99,7 +103,6 @@ report 50011 "POS Reporting"
             dataitem("Sales Invoice Header"; "Sales Invoice Header")
             {
                 DataItemLink = "No." = field ("Document No.");
-                RequestFilterFields = "Posting Date";
                 RequestFilterHeading = 'Header Filters';
 
                 column(Document_No; "No.")
@@ -166,47 +169,83 @@ report 50011 "POS Reporting"
                 {
 
                 }
-                column(ResellEndCustName; ResellEndCustName)
+                column(ResellerName2; ResellerName2)
                 {
 
                 }
-                column(ResellEndCustName2; ResellEndCustName2)
+                column(ResellerAddress; ResellerAddress)
                 {
 
                 }
-                column(ResellEndCustAddress; ResellEndCustAddress)
+                column(ResellerAddress2; ResellerAddress2)
                 {
 
                 }
-                column(ResellEndCustAddress2; ResellEndCustAddress2)
+                column(ResellerCity; ResellerCity)
                 {
 
                 }
-                column(ResellEndCustCity; ResellEndCustCity)
+                column(ResellerPostCode; ResellerPostCode)
                 {
 
                 }
-                column(ResellEndCustPostCode; ResellEndCustPostCode)
+                column(ResellerCountryRegion; ResellerCountryRegion)
                 {
 
                 }
-                column(ResellEndCustCountryRegion; ResellEndCustCountryRegion)
+                column(ResellerCounty; ResellerCounty)
                 {
 
                 }
-                column(ResellEndCustCounty; ResellEndCustCounty)
+                column(ResellerContact; ResellerContact)
                 {
 
                 }
-                column(ResellEndCustContact; ResellEndCustContact)
+                column(ResellerContactEmail; ResellerContactEmail)
                 {
 
                 }
-                column(ResellEndCustContactEmail; ResellEndCustEmail)
+                column(ResellerContactPhone; ResellerContactPhone)
                 {
 
                 }
-                column(ResellEndCustContactPhone; ResellEndCustPhone)
+                column(EndCustName2; ResellerName2)
+                {
+
+                }
+                column(EndCustAddress; ResellerAddress)
+                {
+
+                }
+                column(EndCustAddress2; ResellerAddress2)
+                {
+
+                }
+                column(EndCustCity; ResellerCity)
+                {
+
+                }
+                column(EndCustPostCode; ResellerPostCode)
+                {
+
+                }
+                column(EndCustCountryRegion; ResellerCountryRegion)
+                {
+
+                }
+                column(EndCustCounty; ResellerCounty)
+                {
+
+                }
+                column(EndCustContact; ResellerContact)
+                {
+
+                }
+                column(EndCustContactEmail; ResellerContactEmail)
+                {
+
+                }
+                column(EndCustContactPhone; ResellerContactPhone)
                 {
 
                 }
@@ -261,6 +300,7 @@ report 50011 "POS Reporting"
                 if VendorCode <> '' then
                     SetVendorFilter();
                 DocumentType := 'Invoice';
+                PostDate := format(Sales_Invoice_Line.GetFilter("Posting Date"));
             end;
 
             trigger OnAfterGetRecord()
@@ -277,10 +317,19 @@ report 50011 "POS Reporting"
                 PurchInvLine: record "Purch. Inv. Line";
                 PurchLine: record "Purchase Line";
                 PurchHeader: record "Purchase Header";
+                SalesInvHeader: record "Sales Invoice Header";
+                Customer: Record Customer;
             begin
                 ClearValues();
                 if Sales_Invoice_Line.Type <> Sales_Invoice_Line.type::Item then
                     CurrReport.skip;
+                SalesInvHeader.get(Sales_Invoice_Line."Document No.");
+                if (Subsidiary <> SalesInvHeader.Subsidiary) and (Subsidiary <> '') then
+                    CurrReport.skip;
+                if SalesInvHeader.Subsidiary <> '' then begin
+                    Customer.get(Subsidiary);
+                    ICPartnerCode := Customer."IC Partner Code";
+                end;
                 item.get(Sales_Invoice_Line."No.");
                 VendorItemNo := item."Vendor-Item-No.";
                 VARID.SetRange("Customer No.", "Sales Invoice Header".Reseller);
@@ -359,7 +408,7 @@ report 50011 "POS Reporting"
             {
 
             }
-            column(IC_Partner_Code2; "IC Partner Code")
+            column(IC_Partner_Code2; ICPartnerCode2)
             {
 
             }
@@ -493,47 +542,84 @@ report 50011 "POS Reporting"
                 {
 
                 }
-                column(ResellEndCustName1; ResellEndCustName)
+
+                column(ResellerName2_2; ResellerName2)
                 {
 
                 }
-                column(ResellEndCustName2_2; ResellEndCustName2)
+                column(ResellerAddress1; ResellerAddress)
                 {
 
                 }
-                column(ResellEndCustAddress1; ResellEndCustAddress)
+                column(ResellerAddress2_2; ResellerAddress2)
                 {
 
                 }
-                column(ResellEndCustAddress2_2; ResellEndCustAddress2)
+                column(ResellerCity2; ResellerCity)
                 {
 
                 }
-                column(ResellEndCustCity2; ResellEndCustCity)
+                column(ResellerPostCode2; ResellerPostCode)
                 {
 
                 }
-                column(ResellEndCustPostCode2; ResellEndCustPostCode)
+                column(ResellerCountryRegion2; ResellerCountryRegion)
                 {
 
                 }
-                column(ResellEndCustCountryRegion2; ResellEndCustCountryRegion)
+                column(ResellerCounty2; ResellerCounty)
                 {
 
                 }
-                column(ResellEndCustCounty2; ResellEndCustCounty)
+                column(ResellerContact2; ResellerContact)
                 {
 
                 }
-                column(ResellEndCustContact2; ResellEndCustContact)
+                column(ResellerContactEmail2; ResellerContactEmail)
                 {
 
                 }
-                column(ResellEndCustContactEmail2; ResellEndCustEmail)
+                column(ResellerContactPhone2; ResellerContactPhone)
                 {
 
                 }
-                column(ResellEndCustContactPhone2; ResellEndCustPhone)
+                column(EndCustName2_2; ResellerName2)
+                {
+
+                }
+                column(EndCustAddress1; ResellerAddress)
+                {
+
+                }
+                column(EndCustAddress2_2; ResellerAddress2)
+                {
+
+                }
+                column(EndCustCity2; ResellerCity)
+                {
+
+                }
+                column(EndCustPostCode2; ResellerPostCode)
+                {
+
+                }
+                column(EndCustCountryRegion2; ResellerCountryRegion)
+                {
+
+                }
+                column(EndCustCounty2; ResellerCounty)
+                {
+
+                }
+                column(EndCustContact2; ResellerContact)
+                {
+
+                }
+                column(EndCustContactEmail2; ResellerContactEmail)
+                {
+
+                }
+                column(EndCustContactPhone2; ResellerContactPhone)
                 {
 
                 }
@@ -577,56 +663,63 @@ report 50011 "POS Reporting"
                             TempItemLedgEntrySales.Delete();
                         end;
                     end;
-
                 }
-                trigger OnPreDataItem()
-                var
-
-                begin
-                    GlSetup.Get();
-                    if VendorCode <> '' then
-                        SetVendorFilter();
-                    DocumentType := 'Credit Memo';
-                end;
-
-                trigger OnAfterGetRecord()
-                var
-                    Item: Record item;
-                    VARID: record "VAR";
-                    ItemLedgEntrySales: record "Item Ledger Entry";
-                    ItemLedgEntryPurchase: record "Item Ledger Entry";
-                    ReturnShipmentLine: record "Return Shipment Line";
-                    ValueEntry: record "Value Entry";
-                    ValueEntry2: record "Value Entry";
-                    ReturnShipmentHeader: record "Return Shipment Header";
-                    PurchLine: record "Purchase Line";
-                    PurchHeader: record "Purchase Header";
-                begin
-                    ClearValues();
-                    if "Sales Cr.Memo Line".Type <> "Sales Cr.Memo Line".type::Item then
-                        CurrReport.skip;
-                    item.get("Sales Cr.Memo Line"."No.");
-                    VendorItemNo := item."Vendor-Item-No.";
-                    VARID.SetRange("Customer No.", "Sales Cr.Memo Header".Reseller);
-                    VARID.SetRange("Vendor No.", item."Vendor No.");
-                    if VARID.FindFirst() then
-                        VARIDInt := VARID."VAR id";
-
-                    SetPricesCreditMemo(Item);
-
-                    clear(TempItemLedgEntrySales);
-                    POSReportExport.RetrieveEntriesFromPostedInv(TempItemLedgEntrySales, "Sales Cr.Memo Line".RowID1()); //find serial numbers
-
-                    ValueEntry.setrange("Document Type", ValueEntry."Document Type"::"Sales Credit Memo");
-                    ValueEntry.setrange("Document No.", "Sales Cr.Memo Line"."Document No.");
-                    ValueEntry.setrange("Document Line No.", "Sales Cr.Memo Line"."Line No.");
-                    if ValueEntry.FindFirst() then begin
-                        ItemLedgEntrySales.get(ValueEntry."Item Ledger Entry No.");
-                        ShipmentNo := ItemLedgEntrySales."Document No.";
-                    end;
-                end;
-
             }
+            trigger OnPreDataItem()
+            var
+            begin
+                GlSetup.Get();
+                if VendorCode <> '' then
+                    SetVendorFilter();
+                DocumentType := 'Credit Memo';
+                SetFiltersFromSalesInvoice();
+            end;
+
+            trigger OnAfterGetRecord()
+            var
+                Item: Record item;
+                VARID: record "VAR";
+                ItemLedgEntrySales: record "Item Ledger Entry";
+                ItemLedgEntryPurchase: record "Item Ledger Entry";
+                ReturnShipmentLine: record "Return Shipment Line";
+                ValueEntry: record "Value Entry";
+                ValueEntry2: record "Value Entry";
+                ReturnShipmentHeader: record "Return Shipment Header";
+                PurchLine: record "Purchase Line";
+                PurchHeader: record "Purchase Header";
+                CreditMemoHeader: record "Sales Cr.Memo Header";
+                Customer: Record customer;
+            begin
+                ClearValues();
+                if "Sales Cr.Memo Line".Type <> "Sales Cr.Memo Line".type::Item then
+                    CurrReport.skip;
+                CreditMemoHeader.get("Sales Cr.Memo Line"."Document No.");
+                if (Subsidiary <> CreditMemoHeader.Subsidiary) and (Subsidiary <> '') then
+                    CurrReport.skip;
+                if CreditMemoHeader.Subsidiary <> '' then begin
+                    Customer.get(Subsidiary);
+                    ICPartnerCode2 := Customer."IC Partner Code";
+                end;
+                item.get("Sales Cr.Memo Line"."No.");
+                VendorItemNo := item."Vendor-Item-No.";
+                VARID.SetRange("Customer No.", "Sales Cr.Memo Header".Reseller);
+                VARID.SetRange("Vendor No.", item."Vendor No.");
+                if VARID.FindFirst() then
+                    VARIDInt := VARID."VAR id";
+
+                SetPricesCreditMemo(Item);
+
+                clear(TempItemLedgEntrySales);
+                POSReportExport.RetrieveEntriesFromPostedInv(TempItemLedgEntrySales, "Sales Cr.Memo Line".RowID1()); //find serial numbers
+
+                ValueEntry.setrange("Document Type", ValueEntry."Document Type"::"Sales Credit Memo");
+                ValueEntry.setrange("Document No.", "Sales Cr.Memo Line"."Document No.");
+                ValueEntry.setrange("Document Line No.", "Sales Cr.Memo Line"."Line No.");
+                if ValueEntry.FindFirst() then begin
+                    ItemLedgEntrySales.get(ValueEntry."Item Ledger Entry No.");
+                    ShipmentNo := ItemLedgEntrySales."Document No.";
+                end;
+            end;
         }
 
     }
@@ -644,6 +737,22 @@ report 50011 "POS Reporting"
                     {
                         Caption = 'Vendor Code';
                     }
+                }
+                Group("IC Partner")
+                {
+                    field(Subsidiary; Subsidiary)
+                    {
+                        Caption = 'IC Partner';
+                        trigger OnLookup(var text: Text): Boolean
+                        var
+                            ICPartner: record "IC Partner";
+                        begin
+                            if not ICPartner.Get(Subsidiary) then
+                                Clear(Subsidiary);
+                            IF page.RunModal(page::"IC Partner List", ICPartner, ICPartner.Code) = Action::LookupOK then
+                                Subsidiary := ICPartner."Customer No.";
+                        end;
+                    }
 
                 }
             }
@@ -653,79 +762,92 @@ report 50011 "POS Reporting"
     procedure SetEndCustResellerSalesInv()
     var
         Customer: record Customer;
+        Contact: record Contact;
     begin
         if Customer.get("Sales Invoice Header".Reseller) then
             ResellerName := Customer.Name;
         if Customer.get("Sales Invoice Header"."End Customer") then
             EndCustomerName := Customer.name;
-        if not "Sales Invoice Header"."Drop-Shipment" then begin
-            if Customer.get("Sales Invoice Header"."End Customer") then begin
-                ResellEndCustName := Customer.name;
-                ResellEndCustName2 := Customer."Name 2";
-                ResellEndCustAddress := Customer.Address;
-                ResellEndCustAddress2 := Customer."Address 2";
-                ResellEndCustCity := Customer.City;
-                ResellEndCustPostCode := Customer."Post Code";
-                ResellEndCustCounty := Customer.County;
-                ResellEndCustCountryRegion := Customer."Country/Region Code";
-                ResellEndCustContact := Customer.Contact;
-                ResellEndCustPhone := Customer."Phone No.";
-                ResellEndCustEmail := Customer."E-Mail";
-            end;
-        end else begin
-            if Customer.get("Sales Invoice Header".Reseller) then begin
-                ResellEndCustName := Customer.name;
-                ResellEndCustName2 := Customer."Name 2";
-                ResellEndCustAddress := Customer.Address;
-                ResellEndCustAddress2 := Customer."Address 2";
-                ResellEndCustCity := Customer.City;
-                ResellEndCustPostCode := Customer."Post Code";
-                ResellEndCustCounty := Customer.County;
-                ResellEndCustCountryRegion := Customer."Country/Region Code";
-                ResellEndCustContact := Customer.Contact;
-                ResellEndCustPhone := Customer."Phone No.";
-                ResellEndCustEmail := Customer."E-Mail";
+        //if not "Sales Invoice Header"."Drop-Shipment" then begin
+        if Customer.get("Sales Invoice Header"."End Customer") then begin
+            //ResellEndCustName := Customer.name;
+            EndCustName2 := Customer."Name 2";
+            EndCustAddress := Customer.Address;
+            EndCustAddress2 := Customer."Address 2";
+            EndCustCity := Customer.City;
+            EndCustPostCode := Customer."Post Code";
+            EndCustCounty := Customer.County;
+            EndCustCountryRegion := Customer."Country/Region Code";
+            EndCustContact := Customer.Contact;
+            if EndCustContact <> '' then begin
+                Contact.get(EndCustContact);
+                EndCustContactPhone := Contact."Phone No.";
+                EndCustContactEmail := Contact."E-Mail";
             end;
         end;
+        //end else begin
+        if Customer.get("Sales Invoice Header".Reseller) then begin
+            ResellerName2 := Customer."Name 2";
+            ResellerAddress := Customer.Address;
+            ResellerAddress2 := Customer."Address 2";
+            ResellerCity := Customer.City;
+            ResellerPostCode := Customer."Post Code";
+            ResellerCounty := Customer.County;
+            ResellerCountryRegion := Customer."Country/Region Code";
+            if "Sales Invoice Header"."Sell-to Contact No." <> '' then begin
+                Contact.get("Sales Invoice Header"."Sell-to Contact No.");
+                ResellerContact := Contact.Name;
+                ResellerContactPhone := Contact."Phone No.";
+                ResellerContactEmail := Contact."E-Mail";
+            end;
+        end;
+        //end;
     end;
 
     procedure SetEndCustResellerCreditMemo()
     var
         Customer: record Customer;
+        Contact: record contact;
     begin
         if Customer.get("Sales Cr.Memo Header".Reseller) then
             ResellerName := Customer.Name;
         if Customer.get("Sales Cr.Memo Header"."End Customer") then
             EndCustomerName := Customer.name;
-        if not "Sales Cr.Memo Header"."Drop-Shipment" then begin
-            if Customer.get("Sales Cr.Memo Header"."End Customer") then begin
-                ResellEndCustName := Customer.name;
-                ResellEndCustName2 := Customer."Name 2";
-                ResellEndCustAddress := Customer.Address;
-                ResellEndCustAddress2 := Customer."Address 2";
-                ResellEndCustCity := Customer.City;
-                ResellEndCustPostCode := Customer."Post Code";
-                ResellEndCustCounty := Customer.County;
-                ResellEndCustCountryRegion := Customer."Country/Region Code";
-                ResellEndCustContact := Customer.Contact;
-                ResellEndCustPhone := Customer."Phone No.";
-                ResellEndCustEmail := Customer."E-Mail";
-            end;
-        end else begin
-            if Customer.get("Sales Cr.Memo Header".Reseller) then begin
-                ResellEndCustName := Customer.name;
-                ResellEndCustName2 := Customer."Name 2";
-                ResellEndCustAddress := Customer.Address;
-                ResellEndCustAddress2 := Customer."Address 2";
-                ResellEndCustCity := Customer.City;
-                ResellEndCustPostCode := Customer."Post Code";
-                ResellEndCustCounty := Customer.County;
-                ResellEndCustCountryRegion := Customer."Country/Region Code";
-                ResellEndCustContact := Customer.Contact;
-                ResellEndCustPhone := Customer."Phone No.";
-                ResellEndCustEmail := Customer."E-Mail";
+        //if not "Sales Cr.Memo Header"."Drop-Shipment" then begin
+        if Customer.get("Sales Cr.Memo Header"."End Customer") then begin
+            //ResellEndCustName := Customer.name;
+            EndCustName2 := Customer."Name 2";
+            EndCustAddress := Customer.Address;
+            EndCustAddress2 := Customer."Address 2";
+            EndCustCity := Customer.City;
+            EndCustPostCode := Customer."Post Code";
+            EndCustCounty := Customer.County;
+            EndCustCountryRegion := Customer."Country/Region Code";
+            if "Sales Cr.Memo Header"."End Customer Contact" <> '' then begin
+                Contact.get("Sales Cr.Memo Header"."End Customer Contact");
+                EndCustContact := Contact.Name;
+                EndCustContactPhone := contact."Phone No.";
+                EndCustContactEmail := Contact."E-Mail";
             end;
         end;
+        //end else begin
+        if Customer.get("Sales Cr.Memo Header".Reseller) then begin
+            //ResellEndCustName := Customer.name;
+            ResellerName2 := Customer."Name 2";
+            ResellerAddress := Customer.Address;
+            ResellerAddress2 := Customer."Address 2";
+            ResellerCity := Customer.City;
+            ResellerPostCode := Customer."Post Code";
+            ResellerCounty := Customer.County;
+            ResellerCountryRegion := Customer."Country/Region Code";
+            if "Sales Cr.Memo Header"."Sell-to Contact No." <> '' then begin
+                Contact.get("Sales Cr.Memo Header"."Sell-to Contact No.");
+                ResellerContact := Contact.Name;
+                ResellerContactPhone := Contact."Phone No.";
+                ResellerContactEmail := Contact."E-Mail";
+            end;
+        end;
+        //end;
     end;
 
     local procedure SetVendorFilter()
@@ -734,6 +856,11 @@ report 50011 "POS Reporting"
     begin
         Sales_Invoice_Line.SetFilter("Shortcut Dimension 1 Code", VendorCode);
         "Sales Cr.Memo Line".SetFilter("Shortcut Dimension 1 Code", VendorCode);
+    end;
+
+    local procedure SetFiltersFromSalesInvoice()
+    begin
+        "Sales Cr.Memo Line".SetFilter("Posting Date", PostDate);
     end;
 
     local procedure SetPricesSalesInv(Item: record Item)
@@ -829,7 +956,7 @@ report 50011 "POS Reporting"
         if ValueEntry.FindFirst() then begin
             if PurchInvLine.get(ValueEntry."Document No.", ValueEntry."Document Line No.") then begin
                 PurchInvHeader.get(PurchInvLine."Document No.");
-                PurchOrderNo := PurchInvLine."Document No.";
+                PurchOrderNo := PurchInvLine."Order No.";
                 PurchOrderPostDate := PurchInvLine."Posting Date";
                 PurchCostPrice := PurchInvLine."Unit Cost";
             end else begin
@@ -869,7 +996,7 @@ report 50011 "POS Reporting"
                 PurchInvLine.setrange("Order No.", PurchRcptLine."Order No.");
                 PurchInvLine.SetRange("Order Line No.", PurchRcptLine."Order Line No.");
                 if PurchInvLine.findfirst then begin
-                    PurchOrderNo := PurchInvLine."Document No.";
+                    PurchOrderNo := PurchInvLine."Order No.";
                     PurchCostPrice := PurchInvLine."Direct Unit Cost";
                     PurchOrderPostDate := PurchInvLine."Posting Date";
                 end else begin
@@ -919,18 +1046,33 @@ report 50011 "POS Reporting"
         PurchOrderPostDate: Date;
         PurchCostPrice: decimal;
         ListPrice: Decimal;
-        ResellEndCustName: text[50];
-        ResellEndCustName2: text[50];
-        ResellEndCustAddress: text[50];
-        ResellEndCustAddress2: text[50];
-        ResellEndCustCity: text[30];
-        ResellEndCustPostCode: code[20];
-        ResellEndCustCounty: text[30];
-        ResellEndCustCountryRegion: code[10];
-        ResellEndCustContact: text[50];
-        ResellEndCustPhone: text[30];
-        ResellEndCustEmail: text[80];
+        //ResellEndCustName: text[50];
+        ResellerName2: text[50];
+        ResellerAddress: text[50];
+        ResellerAddress2: text[50];
+        ResellerCity: text[30];
+        ResellerPostCode: code[20];
+        ResellerCounty: text[30];
+        ResellerCountryRegion: code[10];
+        ResellerContact: text[50];
+        ResellerContactPhone: text[30];
+        ResellerContactEmail: text[80];
+        EndCustName2: text[50];
+        EndCustAddress: text[50];
+        EndCustAddress2: text[50];
+        EndCustCity: text[30];
+        EndCustPostCode: code[20];
+        EndCustCounty: text[30];
+        EndCustCountryRegion: code[10];
+        EndCustContact: text[50];
+        EndCustContactPhone: text[30];
+        EndCustContactEmail: text[80];
         GlSetup: record "General Ledger Setup";
         DocumentType: text[20];
+        PostDate: text;
+        ICPartnerCode: Text;
+        ICPartnerCode2: text;
+        Subsidiary: code[20];
+
 
 }

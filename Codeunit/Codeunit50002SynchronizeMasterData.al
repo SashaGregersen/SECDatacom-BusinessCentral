@@ -138,6 +138,13 @@ codeunit 50002 "Synchronize Master Data"
         ICSyncMgt.InsertModifyPostCodeInOtherCompanies(PostCode);
     End;
 
+    procedure SynchronizeVARIDToCompany(VARID: Record "VAR")
+    var
+        ICSyncMgt: Codeunit "IC Sync Management";
+    begin
+        ICSyncMgt.InsertModifyVARIDInOtherCompanies(VARID);
+    End;
+
     procedure DeleteItemInOtherCompany(Item: Record "Item")
     var
         ICSyncMgt: Codeunit "IC Sync Management";
