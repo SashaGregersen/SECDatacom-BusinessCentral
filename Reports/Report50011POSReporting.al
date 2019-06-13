@@ -5,7 +5,7 @@ report 50011 "POS Reporting"
     ProcessingOnly = false;
     UseRequestPage = true;
     DefaultLayout = RDLC;
-    RDLCLayout = './Layouts/POSReport.rdl';
+    RDLCLayout = './Layouts/POSReport2.rdl';
     Caption = 'POS Report';
 
     dataset
