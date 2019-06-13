@@ -3,19 +3,30 @@ pageextension 50028 "End Customer and Reseller 8" extends 132
     //note - temp suspended the action - until reports are ok
     layout
     {
-        addbefore("No.")
+        addafter("No.")
         {
+            field("End Customer Name"; "End Customer Name")
+            {
+                ApplicationArea = all;
+                Editable = false;
+            }
             field("End Customer"; "End Customer")
             {
                 ApplicationArea = all;
+                Editable = false;
             }
         }
-        addbefore("End Customer")
+        addafter("Sell-to Customer Name")
         {
             field(Reseller; Reseller)
             {
                 ApplicationArea = all;
+                Editable = false;
             }
+        }
+        modify("Sell-to Customer Name")
+        {
+            Caption = 'Reseller Name';
         }
 
     }
@@ -24,12 +35,17 @@ pageextension 50028 "End Customer and Reseller 8" extends 132
     {
         addlast(Processing)
         {
-            action(ShowMyReport)
+            action(AddTransActionType)
             {
-                Image = ItemGroup;
-                trigger OnAction();
+                Caption = 'Add Transaction Type';
+                Image = ChangeDimensions;
+                ApplicationArea = all;
+
+                trigger OnAction()
+                var
+                    SalesOrderHandler: Codeunit "Sales Order Event Handler";
                 begin
-                    SalesInvoice.Run();
+                    SalesOrderHandler.AddTransactionTypeToPostedSalesDocument(Rec);
                 end;
             }
             action("Export Cygate XML")

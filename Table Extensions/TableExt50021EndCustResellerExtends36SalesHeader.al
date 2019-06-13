@@ -103,22 +103,6 @@ tableextension 50021 "End Customer and Reseller" extends 36
                     end;
                 end;
             end;
-
-            trigger Onlookup();
-            var
-                Customer: Record Customer;
-                ICpartner: Record "IC Partner";
-                ICPartner2: record "IC Partner";
-                ICPartnerList: page "ic partner list";
-            begin
-                if Rec.Subsidiary <> '' then begin
-                    ICPartner2.SetRange("Customer No.", Rec.Subsidiary);
-                    ICPartner2.FindFirst();
-                    ICpartner.Get(ICPartner2.Code);
-                end;
-                IF page.RunModal(page::"IC Partner List", ICpartner, ICpartner.Code) = Action::LookupOK then
-                    Validate("subsidiary", ICpartner."Customer No.");
-            end;
         }
 
         field(50004; "Financing Partner"; code[20])
@@ -251,10 +235,12 @@ tableextension 50021 "End Customer and Reseller" extends 36
         field(50014; "Ship-to Phone No."; Text[30])
         {
             DataClassification = ToBeClassified;
+            Editable = false;
         }
         field(50015; "Ship-to Email"; Text[80])
         {
             DataClassification = ToBeClassified;
+            Editable = false;
         }
         field(50016; "End Customer Contact"; Text[50])
         {
@@ -301,9 +287,34 @@ tableextension 50021 "End Customer and Reseller" extends 36
             DataClassification = ToBeClassified;
         }
 
-        field(50020; xShippingAdvice; Option)
+        field(50020; "xShippingAdvice"; Option)
         {
+            Caption = 'Shipping Advice';
             OptionMembers = Partial,Complete;
+        }
+
+        field(50021; "Purchase Currency Method"; Option)
+        {
+            Caption = 'Purchase Currency Method';
+            OptionMembers = "Vendor Currency","Local Currency","Same Currency";
+            trigger OnValidate()
+            begin
+                case "Purchase Currency Method" of
+                    "Purchase Currency Method"::"Local Currency":
+                        "Purchase Currency Code" := '';
+                    "Purchase Currency Method"::"Vendor Currency":
+                        "Purchase Currency Code" := '';
+                end;
+            end;
+        }
+        field(50022; "Purchase Currency Code"; Code[10])
+        {
+            Caption = 'Purchase Currency Code';
+            TableRelation = Currency;
+        }
+        field(50023; "Ship-to Comment"; text[50])
+        {
+            DataClassification = CustomerContent;
         }
 
     }

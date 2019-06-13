@@ -18,6 +18,14 @@ pageextension 50037 "Purch. Rcpt. Hdr. Adv. pricing" extends "Posted Purchase Re
                 Editable = false;
             }
         }
+        addafter("Ship-to Country/Region Code")
+        {
+            field("Ship-To Comment"; "Ship-To Comment")
+            {
+                ApplicationArea = all;
+                Editable = false;
+            }
+        }
     }
 
 }

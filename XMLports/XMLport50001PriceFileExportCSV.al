@@ -27,7 +27,7 @@ xmlport 50001 "Price File Export CSV"
                 {
 
                 }
-                fieldelement(VendItemNo; item."Vendor Item No.")
+                fieldelement(VendItemNo; item."Vendor-Item-No.")
                 {
 
                 }
@@ -48,15 +48,18 @@ xmlport 50001 "Price File Export CSV"
 
                     trigger OnBeforePassVariable()
                     begin
-                        SalesPriceUnitPrice := Format(FindCheapestPrice(salesprice));
+                        SalesPriceUnitPrice := Format(FindCheapestPrice(salesprice, CustomerNo));
                     end;
 
                 }
                 textelement(CurrencyCode)
                 {
-                    trigger OnAfterAssignVariable()
+                    trigger OnBeforePassVariable()
                     begin
-                        CurrencyCode := CurrencyFilter;
+                        if CurrencyFilter = '' then
+                            CurrencyCode := GLSetup."LCY Code"
+                        else
+                            CurrencyCode := CurrencyFilter;
                     end;
                 }
                 tableelement(DefaultDimension; "Default Dimension")
@@ -86,7 +89,16 @@ xmlport 50001 "Price File Export CSV"
 
                     if ItemCategory.Get(Item."Item Category Code") then begin
                         if ItemCategory."Overwrite Quantity" then
-                            Invent := format(999);
+                            Invent := format(999)
+                        else begin
+                            Item2.ChangeCompany(GLSetup."Master Company");
+                            if (Item2.Get(Item."No.")) then begin
+                                Invt := SyncMasterData.UpdateInventoryOnItemFromLocation(Item2, GLSetup);
+                                if (Invt <= 0) and Item2."Blocked from purchase" then
+                                    currXMLport.skip;
+                            end;
+                            Invent := format(Invt);
+                        end;
                     end else begin
                         Item2.ChangeCompany(GLSetup."Master Company");
                         if (Item2.Get(Item."No.")) then begin
@@ -101,6 +113,7 @@ xmlport 50001 "Price File Export CSV"
                     if not salesprice.FindSet() then
                         currXMLport.Skip();
                 end;
+
             }
 
         }
@@ -109,6 +122,7 @@ xmlport 50001 "Price File Export CSV"
     trigger OnPreXmlPort()
     begin
         GLSetup.get;
+        GLSetup.TestField("Master Company");
 
         if CustomerNo = '' then
             currXMLport.Skip();
@@ -137,22 +151,22 @@ xmlport 50001 "Price File Export CSV"
         CustomerNo := customer."No.";
     end;
 
-    procedure FindCheapestPrice(SalesPrice: record "Sales Price"): Decimal
+    procedure FindCheapestPrice(SalesPrice: record "Sales Price"; CustomerNo: code[20]): Decimal
     var
 
     begin
         SalesPrice.SetRange("Item No.", Item."No.");
         SalesPrice.SetRange("Sales Type", SalesPrice."Sales Type"::Customer);
-        SalesPrice.SetRange("Sales Code", FindDiscountGroup());
+        SalesPrice.SetRange("Sales Code", CustomerNo);
         SalesPrice.SetRange("Currency Code", CurrencyFilter);
+        SalesPrice.setrange("Ending Date", 0D);
         if salesprice.FindLast() then
-            exit(salesprice."Unit Price")
-        else
-            SalesPrice.SetRange("Sales Type", SalesPrice."Sales Type"::"Customer Price Group");
+            exit(salesprice."Unit Price");
+        SalesPrice.SetRange("Sales Code", FindDiscountGroup());
+        SalesPrice.SetRange("Sales Type", SalesPrice."Sales Type"::"Customer Price Group");
         if SalesPrice.FindLast() then
-            exit(SalesPrice."Unit Price")
-        else
-            SalesPrice.SetRange("Sales Type", SalesPrice."Sales Type"::"All Customers");
+            exit(SalesPrice."Unit Price");
+        SalesPrice.SetRange("Sales Type", SalesPrice."Sales Type"::"All Customers");
         if SalesPrice.FindLast() then
             exit(SalesPrice."Unit Price");
     end;
@@ -160,16 +174,17 @@ xmlport 50001 "Price File Export CSV"
     procedure FindDiscountGroup(): code[20]
     var
         PriceGroupLink: record "Price Group Link";
+        Customer: record customer;
         SalesLineDiscountTemp: Record "Sales Line Discount" temporary;
         AdvancedPriceManage: Codeunit "Advanced Price Management";
     begin
         If AdvancedPriceManage.FindPriceGroupsFromItem(Item, SalesLineDiscountTemp) then begin
-            PriceGroupLink.SetRange("Customer No.", CustomerNo);
-            if PriceGroupLink.FindSet then begin
-                SalesLineDiscountTemp.SetRange("Sales Code", PriceGroupLink."Customer Discount Group Code");
-                if SalesLineDiscountTemp.FindFirst() then
-                    exit(SalesLineDiscountTemp."Sales Code")
-            end;
+            Customer.get(CustomerNo);
+            SalesLineDiscountTemp.SetRange("Sales Code", Customer."Customer Price Group");
+            if SalesLineDiscountTemp.FindFirst() then
+                exit(SalesLineDiscountTemp."Sales Code")
+            else
+                exit('');
         end else
             exit('');
     end;

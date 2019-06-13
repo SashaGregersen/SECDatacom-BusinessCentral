@@ -17,6 +17,8 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
                 BidPrices.GetPricesForItem("Document No.", "No.", "Currency Code", "Sell-to Customer No.", "Posting Date", BidPrices);
                 if Page.RunModal(50001, BidPrices) = "Action"::LookupOK then begin
                     Bid.Get(BidPrices."Bid No.");
+                    if bid.Deactivate then
+                        Error('The bid is deactivated and cannot be used');
                     "Bid No." := Bid."No.";
                     if ("Currency Code" = BidPrices."Currency Code") then
                         updateBidPrices(BidPrices, Bid.Claimable, Bid."Project Sale")
@@ -25,8 +27,9 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
                         BidPrices."Bid Unit Purchase Price" := CurrExchRate.ExchangeAmount(BidPrices."Bid Unit Purchase Price", BidPrices."Currency Code", "Currency Code", "Posting Date");
                         updateBidPrices(BidPrices, Bid.Claimable, Bid."Project Sale");
                     end;
-                end else
-                    Validate("Bid No.", '');
+                end;
+                /* if "Bid No." = '' then
+                    "Bid No." := ''; */
             end;
 
             trigger Onvalidate();
@@ -59,9 +62,11 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
                                         updateBidPrices(BidPrices, BidPrices.Claimable, Bid."Project Sale");
                                         exit;
                                     end;
-                                    BidPrices."Bid Unit Sales Price" := CurrExchRate.ExchangeAmount(BidPrices."Bid Unit Sales Price", BidPrices."Currency Code", "Currency Code", "Posting Date");
-                                    BidPrices."Bid Unit Purchase Price" := CurrExchRate.ExchangeAmount(BidPrices."Bid Unit Purchase Price", BidPrices."Currency Code", "Currency Code", "Posting Date");
-                                    updateBidPrices(BidPrices, BidPrices.Claimable, Bid."Project Sale");
+                                    if not Bid."Project Sale" then begin
+                                        BidPrices."Bid Unit Sales Price" := CurrExchRate.ExchangeAmount(BidPrices."Bid Unit Sales Price", BidPrices."Currency Code", "Currency Code", "Posting Date");
+                                        BidPrices."Bid Unit Purchase Price" := CurrExchRate.ExchangeAmount(BidPrices."Bid Unit Purchase Price", BidPrices."Currency Code", "Currency Code", "Posting Date");
+                                        updateBidPrices(BidPrices, BidPrices.Claimable, Bid."Project Sale");
+                                    end;
                                 end
                             end;
                         end;
@@ -84,7 +89,8 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
                 if "Bid Unit Sales Price" <> 0 then
                     validate("Unit Price", "Bid unit Sales Price")
                 else
-                    Validate(Quantity); //code here that finds the original sales price without bid
+                    if "Bid Unit Sales Price" <> xRec."Bid Unit Sales Price" then
+                        Validate(Quantity); //code here that finds the original sales price without bid
             end;
         }
         field(50002; "Bid Sales Discount"; Decimal)
@@ -155,6 +161,7 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
         field(50021; "Claimable"; Boolean)
         {
             DataClassification = ToBeClassified;
+            Editable = false;
 
             trigger Onvalidate();
             begin
@@ -226,8 +233,9 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
         }
     }
 
-    local procedure updateBidPrices(BidPrices: Record "Bid Item Price"; NewClaimableValue: Boolean; IsProjectSales: Boolean)
+    procedure updateBidPrices(BidPrices: Record "Bid Item Price"; NewClaimableValue: Boolean; IsProjectSales: Boolean)
     begin
+        //if BidPrices."Bid Unit Sales Price" <> "Bid Unit Sales Price" then
         validate("Bid Unit Sales Price", BidPrices."Bid Unit Sales Price");
         If IsProjectSales and (BidPrices."Bid Unit Sales Price" = 0) then begin
             Validate("Unit Price", 0);
@@ -256,10 +264,11 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
         end;
 
         if "KickBack Percentage" <> 0 then
-            If "Bid Unit Sales Price" <> 0 then
+            /* If "Bid Unit Sales Price" <> 0 then
                 "Kickback Amount" := ("Bid Unit Sales Price" * Quantity) * ("KickBack Percentage" / 100)
             else
-                "Kickback Amount" := ("Unit Price" * Quantity) * ("kickback percentage" / 100);
+                "Kickback Amount" := ("Unit Price" * Quantity) * ("kickback percentage" / 100); */
+                "Kickback Amount" := "Line Amount" * ("KickBack Percentage" / 100); //SDG 03-06-19
 
         if "Transfer Price Markup" <> 0 then
             If "Bid Unit Purchase Price" <> 0 then
@@ -269,7 +278,7 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
 
         If "Bid Unit Purchase Price" <> 0 then begin
             "Calculated Purchase Price" := ("Bid Unit Purchase Price" * Quantity) + TransferPriceAmount;
-            //if not Claimable then
+            //if not Claimable then            //    
             //    "Purchase Price on Purchase Order" := "Bid Unit Purchase Price"
             //else
             //    "Purchase Price on Purchase Order" := "Unit Purchase Price";

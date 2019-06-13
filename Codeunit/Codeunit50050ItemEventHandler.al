@@ -10,7 +10,7 @@ codeunit 50050 "Item Event handler"
         SyncMasterData: Codeunit "Synchronize Master Data";
         AdvPriceMgt: Codeunit "Advanced Price Management";
     begin
-        If not runtrigger then
+        If not runtrigger and rec.IsTemporary then
             EXIT;
         if Rec."Item Disc. Group" <> '' then
             AdvPriceMgt.UpdateItemPurchaseDicountsFromItemDiscGroup(Rec);
@@ -30,7 +30,7 @@ codeunit 50050 "Item Event handler"
         SyncMasterData: Codeunit "Synchronize Master Data";
         AdvPriceMgt: Codeunit "Advanced Price Management";
     begin
-        If not runtrigger then
+        If not runtrigger and rec.IsTemporary then
             EXIT;
         if Rec."Item Disc. Group" <> '' then
             AdvPriceMgt.UpdateItemPurchaseDicountsFromItemDiscGroup(Rec);
@@ -64,15 +64,6 @@ codeunit 50050 "Item Event handler"
             Rec.Validate("Vendor Currency", Vendor."Currency Code");
     end;
 
-    [EventSubscriber(ObjectType::table, database::"Item", 'OnAfterValidateEvent', 'Vendor Item No.', true, true)]
-    local procedure ItemOnAfterValidateVendorItemNo(var Rec: Record "Item")
-    var
-        Vendor: Record Vendor;
-    begin
-        rec."Vendor-Item-No." := Rec."Vendor Item No.";
-    end;
-
-
     [EventSubscriber(ObjectType::table, database::"Item", 'OnAfterValidateEvent', 'Item Disc. Group', true, true)]
     local procedure ItemOnAfterValidateItemDiscGroup(var Rec: Record "Item")
     var
@@ -82,6 +73,8 @@ codeunit 50050 "Item Event handler"
     begin
         if not ItemDiscGroup.Get(Rec."Item Disc. Group") then
             exit;
+        if ItemDiscGroup."Use Orginal Vendor in Subs" then
+            rec.Validate("IC partner Vendor No.", '');
         ItemDiscPct.SetRange("Item Disc. Group Code", ItemDiscGroup.Code);
         ItemDiscPct.SetAscending("Start Date", false);
         if not ItemDiscPct.FindLast() then

@@ -76,7 +76,7 @@ codeunit 50005 "IC Sync Management"
             repeat
                 InventorySetup.ChangeCompany(CompanyRec.Name);
                 if InventorySetup.Get() then begin
-                    if InventorySetup."Receive Synchronized Items" and InventorySetup."Synchronize Item" then begin
+                    if InventorySetup."Receive Synchronized Items" or InventorySetup."Synchronize Item" then begin
                         CompanyTemp := CompanyRec;
                         if not CompanyTemp.Insert(false) then;
                     end;
@@ -84,7 +84,7 @@ codeunit 50005 "IC Sync Management"
             until CompanyRec.Next() = 0;
     end;
 
-    procedure CopyPurchasePricesToOtherCompanies(ItemNo: code[20])
+    procedure CopyTransferPurchasePricesToOtherCompanies(ItemNo: code[20])
     //Add the specific sales prices from parent company as specific purchase prices in the child company
 
     var
@@ -92,6 +92,7 @@ codeunit 50005 "IC Sync Management"
         ICPartnerInOtherCompany: Record "IC Partner";
         SalesPrice: Record "Sales Price";
         PurchasePrice: Record "Purchase Price";
+        Item: record item;
     begin
         ICPartner.SetFilter("Inbox Details", '<>%1', '');
         if ICPartner.FindSet() then
@@ -108,6 +109,51 @@ codeunit 50005 "IC Sync Management"
                             PurchasePrice.Init();
                             PurchasePrice."Item No." := SalesPrice."Item No.";
                             PurchasePrice."Vendor No." := ICPartnerInOtherCompany."Vendor No.";
+                            PurchasePrice."Unit of Measure Code" := SalesPrice."Unit of Measure Code";
+                            if SalesPrice."Currency Code" <> '' then begin
+                                if SalesPrice."Currency Code" = ICPartner."Currency Code" then
+                                    PurchasePrice."Currency Code" := ''
+                                else
+                                    PurchasePrice."Currency Code" := SalesPrice."Currency Code";
+                            end else
+                                PurchasePrice."Currency Code" := ICPartnerInOtherCompany."Currency Code";
+                            PurchasePrice."Starting Date" := SalesPrice."Starting Date";
+                            PurchasePrice."Ending Date" := SalesPrice."Ending Date";
+                            PurchasePrice."Minimum Quantity" := SalesPrice."Minimum Quantity";
+                            PurchasePrice."Direct Unit Cost" := SalesPrice."Unit Price";
+                            if not PurchasePrice.Insert(false) then
+                                PurchasePrice.Modify(false);
+                        end;
+                    until SalesPrice.Next() = 0;
+            until ICPartner.Next() = 0;
+    end;
+
+    procedure CopyPurchasePricesToOtherCompanies(ItemNo: code[20])
+    //Add the specific sales prices from parent company as specific purchase prices in the child company
+
+    var
+        ICPartner: Record "IC Partner";
+        ICPartnerInOtherCompany: Record "IC Partner";
+        SalesPrice: Record "Sales Price";
+        PurchasePrice: Record "Purchase Price";
+        Item: record Item;
+    begin
+        Item.get(ItemNo);
+        ICPartner.SetFilter("Inbox Details", '<>%1', '');
+        if ICPartner.FindSet() then
+            repeat
+                SalesPrice.SetRange("Item No.", ItemNo);
+                SalesPrice.SetRange("Sales Type", SalesPrice."Sales Type"::Customer);
+                SalesPrice.SetRange("Sales Code", ICPartner."Customer No.");
+                if SalesPrice.FindSet() then
+                    repeat
+                        ICPartnerInOtherCompany.ChangeCompany(ICPartner."Inbox Details");
+                        ICPartnerInOtherCompany.SetRange("Inbox Details", CompanyName());
+                        if ICPartnerInOtherCompany.FindFirst() then begin
+                            PurchasePrice.ChangeCompany(ICPartner."Inbox Details");
+                            PurchasePrice.Init();
+                            PurchasePrice."Item No." := SalesPrice."Item No.";
+                            PurchasePrice."Vendor No." := Item."Vendor No.";
                             PurchasePrice."Unit of Measure Code" := SalesPrice."Unit of Measure Code";
                             if SalesPrice."Currency Code" <> '' then begin
                                 if SalesPrice."Currency Code" = ICPartner."Currency Code" then
@@ -267,14 +313,20 @@ codeunit 50005 "IC Sync Management"
     var
         CompanyTemp: Record Company temporary;
         SessionID: Integer;
+        //ItemOtherCompany: record item;
     begin
         GetCompaniesToDeleteItem(CompanyTemp);
         if CompanyTemp.Count() = 0 then
             exit;
+
         if CompanyTemp.FindSet() then
             repeat
                 SessionID := RunDeleteItemInOtherCompany(Item, CompanyTemp.Name);
                 CheckSessionForTimeoutAndError(SessionID, 5, CompanyTemp.Name);
+                /* ItemOtherCompany.ChangeCompany(CompanyTemp.Name);
+                if ItemOtherCompany.get(item."No.") then begin
+                    ItemOtherCompany.delete(false);
+                end; */
             until CompanyTemp.Next() = 0;
     end;
 
@@ -308,28 +360,6 @@ codeunit 50005 "IC Sync Management"
         end;
     end;
 
-    /* procedure ModifyICSalesOrderInOtherCompany(var rec: record "Sales Line"; ICCompany: text[250])
-
-    var
-        CompanyTemp: Record Company temporary;
-        SessionID: Integer;
-
-    begin
-        SessionID := RunModifyICSalesOrderInOtherCompany(rec, ICCompany);
-        CheckSessionForTimeoutAndError(SessionID, 5, ICCompany);
-    end;
-
-    procedure ModifyICPurchaseOrderInOtherCompany(var rec: record "Purchase Line"; ICCompany: text[250])
-
-    var
-        CompanyTemp: Record Company temporary;
-        SessionID: Integer;
-
-    begin
-        SessionID := RunModifyICPurchaseOrderInOtherCompany(rec, ICCompany);
-        CheckSessionForTimeoutAndError(SessionID, 5, ICCompany);
-    end; */
-
     procedure PostPurchaseOrderInOtherCompany(PurchaseOrder: Record "Purchase Header"; PostInCompanyName: Text[35])
 
     var
@@ -338,7 +368,7 @@ codeunit 50005 "IC Sync Management"
         if PostInCompanyName = '' then
             exit;
         SessionID := RunPostPurchaseOrderInOtherCompany(PurchaseOrder, PostInCompanyName);
-        CheckSessionForTimeoutAndError(SessionID, 5, PostInCompanyName);
+        CheckSessionForTimeoutAndError(SessionID, 180, PostInCompanyName);
     end;
 
     procedure PostSalesOrderInOtherCompany(SalesOrder: Record "Sales Header"; PostInCompanyName: Text[35])
@@ -488,28 +518,6 @@ codeunit 50005 "IC Sync Management"
         Commit();
     end;
 
-    /* local procedure RunModifyICSalesOrderInOtherCompany(SalesLine: record "Sales Line"; RunInCompany: Text) SessionID: Integer
-    var
-        OK: Boolean;
-        SessionEventComment: Text;
-    begin
-        OK := StartSession(SessionID, 50025, RunInCompany, SalesLine);
-        if not OK then
-            Error(GetLastErrorText());
-        Commit();
-    end;
-
-    local procedure RunModifyICPurchaseOrderInOtherCompany(PurchLine: record "Purchase Line"; RunInCompany: Text) SessionID: Integer
-    var
-        OK: Boolean;
-        SessionEventComment: Text;
-    begin
-        OK := StartSession(SessionID, 50027, RunInCompany, PurchLine);
-        if not OK then
-            Error(GetLastErrorText());
-        Commit();
-    end; */
-
     local procedure RunPostPurchaseOrderInOtherCompany(Purchaseorder: Record "Purchase Header"; RunInCompany: Text) SessionID: Integer
     var
         OK: Boolean;
@@ -589,56 +597,6 @@ codeunit 50005 "IC Sync Management"
         else
             exit('');
     END;
-
-    /* procedure UpdateQtyToInvoiceInICCompany(var SalesLine: Record "Sales Line")
-    var
-        ICpartner: record "IC Partner";
-        SalesHeader: record "Sales Header";
-        ICEvents: codeunit "IC Event Handler";
-        SalesLineOtherCompany: record "Sales Line";
-        PurchLineOtherCompany: Record "Purchase Line";
-        PurchOrderEvents: codeunit "Purchase Order Event Handler";
-        ICSyncMgt: codeunit "IC Sync Management";
-    begin
-        if (SalesLine."IC SO No." <> '') and (SalesLine."IC SO Line No." <> 0) and (SalesLine."IC PO No." <> '') AND (SalesLine."IC PO Line No." <> 0) then begin
-            SalesHeader.get(SalesLine."Document Type", SalesLine."Document No.");
-            if ICEvents.GetICPartner(ICpartner, SalesHeader.Subsidiary) then begin
-                SalesLineOtherCompany.ChangeCompany(ICpartner."Inbox Details");
-                SalesLineOtherCompany.get(SalesLine."Document Type", SalesLine."IC SO No.", SalesLine."IC SO Line No.");
-                SalesLineOtherCompany."Qty. to Invoice" := SalesLine."Qty. to Invoice";
-                ICSyncMgt.ModifyICSalesOrderInOtherCompany(SalesLineOtherCompany, ICpartner."Inbox Details");
-                PurchLineOtherCompany.ChangeCompany(ICpartner."Inbox Details");
-                PurchLineOtherCompany.get(SalesLine."Document Type", SalesLine."IC PO No.", SalesLine."IC PO Line No.");
-                PurchLineOtherCompany."Qty. to Invoice" := SalesLine."Qty. to Invoice";
-                ICSyncMgt.ModifyICPurchaseOrderInOtherCompany(PurchLineOtherCompany, ICpartner."Inbox Details");
-            end;
-        end;
-    end;
-
-    procedure UpdateQtyToShipInICCompany(var Salesline: record "Sales Line")
-    var
-        ICpartner: record "IC Partner";
-        SalesHeader: record "Sales Header";
-        ICEvents: codeunit "IC Event Handler";
-        SalesLineOtherCompany: record "Sales Line";
-        PurchLineOtherCompany: Record "Purchase Line";
-        PurchOrderEvents: codeunit "Purchase Order Event Handler";
-        ICSyncMgt: codeunit "IC Sync Management";
-    begin
-        if (Salesline."IC SO No." <> '') and (Salesline."IC SO Line No." <> 0) and (Salesline."IC PO No." <> '') AND (Salesline."IC PO Line No." <> 0) then begin
-            SalesHeader.get(Salesline."Document Type", Salesline."Document No.");
-            if ICEvents.GetICPartner(ICpartner, SalesHeader.Subsidiary) then begin
-                SalesLineOtherCompany.ChangeCompany(ICpartner."Inbox Details");
-                SalesLineOtherCompany.get(Salesline."Document Type", Salesline."IC SO No.", Salesline."IC SO Line No.");
-                SalesLineOtherCompany."Qty. to Ship" := Salesline."Qty. to Ship";
-                ICSyncMgt.ModifyICSalesOrderInOtherCompany(SalesLineOtherCompany, ICpartner."Inbox Details");
-                PurchLineOtherCompany.ChangeCompany(ICpartner."Inbox Details");
-                PurchLineOtherCompany.get(Salesline."Document Type", Salesline."IC PO No.", Salesline."IC PO Line No.");
-                PurchLineOtherCompany."Qty. to Receive" := Salesline."Qty. to Ship";
-                ICSyncMgt.ModifyICPurchaseOrderInOtherCompany(PurchLineOtherCompany, ICpartner."Inbox Details");
-            end;
-        end;
-    end; */
 
 
     var

@@ -19,7 +19,10 @@ table 50001 "Bid Item Price"
                 ItemFilter := GetFilter("item No.");
                 if ItemFilter <> '' then begin
                     Item.Get(ItemFilter);
-                    Bid.SetRange("Vendor No.", Item."Vendor No.");
+                    if Item."IC partner Vendor No." <> '' then
+                        bid.SetRange("Vendor No.", item."IC partner Vendor No.")
+                    else
+                        Bid.SetRange("Vendor No.", Item."Vendor No.");
                 end;
                 if Page.RunModal(50000, Bid) = Action::LookupOK then
                     Validate("Bid No.", Bid."No.");
@@ -43,7 +46,7 @@ table 50001 "Bid Item Price"
         field(3; "Customer No."; code[20])
         {
             DataClassification = ToBeClassified;
-            TableRelation = Customer."No.";
+            TableRelation = Customer."No." WHERE ("Customer Type" = CONST (Reseller));
         }
         field(4; "Expiry Date"; date)
         {
@@ -71,6 +74,10 @@ table 50001 "Bid Item Price"
                 if "Currency Code" <> xRec."Currency Code" then
                     UpdateListprice();
             end;
+        }
+        field(12; "Entry No."; Integer)
+        {
+            DataClassification = ToBeClassified;
         }
         field(50001; "Bid Unit Sales Price"; Decimal)
         {
@@ -123,7 +130,10 @@ table 50001 "Bid Item Price"
         field(50021; "Claimable"; Boolean)
         {
             DataClassification = ToBeClassified;
+            Editable = false;
+
         }
+
     }
 
     keys
@@ -131,6 +141,10 @@ table 50001 "Bid Item Price"
         key(PK; "Bid No.", "item No.", "Customer No.", "Currency Code")
         {
             Clustered = true;
+        }
+        key(EntryNo; "Entry No.")
+        {
+
         }
     }
 
@@ -141,21 +155,65 @@ table 50001 "Bid Item Price"
     trigger OnInsert();
     var
         Bid: Record Bid;
-
+        Bid2: record bid;
+        Bidprices: record "Bid Item Price";
     begin
         TestField("Bid No.");
         If Bid.Get("Bid No.") then begin
             "Expiry Date" := Bid."Expiry Date";
             Claimable := Bid.Claimable;
+            "Entry No." := bid."Entry No.";
         end;
     end;
 
     trigger OnModify();
+    var
+        BidPrices: record "Bid Item Price";
+        Bid: record bid;
+        Bid2: record bid;
     begin
+        If Bid.Get("Bid No.") then begin
+            Bid2.setrange("Vendor Bid No.", bid."Vendor Bid No.");
+            if bid2.FindSet() then
+                repeat
+                    BidPrices.setrange("Entry No.", Bid2."Entry No.");
+                    BidPrices.SetFilter("Customer No.", '<>%1', '');
+                    BidPrices.SetRange("item No.", rec."item No.");
+                    BidPrices.setrange("Currency Code", rec."Currency Code");
+                    BidPrices.setfilter("Bid No.", '<>%1', rec."Bid No.");
+                    if BidPrices.FindSet() then
+                        repeat
+                            BidPrices.validate("Bid Unit Purchase Price", rec."Bid Unit Purchase Price");
+                            BidPrices.validate("Bid Purchase Discount Pct.", rec."Bid Purchase Discount Pct.");
+                            BidPrices.validate("Bid Unit Sales Price", rec."Bid Unit sales Price");
+                            BidPrices.validate("Bid Sales Discount Pct.", rec."Bid Sales Discount Pct.");
+                            BidPrices.Modify(false);
+                        until BidPrices.next = 0;
+                until bid2.next = 0;
+        end;
     end;
 
     trigger OnDelete();
+    var
+        BidPrices: record "Bid Item Price";
+        Bid: record bid;
+        Bid2: record bid;
     begin
+        If Bid.Get("Bid No.") then begin
+            Bid2.setrange("Vendor Bid No.", bid."Vendor Bid No.");
+            if bid2.FindSet() then
+                repeat
+                    BidPrices.setrange("Entry No.", Bid2."Entry No.");
+                    BidPrices.SetFilter("Customer No.", '<>%1', '');
+                    BidPrices.SetRange("item No.", rec."item No.");
+                    BidPrices.setrange("Currency Code", rec."Currency Code");
+                    BidPrices.setfilter("Bid No.", '<>%1', rec."Bid No.");
+                    if BidPrices.FindSet() then
+                        repeat
+                            BidPrices.delete(false);
+                        until BidPrices.next = 0;
+                until bid2.next = 0;
+        end;
     end;
 
     trigger OnRename();
@@ -214,7 +272,7 @@ table 50001 "Bid Item Price"
                 if (not BidPrices.AlreadyUsed(SalesHeaderNo)) and (not BidPrices.HasExpired(OnDate)) then
                     BidPrices.Mark(true);
             until BidPrices.Next() = 0;
-        BidPrices.setrange("Customer No.");
+        BidPrices.setrange("Customer No.", '');
         if BidPrices.FindFirst() then
             repeat
                 if (not BidPrices.AlreadyUsed(SalesHeaderNo)) and (not BidPrices.HasExpired(OnDate)) then
@@ -228,8 +286,10 @@ table 50001 "Bid Item Price"
                         BidPrices.Mark(true);
                 until BidPrices.Next() = 0;
         end;
+        BidPrices.setrange("Customer No.");
         BidPrices.SetRange("Currency Code");
         BidPrices.MarkedOnly(true);
     end;
+
 
 }

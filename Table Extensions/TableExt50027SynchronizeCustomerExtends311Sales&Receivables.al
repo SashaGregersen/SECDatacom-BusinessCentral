@@ -56,10 +56,20 @@ tableextension 50027 "Synchronize Customer" extends "Sales & Receivables Setup"
             DataClassification = ToBeClassified;
             TableRelation = "Config. Template Header".Code where ("Table ID" = const (27));
         }
+        field(50120; "Transaction Type"; Code[20])
+        {
+            DataClassification = ToBeClassified;
+            TableRelation = Dimension;
+        }
 
         field(66050; "Cygate Endpoint"; Text[150])
         {
             DataClassification = ToBeClassified;
+        }
+        field(66051; "Cygate Customer No."; Code[20])
+        {
+            DataClassification = ToBeClassified;
+            TableRelation = customer;
         }
     }
 

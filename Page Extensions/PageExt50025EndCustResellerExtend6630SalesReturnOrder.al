@@ -112,6 +112,22 @@ pageextension 50025 "End Customer and Reseller 5" extends 6630
     actions
     {
         // Add changes to page actions here
+        addlast(Processing)
+        {
+            action(AddTransActionType)
+            {
+                Caption = 'Add Transaction Type';
+                Image = ChangeDimensions;
+                ApplicationArea = all;
+
+                trigger OnAction()
+                var
+                    SalesOrderHandler: Codeunit "Sales Order Event Handler";
+                begin
+                    SalesOrderHandler.AddTransactionTypeToSalesDocument(Rec);
+                end;
+            }
+        }
     }
 
 

@@ -297,7 +297,7 @@ report 50009 "SEC Sales - Shipment"
                         Column(Vendor_Item_No_Lbl; VendorItemNoLbl)
                         {
                         }
-                        column(Vendor_Item_No; item."Vendor Item No.")
+                        column(Vendor_Item_No; item."Vendor-Item-No.")
                         {
                         }
                         dataitem(DimensionLoop2; "Integer")

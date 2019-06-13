@@ -32,7 +32,9 @@ codeunit 50000 "Advanced Price Management"
             repeat
                 CreatePricesForItemFromItemDiscountGroups(ItemTemp);               //lav priser basesert på sales discounts for hver vare 
                 if ItemTemp."Vendor No." <> '' then
-                    CreatePricesForICPartners(ItemTemp."No.", ItemTemp."Vendor No.");  //lav transfer priser for partnere og flyt tdem til andre selskaber
+                    CreatePricesForICPartners(ItemTemp."No.", ItemTemp."Vendor No.")  //lav transfer priser for partnere og flyt tdem til andre selskaber
+
+
             until ItemTemp.Next() = 0;
     end;
 
@@ -262,6 +264,8 @@ codeunit 50000 "Advanced Price Management"
     begin
         FindPriceCurrencies('', true, CurrencyTemp);
         SalesDiscountGroup.CopyFilters(DiscontGroupFilters);
+        SalesDiscountGroup.SetFilter("Ending Date", '=%1', 0D);
+        SalesDiscountGroup.SetFilter("Starting Date", '<%1', WorkDate());
         if SalesDiscountGroup.FindSet then
             repeat
                 if FindItemsInItemDiscGroup(ItemTemp, SalesDiscountGroup.Code) then begin
@@ -285,11 +289,15 @@ codeunit 50000 "Advanced Price Management"
         ImplementPrices: Report "Implement Price Change";
         Suggestprices: report "Suggest Sales Price on Wksh.";
         ICSyncMgt: Codeunit "IC Sync Management";
+        ItemDiscountGroup: record "Item Discount Group";
     begin
-
         Item.Get(ItemNo);
-        if Item."Transfer Price %" = 0 then
+        if not ItemDiscountGroup.Get(item."Item Disc. Group") then
             exit;
+        if Item."Transfer Price %" = 0 then begin
+            if not ItemDiscountGroup."Use Orginal Vendor in Subs" then
+                exit;
+        end;
         if ICPartner.FindSet() then
             repeat
                 if ICPartner."Customer No." <> '' then begin
@@ -303,7 +311,10 @@ codeunit 50000 "Advanced Price Management"
                         Salesprice."Item No." := PurchasePrice."Item No.";
                         Salesprice."Unit of Measure Code" := PurchasePrice."Unit of Measure Code";
                         Salesprice."Minimum Quantity" := PurchasePrice."Minimum Quantity";
-                        Salesprice."Unit Price" := round(PurchasePrice."Direct Unit Cost" / ((100 - Item."Transfer Price %") / 100));
+                        if not ItemDiscountGroup."Use Orginal Vendor in Subs" then
+                            Salesprice."Unit Price" := round(PurchasePrice."Direct Unit Cost" / ((100 - Item."Transfer Price %") / 100))
+                        else
+                            SalesPrice."Unit Price" := PurchasePrice."Direct Unit Cost";
                         if not Salesprice.Insert(true) then
                             Salesprice.Modify(true);
 
@@ -331,7 +342,10 @@ codeunit 50000 "Advanced Price Management"
                     end;
                 end;
             until ICPartner.Next() = 0;
-        ICSyncMgt.CopyPurchasePricesToOtherCompanies(Item."No.");
+        if ItemDiscountGroup."Use Orginal Vendor in Subs" then
+            ICSyncMgt.CopyPurchasePricesToOtherCompanies(Item."No.")
+        else
+            ICSyncMgt.CopyTransferPurchasePricesToOtherCompanies(Item."No.");
     end;
 
     local procedure CreatePricesForItemFromItemDiscountGroups(Item: Record Item)
@@ -505,16 +519,19 @@ codeunit 50000 "Advanced Price Management"
         end;
     end;
 
-    procedure ExchangeAmtLCYToFCYAndFCYToLCY(SalesPrice: record "Sales Price"; CurrencyFactorCode: code[10])
+    procedure ExchangeAmtFCYToLCY(SalesPrice: record "Sales Price"; SalesPrice2: record "sales price"; CurrencyFactorCode: code[10])
     var
         CurrencyExcRate: Record "Currency Exchange Rate";
+        Currency: record Currency;
         Factor: Decimal;
         FromLCYToFCY: Decimal;
     begin
         Factor := CurrencyExcRate.GetCurrentCurrencyFactor(CurrencyFactorCode);
-        FromLCYToFCY := CurrencyExcRate.ExchangeAmtLCYToFCY(Today(), CurrencyFactorCode, Salesprice."Unit Price", Factor);
-        Salesprice.Validate("Unit Price", CurrencyExcRate.ExchangeAmtFCYToLCY(Today(), CurrencyFactorCode, FromLCYToFCY, Factor));
-        Salesprice.Modify(true);
+        //CurrencyExcRate.findlast;
+        //FromLCYToFCY := CurrencyExcRate.ExchangeAmtLCYToFCY(CurrencyExcRate."Starting Date", CurrencyFactorCode, Salesprice."Unit Price", Factor);
+        Salesprice2.Validate("Unit Price", CurrencyExcRate.ExchangeAmtFCYToLCY(CurrencyExcRate."Starting Date", CurrencyFactorCode, SalesPrice."Unit Price", Factor));
+        Salesprice2.Modify(true);
+
     end;
 
     procedure ExchangeAmtFCYToFCY(SalesPrice: Record "Sales Price"; SalesPrice2: Record "Sales Price")
@@ -523,7 +540,9 @@ codeunit 50000 "Advanced Price Management"
         Factor: Decimal;
         FromLCYToFCY: Decimal;
     begin
-        Salesprice2.Validate("Unit Price", CurrencyExcRate.ExchangeAmtFCYToFCY(Today(), SalesPrice."Currency Code", SalesPrice2."Currency Code", SalesPrice."Unit Price"));
+        CurrencyExcRate.setrange("Currency Code", SalesPrice."Currency Code");
+        CurrencyExcRate.findlast;
+        Salesprice2.Validate("Unit Price", CurrencyExcRate.ExchangeAmtFCYToFCY(CurrencyExcRate."Starting Date", SalesPrice."Currency Code", SalesPrice2."Currency Code", SalesPrice."Unit Price"));
         SalesPrice2.Modify(true);
     end;
 
@@ -533,7 +552,8 @@ codeunit 50000 "Advanced Price Management"
         Factor: Decimal;
     begin
         Factor := CurrencyExcRate.GetCurrentCurrencyFactor(SalesPriceFCY."Currency Code");
-        SalesPriceFCY.Validate("Unit Price", CurrencyExcRate.ExchangeAmtLCYToFCY(Today(), SalesPriceFCY."Currency Code", SalesPriceLCY."Unit Price", Factor));
+        //CurrencyExcRate.findlast;
+        SalesPriceFCY.Validate("Unit Price", CurrencyExcRate.ExchangeAmtLCYToFCY(CurrencyExcRate."Starting Date", SalesPriceFCY."Currency Code", SalesPriceLCY."Unit Price", Factor));
         SalesPriceFCY.Modify(true);
     end;
 

@@ -12,6 +12,11 @@ tableextension 50041 "Purch. Rcpt. Hdr. Adv. Pricing" extends "Purch. Rcpt. Head
             DataClassification = ToBeClassified;
             Editable = false;
         }
+        field(50004; "Ship-To Comment"; Text[100])
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
     }
 
 }

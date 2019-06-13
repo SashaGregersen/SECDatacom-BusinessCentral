@@ -30,6 +30,10 @@ page 50013 "General Journal Provisions"
                     ApplicationArea = All;
 
                 }
+                field("Shortcut Dimension 1 Code"; "Shortcut Dimension 1 Code")
+                {
+                    ApplicationArea = all;
+                }
             }
 
         }

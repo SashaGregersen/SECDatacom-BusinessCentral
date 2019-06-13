@@ -2,6 +2,17 @@ pageextension 50021 "End Customer and Reseller" extends 42
 {
     layout
     {
+        addafter("Shipping Advice")
+        {
+            field("SEC Shipping Advice"; xShippingAdvice)
+            {
+                ApplicationArea = all;
+            }
+        }
+        modify("Shipping Advice")
+        {
+            Visible = false;
+        }
         addbefore("Sell-to Customer No.")
         {
             field("End Customer"; "End Customer")
@@ -34,16 +45,19 @@ pageextension 50021 "End Customer and Reseller" extends 42
             {
                 ApplicationArea = all;
                 Importance = Additional;
+                Editable = false;
             }
             field("End Customer Phone No."; "End Customer Phone No.")
             {
                 ApplicationArea = all;
                 Importance = Additional;
+                Editable = false;
             }
             field("End Customer Email"; "End Customer Email")
             {
                 ApplicationArea = all;
                 Importance = Additional;
+                Editable = false;
             }
         }
         addafter("reseller")
@@ -129,6 +143,10 @@ pageextension 50021 "End Customer and Reseller" extends 42
                 ApplicationArea = all;
                 Caption = 'E-mail';
             }
+            field("Ship-to Comment"; "Ship-to Comment")
+            {
+                ApplicationArea = all;
+            }
         }
         modify("Sell-to Customer No.")
         {
@@ -145,12 +163,49 @@ pageextension 50021 "End Customer and Reseller" extends 42
                 ApplicationArea = all;
                 Caption = 'Sell-to Customer Name';
             }
+            field("Purchase Currency Method"; "Purchase Currency Method")
+            {
+                ApplicationArea = all;
+                Importance = Promoted;
+                Editable = true;
+            }
+            field("Purchase Currency Code"; "Purchase Currency Code")
+            {
+                ApplicationArea = all;
+                Importance = Promoted;
+                Editable = ("Purchase Currency Method" = "Purchase Currency Method"::"Same Currency");
+            }
         }
 
     }
 
     actions
     {
+        addafter("Create Inventor&y Put-away/Pick")
+        {
+            action(SECCreateInvtPutAwayPick)
+            {
+                Caption = 'Create Inventor&y Put-away/Pick';
+                Promoted = true;
+                PromotedCategory = Process;
+                Image = CreateInventoryPickup;
+                AccessByPermission = TableData "Posted Invt. Pick Header" = R;
+                Ellipsis = true;
+                ToolTip = 'Create an inventory put-away or inventory pick to handle items on the document according to a basic warehouse configuration that does not require warehouse receipt or shipment documents.';
+
+                trigger OnAction()
+                var
+                    SalesOrderAction: Codeunit "Sales Order Event Handler";
+                begin
+                    SalesOrderAction.SECCheckShippingAdvice(Rec);
+                    CreateInvtPutAwayPick();
+                end;
+            }
+        }
+        modify("Create Inventor&y Put-away/Pick")
+        {
+            Visible = false;
+        }
         addafter("Create Purchase Document")
         {
             action("Import Project Sale")
@@ -204,6 +259,20 @@ pageextension 50021 "End Customer and Reseller" extends 42
                 trigger OnAction();
                 begin
                     SalesOrder.Run();
+                end;
+            }
+
+            action(AddTransActionType)
+            {
+                Caption = 'Add Transaction Type';
+                Image = ChangeDimensions;
+                ApplicationArea = all;
+
+                trigger OnAction()
+                var
+                    SalesOrderHandler: Codeunit "Sales Order Event Handler";
+                begin
+                    SalesOrderHandler.AddTransactionTypeToSalesDocument(Rec);
                 end;
             }
         }

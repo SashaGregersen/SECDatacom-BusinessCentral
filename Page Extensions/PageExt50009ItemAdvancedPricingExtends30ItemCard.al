@@ -4,12 +4,20 @@ pageextension 50009 "Item Adv. Pricing" extends "Item Card"
     {
         addafter("Vendor Item No.")
         {
+            field("Vendor-Item-No."; "Vendor-Item-No.")
+            {
+                ApplicationArea = all;
+                Caption = 'Vendor Item No.';
+            }
             field("Vendor Currency"; "Vendor Currency")
             {
                 ApplicationArea = All;
             }
         }
-
+        modify("Vendor Item No.")
+        {
+            Visible = false;
+        }
         addafter("Profit %")
         {
             field("Transfer Price %"; "Transfer Price %")
@@ -69,8 +77,9 @@ pageextension 50009 "Item Adv. Pricing" extends "Item Card"
                     SalesPriceWksPage: Page "Sales Price Worksheet";
                     SalesPriceWks: Record "Sales Price Worksheet";
                 begin
-                    SalesPriceWks.CreateNewListPriceFromItem(Rec);
+                    SalesPriceWks.CreateNewListPriceFromItem(Rec, true);
                     Commit();
+                    SalesPriceWks.setrange("Item No.", "No.");
                     SalesPriceWksPage.SetTableView(SalesPriceWks);
                     SalesPriceWksPage.RunModal();
                 end;

@@ -49,6 +49,10 @@ page 50001 "Bid Prices"
                 {
                     ApplicationArea = all;
                 }
+                field(Claimable; Claimable)
+                {
+                    ApplicationArea = all;
+                }
             }
         }
     }
@@ -75,6 +79,7 @@ page 50001 "Bid Prices"
                     Message('Bid No. %1 created', Bid."No.");
                 end;
             }
+
         }
     }
 

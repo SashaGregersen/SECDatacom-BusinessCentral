@@ -38,6 +38,10 @@ page 50000 "Bid List"
                 {
                     ApplicationArea = All;
                 }
+                field(Deactivate; Deactivate)
+                {
+                    ApplicationArea = all;
+                }
             }
 
         }
@@ -50,6 +54,16 @@ page 50000 "Bid List"
     {
         area(processing)
         {
+            action("Import Bid Prices")
+            {
+                Image = ImportExcel;
+                trigger OnAction()
+                var
+                    FilMgt: Codeunit "File Management Import";
+                begin
+                    FilMgt.ImportBidPricesFromCSV();
+                end;
+            }
             action("Show Prices")
             {
                 trigger OnAction();
@@ -100,6 +114,17 @@ page 50000 "Bid List"
                     BidMgt: Codeunit "Bid Management";
                 begin
                     BidMgt.CopyBidToOtherCompanies(Rec);
+                end;
+            }
+            action("Copy bid")
+            {
+                ApplicationArea = all;
+
+                trigger OnAction()
+                var
+                    BidMgt: codeunit "Bid Management";
+                begin
+                    BidMgt.CopyBidToCustomer(Rec);
                 end;
             }
         }

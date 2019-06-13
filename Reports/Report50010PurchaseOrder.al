@@ -91,6 +91,18 @@ report 50010 "SEC Purchase Order"
             column(EndCustCountry; EndcustomerCountryRegion.Name)
             {
             }
+            column(End_Customer_Contact_No_; "End Customer Contact No.")
+            {
+
+            }
+            column(End_Customer_Phone_No_; EndCustPhone)
+            {
+
+            }
+            column(End_Customer_Email_No_; EndCustEmail)
+            {
+
+            }
             column(Reseller_Lbl; FieldCaption("Reseller"))
             {
             }
@@ -230,6 +242,9 @@ report 50010 "SEC Purchase Order"
                     column(ShipmentMethodDesc; ShipmentMethod.Description)
                     {
                     }
+                    column(ShipmentMethodCode; ShipmentMethod.Code)
+                    {
+                    }
                     column(PrepmtPaymentTermsDesc; PrepmtPaymentTerms.Description)
                     {
                     }
@@ -324,6 +339,8 @@ report 50010 "SEC Purchase Order"
                         begin
                             CurrReport.Break;
                         end;
+
+
                     }
                     dataitem(RoundLoop; "Integer")
                     {
@@ -460,6 +477,14 @@ report 50010 "SEC Purchase Order"
                         column(BidNo; "Purchase Line"."Bid No.")
                         {
                         }
+                        //>> NC
+                        column(VendorBidNo; Bid."Vendor Bid No.")
+                        {
+                        }
+                        column(VendorItemNo; "Purchase Line"."Vendor-Item-No")
+                        {
+                        }
+                        //<< NC
                         column(Claimable; "Purchase Line".Claimable)
                         {
                         }
@@ -528,6 +553,14 @@ report 50010 "SEC Purchase Order"
                             TotalSubTotal += "Purchase Line"."Line Amount";
                             TotalInvoiceDiscountAmount -= "Purchase Line"."Inv. Discount Amount";
                             TotalAmount += "Purchase Line".Amount;
+                            //>> NC
+                            begin
+                                Bid.SetRange("No.", "Purchase Line"."Bid No.");
+                                if not Bid.FindFirst() then
+                                    Bid."Vendor Bid No." := '';
+                            end;
+                            //<< NC
+
                         end;
 
                         trigger OnPostDataItem()
@@ -982,9 +1015,18 @@ report 50010 "SEC Purchase Order"
                         EndcustomerCountryRegion.get(Endcustomer."Country/Region Code")
                     else
                         Clear(EndcustomerCountryRegion);
+                    if "End Customer Contact No." <> '' then begin
+                        Contact.get("End Customer Contact No.");
+                        EndCustName := Contact.Name;
+                        EndCustEmail := Contact."E-Mail";
+                        EndCustPhone := Contact."Phone No.";
+                    end;
                 End else begin
                     clear(Endcustomer);
                     Clear(EndcustomerCountryRegion);
+                    Clear(EndCustEmail);
+                    Clear(EndCustPhone);
+                    Clear(EndCustName);
                 end;
 
                 if "Reseller" <> '' then begin
@@ -1227,6 +1269,11 @@ report 50010 "SEC Purchase Order"
         EndcustomerCountryRegion: Record "Country/Region";
         ResellerCountryRegion: Record "Country/Region";
         VarIDLbl: Label 'VAR ID:';
+        Bid: Record "Bid";
+        EndCustPhone: text[30];
+        EndCustEmail: text[80];
+        EndCustName: text[100];
+        Contact: record contact;
         //<< NC
         TotalPrepmtLineAmount: Decimal;
         VARRec: Record "VAR";

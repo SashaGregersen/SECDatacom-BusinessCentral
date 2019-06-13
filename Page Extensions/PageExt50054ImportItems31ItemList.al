@@ -1,5 +1,22 @@
 pageextension 50054 "Import Item List" extends "Item List"
 {
+    layout
+    {
+
+        /* addafter("Vendor Item No.") // removed due to Microsoft mulitipath search error
+        {
+            field("Vendor-Item-No."; "Vendor-Item-No.")
+            {
+                ApplicationArea = all;
+                Caption = 'Vendor Item No.';
+            }
+        }
+        modify("Vendor Item No.")
+        {
+            Visible = false;
+        } */
+
+    }
 
     actions
     {
@@ -22,4 +39,5 @@ pageextension 50054 "Import Item List" extends "Item List"
         }
 
     }
+
 }

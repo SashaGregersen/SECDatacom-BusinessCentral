@@ -23,6 +23,7 @@ codeunit 50004 "Create Purchase Order"
         TempPurchHeader: Record "Purchase Header" temporary;
         ReleasePurchDoc: Codeunit "Release Purchase Document";
         Bid: Record Bid;
+        CurrExchRate: Record "Currency Exchange Rate";
     begin
         GlobalLineCounter := 0;
         SalesLine.SetRange("Document No.", SalesHeader."No.");
@@ -35,21 +36,31 @@ codeunit 50004 "Create Purchase Order"
                 if QtyToPurchase <> 0 then begin
                     VendorNo := AdvPriceMgt.GetVendorNoForItem(SalesLine."No.");
                     Item.Get(SalesLine."No.");
-                    CurrencyCode := Item."Vendor Currency";
+                    case SalesHeader."Purchase Currency Method" of
+                        SalesHeader."Purchase Currency Method"::"Local Currency":
+                            CurrencyCode := '';
+                        SalesHeader."Purchase Currency Method"::"Vendor Currency":
+                            CurrencyCode := Item."Vendor Currency";
+                        SalesHeader."Purchase Currency Method"::"Same Currency":
+                            CurrencyCode := SalesHeader."Purchase Currency Code";
+                    end;
+
                     Clear(PurchasePrice);
                     if SalesLine."Bid No." <> '' then begin
                         Clear(BidPrice);
                         if not BidMgt.GetBestBidPrice(SalesLine."Bid No.", SalesLine."Sell-to Customer No.", SalesLine."No.", CurrencyCode, BidPrice) then
                             Clear(PurchasePrice)
                         else begin
-                            BidMgt.MakePurchasePriceFromBidPrice(BidPrice, PurchasePrice);
-                            CurrencyCode := PurchasePrice."Currency Code";
+                            BidMgt.MakePurchasePriceFromBidPrice(BidPrice, PurchasePrice, SalesLine);
                         end;
                     end else begin
-                        Item.Get(SalesLine."No.");
-                        CurrencyCode := Item."Vendor Currency";
-                        if AdvPriceMgt.FindBestPurchasePrice(SalesLine."No.", VendorNo, CurrencyCode, SalesLine."Variant Code", PurchasePrice) then
-                            CurrencyCode := PurchasePrice."Currency Code";
+                        AdvPriceMgt.FindBestPurchasePrice(SalesLine."No.", VendorNo, CurrencyCode, SalesLine."Variant Code", PurchasePrice);
+                    end;
+                    if PurchasePrice."Currency Code" <> CurrencyCode then begin
+                        PurchasePrice."Direct Unit Cost" := CurrExchRate.ExchangeAmount(PurchasePrice."Direct Unit Cost",
+                                                                                        PurchasePrice."Currency Code",
+                                                                                        CurrencyCode, WorkDate());
+                        PurchasePrice."Currency Code" := CurrencyCode;
                     end;
 
                     if PurchasePrice."Direct Unit Cost" <> 0 then begin
@@ -101,6 +112,7 @@ codeunit 50004 "Create Purchase Order"
             SalesHeader."Ship-to Address", SalesHeader."Ship-to Address 2", SalesHeader."Ship-to City",
             SalesHeader."Ship-to Post Code", SalesHeader."Ship-to County", SalesHeader."Ship-to Country/Region Code");
             PurchHeader.validate("Ship-to Contact", SalesHeader."Ship-to Contact");
+            PurchHeader.validate("Ship-To Comment", SalesHeader."Ship-to Comment");
         end else begin
             if SalesHeader.Subsidiary <> '' then begin
                 CompanyInfo.get();
@@ -108,10 +120,13 @@ codeunit 50004 "Create Purchase Order"
                 CompanyInfo."Ship-to Address 2", CompanyInfo."Ship-to City", CompanyInfo."Ship-to Post Code",
                 CompanyInfo."Ship-to County", CompanyInfo."Ship-to Country/Region Code");
                 PurchHeader.validate("Ship-to Contact", CompanyInfo."Ship-to Contact");
+                PurchHeader.validate("Ship-To Comment", SalesHeader."Ship-to Comment");
             end;
         end;
         PurchHeader."End Customer" := SalesHeader."End Customer";
         PurchHeader.Reseller := SalesHeader.Reseller;
+        PurchHeader."End Customer Contact No." := SalesHeader."End Customer Contact";
+        PurchHeader."Reseller Contact No." := SalesHeader."Sell-to Contact No.";
         PurchHeader.Modify(true);
         exit(StrSubstNo('Purchase Order %1 created', PurchHeader."No."));
     end;
@@ -136,7 +151,7 @@ codeunit 50004 "Create Purchase Order"
         PurchLine.Validate("No.", SalesLine."No.");
         PurchLine.Validate("Location Code", SalesLine."Location Code");
         PurchLine.Validate(Quantity, (SalesLine.Quantity - SalesLine."Reserved Quantity"));
-        PurchLine.Validate("Expected Receipt Date", SalesLine."Shipment Date"); //vend med SEC 
+        PurchLine.Validate("Expected Receipt Date", SalesLine."Shipment Date");
         if SalesLine."Bid No." <> '' then
             PurchLine.Validate("Bid No.", SalesLine."Bid No.");
         PurchLine.Validate("Direct Unit Cost", PurchasePrice);
@@ -247,7 +262,7 @@ codeunit 50004 "Create Purchase Order"
             exit(ReservationEntry."Entry No." + 1)
     end;
 
-    local procedure GetVendorBidNo(BidNo: Code[20]): code[20]
+    local procedure GetVendorBidNo(BidNo: Code[20]): Text[100]
     var
         Bid: record "Bid";
     begin

@@ -6,7 +6,7 @@ pageextension 50058 PreReminderBookkeeper extends "Bookkeeper Role Center"
         {
             action(SendPreReminder)
             {
-                Caption = 'Send PreReminders';
+                Caption = 'Send Pre-Reminders';
                 Image = SendAsPDF;
                 ApplicationArea = All;
                 RunObject = Report "Find PreReminders";

@@ -15,7 +15,7 @@ pageextension 50012 "All Profile" extends "Available Profiles"
                 var
                     CreatePMAndDCORoleCenter: Codeunit 50095;
                 begin
-                    CreatePMAndDCORoleCenter.Run();
+                    CreatePMAndDCORoleCenter.Run(); //skal fjernes efter kørt i PROD.
                 end;
             }
         }

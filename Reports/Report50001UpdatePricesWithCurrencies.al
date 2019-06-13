@@ -26,7 +26,7 @@ report 50001 "Update Prices with Currencies"
             begin
                 repeat
                     CurrencyTemp.SetRange(Code, "Vendor Currency");
-                    if not CurrencyTemp.Find() then
+                    if not CurrencyTemp.FindFirst() then
                         exit;
                     VendCurr := "Vendor Currency";
                     Salesprice.SetRange("Item No.", "No.");
@@ -40,7 +40,7 @@ report 50001 "Update Prices with Currencies"
                                 repeat
                                     IF LocalCurrency <> VendCurr then
                                         if salesprice2."Currency Code" = LocalCurrency then
-                                            AdvancedPriceManage.ExchangeAmtLCYToFCYAndFCYToLCY(salesprice2, VendCurr)
+                                            AdvancedPriceManage.ExchangeAmtFCYToLCY(Salesprice, salesprice2, VendCurr)
                                         else
                                             AdvancedPriceManage.ExchangeAmtFCYToFCY(Salesprice, salesprice2);
 

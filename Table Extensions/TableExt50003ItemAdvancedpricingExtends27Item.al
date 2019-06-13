@@ -7,7 +7,6 @@ tableextension 50003 "Item Adv. Pricing" extends Item
         {
             Editable = false;
             DataClassification = ToBeClassified;
-
         }
         field(50001; "Transfer Price %"; Decimal)
         {
@@ -26,17 +25,18 @@ tableextension 50003 "Item Adv. Pricing" extends Item
 
         field(50004; "Vendor-Item-No."; Text[60])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
+            trigger onvalidate()
+            var
 
-            trigger OnValidate()
             begin
-                Validate("Vendor Item No.", CopyStr("Vendor-Item-No.", 1, 20));
+                "Vendor Item No." := "Vendor-Item-No.";
             end;
         }
 
         field(50005; "Blocked from purchase"; boolean)
         {
-
+            DataClassification = ToBeClassified;
         }
         field(50006; "IC partner Vendor No."; Code[20])
         {
@@ -48,7 +48,7 @@ tableextension 50003 "Item Adv. Pricing" extends Item
 
     Fieldgroups
     {
-        addlast(DropDown; "Vendor Item No.")
+        addlast(DropDown; "Vendor-Item-No.")
         {
 
         }

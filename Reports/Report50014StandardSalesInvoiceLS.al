@@ -168,6 +168,9 @@ report 50014 "SEC - Sales Invoice LS"
             column(ShipmentMethodDescription; ShipmentMethod.Description)
             {
             }
+            column(ShipmentMethodCode; ShipmentMethod.Code)
+            {
+            }
             column(ShipmentMethodDescription_Lbl; ShptMethodDescLbl)
             {
             }
@@ -242,6 +245,14 @@ report 50014 "SEC - Sales Invoice LS"
             column(PaymentMethodDescription_Lbl; PaymentMethodDescLbl)
             {
             }
+            //>>NC
+            column(PaymentMethodExtDescription; PaymentMethod.GetPaymentMethodExtDescription)
+            {
+            }
+            column(PrintFIK; PrintFIK)
+            {
+            }
+            //<<NC
             column(BilltoCustumerNo; "Bill-to Customer No.")
             {
             }
@@ -624,7 +635,7 @@ report 50014 "SEC - Sales Invoice LS"
                 column(Vendor_Item_No_Lbl; VendorItemNoLbl)
                 {
                 }
-                column(Vendor_Item_No; Item."Vendor Item No.")
+                column(Vendor_Item_No; Item."Vendor-Item-No.")
                 {
                 }
                 dataitem(ShipmentLine; "Sales Shipment Buffer")
@@ -1251,6 +1262,12 @@ report 50014 "SEC - Sales Invoice LS"
                     PaymentID := PaymentID + Modulus10(PaymentID);
                 end else
                     PaymentID := PadStr('', PmtIDLength, '0');
+
+                if PaymentMethod.Code = '' then
+                    PrintFIK := True
+                else
+                    PrintFIk := PaymentMethod."Print FIK";
+
                 // </PM>
                 //<<NC
 
@@ -1260,6 +1277,7 @@ report 50014 "SEC - Sales Invoice LS"
                 TotalAmountVAT := 0;
                 TotalAmountInclVAT := 0;
                 TotalPaymentDiscOnVAT := 0;
+
 
             end;
 
@@ -1509,6 +1527,8 @@ report 50014 "SEC - Sales Invoice LS"
         PmtSetup: Record "Payment Setup";
         PaymentID: Code[16];
         PmtIDLength: Integer;
+        PrintFIK: Boolean;
+
         //<<PM
         //<<NC variables
         PricePerLbl: Label 'Price per';

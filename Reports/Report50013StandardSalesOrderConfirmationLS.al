@@ -165,6 +165,10 @@ report 50013 "SEC Sales - Order Conf. LS"
             {
             }
             column(ShipmentMethodDescription_Lbl; ShptMethodDescLbl)
+
+            {
+            }
+            column(ShipmentMethodCode; ShipmentMethod.Code)
             {
             }
             column(Shipment_Lbl; ShipmentLbl)
@@ -225,11 +229,18 @@ report 50013 "SEC Sales - Order Conf. LS"
             Column(Ship_to_Country; ShipToCountryRegion.Name)
             {
             }
+            Column(Ship_to_Contact; "Ship-to Contact")
+            {
+            }
             //<<NC
             column(PaymentTermsDescription; PaymentTerms.Description)
             {
             }
             column(PaymentTermsDescription_Lbl; PaymentTermsDescLbl)
+            {
+            }
+            //<<NC
+            column(PaymentTermsCode; PaymentTerms.Code)
             {
             }
             column(PaymentMethodDescription; PaymentMethod.Description)
@@ -499,7 +510,14 @@ report 50013 "SEC Sales - Order Conf. LS"
                 column(UnitPrice_Lbl; FieldCaption("Unit Price"))
                 {
                 }
+
                 column(UnitOfMeasure; "Unit of Measure")
+                {
+                }
+                column(UnitListPrice; "Unit List Price")
+                {
+                }
+                column(Reseller_Discount; "Reseller Discount")
                 {
                 }
                 column(UnitOfMeasure_Lbl; FieldCaption("Unit of Measure"))
@@ -529,7 +547,7 @@ report 50013 "SEC Sales - Order Conf. LS"
                 {
                 }
                 //Adding vendor item no column to the sales line
-                column(Vendor_Item_No; Item."Vendor Item No.")
+                column(Vendor_Item_No; Item."Vendor-Item-No.")
                 {
                 }
                 dataitem(AssemblyLine; "Assembly Line")

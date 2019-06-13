@@ -10,22 +10,22 @@ table 50000 "Bid"
     {
         field(1; "No."; Code[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Editable = false;
         }
 
         field(2; "Vendor No."; code[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             TableRelation = Vendor."No.";
         }
         field(3; "Vendor Bid No."; text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(4; "Expiry Date"; date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
 
             trigger OnValidate()
             var
@@ -37,20 +37,39 @@ table 50000 "Bid"
         }
         field(5; "One Time Bid"; boolean)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(6; Description; Text[50])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(7; Claimable; Boolean)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
+            trigger OnValidate()
+            var
+                BidPrices: record "Bid Item Price";
+            begin
+                bidprices.setrange("Bid No.", "No.");
+                if bidprices.FindSet() then
+                    repeat
+                        bidprices.Claimable := Claimable;
+                        BidPrices.Modify(true);
+                    until bidprices.next = 0;
+            end;
         }
         field(8; "Project Sale"; Boolean)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Editable = false;
+        }
+        field(9; Deactivate; Boolean)
+        {
+            DataClassification = CustomerContent;
+        }
+        field(10; "Entry No."; Integer)
+        {
+            DataClassification = CustomerContent;
         }
 
     }
@@ -82,10 +101,26 @@ table 50000 "Bid"
             SalesSetup.TestField("Bid No. Series");
             Validate("No.", NoseriesManage.GetNextNo('Bid', today, true));
         end;
+        if "Entry No." = 0 then begin
+            GetNextEntryNo(Rec);
+        end;
     end;
 
     trigger OnModify();
+    var
+        Bid: record bid;
     begin
+        bid.setrange("Vendor Bid No.", rec."Vendor Bid No.");
+        bid.SetFilter("No.", '<>%1', rec."No.");
+        if bid.FindSet() then
+            repeat
+                bid."One Time Bid" := "One Time Bid";
+                bid."Project Sale" := "Project Sale";
+                bid."Vendor No." := "Vendor No.";
+                bid.validate(Claimable, rec.Claimable);
+                bid.validate("Expiry Date", rec."Expiry Date");
+                bid.Modify(false);
+            until bid.Next() = 0;
     end;
 
     trigger OnDelete();
@@ -138,6 +173,16 @@ table 50000 "Bid"
                     BidItemPrice.Insert(true);
                 end;
             until CurrencyTemp.Next() = 0;
+    end;
+
+    procedure GetNextEntryNo(var rec: record "Bid")
+    var
+        Bid2: record bid;
+    begin
+        if Bid2.FindLast() then
+            rec."Entry No." := Bid2."Entry No." + 1
+        else
+            rec."Entry No." := 1;
     end;
 
 }
