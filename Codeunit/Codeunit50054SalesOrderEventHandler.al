@@ -793,6 +793,12 @@ codeunit 50054 "Sales Order Event Handler"
         Rec."Ship-to Contact" := '';
     end;
 
+    [EventSubscriber(ObjectType::table, database::"Sales Header", 'OnAfterValidateEvent', 'Sell-To Contact', true, true)]
+    local procedure OnAfterValidateSellToContactEvent(var Rec: Record "Sales Header"; var xRec: Record "Sales Header")
+    begin
+        rec.SetDropShipment();
+    end;
+
     procedure AddTransactionTypeToSalesDocument(var SalesHeader: Record "Sales Header");
     var
         SalesSetup: Record "Sales & Receivables Setup";

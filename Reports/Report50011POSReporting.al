@@ -327,7 +327,7 @@ report 50011 "POS Reporting"
                 if (Subsidiary <> SalesInvHeader.Subsidiary) and (Subsidiary <> '') then
                     CurrReport.skip;
                 if SalesInvHeader.Subsidiary <> '' then begin
-                    Customer.get(Subsidiary);
+                    Customer.get(SalesInvHeader.Subsidiary);
                     ICPartnerCode := Customer."IC Partner Code";
                 end;
                 item.get(Sales_Invoice_Line."No.");
@@ -697,7 +697,7 @@ report 50011 "POS Reporting"
                 if (Subsidiary <> CreditMemoHeader.Subsidiary) and (Subsidiary <> '') then
                     CurrReport.skip;
                 if CreditMemoHeader.Subsidiary <> '' then begin
-                    Customer.get(Subsidiary);
+                    Customer.get(CreditMemoHeader.Subsidiary);
                     ICPartnerCode2 := Customer."IC Partner Code";
                 end;
                 item.get("Sales Cr.Memo Line"."No.");
@@ -778,10 +778,10 @@ report 50011 "POS Reporting"
             EndCustPostCode := Customer."Post Code";
             EndCustCounty := Customer.County;
             EndCustCountryRegion := Customer."Country/Region Code";
-            EndCustContact := Customer.Contact;
-            if EndCustContact <> '' then begin
-                Contact.get(EndCustContact);
-                EndCustContactPhone := Contact."Phone No.";
+            if "Sales Invoice Header"."End Customer Contact" <> '' then begin
+                Contact.get("Sales Invoice Header"."End Customer Contact");
+                EndCustContact := Contact.Name;
+                EndCustContactPhone := contact."Phone No.";
                 EndCustContactEmail := Contact."E-Mail";
             end;
         end;
@@ -935,6 +935,23 @@ report 50011 "POS Reporting"
         Clear(Currency);
         clear(BidPurchaseDiscountPct);
         Clear(BidUnitPurchasePrice);
+        clear(ResellerName);
+        Clear(ResellerName2);
+        clear(ResellerAddress);
+        Clear(ResellerAddress2);
+        Clear(ResellerCity);
+        Clear(ResellerPostCode);
+        Clear(ResellerCountryRegion);
+        clear(ResellerCounty);
+        clear(EndCustomerName);
+        clear(EndCustName2);
+        clear(EndcustAddress);
+        Clear(EndcustAddress2);
+        Clear(EndcustCity);
+        Clear(EndcustPostCode);
+        Clear(EndcustCountryRegion);
+        clear(EndcustCounty);
+
     end;
 
     local procedure UpdatePurchInfoSerialNumbersSalesInv(TempItemLedEntrySales: record "Item Ledger Entry" temporary)
