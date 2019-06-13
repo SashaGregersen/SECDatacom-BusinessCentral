@@ -2,12 +2,15 @@ pageextension 50071 "PostedSalesInvoiceSubform" extends "Posted Sales Invoice Su
 {
     layout
     {
-        addafter("Line Discount %")
+        addafter("Unit Price")
         {
             field("Unit List Price"; "Unit List Price")
             {
-                ApplicationArea = All;
+                ApplicationArea = all;
             }
+        }
+        addafter("Line Discount %")
+        {
             Field("Reseller Discount"; "Reseller Discount")
             {
                 ApplicationArea = All;

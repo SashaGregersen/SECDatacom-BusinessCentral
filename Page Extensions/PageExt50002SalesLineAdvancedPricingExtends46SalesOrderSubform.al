@@ -4,8 +4,19 @@ pageextension 50002 "Sales Line Bid" extends "Sales Order Subform"
 
     layout
     {
+        addafter("Unit Price")
+        {
+            field("Unit List Price"; "Unit List Price")
+            {
+                ApplicationArea = all;
+            }
+        }
         addafter("Line Discount %")
         {
+            Field("Reseller Discount"; "Reseller Discount")
+            {
+                ApplicationArea = All;
+            }
             field("Bid No."; "Bid No.")
             {
                 ApplicationArea = All;
