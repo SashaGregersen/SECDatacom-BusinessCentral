@@ -852,8 +852,8 @@ codeunit 50003 "File Management Import"
                             PurchasePrice.VALIDATE("Starting Date", TempDate);
                         END;
                         if not SkipRecord then begin
-                            IF NOT PurchasePrice.INSERT THEN
-                                PurchasePrice.MODIFY;
+                            IF NOT PurchasePrice.INSERT(true) THEN
+                                PurchasePrice.MODIFY(true);
                             PurchasePrice.MARK(TRUE);
                         end;
                         SkipRecord := false;
