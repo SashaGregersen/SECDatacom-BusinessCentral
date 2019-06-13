@@ -19,7 +19,7 @@ codeunit 50004 "Create Purchase Order"
         Item: Record Item;
         AdvPriceMgt: Codeunit "Advanced Price Management";
         BidMgt: Codeunit "Bid Management";
-        MessageTxt: Text;
+        MessageTxt: Text[250];
         TempPurchHeader: Record "Purchase Header" temporary;
         ReleasePurchDoc: Codeunit "Release Purchase Document";
         Bid: Record Bid;
@@ -94,7 +94,7 @@ codeunit 50004 "Create Purchase Order"
         end;
     end;
 
-    procedure CreatePurchHeader(SalesHeader: record "Sales Header"; VendorNo: code[20]; CurrencyCode: code[10]; VendorBidNo: code[20]; var PurchHeader: record "Purchase Header"): Text
+    procedure CreatePurchHeader(SalesHeader: record "Sales Header"; VendorNo: code[20]; CurrencyCode: code[10]; VendorBidNo: Text[100]; var PurchHeader: record "Purchase Header"): Text
     var
         Customer: record customer;
         CompanyInfo: record "Company Information";
