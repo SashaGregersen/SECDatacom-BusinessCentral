@@ -1,4 +1,4 @@
-pageextension 50042 "Sales Quote Subform" extends "Sales Quote Subform"
+pageextension 50071 "PostedSalesInvoiceSubform" extends "Posted Sales Invoice Subform"
 {
     layout
     {
@@ -9,12 +9,11 @@ pageextension 50042 "Sales Quote Subform" extends "Sales Quote Subform"
                 ApplicationArea = all;
             }
         }
-
         addafter("Line Discount %")
         {
-            field("Reseller Discount"; "Reseller Discount")
+            Field("Reseller Discount"; "Reseller Discount")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
             }
             field("Bid No."; "Bid No.")
             {
@@ -64,7 +63,7 @@ pageextension 50042 "Sales Quote Subform" extends "Sales Quote Subform"
             {
                 ApplicationArea = All;
             }
-            field("Profit Amount"; "Profit Amount")
+            field("Profit Amount"; "Profit Amount 1")
             {
                 ApplicationArea = All;
             }
@@ -75,10 +74,4 @@ pageextension 50042 "Sales Quote Subform" extends "Sales Quote Subform"
         }
 
     }
-
-    actions
-    {
-
-    }
-
 }
