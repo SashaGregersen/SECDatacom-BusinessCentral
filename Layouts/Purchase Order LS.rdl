@@ -9432,7 +9432,6 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
-                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell>
@@ -9764,16 +9763,8 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                       <TablixMember />
                                       <TablixMember />
                                       <TablixMember />
-                                      <TablixMember>
-                                        <Visibility>
-                                          <Hidden>=IIF(Fields!ShipToAddr6.Value="",TRUE,FALSE)</Hidden>
-                                        </Visibility>
-                                      </TablixMember>
-                                      <TablixMember>
-                                        <Visibility>
-                                          <Hidden>=IIF(Fields!ShipToAddr7.Value="",TRUE,FALSE)</Hidden>
-                                        </Visibility>
-                                      </TablixMember>
+                                      <TablixMember />
+                                      <TablixMember />
                                       <TablixMember>
                                         <Visibility>
                                           <Hidden>=IIF(Fields!ShipToAddr8.Value="",TRUE,FALSE)</Hidden>
@@ -10444,6 +10435,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                           <KeepTogether>true</KeepTogether>
                           <Style />
                         </Rectangle>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
