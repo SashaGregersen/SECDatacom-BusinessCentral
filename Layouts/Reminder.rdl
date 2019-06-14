@@ -1270,7 +1270,6 @@
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
-                                                      <FontWeight>Bold</FontWeight>
                                                       <Format>d</Format>
                                                     </Style>
                                                   </TextRun>
@@ -1308,7 +1307,6 @@
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
-                                                      <FontWeight>Bold</FontWeight>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -1350,7 +1348,6 @@
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
-                                                      <FontWeight>Bold</FontWeight>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -1388,7 +1385,6 @@
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
-                                                      <FontWeight>Bold</FontWeight>
                                                       <Format>d</Format>
                                                     </Style>
                                                   </TextRun>
@@ -1431,7 +1427,6 @@
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
-                                                      <FontWeight>Bold</FontWeight>
                                                       <Format>N</Format>
                                                     </Style>
                                                   </TextRun>
@@ -1474,7 +1469,6 @@
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
-                                                      <FontWeight>Bold</FontWeight>
                                                       <Format>N</Format>
                                                     </Style>
                                                   </TextRun>
