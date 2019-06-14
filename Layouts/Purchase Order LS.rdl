@@ -1468,9 +1468,6 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               </Paragraph>
                                             </Paragraphs>
                                             <rd:DefaultName>VendorBidNo</rd:DefaultName>
-                                            <Visibility>
-                                              <Hidden>=Iif(Fields!Claimable.Value = false, true, false)</Hidden>
-                                            </Visibility>
                                             <Style>
                                               <Border>
                                                 <Style>None</Style>
@@ -3010,6 +3007,9 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                         <KeepWithGroup>After</KeepWithGroup>
                                       </TablixMember>
                                       <TablixMember>
+                                        <Visibility>
+                                          <Hidden>=Iif(Fields!Claimable.Value = false, true, false)</Hidden>
+                                        </Visibility>
                                         <KeepWithGroup>After</KeepWithGroup>
                                       </TablixMember>
                                       <TablixMember>
@@ -9505,7 +9505,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!End_Customer_Phone_No_.Value</Value>
+                                                    <Value>="Phone No.: " + Fields!End_Customer_Phone_No_.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -9590,7 +9590,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!End_Customer_Email_No_.Value</Value>
+                                                    <Value>="E-mail: " + Fields!End_Customer_Email_No_.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -10435,7 +10435,6 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                           <KeepTogether>true</KeepTogether>
                           <Style />
                         </Rectangle>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
