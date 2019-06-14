@@ -95,6 +95,10 @@ report 50010 "SEC Purchase Order"
             {
 
             }
+            column(End_Customer_Contact_Name; EndCustContactName)
+            {
+
+            }
             column(End_Customer_Phone_No_; EndCustPhone)
             {
 
@@ -1017,7 +1021,7 @@ report 50010 "SEC Purchase Order"
                         Clear(EndcustomerCountryRegion);
                     if "End Customer Contact No." <> '' then begin
                         Contact.get("End Customer Contact No.");
-                        EndCustName := Contact.Name;
+                        EndCustContactName := Contact.Name;
                         EndCustEmail := Contact."E-Mail";
                         EndCustPhone := Contact."Phone No.";
                     end;
@@ -1272,6 +1276,7 @@ report 50010 "SEC Purchase Order"
         Bid: Record "Bid";
         EndCustPhone: text[30];
         EndCustEmail: text[80];
+        EndCustContactName: text[100];
         EndCustName: text[100];
         Contact: record contact;
         //<< NC
