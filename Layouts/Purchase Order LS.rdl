@@ -96,6 +96,9 @@
         <Field Name="End_Customer_Contact_No_">
           <DataField>End_Customer_Contact_No_</DataField>
         </Field>
+        <Field Name="End_Customer_Contact_Name">
+          <DataField>End_Customer_Contact_Name</DataField>
+        </Field>
         <Field Name="End_Customer_Phone_No_">
           <DataField>End_Customer_Phone_No_</DataField>
         </Field>
@@ -9413,7 +9416,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>="Att.: " + Fields!End_Customer_Contact_No_.Value</Value>
+                                                    <Value>="Att.: " + Fields!End_Customer_Contact_Name.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -9429,6 +9432,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
+                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell>
@@ -9603,7 +9607,6 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
-                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell>
@@ -9669,7 +9672,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="Textbox215">
+                                          <Textbox Name="Textbox31">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
@@ -9686,7 +9689,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                                 <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>Textbox215</rd:DefaultName>
+                                            <rd:DefaultName>Textbox31</rd:DefaultName>
                                             <Style>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingRight>5pt</PaddingRight>
