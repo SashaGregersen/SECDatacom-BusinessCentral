@@ -1447,8 +1447,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="VendorBidNo2">
-                                            <CanGrow>true</CanGrow>
+                                          <Textbox Name="PurchLineNo3">
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
@@ -1462,21 +1461,21 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
-                                                <Style>
-                                                  <TextAlign>Left</TextAlign>
-                                                </Style>
+                                                <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>VendorBidNo</rd:DefaultName>
+                                            <rd:DefaultName>PurchLineNo</rd:DefaultName>
+                                            <ZIndex>115</ZIndex>
+                                            <DataElementOutput>NoOutput</DataElementOutput>
                                             <Style>
                                               <Border>
                                                 <Style>None</Style>
                                               </Border>
                                               <VerticalAlign>Top</VerticalAlign>
-                                              <PaddingLeft>5pt</PaddingLeft>
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
+                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell>
@@ -10447,7 +10446,6 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                           <KeepTogether>true</KeepTogether>
                           <Style />
                         </Rectangle>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
