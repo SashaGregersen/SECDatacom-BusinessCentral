@@ -32,7 +32,7 @@ codeunit 50055 "Purchase Order Event Handler"
         GenJnlLine.Validate(Description, InvoicePostBuffer.Description);
     end;
 
-    procedure UpdatePurchLineQtyToInv(var rec: record "Purchase Line"; xrec: Record "sales Line"; ReservationEntry: Record "Reservation Entry"; ICorder: boolean; ICCompany: text[250])
+    /* procedure UpdatePurchLineQtyToInv(var rec: record "Purchase Line"; xrec: Record "sales Line"; ReservationEntry: Record "Reservation Entry"; ICorder: boolean; ICCompany: text[250])
     var
         NegativeReservEntry: Record "Reservation Entry";
     begin
@@ -62,5 +62,5 @@ codeunit 50055 "Purchase Order Event Handler"
                     NegativeReservEntry.Modify(true);
                 end;
             until ReservationEntry.next = 0;
-    end;
+    end; */
 }

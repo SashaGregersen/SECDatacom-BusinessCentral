@@ -11,78 +11,84 @@ xmlport 50000 "Price File Export XML"
             {
                 XmlName = 'Item';
 
-                fieldelement(No; Item."No.")
-                {
-                }
-                fieldelement(Descip; item.Description)
+                fieldelement(SEC_PN; Item."No.")
                 {
 
                 }
-                fieldelement(Descrip2; item."Description 2")
+                fieldelement(Description; item.Description)
                 {
 
                 }
-                fieldelement(VendItemNo; item."Vendor-Item-No.")
+                fieldelement(Extended_Description; item."Description 2")
                 {
 
                 }
-                fieldelement(Vendor; item."Vendor No.")
+                fieldelement(Manufacturer_SKU; item."Vendor-Item-No.")
                 {
 
                 }
-                textelement(Invent)
-                {
-
-                }
-                textelement(SalesPriceUnitPrice)
-                {
-
-                    trigger OnBeforePassVariable()
-                    var
-
-                    begin
-                        SalesPriceUnitPrice := Format(FindCheapestPrice(salesprice));
-                    end;
-
-                }
-                textelement(CurrencyCode)
+                textelement(Currency)
                 {
                     trigger OnBeforePassVariable()
                     begin
                         if CurrencyFilter = '' then
-                            CurrencyCode := GLSetup."LCY Code"
+                            Currency := GLSetup."LCY Code"
                         else
-                            CurrencyCode := CurrencyFilter;
+                            Currency := CurrencyFilter;
                     end;
                 }
-                tableelement(DefaultDimension; "Default Dimension")
+                Textelement(Cost)
                 {
-                    XmlName = 'DefaultDimension';
-                    LinkTable = Item;
-                    LinkFields = "No." = field ("No."), "Table ID" = const (27);
 
-                    fieldelement(DefaultDimCode; DefaultDimension."Dimension Code")
-                    {
-
-                    }
-                    fieldelement(DefaultDimCode; DefaultDimension."Dimension Value Code")
-                    {
-
-                    }
                 }
+                textelement(List_Price)
+                {
+
+                    trigger OnBeforePassVariable()
+                    begin
+                        List_Price := Format(FindCheapestPrice(salesprice), 0, 9);
+                    end;
+
+                }
+                fieldelement(Manufacturer; item."Global Dimension 1 Code")
+                {
+                }
+                textelement(Maincategory)
+                {
+
+                }
+                textelement(Subcategory)
+                {
+
+                }
+
+                fieldelement(EAN; item.GTIN)
+                {
+
+                }
+                Textelement(Stock)
+                {
+
+                }
+
                 trigger OnAfterGetRecord()
                 var
                     SyncMasterData: Codeunit "Synchronize Master Data";
                     Item2: record Item;
                     Invt: Decimal;
                     ItemCategory: record "Item Category";
+                    DefaultDim: record "Default Dimension";
                 begin
                     if not item."Use on Website" then
                         currXMLport.Skip();
 
+                    SalesPrice.SetRange("Item No.", Item."No.");
+                    if not salesprice.FindSet() then
+                        currXMLport.Skip();
+
                     if ItemCategory.Get(Item."Item Category Code") then begin
                         if ItemCategory."Overwrite Quantity" then
-                            Invent := format(999)
+                            Stock := format(999)
                         else begin
                             Item2.ChangeCompany(GLSetup."Master Company");
                             if (Item2.Get(Item."No.")) then begin
@@ -90,7 +96,7 @@ xmlport 50000 "Price File Export XML"
                                 if (Invt <= 0) and Item2."Blocked from purchase" then
                                     currXMLport.skip;
                             end;
-                            Invent := format(Invt);
+                            Stock := format(Invt);
                         end;
                     end else begin
                         Item2.ChangeCompany(GLSetup."Master Company");
@@ -99,21 +105,24 @@ xmlport 50000 "Price File Export XML"
                             if (Invt <= 0) and Item2."Blocked from purchase" then
                                 currXMLport.skip;
                         end;
-                        Invent := format(Invt);
+                        Stock := format(Invt);
+                    end;
+                    DefaultDim.setrange("No.", item."No.");
+                    DefaultDim.setrange("Table ID", 27);
+                    DefaultDim.SetFilter("Dimension Code", '<>%1', GLSetup."Global Dimension 1 Code");
+                    if DefaultDim.FindFirst() then begin
+                        MainCategory := DefaultDim."Dimension Code";
+                        SubCategory := DefaultDim."Dimension Value Code";
                     end;
 
-                    SalesPrice.SetRange("Item No.", Item."No.");
-                    if not salesprice.FindSet() then
-                        currXMLport.Skip();
                 end;
+
             }
 
         }
     }
 
     trigger OnPreXmlPort()
-    var
-        salesprice: Record "Sales Price";
     begin
         GLSetup.get;
         GLSetup.TestField("Master Company");

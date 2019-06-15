@@ -63,17 +63,17 @@ codeunit 50004 "Create Purchase Order"
                         PurchasePrice."Currency Code" := CurrencyCode;
                     end;
 
-                    if PurchasePrice."Direct Unit Cost" <> 0 then begin //check på <> 0 bør fjernes
-                        if not FindTempPurchaseHeader(VendorNo, CurrencyCode, TempPurchHeader) then begin
-                            MessageTxt := MessageTxt + CreatePurchHeader(SalesHeader, VendorNo, CurrencyCode, GetVendorBidNo(SalesLine."Bid No."), PurchHeader) + '/';
-                            TempPurchHeader := PurchHeader;
-                            TempPurchHeader.Insert(false);
-                        end else
-                            PurchHeader.Get(TempPurchHeader."Document Type", TempPurchHeader."No.");
-                        CreatePurchLine(PurchHeader, SalesHeader, SalesLine, PurchasePrice."Direct Unit Cost", PurchLine);
-                        ReserveItemOnPurchOrder(SalesLine, PurchLine);
-                        GlobalLineCounter := GlobalLineCounter + 1;
-                    end;
+                    //if PurchasePrice."Direct Unit Cost" <> 0 then begin //check på <> 0 bør fjernes
+                    if not FindTempPurchaseHeader(VendorNo, CurrencyCode, TempPurchHeader) then begin
+                        MessageTxt := MessageTxt + CreatePurchHeader(SalesHeader, VendorNo, CurrencyCode, GetVendorBidNo(SalesLine."Bid No."), PurchHeader) + '/';
+                        TempPurchHeader := PurchHeader;
+                        TempPurchHeader.Insert(false);
+                    end else
+                        PurchHeader.Get(TempPurchHeader."Document Type", TempPurchHeader."No.");
+                    CreatePurchLine(PurchHeader, SalesHeader, SalesLine, PurchasePrice."Direct Unit Cost", PurchLine);
+                    ReserveItemOnPurchOrder(SalesLine, PurchLine);
+                    GlobalLineCounter := GlobalLineCounter + 1;
+                    //end;
                 end;
             until SalesLine.next = 0;
 

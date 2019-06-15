@@ -15,81 +15,98 @@ xmlport 50001 "Price File Export CSV"
             {
                 XmlName = 'Item';
 
-                fieldelement(No; Item."No.")
+                fieldelement(SEC_PN; Item."No.")
                 {
 
                 }
-                fieldelement(Descip; item.Description)
+                fieldelement(Description; item.Description)
                 {
 
                 }
-                fieldelement(Descrip2; item."Description 2")
+                fieldelement(Extended_Description; item."Description 2")
                 {
 
                 }
-                fieldelement(VendItemNo; item."Vendor-Item-No.")
+                fieldelement(Manufacturer_SKU; item."Vendor-Item-No.")
                 {
 
                 }
-                fieldelement(VendCurrency; item."Vendor Currency")
-                {
-
-                }
-                fieldelement(Vendor; item."Vendor No.")
-                {
-
-                }
-                Textelement(Invent)
-                {
-
-                }
-                textelement(SalesPriceUnitPrice)
-                {
-
-                    trigger OnBeforePassVariable()
-                    begin
-                        SalesPriceUnitPrice := Format(FindCheapestPrice(salesprice, CustomerNo));
-                    end;
-
-                }
-                textelement(CurrencyCode)
+                textelement(Currency)
                 {
                     trigger OnBeforePassVariable()
                     begin
                         if CurrencyFilter = '' then
-                            CurrencyCode := GLSetup."LCY Code"
+                            Currency := GLSetup."LCY Code"
                         else
-                            CurrencyCode := CurrencyFilter;
+                            Currency := CurrencyFilter;
                     end;
                 }
-                tableelement(DefaultDimension; "Default Dimension")
+                Textelement(Cost)
+                {
+
+                }
+                textelement(List_Price)
+                {
+
+                    trigger OnBeforePassVariable()
+                    begin
+                        List_Price := Format(FindCheapestPrice(salesprice), 0, 9);
+                    end;
+
+                }
+                fieldelement(Manufacturer; item."Global Dimension 1 Code")
+                {
+                }
+                textelement(Maincategory)
+                {
+
+                }
+                textelement(Subcategory)
+                {
+
+                }
+                /* tableelement(DefaultDimension; "Default Dimension")
                 {
                     XmlName = 'DefaultDimension';
                     LinkTable = Item;
                     LinkFields = "No." = field ("No."), "Table ID" = const (27);
 
-                    fieldelement(DefaultDimCode; DefaultDimension."Dimension Code")
+                    textelement(DefaultDimCode; MainCategory)
                     {
 
                     }
-                    fieldelement(DefaultDimCode; DefaultDimension."Dimension Value Code")
+                    textelement(DefaultDimCode; SubCategory)
                     {
 
                     }
+                } */
+                fieldelement(EAN; item.GTIN)
+                {
+
                 }
+                Textelement(Stock)
+                {
+
+                }
+
                 trigger OnAfterGetRecord()
                 var
                     SyncMasterData: Codeunit "Synchronize Master Data";
                     Item2: record Item;
                     Invt: Decimal;
                     ItemCategory: record "Item Category";
+                    DefaultDim: record "Default Dimension";
                 begin
                     if not item."Use on Website" then
                         currXMLport.Skip();
 
+                    SalesPrice.SetRange("Item No.", Item."No.");
+                    if not salesprice.FindSet() then
+                        currXMLport.Skip();
+
                     if ItemCategory.Get(Item."Item Category Code") then begin
                         if ItemCategory."Overwrite Quantity" then
-                            Invent := format(999)
+                            Stock := format(999)
                         else begin
                             Item2.ChangeCompany(GLSetup."Master Company");
                             if (Item2.Get(Item."No.")) then begin
@@ -97,7 +114,7 @@ xmlport 50001 "Price File Export CSV"
                                 if (Invt <= 0) and Item2."Blocked from purchase" then
                                     currXMLport.skip;
                             end;
-                            Invent := format(Invt);
+                            Stock := format(Invt);
                         end;
                     end else begin
                         Item2.ChangeCompany(GLSetup."Master Company");
@@ -106,12 +123,16 @@ xmlport 50001 "Price File Export CSV"
                             if (Invt <= 0) and Item2."Blocked from purchase" then
                                 currXMLport.skip;
                         end;
-                        Invent := format(Invt);
+                        Stock := format(Invt);
+                    end;
+                    DefaultDim.setrange("No.", item."No.");
+                    DefaultDim.setrange("Table ID", 27);
+                    DefaultDim.SetFilter("Dimension Code", '<>%1', GLSetup."Global Dimension 1 Code");
+                    if DefaultDim.FindFirst() then begin
+                        MainCategory := DefaultDim."Dimension Code";
+                        SubCategory := DefaultDim."Dimension Value Code";
                     end;
 
-                    SalesPrice.SetRange("Item No.", Item."No.");
-                    if not salesprice.FindSet() then
-                        currXMLport.Skip();
                 end;
 
             }
@@ -151,7 +172,7 @@ xmlport 50001 "Price File Export CSV"
         CustomerNo := customer."No.";
     end;
 
-    procedure FindCheapestPrice(SalesPrice: record "Sales Price"; CustomerNo: code[20]): Decimal
+    procedure FindCheapestPrice(SalesPrice: record "Sales Price"): Decimal
     var
 
     begin
