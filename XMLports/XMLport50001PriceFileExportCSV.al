@@ -1,7 +1,7 @@
 xmlport 50001 "Price File Export CSV"
 {
     Direction = export;
-    TextEncoding = WINDOWS;
+    TextEncoding = UTF8;
     Format = VariableText;
     FieldDelimiter = '';
     FieldSeparator = ';';
@@ -11,6 +11,96 @@ xmlport 50001 "Price File Export CSV"
         textelement(Root)
         {
 
+            /* tableelement(ItemTableTitle; integer)
+            {
+                textelement(SEC_PN)
+                {
+                    trigger OnBeforePassVariable()
+                    begin
+                        SEC_PN := 'SEC PN';
+                    end;
+                }
+                textelement(Description)
+                {
+                    trigger OnBeforePassVariable()
+                    begin
+                        Description := 'Description';
+                    end;
+                }
+                textelement(Extended_Description)
+                {
+                    trigger OnBeforePassVariable()
+                    begin
+                        Extended_Description := 'Extended Description';
+                    end;
+                }
+                textelement(Manufacturer_SKU)
+                {
+                    trigger OnBeforePassVariable()
+                    begin
+                        Manufacturer_SKU := 'Manufacturer SKU';
+                    end;
+                }
+                textelement(CurrencyLbl)
+                {
+                    trigger OnBeforePassVariable()
+                    begin
+                        CurrencyLbl := 'Currency';
+                    end;
+                }
+                Textelement(CostLbl)
+                {
+                    trigger OnBeforePassVariable()
+                    begin
+                        CostLbl := 'Cost';
+                    end;
+                }
+                textelement(List_PriceLbl)
+                {
+
+                    trigger OnBeforePassVariable()
+                    begin
+                        List_PriceLbl := 'List Price';
+                    end;
+
+                }
+                textelement(Manufacturer)
+                {
+                    trigger OnBeforePassVariable()
+                    begin
+                        Manufacturer := 'Manufacturer';
+                    end;
+                }
+                textelement(MaincategoryLbl)
+                {
+                    trigger OnBeforePassVariable()
+                    begin
+                        MaincategoryLbl := 'Maincategory';
+                    end;
+                }
+
+                textelement(SubcategoryLbl)
+                {
+                    trigger OnBeforePassVariable()
+                    begin
+                        SubcategoryLbl := 'Subcategory';
+                    end;
+                }
+                textelement(EANLbl)
+                {
+                    trigger OnBeforePassVariable()
+                    begin
+                        EANLbl := 'EAN';
+                    end;
+                }
+                Textelement(StockLBl)
+                {
+                    trigger OnBeforePassVariable()
+                    begin
+                        StockLBl := 'Stock';
+                    end;
+                }
+            } */
             tableelement(Item; Item)
             {
                 XmlName = 'Item';
@@ -147,6 +237,8 @@ xmlport 50001 "Price File Export CSV"
 
         if CustomerNo = '' then
             currXMLport.Skip();
+
+        //ItemTableTitle.Number := 1;
     end;
 
     var
