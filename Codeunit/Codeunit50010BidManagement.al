@@ -267,6 +267,7 @@ codeunit 50010 "Bid Management"
         Vendor: record vendor;
     begin
         PurchHeader.Init();
+        //PurchHeader."No." := '';
         PurchHeader.Validate("Document Type", DocType);
         PurchHeader.validate("Posting Date", postingdate);
         PurchHeader.Validate("Buy-from Vendor No.", VendorNo);

@@ -425,8 +425,8 @@ codeunit 50054 "Sales Order Event Handler"
     var
         PartnerRecord: Record "Reservation Entry";
     begin
-        if not RunTrigger then
-            exit;
+        /* if not RunTrigger then
+            exit; */
         if rec.IsTemporary then
             exit;
         IF (Rec."Source Type" = 37) THEN BEGIN

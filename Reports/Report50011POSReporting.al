@@ -359,6 +359,7 @@ report 50011 "POS Reporting"
                     (ItemLedgEntryPurchase."Entry Type" <> ItemLedgEntryPurchase."Entry Type"::Sale) then begin
                         PurchOrderNo := format(ItemLedgEntryPurchase."Entry Type");
                         PurchOrderPostDate := ItemLedgEntryPurchase."Posting Date";
+                        StandardCost := FindPurchasePrice(PurchasePrice, Item, PurchOrderPostDate);
                     end else begin
                         if PurchRcptLine.get(ItemLedgEntryPurchase."Document No.", ItemLedgEntryPurchase."Document Line No.") then begin
                             PurchInvLine.setrange("Order No.", PurchRcptLine."Order No.");
@@ -368,6 +369,7 @@ report 50011 "POS Reporting"
                                 PurchOrderNo := PurchInvLine."Document No.";
                                 PurchOrderPostDate := PurchInvLine."Posting Date";
                                 PurchCostPrice := PurchInvLine."Unit Cost";
+                                StandardCost := FindPurchasePrice(PurchasePrice, Item, PurchOrderPostDate);
                             end else begin
                                 PurchLine.SetRange("Document Type", PurchLine."Document Type"::Order);
                                 PurchLine.SetRange("Document No.", PurchRcptLine."Order No.");
@@ -377,6 +379,7 @@ report 50011 "POS Reporting"
                                     PurchOrderNo := PurchLine."Document No.";
                                     PurchOrderPostDate := PurchHeader."Posting Date";
                                     PurchCostPrice := PurchLine."Unit Cost";
+                                    StandardCost := FindPurchasePrice(PurchasePrice, Item, PurchOrderPostDate);
                                 end;
                             end;
                             // Find PurchCostPrice on purchase
@@ -904,7 +907,7 @@ report 50011 "POS Reporting"
             Currency := Item."Vendor Currency";
             UnitListPrice := Sales_Invoice_Line."Unit List Price VC";
         end;
-        StandardCost := FindPurchasePrice(PurchasePrice, Item);
+
     end;
 
     local procedure SetPricesCreditMemo(Item: record Item)
@@ -934,7 +937,7 @@ report 50011 "POS Reporting"
             Currency := Item."Vendor Currency";
             UnitListPrice := "Sales Cr.Memo Line"."Unit List Price VC";
         end;
-        StandardCost := FindPurchasePrice(PurchasePrice, Item);
+
     end;
 
 
@@ -986,6 +989,7 @@ report 50011 "POS Reporting"
         PurchInvLine: record "Purch. Inv. Line";
         PurchLine: record "Purchase Line";
         PurchHeader: record "Purchase Header";
+        Item: record Item;
     begin
         PostedSalesShipment.get(TempItemLedgEntrySales."Document No.");
         ShipmentNo := PostedSalesShipment."No.";
@@ -998,6 +1002,8 @@ report 50011 "POS Reporting"
                 PurchOrderNo := PurchInvLine."Order No.";
                 PurchOrderPostDate := PurchInvLine."Posting Date";
                 PurchCostPrice := PurchInvLine."Unit Cost";
+                if item.get(PurchInvLine."No.") then
+                    StandardCost := FindPurchasePrice(PurchasePrice, Item, PurchOrderPostDate);
             end else begin
                 ValueEntry.SetRange("Document Type", 5); // purchase receipt
                 if ValueEntry.FindFirst() then
@@ -1010,6 +1016,8 @@ report 50011 "POS Reporting"
                             PurchOrderNo := PurchLine."Document No.";
                             PurchOrderPostDate := PurchHeader."Posting Date";
                             PurchCostPrice := PurchLine."Unit Cost";
+                            if item.get(PurchLine."No.") then
+                                StandardCost := FindPurchasePrice(PurchasePrice, Item, PurchOrderPostDate);
                         end;
                     end;
             end;
@@ -1027,6 +1035,7 @@ report 50011 "POS Reporting"
         PurchInvLine: record "Purch. Inv. Line";
         PurchLine: record "Purchase Line";
         PurchHeader: record "Purchase Header";
+        Item: record Item;
     begin
         ItemLedgerEntryPurch.setrange("Document Type", ItemLedgerEntryPurch."Document Type"::"Purchase Receipt");
         ItemLedgerEntryPurch.setrange("Serial No.", TempItemLedgEntrySales."Serial No.");
@@ -1038,12 +1047,16 @@ report 50011 "POS Reporting"
                     PurchOrderNo := PurchInvLine."Order No.";
                     PurchCostPrice := PurchInvLine."Direct Unit Cost";
                     PurchOrderPostDate := PurchInvLine."Posting Date";
+                    if Item.get(PurchInvLine."No.") then
+                        StandardCost := FindPurchasePrice(PurchasePrice, Item, PurchOrderPostDate);
                 end else begin
                     if PurchLine.GET(Purchline."Document Type"::Order, PurchRcptLine."Order No.", PurchRcptLine."Order Line No.") then begin
                         PurchHeader.get(PurchLine."Document Type", Purchline."Document No.");
                         PurchOrderNo := PurchLine."Document No.";
                         PurchCostPrice := PurchLine."Direct Unit Cost";
                         PurchOrderPostDate := PurchHeader."Posting Date";
+                        if Item.get(PurchLine."No.") then
+                            StandardCost := FindPurchasePrice(PurchasePrice, Item, PurchOrderPostDate);
                     end;
                 end;
                 if (PurchCostPrice <> 0) and (BidUnitPurchasePrice <> 0) then
@@ -1063,14 +1076,14 @@ report 50011 "POS Reporting"
             ShipmentNo := SalesShipLine."Document No.";
     end;
 
-    procedure FindPurchasePrice(var PurchPrice: record "Purchase Price"; item: record Item): Decimal
+    procedure FindPurchasePrice(var PurchPrice: record "Purchase Price"; item: record Item; PostingDate: Date): Decimal
     begin
         PurchPrice.setrange("Vendor No.", Item."Vendor No.");
         PurchPrice.setrange("Item No.", Item."No.");
         PurchPrice.setrange("Unit of Measure Code", item."Base Unit of Measure");
         PurchPrice.setrange("Currency Code", item."Vendor Currency");
-        PurchPrice.Setfilter("Ending Date", '>%1|%2', Sales_Invoice_Line."Posting Date", 0D);
-        PurchPrice.SetFilter("Starting Date", '%1|<%2', Sales_Invoice_Line."Posting Date", Sales_Invoice_Line."Posting Date");
+        PurchPrice.Setfilter("Ending Date", '>%1|%2', PostingDate, 0D);
+        PurchPrice.SetFilter("Starting Date", '%1|<%2', PostingDate, PostingDate);
         if PurchPrice.FindFirst() then
             exit(PurchPrice."Direct Unit Cost")
         else
