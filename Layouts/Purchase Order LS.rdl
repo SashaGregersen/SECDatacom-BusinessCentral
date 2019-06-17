@@ -214,10 +214,10 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                     <Width>3.88399in</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>4.23088in</Width>
+                                    <Width>4.10588in</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>0.51858in</Width>
+                                    <Width>0.62275in</Width>
                                   </TablixColumn>
                                   <TablixColumn>
                                     <Width>0.64993in</Width>
@@ -301,7 +301,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!Qty_PurchLineCaption.Value</Value>
+                                                    <Value>Quantity</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -330,7 +330,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!UOM_PurchLineCaption.Value</Value>
+                                                    <Value>Measure</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -362,7 +362,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Replace(First(Fields!DirectUniCostCaption.Value)," ",chr(10))</Value>
+                                                    <Value>Unit Cost</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -792,8 +792,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="VendorBidNo2">
-                                            <CanGrow>true</CanGrow>
+                                          <Textbox Name="PurchLineNo3">
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
@@ -807,18 +806,17 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
-                                                <Style>
-                                                  <TextAlign>Left</TextAlign>
-                                                </Style>
+                                                <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>VendorBidNo</rd:DefaultName>
+                                            <rd:DefaultName>PurchLineNo</rd:DefaultName>
+                                            <ZIndex>115</ZIndex>
+                                            <DataElementOutput>NoOutput</DataElementOutput>
                                             <Style>
                                               <Border>
                                                 <Style>None</Style>
                                               </Border>
                                               <VerticalAlign>Top</VerticalAlign>
-                                              <PaddingLeft>5pt</PaddingLeft>
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
@@ -2502,7 +2500,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                               <Top>0.03167cm</Top>
                               <Left>0.00632cm</Left>
                               <Height>7.19662cm</Height>
-                              <Width>10.79813in</Width>
+                              <Width>10.7773in</Width>
                               <ZIndex>1</ZIndex>
                               <Style />
                             </Tablix>
@@ -8766,7 +8764,13 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               </Paragraph>
                                             </Paragraphs>
                                             <rd:DefaultName>End_Customer_Contact_No_</rd:DefaultName>
+                                            <Visibility>
+                                              <Hidden>=Iif(Fields!End_Customer_Contact_Name.Value = "", true, false)</Hidden>
+                                            </Visibility>
                                             <Style>
+                                              <Border>
+                                                <Style>None</Style>
+                                              </Border>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
@@ -8794,6 +8798,9 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                                 </Style>
                                               </Paragraph>
                                             </Paragraphs>
+                                            <Visibility>
+                                              <Hidden>=Iif(Fields!Var_ID.Value = "", true, false)</Hidden>
+                                            </Visibility>
                                             <Style>
                                               <Border>
                                                 <Style>None</Style>
@@ -8802,6 +8809,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
+                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                     </TablixCells>
@@ -8855,7 +8863,13 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               </Paragraph>
                                             </Paragraphs>
                                             <rd:DefaultName>End_Customer_Phone_No_</rd:DefaultName>
+                                            <Visibility>
+                                              <Hidden>=Iif(Fields!End_Customer_Phone_No_.Value = "", true, false)</Hidden>
+                                            </Visibility>
                                             <Style>
+                                              <Border>
+                                                <Style>None</Style>
+                                              </Border>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
@@ -8940,7 +8954,13 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               </Paragraph>
                                             </Paragraphs>
                                             <rd:DefaultName>End_Customer_Email_No_</rd:DefaultName>
+                                            <Visibility>
+                                              <Hidden>=Iif(Fields!End_Customer_Email_No_.Value = "", true, false)</Hidden>
+                                            </Visibility>
                                             <Style>
+                                              <Border>
+                                                <Style>None</Style>
+                                              </Border>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
@@ -10147,31 +10167,6 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
             </Textbox>
-            <Textbox Name="CmpnyGirNoCaption">
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>=Code.GetData(26,1)</Value>
-                      <Style>
-                        <FontFamily>Segoe UI</FontFamily>
-                        <FontSize>8pt</FontSize>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style />
-                </Paragraph>
-              </Paragraphs>
-              <Top>6.01302cm</Top>
-              <Left>20.74587cm</Left>
-              <Height>11pt</Height>
-              <Width>2.64181cm</Width>
-              <ZIndex>12</ZIndex>
-              <Style>
-                <VerticalAlign>Middle</VerticalAlign>
-              </Style>
-            </Textbox>
             <Textbox Name="CmpnyVATRegNoCaption">
               <KeepTogether>true</KeepTogether>
               <Paragraphs>
@@ -10188,11 +10183,11 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>5.58969cm</Top>
-              <Left>20.74587cm</Left>
+              <Top>5.946cm</Top>
+              <Left>20.7525cm</Left>
               <Height>11pt</Height>
               <Width>2.64534cm</Width>
-              <ZIndex>13</ZIndex>
+              <ZIndex>12</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -10217,7 +10212,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Left>12.80837cm</Left>
               <Height>11pt</Height>
               <Width>2.64534cm</Width>
-              <ZIndex>14</ZIndex>
+              <ZIndex>13</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -10242,7 +10237,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Left>12.80837cm</Left>
               <Height>11pt</Height>
               <Width>2.64534cm</Width>
-              <ZIndex>15</ZIndex>
+              <ZIndex>14</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -10269,7 +10264,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Left>12.25106cm</Left>
               <Height>11pt</Height>
               <Width>15.16507cm</Width>
-              <ZIndex>16</ZIndex>
+              <ZIndex>15</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -10296,7 +10291,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Left>12.80837cm</Left>
               <Height>11pt</Height>
               <Width>14.60773cm</Width>
-              <ZIndex>17</ZIndex>
+              <ZIndex>16</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -10323,7 +10318,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Left>12.80837cm</Left>
               <Height>11pt</Height>
               <Width>14.60773cm</Width>
-              <ZIndex>18</ZIndex>
+              <ZIndex>17</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -10350,7 +10345,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Left>4.10583cm</Left>
               <Height>11pt</Height>
               <Width>16.46558cm</Width>
-              <ZIndex>19</ZIndex>
+              <ZIndex>18</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -10377,7 +10372,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Left>4.1039cm</Left>
               <Height>11pt</Height>
               <Width>16.50086cm</Width>
-              <ZIndex>20</ZIndex>
+              <ZIndex>19</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -10404,7 +10399,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Left>23.45612cm</Left>
               <Height>11pt</Height>
               <Width>3.95998cm</Width>
-              <ZIndex>21</ZIndex>
+              <ZIndex>20</ZIndex>
               <Style>
                 <Border />
                 <VerticalAlign>Middle</VerticalAlign>
@@ -10432,34 +10427,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Left>23.44928cm</Left>
               <Height>11pt</Height>
               <Width>3.95645cm</Width>
-              <ZIndex>22</ZIndex>
-              <Style>
-                <VerticalAlign>Middle</VerticalAlign>
-              </Style>
-            </Textbox>
-            <Textbox Name="CmpnyGirNo">
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>=Code.GetData(35,1)</Value>
-                      <Style>
-                        <FontFamily>Segoe UI</FontFamily>
-                        <FontSize>8pt</FontSize>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Right</TextAlign>
-                  </Style>
-                </Paragraph>
-              </Paragraphs>
-              <Top>6.01302cm</Top>
-              <Left>23.45613cm</Left>
-              <Height>11pt</Height>
-              <Width>3.95998cm</Width>
-              <ZIndex>23</ZIndex>
+              <ZIndex>21</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -10482,11 +10450,11 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>5.59674cm</Top>
-              <Left>23.45966cm</Left>
+              <Top>5.95305cm</Top>
+              <Left>23.46629cm</Left>
               <Height>11pt</Height>
               <Width>3.95645cm</Width>
-              <ZIndex>24</ZIndex>
+              <ZIndex>22</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -10513,7 +10481,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Left>15.43241cm</Left>
               <Height>11pt</Height>
               <Width>11.97332cm</Width>
-              <ZIndex>25</ZIndex>
+              <ZIndex>23</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -10540,7 +10508,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Left>15.44279cm</Left>
               <Height>11pt</Height>
               <Width>11.97332cm</Width>
-              <ZIndex>26</ZIndex>
+              <ZIndex>24</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -10567,7 +10535,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Left>12.80837cm</Left>
               <Height>11pt</Height>
               <Width>14.60773cm</Width>
-              <ZIndex>27</ZIndex>
+              <ZIndex>25</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -10594,7 +10562,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Left>12.80837cm</Left>
               <Height>11pt</Height>
               <Width>14.60773cm</Width>
-              <ZIndex>28</ZIndex>
+              <ZIndex>26</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -10621,7 +10589,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Left>12.80837cm</Left>
               <Height>11pt</Height>
               <Width>14.60773cm</Width>
-              <ZIndex>29</ZIndex>
+              <ZIndex>27</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -10648,7 +10616,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Left>12.80837cm</Left>
               <Height>11pt</Height>
               <Width>14.60773cm</Width>
-              <ZIndex>30</ZIndex>
+              <ZIndex>28</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -10675,7 +10643,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Left>1.65527cm</Left>
               <Height>20pt</Height>
               <Width>25.79535cm</Width>
-              <ZIndex>31</ZIndex>
+              <ZIndex>29</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -10700,7 +10668,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Left>0.04795cm</Left>
               <Height>11pt</Height>
               <Width>12.72515cm</Width>
-              <ZIndex>32</ZIndex>
+              <ZIndex>30</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -10725,7 +10693,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Left>0.04795cm</Left>
               <Height>11pt</Height>
               <Width>12.72515cm</Width>
-              <ZIndex>33</ZIndex>
+              <ZIndex>31</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -10750,7 +10718,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Left>0.04795cm</Left>
               <Height>11pt</Height>
               <Width>12.72515cm</Width>
-              <ZIndex>34</ZIndex>
+              <ZIndex>32</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -10775,7 +10743,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Left>0.04795cm</Left>
               <Height>11pt</Height>
               <Width>12.72515cm</Width>
-              <ZIndex>35</ZIndex>
+              <ZIndex>33</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -10800,7 +10768,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Left>0.04795cm</Left>
               <Height>11pt</Height>
               <Width>12.72515cm</Width>
-              <ZIndex>36</ZIndex>
+              <ZIndex>34</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -10825,7 +10793,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Left>0.04795cm</Left>
               <Height>11pt</Height>
               <Width>12.72515cm</Width>
-              <ZIndex>37</ZIndex>
+              <ZIndex>35</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -10850,7 +10818,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Left>0.04795cm</Left>
               <Height>11pt</Height>
               <Width>12.72515cm</Width>
-              <ZIndex>38</ZIndex>
+              <ZIndex>36</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -10875,7 +10843,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Left>0.04795cm</Left>
               <Height>11pt</Height>
               <Width>12.062cm</Width>
-              <ZIndex>39</ZIndex>
+              <ZIndex>37</ZIndex>
               <Style>
                 <Border />
                 <VerticalAlign>Middle</VerticalAlign>
@@ -10902,7 +10870,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Left>12.80837cm</Left>
               <Height>11pt</Height>
               <Width>2.64534cm</Width>
-              <ZIndex>40</ZIndex>
+              <ZIndex>38</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -10932,7 +10900,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Left>15.44279cm</Left>
               <Height>11pt</Height>
               <Width>11.97332cm</Width>
-              <ZIndex>41</ZIndex>
+              <ZIndex>39</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -10959,7 +10927,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Left>0.04795cm</Left>
               <Height>11pt</Height>
               <Width>3.99999cm</Width>
-              <ZIndex>42</ZIndex>
+              <ZIndex>40</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -10984,7 +10952,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Left>4.07055cm</Left>
               <Height>11pt</Height>
               <Width>16.50086cm</Width>
-              <ZIndex>43</ZIndex>
+              <ZIndex>41</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -11009,7 +10977,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Left>0.04795cm</Left>
               <Height>11pt</Height>
               <Width>3.99999cm</Width>
-              <ZIndex>44</ZIndex>
+              <ZIndex>42</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -11034,7 +11002,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Left>4.07055cm</Left>
               <Height>11pt</Height>
               <Width>16.50086cm</Width>
-              <ZIndex>45</ZIndex>
+              <ZIndex>43</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -11059,7 +11027,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Left>0.04795cm</Left>
               <Height>11pt</Height>
               <Width>3.99999cm</Width>
-              <ZIndex>46</ZIndex>
+              <ZIndex>44</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -11087,7 +11055,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Left>4.07055cm</Left>
               <Height>11pt</Height>
               <Width>16.50086cm</Width>
-              <ZIndex>47</ZIndex>
+              <ZIndex>45</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
