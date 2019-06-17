@@ -277,12 +277,13 @@ report 50011 "POS Reporting"
                         PostedSalesShipment: Record "Sales Shipment Header";
                     begin
                         SetEndCustResellerSalesInv();
-                        if Number = 0 then begin
+                        TempItemLedgEntrySales.setfilter("Serial No.", '<>%1', '');
+                        if not TempItemLedgEntrySales.findset then begin
+                            //if Number = 0 then begin
                             qty := Sales_Invoice_Line.Quantity;
                             CurrReport.skip;
-                        end;
-
-                        if TempItemLedgEntrySales.findfirst then begin
+                        end else begin
+                            //if TempItemLedgEntrySales.findfirst then begin
                             qty := 1;
                             SerialNo := TempItemLedgEntrySales."Serial No.";
                             UpdatePurchInfoSerialNumbersSalesInv(TempItemLedgEntrySales);
@@ -653,11 +654,13 @@ report 50011 "POS Reporting"
                         PostedSalesShipment: Record "Sales Shipment Header";
                     begin
                         SetEndCustResellerCreditMemo();
-                        if Number = 0 then begin
+                        TempItemLedgEntrySales.setfilter("Serial No.", '<>%1', '');
+                        if not TempItemLedgEntrySales.findset then begin
+                            //if Number = 0 then begin
                             qty := "Sales Cr.Memo Line".Quantity;
                             CurrReport.skip;
-                        end;
-                        if TempItemLedgEntrySales.findfirst then begin
+                        end else begin
+                            //if TempItemLedgEntrySales.findfirst then begin
                             qty := 1;
                             SerialNo := TempItemLedgEntrySales."Serial No.";
                             UpdatePurchInfoSerialNumbersCreditMemo(TempItemLedgEntrySales);
@@ -710,7 +713,7 @@ report 50011 "POS Reporting"
 
                 SetPricesCreditMemo(Item);
 
-                clear(TempItemLedgEntrySales);
+                TempItemLedgEntrySales.DeleteAll();
                 POSReportExport.RetrieveEntriesFromPostedInv(TempItemLedgEntrySales, "Sales Cr.Memo Line".RowID1()); //find serial numbers
 
                 ValueEntry.setrange("Document Type", ValueEntry."Document Type"::"Sales Credit Memo");
