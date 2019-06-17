@@ -11,8 +11,9 @@ xmlport 50001 "Price File Export CSV"
         textelement(Root)
         {
 
-            /* tableelement(ItemTableTitle; integer)
+            tableelement(ItemTableTitle; integer)
             {
+                SourceTableView = SORTING (Number) WHERE (Number = CONST (1));
                 textelement(SEC_PN)
                 {
                     trigger OnBeforePassVariable()
@@ -100,7 +101,7 @@ xmlport 50001 "Price File Export CSV"
                         StockLBl := 'Stock';
                     end;
                 }
-            } */
+            }
             tableelement(Item; Item)
             {
                 XmlName = 'Item';
@@ -133,7 +134,10 @@ xmlport 50001 "Price File Export CSV"
                 }
                 Textelement(Cost)
                 {
-
+                    trigger OnBeforePassVariable()
+                    begin
+                        Cost := Format(FindPurchasePrice(PurchasePrice, Item), 0, 9);
+                    end;
                 }
                 textelement(List_Price)
                 {
@@ -155,21 +159,7 @@ xmlport 50001 "Price File Export CSV"
                 {
 
                 }
-                /* tableelement(DefaultDimension; "Default Dimension")
-                {
-                    XmlName = 'DefaultDimension';
-                    LinkTable = Item;
-                    LinkFields = "No." = field ("No."), "Table ID" = const (27);
 
-                    textelement(DefaultDimCode; MainCategory)
-                    {
-
-                    }
-                    textelement(DefaultDimCode; SubCategory)
-                    {
-
-                    }
-                } */
                 fieldelement(EAN; item.GTIN)
                 {
 
@@ -237,8 +227,6 @@ xmlport 50001 "Price File Export CSV"
 
         if CustomerNo = '' then
             currXMLport.Skip();
-
-        //ItemTableTitle.Number := 1;
     end;
 
     var
@@ -246,6 +234,7 @@ xmlport 50001 "Price File Export CSV"
         CurrencyFilter: text;
         UnitPrice: decimal;
         salesprice: record "Sales Price";
+        PurchasePrice: record "Purchase Price";
         GLSetup: record "General Ledger Setup";
 
     procedure SetCurrencyFilter(NewCurrencyFilter: Text)
@@ -300,5 +289,19 @@ xmlport 50001 "Price File Export CSV"
                 exit('');
         end else
             exit('');
+    end;
+
+    procedure FindPurchasePrice(var PurchPrice: record "Purchase Price"; item: record Item): Decimal
+    begin
+        PurchPrice.setrange("Vendor No.", Item."Vendor No.");
+        PurchPrice.setrange("Item No.", Item."No.");
+        PurchPrice.setrange("Unit of Measure Code", item."Base Unit of Measure");
+        PurchPrice.setrange("Currency Code", item."Vendor Currency");
+        PurchPrice.SetRange("Ending Date", 0D);
+        PurchPrice.SetFilter("Starting Date", '%1|<%2', WorkDate(), WorkDate());
+        if PurchPrice.FindFirst() then
+            exit(PurchPrice."Direct Unit Cost")
+        else
+            exit(0)
     end;
 }

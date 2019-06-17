@@ -31,10 +31,6 @@ report 50011 "POS Reporting"
             {
 
             }
-            /* column(IC_Partner_Code; "IC Partner Code")
-            {
-
-            } */
             column(IC_Partner_Code; ICPartnerCode)
             {
 
@@ -83,9 +79,13 @@ report 50011 "POS Reporting"
             {
                 //skal hentes fra købslinjen
             }
-            column(Cost_Percentage; CostPercentage)
+            column(BidCostPercentage; bidCostPercentage)
             {
                 //udregnet vha. (unit purch price - bid unit purch price) / unit purch price    
+            }
+            column(StandardCost; StandardCost)
+            {
+
             }
             column(Quantity; Qty)
             {
@@ -381,7 +381,7 @@ report 50011 "POS Reporting"
                             end;
                             // Find PurchCostPrice on purchase
                             if (PurchCostPrice <> 0) and (BidUnitPurchasePrice <> 0) then
-                                CostPercentage := (PurchCostPrice - BidUnitPurchasePrice) / PurchCostPrice; //er der en købskostpris procent når der ikke er bid?
+                                BidCostPercentage := (PurchCostPrice - BidUnitPurchasePrice) / PurchCostPrice; //er der en købskostpris procent når der ikke er bid?
 
                         end;
                     end;
@@ -458,9 +458,13 @@ report 50011 "POS Reporting"
             {
                 //hentes fra købslinjen
             }
-            column(Cost_Percentage2; CostPercentage)
+            column(BidCost_Percentage2; BidCostPercentage)
             {
                 //udregnet vha. (unit purch price - bid unit purch price) / unit purch price    
+            }
+            column(StandardCost2; StandardCost)
+            {
+
             }
             column(Quantity2; Qty)
             {
@@ -900,6 +904,7 @@ report 50011 "POS Reporting"
             Currency := Item."Vendor Currency";
             UnitListPrice := Sales_Invoice_Line."Unit List Price VC";
         end;
+        StandardCost := FindPurchasePrice(PurchasePrice, Item);
     end;
 
     local procedure SetPricesCreditMemo(Item: record Item)
@@ -929,6 +934,7 @@ report 50011 "POS Reporting"
             Currency := Item."Vendor Currency";
             UnitListPrice := "Sales Cr.Memo Line"."Unit List Price VC";
         end;
+        StandardCost := FindPurchasePrice(PurchasePrice, Item);
     end;
 
 
@@ -942,7 +948,7 @@ report 50011 "POS Reporting"
         clear(PurchOrderNo);
         Clear(PurchOrderPostDate);
         Clear(PurchCostPrice);
-        Clear(CostPercentage);
+        Clear(BidCostPercentage);
         clear(UnitListPrice);
         clear(VendorBidNo);
         clear(BidPurchaseDiscountPct);
@@ -966,6 +972,7 @@ report 50011 "POS Reporting"
         Clear(EndcustPostCode);
         Clear(EndcustCountryRegion);
         clear(EndcustCounty);
+        Clear(StandardCost);
 
     end;
 
@@ -1009,7 +1016,7 @@ report 50011 "POS Reporting"
 
             // Find PurchCostPrice på købslinjen 
             if (PurchCostPrice <> 0) and (BidUnitPurchasePrice <> 0) then
-                CostPercentage := (PurchCostPrice - BidUnitPurchasePrice) / PurchCostPrice;
+                BidCostPercentage := (PurchCostPrice - BidUnitPurchasePrice) / PurchCostPrice;
         end;
     end;
 
@@ -1040,7 +1047,7 @@ report 50011 "POS Reporting"
                     end;
                 end;
                 if (PurchCostPrice <> 0) and (BidUnitPurchasePrice <> 0) then
-                    CostPercentage := (PurchCostPrice - BidUnitPurchasePrice) / PurchCostPrice;
+                    BidCostPercentage := (PurchCostPrice - BidUnitPurchasePrice) / PurchCostPrice;
             end;
         end;
 
@@ -1054,6 +1061,20 @@ report 50011 "POS Reporting"
         SalesShipLine.setrange("Order Line No.", Sales_Invoice_Line."Order Line No.");
         if SalesShipLine.FindFirst() then
             ShipmentNo := SalesShipLine."Document No.";
+    end;
+
+    procedure FindPurchasePrice(var PurchPrice: record "Purchase Price"; item: record Item): Decimal
+    begin
+        PurchPrice.setrange("Vendor No.", Item."Vendor No.");
+        PurchPrice.setrange("Item No.", Item."No.");
+        PurchPrice.setrange("Unit of Measure Code", item."Base Unit of Measure");
+        PurchPrice.setrange("Currency Code", item."Vendor Currency");
+        PurchPrice.Setfilter("Ending Date", '>%1|%2', Sales_Invoice_Line."Posting Date", 0D);
+        PurchPrice.SetFilter("Starting Date", '%1|<%2', Sales_Invoice_Line."Posting Date", Sales_Invoice_Line."Posting Date");
+        if PurchPrice.FindFirst() then
+            exit(PurchPrice."Direct Unit Cost")
+        else
+            exit(0)
     end;
 
     var
@@ -1072,7 +1093,7 @@ report 50011 "POS Reporting"
         Qty: Decimal;
         POSReportExport: codeunit "POS Report Export";
         SerialNo: text[50];
-        CostPercentage: Decimal;
+        BidCostPercentage: Decimal;
         VARIDInt: Code[20];
         PurchOrderNo: code[20];
         PurchOrderPostDate: Date;
@@ -1105,6 +1126,8 @@ report 50011 "POS Reporting"
         ICPartnerCode: Text;
         ICPartnerCode2: text;
         Subsidiary: code[20];
+        StandardCost: Decimal;
+        PurchasePrice: record "Purchase Price";
 
 
 }

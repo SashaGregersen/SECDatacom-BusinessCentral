@@ -189,6 +189,9 @@
                 <TablixColumn>
                   <Width>1in</Width>
                 </TablixColumn>
+                <TablixColumn>
+                  <Width>1in</Width>
+                </TablixColumn>
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
@@ -1061,7 +1064,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Cost Percentage</Value>
+                                  <Value>Bid Cost Percentage</Value>
                                   <Style>
                                     <FontSize>11pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -1073,6 +1076,45 @@
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox57</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <BottomBorder>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                              <Width>1pt</Width>
+                            </BottomBorder>
+                            <BackgroundColor>White</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox1">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Standard Cost</Value>
+                                  <Style>
+                                    <FontSize>11pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Color>#666666</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox1</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -3150,14 +3192,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Cost_Percentage">
+                        <Textbox Name="BidCostPercentage">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!Cost_Percentage.Value</Value>
+                                  <Value>=Fields!BidCostPercentage.Value</Value>
                                   <Style>
                                     <FontWeight>Normal</FontWeight>
                                     <Color>#333333</Color>
@@ -3167,7 +3209,40 @@
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Cost_Percentage</rd:DefaultName>
+                          <rd:DefaultName>BidCostPercentage</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <BackgroundColor>White</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="StandardCost">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!StandardCost.Value</Value>
+                                  <Style>
+                                    <FontWeight>Normal</FontWeight>
+                                    <Color>#333333</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>StandardCost</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -5036,14 +5111,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Cost_Percentage2">
+                        <Textbox Name="BidCost_Percentage2">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!Cost_Percentage2.Value</Value>
+                                  <Value>=Fields!BidCost_Percentage2.Value</Value>
                                   <Style>
                                     <FontWeight>Normal</FontWeight>
                                     <Color>#333333</Color>
@@ -5053,7 +5128,40 @@
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Cost_Percentage2</rd:DefaultName>
+                          <rd:DefaultName>BidCost_Percentage2</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <BackgroundColor>White</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="StandardCost2">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!StandardCost2.Value</Value>
+                                  <Style>
+                                    <FontWeight>Normal</FontWeight>
+                                    <Color>#333333</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>StandardCost2</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -6252,6 +6360,7 @@
                 <TablixMember />
                 <TablixMember />
                 <TablixMember />
+                <TablixMember />
               </TablixMembers>
             </TablixColumnHierarchy>
             <TablixRowHierarchy>
@@ -6272,7 +6381,7 @@
             <Top>0in</Top>
             <Left>0in</Left>
             <Height>0.75in</Height>
-            <Width>57in</Width>
+            <Width>58in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -6283,7 +6392,7 @@
         <Height>0.75in</Height>
         <Style />
       </Body>
-      <Width>57in</Width>
+      <Width>58in</Width>
       <Page>
         <Style />
       </Page>
@@ -6391,11 +6500,17 @@ End Function
         <Field Name="PurchCostPriceFormat">
           <DataField>PurchCostPriceFormat</DataField>
         </Field>
-        <Field Name="Cost_Percentage">
-          <DataField>Cost_Percentage</DataField>
+        <Field Name="BidCostPercentage">
+          <DataField>BidCostPercentage</DataField>
         </Field>
-        <Field Name="Cost_PercentageFormat">
-          <DataField>Cost_PercentageFormat</DataField>
+        <Field Name="BidCostPercentageFormat">
+          <DataField>BidCostPercentageFormat</DataField>
+        </Field>
+        <Field Name="StandardCost">
+          <DataField>StandardCost</DataField>
+        </Field>
+        <Field Name="StandardCostFormat">
+          <DataField>StandardCostFormat</DataField>
         </Field>
         <Field Name="Quantity">
           <DataField>Quantity</DataField>
@@ -6580,11 +6695,17 @@ End Function
         <Field Name="PurchCostPrice2Format">
           <DataField>PurchCostPrice2Format</DataField>
         </Field>
-        <Field Name="Cost_Percentage2">
-          <DataField>Cost_Percentage2</DataField>
+        <Field Name="BidCost_Percentage2">
+          <DataField>BidCost_Percentage2</DataField>
         </Field>
-        <Field Name="Cost_Percentage2Format">
-          <DataField>Cost_Percentage2Format</DataField>
+        <Field Name="BidCost_Percentage2Format">
+          <DataField>BidCost_Percentage2Format</DataField>
+        </Field>
+        <Field Name="StandardCost2">
+          <DataField>StandardCost2</DataField>
+        </Field>
+        <Field Name="StandardCost2Format">
+          <DataField>StandardCost2Format</DataField>
         </Field>
         <Field Name="Quantity2">
           <DataField>Quantity2</DataField>

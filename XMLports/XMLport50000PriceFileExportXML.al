@@ -39,7 +39,10 @@ xmlport 50000 "Price File Export XML"
                 }
                 Textelement(Cost)
                 {
-
+                    trigger OnBeforePassVariable()
+                    begin
+                        Cost := Format(PriceFileExport.FindPurchasePrice(PurchasePrice, Item), 0, 9);
+                    end;
                 }
                 textelement(List_Price)
                 {
@@ -137,6 +140,8 @@ xmlport 50000 "Price File Export XML"
         UnitPrice: decimal;
         salesprice: record "Sales Price";
         GLSetup: record "General Ledger Setup";
+        PriceFileExport: XmlPort "Price File Export CSV";
+        PurchasePrice: record "Purchase Price";
 
     procedure SetCurrencyFilter(NewCurrencyFilter: Text)
     var
