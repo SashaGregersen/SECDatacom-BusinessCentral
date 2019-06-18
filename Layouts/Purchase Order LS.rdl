@@ -3006,7 +3006,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                       </TablixMember>
                                       <TablixMember>
                                         <Visibility>
-                                          <Hidden>=Iif(Fields!Claimable.Value = true, true, false)</Hidden>
+                                          <Hidden>=IIF(Fields!VendorBidNo.Value = "", Iif(Fields!Claimable.Value = true, true, false) ,false)</Hidden>
                                         </Visibility>
                                         <KeepWithGroup>After</KeepWithGroup>
                                       </TablixMember>
