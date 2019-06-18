@@ -105,6 +105,7 @@ xmlport 50001 "Price File Export CSV"
             tableelement(Item; Item)
             {
                 XmlName = 'Item';
+                SourceTableView = SORTING ("No.");
 
                 fieldelement(SEC_PN; Item."No.")
                 {
@@ -136,7 +137,8 @@ xmlport 50001 "Price File Export CSV"
                 {
                     trigger OnBeforePassVariable()
                     begin
-                        Cost := Format(FindPurchasePrice(PurchasePrice, Item), 0, 9);
+                        CostDec := Round(FindPurchasePrice(PurchasePrice, Item), 0.01);
+                        cost := format(CostDec, 0, 9);
                     end;
                 }
                 textelement(List_Price)
@@ -144,7 +146,8 @@ xmlport 50001 "Price File Export CSV"
 
                     trigger OnBeforePassVariable()
                     begin
-                        List_Price := Format(FindCheapestPrice(salesprice), 0, 9);
+                        ListPriceDec := round(FindCheapestPrice(salesprice), 0.01);
+                        List_Price := Format(ListPriceDec, 0, 9);
                     end;
 
                 }
@@ -236,6 +239,8 @@ xmlport 50001 "Price File Export CSV"
         salesprice: record "Sales Price";
         PurchasePrice: record "Purchase Price";
         GLSetup: record "General Ledger Setup";
+        CostDec: decimal;
+        ListPriceDec: Decimal;
 
     procedure SetCurrencyFilter(NewCurrencyFilter: Text)
     var

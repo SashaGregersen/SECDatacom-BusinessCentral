@@ -41,7 +41,8 @@ xmlport 50000 "Price File Export XML"
                 {
                     trigger OnBeforePassVariable()
                     begin
-                        Cost := Format(PriceFileExport.FindPurchasePrice(PurchasePrice, Item), 0, 9);
+                        CostDec := Round(PriceFileExport.FindPurchasePrice(PurchasePrice, Item), 0.01);
+                        cost := format(CostDec, 0, 9);
                     end;
                 }
                 textelement(List_Price)
@@ -49,7 +50,8 @@ xmlport 50000 "Price File Export XML"
 
                     trigger OnBeforePassVariable()
                     begin
-                        List_Price := Format(FindCheapestPrice(salesprice), 0, 9);
+                        ListPriceDec := round(FindCheapestPrice(salesprice), 0.01);
+                        List_Price := Format(ListPriceDec, 0, 9);
                     end;
 
                 }
@@ -142,6 +144,8 @@ xmlport 50000 "Price File Export XML"
         GLSetup: record "General Ledger Setup";
         PriceFileExport: XmlPort "Price File Export CSV";
         PurchasePrice: record "Purchase Price";
+        ListPriceDec: decimal;
+        CostDec: decimal;
 
     procedure SetCurrencyFilter(NewCurrencyFilter: Text)
     var
