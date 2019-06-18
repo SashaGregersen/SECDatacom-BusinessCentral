@@ -218,9 +218,11 @@ xmlport 50001 "Price File Export CSV"
 
                 end;
 
+
             }
 
         }
+
     }
 
     trigger OnPreXmlPort()
@@ -231,6 +233,7 @@ xmlport 50001 "Price File Export CSV"
         if CustomerNo = '' then
             currXMLport.Skip();
     end;
+
 
     var
         CustomerNo: code[20];
