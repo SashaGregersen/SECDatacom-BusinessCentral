@@ -73,6 +73,10 @@ pageextension 50002 "Sales Line Bid" extends "Sales Order Subform"
             {
                 ApplicationArea = All;
             }
+            field("Description 2"; "Description 2")
+            {
+                ApplicationArea = All;
+            }
         }
 
         modify("Drop Shipment")
