@@ -203,4 +203,16 @@ codeunit 50052 "Customer Event Handler"
     begin
         ReportParameters := EDICygate.GetParameters(FilterRecord);
     end;
+
+    [EventSubscriber(ObjectType::table, database::"Var", 'OnAfterInsertEvent', '', true, true)]
+    local procedure VARIDOnAfterInsertEvent(var Rec: Record "Var"; runtrigger: Boolean)
+    var
+        SyncMasterData: Codeunit "Synchronize Master Data";
+    begin
+        if not runtrigger then
+            exit;
+        if rec.IsTemporary() then
+            exit;
+        SyncMasterData.SynchronizeVARIDToCompany(Rec);
+    end;
 }

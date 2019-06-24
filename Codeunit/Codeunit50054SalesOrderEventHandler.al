@@ -71,6 +71,7 @@ codeunit 50054 "Sales Order Event Handler"
             bid.setrange("Vendor No.", Item."Vendor No.");
             bid.SetFilter("Expiry Date", '>=%1|%2', Today, 0D);
             bid.setrange(Deactivate, false);
+            bid.setrange("One Time Bid", false);
             if bid.FindSet() then
                 repeat
                     BidItemPrices.SetRange("Bid No.", Bid."No.");
@@ -424,6 +425,10 @@ codeunit 50054 "Sales Order Event Handler"
     var
         PartnerRecord: Record "Reservation Entry";
     begin
+        /* if not RunTrigger then
+            exit; */
+        if rec.IsTemporary then
+            exit;
         IF (Rec."Source Type" = 37) THEN BEGIN
             IF Rec."Serial No." = '' THEN BEGIN
                 IF PartnerRecord.GET(Rec."Entry No.", NOT Rec.Positive) THEN BEGIN
@@ -453,7 +458,9 @@ codeunit 50054 "Sales Order Event Handler"
     var
         PartnerRecord: Record "Reservation Entry";
     begin
-        if not RunTrigger then
+        // if not RunTrigger then
+        //     exit;
+        if rec.IsTemporary then
             exit;
         IF (Rec."Source Type" = 37) THEN BEGIN
             IF Rec."Serial No." = '' THEN BEGIN
@@ -791,6 +798,12 @@ codeunit 50054 "Sales Order Event Handler"
         Rec."Ship-to County" := '';
         Rec."Ship-to Country/Region Code" := '';
         Rec."Ship-to Contact" := '';
+    end;
+
+    [EventSubscriber(ObjectType::table, database::"Sales Header", 'OnAfterValidateEvent', 'Sell-To Contact', true, true)]
+    local procedure OnAfterValidateSellToContactEvent(var Rec: Record "Sales Header"; var xRec: Record "Sales Header")
+    begin
+        rec.SetDropShipment();
     end;
 
     procedure AddTransactionTypeToSalesDocument(var SalesHeader: Record "Sales Header");

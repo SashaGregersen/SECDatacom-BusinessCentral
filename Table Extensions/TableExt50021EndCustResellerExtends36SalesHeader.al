@@ -321,18 +321,26 @@ tableextension 50021 "End Customer and Reseller" extends 36
     procedure SetShipToAddressOnSalesOrder(Customer: record customer)
     var
         ShipToAdress: record "Ship-to Address";
+        Contact: record contact;
     begin
         if ShipToAdress.get(Customer."No.", Customer."Prefered Shipment Address") then begin
             SetShipToAddress(ShipToAdress.Name, ShipToAdress."Name 2", ShipToAdress.Address, ShipToAdress."Address 2", ShipToAdress.City, ShipToAdress."Post Code", shiptoadress.County, shiptoadress."Country/Region Code");
-            rec.Validate("Ship-to Contact", ShipToAdress.Contact);
             rec.validate("Ship-To-Code", shiptoadress.Code);
+            rec.Validate("Ship-to Contact", ShipToAdress.Contact);
             rec.Validate("Ship-to Phone No.", ShipToAdress."Phone No.");
             rec.Validate("Ship-To Email", ShipToAdress."E-Mail");
         end else begin
             SetShipToAddress(Customer.Name, customer."Name 2", customer.Address, Customer."Address 2", customer.City, Customer."Post Code", customer.County, customer."Country/Region Code");
-            rec.Validate("Ship-to Contact", Customer.Contact);
-            rec.validate("Ship-to Phone No.", Customer."Phone No.");
-            rec.Validate("Ship-To Email", Customer."E-Mail");
+            if "Drop-Shipment" then begin
+                rec.Validate("Ship-to Contact", rec."End Customer Contact Name");
+                rec.validate("Ship-to Phone No.", rec."End Customer Phone No.");
+                rec.Validate("Ship-To Email", rec."End Customer Email");
+            end else begin
+                rec.validate("Ship-to Contact", "Sell-to Contact");
+                if contact.get("Sell-to Contact No.") then;
+                rec.validate("Ship-to Phone No.", Contact."Phone No.");
+                rec.validate("Ship-to Email", Contact."E-Mail");
+            end;
         end;
     end;
 

@@ -28,6 +28,10 @@ query 50006 "PostedSalesCreditMemoLines"
             column(Unit_Cost__LCY_; "Unit Cost (LCY)")
             {
             }
+            column(Line_Amount; "Line Amount")
+            {
+
+            }
             column(Shortcut_Dimension_1_Code; "Shortcut Dimension 1 Code")
             {
 
@@ -110,6 +114,15 @@ query 50006 "PostedSalesCreditMemoLines"
                 {
 
                 }
+                Column(Currency_Code; "Currency Code")
+                {
+
+                }
+                Column(Currency_Factor; "Currency Factor")
+                {
+
+                }
+
 
             }
         }

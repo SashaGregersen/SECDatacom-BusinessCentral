@@ -46,12 +46,19 @@ pageextension 50005 "Price Wrksh. Adv. Pricing" extends "Sales Price Worksheet"
                     FileMgtImport: Codeunit "File Management Import";
                     PurchasePricePage: Page "Purchase Prices";
                     PurchasePrice: Record "Purchase Price";
+                    TempItem: record item temporary;
+                    NonExistingItems: page "Non-Exisiting Items";
                 begin
                     PurchasePrice.Init();
+                    TempItem.DeleteAll();
 
-                    FileMgtImport.ImportCostPricesFromCSV(PurchasePrice);
+                    FileMgtImport.ImportCostPricesFromCSV(PurchasePrice, TempItem);
                     PurchasePricePage.SETTABLEVIEW(PurchasePrice);
                     PurchasePricePage.RUN;
+                    /* if TempItem.Count > 0 then begin
+                        NonExistingItems.SetTableView(TempItem);
+                        NonExistingItems.Run();
+                    end; */
                     CurrPage.CLOSE
                 end;
             }

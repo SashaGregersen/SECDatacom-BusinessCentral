@@ -26,12 +26,14 @@ codeunit 50011 "Item Substitution"
                         item.CalcFields(Inventory);
                         Item.CalcFields("Reserved Qty. on Inventory");
                         if (Item.Inventory - item."Reserved Qty. on Inventory") < rec.Quantity then begin
-                            ReserveEngineMgt.CancelReservation(ReservEntry);
+                            //ReserveEngineMgt.CancelReservation(ReservEntry);
+                            // i stedet skal vi indsætte en nylinje 
                             Rec.Validate("No.", SubItem."Substitute No.");
                             Rec.Modify(true);
                         end else
                             if Confirm('The substitute item %1 is available on stock, do you wish to continue purchasing it?', false, item."No.") then begin
-                                ReserveEngineMgt.CancelReservation(ReservEntry);
+                                //ReserveEngineMgt.CancelReservation(ReservEntry);
+                                // istedet skal vi insætte en ny linje 
                                 Rec.Validate("No.", SubItem."Substitute No.");
                                 Rec.Modify(true);
                             end;

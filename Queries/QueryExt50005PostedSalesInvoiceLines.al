@@ -10,7 +10,6 @@ query 50005 "PostedSalesInvoiceLines"
             {
             }
             Column(Line_No_; "Line No.")
-
             {
             }
             Column(Type; Type)
@@ -27,6 +26,10 @@ query 50005 "PostedSalesInvoiceLines"
             }
             column(Unit_Cost__LCY_; "Unit Cost (LCY)")
             {
+            }
+            column(Line_Amount; "Line Amount")
+            {
+
             }
             column(Shortcut_Dimension_1_Code; "Shortcut Dimension 1 Code")
             {
@@ -94,11 +97,15 @@ query 50005 "PostedSalesInvoiceLines"
             {
 
             }
-            column(Profit_Amount_LCY; "Profit Amount LCY") { }
+            column(Profit_Amount_LCY; "Profit Amount LCY")
+            {
+
+            }
             column(Line_Amount_Excl__VAT__LCY_; "Line Amount Excl. VAT (LCY)")
             {
 
             }
+
             dataitem(Sales_Invoice_Header; "Sales Invoice Header")
             {
                 DataItemLink = "No." = Sales_Invoice_Line."Document No.";
@@ -110,11 +117,18 @@ query 50005 "PostedSalesInvoiceLines"
                 {
 
                 }
+                Column(Currency_Code; "Currency Code")
+                {
+
+                }
+                Column(Currency_Factor; "Currency Factor")
+                {
+
+                }
 
             }
+
         }
-
-
 
     }
 }

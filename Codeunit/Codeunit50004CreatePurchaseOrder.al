@@ -19,7 +19,7 @@ codeunit 50004 "Create Purchase Order"
         Item: Record Item;
         AdvPriceMgt: Codeunit "Advanced Price Management";
         BidMgt: Codeunit "Bid Management";
-        MessageTxt: Text;
+        MessageTxt: Text[250];
         TempPurchHeader: Record "Purchase Header" temporary;
         ReleasePurchDoc: Codeunit "Release Purchase Document";
         Bid: Record Bid;
@@ -63,17 +63,17 @@ codeunit 50004 "Create Purchase Order"
                         PurchasePrice."Currency Code" := CurrencyCode;
                     end;
 
-                    if PurchasePrice."Direct Unit Cost" <> 0 then begin
-                        if not FindTempPurchaseHeader(VendorNo, CurrencyCode, TempPurchHeader) then begin
-                            MessageTxt := MessageTxt + CreatePurchHeader(SalesHeader, VendorNo, CurrencyCode, GetVendorBidNo(SalesLine."Bid No."), PurchHeader) + '/';
-                            TempPurchHeader := PurchHeader;
-                            TempPurchHeader.Insert(false);
-                        end else
-                            PurchHeader.Get(TempPurchHeader."Document Type", TempPurchHeader."No.");
-                        CreatePurchLine(PurchHeader, SalesHeader, SalesLine, PurchasePrice."Direct Unit Cost", PurchLine);
-                        ReserveItemOnPurchOrder(SalesLine, PurchLine);
-                        GlobalLineCounter := GlobalLineCounter + 1;
-                    end;
+                    //if PurchasePrice."Direct Unit Cost" <> 0 then begin //check på <> 0 bør fjernes
+                    if not FindTempPurchaseHeader(VendorNo, CurrencyCode, TempPurchHeader) then begin
+                        MessageTxt := MessageTxt + CreatePurchHeader(SalesHeader, VendorNo, CurrencyCode, GetVendorBidNo(SalesLine."Bid No."), PurchHeader) + '/';
+                        TempPurchHeader := PurchHeader;
+                        TempPurchHeader.Insert(false);
+                    end else
+                        PurchHeader.Get(TempPurchHeader."Document Type", TempPurchHeader."No.");
+                    CreatePurchLine(PurchHeader, SalesHeader, SalesLine, PurchasePrice."Direct Unit Cost", PurchLine);
+                    ReserveItemOnPurchOrder(SalesLine, PurchLine);
+                    GlobalLineCounter := GlobalLineCounter + 1;
+                    //end;
                 end;
             until SalesLine.next = 0;
 
@@ -94,7 +94,7 @@ codeunit 50004 "Create Purchase Order"
         end;
     end;
 
-    procedure CreatePurchHeader(SalesHeader: record "Sales Header"; VendorNo: code[20]; CurrencyCode: code[10]; VendorBidNo: code[20]; var PurchHeader: record "Purchase Header"): Text
+    procedure CreatePurchHeader(SalesHeader: record "Sales Header"; VendorNo: code[20]; CurrencyCode: code[10]; VendorBidNo: Text[100]; var PurchHeader: record "Purchase Header"): Text
     var
         Customer: record customer;
         CompanyInfo: record "Company Information";
@@ -106,7 +106,7 @@ codeunit 50004 "Create Purchase Order"
         PurchHeader.Validate("Buy-from Vendor No.", VendorNo);
         PurchHeader.Validate("Currency Code", CurrencyCode);
         if VendorBidNo <> '' then
-            PurchHeader.Validate("Vendor Shipment No.", VendorBidNo);
+            PurchHeader.Validate("Vendor Shipment No.", COPYSTR(VendorBidNo, 1, 35));
         if (SalesHeader."Ship directly from supplier") then begin
             PurchHeader.SetShipToAddress(SalesHeader."Ship-to Name", SalesHeader."Ship-to Name 2",
             SalesHeader."Ship-to Address", SalesHeader."Ship-to Address 2", SalesHeader."Ship-to City",

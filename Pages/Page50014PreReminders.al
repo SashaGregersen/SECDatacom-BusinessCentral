@@ -16,6 +16,10 @@ page 50014 "PreReminders"
                 {
                     ApplicationArea = All;
                 }
+                field("Customer Name"; "Customer Name")
+                {
+                    ApplicationArea = all;
+                }
                 field("Document Date"; "Document Date")
                 {
                     ApplicationArea = All;
@@ -23,6 +27,10 @@ page 50014 "PreReminders"
                 field("Document Type"; "Document Type")
                 {
                     ApplicationArea = All;
+                }
+                field("Document No."; "Document No.")
+                {
+                    ApplicationArea = all;
                 }
                 field("Due Date"; "Due Date")
                 {
@@ -87,6 +95,7 @@ page 50014 "PreReminders"
                                 HeaderDoc := tmpCust;
                                 EMailTemplateMgt.SendMail(EmailTemplateLine, RecRef, HeaderDoc, '', true, false, 0);
                             end;
+
                         until tmpCust.Next() = 0;
                 end;
             }

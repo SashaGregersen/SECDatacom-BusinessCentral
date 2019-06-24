@@ -5,7 +5,7 @@ report 50011 "POS Reporting"
     ProcessingOnly = false;
     UseRequestPage = true;
     DefaultLayout = RDLC;
-    RDLCLayout = './Layouts/POSReport.rdl';
+    RDLCLayout = './Layouts/POSReport2.rdl';
     Caption = 'POS Report';
 
     dataset
@@ -13,7 +13,7 @@ report 50011 "POS Reporting"
         dataitem(Sales_Invoice_Line; "Sales Invoice Line")
         {
             RequestFilterHeading = 'Line Filters';
-            RequestFilterFields = "IC Partner Code";
+            RequestFilterFields = "Posting Date";
 
             column(Document_Type; DocumentType)
             {
@@ -31,7 +31,7 @@ report 50011 "POS Reporting"
             {
 
             }
-            column(IC_Partner_Code; "IC Partner Code")
+            column(IC_Partner_Code; ICPartnerCode)
             {
 
             }
@@ -79,9 +79,13 @@ report 50011 "POS Reporting"
             {
                 //skal hentes fra købslinjen
             }
-            column(Cost_Percentage; CostPercentage)
+            column(BidCostPercentage; bidCostPercentage)
             {
                 //udregnet vha. (unit purch price - bid unit purch price) / unit purch price    
+            }
+            column(StandardCost; StandardCost)
+            {
+
             }
             column(Quantity; Qty)
             {
@@ -99,7 +103,6 @@ report 50011 "POS Reporting"
             dataitem("Sales Invoice Header"; "Sales Invoice Header")
             {
                 DataItemLink = "No." = field ("Document No.");
-                RequestFilterFields = "Posting Date";
                 RequestFilterHeading = 'Header Filters';
 
                 column(Document_No; "No.")
@@ -166,47 +169,83 @@ report 50011 "POS Reporting"
                 {
 
                 }
-                column(ResellEndCustName; ResellEndCustName)
+                column(ResellerName2; ResellerName2)
                 {
 
                 }
-                column(ResellEndCustName2; ResellEndCustName2)
+                column(ResellerAddress; ResellerAddress)
                 {
 
                 }
-                column(ResellEndCustAddress; ResellEndCustAddress)
+                column(ResellerAddress2; ResellerAddress2)
                 {
 
                 }
-                column(ResellEndCustAddress2; ResellEndCustAddress2)
+                column(ResellerCity; ResellerCity)
                 {
 
                 }
-                column(ResellEndCustCity; ResellEndCustCity)
+                column(ResellerPostCode; ResellerPostCode)
                 {
 
                 }
-                column(ResellEndCustPostCode; ResellEndCustPostCode)
+                column(ResellerCountryRegion; ResellerCountryRegion)
                 {
 
                 }
-                column(ResellEndCustCountryRegion; ResellEndCustCountryRegion)
+                column(ResellerCounty; ResellerCounty)
                 {
 
                 }
-                column(ResellEndCustCounty; ResellEndCustCounty)
+                column(ResellerContact; ResellerContact)
                 {
 
                 }
-                column(ResellEndCustContact; ResellEndCustContact)
+                column(ResellerContactEmail; ResellerContactEmail)
                 {
 
                 }
-                column(ResellEndCustContactEmail; ResellEndCustEmail)
+                column(ResellerContactPhone; ResellerContactPhone)
                 {
 
                 }
-                column(ResellEndCustContactPhone; ResellEndCustPhone)
+                column(EndCustName2; EndCustName2)
+                {
+
+                }
+                column(EndCustAddress; EndCustAddress)
+                {
+
+                }
+                column(EndCustAddress2; EndCustAddress2)
+                {
+
+                }
+                column(EndCustCity; EndCustCity)
+                {
+
+                }
+                column(EndCustPostCode; EndCustPostCode)
+                {
+
+                }
+                column(EndCustCountryRegion; EndCustCountryRegion)
+                {
+
+                }
+                column(EndCustCounty; EndCustCounty)
+                {
+
+                }
+                column(EndCustContact; EndCustContact)
+                {
+
+                }
+                column(EndCustContactEmail; EndCustContactEmail)
+                {
+
+                }
+                column(EndCustContactPhone; EndCustContactPhone)
                 {
 
                 }
@@ -222,7 +261,7 @@ report 50011 "POS Reporting"
                     var
                         ValueEntry: record "Value Entry";
                     begin
-                        if TempItemLedgEntrySales.Count = 0 then
+                        if TempItemLedgEntrySales.Count = 1 then
                             SetRange(Number, 0)
                         else
                             SetRange(Number, 1, TempItemLedgEntrySales.count());
@@ -238,11 +277,13 @@ report 50011 "POS Reporting"
                         PostedSalesShipment: Record "Sales Shipment Header";
                     begin
                         SetEndCustResellerSalesInv();
-                        if Number = 0 then begin
+                        TempItemLedgEntrySales.setfilter("Serial No.", '<>%1', '');
+                        if not TempItemLedgEntrySales.findset then begin
+                            //if Number = 0 then begin
                             qty := Sales_Invoice_Line.Quantity;
                             CurrReport.skip;
-                        end;
-                        if TempItemLedgEntrySales.findfirst then begin
+                        end else begin
+                            //if TempItemLedgEntrySales.findfirst then begin
                             qty := 1;
                             SerialNo := TempItemLedgEntrySales."Serial No.";
                             UpdatePurchInfoSerialNumbersSalesInv(TempItemLedgEntrySales);
@@ -261,6 +302,7 @@ report 50011 "POS Reporting"
                 if VendorCode <> '' then
                     SetVendorFilter();
                 DocumentType := 'Invoice';
+                PostDate := format(Sales_Invoice_Line.GetFilter("Posting Date"));
             end;
 
             trigger OnAfterGetRecord()
@@ -277,65 +319,77 @@ report 50011 "POS Reporting"
                 PurchInvLine: record "Purch. Inv. Line";
                 PurchLine: record "Purchase Line";
                 PurchHeader: record "Purchase Header";
+                SalesInvHeader: record "Sales Invoice Header";
+                Customer: Record Customer;
             begin
                 ClearValues();
                 if Sales_Invoice_Line.Type <> Sales_Invoice_Line.type::Item then
                     CurrReport.skip;
+                SalesInvHeader.get(Sales_Invoice_Line."Document No.");
+                if (Subsidiary <> SalesInvHeader.Subsidiary) and (Subsidiary <> '') then
+                    CurrReport.skip;
+                if SalesInvHeader.Subsidiary <> '' then begin
+                    Customer.get(SalesInvHeader.Subsidiary);
+                    ICPartnerCode := Customer."IC Partner Code";
+                end;
                 item.get(Sales_Invoice_Line."No.");
                 VendorItemNo := item."Vendor-Item-No.";
-                VARID.SetRange("Customer No.", "Sales Invoice Header".Reseller);
+                VARID.SetRange("Customer No.", SalesInvHeader.Reseller);
                 VARID.SetRange("Vendor No.", item."Vendor No.");
                 if VARID.FindFirst() then
                     VARIDInt := VARID."VAR id";
 
                 SetPricesSalesInv(Item);
 
-                clear(TempItemLedgEntrySales);
+                TempItemLedgEntrySales.DeleteAll();
                 POSReportExport.RetrieveEntriesFromPostedInv(TempItemLedgEntrySales, Sales_Invoice_Line.RowID1()); //find serial numbers
 
-                if TempItemLedgEntrySales.Count() < 1 then begin // find purch info for lines w/o serial numbers
-                    clear(ItemLedgEntryPurchase);
-                    FindShipmentNo();
-                    ValueEntry.setrange("Document Type", 2);
-                    ValueEntry.setrange("Document No.", Sales_Invoice_Line."Document No.");
-                    ValueEntry.setrange("Document Line No.", Sales_Invoice_Line."Line No.");
-                    if ValueEntry.FindFirst() then begin
-                        ItemLedgEntrySales.get(ValueEntry."Item Ledger Entry No.");
-                        POSReportExport.FindAppliedEntry(ItemLedgEntrySales, ItemLedgEntryPurchase);
-                        if ItemLedgEntryPurchase."Entry No." = 0 then
-                            exit;
-                        if (ItemLedgEntryPurchase."Entry Type" <> ItemLedgEntryPurchase."Entry Type"::Purchase) and
-                        (ItemLedgEntryPurchase."Entry Type" <> ItemLedgEntryPurchase."Entry Type"::Sale) then begin
-                            PurchOrderNo := format(ItemLedgEntryPurchase."Entry Type");
-                            PurchOrderPostDate := ItemLedgEntryPurchase."Posting Date";
-                        end else begin
-                            if PurchRcptLine.get(ItemLedgEntryPurchase."Document No.", ItemLedgEntryPurchase."Document Line No.") then begin
-                                PurchInvLine.setrange("Order No.", PurchRcptLine."Order No.");
-                                PurchInvLine.setrange("Order Line No.", PurchRcptLine."Order Line No.");
-                                if PurchInvLine.FindFirst() then begin //purchase invoice
-                                    PurchInvHeader.get(PurchInvLine."Document No.");
-                                    PurchOrderNo := PurchInvLine."Document No.";
-                                    PurchOrderPostDate := PurchInvLine."Posting Date";
-                                    PurchCostPrice := PurchInvLine."Unit Cost";
-                                end else begin
-                                    PurchLine.SetRange("Document Type", PurchLine."Document Type"::Order);
-                                    PurchLine.SetRange("Document No.", PurchRcptLine."Order No.");
-                                    PurchLine.setrange("Line No.", PurchRcptLine."Order Line No.");
-                                    if PurchLine.FindFirst() then begin //purchase order                                                                        
-                                        PurchHeader.get(PurchLine."Document Type", PurchLine."Document No.");
-                                        PurchOrderNo := PurchLine."Document No.";
-                                        PurchOrderPostDate := PurchHeader."Posting Date";
-                                        PurchCostPrice := PurchLine."Unit Cost";
-                                    end;
+                //if TempItemLedgEntrySales.Count() = 1 then begin // find purch info for lines w/o serial numbers
+                clear(ItemLedgEntryPurchase);
+                FindShipmentNo();
+                ValueEntry.setrange("Document Type", 2);
+                ValueEntry.setrange("Document No.", Sales_Invoice_Line."Document No.");
+                ValueEntry.setrange("Document Line No.", Sales_Invoice_Line."Line No.");
+                if ValueEntry.FindFirst() then begin
+                    ItemLedgEntrySales.get(ValueEntry."Item Ledger Entry No.");
+                    POSReportExport.FindAppliedEntry(ItemLedgEntrySales, ItemLedgEntryPurchase);
+                    if ItemLedgEntryPurchase."Entry No." = 0 then
+                        exit;
+                    if (ItemLedgEntryPurchase."Entry Type" <> ItemLedgEntryPurchase."Entry Type"::Purchase) and
+                    (ItemLedgEntryPurchase."Entry Type" <> ItemLedgEntryPurchase."Entry Type"::Sale) then begin
+                        PurchOrderNo := format(ItemLedgEntryPurchase."Entry Type");
+                        PurchOrderPostDate := ItemLedgEntryPurchase."Posting Date";
+                        StandardCost := FindPurchasePrice(PurchasePrice, Item, PurchOrderPostDate);
+                    end else begin
+                        if PurchRcptLine.get(ItemLedgEntryPurchase."Document No.", ItemLedgEntryPurchase."Document Line No.") then begin
+                            PurchInvLine.setrange("Order No.", PurchRcptLine."Order No.");
+                            PurchInvLine.setrange("Order Line No.", PurchRcptLine."Order Line No.");
+                            if PurchInvLine.FindFirst() then begin //purchase invoice
+                                PurchInvHeader.get(PurchInvLine."Document No.");
+                                PurchOrderNo := PurchInvLine."Document No.";
+                                PurchOrderPostDate := PurchInvLine."Posting Date";
+                                PurchCostPrice := PurchInvLine."Unit Cost";
+                                StandardCost := FindPurchasePrice(PurchasePrice, Item, PurchOrderPostDate);
+                            end else begin
+                                PurchLine.SetRange("Document Type", PurchLine."Document Type"::Order);
+                                PurchLine.SetRange("Document No.", PurchRcptLine."Order No.");
+                                PurchLine.setrange("Line No.", PurchRcptLine."Order Line No.");
+                                if PurchLine.FindFirst() then begin //purchase order                                                                        
+                                    PurchHeader.get(PurchLine."Document Type", PurchLine."Document No.");
+                                    PurchOrderNo := PurchLine."Document No.";
+                                    PurchOrderPostDate := PurchHeader."Posting Date";
+                                    PurchCostPrice := PurchLine."Unit Cost";
+                                    StandardCost := FindPurchasePrice(PurchasePrice, Item, PurchOrderPostDate);
                                 end;
-                                // Find PurchCostPrice on purchase
-                                if (PurchCostPrice <> 0) and (BidUnitPurchasePrice <> 0) then
-                                    CostPercentage := (PurchCostPrice - BidUnitPurchasePrice) / PurchCostPrice; //er der en købskostpris procent når der ikke er bid?
-
                             end;
+                            // Find PurchCostPrice on purchase
+                            if (PurchCostPrice <> 0) and (BidUnitPurchasePrice <> 0) then
+                                BidCostPercentage := (PurchCostPrice - BidUnitPurchasePrice) / PurchCostPrice; //er der en købskostpris procent når der ikke er bid?
+
                         end;
                     end;
                 end;
+                //end;
             end;
 
         }
@@ -359,7 +413,7 @@ report 50011 "POS Reporting"
             {
 
             }
-            column(IC_Partner_Code2; "IC Partner Code")
+            column(IC_Partner_Code2; ICPartnerCode2)
             {
 
             }
@@ -407,9 +461,13 @@ report 50011 "POS Reporting"
             {
                 //hentes fra købslinjen
             }
-            column(Cost_Percentage2; CostPercentage)
+            column(BidCost_Percentage2; BidCostPercentage)
             {
                 //udregnet vha. (unit purch price - bid unit purch price) / unit purch price    
+            }
+            column(StandardCost2; StandardCost)
+            {
+
             }
             column(Quantity2; Qty)
             {
@@ -493,47 +551,84 @@ report 50011 "POS Reporting"
                 {
 
                 }
-                column(ResellEndCustName1; ResellEndCustName)
+
+                column(ResellerName2_2; ResellerName2)
                 {
 
                 }
-                column(ResellEndCustName2_2; ResellEndCustName2)
+                column(ResellerAddress1; ResellerAddress)
                 {
 
                 }
-                column(ResellEndCustAddress1; ResellEndCustAddress)
+                column(ResellerAddress2_2; ResellerAddress2)
                 {
 
                 }
-                column(ResellEndCustAddress2_2; ResellEndCustAddress2)
+                column(ResellerCity2; ResellerCity)
                 {
 
                 }
-                column(ResellEndCustCity2; ResellEndCustCity)
+                column(ResellerPostCode2; ResellerPostCode)
                 {
 
                 }
-                column(ResellEndCustPostCode2; ResellEndCustPostCode)
+                column(ResellerCountryRegion2; ResellerCountryRegion)
                 {
 
                 }
-                column(ResellEndCustCountryRegion2; ResellEndCustCountryRegion)
+                column(ResellerCounty2; ResellerCounty)
                 {
 
                 }
-                column(ResellEndCustCounty2; ResellEndCustCounty)
+                column(ResellerContact2; ResellerContact)
                 {
 
                 }
-                column(ResellEndCustContact2; ResellEndCustContact)
+                column(ResellerContactEmail2; ResellerContactEmail)
                 {
 
                 }
-                column(ResellEndCustContactEmail2; ResellEndCustEmail)
+                column(ResellerContactPhone2; ResellerContactPhone)
                 {
 
                 }
-                column(ResellEndCustContactPhone2; ResellEndCustPhone)
+                column(EndCustName2_2; ResellerName2)
+                {
+
+                }
+                column(EndCustAddress1; EndCustAddress)
+                {
+
+                }
+                column(EndCustAddress2_2; EndCustAddress2)
+                {
+
+                }
+                column(EndCustCity2; EndCustCity)
+                {
+
+                }
+                column(EndCustPostCode2; EndCustPostCode)
+                {
+
+                }
+                column(EndCustCountryRegion2; EndCustCountryRegion)
+                {
+
+                }
+                column(EndCustCounty2; EndCustCounty)
+                {
+
+                }
+                column(EndCustContact2; EndCustContact)
+                {
+
+                }
+                column(EndCustContactEmail2; EndCustContactEmail)
+                {
+
+                }
+                column(EndCustContactPhone2; EndCustContactPhone)
                 {
 
                 }
@@ -566,67 +661,76 @@ report 50011 "POS Reporting"
                         PostedSalesShipment: Record "Sales Shipment Header";
                     begin
                         SetEndCustResellerCreditMemo();
-                        if Number = 0 then begin
+                        TempItemLedgEntrySales.setfilter("Serial No.", '<>%1', '');
+                        if not TempItemLedgEntrySales.findset then begin
+                            //if Number = 0 then begin
                             qty := "Sales Cr.Memo Line".Quantity;
                             CurrReport.skip;
-                        end;
-                        if TempItemLedgEntrySales.findfirst then begin
+                        end else begin
+                            //if TempItemLedgEntrySales.findfirst then begin
                             qty := 1;
                             SerialNo := TempItemLedgEntrySales."Serial No.";
                             UpdatePurchInfoSerialNumbersCreditMemo(TempItemLedgEntrySales);
                             TempItemLedgEntrySales.Delete();
                         end;
                     end;
-
                 }
-                trigger OnPreDataItem()
-                var
-
-                begin
-                    GlSetup.Get();
-                    if VendorCode <> '' then
-                        SetVendorFilter();
-                    DocumentType := 'Credit Memo';
-                end;
-
-                trigger OnAfterGetRecord()
-                var
-                    Item: Record item;
-                    VARID: record "VAR";
-                    ItemLedgEntrySales: record "Item Ledger Entry";
-                    ItemLedgEntryPurchase: record "Item Ledger Entry";
-                    ReturnShipmentLine: record "Return Shipment Line";
-                    ValueEntry: record "Value Entry";
-                    ValueEntry2: record "Value Entry";
-                    ReturnShipmentHeader: record "Return Shipment Header";
-                    PurchLine: record "Purchase Line";
-                    PurchHeader: record "Purchase Header";
-                begin
-                    ClearValues();
-                    if "Sales Cr.Memo Line".Type <> "Sales Cr.Memo Line".type::Item then
-                        CurrReport.skip;
-                    item.get("Sales Cr.Memo Line"."No.");
-                    VendorItemNo := item."Vendor-Item-No.";
-                    VARID.SetRange("Customer No.", "Sales Cr.Memo Header".Reseller);
-                    VARID.SetRange("Vendor No.", item."Vendor No.");
-                    if VARID.FindFirst() then
-                        VARIDInt := VARID."VAR id";
-
-                    SetPricesCreditMemo(Item);
-
-                    clear(TempItemLedgEntrySales);
-                    POSReportExport.RetrieveEntriesFromPostedInv(TempItemLedgEntrySales, "Sales Cr.Memo Line".RowID1()); //find serial numbers
-
-                    ValueEntry.setrange("Document Type", ValueEntry."Document Type"::"Sales Credit Memo");
-                    ValueEntry.setrange("Document No.", "Sales Cr.Memo Line"."Document No.");
-                    ValueEntry.setrange("Document Line No.", "Sales Cr.Memo Line"."Line No.");
-                    if ValueEntry.FindFirst() then begin
-                        ItemLedgEntrySales.get(ValueEntry."Item Ledger Entry No.");
-                        ShipmentNo := ItemLedgEntrySales."Document No.";
-                    end;
-                end;
-
             }
+            trigger OnPreDataItem()
+            var
+            begin
+                GlSetup.Get();
+                if VendorCode <> '' then
+                    SetVendorFilter();
+                DocumentType := 'Credit Memo';
+                SetFiltersFromSalesInvoice();
+            end;
+
+            trigger OnAfterGetRecord()
+            var
+                Item: Record item;
+                VARID: record "VAR";
+                ItemLedgEntrySales: record "Item Ledger Entry";
+                ItemLedgEntryPurchase: record "Item Ledger Entry";
+                ReturnShipmentLine: record "Return Shipment Line";
+                ValueEntry: record "Value Entry";
+                ValueEntry2: record "Value Entry";
+                ReturnShipmentHeader: record "Return Shipment Header";
+                PurchLine: record "Purchase Line";
+                PurchHeader: record "Purchase Header";
+                CreditMemoHeader: record "Sales Cr.Memo Header";
+                Customer: Record customer;
+            begin
+                ClearValues();
+                if "Sales Cr.Memo Line".Type <> "Sales Cr.Memo Line".type::Item then
+                    CurrReport.skip;
+                CreditMemoHeader.get("Sales Cr.Memo Line"."Document No.");
+                if (Subsidiary <> CreditMemoHeader.Subsidiary) and (Subsidiary <> '') then
+                    CurrReport.skip;
+                if CreditMemoHeader.Subsidiary <> '' then begin
+                    Customer.get(CreditMemoHeader.Subsidiary);
+                    ICPartnerCode2 := Customer."IC Partner Code";
+                end;
+                item.get("Sales Cr.Memo Line"."No.");
+                VendorItemNo := item."Vendor-Item-No.";
+                VARID.SetRange("Customer No.", "Sales Cr.Memo Header".Reseller);
+                VARID.SetRange("Vendor No.", item."Vendor No.");
+                if VARID.FindFirst() then
+                    VARIDInt := VARID."VAR id";
+
+                SetPricesCreditMemo(Item);
+
+                TempItemLedgEntrySales.DeleteAll();
+                POSReportExport.RetrieveEntriesFromPostedInv(TempItemLedgEntrySales, "Sales Cr.Memo Line".RowID1()); //find serial numbers
+
+                ValueEntry.setrange("Document Type", ValueEntry."Document Type"::"Sales Credit Memo");
+                ValueEntry.setrange("Document No.", "Sales Cr.Memo Line"."Document No.");
+                ValueEntry.setrange("Document Line No.", "Sales Cr.Memo Line"."Line No.");
+                if ValueEntry.FindFirst() then begin
+                    ItemLedgEntrySales.get(ValueEntry."Item Ledger Entry No.");
+                    ShipmentNo := ItemLedgEntrySales."Document No.";
+                end;
+            end;
         }
 
     }
@@ -644,6 +748,22 @@ report 50011 "POS Reporting"
                     {
                         Caption = 'Vendor Code';
                     }
+                }
+                Group("IC Partner")
+                {
+                    field(Subsidiary; Subsidiary)
+                    {
+                        Caption = 'IC Partner';
+                        trigger OnLookup(var text: Text): Boolean
+                        var
+                            ICPartner: record "IC Partner";
+                        begin
+                            if not ICPartner.Get(Subsidiary) then
+                                Clear(Subsidiary);
+                            IF page.RunModal(page::"IC Partner List", ICPartner, ICPartner.Code) = Action::LookupOK then
+                                Subsidiary := ICPartner."Customer No.";
+                        end;
+                    }
 
                 }
             }
@@ -653,79 +773,98 @@ report 50011 "POS Reporting"
     procedure SetEndCustResellerSalesInv()
     var
         Customer: record Customer;
+        Customer2: record customer;
+        Contact: record Contact;
+        Contact2: record contact;
     begin
-        if Customer.get("Sales Invoice Header".Reseller) then
-            ResellerName := Customer.Name;
-        if Customer.get("Sales Invoice Header"."End Customer") then
+        /* if Customer.get("Sales Invoice Header".Reseller) then
+            ResellerName := Customer.Name; */
+        /* if Customer.get("Sales Invoice Header"."End Customer") then
+            EndCustomerName := Customer.name; */
+
+        if Customer.get("Sales Invoice Header"."End Customer") then begin
             EndCustomerName := Customer.name;
-        if not "Sales Invoice Header"."Drop-Shipment" then begin
-            if Customer.get("Sales Invoice Header"."End Customer") then begin
-                ResellEndCustName := Customer.name;
-                ResellEndCustName2 := Customer."Name 2";
-                ResellEndCustAddress := Customer.Address;
-                ResellEndCustAddress2 := Customer."Address 2";
-                ResellEndCustCity := Customer.City;
-                ResellEndCustPostCode := Customer."Post Code";
-                ResellEndCustCounty := Customer.County;
-                ResellEndCustCountryRegion := Customer."Country/Region Code";
-                ResellEndCustContact := Customer.Contact;
-                ResellEndCustPhone := Customer."Phone No.";
-                ResellEndCustEmail := Customer."E-Mail";
-            end;
-        end else begin
-            if Customer.get("Sales Invoice Header".Reseller) then begin
-                ResellEndCustName := Customer.name;
-                ResellEndCustName2 := Customer."Name 2";
-                ResellEndCustAddress := Customer.Address;
-                ResellEndCustAddress2 := Customer."Address 2";
-                ResellEndCustCity := Customer.City;
-                ResellEndCustPostCode := Customer."Post Code";
-                ResellEndCustCounty := Customer.County;
-                ResellEndCustCountryRegion := Customer."Country/Region Code";
-                ResellEndCustContact := Customer.Contact;
-                ResellEndCustPhone := Customer."Phone No.";
-                ResellEndCustEmail := Customer."E-Mail";
+            EndCustName2 := Customer."Name 2";
+            EndCustAddress := Customer.Address;
+            EndCustAddress2 := Customer."Address 2";
+            EndCustCity := Customer.City;
+            EndCustPostCode := Customer."Post Code";
+            EndCustCounty := Customer.County;
+            EndCustCountryRegion := Customer."Country/Region Code";
+            if "Sales Invoice Header"."End Customer Contact" <> '' then begin
+                Contact.get("Sales Invoice Header"."End Customer Contact");
+                EndCustContact := Contact.Name;
+                EndCustContactPhone := contact."Phone No.";
+                EndCustContactEmail := Contact."E-Mail";
             end;
         end;
+
+        if Customer2.get("Sales Invoice Header".Reseller) then begin
+            ResellerName := Customer2.Name;
+            ResellerName2 := Customer2."Name 2";
+            ResellerAddress := Customer2.Address;
+            ResellerAddress2 := Customer2."Address 2";
+            ResellerCity := Customer2.City;
+            ResellerPostCode := Customer2."Post Code";
+            ResellerCounty := Customer2.County;
+            ResellerCountryRegion := Customer2."Country/Region Code";
+            if "Sales Invoice Header"."Sell-to Contact No." <> '' then begin
+                Contact2.get("Sales Invoice Header"."Sell-to Contact No.");
+                ResellerContact := Contact2.Name;
+                ResellerContactPhone := Contact2."Phone No.";
+                ResellerContactEmail := Contact2."E-Mail";
+            end;
+        end;
+
     end;
 
     procedure SetEndCustResellerCreditMemo()
     var
         Customer: record Customer;
+        Customer2: record customer;
+        Contact: record contact;
+        Contact2: record contact;
     begin
-        if Customer.get("Sales Cr.Memo Header".Reseller) then
+        /* if Customer.get("Sales Cr.Memo Header".Reseller) then
             ResellerName := Customer.Name;
         if Customer.get("Sales Cr.Memo Header"."End Customer") then
+            EndCustomerName := Customer.name; */
+
+        if Customer.get("Sales Cr.Memo Header"."End Customer") then begin
             EndCustomerName := Customer.name;
-        if not "Sales Cr.Memo Header"."Drop-Shipment" then begin
-            if Customer.get("Sales Cr.Memo Header"."End Customer") then begin
-                ResellEndCustName := Customer.name;
-                ResellEndCustName2 := Customer."Name 2";
-                ResellEndCustAddress := Customer.Address;
-                ResellEndCustAddress2 := Customer."Address 2";
-                ResellEndCustCity := Customer.City;
-                ResellEndCustPostCode := Customer."Post Code";
-                ResellEndCustCounty := Customer.County;
-                ResellEndCustCountryRegion := Customer."Country/Region Code";
-                ResellEndCustContact := Customer.Contact;
-                ResellEndCustPhone := Customer."Phone No.";
-                ResellEndCustEmail := Customer."E-Mail";
-            end;
-        end else begin
-            if Customer.get("Sales Cr.Memo Header".Reseller) then begin
-                ResellEndCustName := Customer.name;
-                ResellEndCustName2 := Customer."Name 2";
-                ResellEndCustAddress := Customer.Address;
-                ResellEndCustAddress2 := Customer."Address 2";
-                ResellEndCustCity := Customer.City;
-                ResellEndCustPostCode := Customer."Post Code";
-                ResellEndCustCounty := Customer.County;
-                ResellEndCustCountryRegion := Customer."Country/Region Code";
-                ResellEndCustContact := Customer.Contact;
-                ResellEndCustPhone := Customer."Phone No.";
-                ResellEndCustEmail := Customer."E-Mail";
+            EndCustName2 := Customer."Name 2";
+            EndCustAddress := Customer.Address;
+            EndCustAddress2 := Customer."Address 2";
+            EndCustCity := Customer.City;
+            EndCustPostCode := Customer."Post Code";
+            EndCustCounty := Customer.County;
+            EndCustCountryRegion := Customer."Country/Region Code";
+            if "Sales Cr.Memo Header"."End Customer Contact" <> '' then begin
+                Contact.get("Sales Cr.Memo Header"."End Customer Contact");
+                EndCustContact := Contact.Name;
+                EndCustContactPhone := contact."Phone No.";
+                EndCustContactEmail := Contact."E-Mail";
             end;
         end;
+
+        if Customer2.get("Sales Cr.Memo Header".Reseller) then begin
+
+            ResellerName := Customer2.Name;
+            ResellerName2 := Customer2."Name 2";
+            ResellerAddress := Customer2.Address;
+            ResellerAddress2 := Customer2."Address 2";
+            ResellerCity := Customer2.City;
+            ResellerPostCode := Customer2."Post Code";
+            ResellerCounty := Customer2.County;
+            ResellerCountryRegion := Customer2."Country/Region Code";
+            if "Sales Cr.Memo Header"."Sell-to Contact No." <> '' then begin
+                Contact2.get("Sales Cr.Memo Header"."Sell-to Contact No.");
+                ResellerContact := Contact2.Name;
+                ResellerContactPhone := Contact2."Phone No.";
+                ResellerContactEmail := Contact2."E-Mail";
+            end;
+        end;
+
     end;
 
     local procedure SetVendorFilter()
@@ -734,6 +873,11 @@ report 50011 "POS Reporting"
     begin
         Sales_Invoice_Line.SetFilter("Shortcut Dimension 1 Code", VendorCode);
         "Sales Cr.Memo Line".SetFilter("Shortcut Dimension 1 Code", VendorCode);
+    end;
+
+    local procedure SetFiltersFromSalesInvoice()
+    begin
+        "Sales Cr.Memo Line".SetFilter("Posting Date", PostDate);
     end;
 
     local procedure SetPricesSalesInv(Item: record Item)
@@ -763,6 +907,7 @@ report 50011 "POS Reporting"
             Currency := Item."Vendor Currency";
             UnitListPrice := Sales_Invoice_Line."Unit List Price VC";
         end;
+
     end;
 
     local procedure SetPricesCreditMemo(Item: record Item)
@@ -792,22 +937,46 @@ report 50011 "POS Reporting"
             Currency := Item."Vendor Currency";
             UnitListPrice := "Sales Cr.Memo Line"."Unit List Price VC";
         end;
+
     end;
 
 
     local procedure ClearValues()
     begin
         clear(VARIDInt);
+        clear(VendorCode);
+        clear(ICPartnerCode);
+        Clear(ICPartnerCode2);
         Clear(ShipmentNo);
         clear(PurchOrderNo);
         Clear(PurchOrderPostDate);
         Clear(PurchCostPrice);
-        Clear(CostPercentage);
+        Clear(BidCostPercentage);
         clear(UnitListPrice);
+        clear(VendorBidNo);
         clear(BidPurchaseDiscountPct);
         Clear(Currency);
         clear(BidPurchaseDiscountPct);
         Clear(BidUnitPurchasePrice);
+        clear(SerialNo);
+        clear(ResellerName);
+        Clear(ResellerName2);
+        clear(ResellerAddress);
+        Clear(ResellerAddress2);
+        Clear(ResellerCity);
+        Clear(ResellerPostCode);
+        Clear(ResellerCountryRegion);
+        clear(ResellerCounty);
+        clear(EndCustomerName);
+        clear(EndCustName2);
+        clear(EndcustAddress);
+        Clear(EndcustAddress2);
+        Clear(EndcustCity);
+        Clear(EndcustPostCode);
+        Clear(EndcustCountryRegion);
+        clear(EndcustCounty);
+        Clear(StandardCost);
+
     end;
 
     local procedure UpdatePurchInfoSerialNumbersSalesInv(TempItemLedEntrySales: record "Item Ledger Entry" temporary)
@@ -820,6 +989,7 @@ report 50011 "POS Reporting"
         PurchInvLine: record "Purch. Inv. Line";
         PurchLine: record "Purchase Line";
         PurchHeader: record "Purchase Header";
+        Item: record Item;
     begin
         PostedSalesShipment.get(TempItemLedgEntrySales."Document No.");
         ShipmentNo := PostedSalesShipment."No.";
@@ -829,9 +999,11 @@ report 50011 "POS Reporting"
         if ValueEntry.FindFirst() then begin
             if PurchInvLine.get(ValueEntry."Document No.", ValueEntry."Document Line No.") then begin
                 PurchInvHeader.get(PurchInvLine."Document No.");
-                PurchOrderNo := PurchInvLine."Document No.";
+                PurchOrderNo := PurchInvLine."Order No.";
                 PurchOrderPostDate := PurchInvLine."Posting Date";
                 PurchCostPrice := PurchInvLine."Unit Cost";
+                if item.get(PurchInvLine."No.") then
+                    StandardCost := FindPurchasePrice(PurchasePrice, Item, PurchOrderPostDate);
             end else begin
                 ValueEntry.SetRange("Document Type", 5); // purchase receipt
                 if ValueEntry.FindFirst() then
@@ -844,13 +1016,15 @@ report 50011 "POS Reporting"
                             PurchOrderNo := PurchLine."Document No.";
                             PurchOrderPostDate := PurchHeader."Posting Date";
                             PurchCostPrice := PurchLine."Unit Cost";
+                            if item.get(PurchLine."No.") then
+                                StandardCost := FindPurchasePrice(PurchasePrice, Item, PurchOrderPostDate);
                         end;
                     end;
             end;
 
             // Find PurchCostPrice på købslinjen 
             if (PurchCostPrice <> 0) and (BidUnitPurchasePrice <> 0) then
-                CostPercentage := (PurchCostPrice - BidUnitPurchasePrice) / PurchCostPrice;
+                BidCostPercentage := (PurchCostPrice - BidUnitPurchasePrice) / PurchCostPrice;
         end;
     end;
 
@@ -861,6 +1035,7 @@ report 50011 "POS Reporting"
         PurchInvLine: record "Purch. Inv. Line";
         PurchLine: record "Purchase Line";
         PurchHeader: record "Purchase Header";
+        Item: record Item;
     begin
         ItemLedgerEntryPurch.setrange("Document Type", ItemLedgerEntryPurch."Document Type"::"Purchase Receipt");
         ItemLedgerEntryPurch.setrange("Serial No.", TempItemLedgEntrySales."Serial No.");
@@ -869,19 +1044,23 @@ report 50011 "POS Reporting"
                 PurchInvLine.setrange("Order No.", PurchRcptLine."Order No.");
                 PurchInvLine.SetRange("Order Line No.", PurchRcptLine."Order Line No.");
                 if PurchInvLine.findfirst then begin
-                    PurchOrderNo := PurchInvLine."Document No.";
+                    PurchOrderNo := PurchInvLine."Order No.";
                     PurchCostPrice := PurchInvLine."Direct Unit Cost";
                     PurchOrderPostDate := PurchInvLine."Posting Date";
+                    if Item.get(PurchInvLine."No.") then
+                        StandardCost := FindPurchasePrice(PurchasePrice, Item, PurchOrderPostDate);
                 end else begin
                     if PurchLine.GET(Purchline."Document Type"::Order, PurchRcptLine."Order No.", PurchRcptLine."Order Line No.") then begin
                         PurchHeader.get(PurchLine."Document Type", Purchline."Document No.");
                         PurchOrderNo := PurchLine."Document No.";
                         PurchCostPrice := PurchLine."Direct Unit Cost";
                         PurchOrderPostDate := PurchHeader."Posting Date";
+                        if Item.get(PurchLine."No.") then
+                            StandardCost := FindPurchasePrice(PurchasePrice, Item, PurchOrderPostDate);
                     end;
                 end;
                 if (PurchCostPrice <> 0) and (BidUnitPurchasePrice <> 0) then
-                    CostPercentage := (PurchCostPrice - BidUnitPurchasePrice) / PurchCostPrice;
+                    BidCostPercentage := (PurchCostPrice - BidUnitPurchasePrice) / PurchCostPrice;
             end;
         end;
 
@@ -895,6 +1074,20 @@ report 50011 "POS Reporting"
         SalesShipLine.setrange("Order Line No.", Sales_Invoice_Line."Order Line No.");
         if SalesShipLine.FindFirst() then
             ShipmentNo := SalesShipLine."Document No.";
+    end;
+
+    procedure FindPurchasePrice(var PurchPrice: record "Purchase Price"; item: record Item; PostingDate: Date): Decimal
+    begin
+        PurchPrice.setrange("Vendor No.", Item."Vendor No.");
+        PurchPrice.setrange("Item No.", Item."No.");
+        PurchPrice.setrange("Unit of Measure Code", item."Base Unit of Measure");
+        PurchPrice.setrange("Currency Code", item."Vendor Currency");
+        PurchPrice.Setfilter("Ending Date", '>%1|%2', PostingDate, 0D);
+        PurchPrice.SetFilter("Starting Date", '%1|<%2', PostingDate, PostingDate);
+        if PurchPrice.FindFirst() then
+            exit(PurchPrice."Direct Unit Cost")
+        else
+            exit(0)
     end;
 
     var
@@ -913,24 +1106,41 @@ report 50011 "POS Reporting"
         Qty: Decimal;
         POSReportExport: codeunit "POS Report Export";
         SerialNo: text[50];
-        CostPercentage: Decimal;
+        BidCostPercentage: Decimal;
         VARIDInt: Code[20];
         PurchOrderNo: code[20];
         PurchOrderPostDate: Date;
         PurchCostPrice: decimal;
         ListPrice: Decimal;
-        ResellEndCustName: text[50];
-        ResellEndCustName2: text[50];
-        ResellEndCustAddress: text[50];
-        ResellEndCustAddress2: text[50];
-        ResellEndCustCity: text[30];
-        ResellEndCustPostCode: code[20];
-        ResellEndCustCounty: text[30];
-        ResellEndCustCountryRegion: code[10];
-        ResellEndCustContact: text[50];
-        ResellEndCustPhone: text[30];
-        ResellEndCustEmail: text[80];
+        //ResellEndCustName: text[50];
+        ResellerName2: text[50];
+        ResellerAddress: text[50];
+        ResellerAddress2: text[50];
+        ResellerCity: text[30];
+        ResellerPostCode: code[20];
+        ResellerCounty: text[30];
+        ResellerCountryRegion: code[10];
+        ResellerContact: text[50];
+        ResellerContactPhone: text[30];
+        ResellerContactEmail: text[80];
+        EndCustName2: text[50];
+        EndCustAddress: text[50];
+        EndCustAddress2: text[50];
+        EndCustCity: text[30];
+        EndCustPostCode: code[20];
+        EndCustCounty: text[30];
+        EndCustCountryRegion: code[10];
+        EndCustContact: text[50];
+        EndCustContactPhone: text[30];
+        EndCustContactEmail: text[80];
         GlSetup: record "General Ledger Setup";
         DocumentType: text[20];
+        PostDate: text;
+        ICPartnerCode: Text;
+        ICPartnerCode2: text;
+        Subsidiary: code[20];
+        StandardCost: Decimal;
+        PurchasePrice: record "Purchase Price";
+
 
 }
