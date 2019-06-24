@@ -294,10 +294,6 @@ codeunit 50000 "Advanced Price Management"
         Item.Get(ItemNo);
         if not ItemDiscountGroup.Get(item."Item Disc. Group") then
             exit;
-        if Item."Transfer Price %" = 0 then begin
-            if not ItemDiscountGroup."Use Orginal Vendor in Subs" then
-                exit;
-        end;
         if ICPartner.FindSet() then
             repeat
                 if ICPartner."Customer No." <> '' then begin
