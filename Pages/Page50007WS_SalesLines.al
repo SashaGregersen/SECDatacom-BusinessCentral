@@ -35,27 +35,16 @@ page 50007 "WS Sales Line"
                 {
                     ApplicationArea = All;
                 }
-                field("VendorBidCode"; "VendorBidCode")
+                field("VendorBidCode"; "Description 2")
                 {
                     ApplicationArea = All;
                     CaptionML = DAN = 'VendorBidCode', ENU = 'VendorBidCode';
-                    trigger OnValidate()
-                    var
-                        Bid: Record Bid;
-                    begin
-                        if VendorBidCode = '' then exit;
-
-                        Bid.SetRange("Vendor Bid No.", VendorBidCode);
-                        Bid.FindFirst();
-                        Validate("Bid No.", Bid."No.");
-                    end;
                 }
             }
         }
     }
     var
         ShipComment: Text;
-        VendorBidCode: Text[100];
 
     trigger OnOpenPage()
     begin
