@@ -35,7 +35,6 @@ codeunit 50050 "Item Event handler"
         if Rec.IsTemporary then
             exit;
         if Rec."Item Disc. Group" <> xrec."Item Disc. Group" then
-            //if Rec."Item Disc. Group" <> '' then
             AdvPriceMgt.UpdateItemPurchaseDicountsFromItemDiscGroup(Rec);
         InventorySetup.get;
         IF InventorySetup."Synchronize Item" = FALSE then
