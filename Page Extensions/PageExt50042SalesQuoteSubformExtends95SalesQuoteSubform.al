@@ -78,7 +78,34 @@ pageextension 50042 "Sales Quote Subform" extends "Sales Quote Subform"
 
     actions
     {
+        addbefore("Get &Price")
+        {
+            action(Newbid)
+            {
+                Caption = 'New Bid';
+                Image = New;
+                ApplicationArea = all;
 
+                trigger OnAction()
+                var
+                    SalesHeader: record "Sales Header";
+                    OneTimeBid: Report "One Time Bid";
+                    Item: Record item;
+                    SalesLine: record "Sales Line";
+                begin
+                    if type <> type::Item then
+                        Error('Can only be used on items');
+                    SalesHeader.get("Document Type", "Document No.");
+                    Item.Get("No.");
+                    OneTimeBid.SetCustomerNo(SalesHeader.Reseller);
+                    OneTimeBid.SetItemNo("No.");
+                    OneTimeBid.SetVendorNo(Item."Vendor No.");
+                    OneTimeBid.SetSalesLineFilter(Rec);
+                    OneTimeBid.SetTableView(Rec);
+                    OneTimeBid.Run();
+                end;
+            }
+        }
     }
 
 }
