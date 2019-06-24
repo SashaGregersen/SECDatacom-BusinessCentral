@@ -24,15 +24,18 @@ codeunit 50050 "Item Event handler"
     end;
 
     [EventSubscriber(ObjectType::table, database::"Item", 'OnAfterModifyEvent', '', true, true)]
-    local procedure ItemOnAfterModify(var Rec: Record "Item"; runtrigger: Boolean)
+    local procedure ItemOnAfterModify(var Rec: Record "Item"; xrec: Record Item; runtrigger: Boolean)
     var
         InventorySetup: Record "Inventory Setup";
         SyncMasterData: Codeunit "Synchronize Master Data";
         AdvPriceMgt: Codeunit "Advanced Price Management";
     begin
-        If not runtrigger and rec.IsTemporary then
+        If not runtrigger then
             EXIT;
-        if Rec."Item Disc. Group" <> '' then
+        if Rec.IsTemporary then
+            exit;
+        if Rec."Item Disc. Group" <> xrec."Item Disc. Group" then
+            //if Rec."Item Disc. Group" <> '' then
             AdvPriceMgt.UpdateItemPurchaseDicountsFromItemDiscGroup(Rec);
         InventorySetup.get;
         IF InventorySetup."Synchronize Item" = FALSE then
