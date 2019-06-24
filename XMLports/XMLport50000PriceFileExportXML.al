@@ -50,7 +50,7 @@ xmlport 50000 "Price File Export XML"
 
                     trigger OnBeforePassVariable()
                     begin
-                        ListPriceDec := round(FindCheapestPrice(salesprice), 0.01);
+                        ListPriceDec := round(UnitPrice, 0.01);
                         List_Price := Format(ListPriceDec, 0, 9);
                     end;
 
@@ -85,12 +85,14 @@ xmlport 50000 "Price File Export XML"
                     DefaultDim: record "Default Dimension";
                     Dimension: record Dimension;
                     DimensionValue: Record "Dimension Value";
+                    ItemExportMgt: Codeunit "Item Export Management";
+                    UnitPrice: Decimal;
                 begin
                     if not item."Use on Website" then
                         currXMLport.Skip();
 
-                    SalesPrice.SetRange("Item No.", Item."No.");
-                    if not salesprice.FindSet() then
+                    UnitPrice := ItemExportMgt.FindItemPriceForCustomer(Item."No.", CustomerNo, Currency);
+                    if UnitPrice = 0 then
                         currXMLport.Skip();
 
                     if ItemCategory.Get(Item."Item Category Code") then begin
@@ -169,22 +171,23 @@ xmlport 50000 "Price File Export XML"
 
     procedure FindCheapestPrice(SalesPrice: record "Sales Price"): Decimal
     var
-
+        ItemExportMgt: Codeunit "Item Export Management";
     begin
-        SalesPrice.SetRange("Item No.", Item."No.");
-        SalesPrice.SetRange("Sales Type", SalesPrice."Sales Type"::Customer);
-        SalesPrice.SetRange("Sales Code", CustomerNo);
-        SalesPrice.SetRange("Currency Code", CurrencyFilter);
-        SalesPrice.setrange("Ending Date", 0D);
-        if salesprice.FindLast() then
-            exit(salesprice."Unit Price");
-        SalesPrice.SetRange("Sales Code", FindDiscountGroup());
-        SalesPrice.SetRange("Sales Type", SalesPrice."Sales Type"::"Customer Price Group");
-        if SalesPrice.FindLast() then
-            exit(SalesPrice."Unit Price");
-        SalesPrice.SetRange("Sales Type", SalesPrice."Sales Type"::"All Customers");
-        if SalesPrice.FindLast() then
-            exit(SalesPrice."Unit Price");
+        Error('Deprecated');
+        /*         SalesPrice.SetRange("Item No.", Item."No.");
+                SalesPrice.SetRange("Sales Type", SalesPrice."Sales Type"::Customer);
+                SalesPrice.SetRange("Sales Code", CustomerNo);
+                SalesPrice.SetRange("Currency Code", CurrencyFilter);
+                SalesPrice.setrange("Ending Date", 0D);
+                if salesprice.FindLast() then
+                    exit(salesprice."Unit Price");
+                SalesPrice.SetRange("Sales Code", FindDiscountGroup());
+                SalesPrice.SetRange("Sales Type", SalesPrice."Sales Type"::"Customer Price Group");
+                if SalesPrice.FindLast() then
+                    exit(SalesPrice."Unit Price");
+                SalesPrice.SetRange("Sales Type", SalesPrice."Sales Type"::"All Customers");
+                if SalesPrice.FindLast() then
+                    exit(SalesPrice."Unit Price"); */
     end;
 
     procedure FindDiscountGroup(): code[20]
@@ -194,14 +197,15 @@ xmlport 50000 "Price File Export XML"
         SalesLineDiscountTemp: Record "Sales Line Discount" temporary;
         AdvancedPriceManage: Codeunit "Advanced Price Management";
     begin
-        If AdvancedPriceManage.FindPriceGroupsFromItem(Item, SalesLineDiscountTemp) then begin
-            Customer.get(CustomerNo);
-            SalesLineDiscountTemp.SetRange("Sales Code", Customer."Customer Price Group");
-            if SalesLineDiscountTemp.FindFirst() then
-                exit(SalesLineDiscountTemp."Sales Code")
-            else
-                exit('');
-        end else
-            exit('');
+        Error('Deprecated');
+        /*         If AdvancedPriceManage.FindPriceGroupsFromItem(Item, SalesLineDiscountTemp) then begin
+                    Customer.get(CustomerNo);
+                    SalesLineDiscountTemp.SetRange("Sales Code", Customer."Customer Price Group");
+                    if SalesLineDiscountTemp.FindFirst() then
+                        exit(SalesLineDiscountTemp."Sales Code")
+                    else
+                        exit('');
+                end else
+                    exit(''); */
     end;
 }
