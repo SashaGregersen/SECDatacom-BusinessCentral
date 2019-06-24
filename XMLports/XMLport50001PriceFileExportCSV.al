@@ -179,6 +179,8 @@ xmlport 50001 "Price File Export CSV"
                     Invt: Decimal;
                     ItemCategory: record "Item Category";
                     DefaultDim: record "Default Dimension";
+                    Dimension: Record Dimension;
+                    DimensionValue: Record "Dimension Value";
                 begin
                     if not item."Use on Website" then
                         currXMLport.Skip();
@@ -212,11 +214,13 @@ xmlport 50001 "Price File Export CSV"
                     DefaultDim.setrange("Table ID", 27);
                     DefaultDim.SetFilter("Dimension Code", '<>%1', GLSetup."Global Dimension 1 Code");
                     if DefaultDim.FindFirst() then begin
-                        MainCategory := DefaultDim."Dimension Code";
-                        SubCategory := DefaultDim."Dimension Value Code";
+                        Dimension.Get(DefaultDim."Dimension Code");
+                        MainCategory := Dimension.Name;
+                        DimensionValue.Get(DefaultDim."Dimension Code", DefaultDim."Dimension Value Code");
+                        SubCategory := DimensionValue.Name;
                     end;
-
                 end;
+
 
 
             }
