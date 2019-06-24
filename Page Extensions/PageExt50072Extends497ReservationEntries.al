@@ -2,7 +2,7 @@ pageextension 50072 "Adv. Pricing Reservations" extends "Reservation Entries"
 {
     layout
     {
-        // Add changes to page layout here
+
     }
 
     actions
@@ -42,7 +42,6 @@ pageextension 50072 "Adv. Pricing Reservations" extends "Reservation Entries"
                 end;
             }
         }
-        // Add changes to page actions here
     }
 
     var
