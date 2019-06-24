@@ -50,7 +50,7 @@ xmlport 50000 "Price File Export XML"
 
                     trigger OnBeforePassVariable()
                     begin
-                        ListPriceDec := round(UnitPrice, 0.01);
+                        ListPriceDec := round(ListPriceDec, 0.01);
                         List_Price := Format(ListPriceDec, 0, 9);
                     end;
 
@@ -86,13 +86,13 @@ xmlport 50000 "Price File Export XML"
                     Dimension: record Dimension;
                     DimensionValue: Record "Dimension Value";
                     ItemExportMgt: Codeunit "Item Export Management";
-                    UnitPrice: Decimal;
+
                 begin
                     if not item."Use on Website" then
                         currXMLport.Skip();
 
-                    UnitPrice := ItemExportMgt.FindItemPriceForCustomer(Item."No.", CustomerNo, Currency);
-                    if UnitPrice = 0 then
+                    ListPriceDec := ItemExportMgt.FindItemPriceForCustomer(Item."No.", CustomerNo, CurrencyFilter);
+                    if ListPriceDec = 0 then
                         currXMLport.Skip();
 
                     if ItemCategory.Get(Item."Item Category Code") then begin
