@@ -10,7 +10,7 @@ codeunit 50007 "IC Sync Item"
         Vendor: Record Vendor;
     begin
         ICpartner.SetFilter("Vendor No.", '<>%1', '');
-        if ICpartner.FindFirst() then
+        if not ICpartner.FindFirst() then
             Error('There are no Intercompany Partners with a Vendor No. in %1', CompanyName);
 
         if not ItemDiscountGroup.get(rec."Item Disc. Group") then
