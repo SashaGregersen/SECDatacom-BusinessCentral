@@ -284,6 +284,7 @@ xmlport 50001 "Price File Export CSV"
 
     begin
         Error('Deprecated');
+
         /* SalesPrice.SetRange("Item No.", Item."No.");
         SalesPrice.SetRange("Sales Type", SalesPrice."Sales Type"::Customer);
         SalesPrice.SetRange("Sales Code", CustomerNo);
