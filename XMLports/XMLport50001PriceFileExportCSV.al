@@ -137,7 +137,7 @@ xmlport 50001 "Price File Export CSV"
                 {
                     trigger OnBeforePassVariable()
                     begin
-                        CostDec := Round(FindPurchasePrice(PurchasePrice, Item), 0.01);
+                        CostDec := Round(CostDec, 0.01);
                         cost := format(CostDec, 0, 9);
                     end;
                 }
@@ -182,9 +182,22 @@ xmlport 50001 "Price File Export CSV"
                     Dimension: Record Dimension;
                     DimensionValue: Record "Dimension Value";
                     ItemExportMgt: Codeunit "Item Export Management";
+                    CurrencyExchRate: Record "Currency Exchange Rate";
+                    CurrencyFactor: Decimal;
                 begin
                     if not item."Use on Website" then
                         currXMLport.Skip();
+
+                    if ItemExportMgt.FindPurchasePrice(PurchasePrice, Item) then
+                        if PurchasePrice."Currency Code" = CurrencyFilter then
+                            CostDec := PurchasePrice."Direct Unit Cost"
+                        else begin
+                            CurrencyFactor := CurrencyExchRate.GetCurrentCurrencyFactor(PurchasePrice."Currency Code");
+                            if CurrencyFilter = '' then
+                                CostDec := CurrencyExchRate.ExchangeAmtFCYToLCY(WorkDate(), CurrencyFilter, PurchasePrice."Direct Unit Cost", CurrencyFactor)
+                            else
+                                CostDec := CurrencyExchRate.ExchangeAmtLCYToFCY(WorkDate(), CurrencyFilter, PurchasePrice."Direct Unit Cost", CurrencyFactor);
+                        end;
 
                     ListPriceDec := ItemExportMgt.FindItemPriceForCustomer(Item."No.", CustomerNo, CurrencyFilter);
                     if ListPriceDec = 0 then
@@ -308,15 +321,17 @@ xmlport 50001 "Price File Export CSV"
 
     procedure FindPurchasePrice(var PurchPrice: record "Purchase Price"; item: record Item): Decimal
     begin
-        PurchPrice.setrange("Vendor No.", Item."Vendor No.");
-        PurchPrice.setrange("Item No.", Item."No.");
-        PurchPrice.setrange("Unit of Measure Code", item."Base Unit of Measure");
-        PurchPrice.setrange("Currency Code", item."Vendor Currency");
-        PurchPrice.SetRange("Ending Date", 0D);
-        PurchPrice.SetFilter("Starting Date", '%1|<%2', WorkDate(), WorkDate());
-        if PurchPrice.FindFirst() then
-            exit(PurchPrice."Direct Unit Cost")
-        else
-            exit(0)
+        Error('Deprecated'); //Moved to CU50001
+
+        /*         PurchPrice.setrange("Vendor No.", Item."Vendor No.");
+                PurchPrice.setrange("Item No.", Item."No.");
+                PurchPrice.setrange("Unit of Measure Code", item."Base Unit of Measure");
+                PurchPrice.setrange("Currency Code", item."Vendor Currency");
+                PurchPrice.SetRange("Ending Date", 0D);
+                PurchPrice.SetFilter("Starting Date", '%1|<%2', WorkDate(), WorkDate());
+                if PurchPrice.FindFirst() then
+                    exit(PurchPrice."Direct Unit Cost")
+                else
+                    exit(0) */
     end;
 }

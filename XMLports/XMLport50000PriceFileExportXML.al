@@ -41,7 +41,7 @@ xmlport 50000 "Price File Export XML"
                 {
                     trigger OnBeforePassVariable()
                     begin
-                        CostDec := Round(PriceFileExport.FindPurchasePrice(PurchasePrice, Item), 0.01);
+                        CostDec := Round(CostDec, 0.01);
                         cost := format(CostDec, 0, 9);
                     end;
                 }
@@ -86,10 +86,22 @@ xmlport 50000 "Price File Export XML"
                     Dimension: record Dimension;
                     DimensionValue: Record "Dimension Value";
                     ItemExportMgt: Codeunit "Item Export Management";
-
+                    CurrencyExchRate: Record "Currency Exchange Rate";
+                    CurrencyFactor: Decimal;
                 begin
                     if not item."Use on Website" then
                         currXMLport.Skip();
+
+                    if ItemExportMgt.FindPurchasePrice(PurchasePrice, Item) then
+                        if PurchasePrice."Currency Code" = CurrencyFilter then
+                            CostDec := PurchasePrice."Direct Unit Cost"
+                        else begin
+                            CurrencyFactor := CurrencyExchRate.GetCurrentCurrencyFactor(PurchasePrice."Currency Code");
+                            if CurrencyFilter = '' then
+                                CostDec := CurrencyExchRate.ExchangeAmtFCYToLCY(WorkDate(), CurrencyFilter, PurchasePrice."Direct Unit Cost", CurrencyFactor)
+                            else
+                                CostDec := CurrencyExchRate.ExchangeAmtLCYToFCY(WorkDate(), CurrencyFilter, PurchasePrice."Direct Unit Cost", CurrencyFactor);
+                        end;
 
                     ListPriceDec := ItemExportMgt.FindItemPriceForCustomer(Item."No.", CustomerNo, CurrencyFilter);
                     if ListPriceDec = 0 then

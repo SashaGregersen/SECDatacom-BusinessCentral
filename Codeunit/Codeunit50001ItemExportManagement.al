@@ -43,6 +43,17 @@ codeunit 50001 "Item Export Management"
         end;
     end;
 
+    procedure FindPurchasePrice(var PurchPrice: record "Purchase Price"; item: record Item): Boolean
+    begin
+        PurchPrice.setrange("Vendor No.", Item."Vendor No.");
+        PurchPrice.setrange("Item No.", Item."No.");
+        PurchPrice.setrange("Unit of Measure Code", item."Base Unit of Measure");
+        PurchPrice.setrange("Currency Code", item."Vendor Currency");
+        PurchPrice.SetRange("Ending Date", 0D);
+        PurchPrice.SetFilter("Starting Date", '%1|<%2', WorkDate(), WorkDate());
+        exit(PurchPrice.FindFirst);
+    end;
+
     var
         myInt: Integer;
 }
