@@ -55,9 +55,9 @@ table 50007 "Item Disc. Group Percentages"
 
     trigger OnModify()
     begin
-        if Rec."Transfer Price Percentage" <> 0 then
+        if Rec."Transfer Price Percentage" <> xRec."Transfer Price Percentage" then
             AdvPriceMgt.UpdateTransferPrices("Item Disc. Group Code", Rec."Transfer Price Percentage");
-        if (Rec."Purchase Discount Percentage" <> 0) or (Rec."Customer Markup Percentage" <> 0) then
+        if (Rec."Purchase Discount Percentage" <> xRec."Purchase Discount Percentage") or (Rec."Customer Markup Percentage" <> xRec."Customer Markup Percentage") then
             AdvPriceMgt.UpdatePurchaseDicountsForItemDiscGroup("Item Disc. Group Code", "Purchase Discount Percentage", "Customer Markup Percentage", "Start Date", "Purchase From Vendor No.");
     end;
 
