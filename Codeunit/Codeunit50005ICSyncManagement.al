@@ -92,6 +92,7 @@ codeunit 50005 "IC Sync Management"
         ICPartnerInOtherCompany: Record "IC Partner";
         SalesPrice: Record "Sales Price";
         PurchasePrice: Record "Purchase Price";
+        PurchasePriceTemp: Record "Purchase Price" temporary;
         Item: record item;
     begin
         ICPartner.SetFilter("Inbox Details", '<>%1', '');
@@ -123,9 +124,15 @@ codeunit 50005 "IC Sync Management"
                             PurchasePrice."Direct Unit Cost" := SalesPrice."Unit Price";
                             if not PurchasePrice.Insert(false) then
                                 PurchasePrice.Modify(false);
+                            PurchasePriceTemp := PurchasePrice;
+                            if not PurchasePriceTemp.Insert() then;
                         end;
                     until SalesPrice.Next() = 0;
             until ICPartner.Next() = 0;
+        if PurchasePriceTemp.FindSet() then
+            repeat
+                InsertModifyPurchasePriceInOtherCompanies(PurchasePriceTemp);
+            until PurchasePriceTemp.Next() = 0;
     end;
 
     procedure CopyPurchasePricesToOtherCompanies(ItemNo: code[20])
@@ -136,6 +143,7 @@ codeunit 50005 "IC Sync Management"
         ICPartnerInOtherCompany: Record "IC Partner";
         SalesPrice: Record "Sales Price";
         PurchasePrice: Record "Purchase Price";
+        PurchasePriceTemp: Record "Purchase Price" temporary;
         Item: record Item;
     begin
         Item.get(ItemNo);
@@ -168,9 +176,15 @@ codeunit 50005 "IC Sync Management"
                             PurchasePrice."Direct Unit Cost" := SalesPrice."Unit Price";
                             if not PurchasePrice.Insert(false) then
                                 PurchasePrice.Modify(false);
+                            PurchasePriceTemp := PurchasePrice;
+                            if not PurchasePriceTemp.Insert() then;
                         end;
                     until SalesPrice.Next() = 0;
             until ICPartner.Next() = 0;
+        if PurchasePriceTemp.FindSet() then
+            repeat
+                InsertModifyPurchasePriceInOtherCompanies(PurchasePriceTemp);
+            until PurchasePriceTemp.Next() = 0;
     end;
 
     procedure UpdatePricesInOtherCompanies(SalesPriceWorkSheet: Record "Sales Price Worksheet")
@@ -304,6 +318,22 @@ codeunit 50005 "IC Sync Management"
         if CompanyTemp.FindSet() then
             repeat
                 SessionID := RunInsertModifyExtendedTextLineInOtherCompany(ExtendedTextLine, CompanyTemp.Name);
+                CheckSessionForTimeoutAndError(SessionID, 5, CompanyTemp.Name);
+            until CompanyTemp.Next() = 0;
+    end;
+
+    procedure InsertModifyPurchasePriceInOtherCompanies(PurchasePrice: Record "Purchase Price")
+
+    var
+        CompanyTemp: Record Company temporary;
+        SessionID: Integer;
+    begin
+        GetCompaniesToSyncTo(CompanyTemp);
+        if CompanyTemp.Count() = 0 then
+            exit;
+        if CompanyTemp.FindSet() then
+            repeat
+                SessionID := RunInsertModifyPurchasePriceInOtherCompany(PurchasePrice, CompanyTemp.Name);
                 CheckSessionForTimeoutAndError(SessionID, 5, CompanyTemp.Name);
             until CompanyTemp.Next() = 0;
     end;
@@ -495,6 +525,17 @@ codeunit 50005 "IC Sync Management"
         SessionEventComment: Text;
     begin
         OK := StartSession(SessionID, 50018, RunInCompany, ExtendedTxtLine);
+        if not OK then
+            Error(GetLastErrorText());
+        Commit();
+    end;
+
+    local procedure RunInsertModifyPurchasePriceInOtherCompany(PurchasePrice: record "Purchase Price"; RunInCompany: Text) SessionID: Integer
+    var
+        OK: Boolean;
+        SessionEventComment: Text;
+    begin
+        OK := StartSession(SessionID, 50027, RunInCompany, PurchasePrice);
         if not OK then
             Error(GetLastErrorText());
         Commit();
