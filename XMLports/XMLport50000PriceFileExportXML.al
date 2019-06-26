@@ -92,15 +92,16 @@ xmlport 50000 "Price File Export XML"
                     if not item."Use on Website" then
                         currXMLport.Skip();
 
+                    CostDec := 0;
                     if ItemExportMgt.FindPurchasePrice(PurchasePrice, Item) then
                         if PurchasePrice."Currency Code" = CurrencyFilter then
                             CostDec := PurchasePrice."Direct Unit Cost"
                         else begin
                             CurrencyFactor := CurrencyExchRate.GetCurrentCurrencyFactor(PurchasePrice."Currency Code");
                             if CurrencyFilter = '' then
-                                CostDec := CurrencyExchRate.ExchangeAmtFCYToLCY(WorkDate(), CurrencyFilter, PurchasePrice."Direct Unit Cost", CurrencyFactor)
+                                CostDec := CurrencyExchRate.ExchangeAmtFCYToLCY(WorkDate(), PurchasePrice."Currency Code", PurchasePrice."Direct Unit Cost", CurrencyFactor)
                             else
-                                CostDec := CurrencyExchRate.ExchangeAmtLCYToFCY(WorkDate(), CurrencyFilter, PurchasePrice."Direct Unit Cost", CurrencyFactor);
+                                CostDec := CurrencyExchRate.ExchangeAmtFCYToFCY(WorkDate(), PurchasePrice."Currency Code", CurrencyFilter, PurchasePrice."Direct Unit Cost");
                         end;
 
                     ListPriceDec := ItemExportMgt.FindItemPriceForCustomer(Item."No.", CustomerNo, CurrencyFilter);
