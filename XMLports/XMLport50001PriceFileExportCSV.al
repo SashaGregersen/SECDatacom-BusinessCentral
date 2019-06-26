@@ -138,7 +138,7 @@ xmlport 50001 "Price File Export CSV"
                     trigger OnBeforePassVariable()
                     begin
                         CostDec := Round(CostDec, 0.01);
-                        cost := format(CostDec, 0, 9);
+                        cost := format(CostDec, 0, 1);
                     end;
                 }
                 textelement(List_Price)
@@ -147,7 +147,7 @@ xmlport 50001 "Price File Export CSV"
                     trigger OnBeforePassVariable()
                     begin
                         ListPriceDec := round(ListPriceDec, 0.01);
-                        List_Price := Format(ListPriceDec, 0, 9);
+                        List_Price := Format(ListPriceDec, 0, 1);
                     end;
 
                 }
