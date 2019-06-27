@@ -1,5 +1,6 @@
 codeunit 50010 "Bid Management"
 {
+    Permissions = TableData "Sales Shipment Line" = rm, TableData "Return Receipt Line" = rm;
     trigger OnRun()
     begin
 
