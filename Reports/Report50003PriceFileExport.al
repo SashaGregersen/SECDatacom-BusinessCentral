@@ -69,7 +69,7 @@ report 50003 "Price File Export"
         {
             area(Content)
             {
-                group(GroupName)
+                group("Price File Filters")
                 {
                     field(Customer; Customer."No.")
                     {

@@ -209,9 +209,9 @@ page 50018 "Cygate Price List"
 
     var
         ListPrice: Decimal;
-        MainCategoryCode: code[20];
+        MainCategoryCode: code[30];
         ResellerPrice: Decimal;
-        SubCategoryCode: code[20];
+        SubCategoryCode: code[50];
         Invent: Integer;
         GlSetup: record "General Ledger Setup";
         SalesReceiveSetup: record "Sales & Receivables Setup";
