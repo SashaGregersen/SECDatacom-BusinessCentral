@@ -98,6 +98,7 @@ codeunit 50005 "IC Sync Management"
         ICPartner.SetFilter("Inbox Details", '<>%1', '');
         if ICPartner.FindSet() then
             repeat
+                clear(PurchasePriceTemp);
                 SalesPrice.SetRange("Item No.", ItemNo);
                 SalesPrice.SetRange("Sales Type", SalesPrice."Sales Type"::Customer);
                 SalesPrice.SetRange("Sales Code", ICPartner."Customer No.");
@@ -106,7 +107,7 @@ codeunit 50005 "IC Sync Management"
                         ICPartnerInOtherCompany.ChangeCompany(ICPartner."Inbox Details");
                         ICPartnerInOtherCompany.SetRange("Inbox Details", CompanyName());
                         if ICPartnerInOtherCompany.FindFirst() then begin
-                            PurchasePrice.ChangeCompany(ICPartner."Inbox Details");
+                            //PurchasePrice.ChangeCompany(ICPartner."Inbox Details");
                             PurchasePrice.Init();
                             PurchasePrice."Item No." := SalesPrice."Item No.";
                             PurchasePrice."Vendor No." := ICPartnerInOtherCompany."Vendor No.";
@@ -122,17 +123,17 @@ codeunit 50005 "IC Sync Management"
                             PurchasePrice."Ending Date" := SalesPrice."Ending Date";
                             PurchasePrice."Minimum Quantity" := SalesPrice."Minimum Quantity";
                             PurchasePrice."Direct Unit Cost" := SalesPrice."Unit Price";
-                            if not PurchasePrice.Insert(false) then
-                                PurchasePrice.Modify(false);
+                            //if not PurchasePrice.Insert(false) then
+                            //    PurchasePrice.Modify(false);
                             PurchasePriceTemp := PurchasePrice;
-                            if not PurchasePriceTemp.Insert() then;
+                            if not PurchasePriceTemp.Insert(false) then;
                         end;
                     until SalesPrice.Next() = 0;
+                if PurchasePriceTemp.FindSet() then
+                    repeat
+                        InsertModifyPurchasePriceInOtherCompanies(PurchasePriceTemp);
+                    until PurchasePriceTemp.Next() = 0;
             until ICPartner.Next() = 0;
-        if PurchasePriceTemp.FindSet() then
-            repeat
-                InsertModifyPurchasePriceInOtherCompanies(PurchasePriceTemp);
-            until PurchasePriceTemp.Next() = 0;
     end;
 
     procedure CopyPurchasePricesToOtherCompanies(ItemNo: code[20])
@@ -150,6 +151,7 @@ codeunit 50005 "IC Sync Management"
         ICPartner.SetFilter("Inbox Details", '<>%1', '');
         if ICPartner.FindSet() then
             repeat
+                Clear(PurchasePriceTemp);
                 SalesPrice.SetRange("Item No.", ItemNo);
                 SalesPrice.SetRange("Sales Type", SalesPrice."Sales Type"::Customer);
                 SalesPrice.SetRange("Sales Code", ICPartner."Customer No.");
@@ -158,7 +160,7 @@ codeunit 50005 "IC Sync Management"
                         ICPartnerInOtherCompany.ChangeCompany(ICPartner."Inbox Details");
                         ICPartnerInOtherCompany.SetRange("Inbox Details", CompanyName());
                         if ICPartnerInOtherCompany.FindFirst() then begin
-                            PurchasePrice.ChangeCompany(ICPartner."Inbox Details");
+                            //PurchasePrice.ChangeCompany(ICPartner."Inbox Details");
                             PurchasePrice.Init();
                             PurchasePrice."Item No." := SalesPrice."Item No.";
                             PurchasePrice."Vendor No." := Item."Vendor No.";
@@ -174,17 +176,17 @@ codeunit 50005 "IC Sync Management"
                             PurchasePrice."Ending Date" := SalesPrice."Ending Date";
                             PurchasePrice."Minimum Quantity" := SalesPrice."Minimum Quantity";
                             PurchasePrice."Direct Unit Cost" := SalesPrice."Unit Price";
-                            if not PurchasePrice.Insert(false) then
-                                PurchasePrice.Modify(false);
+                            //if not PurchasePrice.Insert(false) then
+                            //    PurchasePrice.Modify(false);
                             PurchasePriceTemp := PurchasePrice;
-                            if not PurchasePriceTemp.Insert() then;
+                            if not PurchasePriceTemp.Insert(false) then;
                         end;
                     until SalesPrice.Next() = 0;
+                if PurchasePriceTemp.FindSet() then
+                    repeat
+                        InsertModifyPurchasePriceInOtherCompanies(PurchasePriceTemp);
+                    until PurchasePriceTemp.Next() = 0;
             until ICPartner.Next() = 0;
-        if PurchasePriceTemp.FindSet() then
-            repeat
-                InsertModifyPurchasePriceInOtherCompanies(PurchasePriceTemp);
-            until PurchasePriceTemp.Next() = 0;
     end;
 
     procedure UpdatePricesInOtherCompanies(SalesPriceWorkSheet: Record "Sales Price Worksheet")

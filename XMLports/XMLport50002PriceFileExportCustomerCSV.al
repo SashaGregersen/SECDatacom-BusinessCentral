@@ -18,21 +18,21 @@ xmlport 50002 "Price File Export Customer CSV"
                 {
                     trigger OnBeforePassVariable()
                     begin
-                        SEC_PN := 'SEC Varenr.';
+                        SEC_PN := 'SEC PN';
                     end;
                 }
                 textelement(Description)
                 {
                     trigger OnBeforePassVariable()
                     begin
-                        Description := 'Varenavn';
+                        Description := 'Description';
                     end;
                 }
                 textelement(Extended_Description)
                 {
                     trigger OnBeforePassVariable()
                     begin
-                        Extended_Description := 'Vare Beskrivelse';
+                        Extended_Description := 'Extended Description';
                     end;
                 }
                 textelement(Manufacturer_SKU)
@@ -53,7 +53,7 @@ xmlport 50002 "Price File Export Customer CSV"
                 {
                     trigger OnBeforePassVariable()
                     begin
-                        CostLbl := 'Cost';
+                        CostLbl := 'Sales Price';
                     end;
                 }
                 textelement(List_PriceLbl)
