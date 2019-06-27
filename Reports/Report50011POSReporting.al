@@ -792,10 +792,11 @@ report 50011 "POS Reporting"
             EndCustCounty := Customer.County;
             EndCustCountryRegion := Customer."Country/Region Code";
             if "Sales Invoice Header"."End Customer Contact" <> '' then begin
-                Contact.get("Sales Invoice Header"."End Customer Contact");
-                EndCustContact := Contact.Name;
-                EndCustContactPhone := contact."Phone No.";
-                EndCustContactEmail := Contact."E-Mail";
+                if Contact.get("Sales Invoice Header"."End Customer Contact") then begin
+                    EndCustContact := Contact.Name;
+                    EndCustContactPhone := contact."Phone No.";
+                    EndCustContactEmail := Contact."E-Mail";
+                end;
             end;
         end;
 
@@ -809,10 +810,11 @@ report 50011 "POS Reporting"
             ResellerCounty := Customer2.County;
             ResellerCountryRegion := Customer2."Country/Region Code";
             if "Sales Invoice Header"."Sell-to Contact No." <> '' then begin
-                Contact2.get("Sales Invoice Header"."Sell-to Contact No.");
-                ResellerContact := Contact2.Name;
-                ResellerContactPhone := Contact2."Phone No.";
-                ResellerContactEmail := Contact2."E-Mail";
+                if Contact2.get("Sales Invoice Header"."Sell-to Contact No.") then begin
+                    ResellerContact := Contact2.Name;
+                    ResellerContactPhone := Contact2."Phone No.";
+                    ResellerContactEmail := Contact2."E-Mail";
+                end;
             end;
         end;
 
@@ -840,10 +842,11 @@ report 50011 "POS Reporting"
             EndCustCounty := Customer.County;
             EndCustCountryRegion := Customer."Country/Region Code";
             if "Sales Cr.Memo Header"."End Customer Contact" <> '' then begin
-                Contact.get("Sales Cr.Memo Header"."End Customer Contact");
-                EndCustContact := Contact.Name;
-                EndCustContactPhone := contact."Phone No.";
-                EndCustContactEmail := Contact."E-Mail";
+                if Contact.get("Sales Cr.Memo Header"."End Customer Contact") then begin
+                    EndCustContact := Contact.Name;
+                    EndCustContactPhone := contact."Phone No.";
+                    EndCustContactEmail := Contact."E-Mail";
+                end;
             end;
         end;
 
@@ -858,10 +861,11 @@ report 50011 "POS Reporting"
             ResellerCounty := Customer2.County;
             ResellerCountryRegion := Customer2."Country/Region Code";
             if "Sales Cr.Memo Header"."Sell-to Contact No." <> '' then begin
-                Contact2.get("Sales Cr.Memo Header"."Sell-to Contact No.");
-                ResellerContact := Contact2.Name;
-                ResellerContactPhone := Contact2."Phone No.";
-                ResellerContactEmail := Contact2."E-Mail";
+                if Contact2.get("Sales Cr.Memo Header"."Sell-to Contact No.") then begin
+                    ResellerContact := Contact2.Name;
+                    ResellerContactPhone := Contact2."Phone No.";
+                    ResellerContactEmail := Contact2."E-Mail";
+                end;
             end;
         end;
 
