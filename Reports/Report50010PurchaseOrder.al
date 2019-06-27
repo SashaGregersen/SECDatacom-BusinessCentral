@@ -131,6 +131,10 @@ report 50010 "SEC Purchase Order"
             column(Var_ID; VarRec."VAR id")
             {
             }
+            column(Ship_To_Comment; "Ship-To Comment")
+            {
+
+            }
             //alasd
             dataitem(CopyLoop; "Integer")
             {
