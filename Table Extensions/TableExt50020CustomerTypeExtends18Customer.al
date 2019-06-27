@@ -57,7 +57,7 @@ tableextension 50020 CustomerType extends 18
         {
             DataClassification = ToBeClassified;
             TableRelation = Company.Name;
-            Editable = true; //ret til false
+            Editable = false;
         }
         field(50004; "xShippingAdvice"; Option)
         {

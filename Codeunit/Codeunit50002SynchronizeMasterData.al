@@ -178,7 +178,6 @@ codeunit 50002 "Synchronize Master Data"
             IF not Customer2.Insert(false) then
                 Customer2.Modify(false);
         end;
-
     end;
 
     procedure CheckPostCode(Customer: record Customer; postcode: record "Post Code")
@@ -214,6 +213,26 @@ codeunit 50002 "Synchronize Master Data"
         Rec.validate(Reserve, rec.Reserve::Always);
         Rec.Validate("Prevent Negative Inventory", rec."Prevent Negative Inventory"::Yes);
         rec.Validate("Reordering Policy", rec."Reordering Policy"::Order);
+    end;
+
+    procedure SynchronizeContactToCompany(Contact: record Contact)
+    var
+        Company: record company;
+        Contact2: record Contact;
+        GlSetup: record "General Ledger Setup";
+        CustDiscGroup: record "Customer Discount Group";
+        CustPriceGroup: record "Customer Price Group";
+        postcode: Record "Post Code";
+    begin
+        GlSetup.Get;
+        Company.SetRange(Company.Name, GlSetup."Master Company");
+        IF Company.FindFirst() then begin
+            Contact2.ChangeCompany(Company.Name);
+            Contact2.Init();
+            Contact2.TransferFields(Contact);
+            IF not Contact2.Insert(false) then
+                Contact2.Modify(false);
+        end;
     end;
 
 }

@@ -967,6 +967,9 @@ report 50011 "POS Reporting"
         Clear(ResellerPostCode);
         Clear(ResellerCountryRegion);
         clear(ResellerCounty);
+        clear(ResellerContact);
+        clear(ResellerContactEmail);
+        clear(ResellerContactPhone);
         clear(EndCustomerName);
         clear(EndCustName2);
         clear(EndcustAddress);
@@ -975,6 +978,9 @@ report 50011 "POS Reporting"
         Clear(EndcustPostCode);
         Clear(EndcustCountryRegion);
         clear(EndcustCounty);
+        clear(EndCustContact);
+        clear(EndCustContactEmail);
+        clear(EndCustContactPhone);
         Clear(StandardCost);
 
     end;
