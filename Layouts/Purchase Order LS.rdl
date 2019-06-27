@@ -2132,7 +2132,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value />
+                                                    <Value>Type Purch Line</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -2197,7 +2197,8 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="textbox17">
+                                          <Textbox Name="Textbox17">
+                                            <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
@@ -2214,11 +2215,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                                 <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>textbox17</rd:DefaultName>
-                                            <ZIndex>43</ZIndex>
-                                            <Visibility>
-                                              <Hidden>=iif(SUM(Fields!TotalInclVAT.Value)=0,true,false)</Hidden>
-                                            </Visibility>
+                                            <rd:DefaultName>Textbox17</rd:DefaultName>
                                             <Style>
                                               <PaddingRight>0.0625in</PaddingRight>
                                               <PaddingBottom>2pt</PaddingBottom>
@@ -2997,13 +2994,13 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                     <TablixMembers>
                                       <TablixMember>
                                         <Visibility>
-                                          <Hidden>=Iif(Fields!Type_PurchLine.Value="0",TRUE,FALSE)</Hidden>
+                                          <Hidden>=IIF(Fields!Type_PurchLine.Value=0,true,false)</Hidden>
                                         </Visibility>
                                         <KeepWithGroup>After</KeepWithGroup>
                                       </TablixMember>
                                       <TablixMember>
                                         <Visibility>
-                                          <Hidden>=IIF(Fields!Qty_PurchLine.Value=0,false,true)</Hidden>
+                                          <Hidden>=IIF(Fields!Type_PurchLine.Value=0,false,true)</Hidden>
                                         </Visibility>
                                         <KeepWithGroup>After</KeepWithGroup>
                                       </TablixMember>
