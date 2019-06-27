@@ -1,5 +1,6 @@
 codeunit 50020 "POS Report Export"
 {
+    Permissions = TableData "item ledger entry" = rmid;
 
     procedure FindAppliedEntry(ItemLedgEntry: record "Item Ledger Entry"; var TempItemEntry: record "Item Ledger Entry" temporary)
     var

@@ -215,4 +215,46 @@ codeunit 50052 "Customer Event Handler"
             exit;
         SyncMasterData.SynchronizeVARIDToCompany(Rec);
     end;
+
+    [EventSubscriber(ObjectType::table, database::"Contact", 'OnAfterInsertEvent', '', true, true)]
+    local procedure OnAfterInsertContactEvent(var Rec: Record "Contact"; runtrigger: Boolean)
+    var
+        SalesSetup: record "Sales & Receivables Setup";
+        SyncMasterData: codeunit "Synchronize Master Data";
+    begin
+        If not runtrigger then
+            EXIT;
+        if rec.IsTemporary() then
+            exit;
+        rec.validate("Owning Company", CompanyName());
+
+        if CompanyName() = rec."Owning Company" then begin
+            SalesSetup.get;
+            IF SalesSetup."Synchronize Customer" = FALSE then
+                Exit;
+            SyncMasterData.SynchronizeContactToCompany(Rec);
+        end else
+            error('You must modify this contact in %1', rec."Owning Company");
+    end;
+
+    [EventSubscriber(ObjectType::table, database::"Contact", 'OnAfterModifyEvent', '', true, true)]
+    local procedure OnAfterModifyContactEvent(var Rec: Record "Contact"; runtrigger: Boolean)
+    var
+        SalesSetup: record "Sales & Receivables Setup";
+        SyncMasterData: codeunit "Synchronize Master Data";
+    begin
+        If not runtrigger then
+            EXIT;
+        if rec.IsTemporary() then
+            exit;
+        rec.validate("Owning Company", CompanyName());
+
+        if CompanyName() = rec."Owning Company" then begin
+            SalesSetup.get;
+            IF SalesSetup."Synchronize Customer" = FALSE then
+                Exit;
+            SyncMasterData.SynchronizeContactToCompany(Rec);
+        end else
+            error('You must modify this contact in %1', rec."Owning Company");
+    end;
 }
