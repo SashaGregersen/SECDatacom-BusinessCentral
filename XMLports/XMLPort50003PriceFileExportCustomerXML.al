@@ -1,107 +1,11 @@
-xmlport 50002 "Price File Export Customer CSV"
+xmlport 50003 "Price File Export Customer XML"
 {
     Direction = export;
-    TextEncoding = UTF8;
-    Format = VariableText;
-    FieldDelimiter = '';
-    FieldSeparator = ';';
 
     schema
     {
         textelement(Root)
         {
-
-            tableelement(ItemTableTitle; integer)
-            {
-                SourceTableView = SORTING (Number) WHERE (Number = CONST (1));
-                textelement(SEC_PN)
-                {
-                    trigger OnBeforePassVariable()
-                    begin
-                        SEC_PN := 'SEC PN';
-                    end;
-                }
-                textelement(Description)
-                {
-                    trigger OnBeforePassVariable()
-                    begin
-                        Description := 'Description';
-                    end;
-                }
-                textelement(Extended_Description)
-                {
-                    trigger OnBeforePassVariable()
-                    begin
-                        Extended_Description := 'Extended Description';
-                    end;
-                }
-                textelement(Manufacturer_SKU)
-                {
-                    trigger OnBeforePassVariable()
-                    begin
-                        Manufacturer_SKU := 'Manufacturer SKU';
-                    end;
-                }
-                textelement(CurrencyLbl)
-                {
-                    trigger OnBeforePassVariable()
-                    begin
-                        CurrencyLbl := 'Currency';
-                    end;
-                }
-                Textelement(CostLbl)
-                {
-                    trigger OnBeforePassVariable()
-                    begin
-                        CostLbl := 'Sales Price';
-                    end;
-                }
-                textelement(List_PriceLbl)
-                {
-
-                    trigger OnBeforePassVariable()
-                    begin
-                        List_PriceLbl := 'List Price';
-                    end;
-
-                }
-                textelement(Manufacturer)
-                {
-                    trigger OnBeforePassVariable()
-                    begin
-                        Manufacturer := 'Manufacturer';
-                    end;
-                }
-                textelement(MaincategoryLbl)
-                {
-                    trigger OnBeforePassVariable()
-                    begin
-                        MaincategoryLbl := 'Maincategory';
-                    end;
-                }
-
-                textelement(SubcategoryLbl)
-                {
-                    trigger OnBeforePassVariable()
-                    begin
-                        SubcategoryLbl := 'Subcategory';
-                    end;
-                }
-                textelement(EANLbl)
-                {
-                    trigger OnBeforePassVariable()
-                    begin
-                        EANLbl := 'EAN';
-                    end;
-                }
-                Textelement(StockLBl)
-                {
-                    trigger OnBeforePassVariable()
-                    begin
-                        StockLBl := 'Stock';
-                    end;
-                }
-            }
             tableelement(Item; Item)
             {
                 XmlName = 'Item';

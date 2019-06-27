@@ -54,6 +54,4 @@ codeunit 50001 "Item Export Management"
         exit(PurchPrice.FindFirst);
     end;
 
-    var
-        myInt: Integer;
 }

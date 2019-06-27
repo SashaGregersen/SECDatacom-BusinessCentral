@@ -24,14 +24,14 @@ pageextension 50034 "Price File Export" extends "Customer List"
     {
         addafter(Sales_Prices)
         {
-            action(ExportPriceFile)
+            action("Export Customer Price File")
             {
                 Promoted = true;
                 PromotedCategory = New;
                 Image = Export;
                 trigger OnAction();
                 begin
-                    Report.Run(50003, true, false, item);
+                    Report.Run(50025, true, false, item);
                 end;
             }
         }

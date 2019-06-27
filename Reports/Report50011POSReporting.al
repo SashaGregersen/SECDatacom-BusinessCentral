@@ -83,7 +83,7 @@ report 50011 "POS Reporting"
             {
                 //udregnet vha. (unit purch price - bid unit purch price) / unit purch price    
             }
-            column(StandardCost; StandardCost)
+            column(StandardCost; StandardCostPercentage)
             {
 
             }
@@ -359,7 +359,7 @@ report 50011 "POS Reporting"
                     (ItemLedgEntryPurchase."Entry Type" <> ItemLedgEntryPurchase."Entry Type"::Sale) then begin
                         PurchOrderNo := format(ItemLedgEntryPurchase."Entry Type");
                         PurchOrderPostDate := ItemLedgEntryPurchase."Posting Date";
-                        StandardCost := FindPurchasePrice(PurchasePrice, Item, PurchOrderPostDate);
+                        StandardCostPercentage := FindPurchaseDisc(PurchasePrice, Item, PurchOrderPostDate);
                     end else begin
                         if PurchRcptLine.get(ItemLedgEntryPurchase."Document No.", ItemLedgEntryPurchase."Document Line No.") then begin
                             PurchInvLine.setrange("Order No.", PurchRcptLine."Order No.");
@@ -369,7 +369,7 @@ report 50011 "POS Reporting"
                                 PurchOrderNo := PurchInvLine."Document No.";
                                 PurchOrderPostDate := PurchInvLine."Posting Date";
                                 PurchCostPrice := PurchInvLine."Unit Cost";
-                                StandardCost := FindPurchasePrice(PurchasePrice, Item, PurchOrderPostDate);
+                                StandardCostPercentage := FindPurchaseDisc(PurchasePrice, Item, PurchOrderPostDate);
                             end else begin
                                 PurchLine.SetRange("Document Type", PurchLine."Document Type"::Order);
                                 PurchLine.SetRange("Document No.", PurchRcptLine."Order No.");
@@ -379,7 +379,7 @@ report 50011 "POS Reporting"
                                     PurchOrderNo := PurchLine."Document No.";
                                     PurchOrderPostDate := PurchHeader."Posting Date";
                                     PurchCostPrice := PurchLine."Unit Cost";
-                                    StandardCost := FindPurchasePrice(PurchasePrice, Item, PurchOrderPostDate);
+                                    StandardCostPercentage := FindPurchaseDisc(PurchasePrice, Item, PurchOrderPostDate);
                                 end;
                             end;
                             // Find PurchCostPrice on purchase
@@ -465,7 +465,7 @@ report 50011 "POS Reporting"
             {
                 //udregnet vha. (unit purch price - bid unit purch price) / unit purch price    
             }
-            column(StandardCost2; StandardCost)
+            column(StandardCost2; StandardCostPercentage)
             {
 
             }
@@ -985,7 +985,7 @@ report 50011 "POS Reporting"
         clear(EndCustContact);
         clear(EndCustContactEmail);
         clear(EndCustContactPhone);
-        Clear(StandardCost);
+        Clear(StandardCostPercentage);
 
     end;
 
@@ -1013,7 +1013,7 @@ report 50011 "POS Reporting"
                 PurchOrderPostDate := PurchInvLine."Posting Date";
                 PurchCostPrice := PurchInvLine."Unit Cost";
                 if item.get(PurchInvLine."No.") then
-                    StandardCost := FindPurchasePrice(PurchasePrice, Item, PurchOrderPostDate);
+                    StandardCostPercentage := FindPurchaseDisc(PurchasePrice, Item, PurchOrderPostDate);
             end else begin
                 ValueEntry.SetRange("Document Type", 5); // purchase receipt
                 if ValueEntry.FindFirst() then
@@ -1027,7 +1027,7 @@ report 50011 "POS Reporting"
                             PurchOrderPostDate := PurchHeader."Posting Date";
                             PurchCostPrice := PurchLine."Unit Cost";
                             if item.get(PurchLine."No.") then
-                                StandardCost := FindPurchasePrice(PurchasePrice, Item, PurchOrderPostDate);
+                                StandardCostPercentage := FindPurchaseDisc(PurchasePrice, Item, PurchOrderPostDate);
                         end;
                     end;
             end;
@@ -1058,7 +1058,7 @@ report 50011 "POS Reporting"
                     PurchCostPrice := PurchInvLine."Direct Unit Cost";
                     PurchOrderPostDate := PurchInvLine."Posting Date";
                     if Item.get(PurchInvLine."No.") then
-                        StandardCost := FindPurchasePrice(PurchasePrice, Item, PurchOrderPostDate);
+                        StandardCostPercentage := FindPurchaseDisc(PurchasePrice, Item, PurchOrderPostDate);
                 end else begin
                     if PurchLine.GET(Purchline."Document Type"::Order, PurchRcptLine."Order No.", PurchRcptLine."Order Line No.") then begin
                         PurchHeader.get(PurchLine."Document Type", Purchline."Document No.");
@@ -1066,7 +1066,7 @@ report 50011 "POS Reporting"
                         PurchCostPrice := PurchLine."Direct Unit Cost";
                         PurchOrderPostDate := PurchHeader."Posting Date";
                         if Item.get(PurchLine."No.") then
-                            StandardCost := FindPurchasePrice(PurchasePrice, Item, PurchOrderPostDate);
+                            StandardCostPercentage := FindPurchaseDisc(PurchasePrice, Item, PurchOrderPostDate);
                     end;
                 end;
                 if (PurchCostPrice <> 0) and (BidUnitPurchasePrice <> 0) then
@@ -1086,9 +1086,11 @@ report 50011 "POS Reporting"
             ShipmentNo := SalesShipLine."Document No.";
     end;
 
-    procedure FindPurchasePrice(var PurchPrice: record "Purchase Price"; item: record Item; PostingDate: Date): Decimal
+    procedure FindPurchaseDisc(var PurchPrice: record "Purchase Price"; item: record Item; PostingDate: Date): Decimal
+    var
+        ItemDiscPercentage: record "Item Disc. Group Percentages";
     begin
-        PurchPrice.setrange("Vendor No.", Item."Vendor No.");
+        /* PurchPrice.setrange("Vendor No.", Item."Vendor No.");
         PurchPrice.setrange("Item No.", Item."No.");
         PurchPrice.setrange("Unit of Measure Code", item."Base Unit of Measure");
         PurchPrice.setrange("Currency Code", item."Vendor Currency");
@@ -1097,7 +1099,14 @@ report 50011 "POS Reporting"
         if PurchPrice.FindFirst() then
             exit(PurchPrice."Direct Unit Cost")
         else
-            exit(0)
+            exit(0); */
+
+        itemDiscPercentage.setrange("Item Disc. Group Code", item."Item Disc. Group");
+        ItemDiscPercentage.setfilter("Start Date", '<=%1', PostingDate);
+        if itemDiscPercentage.findfirst then
+            exit(ItemDiscPercentage."Purchase Discount Percentage")
+        else
+            exit(0);
     end;
 
     var
@@ -1149,7 +1158,7 @@ report 50011 "POS Reporting"
         ICPartnerCode: Text;
         ICPartnerCode2: text;
         Subsidiary: code[20];
-        StandardCost: Decimal;
+        StandardCostPercentage: Decimal;
         PurchasePrice: record "Purchase Price";
 
 

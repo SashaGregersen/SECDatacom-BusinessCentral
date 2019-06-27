@@ -181,23 +181,29 @@ page 50018 "Cygate Price List"
     local procedure GetMainCategoryCode(): code[20]
     var
         DefaultDim: Record "Default Dimension";
+        Dimension: record dimension;
     begin
         DefaultDim.SetRange("Table ID", 27);
         DefaultDim.SetRange("No.", Rec."No.");
         DefaultDim.SetFilter("Dimension Code", '<>%1', GlSetup."Global Dimension 1 Code");
-        if DefaultDim.FindFirst() then
-            exit(DefaultDim."Dimension Code");
+        if DefaultDim.FindFirst() then begin
+            Dimension.Get(DefaultDim."Dimension Code");
+            exit(Dimension.Name);
+        end;
     end;
 
     local procedure GetSubCategoryCode(): code[20]
     var
         DefaultDim: Record "Default Dimension";
+        DimensionValue: record "Dimension Value";
     begin
         DefaultDim.SetRange("Table ID", 27);
         DefaultDim.SetRange("No.", Rec."No.");
         DefaultDim.SetFilter("Dimension Code", '<>%1', GlSetup."Global Dimension 1 Code");
-        if DefaultDim.FindFirst() then
-            exit(DefaultDim."Dimension Value Code");
+        if DefaultDim.FindFirst() then begin
+            DimensionValue.Get(DefaultDim."Dimension Code", DefaultDim."Dimension Value Code");
+            exit(DimensionValue.Name);
+        end;
     end;
 
 

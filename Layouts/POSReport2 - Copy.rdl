@@ -1103,7 +1103,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Standard Cost Percentage</Value>
+                                  <Value>Standard Cost</Value>
                                   <Style>
                                     <FontSize>11pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -6365,15 +6365,13 @@
             </TablixColumnHierarchy>
             <TablixRowHierarchy>
               <TablixMembers>
-                <TablixMember />
+                <TablixMember>
+                  <KeepWithGroup>After</KeepWithGroup>
+                </TablixMember>
                 <TablixMember>
                   <Group Name="Details" />
                   <TablixMembers>
-                    <TablixMember>
-                      <Visibility>
-                        <Hidden>=IIF(Fields!Document_No.Value=0,true,false)</Hidden>
-                      </Visibility>
-                    </TablixMember>
+                    <TablixMember />
                     <TablixMember />
                   </TablixMembers>
                 </TablixMember>
@@ -6394,7 +6392,7 @@
         <Height>0.75in</Height>
         <Style />
       </Body>
-      <Width>59in</Width>
+      <Width>58in</Width>
       <Page>
         <Style />
       </Page>
