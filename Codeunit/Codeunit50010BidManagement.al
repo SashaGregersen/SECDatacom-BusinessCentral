@@ -174,10 +174,10 @@ codeunit 50010 "Bid Management"
                         Clear(ClaimAmountVendCurrency);
                         LineNo := LineNo + 10000;
                         if SalesShipmentHeader."No." <> '' then
-                            ClaimAmountVendCurrency := ExchangeClaimAmount(SalesShipmentHeader."Currency Code", PurchHeader."Currency Code", SalesShipLine."Claim Amount", SalesShipmentHeader."Posting Date", SalesShipmentHeader."Currency Factor")
+                            ClaimAmountVendCurrency := ExchangeClaimAmount(SalesShipmentHeader."Currency Code", PurchHeader."Currency Code", SalesShipLine."Claim Amount", SalesShipmentHeader."Posting Date", SalesShipmentHeader."Currency Factor", PurchHeader."Currency Factor")
                         else
                             if SalesInvoiceHeader."No." <> '' then
-                                ClaimAmountVendCurrency := ExchangeClaimAmount(SalesInvoiceHeader."Currency Code", PurchHeader."Currency Code", SalesShipLine."Claim Amount", SalesInvoiceHeader."Posting Date", SalesInvoiceHeader."Currency Factor")
+                                ClaimAmountVendCurrency := ExchangeClaimAmount(SalesInvoiceHeader."Currency Code", PurchHeader."Currency Code", SalesShipLine."Claim Amount", SalesInvoiceHeader."Posting Date", SalesInvoiceHeader."Currency Factor", PurchHeader."Currency Factor")
                             else
                                 Error('Insufficient data to post claim');
                         CreateItemChargePurchaseLine(PurchHeader, LineNo, PurchSetup."Claims Charge No.", ClaimAmountVendCurrency, PurchLine);
@@ -247,10 +247,10 @@ codeunit 50010 "Bid Management"
                     repeat
                         Clear(ClaimAmountVendCurrency);
                         if ReturnReceiptHeader."No." <> '' then
-                            ClaimAmountVendCurrency := ExchangeClaimAmount(ReturnReceiptHeader."Currency Code", PurchHeader."Currency Code", ReturnRcptLine."Claim Amount", ReturnReceiptHeader."Posting Date", ReturnReceiptHeader."Currency Factor")
+                            ClaimAmountVendCurrency := ExchangeClaimAmount(ReturnReceiptHeader."Currency Code", PurchHeader."Currency Code", ReturnRcptLine."Claim Amount", ReturnReceiptHeader."Posting Date", ReturnReceiptHeader."Currency Factor", PurchHeader."Currency Factor")
                         else
                             if SalesCrMemoHeader."No." <> '' then
-                                ClaimAmountVendCurrency := ExchangeClaimAmount(SalesCrMemoHeader."Currency Code", PurchHeader."Currency Code", ReturnRcptLine."Claim Amount", SalesCrMemoHeader."Posting Date", SalesCrMemoHeader."Currency Factor")
+                                ClaimAmountVendCurrency := ExchangeClaimAmount(SalesCrMemoHeader."Currency Code", PurchHeader."Currency Code", ReturnRcptLine."Claim Amount", SalesCrMemoHeader."Posting Date", SalesCrMemoHeader."Currency Factor", PurchHeader."Currency Factor")
                             else
                                 Error('Insufficient data to post claim');
                         CreateItemChargePurchaseLine(PurchHeader, SalesCrMemoLine."Line No.", PurchSetup."Claims Charge No.", ClaimAmountVendCurrency, PurchLine);
@@ -399,7 +399,7 @@ codeunit 50010 "Bid Management"
             Exit(CurrencyExchangeRate.ExchangeAmtFCYToFCY(ReturnRcptHeader."Posting Date", ReturnRcptHeader."Currency Code", PurchHeader."Currency Code", ReturnRcptLine."Claim Amount"));
     end;
 
-    local procedure ExchangeClaimAmount(SalesDocCurrencyCode: Code[20]; PurchaseDocCurrencyCode: Code[20]; ClaimAmount: Decimal; DocDate: Date; SalesDocCurrFactor: Decimal): Decimal
+    local procedure ExchangeClaimAmount(SalesDocCurrencyCode: Code[20]; PurchaseDocCurrencyCode: Code[20]; ClaimAmount: Decimal; DocDate: Date; SalesDocCurrFactor: Decimal; PurchaseDocCurrFactor: Decimal): Decimal
     var
         CurrencyExchangeRate: record "Currency Exchange Rate";
     begin
@@ -408,10 +408,14 @@ codeunit 50010 "Bid Management"
 
         if SalesDocCurrencyCode = '' then
             //from LCYTOFCY 
-            Exit(CurrencyExchangeRate.ExchangeAmtLCYToFCY(DocDate, PurchaseDocCurrencyCode, ClaimAmount, SalesDocCurrFactor))
+            Exit(CurrencyExchangeRate.ExchangeAmtLCYToFCY(DocDate, PurchaseDocCurrencyCode, ClaimAmount, PurchaseDocCurrFactor))
         else
-            //from FCYToFCY
-            Exit(CurrencyExchangeRate.ExchangeAmtFCYToFCY(DocDate, SalesDocCurrencyCode, PurchaseDocCurrencyCode, ClaimAmount));
+            //from FCY to LCY
+            if PurchaseDocCurrencyCode = '' then
+                Exit(CurrencyExchangeRate.ExchangeAmtFCYToLCY(DocDate, SalesDocCurrencyCode, ClaimAmount, SalesDocCurrFactor))
+            else
+                //from FCYToFCY
+                Exit(CurrencyExchangeRate.ExchangeAmtFCYToFCY(DocDate, SalesDocCurrencyCode, PurchaseDocCurrencyCode, ClaimAmount));
     end;
 
     procedure CopyBidToCustomer(Bid: record "Bid")
