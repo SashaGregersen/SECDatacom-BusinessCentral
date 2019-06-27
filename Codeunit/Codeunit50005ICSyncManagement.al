@@ -126,7 +126,7 @@ codeunit 50005 "IC Sync Management"
                             //if not PurchasePrice.Insert(false) then
                             //    PurchasePrice.Modify(false);
                             PurchasePriceTemp := PurchasePrice;
-                            if not PurchasePriceTemp.Insert() then;
+                            if not PurchasePriceTemp.Insert(false) then;
                         end;
                     until SalesPrice.Next() = 0;
                 if PurchasePriceTemp.FindSet() then
@@ -179,7 +179,7 @@ codeunit 50005 "IC Sync Management"
                             //if not PurchasePrice.Insert(false) then
                             //    PurchasePrice.Modify(false);
                             PurchasePriceTemp := PurchasePrice;
-                            if not PurchasePriceTemp.Insert() then;
+                            if not PurchasePriceTemp.Insert(false) then;
                         end;
                     until SalesPrice.Next() = 0;
                 if PurchasePriceTemp.FindSet() then
