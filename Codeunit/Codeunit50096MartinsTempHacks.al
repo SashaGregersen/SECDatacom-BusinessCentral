@@ -9,7 +9,8 @@ codeunit 50096 "Temp Hacks"
         //SetOwningCompany();
         //if Purchheader.get(Purchheader."Document Type"::Order, '106061') then
         //Codeunit.Run(50021, Purchheader);
-        TestCurrencyUpdate();
+        //TestCurrencyUpdate();
+        //TestPurPriceUpdate('70619');
     end;
 
     local procedure SetOwningCompany()
@@ -33,6 +34,18 @@ codeunit 50096 "Temp Hacks"
         Item: record item;
     begin
         report.run(Report::"Update Prices with Currencies", false, false, item);
+    end;
+
+    Local procedure TestPurPriceUpdate(ItemNo: Code[20])
+    var
+        PurchasePrice: Record "Purchase Price";
+        SyncPurPrice: Codeunit "IC Sync Purchase price";
+    begin
+        PurchasePrice.SetRange("Item No.", ItemNo);
+        if PurchasePrice.FindSet() then
+            repeat
+                SyncPurPrice.Run(PurchasePrice);
+            until PurchasePrice.Next() = 0;
     end;
 
     var
