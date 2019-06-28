@@ -7,6 +7,7 @@ codeunit 50096 "Temp Hacks"
     begin
 
         SetOwningCompanyOnContacts();
+        //SetOwningCompany();
         //if Purchheader.get(Purchheader."Document Type"::Order, '106061') then
         //Codeunit.Run(50021, Purchheader);
         //TestCurrencyUpdate();
