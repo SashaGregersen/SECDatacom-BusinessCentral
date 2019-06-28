@@ -107,7 +107,6 @@ codeunit 50005 "IC Sync Management"
                         ICPartnerInOtherCompany.ChangeCompany(ICPartner."Inbox Details");
                         ICPartnerInOtherCompany.SetRange("Inbox Details", CompanyName());
                         if ICPartnerInOtherCompany.FindFirst() then begin
-                            //PurchasePrice.ChangeCompany(ICPartner."Inbox Details");
                             PurchasePrice.Init();
                             PurchasePrice."Item No." := SalesPrice."Item No.";
                             PurchasePrice."Vendor No." := ICPartnerInOtherCompany."Vendor No.";
@@ -123,8 +122,6 @@ codeunit 50005 "IC Sync Management"
                             PurchasePrice."Ending Date" := SalesPrice."Ending Date";
                             PurchasePrice."Minimum Quantity" := SalesPrice."Minimum Quantity";
                             PurchasePrice."Direct Unit Cost" := SalesPrice."Unit Price";
-                            //if not PurchasePrice.Insert(false) then
-                            //    PurchasePrice.Modify(false);
                             PurchasePriceTemp := PurchasePrice;
                             if not PurchasePriceTemp.Insert(false) then;
                         end;
@@ -160,7 +157,6 @@ codeunit 50005 "IC Sync Management"
                         ICPartnerInOtherCompany.ChangeCompany(ICPartner."Inbox Details");
                         ICPartnerInOtherCompany.SetRange("Inbox Details", CompanyName());
                         if ICPartnerInOtherCompany.FindFirst() then begin
-                            //PurchasePrice.ChangeCompany(ICPartner."Inbox Details");
                             PurchasePrice.Init();
                             PurchasePrice."Item No." := SalesPrice."Item No.";
                             PurchasePrice."Vendor No." := Item."Vendor No.";
@@ -176,8 +172,6 @@ codeunit 50005 "IC Sync Management"
                             PurchasePrice."Ending Date" := SalesPrice."Ending Date";
                             PurchasePrice."Minimum Quantity" := SalesPrice."Minimum Quantity";
                             PurchasePrice."Direct Unit Cost" := SalesPrice."Unit Price";
-                            //if not PurchasePrice.Insert(false) then
-                            //    PurchasePrice.Modify(false);
                             PurchasePriceTemp := PurchasePrice;
                             if not PurchasePriceTemp.Insert(false) then;
                         end;

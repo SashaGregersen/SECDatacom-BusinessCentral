@@ -10,8 +10,10 @@ codeunit 50050 "Item Event handler"
         SyncMasterData: Codeunit "Synchronize Master Data";
         AdvPriceMgt: Codeunit "Advanced Price Management";
     begin
-        If not runtrigger and rec.IsTemporary then
+        If not runtrigger then
             EXIT;
+        if rec.IsTemporary then
+            exit;
         if Rec."Item Disc. Group" <> '' then
             AdvPriceMgt.UpdateItemPurchaseDicountsFromItemDiscGroup(Rec);
         AdvPriceMgt.CreateListPriceVariant(Rec);

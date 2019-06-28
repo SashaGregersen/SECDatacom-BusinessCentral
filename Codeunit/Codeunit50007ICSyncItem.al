@@ -8,6 +8,7 @@ codeunit 50007 "IC Sync Item"
         ICpartner: Record "IC Partner";
         ItemDiscountGroup: record "Item Discount Group";
         Vendor: Record Vendor;
+        AdvPriceMgt: Codeunit "Advanced Price Management";
     begin
         ICpartner.SetFilter("Vendor No.", '<>%1', '');
         if not ICpartner.FindFirst() then
@@ -24,6 +25,10 @@ codeunit 50007 "IC Sync Item"
 
         if not rec.Insert(false) then
             rec.Modify(false);
+
+        if Rec."Item Disc. Group" <> '' then
+            AdvPriceMgt.UpdateItemPurchaseDicountsFromItemDiscGroup(Rec);
+
         if Rec."Base Unit of Measure" <> '' then begin
             if not ItemUOM.Get(rec."No.", rec."Base Unit of Measure") then begin
                 ItemUOM."Item No." := Rec."No.";

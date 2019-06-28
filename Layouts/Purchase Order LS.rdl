@@ -726,27 +726,31 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="Textbox34">
-                                            <CanGrow>true</CanGrow>
+                                          <Textbox Name="PurchLineNo5">
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value />
+                                                    <Value>=Fields!Desc_PurchLine.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
+                                                      <NumeralVariant>2</NumeralVariant>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
                                                 <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>Textbox34</rd:DefaultName>
+                                            <rd:DefaultName>PurchLineNo</rd:DefaultName>
+                                            <ZIndex>115</ZIndex>
+                                            <DataElementOutput>NoOutput</DataElementOutput>
                                             <Style>
+                                              <Border>
+                                                <Style>None</Style>
+                                              </Border>
                                               <VerticalAlign>Top</VerticalAlign>
-                                              <PaddingLeft>5pt</PaddingLeft>
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
@@ -1474,7 +1478,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value />
+                                                    <Value>Type Purch Line</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -1539,7 +1543,8 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="textbox17">
+                                          <Textbox Name="Textbox17">
+                                            <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
@@ -1556,11 +1561,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                                 <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>textbox17</rd:DefaultName>
-                                            <ZIndex>43</ZIndex>
-                                            <Visibility>
-                                              <Hidden>=iif(SUM(Fields!TotalInclVAT.Value)=0,true,false)</Hidden>
-                                            </Visibility>
+                                            <rd:DefaultName>Textbox17</rd:DefaultName>
                                             <Style>
                                               <PaddingRight>0.0625in</PaddingRight>
                                               <PaddingBottom>2pt</PaddingBottom>
@@ -2338,14 +2339,11 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                     </SortExpressions>
                                     <TablixMembers>
                                       <TablixMember>
-                                        <Visibility>
-                                          <Hidden>=Iif(Fields!Type_PurchLine.Value="0",TRUE,FALSE)</Hidden>
-                                        </Visibility>
                                         <KeepWithGroup>After</KeepWithGroup>
                                       </TablixMember>
                                       <TablixMember>
                                         <Visibility>
-                                          <Hidden>=IIF((Fields!Qty_PurchLine.Value)=0,false,true)</Hidden>
+                                          <Hidden>true</Hidden>
                                         </Visibility>
                                         <KeepWithGroup>After</KeepWithGroup>
                                       </TablixMember>
@@ -8992,7 +8990,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                             </Paragraphs>
                                             <rd:DefaultName>Ship_To_Comment</rd:DefaultName>
                                             <Style>
-                                              <VerticalAlign>Top</VerticalAlign>
+                                              <VerticalAlign>Bottom</VerticalAlign>
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
