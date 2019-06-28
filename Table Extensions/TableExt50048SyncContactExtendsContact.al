@@ -3,7 +3,7 @@ tableextension 50048 "Sync Contact" extends 5050
     fields
     {
 
-        field(50000; "Owning Company"; text[35])
+        field(50005; "Owning Company"; text[35])
         {
             DataClassification = CustomerContent;
             TableRelation = Company.Name;
