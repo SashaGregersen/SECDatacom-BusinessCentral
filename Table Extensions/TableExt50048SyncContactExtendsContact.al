@@ -7,7 +7,16 @@ tableextension 50048 "Sync Contact" extends 5050
             DataClassification = CustomerContent;
             TableRelation = Company.Name;
             Editable = false;
+            ObsoleteState = Pending;
         }
+        field(50003; "Owning-Company"; Text[30])
+        {
+            DataClassification = CustomerContent;
+            TableRelation = Company.Name;
+            Editable = false;
+        }
+
+
     }
 
     var
