@@ -10,7 +10,7 @@ codeunit 50096 "Temp Hacks"
         //if Purchheader.get(Purchheader."Document Type"::Order, '106061') then
         //Codeunit.Run(50021, Purchheader);
         //TestCurrencyUpdate();
-        TestPurPriceUpdate('70613');
+        //TestPurPriceUpdate('70619');
     end;
 
     local procedure SetOwningCompany()

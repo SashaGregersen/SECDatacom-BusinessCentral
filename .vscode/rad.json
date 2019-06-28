@@ -1,1 +1,1 @@
-﻿{"Added":[{"Id":50025,"Kind":13,"Name":"Price File Export Customer","PackagePath":"/src/Reports/Report50025PriceFileExportCustomer.al"},{"Id":50003,"Kind":15,"Name":"Price File Export Customer XML","PackagePath":"/src/XMLports/XMLPort50003PriceFileExportCustomerXML.al"}],"Modified":[{"Id":50096,"Kind":11,"Name":"Temp Hacks","PackagePath":"/src/Codeunit/Codeunit50096MartinsTempHacks.al"},{"Id":50005,"Kind":11,"Name":"IC Sync Management","PackagePath":"/src/Codeunit/Codeunit50005ICSyncManagement.al"}],"Removed":[]}
+﻿{"Added":[],"Modified":[],"Removed":[]}
