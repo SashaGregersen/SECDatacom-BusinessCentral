@@ -238,7 +238,7 @@ codeunit 50051 "Price Event Handler"
             SalesLine.validate("Unit List Price", ListPrice."Unit Price")
         else
             SalesLine.Validate("Unit List Price", 0);
-        if (ListPrice."Unit Price" <> 0) and (SalesLine."Unit Price" <> 0) then
+        if (ListPrice."Unit Price" <> 0) then
             SalesLine.validate("Reseller Discount", UpdateResellerDiscount(SalesLine, ListPrice));
 
         if Advpricemgt.FindListPriceForitem(SalesLine."No.", Item."Vendor Currency", ListPrice2) then

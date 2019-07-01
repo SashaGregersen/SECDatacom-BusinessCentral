@@ -97,6 +97,13 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
         {
             DataClassification = ToBeClassified;
             Editable = false;
+            trigger Onvalidate()
+            var
+
+            begin
+                if "Bid Sales Discount" = 100 then
+                    validate("Unit Price", 0);
+            end;
         }
         field(50010; "Unit Purchase Price"; Decimal)
         {
@@ -240,10 +247,12 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
         If IsProjectSales and (BidPrices."Bid Unit Sales Price" = 0) then begin
             Validate("Unit Price", 0);
         end;
-        "Bid Sales Discount" := BidPrices."Bid Sales Discount Pct.";
+        //"Bid Sales Discount" := BidPrices."Bid Sales Discount Pct.";
+        validate("Bid Sales Discount", BidPrices."Bid Sales Discount Pct.");
         Claimable := NewClaimableValue;
         Validate("Bid Unit Purchase Price", BidPrices."Bid Unit Purchase Price");
         "Bid Purchase Discount" := BidPrices."Bid Purchase Discount Pct.";
+
     end;
 
     procedure CalcAdvancedPrices();
