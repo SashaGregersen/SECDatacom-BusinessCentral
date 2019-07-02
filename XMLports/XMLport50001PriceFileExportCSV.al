@@ -63,7 +63,6 @@ xmlport 50001 "Price File Export CSV"
                     begin
                         List_PriceLbl := 'List Price';
                     end;
-
                 }
                 textelement(Manufacturer)
                 {

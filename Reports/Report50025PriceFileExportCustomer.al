@@ -97,26 +97,26 @@ report 50025 "Price File Export Customer"
 
     procedure CreateFileLocationPath(FormatCSV: Boolean) Filelocation: Text
     var
-        CurrDateTime: text;
+        CurrDate: text;
         InvtSetup: record "Inventory Setup";
     begin
         InvtSetup.Get();
-        if InvtSetup."Price file location" = '' then
-            Error('File Location is missing in Inventory Setup');
+        if (InvtSetup."Price file location" = '') then
+            Error('Customer Price File Location is missing in Inventory Setup');
         if FormatCSV = true then begin
-            FormatCurrentDateTime(CurrDateTime);
-            Filelocation := InvtSetup."Price file location" + '\Pricelist_' + customer."No." + '_' + CurrDateTime + '.csv'
+            FormatCurrentDateTime(CurrDate);
+            Filelocation := InvtSetup."Price file location" + '\Pricelist-%DATO' + '' + '(' + CurrDate + ')' + '%-%' + customer."No." + '%' + '.csv';
         end else begin
-            FormatCurrentDateTime(CurrDateTime);
-            Filelocation := InvtSetup."Price file location" + '\Pricelist_' + customer."No." + '_' + CurrDateTime + '.xml';
+            FormatCurrentDateTime(CurrDate);
+            Filelocation := InvtSetup."Price file location" + '\Pricelist-%DATO' + '' + '(' + CurrDate + ')' + '%-%' + customer."No." + '%' + '.xml';
         end;
     end;
 
-    procedure FormatCurrentDateTime(var CurrDateTime: Text)
+    procedure FormatCurrentDateTime(var CurrDate: Text)
     var
-        CurrDateTime2: text;
+    //CurrDateTime2: text;
     begin
-        CurrDateTime2 := ConvertStr(format(CurrentDateTime()), '/', '-');
-        CurrDateTime := ConvertStr(Format(CurrentDateTime()), ':', '.');
+        //CurrDateTime2 := ConvertStr(format(CurrentDateTime(), 0, '<Year4>/<Month,2>/<Day,2> <Hours12,2>:<Minutes,2>:<Seconds,2>'), '/', '-');
+        CurrDate := ConvertStr(Format(Today(), 0, '<Year4>-<Month,2>-<Day,2>'), ':', '.');
     end;
 }
