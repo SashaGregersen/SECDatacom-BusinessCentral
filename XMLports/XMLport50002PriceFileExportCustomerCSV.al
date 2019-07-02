@@ -10,7 +10,6 @@ xmlport 50002 "Price File Export Customer CSV"
     {
         textelement(Root)
         {
-
             tableelement(ItemTableTitle; integer)
             {
                 SourceTableView = SORTING (Number) WHERE (Number = CONST (1));
@@ -79,7 +78,6 @@ xmlport 50002 "Price File Export Customer CSV"
                         MaincategoryLbl := 'Maincategory';
                     end;
                 }
-
                 textelement(SubcategoryLbl)
                 {
                     trigger OnBeforePassVariable()
@@ -104,11 +102,10 @@ xmlport 50002 "Price File Export Customer CSV"
             }
             tableelement(Item; Item)
             {
-                XmlName = 'Item';
-                SourceTableView = SORTING ("No.");
 
                 fieldelement(SEC_PN; Item."No.")
                 {
+
 
                 }
                 fieldelement(Description; item.Description)
@@ -171,7 +168,6 @@ xmlport 50002 "Price File Export Customer CSV"
                 {
 
                 }
-
                 trigger OnAfterGetRecord()
                 var
                     SyncMasterData: Codeunit "Synchronize Master Data";
@@ -239,9 +235,6 @@ xmlport 50002 "Price File Export Customer CSV"
                         SubCategory := DimensionValue.Name;
                     end;
                 end;
-
-
-
             }
 
         }
