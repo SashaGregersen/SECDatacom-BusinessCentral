@@ -23,8 +23,8 @@ codeunit 50007 "IC Sync Item"
         if Vendor.Get(rec."Vendor No.") then
             Rec.Validate("Vendor Currency", Vendor."Currency Code");
 
-        if not rec.Insert(false) then
-            rec.Modify(false);
+        if not rec.Insert(true) then
+            rec.Modify(true);
 
         if Rec."Item Disc. Group" <> '' then
             AdvPriceMgt.UpdateItemPurchaseDicountsFromItemDiscGroup(Rec);
@@ -34,7 +34,7 @@ codeunit 50007 "IC Sync Item"
                 ItemUOM."Item No." := Rec."No.";
                 ItemUOM.Code := rec."Base Unit of Measure";
                 ItemUOM."Qty. per Unit of Measure" := 1;
-                ItemUOM.Insert(false);
+                ItemUOM.Insert(true);
             end;
         end;
     end;

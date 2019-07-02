@@ -6,6 +6,7 @@ codeunit 50096 "Temp Hacks"
         JobQueue: Record "Job Queue Entry";
     begin
 
+        SetOwningCompanyOnContacts();
         //SetOwningCompany();
         //if Purchheader.get(Purchheader."Document Type"::Order, '106061') then
         //Codeunit.Run(50021, Purchheader);
@@ -34,6 +35,22 @@ codeunit 50096 "Temp Hacks"
         Item: record item;
     begin
         report.run(Report::"Update Prices with Currencies", false, false, item);
+    end;
+
+    local procedure SetOwningCompanyOnContacts()
+    var
+        Contact: Record Contact;
+        Window: Dialog;
+    begin
+        Window.Open('#1############');
+        if Contact.FindSet(true, false) then
+            repeat
+                Window.Update(1, Contact."No.");
+                Contact."Owning-Company" := CompanyName();
+                Contact.Modify(false);
+            until Contact.Next() = 0;
+        Window.Close();
+        Message('Done');
     end;
 
     Local procedure TestPurPriceUpdate(ItemNo: Code[20])
