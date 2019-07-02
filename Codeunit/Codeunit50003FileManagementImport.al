@@ -319,6 +319,7 @@ codeunit 50003 "File Management Import"
         SalesLine.Validate("Bid No.", BidPrices."Bid No.");
         if BidPrices."Bid Unit Purchase Price" = 0 then
             SalesLine.Validate("Unit Purchase Price", 0);
+        SalesLine.validate("Unit Price", BidPrices."Bid Unit Sales Price");
         SalesLine.Modify(true);
         if SalesLine."Line Discount %" <> 0 then begin
             SalesLine."Line Discount %" := 0;
@@ -396,7 +397,7 @@ codeunit 50003 "File Management Import"
                                     PurchOrder.Modify(true);
                                 end;
                                 if PurchOrder."Vendor Shipment No." = '' then begin
-                                    PurchOrder.validate("Vendor Shipment No.", VendorBidNo);
+                                    PurchOrder.validate("Vendor Shipment No.", COPYSTR(VendorBidNo, 1, 35));
                                     PurchOrder.Modify(true);
                                 end;
                                 SalesLine.SetRange("Document No.", SalesHeader."No.");
