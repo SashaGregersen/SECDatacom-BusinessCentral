@@ -86,10 +86,10 @@ codeunit 50003 "File Management Import"
                         begin
                             SalesHeader.validate("Currency Code", TempCSVBuffer.Value);
                         end;
-                    12:
+                    /* 12:
                         begin
                             SalesHeader.validate(SalesHeader."Currency Code", TempCSVBuffer.Value);
-                        end;
+                        end; */
                     13:
                         begin
                             if TempCSVBuffer.value = '' then
