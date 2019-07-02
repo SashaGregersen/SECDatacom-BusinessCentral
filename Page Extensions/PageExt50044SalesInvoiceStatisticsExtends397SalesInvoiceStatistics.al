@@ -66,7 +66,7 @@ pageextension 50044 "Sales Invoice Statistics" extends "Sales Invoice Statistics
                 ProfitAmount := ProfitAmount + ExchangeCurrencyAmountToLCY(Rec, GlEntries);
             until GlEntries.next = 0;
         if (ProfitAmount <> 0) and (Amount <> 0) then begin
-            ContributionAmount := (ProfitAmount / Amount);
+            ContributionAmount := ProfitAmount;
             ContributionMargin := (ProfitAmount / Amount) * 100;
         end;
     end;
