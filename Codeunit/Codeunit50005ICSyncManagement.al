@@ -128,7 +128,7 @@ codeunit 50005 "IC Sync Management"
                     until SalesPrice.Next() = 0;
                 if PurchasePriceTemp.FindSet() then
                     repeat
-                        InsertModifyPurchasePriceInOtherCompanies(PurchasePriceTemp);
+                        InsertModifyPurchasePriceInOneOtherCompany(PurchasePriceTemp, ICPartner."Inbox Details");
                     until PurchasePriceTemp.Next() = 0;
             until ICPartner.Next() = 0;
     end;
@@ -332,6 +332,15 @@ codeunit 50005 "IC Sync Management"
                 SessionID := RunInsertModifyPurchasePriceInOtherCompany(PurchasePrice, CompanyTemp.Name);
                 CheckSessionForTimeoutAndError(SessionID, 5, CompanyTemp.Name);
             until CompanyTemp.Next() = 0;
+    end;
+
+    procedure InsertModifyPurchasePriceInOneOtherCompany(PurchasePrice: Record "Purchase Price"; OtherCompanyname: text[35])
+
+    var
+        SessionID: Integer;
+    begin
+        SessionID := RunInsertModifyPurchasePriceInOtherCompany(PurchasePrice, OtherCompanyname);
+        CheckSessionForTimeoutAndError(SessionID, 5, OtherCompanyname);
     end;
 
     procedure DeleteItemInOtherCompanies(Item: Record "Item")
