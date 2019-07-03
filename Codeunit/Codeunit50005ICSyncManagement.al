@@ -98,6 +98,7 @@ codeunit 50005 "IC Sync Management"
         ICPartner.SetFilter("Inbox Details", '<>%1', '');
         if ICPartner.FindSet() then
             repeat
+                PurchasePriceTemp.DeleteAll(false);
                 clear(PurchasePriceTemp);
                 SalesPrice.SetRange("Item No.", ItemNo);
                 SalesPrice.SetRange("Sales Type", SalesPrice."Sales Type"::Customer);
@@ -148,6 +149,7 @@ codeunit 50005 "IC Sync Management"
         ICPartner.SetFilter("Inbox Details", '<>%1', '');
         if ICPartner.FindSet() then
             repeat
+                PurchasePriceTemp.DeleteAll(false);
                 Clear(PurchasePriceTemp);
                 SalesPrice.SetRange("Item No.", ItemNo);
                 SalesPrice.SetRange("Sales Type", SalesPrice."Sales Type"::Customer);
@@ -178,7 +180,7 @@ codeunit 50005 "IC Sync Management"
                     until SalesPrice.Next() = 0;
                 if PurchasePriceTemp.FindSet() then
                     repeat
-                        InsertModifyPurchasePriceInOtherCompanies(PurchasePriceTemp);
+                        InsertModifyPurchasePriceInOneOtherCompany(PurchasePriceTemp, ICPartner."Inbox Details");
                     until PurchasePriceTemp.Next() = 0;
             until ICPartner.Next() = 0;
     end;
