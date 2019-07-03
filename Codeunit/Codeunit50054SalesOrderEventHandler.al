@@ -72,6 +72,7 @@ codeunit 50054 "Sales Order Event Handler"
             bid.SetFilter("Expiry Date", '>=%1|%2', Today, 0D);
             bid.setrange(Deactivate, false);
             bid.setrange("One Time Bid", false);
+            bid.setrange("Project Sale", false);
             if bid.FindSet() then
                 repeat
                     BidItemPrices.SetRange("Bid No.", Bid."No.");
