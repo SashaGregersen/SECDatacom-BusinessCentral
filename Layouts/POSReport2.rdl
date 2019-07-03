@@ -6375,7 +6375,7 @@
                   <TablixMembers>
                     <TablixMember>
                       <Visibility>
-                        <Hidden>=IIF(Fields!Document_No.Value=0,true,false)</Hidden>
+                        <Hidden>=IIF(Fields!Document_No.Value="",true,false)</Hidden>
                       </Visibility>
                     </TablixMember>
                     <TablixMember />
