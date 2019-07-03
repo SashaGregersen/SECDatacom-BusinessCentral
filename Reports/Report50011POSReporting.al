@@ -664,11 +664,11 @@ report 50011 "POS Reporting"
                         TempItemLedgEntrySales.setfilter("Serial No.", '<>%1', '');
                         if not TempItemLedgEntrySales.findset then begin
                             //if Number = 0 then begin
-                            qty := "Sales Cr.Memo Line".Quantity;
+                            qty := -"Sales Cr.Memo Line".Quantity;
                             CurrReport.skip;
                         end else begin
                             //if TempItemLedgEntrySales.findfirst then begin
-                            qty := 1;
+                            qty := -1;
                             SerialNo := TempItemLedgEntrySales."Serial No.";
                             UpdatePurchInfoSerialNumbersCreditMemo(TempItemLedgEntrySales);
                             TempItemLedgEntrySales.Delete();
@@ -713,7 +713,8 @@ report 50011 "POS Reporting"
                 end;
                 item.get("Sales Cr.Memo Line"."No.");
                 VendorItemNo := item."Vendor-Item-No.";
-                VARID.SetRange("Customer No.", "Sales Cr.Memo Header".Reseller);
+                VARID.Reset();
+                VARID.SetRange("Customer No.", CreditMemoHeader.Reseller);
                 VARID.SetRange("Vendor No.", item."Vendor No.");
                 if VARID.FindFirst() then
                     VARIDInt := VARID."VAR id";

@@ -4,7 +4,6 @@ xmlport 50000 "Price File Export XML"
 
     schema
     {
-
         textelement(Root)
         {
             tableelement(Item; Item)

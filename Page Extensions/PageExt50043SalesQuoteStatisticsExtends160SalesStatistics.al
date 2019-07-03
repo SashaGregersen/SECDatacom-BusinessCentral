@@ -66,7 +66,7 @@ pageextension 50043 "Sales Statistics" extends "Sales Statistics"
                 ProfitAmount := ProfitAmount + GlJournal."Amount (LCY)";
             until GlJournal.next = 0;
         if (ProfitAmount <> 0) and (Amount <> 0) then begin
-            ContributionAmount := (ProfitAmount / Amount);
+            ContributionAmount := ProfitAmount;
             ContributionMargin := (ProfitAmount / Amount) * 100;
         end;
     end;

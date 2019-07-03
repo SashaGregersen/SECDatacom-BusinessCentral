@@ -23,6 +23,10 @@ pageextension 50004 "Synchronize items" extends "Inventory Setup"
             {
                 ApplicationArea = all;
             }
+            field("Price file location 2"; "Price file location 2")
+            {
+                ApplicationArea = all;
+            }
         }
     }
 

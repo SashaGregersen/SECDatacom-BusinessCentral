@@ -6365,7 +6365,11 @@
             </TablixColumnHierarchy>
             <TablixRowHierarchy>
               <TablixMembers>
-                <TablixMember />
+                <TablixMember>
+                  <Visibility>
+                    <Hidden>=IIF(Fields!Document_No.Value=0,true,false)</Hidden>
+                  </Visibility>
+                </TablixMember>
                 <TablixMember>
                   <Group Name="Details" />
                   <TablixMembers>
@@ -6384,6 +6388,9 @@
             <Left>0in</Left>
             <Height>0.75in</Height>
             <Width>58in</Width>
+            <Visibility>
+              <Hidden>=IIF(Fields!Document_No.Value=0,true,false)</Hidden>
+            </Visibility>
             <Style>
               <Border>
                 <Style>None</Style>
