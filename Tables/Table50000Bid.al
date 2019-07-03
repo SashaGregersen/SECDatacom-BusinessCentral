@@ -99,7 +99,7 @@ table 50000 "Bid"
         IF "No." = '' then begin
             SalesSetup.Get();
             SalesSetup.TestField("Bid No. Series");
-            Validate("No.", NoseriesManage.GetNextNo('Bid', today, true));
+            Validate("No.", NoseriesManage.GetNextNo(SalesSetup."Bid No. Series", today, true));
         end;
         if "Entry No." = 0 then begin
             GetNextEntryNo(Rec);

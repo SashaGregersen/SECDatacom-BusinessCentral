@@ -118,7 +118,8 @@ codeunit 50003 "File Management Import"
     local procedure CreateSalesLineFromBid(var TempCSVBuffer: record "CSV Buffer" temporary; Salesheader: record "Sales Header"; var BidNo: code[20])
     var
         BidPrices: record "Bid Item Price";
-        NoseriesManage: Codeunit NoSeriesManagement;
+        NoseriesMgt: Codeunit NoSeriesManagement;
+        SalesRecSetup: Record "Sales & Receivables Setup";
         UnitPriceSell: Decimal;
         UnitPriceBuy: decimal;
         Qty: Integer;
@@ -126,6 +127,7 @@ codeunit 50003 "File Management Import"
         GlobalCounter: Integer;
         Item: Record Item;
         bid: Record Bid;
+        Newbid: record bid;
     begin
         TempCSVBuffer.SetFilter("Line No.", '<>%1', 1);
         if TempCSVBuffer.FindSet() then
@@ -173,7 +175,15 @@ codeunit 50003 "File Management Import"
                         begin
                             if TempCSVBuffer.value <> '' then
                                 BidPrices.Validate("Currency Code", TempCSVBuffer.Value);
-                            BidPrices.Insert(true);
+                            if not BidPrices.Insert(true) then begin
+                                SalesRecSetup.Get;
+                                Newbid.init;
+                                Newbid := bid;
+                                Newbid.validate("No.", NoSeriesMgt.GetNextNo(SalesRecSetup."Bid No. Series", today, true));
+                                Newbid.Insert(true);
+                                BidPrices.validate("Bid No.", Newbid."No.");
+                                BidPrices.Insert(true);
+                            end;
                             CreateSalesLines(Salesheader, BidPrices, Quantity, GlobalCounter);
                         end;
                 end;
