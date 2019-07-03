@@ -197,6 +197,8 @@ codeunit 50010 "Bid Management"
                     PurchHeader2.get(TempPurchHeader."Document Type", TempPurchHeader."No.");
                     DCApprovalsMgt.ForceApproval(PurchHeader2, false);
                     ReleasePurchDoc.PerformManualRelease(PurchHeader2);
+                    PurchHeader2."Posting Description" := TempPurchHeader."Posting Description";
+                    PurchHeader2.Modify(false);
                     PurchPost.SetPreviewMode(false);
                     PurchPost.SetSuppressCommit(false);
                     PurchPost.Run(PurchHeader2);
@@ -272,6 +274,8 @@ codeunit 50010 "Bid Management"
                     PurchHeader2.get(TempPurchHeader."Document Type", TempPurchHeader."No.");
                     DCApprovalsMgt.ForceApproval(PurchHeader2, false);
                     ReleasePurchDoc.PerformManualRelease(PurchHeader2);
+                    PurchHeader2."Posting Description" := TempPurchHeader."Posting Description";
+                    PurchHeader2.Modify(false);
                     PurchPost.SetPreviewMode(false);
                     PurchPost.SetSuppressCommit(false);
                     PurchPost.Run(PurchHeader2);
