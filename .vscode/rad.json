@@ -1,1 +1,1 @@
-﻿{"Added":[],"Modified":[],"Removed":[]}
+﻿{"Added":[],"Modified":[{"Id":50000,"Kind":11,"Name":"Advanced Price Management","PackagePath":"/src/Codeunit/Codeunit50000AdvancedPriceManagement.al"},{"Id":50003,"Kind":11,"Name":"File Management Import","PackagePath":"/src/Codeunit/Codeunit50003FileManagementImport.al"},{"Id":50014,"Kind":17,"Name":"Vendor Item No.","PackagePath":"/src/Table%20Extensions/TableExt50014VendorItemNoExtends7023SalesPriceWorksheet.al"}],"Removed":[]}
