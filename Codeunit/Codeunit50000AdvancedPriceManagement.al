@@ -31,10 +31,8 @@ codeunit 50000 "Advanced Price Management"
         if ItemTemp.FindSet() then
             repeat
                 CreatePricesForItemFromItemDiscountGroups(ItemTemp);               //lav priser basesert på sales discounts for hver vare 
-                if ItemTemp."Vendor No." <> '' then
-                    CreatePricesForICPartners(ItemTemp."No.", ItemTemp."Vendor No.")  //lav transfer priser for partnere og flyt tdem til andre selskaber
-
-
+                //if ItemTemp."Vendor No." <> '' then                                //er det her allerede gjort på det her tidspunkt?
+                //    CreatePricesForICPartners(ItemTemp."No.", ItemTemp."Vendor No.")  //lav transfer priser for partnere og flyt tdem til andre selskaber
             until ItemTemp.Next() = 0;
     end;
 

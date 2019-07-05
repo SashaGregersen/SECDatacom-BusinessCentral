@@ -28,6 +28,8 @@ tableextension 50014 "Vendor Item No." extends "Sales Price Worksheet"
     var
         Item: Record Item;
     begin
+        If "Vendor Item No." = '' then
+            exit;  //don't try to find item unless we have a vendor item no.
         if "Vendor Item No." <> '' then
             Item.SetRange("Vendor-Item-No.", "Vendor Item No.");
         if "Vendor No." <> '' then
