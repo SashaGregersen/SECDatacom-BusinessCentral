@@ -5,6 +5,7 @@ xmlport 50002 "Price File Export Customer CSV"
     Format = VariableText;
     FieldDelimiter = '';
     FieldSeparator = ';';
+    TableSeparator = '<NewLine>';
 
     schema
     {

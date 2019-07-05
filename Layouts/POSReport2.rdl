@@ -6378,7 +6378,11 @@
                         <Hidden>=IIF(Fields!Document_No.Value="",true,false)</Hidden>
                       </Visibility>
                     </TablixMember>
-                    <TablixMember />
+                    <TablixMember>
+                      <Visibility>
+                        <Hidden>=IIF(Fields!Document_No2.Value=0,true,false)</Hidden>
+                      </Visibility>
+                    </TablixMember>
                   </TablixMembers>
                 </TablixMember>
               </TablixMembers>
@@ -6401,7 +6405,7 @@
         <Height>0.75in</Height>
         <Style />
       </Body>
-      <Width>59in</Width>
+      <Width>58in</Width>
       <Page>
         <Style />
       </Page>

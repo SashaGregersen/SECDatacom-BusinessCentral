@@ -551,7 +551,7 @@ codeunit 50054 "Sales Order Event Handler"
         SalesHeader.xShippingAdvice := SellToCustomer.xShippingAdvice;
     end;
 
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Create Inventory Pick/Movement", 'OnAfterAutoCreatePickOrMove', '', true, true)]
+    /* [EventSubscriber(ObjectType::Codeunit, Codeunit::"Create Inventory Pick/Movement", 'OnAfterAutoCreatePickOrMove', '', true, true)]
     local procedure CreateInvtPick_OnAfterAutoCreatePickOrMove(var WarehouseRequest: Record "Warehouse Request"; LineCreated: Boolean)
     var
         WhseActivHeader: Record "Warehouse Activity Header";
@@ -576,7 +576,7 @@ codeunit 50054 "Sales Order Event Handler"
                 if WhseActivHeader.FindFirst() then
                     WhseActivHeader.Delete(true);
             until TmpLocation.Next() = 0;
-    end;
+    end; */
 
     procedure SECGetShippingAdviceLocations(var WarehouseRequest: Record "Warehouse Request"; var TmpLocation: Record Location)
     var

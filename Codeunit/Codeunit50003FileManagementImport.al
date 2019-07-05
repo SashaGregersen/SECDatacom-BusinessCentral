@@ -383,18 +383,21 @@ codeunit 50003 "File Management Import"
                                 SalesLine.SetRange(Type, SalesLine.Type::Item);
                                 if SalesLine.findset then
                                     repeat
-                                        Clear(PurchasePrice);
-                                        Clear(BidPrice);
-                                        if not BidMgt.GetBestBidPrice(SalesLine."Bid No.", SalesLine."Sell-to Customer No.", SalesLine."No.", CurrencyCode, BidPrice) then
-                                            Clear(PurchasePrice)
-                                        else begin
-                                            BidMgt.MakePurchasePriceFromBidPrice(BidPrice, PurchasePrice, SalesLine);
-                                            CurrencyCode := PurchasePrice."Currency Code";
-                                        end;
+                                        SalesLine.CalcFields("Reserved Quantity");
+                                        if SalesLine."Reserved Quantity" = 0 then begin
+                                            Clear(PurchasePrice);
+                                            Clear(BidPrice);
+                                            if not BidMgt.GetBestBidPrice(SalesLine."Bid No.", SalesLine."Sell-to Customer No.", SalesLine."No.", CurrencyCode, BidPrice) then
+                                                Clear(PurchasePrice)
+                                            else begin
+                                                BidMgt.MakePurchasePriceFromBidPrice(BidPrice, PurchasePrice, SalesLine);
+                                                CurrencyCode := PurchasePrice."Currency Code";
+                                            end;
 
-                                        PurchFromSales.CreatePurchLine(PurchOrder, SalesHeader, SalesLine, PurchasePrice."Direct Unit Cost", PurchLine);
-                                        PurchFromSales.ReserveItemOnPurchOrder(SalesLine, PurchLine);
-                                        GlobalLineCounter := GlobalLineCounter + 1;
+                                            PurchFromSales.CreatePurchLine(PurchOrder, SalesHeader, SalesLine, PurchasePrice."Direct Unit Cost", PurchLine);
+                                            PurchFromSales.ReserveItemOnPurchOrder(SalesLine, PurchLine);
+                                            GlobalLineCounter := GlobalLineCounter + 1;
+                                        end;
                                     until SalesLine.next = 0;
                             end else begin
                                 PurchOrder.get(PurchOrder."Document Type"::Order, TempCSVBuffer.Value);
@@ -479,6 +482,9 @@ codeunit 50003 "File Management Import"
         UnitPriceBuy: decimal;
         Quantity: Integer;
         GlobalCounter: Integer;
+        SalesRecSetup: record "Sales & Receivables Setup";
+        Newbid: record bid;
+        NoSeriesMgt: Codeunit NoSeriesManagement;
     begin
         TempCSVBuffer.init;
         SelectFileFromFileShare(TempCSVBuffer);
@@ -553,7 +559,15 @@ codeunit 50003 "File Management Import"
                         begin
                             if TempCSVBuffer.value <> '' then
                                 BidPrices.Validate("Currency Code", TempCSVBuffer.Value);
-                            BidPrices.Insert(true);
+                            if not BidPrices.Insert(true) then begin
+                                SalesRecSetup.Get;
+                                Newbid.init;
+                                Newbid := bid;
+                                Newbid.validate("No.", NoSeriesMgt.GetNextNo(SalesRecSetup."Bid No. Series", today, true));
+                                Newbid.Insert(true);
+                                BidPrices.validate("Bid No.", Newbid."No.");
+                                BidPrices.Insert(true);
+                            end;
                             CreateSalesLines(Salesheader, BidPrices, Quantity, GlobalCounter);
                         end;
                 end;
