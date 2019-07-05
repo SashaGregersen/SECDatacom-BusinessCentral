@@ -676,6 +676,8 @@ codeunit 50003 "File Management Import"
         DimensionsTemplate: Record "Dimensions Template";
         DefDim: Record "Default Dimension";
         GLSetup: Record "General Ledger Setup";
+        PurchaseDiscount: Record "Purchase Line Discount";
+        AdvPriceMgt: Codeunit "Advanced Price Management";
     begin
         GLSetup.Get;
 
@@ -702,6 +704,11 @@ codeunit 50003 "File Management Import"
         Item.Validate("Use on Website", tmpItem."Use on Website");
         Item.Validate("Default Location", tmpItem."Default Location");
         Item.Modify(true);
+
+        PurchaseDiscount.SetRange("Item No.", Item."No.");
+        PurchaseDiscount.SetRange("Vendor No.", Item."Vendor No.");
+        if not PurchaseDiscount.FindFirst() then
+            AdvPriceMgt.UpdateItemPurchaseDicountsFromItemDiscGroup(Item);
 
         ItemRecRef.GetTable(Item);
 
