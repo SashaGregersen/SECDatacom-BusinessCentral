@@ -74,23 +74,6 @@ codeunit 50096 "Temp Hacks"
         DeleteItemDub: report "Delete Item Dublets";
     begin
         DeleteItemDub.Run();
-        /* Window.OPEN('#1############');
-        IF Item.FINDSET THEN
-            REPEAT
-                Item2.SETRANGE("Vendor No.", Item."Vendor No.");
-                Item2.SETRANGE("Vendor Item No.", Item."Vendor Item No.");
-                Item2.SETFILTER("No.", '<>%1', Item."No.");
-                IF Item2.FINDSET(TRUE, FALSE) THEN
-                    REPEAT
-                        Item3 := Item2;
-                        IF (Item3."Vendor Item No." <> '') AND (Item3."Vendor No." <> '') THEN BEGIN
-                            IF not Item3.DELETE(TRUE) THEN;
-                            Window.UPDATE(1, Item3."No.")
-                        END;
-                    UNTIL Item2.NEXT() = 0;
-            UNTIL Item.NEXT = 0;
-        Window.CLOSE();
-        MESSAGE('Done'); */
     end;
 
 }
