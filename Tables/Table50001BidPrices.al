@@ -82,6 +82,7 @@ table 50001 "Bid Item Price"
         field(50001; "Bid Unit Sales Price"; Decimal)
         {
             DataClassification = ToBeClassified;
+            DecimalPlaces = 2 :;
 
             trigger Onvalidate()
             begin
@@ -94,6 +95,7 @@ table 50001 "Bid Item Price"
         field(50002; "Bid Sales Discount Pct."; Decimal)
         {
             DataClassification = ToBeClassified;
+            DecimalPlaces = 2 :;
 
             trigger Onvalidate()
             begin
@@ -106,6 +108,7 @@ table 50001 "Bid Item Price"
         field(50011; "Bid Unit Purchase Price"; Decimal)
         {
             DataClassification = ToBeClassified;
+            DecimalPlaces = 2 :;
 
             trigger Onvalidate()
             begin
@@ -118,6 +121,7 @@ table 50001 "Bid Item Price"
         field(50012; "Bid Purchase Discount Pct."; Decimal)
         {
             DataClassification = ToBeClassified;
+            DecimalPlaces = 2 :;
 
             trigger Onvalidate()
             begin
