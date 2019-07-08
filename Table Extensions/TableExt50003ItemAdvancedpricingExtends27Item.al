@@ -44,6 +44,11 @@ tableextension 50003 "Item Adv. Pricing" extends Item
             TableRelation = Vendor;
         }
 
+        field(50010; "Do Not Sync on Modify"; Boolean)
+        {
+            DataClassification = ToBeClassified;
+        }
+
     }
 
     Fieldgroups

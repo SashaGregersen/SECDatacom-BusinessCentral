@@ -693,7 +693,11 @@ codeunit 50003 "File Management Import"
             Error('Combination of Vendor %1 and Vendor Item No. %2 already exists', tmpItem."Vendor No.", tmpItem."Vendor-Item-No.");
 
         Clear(Item);
+        Item."Do Not Sync on Modify" := true;
         Item.Insert(true);
+        ItemRecRef.GetTable(Item);
+        ConfigTemplateManagement.UpdateRecord(ConfigTemplateHeader, ItemRecRef);
+        Item.Get(Item."No.");
         Item.Validate(Description, tmpItem.Description);
         Item.Validate("Description 2", tmpItem."Description 2");
         Item.Validate("Vendor No.", tmpItem."Vendor No.");
@@ -703,6 +707,7 @@ codeunit 50003 "File Management Import"
         Item.Validate("Transfer Price %", tmpItem."Transfer Price %");
         Item.Validate("Use on Website", tmpItem."Use on Website");
         Item.Validate("Default Location", tmpItem."Default Location");
+        Item."Do Not Sync on Modify" := false;
         Item.Modify(true);
 
         PurchaseDiscount.SetRange("Item No.", Item."No.");
@@ -710,9 +715,6 @@ codeunit 50003 "File Management Import"
         if not PurchaseDiscount.FindFirst() then
             AdvPriceMgt.UpdateItemPurchaseDicountsFromItemDiscGroup(Item);
 
-        ItemRecRef.GetTable(Item);
-
-        ConfigTemplateManagement.UpdateRecord(ConfigTemplateHeader, ItemRecRef);
         DimensionsTemplate.InsertDimensionsFromTemplates(ConfigTemplateHeader, Item."No.", DATABASE::Item);
 
         if DimSetEntry.FindSet() then

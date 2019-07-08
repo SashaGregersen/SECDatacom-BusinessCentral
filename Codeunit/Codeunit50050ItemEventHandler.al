@@ -41,6 +41,8 @@ codeunit 50050 "Item Event handler"
         InventorySetup.get;
         IF InventorySetup."Synchronize Item" = FALSE then
             Exit;
+        if Rec."Do Not Sync on Modify" then
+            exit;
         SyncMasterData.SynchronizeInventoryToCompany(rec);
     end;
 
