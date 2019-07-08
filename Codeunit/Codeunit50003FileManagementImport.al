@@ -693,7 +693,7 @@ codeunit 50003 "File Management Import"
             Error('Combination of Vendor %1 and Vendor Item No. %2 already exists', tmpItem."Vendor No.", tmpItem."Vendor-Item-No.");
 
         Clear(Item);
-        Item."Do Not Sync on Modify" := true;
+        Item."Do Not Sync on Modify" := true;  //use new field to avoid syncs to other companies
         Item.Insert(true);
         ItemRecRef.GetTable(Item);
         ConfigTemplateManagement.UpdateRecord(ConfigTemplateHeader, ItemRecRef);
