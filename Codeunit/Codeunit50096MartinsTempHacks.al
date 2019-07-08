@@ -71,8 +71,10 @@ codeunit 50096 "Temp Hacks"
         Item2: record item;
         Item3: record item;
         Window: Dialog;
+        DeleteItemDub: report "Delete Item Dublets";
     begin
-        Window.OPEN('#1############');
+        DeleteItemDub.Run();
+        /* Window.OPEN('#1############');
         IF Item.FINDSET THEN
             REPEAT
                 Item2.SETRANGE("Vendor No.", Item."Vendor No.");
@@ -82,13 +84,13 @@ codeunit 50096 "Temp Hacks"
                     REPEAT
                         Item3 := Item2;
                         IF (Item3."Vendor Item No." <> '') AND (Item3."Vendor No." <> '') THEN BEGIN
-                            IF Item3.DELETE(TRUE) THEN
-                                Window.UPDATE(1, Item3."No.");
+                            IF not Item3.DELETE(TRUE) THEN;
+                            Window.UPDATE(1, Item3."No.")
                         END;
                     UNTIL Item2.NEXT() = 0;
             UNTIL Item.NEXT = 0;
         Window.CLOSE();
-        MESSAGE('Done');
+        MESSAGE('Done'); */
     end;
 
 }
