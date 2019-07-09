@@ -214,7 +214,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                     <Width>3.88399in</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>4.10588in</Width>
+                                    <Width>3.9913in</Width>
                                   </TablixColumn>
                                   <TablixColumn>
                                     <Width>0.62275in</Width>
@@ -223,10 +223,10 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                     <Width>0.64993in</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>0.72735in</Width>
+                                    <Width>0.84193in</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>0.7874in</Width>
+                                    <Width>0.77698in</Width>
                                   </TablixColumn>
                                 </TablixColumns>
                                 <TablixRows>
@@ -1152,14 +1152,13 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <PaddingBottom>2pt</PaddingBottom>
                                             </Style>
                                           </Textbox>
-                                          <ColSpan>3</ColSpan>
+                                          <ColSpan>2</ColSpan>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell />
-                                      <TablixCell />
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="textbox207">
+                                          <Textbox Name="Textbox54">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
@@ -1174,17 +1173,24 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
-                                                <Style />
+                                                <Style>
+                                                  <TextAlign>Right</TextAlign>
+                                                </Style>
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>textbox206</rd:DefaultName>
-                                            <ZIndex>12</ZIndex>
+                                            <rd:DefaultName>Textbox54</rd:DefaultName>
                                             <Style>
+                                              <Border>
+                                                <Style>None</Style>
+                                              </Border>
                                               <PaddingLeft>5pt</PaddingLeft>
+                                              <PaddingBottom>2pt</PaddingBottom>
                                             </Style>
                                           </Textbox>
+                                          <ColSpan>2</ColSpan>
                                         </CellContents>
                                       </TablixCell>
+                                      <TablixCell />
                                     </TablixCells>
                                   </TablixRow>
                                   <TablixRow>
@@ -1275,14 +1281,13 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <PaddingBottom>2pt</PaddingBottom>
                                             </Style>
                                           </Textbox>
-                                          <ColSpan>3</ColSpan>
+                                          <ColSpan>2</ColSpan>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell />
-                                      <TablixCell />
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="textbox94">
+                                          <Textbox Name="Textbox65">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
@@ -1296,17 +1301,24 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
-                                                <Style />
+                                                <Style>
+                                                  <TextAlign>Right</TextAlign>
+                                                </Style>
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>textbox93</rd:DefaultName>
-                                            <ZIndex>20</ZIndex>
+                                            <rd:DefaultName>Textbox65</rd:DefaultName>
                                             <Style>
+                                              <Border>
+                                                <Style>None</Style>
+                                              </Border>
                                               <PaddingLeft>5pt</PaddingLeft>
+                                              <PaddingBottom>2pt</PaddingBottom>
                                             </Style>
                                           </Textbox>
+                                          <ColSpan>2</ColSpan>
                                         </CellContents>
                                       </TablixCell>
+                                      <TablixCell />
                                     </TablixCells>
                                   </TablixRow>
                                   <TablixRow>
@@ -1538,18 +1550,17 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                                 <Style>None</Style>
                                               </Border>
                                               <PaddingLeft>5pt</PaddingLeft>
-                                              <PaddingRight>5pt</PaddingRight>
                                               <PaddingBottom>2pt</PaddingBottom>
                                             </Style>
                                           </Textbox>
-                                          <ColSpan>3</ColSpan>
+                                          <ColSpan>2</ColSpan>
+                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell />
-                                      <TablixCell />
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="textbox32">
+                                          <Textbox Name="Textbox78">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
@@ -1564,17 +1575,24 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
-                                                <Style />
+                                                <Style>
+                                                  <TextAlign>Right</TextAlign>
+                                                </Style>
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>textbox30</rd:DefaultName>
-                                            <ZIndex>28</ZIndex>
+                                            <rd:DefaultName>Textbox78</rd:DefaultName>
                                             <Style>
+                                              <Border>
+                                                <Style>None</Style>
+                                              </Border>
                                               <PaddingLeft>5pt</PaddingLeft>
+                                              <PaddingBottom>2pt</PaddingBottom>
                                             </Style>
                                           </Textbox>
+                                          <ColSpan>2</ColSpan>
                                         </CellContents>
                                       </TablixCell>
+                                      <TablixCell />
                                     </TablixCells>
                                   </TablixRow>
                                   <TablixRow>
@@ -3046,7 +3064,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                               <Top>0.03167cm</Top>
                               <Left>0.00632cm</Left>
                               <Height>7.19662cm</Height>
-                              <Width>10.7773in</Width>
+                              <Width>10.76688in</Width>
                               <ZIndex>1</ZIndex>
                               <Style />
                             </Tablix>
