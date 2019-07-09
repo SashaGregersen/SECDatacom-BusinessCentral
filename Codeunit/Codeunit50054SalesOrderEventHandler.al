@@ -232,7 +232,7 @@ codeunit 50054 "Sales Order Event Handler"
         if CompanyName() <> GlSetup."Master Company" then
             exit;
 
-        TestIfICLineCanBeChanged(rec);
+        //TestIfICLineCanBeChanged(rec); // 09-07-19 SDG had to remove this in order to post documents 
 
     end;
 
