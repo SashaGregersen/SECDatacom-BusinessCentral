@@ -108,6 +108,7 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
         field(50010; "Unit Purchase Price"; Decimal)
         {
             DataClassification = ToBeClassified;
+            Editable = false;
             trigger Onvalidate()
             begin
                 if "Unit Purchase Price" <> xRec."Unit Purchase Price" then
