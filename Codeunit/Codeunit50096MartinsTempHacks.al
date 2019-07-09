@@ -76,4 +76,28 @@ codeunit 50096 "Temp Hacks"
         DeleteItemDub.Run();
     end;
 
+    procedure DeletePrices()
+    var
+        window: Dialog;
+        purchprice: record "Purchase Price";
+        Item: record item;
+        SalesPrice: record "Sales Price";
+    begin
+        Window.OPEN('#1############');
+        PurchPrice.SETRANGE("Vendor No.", '101300000002');
+        PurchPrice.DELETEALL;
+        Window.UPDATE(1, PurchPrice."Item No.");
+
+        Item.SETRANGE("Global Dimension 1 Code", 'AUDIOCODES');
+        IF Item.FINDSET THEN
+            REPEAT
+                SalesPrice.SETRANGE("Item No.", Item."No.");
+                SalesPrice.DELETEALL;
+                Window.UPDATE(1, SalesPrice."Item No.");
+            UNTIL Item.NEXT = 0;
+
+        Window.CLOSE();
+        MESSAGE('Done');
+    end;
+
 }
