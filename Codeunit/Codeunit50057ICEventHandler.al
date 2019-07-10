@@ -38,6 +38,7 @@ codeunit 50057 "IC Event Handler"
     var
         Customer: record customer;
     begin
+        LocalSalesHeader."External Document No." := SalesHeaderOtherCompany."External Document No.";
         LocalSalesHeader.Subsidiary := SubsidiaryCustomerNo;
         LocalSalesHeader.Reseller := SalesHeaderOtherCompany.Reseller;
         if SalesHeaderOtherCompany."End Customer" <> '' then
@@ -68,6 +69,7 @@ codeunit 50057 "IC Event Handler"
         LocalSalesHeader."Ship-to Contact" := SalesHeaderOtherCompany."Ship-to Contact";
         LocalSalesHeader."Ship-to Phone No." := SalesHeaderOtherCompany."Ship-to Phone No.";
         LocalSalesHeader."Ship-to Email" := SalesHeaderOtherCompany."Ship-to Email";
+        LocalSalesHeader."Ship-to Comment" := SalesHeaderOtherCompany."Ship-to Comment";
         LocalSalesHeader.Modify(false);
     end;
 
