@@ -232,7 +232,7 @@ codeunit 50054 "Sales Order Event Handler"
         if CompanyName() <> GlSetup."Master Company" then
             exit;
 
-        //TestIfICLineCanBeChanged(rec); // 09-07-19 SDG had to remove this in order to post documents 
+        //TestIfICLineCanBeChanged(rec); // 09-07-19 SDG had to remove this in order to post IC documents 
 
     end;
 
@@ -551,7 +551,7 @@ codeunit 50054 "Sales Order Event Handler"
         SalesHeader.xShippingAdvice := SellToCustomer.xShippingAdvice;
     end;
 
-    /* [EventSubscriber(ObjectType::Codeunit, Codeunit::"Create Inventory Pick/Movement", 'OnAfterAutoCreatePickOrMove', '', true, true)]
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Create Inventory Pick/Movement", 'OnAfterAutoCreatePickOrMove', '', true, true)]
     local procedure CreateInvtPick_OnAfterAutoCreatePickOrMove(var WarehouseRequest: Record "Warehouse Request"; LineCreated: Boolean)
     var
         WhseActivHeader: Record "Warehouse Activity Header";
@@ -560,8 +560,10 @@ codeunit 50054 "Sales Order Event Handler"
         SalesHeader: Record "Sales Header";
         SalesLine: Record "Sales Line";
     begin
-        if WarehouseRequest."Source Document" <> WarehouseRequest."Source Document"::"Sales Order" then exit;
+        /* if WarehouseRequest."Source Document" <> WarehouseRequest."Source Document"::"Sales Order" then exit;
         if WarehouseRequest."Source Subtype" <> WarehouseRequest."Source Subtype"::"1" then exit;
+        SalesHeader.Get(WarehouseRequest."Source Subtype", WarehouseRequest."Source No.");
+        if SalesHeader."xShippingAdvice" <> SalesHeader."xShippingAdvice"::Complete then exit;
 
         SECGetShippingAdviceLocations(WarehouseRequest, TmpLocation);
 
@@ -575,8 +577,8 @@ codeunit 50054 "Sales Order Event Handler"
                 WhseActivHeader.SetRange("Location Code", TmpLocation.Code);
                 if WhseActivHeader.FindFirst() then
                     WhseActivHeader.Delete(true);
-            until TmpLocation.Next() = 0;
-    end; */
+            until TmpLocation.Next() = 0; */
+    end;
 
     procedure SECGetShippingAdviceLocations(var WarehouseRequest: Record "Warehouse Request"; var TmpLocation: Record Location)
     var
@@ -586,8 +588,6 @@ codeunit 50054 "Sales Order Event Handler"
         SalesLine: Record "Sales Line";
         ItemCheckAvail: Codeunit "Item-Check Avail.";
     begin
-        SalesHeader.Get(WarehouseRequest."Source Subtype", WarehouseRequest."Source No.");
-        if SalesHeader."xShippingAdvice" <> SalesHeader."xShippingAdvice"::Complete then exit;
 
         if Location.FindSet() then
             repeat

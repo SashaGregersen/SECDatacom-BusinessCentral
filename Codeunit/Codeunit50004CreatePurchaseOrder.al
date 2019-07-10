@@ -24,11 +24,14 @@ codeunit 50004 "Create Purchase Order"
         ReleasePurchDoc: Codeunit "Release Purchase Document";
         Bid: Record Bid;
         CurrExchRate: Record "Currency Exchange Rate";
+        SalesReceive: record "Sales & Receivables Setup";
     begin
+        SalesReceive.get;
         GlobalLineCounter := 0;
         SalesLine.SetRange("Document No.", SalesHeader."No.");
         SalesLine.SetRange("Document Type", SalesHeader."Document Type");
         SalesLine.SetRange(type, SalesLine.type::Item);
+        SalesLine.setfilter("No.", '<>%1', SalesReceive."Freight Item");
         if SalesLine.FindSet() then
             repeat
                 SalesLine.CalcFields("Reserved Quantity");

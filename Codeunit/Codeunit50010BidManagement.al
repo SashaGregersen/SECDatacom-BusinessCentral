@@ -166,6 +166,7 @@ codeunit 50010 "Bid Management"
                 SalesShipLine.SetRange("Order No.", SalesInvLine."Order No.");
                 SalesShipLine.SetRange("Order Line No.", SalesInvLine."Order Line No.");
                 SalesShipLine.SetFilter("Claim Document No.", '');
+                SalesShipLine.setfilter(Quantity, '<>0');
                 if SalesShipLine.FindSet(true, false) then begin
                     Clear(PurchHeader);
                     CreatePurchaseHeader(PurchHeader."Document Type"::"Credit Memo", SalesHeader."Posting Date", ClaimsVendor."No.", SalesInvoiceHeader."No.", PurchHeader);
@@ -246,6 +247,7 @@ codeunit 50010 "Bid Management"
                 ReturnRcptLine.SetRange("return Order No.", SalesCrMemoLine."Order No.");
                 ReturnRcptLine.SetRange("return Order Line No.", SalesCrMemoLine."Order Line No.");
                 ReturnRcptLine.SetFilter("Claim Document No.", '');
+                ReturnRcptLine.setfilter(Quantity, '<>0');
                 if ReturnRcptLine.FindSet(true, false) then begin
                     Clear(PurchHeader);
                     CreatePurchaseHeader(PurchHeader."Document Type"::Invoice, SalesHeader."Posting Date", ClaimsVendor."No.", SalesCrMemoHeader."No.", PurchHeader);
