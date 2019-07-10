@@ -299,9 +299,9 @@ codeunit 50010 "Bid Management"
             PurchHeader.Validate("Currency Code", Vendor."Currency Code"); //ændret til vendor currency
         case PurchHeader."Document Type" of
             PurchHeader."Document Type"::"Credit Memo":
-                PurchHeader."Vendor Cr. Memo No." := ExtDocNo + '-' + format(CurrentDateTime);
+                PurchHeader."Vendor Cr. Memo No." := ExtDocNo + '-' + format(CurrentDateTime, 0, 3);
             PurchHeader."Document Type"::Invoice:
-                PurchHeader."Vendor Invoice No." := ExtDocNo + '-' + format(CurrentDateTime);
+                PurchHeader."Vendor Invoice No." := ExtDocNo + '-' + format(CurrentDateTime, 0, 3);
         end;
         PurchHeader.insert(true);
     end;
