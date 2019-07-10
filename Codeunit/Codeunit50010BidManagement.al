@@ -171,7 +171,7 @@ codeunit 50010 "Bid Management"
                 SalesShipLine.setfilter(Quantity, '<>0');
                 if SalesShipLine.FindSet(true, false) then begin
                     Count := Count + 1;
-                    ExDocNo := SalesInvoiceHeader."No." + Format(Count);
+                    ExDocNo := SalesInvoiceHeader."No." + '-' + Format(Count);
                     Clear(PurchHeader);
                     CreatePurchaseHeader(PurchHeader."Document Type"::"Credit Memo", SalesHeader."Posting Date", ClaimsVendor."No.", ExDocNo, PurchHeader);
                     LineNo := 0;
@@ -256,7 +256,7 @@ codeunit 50010 "Bid Management"
                 ReturnRcptLine.setfilter(Quantity, '<>0');
                 if ReturnRcptLine.FindSet(true, false) then begin
                     Count := Count + 1;
-                    ExDocNo := SalesCrMemoHeader."No." + Format(Count);
+                    ExDocNo := SalesCrMemoHeader."No." + '-' + Format(Count);
                     Clear(PurchHeader);
                     CreatePurchaseHeader(PurchHeader."Document Type"::Invoice, SalesHeader."Posting Date", ClaimsVendor."No.", ExDocNo, PurchHeader);
                     repeat
