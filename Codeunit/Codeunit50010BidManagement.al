@@ -144,6 +144,8 @@ codeunit 50010 "Bid Management"
         ClaimAmountVendCurrency: Decimal;
         TempPurchHeader: record "Purchase Header" temporary;
         PurchHeader2: record "Purchase Header";
+        Count: Integer;
+        ExDocNo: code[35];
     begin
         if not PurchSetup.Get() then
             exit;
@@ -168,8 +170,10 @@ codeunit 50010 "Bid Management"
                 SalesShipLine.SetFilter("Claim Document No.", '');
                 SalesShipLine.setfilter(Quantity, '<>0');
                 if SalesShipLine.FindSet(true, false) then begin
+                    Count := Count + 1;
+                    ExDocNo := Format(Count);
                     Clear(PurchHeader);
-                    CreatePurchaseHeader(PurchHeader."Document Type"::"Credit Memo", SalesHeader."Posting Date", ClaimsVendor."No.", SalesInvoiceHeader."No.", PurchHeader);
+                    CreatePurchaseHeader(PurchHeader."Document Type"::"Credit Memo", SalesHeader."Posting Date", ClaimsVendor."No.", ExDocNo, PurchHeader);
                     LineNo := 0;
                     repeat
                         Clear(ClaimAmountVendCurrency);
@@ -225,6 +229,8 @@ codeunit 50010 "Bid Management"
         ClaimAmountVendCurrency: Decimal;
         TempPurchHeader: record "Purchase Header" temporary;
         PurchHeader2: record "purchase header";
+        Count: Integer;
+        ExDocNo: code[35];
     begin
         if not PurchSetup.Get() then
             exit;
@@ -249,8 +255,10 @@ codeunit 50010 "Bid Management"
                 ReturnRcptLine.SetFilter("Claim Document No.", '');
                 ReturnRcptLine.setfilter(Quantity, '<>0');
                 if ReturnRcptLine.FindSet(true, false) then begin
+                    Count := Count + 1;
+                    ExDocNo := Format(Count);
                     Clear(PurchHeader);
-                    CreatePurchaseHeader(PurchHeader."Document Type"::Invoice, SalesHeader."Posting Date", ClaimsVendor."No.", SalesCrMemoHeader."No.", PurchHeader);
+                    CreatePurchaseHeader(PurchHeader."Document Type"::Invoice, SalesHeader."Posting Date", ClaimsVendor."No.", ExDocNo, PurchHeader);
                     repeat
                         Clear(ClaimAmountVendCurrency);
                         if ReturnReceiptHeader."No." <> '' then
@@ -285,7 +293,7 @@ codeunit 50010 "Bid Management"
         end;
     end;
 
-    local procedure CreatePurchaseHeader(DocType: Integer; PostingDate: date; VendorNo: Code[20]; ExtDocNo: Code[20]; var PurchHeader: Record "Purchase Header")
+    local procedure CreatePurchaseHeader(DocType: Integer; PostingDate: date; VendorNo: Code[20]; ExtDocNo: Code[35]; var PurchHeader: Record "Purchase Header")
     var
         CurrencyCode: code[10];
         Vendor: record vendor;
@@ -299,9 +307,9 @@ codeunit 50010 "Bid Management"
             PurchHeader.Validate("Currency Code", Vendor."Currency Code"); //ændret til vendor currency
         case PurchHeader."Document Type" of
             PurchHeader."Document Type"::"Credit Memo":
-                PurchHeader."Vendor Cr. Memo No." := ExtDocNo + '-' + format(CurrentDateTime, 0, 3);
+                PurchHeader."Vendor Cr. Memo No." := ExtDocNo + '' + format(CurrentDateTime, 0, 3);
             PurchHeader."Document Type"::Invoice:
-                PurchHeader."Vendor Invoice No." := ExtDocNo + '-' + format(CurrentDateTime, 0, 3);
+                PurchHeader."Vendor Invoice No." := ExtDocNo + '' + format(CurrentDateTime, 0, 3);
         end;
         PurchHeader.insert(true);
     end;
