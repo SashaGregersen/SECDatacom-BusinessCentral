@@ -24,16 +24,52 @@ pageextension 50099 "Temp Hacks" extends "Company Information"
                     TempHacks.Run();
                 end;
             }
-            action("Delete Prices")
+            action("Delete Prices1")
             {
                 ApplicationArea = all;
                 Image = ApplyTemplate;
-                Caption = 'Run MAHA Temp Hacks';
+                Caption = 'Delete Prices in DK';
                 trigger OnAction()
                 var
                     TempHacks: Codeunit "Temp Hacks"; //fjernes
                 begin
-                    TempHacks.DeletePrices();
+                    TempHacks.DeletePricesDK();
+                end;
+            }
+            action("Delete Prices2")
+            {
+                ApplicationArea = all;
+                Image = ApplyTemplate;
+                Caption = 'Delete Prices in SE';
+                trigger OnAction()
+                var
+                    TempHacks: Codeunit "Temp Hacks"; //fjernes
+                begin
+                    TempHacks.DeletePricesSE();
+                end;
+            }
+            action("Delete Prices3")
+            {
+                ApplicationArea = all;
+                Image = ApplyTemplate;
+                Caption = 'Delete Prices in NO';
+                trigger OnAction()
+                var
+                    TempHacks: Codeunit "Temp Hacks"; //fjernes
+                begin
+                    TempHacks.DeletePricesNO();
+                end;
+            }
+            action("Delete Prices4")
+            {
+                ApplicationArea = all;
+                Image = ApplyTemplate;
+                Caption = 'Delete Prices in FI';
+                trigger OnAction()
+                var
+                    TempHacks: Codeunit "Temp Hacks"; //fjernes
+                begin
+                    TempHacks.DeletePricesFI();
                 end;
             }
         }

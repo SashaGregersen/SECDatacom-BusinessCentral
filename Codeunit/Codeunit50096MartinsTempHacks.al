@@ -76,7 +76,7 @@ codeunit 50096 "Temp Hacks"
         DeleteItemDub.Run();
     end;
 
-    procedure DeletePrices()
+    procedure DeletePricesDK()
     var
         window: Dialog;
         purchprice: record "Purchase Price";
@@ -84,11 +84,83 @@ codeunit 50096 "Temp Hacks"
         SalesPrice: record "Sales Price";
     begin
         Window.OPEN('#1############');
-        PurchPrice.SETRANGE("Vendor No.", '101300000002');
+        PurchPrice.SETRANGE("Vendor No.", '101300001581');
         PurchPrice.DELETEALL;
         Window.UPDATE(1, PurchPrice."Item No.");
 
-        Item.SETRANGE("Global Dimension 1 Code", 'AUDIOCODES');
+        Item.SETRANGE("Global Dimension 1 Code", 'RUCKUS');
+        IF Item.FINDSET THEN
+            REPEAT
+                SalesPrice.SETRANGE("Item No.", Item."No.");
+                SalesPrice.DELETEALL;
+                Window.UPDATE(1, SalesPrice."Item No.");
+            UNTIL Item.NEXT = 0;
+
+        Window.CLOSE();
+        MESSAGE('Done');
+    end;
+
+    procedure DeletePricesSE()
+    var
+        window: Dialog;
+        purchprice: record "Purchase Price";
+        Item: record item;
+        SalesPrice: record "Sales Price";
+    begin
+        Window.OPEN('#1############');
+        PurchPrice.SETRANGE("Vendor No.", '21210001');
+        PurchPrice.DELETEALL;
+        Window.UPDATE(1, PurchPrice."Item No.");
+
+        Item.SETRANGE("Global Dimension 1 Code", 'RUCKUS');
+        IF Item.FINDSET THEN
+            REPEAT
+                SalesPrice.SETRANGE("Item No.", Item."No.");
+                SalesPrice.DELETEALL;
+                Window.UPDATE(1, SalesPrice."Item No.");
+            UNTIL Item.NEXT = 0;
+
+        Window.CLOSE();
+        MESSAGE('Done');
+    end;
+
+    procedure DeletePricesNO()
+    var
+        window: Dialog;
+        purchprice: record "Purchase Price";
+        Item: record item;
+        SalesPrice: record "Sales Price";
+    begin
+        Window.OPEN('#1############');
+        PurchPrice.SETRANGE("Vendor No.", '31210001');
+        PurchPrice.DELETEALL;
+        Window.UPDATE(1, PurchPrice."Item No.");
+
+        Item.SETRANGE("Global Dimension 1 Code", 'RUCKUS');
+        IF Item.FINDSET THEN
+            REPEAT
+                SalesPrice.SETRANGE("Item No.", Item."No.");
+                SalesPrice.DELETEALL;
+                Window.UPDATE(1, SalesPrice."Item No.");
+            UNTIL Item.NEXT = 0;
+
+        Window.CLOSE();
+        MESSAGE('Done');
+    end;
+
+    procedure DeletePricesFI()
+    var
+        window: Dialog;
+        purchprice: record "Purchase Price";
+        Item: record item;
+        SalesPrice: record "Sales Price";
+    begin
+        Window.OPEN('#1############');
+        PurchPrice.SETRANGE("Vendor No.", '41210002');
+        PurchPrice.DELETEALL;
+        Window.UPDATE(1, PurchPrice."Item No.");
+
+        Item.SETRANGE("Global Dimension 1 Code", 'RUCKUS');
         IF Item.FINDSET THEN
             REPEAT
                 SalesPrice.SETRANGE("Item No.", Item."No.");
