@@ -343,6 +343,9 @@ codeunit 50054 "Sales Order Event Handler"
         SalesLine2: record "Sales Line";
         InsertSalesLine: record "Sales Line";
     begin
+        if not GuiAllowed then
+            exit;
+
         if SalesHeader."Document Type" <> salesheader."Document Type"::Order then
             exit;
 
@@ -416,6 +419,9 @@ codeunit 50054 "Sales Order Event Handler"
         CustChkCrLimit: Codeunit "Cust-Check Cr. Limit";
         Conf001: TextConst DAN = 'Debitorens kreditmaksimum er overskredet. Ønsker du at forsætte?', ENU = 'The customer''s credit limit has been exceeded. Do you want to continue?';
     begin
+        if not GuiAllowed then
+            exit;
+
         if CustChkCrLimit.SalesHeaderCheck(SalesHeader) then
             if not Confirm(Conf001) then
                 IsHandled := true;
