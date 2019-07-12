@@ -249,6 +249,7 @@ report 50011 "POS Reporting"
                 {
 
                 }
+
                 dataitem(Copyloop; Integer)
                 {
 
@@ -261,7 +262,8 @@ report 50011 "POS Reporting"
                     var
                         ValueEntry: record "Value Entry";
                     begin
-                        if TempItemLedgEntrySales.Count = 1 then
+                        TempItemLedgEntrySales.setfilter("Serial No.", '<>%1', '');
+                        if not TempItemLedgEntrySales.FindSet() then
                             SetRange(Number, 0)
                         else
                             SetRange(Number, 1, TempItemLedgEntrySales.count());
@@ -276,13 +278,14 @@ report 50011 "POS Reporting"
                         PurchInvHeader: record "Purch. Inv. Header";
                         PostedSalesShipment: Record "Sales Shipment Header";
                     begin
-                        SetEndCustResellerSalesInv();
+
                         TempItemLedgEntrySales.setfilter("Serial No.", '<>%1', '');
-                        if not TempItemLedgEntrySales.findset then begin
-                            //if Number = 0 then begin
-                            qty := Sales_Invoice_Line.Quantity;
-                            CurrReport.skip;
-                        end else begin
+                        if TempItemLedgEntrySales.FindSet() then begin
+                            /* if not TempItemLedgEntrySales.findset then begin
+                                //if Number = 0 then begin
+                                qty := Sales_Invoice_Line.Quantity;
+                                //CurrReport.skip;
+                            end else begin */
                             //if TempItemLedgEntrySales.findfirst then begin
                             qty := 1;
                             SerialNo := TempItemLedgEntrySales."Serial No.";
@@ -292,6 +295,13 @@ report 50011 "POS Reporting"
                     end;
 
                 }
+
+                trigger OnAfterGetRecord()
+                var
+
+                begin
+                    SetEndCustResellerSalesInv();
+                end;
 
             }
             trigger OnPreDataItem()
@@ -345,51 +355,53 @@ report 50011 "POS Reporting"
                 POSReportExport.RetrieveEntriesFromPostedInv(TempItemLedgEntrySales, Sales_Invoice_Line.RowID1()); //find serial numbers
 
                 //if TempItemLedgEntrySales.Count() = 1 then begin // find purch info for lines w/o serial numbers
-                clear(ItemLedgEntryPurchase);
-                FindShipmentNo();
-                ValueEntry.setrange("Document Type", 2);
-                ValueEntry.setrange("Document No.", Sales_Invoice_Line."Document No.");
-                ValueEntry.setrange("Document Line No.", Sales_Invoice_Line."Line No.");
-                if ValueEntry.FindFirst() then begin
-                    ItemLedgEntrySales.get(ValueEntry."Item Ledger Entry No.");
-                    POSReportExport.FindAppliedEntry(ItemLedgEntrySales, ItemLedgEntryPurchase);
-                    if ItemLedgEntryPurchase."Entry No." = 0 then
-                        exit;
-                    if (ItemLedgEntryPurchase."Entry Type" <> ItemLedgEntryPurchase."Entry Type"::Purchase) and
-                    (ItemLedgEntryPurchase."Entry Type" <> ItemLedgEntryPurchase."Entry Type"::Sale) then begin
-                        PurchOrderNo := format(ItemLedgEntryPurchase."Entry Type");
-                        PurchOrderPostDate := ItemLedgEntryPurchase."Posting Date";
-                        StandardCostPercentage := FindPurchaseDisc(PurchasePrice, Item, PurchOrderPostDate);
-                    end else begin
-                        if PurchRcptLine.get(ItemLedgEntryPurchase."Document No.", ItemLedgEntryPurchase."Document Line No.") then begin
-                            PurchInvLine.setrange("Order No.", PurchRcptLine."Order No.");
-                            PurchInvLine.setrange("Order Line No.", PurchRcptLine."Order Line No.");
-                            if PurchInvLine.FindFirst() then begin //purchase invoice
-                                PurchInvHeader.get(PurchInvLine."Document No.");
-                                PurchOrderNo := PurchInvLine."Document No.";
-                                PurchOrderPostDate := PurchInvLine."Posting Date";
-                                PurchCostPrice := PurchInvLine."Unit Cost";
-                                StandardCostPercentage := FindPurchaseDisc(PurchasePrice, Item, PurchOrderPostDate);
-                            end else begin
-                                PurchLine.SetRange("Document Type", PurchLine."Document Type"::Order);
-                                PurchLine.SetRange("Document No.", PurchRcptLine."Order No.");
-                                PurchLine.setrange("Line No.", PurchRcptLine."Order Line No.");
-                                if PurchLine.FindFirst() then begin //purchase order                                                                        
-                                    PurchHeader.get(PurchLine."Document Type", PurchLine."Document No.");
-                                    PurchOrderNo := PurchLine."Document No.";
-                                    PurchOrderPostDate := PurchHeader."Posting Date";
-                                    PurchCostPrice := PurchLine."Unit Cost";
+                //TempItemLedgEntrySales.setfilter("Serial No.", '');
+                if not TempItemLedgEntrySales.FindSet() then begin
+                    qty := Sales_Invoice_Line.Quantity; //TEST
+                    clear(ItemLedgEntryPurchase);
+                    FindShipmentNo();
+                    ValueEntry.setrange("Document Type", 2);
+                    ValueEntry.setrange("Document No.", Sales_Invoice_Line."Document No.");
+                    ValueEntry.setrange("Document Line No.", Sales_Invoice_Line."Line No.");
+                    if ValueEntry.FindFirst() then begin
+                        ItemLedgEntrySales.get(ValueEntry."Item Ledger Entry No.");
+                        POSReportExport.FindAppliedEntry(ItemLedgEntrySales, ItemLedgEntryPurchase);
+                        if ItemLedgEntryPurchase."Entry No." = 0 then
+                            exit;
+                        if (ItemLedgEntryPurchase."Entry Type" <> ItemLedgEntryPurchase."Entry Type"::Purchase) and
+                        (ItemLedgEntryPurchase."Entry Type" <> ItemLedgEntryPurchase."Entry Type"::Sale) then begin
+                            PurchOrderNo := format(ItemLedgEntryPurchase."Entry Type");
+                            PurchOrderPostDate := ItemLedgEntryPurchase."Posting Date";
+                            StandardCostPercentage := FindPurchaseDisc(PurchasePrice, Item, PurchOrderPostDate);
+                        end else begin
+                            if PurchRcptLine.get(ItemLedgEntryPurchase."Document No.", ItemLedgEntryPurchase."Document Line No.") then begin
+                                PurchInvLine.setrange("Order No.", PurchRcptLine."Order No.");
+                                PurchInvLine.setrange("Order Line No.", PurchRcptLine."Order Line No.");
+                                if PurchInvLine.FindFirst() then begin //purchase invoice
+                                    PurchInvHeader.get(PurchInvLine."Document No.");
+                                    PurchOrderNo := PurchInvLine."Document No.";
+                                    PurchOrderPostDate := PurchInvLine."Posting Date";
+                                    PurchCostPrice := PurchInvLine."Unit Cost";
                                     StandardCostPercentage := FindPurchaseDisc(PurchasePrice, Item, PurchOrderPostDate);
+                                end else begin
+                                    PurchLine.SetRange("Document Type", PurchLine."Document Type"::Order);
+                                    PurchLine.SetRange("Document No.", PurchRcptLine."Order No.");
+                                    PurchLine.setrange("Line No.", PurchRcptLine."Order Line No.");
+                                    if PurchLine.FindFirst() then begin //purchase order                                                                        
+                                        PurchHeader.get(PurchLine."Document Type", PurchLine."Document No.");
+                                        PurchOrderNo := PurchLine."Document No.";
+                                        PurchOrderPostDate := PurchHeader."Posting Date";
+                                        PurchCostPrice := PurchLine."Unit Cost";
+                                        StandardCostPercentage := FindPurchaseDisc(PurchasePrice, Item, PurchOrderPostDate);
+                                    end;
                                 end;
+                                // Find PurchCostPrice on purchase
+                                if (PurchCostPrice <> 0) and (BidUnitPurchasePrice <> 0) then
+                                    BidCostPercentage := (PurchCostPrice - BidUnitPurchasePrice) / PurchCostPrice;
                             end;
-                            // Find PurchCostPrice on purchase
-                            if (PurchCostPrice <> 0) and (BidUnitPurchasePrice <> 0) then
-                                BidCostPercentage := (PurchCostPrice - BidUnitPurchasePrice) / PurchCostPrice; //er der en købskostpris procent når der ikke er bid?
-
                         end;
                     end;
                 end;
-                //end;
             end;
 
         }
