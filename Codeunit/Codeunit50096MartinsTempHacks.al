@@ -39,7 +39,7 @@ codeunit 50096 "Temp Hacks"
         Salesline3.get(salesline2."Document Type"::Order, '213120000019', 20000);
         Salesline3."Qty. Invoiced (Base)" := 1;
         Salesline3."Quantity Invoiced" := 1;
-        Salesline2.Modify(false);
+        Salesline3.Modify(false);
 
         Salesline4.get(salesline2."Document Type"::Order, '213120000019', 30000);
         Salesline4."Qty. Invoiced (Base)" := 1;
