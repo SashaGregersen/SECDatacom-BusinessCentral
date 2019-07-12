@@ -566,7 +566,7 @@ codeunit 50054 "Sales Order Event Handler"
         SalesHeader: Record "Sales Header";
         SalesLine: Record "Sales Line";
     begin
-        /* if WarehouseRequest."Source Document" <> WarehouseRequest."Source Document"::"Sales Order" then exit;
+        if WarehouseRequest."Source Document" <> WarehouseRequest."Source Document"::"Sales Order" then exit;
         if WarehouseRequest."Source Subtype" <> WarehouseRequest."Source Subtype"::"1" then exit;
         SalesHeader.Get(WarehouseRequest."Source Subtype", WarehouseRequest."Source No.");
         if SalesHeader."xShippingAdvice" <> SalesHeader."xShippingAdvice"::Complete then exit;
@@ -583,7 +583,7 @@ codeunit 50054 "Sales Order Event Handler"
                 WhseActivHeader.SetRange("Location Code", TmpLocation.Code);
                 if WhseActivHeader.FindFirst() then
                     WhseActivHeader.Delete(true);
-            until TmpLocation.Next() = 0; */
+            until TmpLocation.Next() = 0;
     end;
 
     procedure SECGetShippingAdviceLocations(var WarehouseRequest: Record "Warehouse Request"; var TmpLocation: Record Location; SalesHeader: Record "Sales Header")

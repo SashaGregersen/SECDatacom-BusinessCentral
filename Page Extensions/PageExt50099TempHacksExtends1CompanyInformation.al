@@ -19,12 +19,12 @@ pageextension 50099 "Temp Hacks" extends "Company Information"
 
                 trigger OnAction()
                 var
-                    TempHacks: Codeunit "Temp Hacks"; //fjernes
+                    TempHacks: Codeunit "Temp Hack"; //fjernes
                 begin
                     TempHacks.Run();
                 end;
             }
-            action("Delete Prices1")
+            /* action("Delete Prices1")
             {
                 ApplicationArea = all;
                 Image = ApplyTemplate;
@@ -71,7 +71,7 @@ pageextension 50099 "Temp Hacks" extends "Company Information"
                 begin
                     TempHacks.DeletePricesFI();
                 end;
-            }
+            } */
         }
     }
 
