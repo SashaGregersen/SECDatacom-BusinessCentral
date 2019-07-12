@@ -15,13 +15,26 @@ pageextension 50099 "Temp Hacks" extends "Company Information"
             {
                 ApplicationArea = all;
                 Image = ApplyTemplate;
-                Caption = 'Run MAHA Temp Hacks';
+                Caption = 'Update sales line 233120000089';
 
                 trigger OnAction()
                 var
                     TempHacks: Codeunit "Temp hacks"; //fjernes
                 begin
-                    TempHacks.Run();
+                    TempHacks.UpdateSalesLine();
+                end;
+            }
+            action(MAHATempHacks2)
+            {
+                ApplicationArea = all;
+                Image = ApplyTemplate;
+                Caption = 'Update salesline on 213120000019';
+
+                trigger OnAction()
+                var
+                    TempHacks: Codeunit "Temp hacks"; //fjernes
+                begin
+                    TempHacks.UpdateSalesLine2();
                 end;
             }
             /* action("Delete Prices1")

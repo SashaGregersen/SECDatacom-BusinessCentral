@@ -5,7 +5,7 @@ codeunit 50096 "Temp Hacks"
         Purchheader: Record "Purchase Header";
         JobQueue: Record "Job Queue Entry";
     begin
-        UpdateSalesLine();
+        //UpdateSalesLine();
         //DeleteItemDublet();
         //SetOwningCompanyOnContacts();
         //SetOwningCompany();
@@ -15,18 +15,22 @@ codeunit 50096 "Temp Hacks"
         //TestPurPriceUpdate('70619');
     end;
 
-    local procedure UpdateSalesLine()
+    procedure UpdateSalesLine()
     var
         salesline: record "Sales Line";
-        Salesline2: record "Sales Line";
-        salesline3: record "Sales Line";
-        Salesline4: record "Sales Line";
     begin
         salesline.get(salesline."Document Type"::Order, '233120000089', 20000);
         salesline."Qty. Invoiced (Base)" := 0;
         salesline."Qty. Shipped (Base)" := 0;
         salesline.Modify(false);
+    end;
 
+    procedure UpdateSalesLine2()
+    var
+        Salesline2: record "Sales Line";
+        salesline3: record "Sales Line";
+        Salesline4: record "Sales Line";
+    begin
         Salesline2.get(salesline2."Document Type"::Order, '213120000019', 10000);
         Salesline2."Qty. Invoiced (Base)" := 1;
         Salesline2."Quantity Invoiced" := 1;
