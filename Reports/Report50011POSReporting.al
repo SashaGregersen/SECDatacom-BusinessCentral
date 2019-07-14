@@ -1047,28 +1047,28 @@ report 50011 "POS Reporting"
                 PurchCostPrice := PurchInvLine."Unit Cost";
                 if item.get(PurchInvLine."No.") then
                     StandardCostPercentage := FindPurchaseDisc(PurchasePrice, Item, PurchOrderPostDate);
-            end else begin
-                ValueEntry.SetRange("Document Type", 5); // purchase receipt
-                if ValueEntry.FindFirst() then
-                    if PurchRcptLine.get(ValueEntry."Document No.", ValueEntry."Document Line No.") then begin
-                        PurchLine.SetRange("Document Type", PurchLine."Document Type"::Order);
-                        PurchLine.SetRange("Document No.", PurchRcptLine."Order No.");
-                        PurchLine.setrange("Line No.", PurchRcptLine."Order Line No.");
-                        if PurchLine.FindFirst() then begin //purchase order                                                            
-                            PurchHeader.get(PurchLine."Document Type", PurchLine."Document No.");
-                            PurchOrderNo := PurchLine."Document No.";
-                            PurchOrderPostDate := PurchHeader."Posting Date";
-                            PurchCostPrice := PurchLine."Unit Cost";
-                            if item.get(PurchLine."No.") then
-                                StandardCostPercentage := FindPurchaseDisc(PurchasePrice, Item, PurchOrderPostDate);
-                        end;
-                    end;
             end;
-
-            // Find PurchCostPrice på købslinjen 
-            if (PurchCostPrice <> 0) and (BidUnitPurchasePrice <> 0) then
-                BidCostPercentage := (PurchCostPrice - BidUnitPurchasePrice) / PurchCostPrice;
+        end else begin
+            ValueEntry.SetRange("Document Type", 5); // purchase receipt
+            if ValueEntry.FindFirst() then
+                if PurchRcptLine.get(ValueEntry."Document No.", ValueEntry."Document Line No.") then begin
+                    PurchLine.SetRange("Document Type", PurchLine."Document Type"::Order);
+                    PurchLine.SetRange("Document No.", PurchRcptLine."Order No.");
+                    PurchLine.setrange("Line No.", PurchRcptLine."Order Line No.");
+                    if PurchLine.FindFirst() then begin //purchase order                                                            
+                        PurchHeader.get(PurchLine."Document Type", PurchLine."Document No.");
+                        PurchOrderNo := PurchLine."Document No.";
+                        PurchOrderPostDate := PurchHeader."Posting Date";
+                        PurchCostPrice := PurchLine."Unit Cost";
+                        if item.get(PurchLine."No.") then
+                            StandardCostPercentage := FindPurchaseDisc(PurchasePrice, Item, PurchOrderPostDate);
+                    end;
+                end;
         end;
+
+        // Find PurchCostPrice på købslinjen 
+        if (PurchCostPrice <> 0) and (BidUnitPurchasePrice <> 0) then
+            BidCostPercentage := (PurchCostPrice - BidUnitPurchasePrice) / PurchCostPrice;
     end;
 
     local procedure UpdatePurchInfoSerialNumbersCreditMemo(TempItemLedEntrySales: record "Item Ledger Entry" temporary)
