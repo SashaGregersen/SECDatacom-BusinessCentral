@@ -335,6 +335,8 @@ report 50011 "POS Reporting"
                 ClearValues();
                 if Sales_Invoice_Line.Type <> Sales_Invoice_Line.type::Item then
                     CurrReport.skip;
+                if Sales_Invoice_Line.Quantity = 0 then
+                    CurrReport.skip;
                 SalesInvHeader.get(Sales_Invoice_Line."Document No.");
                 if (Subsidiary <> SalesInvHeader.Subsidiary) and (Subsidiary <> '') then
                     CurrReport.skip;
@@ -657,7 +659,8 @@ report 50011 "POS Reporting"
                     var
                         ValueEntry: record "Value Entry";
                     begin
-                        if TempItemLedgEntrySales.Count = 0 then
+                        TempItemLedgEntrySales.setfilter("Serial No.", '<>%1', '');
+                        if not TempItemLedgEntrySales.FindSet() then
                             SetRange(Number, 0)
                         else
                             SetRange(Number, 1, TempItemLedgEntrySales.count());
@@ -672,7 +675,6 @@ report 50011 "POS Reporting"
                         PurchInvHeader: record "Purch. Inv. Header";
                         PostedSalesShipment: Record "Sales Shipment Header";
                     begin
-                        SetEndCustResellerCreditMemo();
                         TempItemLedgEntrySales.setfilter("Serial No.", '<>%1', '');
                         if not TempItemLedgEntrySales.findset then begin
                             //if Number = 0 then begin
@@ -687,6 +689,13 @@ report 50011 "POS Reporting"
                         end;
                     end;
                 }
+
+                trigger OnAfterGetRecord()
+                var
+
+                begin
+                    SetEndCustResellerCreditMemo();
+                end;
             }
             trigger OnPreDataItem()
             var
@@ -715,6 +724,8 @@ report 50011 "POS Reporting"
             begin
                 ClearValues();
                 if "Sales Cr.Memo Line".Type <> "Sales Cr.Memo Line".type::Item then
+                    CurrReport.skip;
+                if "Sales Cr.Memo Line".Quantity = 0 then
                     CurrReport.skip;
                 CreditMemoHeader.get("Sales Cr.Memo Line"."Document No.");
                 if (Subsidiary <> CreditMemoHeader.Subsidiary) and (Subsidiary <> '') then
