@@ -1028,6 +1028,15 @@ report 50011 "POS Reporting"
         PostedSalesShipment.get(TempItemLedgEntrySales."Document No.");
         ShipmentNo := PostedSalesShipment."No.";
         POSReportExport.FindAppliedEntry(TempItemLedgEntrySales, TempItemLedgEntryPurchase);
+        if TempItemLedgEntryPurchase."Entry No." = 0 then
+            exit;
+        if (TempItemLedgEntryPurchase."Entry Type" <> TempItemLedgEntryPurchase."Entry Type"::Purchase) and
+        (TempItemLedgEntryPurchase."Entry Type" <> TempItemLedgEntryPurchase."Entry Type"::Sale) then begin
+            PurchOrderNo := format(tempItemLedgEntryPurchase."Entry Type");
+            PurchOrderPostDate := tempItemLedgEntryPurchase."Posting Date";
+            StandardCostPercentage := FindPurchaseDisc(PurchasePrice, Item, PurchOrderPostDate);
+            exit;
+        end;
         ValueEntry.SetRange("Item Ledger Entry No.", TempItemLedgEntryPurchase."Entry No.");
         ValueEntry.setrange("Document Type", 6); //purchase invoice
         if ValueEntry.FindFirst() then begin
@@ -1074,6 +1083,15 @@ report 50011 "POS Reporting"
         ItemLedgerEntryPurch.setrange("Document Type", ItemLedgerEntryPurch."Document Type"::"Purchase Receipt");
         ItemLedgerEntryPurch.setrange("Serial No.", TempItemLedgEntrySales."Serial No.");
         if ItemLedgerEntryPurch.FindFirst() then begin
+            if ItemLedgerEntryPurch."Entry No." = 0 then
+                exit;
+            if (ItemLedgerEntryPurch."Entry Type" <> ItemLedgerEntryPurch."Entry Type"::Purchase) and
+            (ItemLedgerEntryPurch."Entry Type" <> ItemLedgerEntryPurch."Entry Type"::Sale) then begin
+                PurchOrderNo := format(ItemLedgerEntryPurch."Entry Type");
+                PurchOrderPostDate := ItemLedgerEntryPurch."Posting Date";
+                StandardCostPercentage := FindPurchaseDisc(PurchasePrice, Item, PurchOrderPostDate);
+                exit;
+            end;
             if PurchRcptLine.get(ItemLedgerEntryPurch."Document No.", ItemLedgerEntryPurch."Document Line No.") then begin
                 PurchInvLine.setrange("Order No.", PurchRcptLine."Order No.");
                 PurchInvLine.SetRange("Order Line No.", PurchRcptLine."Order Line No.");
