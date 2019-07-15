@@ -31,11 +31,13 @@ codeunit 50050 "Item Event handler"
         InventorySetup: Record "Inventory Setup";
         SyncMasterData: Codeunit "Synchronize Master Data";
         AdvPriceMgt: Codeunit "Advanced Price Management";
+        Item: record item;
     begin
         If not runtrigger then
             EXIT;
         if Rec.IsTemporary then
             exit;
+
         if Rec."Item Disc. Group" <> xrec."Item Disc. Group" then
             AdvPriceMgt.UpdateItemPurchaseDicountsFromItemDiscGroup(Rec);
         InventorySetup.get;
@@ -65,9 +67,34 @@ codeunit 50050 "Item Event handler"
     local procedure ItemOnAfterValidateVendorNo(var Rec: Record "Item")
     var
         Vendor: Record Vendor;
+        Item: record item;
     begin
         if Vendor.get(rec."Vendor No.") then
             Rec.Validate("Vendor Currency", Vendor."Currency Code");
+        if (rec."Vendor No." <> '') and (rec."Vendor-Item-No." <> '') then begin
+            item.setrange("Vendor No.", rec."Vendor No.");
+            item.setrange("Vendor Item No.", rec."Vendor Item No.");
+            if item.FindFirst() then begin
+                Message('The item is already created as Item No. %1. \This item will now be deleted.', item."No.");
+                rec.Delete(true);
+            end;
+        end;
+    end;
+
+    [EventSubscriber(ObjectType::table, database::"Item", 'OnAfterValidateEvent', 'Vendor-Item-No.', true, true)]
+    local procedure ItemOnAfterValidateVendorItemNo(var Rec: Record "Item")
+    var
+        Vendor: Record Vendor;
+        Item: record item;
+    begin
+        if (rec."Vendor No." <> '') and (rec."Vendor-Item-No." <> '') then begin
+            item.setrange("Vendor No.", rec."Vendor No.");
+            item.setrange("Vendor-Item-No.", rec."Vendor-Item-No.");
+            if item.FindFirst() then begin
+                Message('The item is already created as Item No. %1. \This item will now be deleted.', item."No.");
+                rec.Delete(true);
+            end;
+        end;
     end;
 
     [EventSubscriber(ObjectType::table, database::"Item", 'OnAfterValidateEvent', 'Item Disc. Group', true, true)]
