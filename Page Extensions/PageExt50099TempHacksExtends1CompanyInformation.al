@@ -21,22 +21,22 @@ pageextension 50099 "Temp Hacks" extends "Company Information"
                 var
                     TempHacks: Codeunit "Temp hacks"; //fjernes
                 begin
-                    TempHacks.UpdateSalesLine();
+                    TempHacks.RunHack();
                 end;
             }
-            action(MAHATempHacks2)
-            {
-                ApplicationArea = all;
-                Image = ApplyTemplate;
-                Caption = 'Update salesline on 213120000019';
+            /*  action(MAHATempHacks2)
+             {
+                 ApplicationArea = all;
+                 Image = ApplyTemplate;
+                 Caption = 'Update salesline on 213120000019';
 
-                trigger OnAction()
-                var
-                    TempHacks: Codeunit "Temp hacks"; //fjernes
-                begin
-                    TempHacks.UpdateSalesLine2();
-                end;
-            }
+                 trigger OnAction()
+                 var
+                     TempHacks: Codeunit "Temp hacks"; //fjernes
+                 begin
+                     TempHacks.UpdateSalesLine2();
+                 end;
+             } */
             /* action("Delete Prices1")
             {
                 ApplicationArea = all;

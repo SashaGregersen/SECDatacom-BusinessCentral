@@ -15,14 +15,14 @@ codeunit 50096 "Temp Hacks"
         //TestPurPriceUpdate('70619');
     end;
 
-    procedure UpdateSalesLine()
+    procedure RunHack()
     var
-        salesline: record "Sales Line";
+        Item: record item;
+
     begin
-        salesline.get(salesline."Document Type"::Order, '233120000089', 20000);
-        salesline."Qty. Invoiced (Base)" := 0;
-        salesline."Qty. Shipped (Base)" := 0;
-        salesline.Modify(false);
+        Item.get('101500001128');
+        Item."Item Tracking Code" := 'SN_PURCHAS';
+        item.Modify(false);
     end;
 
     procedure UpdateSalesLine2()
