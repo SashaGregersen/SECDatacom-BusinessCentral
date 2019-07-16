@@ -68,6 +68,7 @@ codeunit 50050 "Item Event handler"
     var
         Vendor: Record Vendor;
         Item: record item;
+        ItemCard: page "Item Card";
     begin
         if Vendor.get(rec."Vendor No.") then
             Rec.Validate("Vendor Currency", Vendor."Currency Code");
@@ -75,8 +76,10 @@ codeunit 50050 "Item Event handler"
             item.setrange("Vendor No.", rec."Vendor No.");
             item.setrange("Vendor Item No.", rec."Vendor Item No.");
             if item.FindFirst() then begin
-                Message('The item is already created as Item No. %1. \This item will now be deleted.', item."No.");
+                Message('The combination of Vendor No. and Vendor Item No. already exists as Business Central Item %1.  Duplicates are not supported! Please update Item %1 as required.', item."No.");
                 rec.Delete(true);
+                ItemCard.SetTableView(Item);
+                ItemCard.Run();
             end;
         end;
     end;
@@ -86,13 +89,16 @@ codeunit 50050 "Item Event handler"
     var
         Vendor: Record Vendor;
         Item: record item;
+        ItemCard: page "Item Card";
     begin
         if (rec."Vendor No." <> '') and (rec."Vendor-Item-No." <> '') then begin
             item.setrange("Vendor No.", rec."Vendor No.");
             item.setrange("Vendor-Item-No.", rec."Vendor-Item-No.");
             if item.FindFirst() then begin
-                Message('The item is already created as Item No. %1. \This item will now be deleted.', item."No.");
+                Message('The combination of Vendor No. and Vendor Item No. already exists as Business Central Item %1.  Duplicates are not supported! Please update Item %1 as required.', item."No.");
                 rec.Delete(true);
+                ItemCard.SetTableView(Item);
+                ItemCard.Run();
             end;
         end;
     end;
