@@ -3,6 +3,7 @@ report 50027 "Update Warehouse Entries"
     UsageCategory = None;
     ProcessingOnly = true;
     UseRequestPage = true;
+    Permissions = TableData "Warehouse entry" = rimd;
 
 
     dataset
