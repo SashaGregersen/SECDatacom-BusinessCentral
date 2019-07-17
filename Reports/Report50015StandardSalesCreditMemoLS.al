@@ -476,6 +476,14 @@ report 50015 "SEC Sales - Credit Memo LS"
                     AutoFormatExpression = Header."Currency Code";
                     AutoFormatType = 1;
                 }
+                //>>NC
+                column(Vendor_Item_No_Lbl; VendorItemNoLbl)
+                {
+                }
+                column(Vendor_Item_No; Item."Vendor-Item-No.")
+                {
+                }
+                //<<NC
 
                 dataitem(ShipmentLine; "Sales Shipment Buffer")
                 {
@@ -541,6 +549,13 @@ report 50015 "SEC Sales - Credit Memo LS"
                     InitializeSalesShipmentLine;
                     if Type = Type::"G/L Account" then
                         "No." := '';
+
+                    //>>NC
+                    if Type = Type::Item then
+                        Item.Get("No.")
+                    else
+                        Clear(Item);
+                    //<<NC
 
                     if "Line Discount %" = 0 then
                         LineDiscountPctText := ''
@@ -1060,6 +1075,8 @@ report 50015 "SEC Sales - Credit Memo LS"
         ExternalDocumentNoLbl: Label 'Your Order';
         EndcustomerCountryRegion: Record "Country/Region";
         Endcustomer: Record Customer;
+        VendorItemNoLbl: Label 'Vendor Item No.';
+        Item: Record Item;
         //<<NC
         BodyLbl: Label 'Thank you for your business. Your credit memo is attached to this message.';
 
