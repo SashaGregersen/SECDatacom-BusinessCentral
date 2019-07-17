@@ -144,7 +144,7 @@ codeunit 50010 "Bid Management"
         ClaimAmountVendCurrency: Decimal;
         TempPurchHeader: record "Purchase Header" temporary;
         PurchHeader2: record "Purchase Header";
-        Count: Integer;
+        //Count: Integer;
         ExDocNo: code[35];
     begin
         if not PurchSetup.Get() then
@@ -170,8 +170,8 @@ codeunit 50010 "Bid Management"
                 SalesShipLine.SetFilter("Claim Document No.", '');
                 SalesShipLine.setfilter(Quantity, '<>0');
                 if SalesShipLine.FindSet(true, false) then begin
-                    Count := Count + 1;
-                    ExDocNo := SalesInvoiceHeader."No." + '-' + Format(Count);
+                    //Count := Count + 1;
+                    ExDocNo := SalesInvoiceHeader."No." + '-' + format(SalesShipLine."Line No.");
                     Clear(PurchHeader);
                     CreatePurchaseHeader(PurchHeader."Document Type"::"Credit Memo", SalesHeader."Posting Date", ClaimsVendor."No.", ExDocNo, PurchHeader);
                     LineNo := 0;
@@ -229,7 +229,7 @@ codeunit 50010 "Bid Management"
         ClaimAmountVendCurrency: Decimal;
         TempPurchHeader: record "Purchase Header" temporary;
         PurchHeader2: record "purchase header";
-        Count: Integer;
+        //Count: Integer;
         ExDocNo: code[35];
     begin
         if not PurchSetup.Get() then
@@ -255,8 +255,8 @@ codeunit 50010 "Bid Management"
                 ReturnRcptLine.SetFilter("Claim Document No.", '');
                 ReturnRcptLine.setfilter(Quantity, '<>0');
                 if ReturnRcptLine.FindSet(true, false) then begin
-                    Count := Count + 1;
-                    ExDocNo := SalesCrMemoHeader."No." + '-' + Format(Count);
+                    //Count := Count + 1;
+                    ExDocNo := SalesCrMemoHeader."No." + '-' + Format(ReturnRcptLine."Line No.");
                     Clear(PurchHeader);
                     CreatePurchaseHeader(PurchHeader."Document Type"::Invoice, SalesHeader."Posting Date", ClaimsVendor."No.", ExDocNo, PurchHeader);
                     repeat

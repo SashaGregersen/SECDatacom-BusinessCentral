@@ -31,11 +31,13 @@ codeunit 50050 "Item Event handler"
         InventorySetup: Record "Inventory Setup";
         SyncMasterData: Codeunit "Synchronize Master Data";
         AdvPriceMgt: Codeunit "Advanced Price Management";
+        Item: record item;
     begin
         If not runtrigger then
             EXIT;
         if Rec.IsTemporary then
             exit;
+
         if Rec."Item Disc. Group" <> xrec."Item Disc. Group" then
             AdvPriceMgt.UpdateItemPurchaseDicountsFromItemDiscGroup(Rec);
         InventorySetup.get;
@@ -65,9 +67,42 @@ codeunit 50050 "Item Event handler"
     local procedure ItemOnAfterValidateVendorNo(var Rec: Record "Item")
     var
         Vendor: Record Vendor;
+        Item: record item;
+        ItemCard: page "Item Card";
     begin
         if Vendor.get(rec."Vendor No.") then
             Rec.Validate("Vendor Currency", Vendor."Currency Code");
+        if (rec."Vendor No." <> '') and (rec."Vendor-Item-No." <> '') then begin
+            item.setrange("Vendor No.", rec."Vendor No.");
+            item.setrange("Vendor Item No.", rec."Vendor Item No.");
+            item.setfilter("No.", '<>%1', Rec."No.");
+            if item.FindFirst() then begin
+                Message('The combination of Vendor No. and Vendor Item No. already exists as Business Central Item %1.  Duplicates are not supported! Please update Item %1 as required.', item."No.");
+                rec.Delete(true);
+                ItemCard.SetTableView(Item);
+                ItemCard.Run();
+            end;
+        end;
+    end;
+
+    [EventSubscriber(ObjectType::table, database::"Item", 'OnAfterValidateEvent', 'Vendor-Item-No.', true, true)]
+    local procedure ItemOnAfterValidateVendorItemNo(var Rec: Record "Item")
+    var
+        Vendor: Record Vendor;
+        Item: record item;
+        ItemCard: page "Item Card";
+    begin
+        if (rec."Vendor No." <> '') and (rec."Vendor-Item-No." <> '') then begin
+            item.setrange("Vendor No.", rec."Vendor No.");
+            item.setrange("Vendor-Item-No.", rec."Vendor-Item-No.");
+            item.setfilter("No.", '<>%1', Rec."No.");
+            if item.FindFirst() then begin
+                Message('The combination of Vendor No. and Vendor Item No. already exists as Business Central Item %1.  Duplicates are not supported! Please update Item %1 as required.', item."No.");
+                rec.Delete(true);
+                ItemCard.SetTableView(Item);
+                ItemCard.Run();
+            end;
+        end;
     end;
 
     [EventSubscriber(ObjectType::table, database::"Item", 'OnAfterValidateEvent', 'Item Disc. Group', true, true)]

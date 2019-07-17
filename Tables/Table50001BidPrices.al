@@ -137,6 +137,21 @@ table 50001 "Bid Item Price"
             Editable = false;
 
         }
+        field(50022; "Vendor Bid No."; Text[100])
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
+        field(50023; "Description"; Text[50])
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
+        field(50024; "One Time Bid"; Boolean)
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
 
     }
 
@@ -167,6 +182,9 @@ table 50001 "Bid Item Price"
             "Expiry Date" := Bid."Expiry Date";
             Claimable := Bid.Claimable;
             "Entry No." := bid."Entry No.";
+            "Vendor Bid No." := bid."Vendor Bid No.";
+            Description := bid."Vendor Bid No.";
+            "One Time Bid" := bid."One Time Bid";
         end;
     end;
 
@@ -266,8 +284,11 @@ table 50001 "Bid Item Price"
     end;
 
     procedure GetPricesForItem(SalesHeaderNo: code[20]; ItemNo: code[20]; CurrCode: Code[20]; CustNo: code[20]; OnDate: Date; var BidPrices: Record "Bid Item Price")
+    var
+        Item: record item;
     begin
         Clear(BidPrices);
+        item.get(ItemNo);
         BidPrices.SetRange("item No.", ItemNo);
         BidPrices.SetRange("Currency Code", currcode);
         BidPrices.setrange("Customer No.", CustNo);
@@ -276,6 +297,14 @@ table 50001 "Bid Item Price"
                 if (not BidPrices.AlreadyUsed(SalesHeaderNo)) and (not BidPrices.HasExpired(OnDate)) then
                     BidPrices.Mark(true);
             until BidPrices.Next() = 0;
+        //>>NC.00.01 SDG 15-06-2019
+        BidPrices.SetRange("Currency Code", item."Vendor Currency");
+        if BidPrices.FindFirst() then
+            repeat
+                if (not BidPrices.AlreadyUsed(SalesHeaderNo)) and (not BidPrices.HasExpired(OnDate)) then
+                    BidPrices.Mark(true);
+            until BidPrices.Next() = 0;
+        //<<NC.00.01 SDG 15-06-2019 
         BidPrices.setrange("Customer No.", '');
         if BidPrices.FindFirst() then
             repeat

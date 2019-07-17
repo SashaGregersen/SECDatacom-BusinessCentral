@@ -109,6 +109,7 @@ table 50000 "Bid"
     trigger OnModify();
     var
         Bid: record bid;
+        BidPrices: record "Bid Item Price";
     begin
         bid.setrange("Vendor Bid No.", rec."Vendor Bid No.");
         bid.SetFilter("No.", '<>%1', rec."No.");
@@ -121,6 +122,15 @@ table 50000 "Bid"
                 bid.validate("Expiry Date", rec."Expiry Date");
                 bid.Modify(false);
             until bid.Next() = 0;
+
+        BidPrices.setrange("Bid No.", Rec."No.");
+        if BidPrices.findset then
+            repeat
+                Bidprices."Vendor Bid No." := Rec."Vendor Bid No.";
+                Bidprices.Description := Rec."Description";
+                BidPrices."One Time Bid" := rec."One Time Bid";
+                BidPrices.Modify(true);
+            until BidPrices.next = 0;
     end;
 
     trigger OnDelete();

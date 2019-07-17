@@ -13,6 +13,14 @@ page 50001 "Bid Prices"
                 {
                     ApplicationArea = all;
                 }
+                field("Vendor Bid No."; "Vendor Bid No.")
+                {
+                    ApplicationArea = all;
+                }
+                field(Description; Description)
+                {
+                    ApplicationArea = all;
+                }
                 field("item No."; "item No.")
                 {
                     ApplicationArea = all;
@@ -50,6 +58,10 @@ page 50001 "Bid Prices"
                     ApplicationArea = all;
                 }
                 field(Claimable; Claimable)
+                {
+                    ApplicationArea = all;
+                }
+                field("One Time Bid"; "One Time Bid")
                 {
                     ApplicationArea = all;
                 }

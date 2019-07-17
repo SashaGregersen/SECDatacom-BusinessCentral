@@ -15,10 +15,12 @@ codeunit 50007 "IC Sync Item"
             Error('There are no Intercompany Partners with a Vendor No. in %1', CompanyName);
 
         if not ItemDiscountGroup.get(rec."Item Disc. Group") then
+            Rec.Validate("IC partner Vendor No.", ICpartner."Vendor No.");
+
+        if not ItemDiscountGroup."Use Orginal Vendor in Subs" then
             Rec.Validate("IC partner Vendor No.", ICpartner."Vendor No.")
         else
-            if not ItemDiscountGroup."Use Orginal Vendor in Subs" then
-                Rec.Validate("IC partner Vendor No.", ICpartner."Vendor No.");
+            rec.validate("IC partner Vendor No.", '');
 
         if Vendor.Get(rec."Vendor No.") then
             Rec.Validate("Vendor Currency", Vendor."Currency Code");

@@ -261,7 +261,8 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
         TransferPriceAmount: Decimal;
         PriceEventHandler: Codeunit "Price Event Handler";
     begin
-        if (rec."Bid Unit Purchase Price" = 0) and (rec."Transfer Price Markup" = 0) and (rec."KickBack Percentage" = 0) then begin
+        //if (rec."Bid Unit Purchase Price" = 0) and (rec."Transfer Price Markup" = 0) and (rec."KickBack Percentage" = 0) then begin //SDG 15-07-19
+        if (rec."Bid No." = '') and (rec."Transfer Price Markup" = 0) and (rec."KickBack Percentage" = 0) then begin //SDG 15-07-19
             rec."Calculated Purchase Price" := rec."Unit Purchase Price" * rec.Quantity;
             "Profit Amount" := rec."Line Amount" - rec."Calculated Purchase Price";
             if rec."Line Amount" <> 0 then
@@ -286,7 +287,8 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
             else
                 TransferPriceAmount := ("Unit Purchase Price" * Quantity) * ("Transfer Price Markup" / 100);
 
-        If "Bid Unit Purchase Price" <> 0 then begin
+        //If "Bid Unit Purchase Price" <> 0 then begin //SDG 15-07-19
+        If "Bid No." <> '' then begin //SDG 15-07-19
             "Calculated Purchase Price" := ("Bid Unit Purchase Price" * Quantity) + TransferPriceAmount;
             //if not Claimable then            //    
             //    "Purchase Price on Purchase Order" := "Bid Unit Purchase Price"
