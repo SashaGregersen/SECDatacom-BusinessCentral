@@ -146,14 +146,16 @@ pageextension 50036 "Purch. Header Adv. pricing" extends "Purchase Order"
                 end;
             }
         }
-        addlast(Processing)
+        addlast(IncomingDocument)
         {
-            action(ShowMyReport)
+            action("Update Serial Numbers")
             {
                 Image = ItemGroup;
                 trigger OnAction();
+                var
+                    ICUpdateSerial: codeunit "IC Update Serial Nos. on PO";
                 begin
-                    PurchOrder.Run();
+                    ICUpdateSerial.Run(Rec);
                 end;
             }
 
