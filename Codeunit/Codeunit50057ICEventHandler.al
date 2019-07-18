@@ -273,8 +273,10 @@ codeunit 50057 "IC Event Handler"
                     SOLineInOtherCompany.Modify(false);
                 end;
             until SalesInvLine.Next() = 0;
-        if SOHeaderInOtherCompany.get(SOLineInOtherCompany."Document Type"::Order, SalesInvLine."IC SO No.") then
+        if SOHeaderInOtherCompany.get(SOLineInOtherCompany."Document Type"::Order, SalesInvLine."IC SO No.") then begin
             SOHeaderInOtherCompany."Package Tracking No." := SalesInvHeader."Package Tracking No.";
+            SOHeaderInOtherCompany.Modify(false);
+        end;
     end;
 
     local procedure AddICPurchaseOrderToTempList(HeaderNo: Code[20]; OtherCompanyName: text[35]; var TempPOList: Record "Purchase Header" temporary)
