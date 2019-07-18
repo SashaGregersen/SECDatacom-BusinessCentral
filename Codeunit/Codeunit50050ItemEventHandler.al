@@ -75,6 +75,7 @@ codeunit 50050 "Item Event handler"
         if (rec."Vendor No." <> '') and (rec."Vendor-Item-No." <> '') then begin
             item.setrange("Vendor No.", rec."Vendor No.");
             item.setrange("Vendor Item No.", rec."Vendor Item No.");
+            item.setfilter("No.", '<>%1', Rec."No.");
             if item.FindFirst() then begin
                 Message('The combination of Vendor No. and Vendor Item No. already exists as Business Central Item %1.  Duplicates are not supported! Please update Item %1 as required.', item."No.");
                 rec.Delete(true);
@@ -94,6 +95,7 @@ codeunit 50050 "Item Event handler"
         if (rec."Vendor No." <> '') and (rec."Vendor-Item-No." <> '') then begin
             item.setrange("Vendor No.", rec."Vendor No.");
             item.setrange("Vendor-Item-No.", rec."Vendor-Item-No.");
+            item.setfilter("No.", '<>%1', Rec."No.");
             if item.FindFirst() then begin
                 Message('The combination of Vendor No. and Vendor Item No. already exists as Business Central Item %1.  Duplicates are not supported! Please update Item %1 as required.', item."No.");
                 rec.Delete(true);
