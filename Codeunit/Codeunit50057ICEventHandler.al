@@ -259,11 +259,13 @@ codeunit 50057 "IC Event Handler"
         SalesInvHeader: Record "Sales Invoice Header";
         SalesInvLine: Record "Sales Invoice Line";
         SOLineInOtherCompany: Record "sales Line";
+        SOHeaderInOtherCompany: record "Sales Header";
     begin
         if not SalesInvHeader.Get(SalesInvHdrNo) then
             exit;
         SalesInvLine.SetRange("Document No.", SalesInvHeader."No.");
         SOLineInOtherCompany.ChangeCompany(OtherCompanyName);
+        SOHeaderInOtherCompany.ChangeCompany(OtherCompanyName);
         if SalesInvLine.FindSet() then
             repeat
                 if SOLineInOtherCompany.Get(SOLineInOtherCompany."Document Type"::Order, SalesInvLine."IC SO No.", SalesInvLine."IC SO Line No.") then begin
@@ -271,6 +273,8 @@ codeunit 50057 "IC Event Handler"
                     SOLineInOtherCompany.Modify(false);
                 end;
             until SalesInvLine.Next() = 0;
+        if SOHeaderInOtherCompany.get(SOLineInOtherCompany."Document Type"::Order, SalesInvLine."IC SO No.") then
+            SOHeaderInOtherCompany."Package Tracking No." := SalesInvHeader."Package Tracking No.";
     end;
 
     local procedure AddICPurchaseOrderToTempList(HeaderNo: Code[20]; OtherCompanyName: text[35]; var TempPOList: Record "Purchase Header" temporary)
