@@ -1646,13 +1646,13 @@
                       <Width>2.6114cm</Width>
                     </TablixColumn>
                     <TablixColumn>
-                      <Width>12.12616cm</Width>
+                      <Width>11.43824cm</Width>
                     </TablixColumn>
                     <TablixColumn>
                       <Width>4.99248cm</Width>
                     </TablixColumn>
                     <TablixColumn>
-                      <Width>7.55087cm</Width>
+                      <Width>8.23875cm</Width>
                     </TablixColumn>
                   </TablixColumns>
                   <TablixRows>
@@ -2885,7 +2885,7 @@
                 </Filters>
                 <Top>3.37781cm</Top>
                 <Height>2.8222cm</Height>
-                <Width>27.2809cm</Width>
+                <Width>27.28087cm</Width>
                 <ZIndex>2</ZIndex>
                 <Visibility>
                   <Hidden>=IIF(Fields!TrackingSpecBufferNo.Value&lt;&gt;"",False,True)</Hidden>
@@ -3260,7 +3260,7 @@ Cstr(Fields!Pref_Sender_Country.Value)
             <KeepTogether>true</KeepTogether>
             <Left>0.00002cm</Left>
             <Height>7.54586cm</Height>
-            <Width>27.2809cm</Width>
+            <Width>27.28091cm</Width>
             <Style />
           </Rectangle>
         </ReportItems>
