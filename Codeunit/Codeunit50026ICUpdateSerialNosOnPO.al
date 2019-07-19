@@ -29,13 +29,10 @@ codeunit 50026 "IC Update Serial Nos. on PO"
 
     local procedure CreateItemLedgerEntryTemp(SerialExchange: Record "Serial No. Intercompany Exch."; var TempItemLedgerEntry: Record "Item Ledger Entry" temporary)
     begin
-        if TempItemLedgerEntry.IsEmpty then begin
-            TempItemLedgerEntry.Init;
+        if TempItemLedgerEntry.FindLast() then
+            TempItemLedgerEntry."Entry No." := TempItemLedgerEntry."Entry No." + 1
+        else
             TempItemLedgerEntry."Entry No." := 1;
-        end else begin
-            TempItemLedgerEntry.FindLast();
-            TempItemLedgerEntry."Entry No." := TempItemLedgerEntry."Entry No." + 1;
-        end;
         TempItemLedgerEntry.Validate("Item No.", SerialExchange."Item No.");
         TempItemLedgerEntry.Validate("Serial No.", SerialExchange."Serial No.");
         TempItemLedgerEntry.Insert(true);

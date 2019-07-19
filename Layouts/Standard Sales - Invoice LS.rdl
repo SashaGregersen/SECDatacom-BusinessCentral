@@ -3699,7 +3699,6 @@
                             </Border>
                           </Style>
                         </Rectangle>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -4922,13 +4921,11 @@
                                   <Value>= "VAT No.: " + Fields!VATRegistrationNo.Value</Value>
                                   <Style>
                                     <FontFamily>Segoe UI</FontFamily>
-                                    <FontSize>8pt</FontSize>
+                                    <FontSize>9pt</FontSize>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
-                              <Style>
-                                <TextAlign>Left</TextAlign>
-                              </Style>
+                              <Style />
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>VATRegistrationNo_Lbl</rd:DefaultName>
@@ -7127,7 +7124,7 @@
       <Width>27.36141cm</Width>
       <Page>
         <PageHeader>
-          <Height>1.39229cm</Height>
+          <Height>1.55104cm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>

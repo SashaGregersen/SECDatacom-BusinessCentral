@@ -105,10 +105,10 @@ report 50025 "Price File Export Customer"
             Error('Customer Price File Location is missing in Inventory Setup');
         if FormatCSV = true then begin
             FormatCurrentDateTime(CurrDate);
-            Filelocation := InvtSetup."Price file location" + '\Pricelist-%DATO' + '' + '(' + CurrDate + ')' + '%-%' + customer."No." + '%' + '.csv';
+            Filelocation := InvtSetup."Price file location" + '\Pricelist-' + '' + '(' + CurrDate + ')' + '-' + customer."No." + '' + '.csv';
         end else begin
             FormatCurrentDateTime(CurrDate);
-            Filelocation := InvtSetup."Price file location" + '\Pricelist-%DATO' + '' + '(' + CurrDate + ')' + '%-%' + customer."No." + '%' + '.xml';
+            Filelocation := InvtSetup."Price file location" + '\Pricelist-' + '' + '(' + CurrDate + ')' + '-' + customer."No." + '' + '.xml';
         end;
     end;
 
