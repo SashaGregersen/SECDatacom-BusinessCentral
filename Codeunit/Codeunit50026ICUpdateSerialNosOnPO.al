@@ -23,6 +23,7 @@ codeunit 50026 "IC Update Serial Nos. on PO"
                     SerialNoOnPO.UpdateReservationEntries(TempItemLedgerEntry, PurchLine);
                     SerialExchange.DeleteAll(true);
                     TempItemLedgerEntry.DeleteAll();
+                    TempItemLedgerEntry.reset; //SDG 18-07-2019
                 end;
             until PurchLine.Next() = 0;
     end;

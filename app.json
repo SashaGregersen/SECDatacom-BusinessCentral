@@ -4,7 +4,11 @@
   "publisher": "Netcompany",
   "brief": "",
   "description": "",
+<<<<<<< HEAD
   "version": "1.1.1.43",
+=======
+  "version": "1.1.1.44",
+>>>>>>> 499b3bccc0b7b8d3bd5feb2bbf2dc856d820ca39
   "showMyCode": true,
   "privacyStatement": "",
   "EULA": "",

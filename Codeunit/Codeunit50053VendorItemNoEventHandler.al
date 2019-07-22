@@ -73,7 +73,6 @@ codeunit 50053 "Vendor Item No Event Handler"
     begin
         if item.get(rec."Item No.") then begin
             rec.validate("Vendor-Item-No", item."Vendor-Item-No.");
-            rec.Modify(true);
         end;
     end;
 
