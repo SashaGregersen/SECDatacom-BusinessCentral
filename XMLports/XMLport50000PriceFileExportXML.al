@@ -88,6 +88,8 @@ xmlport 50000 "Price File Export XML"
                     CurrencyExchRate: Record "Currency Exchange Rate";
                     CurrencyFactor: Decimal;
                 begin
+                    clear(Cost);
+                    Clear(List_Price);
                     if not item."Use on Website" then
                         currXMLport.Skip();
 

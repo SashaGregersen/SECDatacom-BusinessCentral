@@ -90,6 +90,8 @@ xmlport 50003 "Price File Export Customer XML"
                     CurrencyFactor: Decimal;
                     AdvPriceMgt: codeunit "Advanced Price Management";
                 begin
+                    clear(Cost);
+                    Clear(List_Price);
                     if not item."Use on Website" then
                         currXMLport.Skip();
 

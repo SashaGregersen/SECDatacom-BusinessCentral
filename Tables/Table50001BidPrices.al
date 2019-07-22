@@ -183,7 +183,7 @@ table 50001 "Bid Item Price"
             Claimable := Bid.Claimable;
             "Entry No." := bid."Entry No.";
             "Vendor Bid No." := bid."Vendor Bid No.";
-            Description := bid."Vendor Bid No.";
+            Description := bid."description";
             "One Time Bid" := bid."One Time Bid";
         end;
     end;

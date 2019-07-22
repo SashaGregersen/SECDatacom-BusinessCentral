@@ -354,7 +354,10 @@ codeunit 50003 "File Management Import"
         BidMgt: Codeunit "Bid Management";
         ReleasePurchDoc: Codeunit "Release Purchase Document";
         ImportTypeDiff: Integer;
+        SalesReceive: record "Sales & Receivables Setup";
+        Item: record item;
     begin
+        SalesReceive.get;
         TempCSVBuffer.SetRange("Line No.", 2);
         if ImportType = ImportType::LinesImport then
             ImportTypeDiff := 5;
@@ -381,23 +384,27 @@ codeunit 50003 "File Management Import"
                                 SalesLine.SetRange("Document No.", SalesHeader."No.");
                                 SalesLine.SetRange("Document Type", SalesHeader."Document Type");
                                 SalesLine.SetRange(Type, SalesLine.Type::Item);
+                                SalesLine.setfilter("No.", '<>%1', SalesReceive."Freight Item");
                                 if SalesLine.findset then
                                     repeat
-                                        SalesLine.CalcFields("Reserved Quantity");
-                                        if SalesLine."Reserved Quantity" = 0 then begin
-                                            Clear(PurchasePrice);
-                                            Clear(BidPrice);
-                                            if not BidMgt.GetBestBidPrice(SalesLine."Bid No.", SalesLine."Sell-to Customer No.", SalesLine."No.", CurrencyCode, BidPrice) then
-                                                Clear(PurchasePrice)
-                                            else begin
-                                                BidMgt.MakePurchasePriceFromBidPrice(BidPrice, PurchasePrice, SalesLine);
-                                                CurrencyCode := PurchasePrice."Currency Code";
-                                            end;
+                                        Item.Get(SalesLine."No."); //SDG 22-07-19
+                                        if item.Type = item.type::Inventory then begin //SDG 22-07-19
+                                            SalesLine.CalcFields("Reserved Quantity");
+                                            if SalesLine."Reserved Quantity" = 0 then begin
+                                                Clear(PurchasePrice);
+                                                Clear(BidPrice);
+                                                if not BidMgt.GetBestBidPrice(SalesLine."Bid No.", SalesLine."Sell-to Customer No.", SalesLine."No.", CurrencyCode, BidPrice) then
+                                                    Clear(PurchasePrice)
+                                                else begin
+                                                    BidMgt.MakePurchasePriceFromBidPrice(BidPrice, PurchasePrice, SalesLine);
+                                                    CurrencyCode := PurchasePrice."Currency Code";
+                                                end;
 
-                                            PurchFromSales.CreatePurchLine(PurchOrder, SalesHeader, SalesLine, PurchasePrice."Direct Unit Cost", PurchLine);
-                                            PurchFromSales.ReserveItemOnPurchOrder(SalesLine, PurchLine);
-                                            GlobalLineCounter := GlobalLineCounter + 1;
-                                        end;
+                                                PurchFromSales.CreatePurchLine(PurchOrder, SalesHeader, SalesLine, PurchasePrice."Direct Unit Cost", PurchLine);
+                                                PurchFromSales.ReserveItemOnPurchOrder(SalesLine, PurchLine);
+                                                GlobalLineCounter := GlobalLineCounter + 1;
+                                            end;
+                                        end; //SDG 22-07-19
                                     until SalesLine.next = 0;
                             end else begin
                                 PurchOrder.get(PurchOrder."Document Type"::Order, TempCSVBuffer.Value);
@@ -416,23 +423,27 @@ codeunit 50003 "File Management Import"
                                 SalesLine.SetRange("Document No.", SalesHeader."No.");
                                 SalesLine.SetRange("Document Type", SalesHeader."Document Type");
                                 SalesLine.SetRange(Type, SalesLine.Type::Item);
+                                SalesLine.setfilter("No.", '<>%1', SalesReceive."Freight Item");
                                 if SalesLine.findset then begin
                                     repeat
-                                        Clear(PurchasePrice);
-                                        Clear(BidPrice);
-                                        if not BidMgt.GetBestBidPrice(SalesLine."Bid No.", SalesLine."Sell-to Customer No.", SalesLine."No.", CurrencyCode, BidPrice) then
-                                            Clear(PurchasePrice)
-                                        else begin
-                                            BidMgt.MakePurchasePriceFromBidPrice(BidPrice, PurchasePrice, SalesLine);
-                                            CurrencyCode := PurchasePrice."Currency Code";
-                                        end;
+                                        Item.Get(SalesLine."No."); //SDG 22-07-19
+                                        if item.Type = item.type::Inventory then begin //SDG 22-07-19
+                                            Clear(PurchasePrice);
+                                            Clear(BidPrice);
+                                            if not BidMgt.GetBestBidPrice(SalesLine."Bid No.", SalesLine."Sell-to Customer No.", SalesLine."No.", CurrencyCode, BidPrice) then
+                                                Clear(PurchasePrice)
+                                            else begin
+                                                BidMgt.MakePurchasePriceFromBidPrice(BidPrice, PurchasePrice, SalesLine);
+                                                CurrencyCode := PurchasePrice."Currency Code";
+                                            end;
 
-                                        SalesLine.CalcFields("Reserved Quantity");
-                                        if SalesLine."Reserved Quantity" = 0 then begin
-                                            PurchFromSales.CreatePurchLine(PurchOrder, SalesHeader, SalesLine, PurchasePrice."Direct Unit Cost", PurchLine);
-                                            PurchFromSales.ReserveItemOnPurchOrder(Salesline, PurchLine);
-                                            GlobalLineCounter := GlobalLineCounter + 1;
-                                        end;
+                                            SalesLine.CalcFields("Reserved Quantity");
+                                            if SalesLine."Reserved Quantity" = 0 then begin
+                                                PurchFromSales.CreatePurchLine(PurchOrder, SalesHeader, SalesLine, PurchasePrice."Direct Unit Cost", PurchLine);
+                                                PurchFromSales.ReserveItemOnPurchOrder(Salesline, PurchLine);
+                                                GlobalLineCounter := GlobalLineCounter + 1;
+                                            end;
+                                        end; //SDG 22-07-19
                                     until SalesLine.next = 0;
                                     Message('%1 lines inserted on purchase order %2', GlobalLineCounter, PurchOrder."No.");
                                 end;

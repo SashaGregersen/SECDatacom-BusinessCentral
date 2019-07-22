@@ -185,6 +185,8 @@ xmlport 50001 "Price File Export CSV"
                     CurrencyExchRate: Record "Currency Exchange Rate";
                     CurrencyFactor: Decimal;
                 begin
+                    clear(Cost);
+                    Clear(List_Price);
                     if not item."Use on Website" then
                         currXMLport.Skip();
 

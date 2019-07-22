@@ -656,6 +656,8 @@ codeunit 50000 "Advanced Price Management"
         Item: Record Item;
     begin
         Item.Get(ItemNo);
+        if item.Type <> item.type::Inventory then
+            exit;
         if Item."IC partner Vendor No." <> '' then
             exit(Item."IC partner Vendor No.")
         else begin
