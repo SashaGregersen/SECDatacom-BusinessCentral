@@ -18,11 +18,19 @@ codeunit 50096 "Temp Hacks"
     procedure RunHack()
     var
         Item: record item;
-
+        salesline: record "Sales Line";
     begin
-        Item.get('101500001128');
-        Item."Item Tracking Code" := 'SN_PURCHAS';
-        item.Modify(false);
+        salesline.setrange("Document No.", '213120000114');
+        salesline.setrange("Document Type", salesline."Document Type"::Order);
+        if salesline.FindSet() then
+            repeat
+                salesline."Qty. to Invoice" := 0;
+                salesline."Qty. to Invoice (Base)" := 0;
+                salesline."Qty. Invoiced (Base)" := salesline.Quantity;
+                salesline."Quantity Invoiced" := salesline.Quantity;
+                salesline.Modify(false);
+            until salesline.next = 0;
+
     end;
 
     procedure UpdateSalesLine2()
