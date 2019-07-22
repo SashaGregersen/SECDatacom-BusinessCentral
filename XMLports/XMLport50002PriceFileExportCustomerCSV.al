@@ -240,6 +240,13 @@ xmlport 50002 "Price File Export Customer CSV"
                 end;
             }
 
+            tableelement(Integer; Integer)
+            {
+                SourceTableView = SORTING (Number) WHERE (Number = CONST (0));
+
+
+            }
+
         }
 
     }
