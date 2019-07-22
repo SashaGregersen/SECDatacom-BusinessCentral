@@ -185,6 +185,9 @@ xmlport 50002 "Price File Export Customer CSV"
                 begin
                     clear(Cost);
                     Clear(List_Price);
+                    Clear(CostDec);
+                    Clear(ListPriceDec);
+
                     if not item."Use on Website" then
                         currXMLport.Skip();
 
@@ -202,9 +205,9 @@ xmlport 50002 "Price File Export Customer CSV"
                                 CostDec := CurrencyExchRate.ExchangeAmtFCYToFCY(WorkDate(), PurchasePrice."Currency Code", CurrencyFilter, PurchasePrice."Direct Unit Cost");
                         end; */
                     salesprice.Reset();
-                    AdvPriceMgt.FindListPriceForitem(item."No.", CurrencyFilter, salesprice);
-                    ListPriceDec := salesprice."Unit Price";
-                    if ListPriceDec = 0 then
+                    if AdvPriceMgt.FindListPriceForitem(item."No.", CurrencyFilter, salesprice) then
+                        ListPriceDec := salesprice."Unit Price"
+                    else
                         currXMLport.Skip();
 
                     if ItemCategory.Get(Item."Item Category Code") then begin
