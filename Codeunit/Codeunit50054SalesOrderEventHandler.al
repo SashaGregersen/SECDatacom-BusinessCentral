@@ -607,8 +607,10 @@ codeunit 50054 "Sales Order Event Handler"
                 if SalesLine.FindSet() then
                     repeat
                         WhseActivLine.SetRange("Source Line No.", SalesLine."Line No.");
+                        //if (not WhseActivLine.FindFirst()) or //SDG 22-07-19
+                        //(SalesLine."Qty. to Ship (Base)" <> salesLine.Quantity) then begin //SDG 22-07-19
                         if (not WhseActivLine.FindFirst()) or
-                            (SalesLine."Qty. to Ship (Base)" <> salesLine.Quantity) then begin
+                            (CalcInvtAvailability(WhseActivLine, SalesLine."No.") < SalesLine.Quantity) then begin //SDG 22-07-19
                             TmpLocation := Location;
                             if TmpLocation.Insert() then;
                         end;
@@ -651,6 +653,41 @@ codeunit 50054 "Sales Order Event Handler"
                 if not Result then
                     Error(ShippingAdviceErr);
             until Location.Next() = 0;
+    end;
+
+    procedure CalcInvtAvailability(WhseActivLine: record "Warehouse Activity Line"; ItemNo: code[20]): Decimal
+    var
+        Item: Record item;
+        WhseAvailMgt: codeunit "Warehouse Availability Mgt.";
+        Location: record location;
+        QtyAssgndtoPick: Decimal;
+        QtyOnDedicatedBins: Decimal;
+        LineReservedQty: Decimal;
+        QtyBlocked: Decimal;
+        QtyReservedOnPickShip: Decimal;
+        TempWhseActivLine2: record "Warehouse Activity Line" temporary;
+    begin
+        WITH WhseActivLine DO BEGIN
+            item.get(ItemNo);
+            Item.SETRANGE("Location Filter", WhseActivLine."Location Code");
+            Item.SETRANGE("Variant Filter", WhseActivLine."Variant Code");
+            Item.CALCFIELDS(Inventory);
+            Item.CALCFIELDS("Reserved Qty. on Inventory");
+            location.get(WhseActivLine."Location Code");
+
+            QtyAssgndtoPick := WhseAvailMgt.CalcQtyAssgndtoPick(Location, ItemNo, WhseActivLine."Variant Code", '');
+            QtyOnDedicatedBins := WhseAvailMgt.CalcQtyOnDedicatedBins(WhseActivLine."Location Code", WhseActivLine."Item No.", WhseActivLine."Variant Code", '', '');
+            QtyBlocked :=
+              WhseAvailMgt.CalcQtyOnBlockedITOrOnBlockedOutbndBins(WhseActivLine."Location Code", WhseActivLine."Item No.", WhseActivLine."Variant Code", '', '', FALSE, FALSE);
+            LineReservedQty :=
+              WhseAvailMgt.CalcLineReservedQtyOnInvt(
+                WhseActivLine."Source Type", WhseActivLine."Source Subtype", WhseActivLine."Source No.", WhseActivLine."Source Line No.", WhseActivLine."Source Subline No.", TRUE, '', '', TempWhseActivLine2);
+            QtyReservedOnPickShip :=
+              WhseAvailMgt.CalcReservQtyOnPicksShips(WhseActivLine."Location Code", WhseActivLine."Item No.", WhseActivLine."Variant Code", TempWhseActivLine2);
+        END;
+        EXIT(
+          Item.Inventory - ABS(Item."Reserved Qty. on Inventory") - QtyAssgndtoPick - QtyOnDedicatedBins - QtyBlocked +
+          LineReservedQty + QtyReservedOnPickShip);
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"OIOUBL-Export Sales Invoice", 'OIOUBL_OnBeforeExportSalesInvoice', '', true, true)]
