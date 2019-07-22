@@ -592,6 +592,7 @@ codeunit 50054 "Sales Order Event Handler"
         WhseActivLine: Record "Warehouse Activity Line";
         SalesLine: Record "Sales Line";
         ItemCheckAvail: Codeunit "Item-Check Avail.";
+        Item: record item;
     begin
         if Location.FindSet() then
             repeat
@@ -604,16 +605,20 @@ codeunit 50054 "Sales Order Event Handler"
                 SalesLine.SetRange("Document Type", SalesHeader."Document Type");
                 SalesLine.SetRange("Document No.", SalesHeader."No.");
                 SalesLine.SetRange("Location Code", Location.Code);
+                SalesLine.setrange(Type, SalesLine.type::Item); //SDG 22-07-19
                 if SalesLine.FindSet() then
                     repeat
-                        WhseActivLine.SetRange("Source Line No.", SalesLine."Line No.");
-                        //if (not WhseActivLine.FindFirst()) or //SDG 22-07-19
-                        //(SalesLine."Qty. to Ship (Base)" <> salesLine.Quantity) then begin //SDG 22-07-19
-                        if (not WhseActivLine.FindFirst()) or
-                            (CalcInvtAvailability(WhseActivLine, SalesLine."No.") < SalesLine.Quantity) then begin //SDG 22-07-19
-                            TmpLocation := Location;
-                            if TmpLocation.Insert() then;
-                        end;
+                        Item.get(SalesLine."No.");//SDG 22-07-19
+                        if item.type = item.type::Inventory then begin//SDG 22-07-19
+                            WhseActivLine.SetRange("Source Line No.", SalesLine."Line No.");
+                            //if (not WhseActivLine.FindFirst()) or //SDG 22-07-19
+                            //(SalesLine."Qty. to Ship (Base)" <> salesLine.Quantity) then begin //SDG 22-07-19
+                            if (not WhseActivLine.FindFirst()) or
+                                (CalcInvtAvailability(WhseActivLine, SalesLine."No.") < SalesLine.Quantity) then begin //SDG 22-07-19
+                                TmpLocation := Location;
+                                if TmpLocation.Insert() then;
+                            end;
+                        end;//SDG 22-07-19
                     until SalesLine.Next() = 0;
             until Location.Next() = 0;
     end;
