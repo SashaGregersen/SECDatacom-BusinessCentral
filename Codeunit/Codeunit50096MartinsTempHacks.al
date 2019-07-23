@@ -17,24 +17,9 @@ codeunit 50096 "Temp Hacks"
 
     procedure RunHack()
     var
-        Item: record item;
-        salesline: record "Sales Line";
-        salesshipmentline: record "Sales Shipment Line";
+        WarehousePick: Report "Create Invt Put-away/Pick/Mvmt";
     begin
-        salesline.setrange("Document No.", '213120000114');
-        salesline.setrange("Document Type", salesline."Document Type"::Order);
-        if salesline.FindSet() then
-            repeat
-                salesline."Qty. Shipped Not Invd. (Base)" := 0;
-                salesline."Qty. Shipped Not Invoiced" := 0;
-                /* salesshipmentline.SetRange("Order No.", salesline."Document No.");
-                salesshipmentline.SetRange("Order Line No.", salesline."Line No.");
-                if salesshipmentline.FindFirst() then begin
-                    salesline."Shipment No." := salesshipmentline."Document No.";
-                    salesline."Shipment Line No." := salesshipmentline."Line No.";
-                end; */
-                salesline.Modify(false);
-            until salesline.next = 0;
+        WarehousePick.Run();
 
     end;
 
