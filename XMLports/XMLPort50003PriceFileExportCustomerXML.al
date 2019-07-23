@@ -92,6 +92,12 @@ xmlport 50003 "Price File Export Customer XML"
                 begin
                     clear(Cost);
                     Clear(List_Price);
+                    Clear(CostDec);
+                    Clear(ListPriceDec);
+                    Clear(Maincategory);
+                    Clear(Subcategory);
+                    Clear(Stock);
+
                     if not item."Use on Website" then
                         currXMLport.Skip();
 

@@ -674,11 +674,11 @@ codeunit 50054 "Sales Order Event Handler"
     begin
         WITH WhseActivLine DO BEGIN
             item.get(ItemNo);
-            Item.SETRANGE("Location Filter", WhseActivLine."Location Code");
-            Item.SETRANGE("Variant Filter", WhseActivLine."Variant Code");
+            /* Item.SETRANGE("Location Filter", WhseActivLine."Location Code");
+            Item.SETRANGE("Variant Filter", WhseActivLine."Variant Code"); */
             Item.CALCFIELDS(Inventory);
             Item.CALCFIELDS("Reserved Qty. on Inventory");
-            location.get(WhseActivLine."Location Code");
+            /* location.get(WhseActivLine."Location Code");
 
             QtyAssgndtoPick := WhseAvailMgt.CalcQtyAssgndtoPick(Location, ItemNo, WhseActivLine."Variant Code", '');
             QtyOnDedicatedBins := WhseAvailMgt.CalcQtyOnDedicatedBins(WhseActivLine."Location Code", WhseActivLine."Item No.", WhseActivLine."Variant Code", '', '');
@@ -688,11 +688,10 @@ codeunit 50054 "Sales Order Event Handler"
               WhseAvailMgt.CalcLineReservedQtyOnInvt(
                 WhseActivLine."Source Type", WhseActivLine."Source Subtype", WhseActivLine."Source No.", WhseActivLine."Source Line No.", WhseActivLine."Source Subline No.", TRUE, '', '', TempWhseActivLine2);
             QtyReservedOnPickShip :=
-              WhseAvailMgt.CalcReservQtyOnPicksShips(WhseActivLine."Location Code", WhseActivLine."Item No.", WhseActivLine."Variant Code", TempWhseActivLine2);
+              WhseAvailMgt.CalcReservQtyOnPicksShips(WhseActivLine."Location Code", WhseActivLine."Item No.", WhseActivLine."Variant Code", TempWhseActivLine2); */
         END;
-        EXIT(
-          Item.Inventory - ABS(Item."Reserved Qty. on Inventory") - QtyAssgndtoPick - QtyOnDedicatedBins - QtyBlocked +
-          LineReservedQty + QtyReservedOnPickShip);
+        EXIT(Item.Inventory - ABS(Item."Reserved Qty. on Inventory"));/*  - QtyAssgndtoPick - QtyOnDedicatedBins - QtyBlocked +
+          LineReservedQty + QtyReservedOnPickShip */
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"OIOUBL-Export Sales Invoice", 'OIOUBL_OnBeforeExportSalesInvoice', '', true, true)]

@@ -187,6 +187,9 @@ xmlport 50002 "Price File Export Customer CSV"
                     Clear(List_Price);
                     Clear(CostDec);
                     Clear(ListPriceDec);
+                    Clear(Maincategory);
+                    Clear(Subcategory);
+                    Clear(Stock);
 
                     if not item."Use on Website" then
                         currXMLport.Skip();

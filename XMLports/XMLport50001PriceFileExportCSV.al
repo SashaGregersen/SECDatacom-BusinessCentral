@@ -187,8 +187,11 @@ xmlport 50001 "Price File Export CSV"
                 begin
                     clear(Cost);
                     Clear(List_Price);
-                    Clear(ListPriceDec);
                     Clear(CostDec);
+                    Clear(ListPriceDec);
+                    Clear(Maincategory);
+                    Clear(Subcategory);
+                    Clear(Stock);
 
                     if not item."Use on Website" then
                         currXMLport.Skip();
