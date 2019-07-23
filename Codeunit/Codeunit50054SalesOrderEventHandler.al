@@ -520,7 +520,9 @@ codeunit 50054 "Sales Order Event Handler"
         AdvPaymentMethodSetup: Record "Advanced Payment Method Setup";
     begin
         if AdvPaymentMethodSetup.Get(Rec."Customer Posting Group", Rec."Currency Code") then
-            Rec.Validate("Payment Method Code", AdvPaymentMethodSetup."Payment Method Code");
+            Rec.Validate("Payment Method Code", AdvPaymentMethodSetup."Payment Method Code")
+        else
+            rec.validate("Payment Method Code", '');
     end;
 
     [EventSubscriber(ObjectType::Table, Database::"Sales Header", 'OnAfterValidateEvent', 'Currency Code', true, true)]
@@ -529,7 +531,9 @@ codeunit 50054 "Sales Order Event Handler"
         AdvPaymentMethodSetup: Record "Advanced Payment Method Setup";
     begin
         if AdvPaymentMethodSetup.Get(Rec."Customer Posting Group", Rec."Currency Code") then
-            Rec.Validate("Payment Method Code", AdvPaymentMethodSetup."Payment Method Code");
+            Rec.Validate("Payment Method Code", AdvPaymentMethodSetup."Payment Method Code")
+        else
+            rec.validate("Payment Method Code", '');
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post (Yes/No)", 'OnBeforeConfirmSalesPost', '', true, true)]
