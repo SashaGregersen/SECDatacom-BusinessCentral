@@ -705,7 +705,7 @@ codeunit 50054 "Sales Order Event Handler"
                 if ReservationEntry.FindSet() then begin
                     repeat
                         if OppositeReservationEntry.get(ReservationEntry."Entry No.", not ReservationEntry.Positive) then begin
-                            if OppositeReservationEntry."Source ID" = '32' then
+                            if OppositeReservationEntry."Source Type" = 32 then
                                 CalcReserveEntry := CalcReserveEntry + OppositeReservationEntry."Quantity (Base)";
                         end;
                     until ReservationEntry.next = 0;
