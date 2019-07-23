@@ -614,7 +614,7 @@ codeunit 50054 "Sales Order Event Handler"
                             //if (not WhseActivLine.FindFirst()) or //SDG 22-07-19
                             //(SalesLine."Qty. to Ship (Base)" <> salesLine.Quantity) then begin //SDG 22-07-19
                             if (not WhseActivLine.FindFirst()) or
-                                (CalcInvtAvailability(WhseActivLine, SalesLine."No.") < SalesLine.Quantity) then begin //SDG 22-07-19
+                                (CalcInvtAvailability(WhseActivLine, WhseActivLine."Item No.", SalesLine) < SalesLine.Quantity) then begin //SDG 22-07-19
                                 TmpLocation := Location;
                                 if TmpLocation.Insert() then;
                             end;
@@ -660,7 +660,7 @@ codeunit 50054 "Sales Order Event Handler"
             until Location.Next() = 0;
     end;
 
-    procedure CalcInvtAvailability(WhseActivLine: record "Warehouse Activity Line"; ItemNo: code[20]): Decimal
+    procedure CalcInvtAvailability(WhseActivLine: record "Warehouse Activity Line"; ItemNo: code[20]; salesline: record "Sales Line"): Decimal
     var
         Item: Record item;
         WhseAvailMgt: codeunit "Warehouse Availability Mgt.";
@@ -671,6 +671,9 @@ codeunit 50054 "Sales Order Event Handler"
         QtyBlocked: Decimal;
         QtyReservedOnPickShip: Decimal;
         TempWhseActivLine2: record "Warehouse Activity Line" temporary;
+        CalcReserveEntry: Integer;
+        ReservationEntry: Record "Reservation Entry";
+        OppositeReservationEntry: record "Reservation Entry";
     begin
         WITH WhseActivLine DO BEGIN
             item.get(ItemNo);
@@ -690,7 +693,27 @@ codeunit 50054 "Sales Order Event Handler"
             QtyReservedOnPickShip :=
               WhseAvailMgt.CalcReservQtyOnPicksShips(WhseActivLine."Location Code", WhseActivLine."Item No.", WhseActivLine."Variant Code", TempWhseActivLine2); */
         END;
-        EXIT(Item.Inventory - ABS(Item."Reserved Qty. on Inventory"));/*  - QtyAssgndtoPick - QtyOnDedicatedBins - QtyBlocked +
+        if (item.Inventory <> 0) and (Item."Reserved Qty. on Inventory" <> 0) then begin
+            salesline.CalcFields("Reserved Quantity");
+            if salesline."Reserved Quantity" <> 0 then begin
+                ReservationEntry.SetRange("Item No.", salesline."No.");
+                ReservationEntry.SetRange("Source ID", SalesLine."Document No.");
+                ReservationEntry.SetRange("Source Subtype", SalesLine."Document Type");
+                ReservationEntry.SetRange("Source Ref. No.", Salesline."Line No.");
+                ReservationEntry.SetRange("Reservation Status", ReservationEntry."Reservation Status"::Reservation);
+                ReservationEntry.Setrange("Location Code", salesline."Location Code");
+                if ReservationEntry.FindSet() then begin
+                    repeat
+                        if OppositeReservationEntry.get(ReservationEntry."Entry No.", not ReservationEntry.Positive) then begin
+                            if OppositeReservationEntry."Source ID" = '32' then
+                                CalcReserveEntry := CalcReserveEntry + OppositeReservationEntry."Quantity (Base)";
+                        end;
+                    until ReservationEntry.next = 0;
+                end;
+            end;
+
+        end;
+        EXIT(Item.Inventory - ABS(Item."Reserved Qty. on Inventory") + CalcReserveEntry);/*  - QtyAssgndtoPick - QtyOnDedicatedBins - QtyBlocked +
           LineReservedQty + QtyReservedOnPickShip */
     end;
 
