@@ -179,7 +179,27 @@ codeunit 50012 "Import Serial Number Purchase"
             repeat
                 if Counter mod 2 <> 0 then begin
                     TempItemLedgerEntry.SetRange("Item No.", TempReservationEntry."Item No.");
-                    TempItemLedgerEntry.FindFirst();
+                    //TempItemLedgerEntry.FindFirst() //SDG 24-7-19
+                    //>>NC.00.01 SDG 24-7-19
+                    if not TempItemLedgerEntry.FindFirst() then begin
+                        if TempReservationEntry.FindSet() then
+                            repeat
+                                ReservationEntry := TempReservationEntry;
+                                ReservationEntry.Validate("Serial No.", '');
+                                ReservationEntry.Validate("Item Tracking", ReservationEntry."Item Tracking"::None);
+                                if not ReservationEntry.Insert(true) then begin
+                                    EntryNo := GetLastReservationEntryNo();
+                                    ReservationEntry."Entry No." := EntryNo + 1;
+                                    ReservationEntry.Insert(true);
+                                    TempReservationEntry.Delete();
+                                    counter := counter + 1;
+                                end;
+                                TempReservationEntry.Delete();
+                                counter := counter + 1;
+                            until TempReservationEntry.next = 0;
+                        exit;
+                    end;
+                    //<<NC.00.01 SDG 24-7-19
                 end;
                 ReservationEntry := TempReservationEntry;
                 ReservationEntry.Validate("Serial No.", TempItemLedgerEntry."Serial No.");
