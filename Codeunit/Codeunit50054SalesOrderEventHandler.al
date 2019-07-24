@@ -679,6 +679,8 @@ codeunit 50054 "Sales Order Event Handler"
         ReservationEntry: Record "Reservation Entry";
         OppositeReservationEntry: record "Reservation Entry";
     begin
+        if WhseActivLine."No." = '' then
+            exit;
         WITH WhseActivLine DO BEGIN
             item.get(ItemNo);
             /* Item.SETRANGE("Location Filter", WhseActivLine."Location Code");
