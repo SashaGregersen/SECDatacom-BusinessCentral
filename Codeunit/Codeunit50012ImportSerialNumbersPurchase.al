@@ -127,17 +127,18 @@ codeunit 50012 "Import Serial Number Purchase"
         NegativeReservationEntry: record "Reservation Entry";
     begin
         TempItemLedgerEntry.SetRange("Item No.", ReservationEntry."Item No.");
-        TempItemLedgerEntry.FindFirst();
-        NegativeReservationEntry.Get(ReservationEntry."Entry No.", Not ReservationEntry.Positive);
-        if NegativeReservationEntry."Serial No." = '' then begin
-            NegativeReservationEntry.Validate("Serial No.", TempItemLedgerEntry."Serial No.");
-            NegativeReservationEntry.Validate("Item Tracking", NegativeReservationEntry."Item Tracking"::"Serial No.");
-            NegativeReservationEntry.Modify(true);
-            ReservationEntry.Validate("Serial No.", TempItemLedgerEntry."Serial No.");
-            ReservationEntry.Validate("Item Tracking", ReservationEntry."Item Tracking"::"Serial No.");
-            ReservationEntry.Modify(true);
+        if TempItemLedgerEntry.FindFirst() then begin
+            NegativeReservationEntry.Get(ReservationEntry."Entry No.", Not ReservationEntry.Positive);
+            if NegativeReservationEntry."Serial No." = '' then begin
+                NegativeReservationEntry.Validate("Serial No.", TempItemLedgerEntry."Serial No.");
+                NegativeReservationEntry.Validate("Item Tracking", NegativeReservationEntry."Item Tracking"::"Serial No.");
+                NegativeReservationEntry.Modify(true);
+                ReservationEntry.Validate("Serial No.", TempItemLedgerEntry."Serial No.");
+                ReservationEntry.Validate("Item Tracking", ReservationEntry."Item Tracking"::"Serial No.");
+                ReservationEntry.Modify(true);
 
-            TempItemLedgerEntry.Delete();
+                TempItemLedgerEntry.Delete();
+            end;
         end;
     end;
 
