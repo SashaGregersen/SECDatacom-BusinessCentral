@@ -125,7 +125,8 @@ Cstr(Fields!ResellerPostcode.Value) + Chr(177) +
 Cstr(Fields!ResellerCity.Value) + Chr(177) +
 Cstr(Fields!ResellerCountry.Value) + Chr(177) +
 Cstr(Fields!Var_ID_Lbl.Value) + Chr(177) + 
-Cstr(Fields!Var_ID.Value)+ 
+Cstr(Fields!Var_ID.Value) + Chr(177) +
+
 Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                             </Visibility>
                                             <Style>
@@ -1554,7 +1555,6 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                             </Style>
                                           </Textbox>
                                           <ColSpan>2</ColSpan>
-                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell />
