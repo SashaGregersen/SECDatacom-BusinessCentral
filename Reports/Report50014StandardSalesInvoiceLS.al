@@ -1258,7 +1258,7 @@ report 50014 "SEC - Sales Invoice LS"
                 end;
 
                 if PmtIDLength > 0 then begin
-                    PaymentID := PadStr('', PmtIDLength - 2 - StrLen("No."), '0') + "No." + '2';
+                    PaymentID := PadStr('', PmtIDLength - 2 - StrLen("No."), '0') + "No." + '0';
                     PaymentID := PaymentID + Modulus10(PaymentID);
                 end else
                     PaymentID := PadStr('', PmtIDLength, '0');
