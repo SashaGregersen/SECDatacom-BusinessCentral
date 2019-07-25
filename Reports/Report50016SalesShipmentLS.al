@@ -199,6 +199,22 @@ report 50016 "SEC Sales - Shipment LS"
                     {
                     }
                     //<< NC adding Preferred Sender Adress
+                    //>>NC.00.01 SDG 25-07-19
+                    column(Package_Tracking_No; "Sales Shipment Header"."Package Tracking No.")
+                    {
+
+                    }
+                    column(Shipping_Agent_Code; "Sales Shipment Header"."Shipping Agent Code")
+                    {
+
+                    }
+                    column(PackageTrackingNo; PackageTrackingNo)
+                    {
+                    }
+                    column(ShippingAgent; ShippingAgent)
+                    {
+                    }
+                    //<<NC.00.01 SDG 25-07-19
                     dataitem(DimensionLoop1; "Integer")
                     {
                         DataItemLinkReference = "Sales Shipment Header";
@@ -804,6 +820,8 @@ report 50016 "SEC Sales - Shipment LS"
         ShipFromLbl: Label 'Shipped from:';
         BarcodeLbl: Label 'Barcode';
         PageCaptionCap: Label 'Page %1 of %2';
+        PackageTrackingNo: label 'Package Tracking No.';
+        ShippingAgent: label 'Shipping Agent';
 
     procedure InitLogInteraction()
     begin

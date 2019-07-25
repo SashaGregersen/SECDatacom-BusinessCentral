@@ -71,32 +71,29 @@
                         </TablixCell>
                         <TablixCell>
                           <CellContents>
-                            <Textbox Name="textbox3">
+                            <Textbox Name="Textbox3">
                               <CanGrow>true</CanGrow>
                               <KeepTogether>true</KeepTogether>
                               <Paragraphs>
                                 <Paragraph>
                                   <TextRuns>
                                     <TextRun>
-                                      <Value>=Fields!Description_SalesShptLineCaption.Value</Value>
-                                      <Style>
-                                        <FontStyle>Normal</FontStyle>
-                                        <FontFamily>Segoe UI</FontFamily>
-                                        <FontSize>8pt</FontSize>
-                                        <FontWeight>Bold</FontWeight>
-                                      </Style>
+                                      <Value />
+                                      <Style />
                                     </TextRun>
                                   </TextRuns>
-                                  <Style>
-                                    <TextAlign>Left</TextAlign>
-                                  </Style>
+                                  <Style />
                                 </Paragraph>
                               </Paragraphs>
-                              <ZIndex>66</ZIndex>
+                              <rd:DefaultName>Textbox3</rd:DefaultName>
                               <Style>
-                                <VerticalAlign>Bottom</VerticalAlign>
-                                <PaddingLeft>5pt</PaddingLeft>
-                                <PaddingRight>5pt</PaddingRight>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
                               </Style>
                             </Textbox>
                           </CellContents>
@@ -1200,7 +1197,6 @@
                   </Filter>
                 </Filters>
                 <Top>0.05362cm</Top>
-                <Left>0.00001cm</Left>
                 <Height>2.90336cm</Height>
                 <Width>27.20152cm</Width>
                 <Visibility>
@@ -3846,7 +3842,7 @@ Cstr(Fields!Pref_Sender_Country.Value)
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
             </Textbox>
-            <Textbox Name="OrderNo_SalesShptHeader">
+            <Textbox Name="PackageTracking">
               <CanGrow>true</CanGrow>
               <KeepTogether>true</KeepTogether>
               <Paragraphs>
@@ -3864,7 +3860,7 @@ Cstr(Fields!Pref_Sender_Country.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>7.40293cm</Top>
-              <Left>3.85355cm</Left>
+              <Left>3.87139cm</Left>
               <Height>0.42334cm</Height>
               <Width>14.28278cm</Width>
               <ZIndex>35</ZIndex>
@@ -3892,8 +3888,8 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>7.40293cm</Top>
-              <Left>0.141cm</Left>
+              <Top>7.47348cm</Top>
+              <Left>0.14099cm</Left>
               <Height>0.42334cm</Height>
               <Width>3.71256cm</Width>
               <ZIndex>36</ZIndex>
@@ -3955,6 +3951,64 @@ Cstr(Fields!Pref_Sender_Country.Value)
               <Width>6.21265cm</Width>
               <ZIndex>38</ZIndex>
               <Style>
+                <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+            </Textbox>
+            <Textbox Name="OrderNoCaption_SalesShptHeader2">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value />
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <Top>7.9321cm</Top>
+              <Left>0.14099cm</Left>
+              <Height>0.42334cm</Height>
+              <Width>3.71258cm</Width>
+              <ZIndex>39</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+            </Textbox>
+            <Textbox Name="ShippingAgent">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value />
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <Top>7.89682cm</Top>
+              <Left>3.85353cm</Left>
+              <Height>0.42334cm</Height>
+              <Width>14.28278cm</Width>
+              <ZIndex>40</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
             </Textbox>
@@ -4217,6 +4271,18 @@ End Function
         </Field>
         <Field Name="Shipped_From_Lbl">
           <DataField>Shipped_From_Lbl</DataField>
+        </Field>
+        <Field Name="Package_Tracking_No">
+          <DataField>Package_Tracking_No</DataField>
+        </Field>
+        <Field Name="Shipping_Agent_Code">
+          <DataField>Shipping_Agent_Code</DataField>
+        </Field>
+        <Field Name="PackageTrackingNo">
+          <DataField>PackageTrackingNo</DataField>
+        </Field>
+        <Field Name="ShippingAgent">
+          <DataField>ShippingAgent</DataField>
         </Field>
         <Field Name="DimText">
           <DataField>DimText</DataField>
