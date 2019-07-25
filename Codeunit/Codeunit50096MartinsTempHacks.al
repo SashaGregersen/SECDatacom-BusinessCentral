@@ -1,5 +1,6 @@
 codeunit 50096 "Temp Hacks"
 {
+    Permissions = TableData "Sales Shipment Line" = rimd;
     trigger OnRun()
     var
         Purchheader: Record "Purchase Header";
