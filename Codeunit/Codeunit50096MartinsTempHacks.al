@@ -17,10 +17,13 @@ codeunit 50096 "Temp Hacks"
 
     procedure RunHack()
     var
-        WarehousePick: Report "Create Invt Put-away/Pick/Mvmt";
+        salesshipment: record "Sales Shipment line";
+        SalesLine: Record "Sales Line";
     begin
-        WarehousePick.Run();
-
+        Salesline.get(SalesLine."Document Type"::Order, '213120000160', 10000);
+        salesshipment.get('213130000207', 10000);
+        salesshipment."Claim Amount" := SalesLine."Claim Amount";
+        salesshipment.Modify(false);
     end;
 
     procedure UpdateSalesLine2()
