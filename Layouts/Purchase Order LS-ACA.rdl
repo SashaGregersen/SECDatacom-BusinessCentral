@@ -19,7 +19,7 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>27.43355cm</Width>
+                  <Width>27.4994cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -215,7 +215,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                     <Width>3.88399in</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>3.9913in</Width>
+                                    <Width>3.06422in</Width>
                                   </TablixColumn>
                                   <TablixColumn>
                                     <Width>0.62275in</Width>
@@ -225,6 +225,9 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                   </TablixColumn>
                                   <TablixColumn>
                                     <Width>0.84193in</Width>
+                                  </TablixColumn>
+                                  <TablixColumn>
+                                    <Width>0.98425in</Width>
                                   </TablixColumn>
                                   <TablixColumn>
                                     <Width>0.77698in</Width>
@@ -320,7 +323,6 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
-                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell>
@@ -389,6 +391,36 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
+                                          <Textbox Name="Textbox229">
+                                            <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Paragraphs>
+                                              <Paragraph>
+                                                <TextRuns>
+                                                  <TextRun>
+                                                    <Value>=Fields!BidNoLbl.Value</Value>
+                                                    <Style>
+                                                      <FontFamily>Segoe UI</FontFamily>
+                                                      <FontSize>8pt</FontSize>
+                                                      <FontWeight>Bold</FontWeight>
+                                                    </Style>
+                                                  </TextRun>
+                                                </TextRuns>
+                                                <Style>
+                                                  <TextAlign>Right</TextAlign>
+                                                </Style>
+                                              </Paragraph>
+                                            </Paragraphs>
+                                            <rd:DefaultName>Textbox229</rd:DefaultName>
+                                            <Style>
+                                              <VerticalAlign>Bottom</VerticalAlign>
+                                              <PaddingLeft>5pt</PaddingLeft>
+                                            </Style>
+                                          </Textbox>
+                                        </CellContents>
+                                      </TablixCell>
+                                      <TablixCell>
+                                        <CellContents>
                                           <Textbox Name="textbox40">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
@@ -449,9 +481,10 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <PaddingBottom>2pt</PaddingBottom>
                                             </Style>
                                           </Textbox>
-                                          <ColSpan>6</ColSpan>
+                                          <ColSpan>7</ColSpan>
                                         </CellContents>
                                       </TablixCell>
+                                      <TablixCell />
                                       <TablixCell />
                                       <TablixCell />
                                       <TablixCell />
@@ -487,9 +520,10 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <PaddingBottom>2pt</PaddingBottom>
                                             </Style>
                                           </Textbox>
-                                          <ColSpan>6</ColSpan>
+                                          <ColSpan>7</ColSpan>
                                         </CellContents>
                                       </TablixCell>
+                                      <TablixCell />
                                       <TablixCell />
                                       <TablixCell />
                                       <TablixCell />
@@ -661,6 +695,37 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
+                                          <Textbox Name="Textbox230">
+                                            <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Paragraphs>
+                                              <Paragraph>
+                                                <TextRuns>
+                                                  <TextRun>
+                                                    <Value>=Fields!BidNo.Value</Value>
+                                                    <Style>
+                                                      <FontFamily>Segoe UI</FontFamily>
+                                                      <FontSize>8pt</FontSize>
+                                                      <NumeralVariant>2</NumeralVariant>
+                                                    </Style>
+                                                  </TextRun>
+                                                </TextRuns>
+                                                <Style>
+                                                  <TextAlign>Right</TextAlign>
+                                                </Style>
+                                              </Paragraph>
+                                            </Paragraphs>
+                                            <rd:DefaultName>Textbox230</rd:DefaultName>
+                                            <Style>
+                                              <VerticalAlign>Top</VerticalAlign>
+                                              <PaddingLeft>5pt</PaddingLeft>
+                                            </Style>
+                                          </Textbox>
+                                          <rd:Selected>true</rd:Selected>
+                                        </CellContents>
+                                      </TablixCell>
+                                      <TablixCell>
+                                        <CellContents>
                                           <Textbox Name="textbox67">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
@@ -786,9 +851,10 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
-                                          <ColSpan>3</ColSpan>
+                                          <ColSpan>4</ColSpan>
                                         </CellContents>
                                       </TablixCell>
+                                      <TablixCell />
                                       <TablixCell />
                                       <TablixCell />
                                     </TablixCells>
@@ -894,9 +960,10 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
-                                          <ColSpan>4</ColSpan>
+                                          <ColSpan>5</ColSpan>
                                         </CellContents>
                                       </TablixCell>
+                                      <TablixCell />
                                       <TablixCell />
                                       <TablixCell />
                                       <TablixCell />
@@ -985,9 +1052,10 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
-                                          <ColSpan>4</ColSpan>
+                                          <ColSpan>5</ColSpan>
                                         </CellContents>
                                       </TablixCell>
+                                      <TablixCell />
                                       <TablixCell />
                                       <TablixCell />
                                       <TablixCell />
@@ -1029,6 +1097,35 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                       <TablixCell />
                                       <TablixCell />
                                       <TablixCell />
+                                      <TablixCell>
+                                        <CellContents>
+                                          <Textbox Name="Textbox232">
+                                            <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Paragraphs>
+                                              <Paragraph>
+                                                <TextRuns>
+                                                  <TextRun>
+                                                    <Value />
+                                                    <Style>
+                                                      <FontFamily>Segoe UI</FontFamily>
+                                                      <FontSize>8pt</FontSize>
+                                                      <FontWeight>Bold</FontWeight>
+                                                    </Style>
+                                                  </TextRun>
+                                                </TextRuns>
+                                                <Style />
+                                              </Paragraph>
+                                            </Paragraphs>
+                                            <rd:DefaultName>Textbox232</rd:DefaultName>
+                                            <Style>
+                                              <Border />
+                                              <VerticalAlign>Top</VerticalAlign>
+                                              <PaddingLeft>5pt</PaddingLeft>
+                                            </Style>
+                                          </Textbox>
+                                        </CellContents>
+                                      </TablixCell>
                                       <TablixCell>
                                         <CellContents>
                                           <Textbox Name="Textbox7">
@@ -1189,9 +1286,10 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <PaddingBottom>2pt</PaddingBottom>
                                             </Style>
                                           </Textbox>
-                                          <ColSpan>2</ColSpan>
+                                          <ColSpan>3</ColSpan>
                                         </CellContents>
                                       </TablixCell>
+                                      <TablixCell />
                                       <TablixCell />
                                     </TablixCells>
                                   </TablixRow>
@@ -1317,9 +1415,10 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <PaddingBottom>2pt</PaddingBottom>
                                             </Style>
                                           </Textbox>
-                                          <ColSpan>2</ColSpan>
+                                          <ColSpan>3</ColSpan>
                                         </CellContents>
                                       </TablixCell>
+                                      <TablixCell />
                                       <TablixCell />
                                     </TablixCells>
                                   </TablixRow>
@@ -1359,6 +1458,35 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                       <TablixCell />
                                       <TablixCell />
                                       <TablixCell />
+                                      <TablixCell>
+                                        <CellContents>
+                                          <Textbox Name="Textbox233">
+                                            <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Paragraphs>
+                                              <Paragraph>
+                                                <TextRuns>
+                                                  <TextRun>
+                                                    <Value />
+                                                    <Style>
+                                                      <FontFamily>Segoe UI</FontFamily>
+                                                      <FontSize>8pt</FontSize>
+                                                      <FontWeight>Bold</FontWeight>
+                                                    </Style>
+                                                  </TextRun>
+                                                </TextRuns>
+                                                <Style />
+                                              </Paragraph>
+                                            </Paragraphs>
+                                            <rd:DefaultName>Textbox233</rd:DefaultName>
+                                            <Style>
+                                              <Border />
+                                              <VerticalAlign>Top</VerticalAlign>
+                                              <PaddingLeft>5pt</PaddingLeft>
+                                            </Style>
+                                          </Textbox>
+                                        </CellContents>
+                                      </TablixCell>
                                       <TablixCell>
                                         <CellContents>
                                           <Textbox Name="Textbox163">
@@ -1426,6 +1554,40 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                       <TablixCell />
                                       <TablixCell />
                                       <TablixCell />
+                                      <TablixCell>
+                                        <CellContents>
+                                          <Textbox Name="Textbox235">
+                                            <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Paragraphs>
+                                              <Paragraph>
+                                                <TextRuns>
+                                                  <TextRun>
+                                                    <Value />
+                                                    <Style>
+                                                      <FontFamily>Segoe UI</FontFamily>
+                                                      <FontSize>8pt</FontSize>
+                                                      <FontWeight>Bold</FontWeight>
+                                                    </Style>
+                                                  </TextRun>
+                                                </TextRuns>
+                                                <Style />
+                                              </Paragraph>
+                                            </Paragraphs>
+                                            <rd:DefaultName>Textbox235</rd:DefaultName>
+                                            <Style>
+                                              <Border>
+                                                <Style>None</Style>
+                                              </Border>
+                                              <TopBorder>
+                                                <Style>Solid</Style>
+                                              </TopBorder>
+                                              <VerticalAlign>Top</VerticalAlign>
+                                              <PaddingLeft>5pt</PaddingLeft>
+                                            </Style>
+                                          </Textbox>
+                                        </CellContents>
+                                      </TablixCell>
                                       <TablixCell>
                                         <CellContents>
                                           <Textbox Name="Textbox142">
@@ -1590,9 +1752,10 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <PaddingBottom>2pt</PaddingBottom>
                                             </Style>
                                           </Textbox>
-                                          <ColSpan>2</ColSpan>
+                                          <ColSpan>3</ColSpan>
                                         </CellContents>
                                       </TablixCell>
+                                      <TablixCell />
                                       <TablixCell />
                                     </TablixCells>
                                   </TablixRow>
@@ -1632,6 +1795,35 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                       <TablixCell />
                                       <TablixCell />
                                       <TablixCell />
+                                      <TablixCell>
+                                        <CellContents>
+                                          <Textbox Name="Textbox237">
+                                            <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Paragraphs>
+                                              <Paragraph>
+                                                <TextRuns>
+                                                  <TextRun>
+                                                    <Value />
+                                                    <Style>
+                                                      <FontFamily>Segoe UI</FontFamily>
+                                                      <FontSize>8pt</FontSize>
+                                                      <FontWeight>Bold</FontWeight>
+                                                    </Style>
+                                                  </TextRun>
+                                                </TextRuns>
+                                                <Style />
+                                              </Paragraph>
+                                            </Paragraphs>
+                                            <rd:DefaultName>Textbox237</rd:DefaultName>
+                                            <Style>
+                                              <Border />
+                                              <VerticalAlign>Top</VerticalAlign>
+                                              <PaddingLeft>5pt</PaddingLeft>
+                                            </Style>
+                                          </Textbox>
+                                        </CellContents>
+                                      </TablixCell>
                                       <TablixCell>
                                         <CellContents>
                                           <Textbox Name="Textbox265">
@@ -1699,6 +1891,40 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                       <TablixCell />
                                       <TablixCell />
                                       <TablixCell />
+                                      <TablixCell>
+                                        <CellContents>
+                                          <Textbox Name="Textbox238">
+                                            <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Paragraphs>
+                                              <Paragraph>
+                                                <TextRuns>
+                                                  <TextRun>
+                                                    <Value />
+                                                    <Style>
+                                                      <FontFamily>Segoe UI</FontFamily>
+                                                      <FontSize>8pt</FontSize>
+                                                      <FontWeight>Bold</FontWeight>
+                                                    </Style>
+                                                  </TextRun>
+                                                </TextRuns>
+                                                <Style />
+                                              </Paragraph>
+                                            </Paragraphs>
+                                            <rd:DefaultName>Textbox238</rd:DefaultName>
+                                            <Style>
+                                              <Border>
+                                                <Style>None</Style>
+                                              </Border>
+                                              <TopBorder>
+                                                <Style>Solid</Style>
+                                              </TopBorder>
+                                              <VerticalAlign>Top</VerticalAlign>
+                                              <PaddingLeft>5pt</PaddingLeft>
+                                            </Style>
+                                          </Textbox>
+                                        </CellContents>
+                                      </TablixCell>
                                       <TablixCell>
                                         <CellContents>
                                           <Textbox Name="Textbox132">
@@ -1827,6 +2053,32 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                       <TablixCell />
                                       <TablixCell>
                                         <CellContents>
+                                          <Textbox Name="Textbox239">
+                                            <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Paragraphs>
+                                              <Paragraph>
+                                                <TextRuns>
+                                                  <TextRun>
+                                                    <Value />
+                                                    <Style>
+                                                      <FontSize>9pt</FontSize>
+                                                      <FontWeight>Bold</FontWeight>
+                                                    </Style>
+                                                  </TextRun>
+                                                </TextRuns>
+                                                <Style />
+                                              </Paragraph>
+                                            </Paragraphs>
+                                            <rd:DefaultName>Textbox239</rd:DefaultName>
+                                            <Style>
+                                              <PaddingLeft>5pt</PaddingLeft>
+                                            </Style>
+                                          </Textbox>
+                                        </CellContents>
+                                      </TablixCell>
+                                      <TablixCell>
+                                        <CellContents>
                                           <Textbox Name="textbox116">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
@@ -1944,6 +2196,33 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                       <TablixCell />
                                       <TablixCell>
                                         <CellContents>
+                                          <Textbox Name="Textbox240">
+                                            <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Paragraphs>
+                                              <Paragraph>
+                                                <TextRuns>
+                                                  <TextRun>
+                                                    <Value />
+                                                    <Style>
+                                                      <FontFamily>Segoe UI</FontFamily>
+                                                      <FontSize>8pt</FontSize>
+                                                    </Style>
+                                                  </TextRun>
+                                                </TextRuns>
+                                                <Style />
+                                              </Paragraph>
+                                            </Paragraphs>
+                                            <rd:DefaultName>Textbox240</rd:DefaultName>
+                                            <Style>
+                                              <VerticalAlign>Top</VerticalAlign>
+                                              <PaddingLeft>5pt</PaddingLeft>
+                                            </Style>
+                                          </Textbox>
+                                        </CellContents>
+                                      </TablixCell>
+                                      <TablixCell>
+                                        <CellContents>
                                           <Textbox Name="textbox256">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
@@ -2011,6 +2290,35 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                       <TablixCell />
                                       <TablixCell>
                                         <CellContents>
+                                          <Textbox Name="Textbox242">
+                                            <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Paragraphs>
+                                              <Paragraph>
+                                                <TextRuns>
+                                                  <TextRun>
+                                                    <Value />
+                                                    <Style>
+                                                      <FontFamily>Segoe UI</FontFamily>
+                                                      <FontSize>8pt</FontSize>
+                                                      <FontWeight>Bold</FontWeight>
+                                                    </Style>
+                                                  </TextRun>
+                                                </TextRuns>
+                                                <Style />
+                                              </Paragraph>
+                                            </Paragraphs>
+                                            <rd:DefaultName>Textbox242</rd:DefaultName>
+                                            <Style>
+                                              <Border />
+                                              <VerticalAlign>Top</VerticalAlign>
+                                              <PaddingLeft>5pt</PaddingLeft>
+                                            </Style>
+                                          </Textbox>
+                                        </CellContents>
+                                      </TablixCell>
+                                      <TablixCell>
+                                        <CellContents>
                                           <Textbox Name="Textbox223">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
@@ -2076,6 +2384,37 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                       <TablixCell />
                                       <TablixCell />
                                       <TablixCell />
+                                      <TablixCell>
+                                        <CellContents>
+                                          <Textbox Name="Textbox243">
+                                            <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Paragraphs>
+                                              <Paragraph>
+                                                <TextRuns>
+                                                  <TextRun>
+                                                    <Value />
+                                                    <Style>
+                                                      <FontFamily>Segoe UI</FontFamily>
+                                                      <FontSize>8pt</FontSize>
+                                                      <FontWeight>Bold</FontWeight>
+                                                    </Style>
+                                                  </TextRun>
+                                                </TextRuns>
+                                                <Style />
+                                              </Paragraph>
+                                            </Paragraphs>
+                                            <rd:DefaultName>Textbox243</rd:DefaultName>
+                                            <Style>
+                                              <TopBorder>
+                                                <Style>Solid</Style>
+                                              </TopBorder>
+                                              <VerticalAlign>Top</VerticalAlign>
+                                              <PaddingLeft>5pt</PaddingLeft>
+                                            </Style>
+                                          </Textbox>
+                                        </CellContents>
+                                      </TablixCell>
                                       <TablixCell>
                                         <CellContents>
                                           <Textbox Name="Textbox264">
@@ -2207,6 +2546,35 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                       <TablixCell />
                                       <TablixCell>
                                         <CellContents>
+                                          <Textbox Name="Textbox244">
+                                            <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Paragraphs>
+                                              <Paragraph>
+                                                <TextRuns>
+                                                  <TextRun>
+                                                    <Value />
+                                                    <Style>
+                                                      <FontFamily>Segoe UI</FontFamily>
+                                                      <FontSize>8pt</FontSize>
+                                                      <FontWeight>Bold</FontWeight>
+                                                    </Style>
+                                                  </TextRun>
+                                                </TextRuns>
+                                                <Style />
+                                              </Paragraph>
+                                            </Paragraphs>
+                                            <rd:DefaultName>Textbox244</rd:DefaultName>
+                                            <Style>
+                                              <Border />
+                                              <VerticalAlign>Top</VerticalAlign>
+                                              <PaddingLeft>5pt</PaddingLeft>
+                                            </Style>
+                                          </Textbox>
+                                        </CellContents>
+                                      </TablixCell>
+                                      <TablixCell>
+                                        <CellContents>
                                           <Textbox Name="textbox162">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
@@ -2330,6 +2698,33 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                       <TablixCell />
                                       <TablixCell>
                                         <CellContents>
+                                          <Textbox Name="Textbox247">
+                                            <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Paragraphs>
+                                              <Paragraph>
+                                                <TextRuns>
+                                                  <TextRun>
+                                                    <Value />
+                                                    <Style>
+                                                      <FontFamily>Segoe UI</FontFamily>
+                                                      <FontSize>8pt</FontSize>
+                                                    </Style>
+                                                  </TextRun>
+                                                </TextRuns>
+                                                <Style />
+                                              </Paragraph>
+                                            </Paragraphs>
+                                            <rd:DefaultName>Textbox247</rd:DefaultName>
+                                            <Style>
+                                              <VerticalAlign>Top</VerticalAlign>
+                                              <PaddingLeft>5pt</PaddingLeft>
+                                            </Style>
+                                          </Textbox>
+                                        </CellContents>
+                                      </TablixCell>
+                                      <TablixCell>
+                                        <CellContents>
                                           <Textbox Name="textbox277">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
@@ -2397,6 +2792,35 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                       <TablixCell />
                                       <TablixCell>
                                         <CellContents>
+                                          <Textbox Name="Textbox248">
+                                            <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Paragraphs>
+                                              <Paragraph>
+                                                <TextRuns>
+                                                  <TextRun>
+                                                    <Value />
+                                                    <Style>
+                                                      <FontFamily>Segoe UI</FontFamily>
+                                                      <FontSize>8pt</FontSize>
+                                                      <FontWeight>Bold</FontWeight>
+                                                    </Style>
+                                                  </TextRun>
+                                                </TextRuns>
+                                                <Style />
+                                              </Paragraph>
+                                            </Paragraphs>
+                                            <rd:DefaultName>Textbox248</rd:DefaultName>
+                                            <Style>
+                                              <Border />
+                                              <VerticalAlign>Top</VerticalAlign>
+                                              <PaddingLeft>5pt</PaddingLeft>
+                                            </Style>
+                                          </Textbox>
+                                        </CellContents>
+                                      </TablixCell>
+                                      <TablixCell>
+                                        <CellContents>
                                           <Textbox Name="Textbox245">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
@@ -2462,6 +2886,37 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                       <TablixCell />
                                       <TablixCell />
                                       <TablixCell />
+                                      <TablixCell>
+                                        <CellContents>
+                                          <Textbox Name="Textbox249">
+                                            <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Paragraphs>
+                                              <Paragraph>
+                                                <TextRuns>
+                                                  <TextRun>
+                                                    <Value />
+                                                    <Style>
+                                                      <FontFamily>Segoe UI</FontFamily>
+                                                      <FontSize>8pt</FontSize>
+                                                      <FontWeight>Bold</FontWeight>
+                                                    </Style>
+                                                  </TextRun>
+                                                </TextRuns>
+                                                <Style />
+                                              </Paragraph>
+                                            </Paragraphs>
+                                            <rd:DefaultName>Textbox249</rd:DefaultName>
+                                            <Style>
+                                              <TopBorder>
+                                                <Style>Solid</Style>
+                                              </TopBorder>
+                                              <VerticalAlign>Top</VerticalAlign>
+                                              <PaddingLeft>5pt</PaddingLeft>
+                                            </Style>
+                                          </Textbox>
+                                        </CellContents>
+                                      </TablixCell>
                                       <TablixCell>
                                         <CellContents>
                                           <Textbox Name="Textbox263">
@@ -2593,6 +3048,35 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                       <TablixCell />
                                       <TablixCell>
                                         <CellContents>
+                                          <Textbox Name="Textbox250">
+                                            <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Paragraphs>
+                                              <Paragraph>
+                                                <TextRuns>
+                                                  <TextRun>
+                                                    <Value />
+                                                    <Style>
+                                                      <FontFamily>Segoe UI</FontFamily>
+                                                      <FontSize>8pt</FontSize>
+                                                      <FontWeight>Bold</FontWeight>
+                                                    </Style>
+                                                  </TextRun>
+                                                </TextRuns>
+                                                <Style />
+                                              </Paragraph>
+                                            </Paragraphs>
+                                            <rd:DefaultName>Textbox250</rd:DefaultName>
+                                            <Style>
+                                              <Border />
+                                              <VerticalAlign>Top</VerticalAlign>
+                                              <PaddingLeft>5pt</PaddingLeft>
+                                            </Style>
+                                          </Textbox>
+                                        </CellContents>
+                                      </TablixCell>
+                                      <TablixCell>
+                                        <CellContents>
                                           <Textbox Name="textbox438">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
@@ -2715,6 +3199,33 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                       <TablixCell />
                                       <TablixCell>
                                         <CellContents>
+                                          <Textbox Name="Textbox251">
+                                            <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Paragraphs>
+                                              <Paragraph>
+                                                <TextRuns>
+                                                  <TextRun>
+                                                    <Value />
+                                                    <Style>
+                                                      <FontFamily>Segoe UI</FontFamily>
+                                                      <FontSize>8pt</FontSize>
+                                                    </Style>
+                                                  </TextRun>
+                                                </TextRuns>
+                                                <Style />
+                                              </Paragraph>
+                                            </Paragraphs>
+                                            <rd:DefaultName>Textbox251</rd:DefaultName>
+                                            <Style>
+                                              <VerticalAlign>Top</VerticalAlign>
+                                              <PaddingLeft>5pt</PaddingLeft>
+                                            </Style>
+                                          </Textbox>
+                                        </CellContents>
+                                      </TablixCell>
+                                      <TablixCell>
+                                        <CellContents>
                                           <Textbox Name="textbox303">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
@@ -2832,6 +3343,33 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                       <TablixCell />
                                       <TablixCell>
                                         <CellContents>
+                                          <Textbox Name="Textbox252">
+                                            <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Paragraphs>
+                                              <Paragraph>
+                                                <TextRuns>
+                                                  <TextRun>
+                                                    <Value />
+                                                    <Style>
+                                                      <FontFamily>Segoe UI</FontFamily>
+                                                      <FontSize>8pt</FontSize>
+                                                    </Style>
+                                                  </TextRun>
+                                                </TextRuns>
+                                                <Style />
+                                              </Paragraph>
+                                            </Paragraphs>
+                                            <rd:DefaultName>Textbox252</rd:DefaultName>
+                                            <Style>
+                                              <VerticalAlign>Top</VerticalAlign>
+                                              <PaddingLeft>5pt</PaddingLeft>
+                                            </Style>
+                                          </Textbox>
+                                        </CellContents>
+                                      </TablixCell>
+                                      <TablixCell>
+                                        <CellContents>
                                           <Textbox Name="textbox358">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
@@ -2865,6 +3403,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                               </TablixBody>
                               <TablixColumnHierarchy>
                                 <TablixMembers>
+                                  <TablixMember />
                                   <TablixMember />
                                   <TablixMember />
                                   <TablixMember />
@@ -3065,7 +3604,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                               <Top>0.03167cm</Top>
                               <Left>0.00632cm</Left>
                               <Height>7.19662cm</Height>
-                              <Width>10.76688in</Width>
+                              <Width>10.82405in</Width>
                               <ZIndex>1</ZIndex>
                               <Style />
                             </Tablix>
@@ -10336,14 +10875,14 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
             <DataSetName>DataSet_Result</DataSetName>
             <Left>0.04795cm</Left>
             <Height>31.25278cm</Height>
-            <Width>27.43355cm</Width>
+            <Width>27.4994cm</Width>
             <Style />
           </Tablix>
         </ReportItems>
         <Height>31.3cm</Height>
         <Style />
       </Body>
-      <Width>27.4815cm</Width>
+      <Width>27.54735cm</Width>
       <Page>
         <PageHeader>
           <Height>8.25902cm</Height>
@@ -12109,6 +12648,9 @@ End Function</Code>
         </Field>
         <Field Name="VendorItemNo">
           <DataField>VendorItemNo</DataField>
+        </Field>
+        <Field Name="BidNoLbl">
+          <DataField>BidNoLbl</DataField>
         </Field>
         <Field Name="Claimable">
           <DataField>Claimable</DataField>
