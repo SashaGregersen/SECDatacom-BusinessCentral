@@ -4278,6 +4278,7 @@ End Function
         <Field Name="Shipped_From_Lbl">
           <DataField>Shipped_From_Lbl</DataField>
         </Field>
+<<<<<<< HEAD
         <Field Name="your_Orderlbl">
           <DataField>your_Orderlbl</DataField>
         </Field>
@@ -4293,6 +4294,8 @@ End Function
         <Field Name="ShippingAgent">
           <DataField>ShippingAgent</DataField>
         </Field>
+=======
+>>>>>>> e5352d6ba2036d6329f2c0cbcd19ce6f52af78d2
         <Field Name="DimText">
           <DataField>DimText</DataField>
         </Field>
