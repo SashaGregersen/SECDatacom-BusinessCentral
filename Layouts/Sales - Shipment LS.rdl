@@ -4272,18 +4272,6 @@ End Function
         <Field Name="Shipped_From_Lbl">
           <DataField>Shipped_From_Lbl</DataField>
         </Field>
-        <Field Name="Package_Tracking_No">
-          <DataField>Package_Tracking_No</DataField>
-        </Field>
-        <Field Name="Shipping_Agent_Code">
-          <DataField>Shipping_Agent_Code</DataField>
-        </Field>
-        <Field Name="PackageTrackingNo">
-          <DataField>PackageTrackingNo</DataField>
-        </Field>
-        <Field Name="ShippingAgent">
-          <DataField>ShippingAgent</DataField>
-        </Field>
         <Field Name="DimText">
           <DataField>DimText</DataField>
         </Field>

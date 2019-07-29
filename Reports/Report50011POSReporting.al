@@ -1152,7 +1152,7 @@ report 50011 "POS Reporting"
     end;
 
     var
-        VendorCode: code[20];
+        VendorCode: Text[250];
         SalesHeader: record "Sales Header";
         BidUnitPurchasePrice: Decimal;
         Currency: code[10];
