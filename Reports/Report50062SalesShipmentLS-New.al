@@ -1,9 +1,9 @@
-report 50062 "SEC Sales - Shipment LS-ACA"
+report 50062 "SEC Sales - Shipment LS-New"
 {
     // version NAVW113.00
 
     DefaultLayout = RDLC;
-    RDLCLayout = './Layouts/Sales - Shipment LS-ACA.rdl';
+    RDLCLayout = './Layouts/Sales - Shipment LS-New.rdl';
     Caption = 'Sales - Shipment';
     PreviewMode = PrintLayout;
 

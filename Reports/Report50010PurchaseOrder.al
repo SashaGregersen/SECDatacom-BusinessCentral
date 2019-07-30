@@ -4,6 +4,7 @@ report 50010 "SEC Purchase Order"
 
     DefaultLayout = RDLC;
     RDLCLayout = './Layouts/Purchase Order LS.rdl';
+    ;
     Caption = 'Purchase Order';
     PreviewMode = PrintLayout;
 

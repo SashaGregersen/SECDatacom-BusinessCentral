@@ -320,7 +320,6 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
-                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell>
@@ -10418,8 +10417,8 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                 </Paragraph>
               </Paragraphs>
               <Top>5.78018cm</Top>
-              <Left>4.07687cm</Left>
-              <Height>11pt</Height>
+              <Left>4.11214cm</Left>
+              <Height>11.92649pt</Height>
               <Width>16.50086cm</Width>
               <ZIndex>2</ZIndex>
               <Style>
@@ -10519,10 +10518,10 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>5.36686cm</Top>
-              <Left>4.07687cm</Left>
-              <Height>11pt</Height>
-              <Width>8.72211cm</Width>
+              <Top>5.42917cm</Top>
+              <Left>4.08954cm</Left>
+              <Height>12.00035pt</Height>
+              <Width>8.63199cm</Width>
               <ZIndex>6</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -10827,9 +10826,9 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>3.0302in</Top>
+              <Top>3.04277in</Top>
               <Left>4.11215cm</Left>
-              <Height>11pt</Height>
+              <Height>10.09468pt</Height>
               <Width>16.46558cm</Width>
               <ZIndex>18</ZIndex>
               <Style>
@@ -10855,8 +10854,8 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                 </Paragraph>
               </Paragraphs>
               <Top>6.20092cm</Top>
-              <Left>4.11022cm</Left>
-              <Height>11pt</Height>
+              <Left>4.08954cm</Left>
+              <Height>9.72602pt</Height>
               <Width>16.50086cm</Width>
               <ZIndex>19</ZIndex>
               <Style>
@@ -11168,8 +11167,8 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>4.36554cm</Top>
-              <Left>0.05427cm</Left>
+              <Top>4.55075cm</Top>
+              <Left>0.04795cm</Left>
               <Height>11pt</Height>
               <Width>12.72515cm</Width>
               <ZIndex>30</ZIndex>
@@ -11193,8 +11192,8 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>4.01276cm</Top>
-              <Left>0.05427cm</Left>
+              <Top>4.19797cm</Top>
+              <Left>0.04795cm</Left>
               <Height>11pt</Height>
               <Width>12.72515cm</Width>
               <ZIndex>31</ZIndex>
@@ -11218,8 +11217,8 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>3.65999cm</Top>
-              <Left>0.05427cm</Left>
+              <Top>3.8452cm</Top>
+              <Left>0.04795cm</Left>
               <Height>11pt</Height>
               <Width>12.72515cm</Width>
               <ZIndex>32</ZIndex>
@@ -11243,8 +11242,8 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>3.31082cm</Top>
-              <Left>0.05427cm</Left>
+              <Top>3.49603cm</Top>
+              <Left>0.04795cm</Left>
               <Height>11pt</Height>
               <Width>12.72515cm</Width>
               <ZIndex>33</ZIndex>
@@ -11268,8 +11267,8 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>2.99333cm</Top>
-              <Left>0.05427cm</Left>
+              <Top>3.17854cm</Top>
+              <Left>0.04795cm</Left>
               <Height>11pt</Height>
               <Width>12.72515cm</Width>
               <ZIndex>34</ZIndex>
@@ -11293,8 +11292,8 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>2.57cm</Top>
-              <Left>0.05427cm</Left>
+              <Top>2.75521cm</Top>
+              <Left>0.04795cm</Left>
               <Height>11pt</Height>
               <Width>12.72515cm</Width>
               <ZIndex>35</ZIndex>
@@ -11318,8 +11317,8 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>2.21722cm</Top>
-              <Left>0.05427cm</Left>
+              <Top>2.40243cm</Top>
+              <Left>0.04795cm</Left>
               <Height>11pt</Height>
               <Width>12.72515cm</Width>
               <ZIndex>36</ZIndex>
@@ -11343,8 +11342,8 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>0.87292in</Top>
-              <Left>0.05427cm</Left>
+              <Top>0.94584in</Top>
+              <Left>0.04795cm</Left>
               <Height>11pt</Height>
               <Width>12.062cm</Width>
               <ZIndex>37</ZIndex>
@@ -11454,7 +11453,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               </Paragraphs>
               <Top>6.98782cm</Top>
               <Left>4.07687cm</Left>
-              <Height>11pt</Height>
+              <Height>9.99978pt</Height>
               <Width>16.50086cm</Width>
               <ZIndex>41</ZIndex>
               <Style>
@@ -11555,7 +11554,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>6.5925cm</Top>
+              <Top>6.57931cm</Top>
               <Left>4.07687cm</Left>
               <Height>11pt</Height>
               <Width>16.50086cm</Width>

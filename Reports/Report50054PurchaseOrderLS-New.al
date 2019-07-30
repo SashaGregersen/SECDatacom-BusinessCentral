@@ -1,9 +1,9 @@
-report 50054 "SEC Purchase Order-ACA.Al"
+report 50054 "SEC Purchase Order-New.Al"
 {
     // version NAVW113.01
 
     DefaultLayout = RDLC;
-    RDLCLayout = './Layouts/Purchase Order LS-ACA.rdl';
+    RDLCLayout = './Layouts/Purchase Order LS-New.rdl';
     Caption = 'Purchase Order';
     PreviewMode = PrintLayout;
 

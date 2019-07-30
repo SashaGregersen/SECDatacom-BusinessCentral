@@ -2,7 +2,7 @@ report 50014 "SEC - Sales Invoice LS"
 {
     // version NAVW113.00
 
-    RDLCLayout = './Layouts/Standard Sales - Invoice LS.rdl';
+    RDLCLayout = './Layouts/Standard Sales - Invoice LS-New.rdl';
     //WordLayout = './Standard Sales - Invoice.docx';
     Caption = 'Sales - Invoice';
     DefaultLayout = RDLC;
