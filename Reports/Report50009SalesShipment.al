@@ -3,7 +3,7 @@ report 50009 "SEC Sales - Shipment"
     // version NAVW113.00
 
     DefaultLayout = RDLC;
-    RDLCLayout = './Layouts/Sales - Shipment LS.rdl';
+    RDLCLayout = './Layouts/Sales - Shipment.rdl';
     Caption = 'Sales - Shipment';
     PreviewMode = PrintLayout;
 

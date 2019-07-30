@@ -1,9 +1,9 @@
-report 50016 "SEC Sales - Shipment LS"
+report 50062 "SEC Sales - Shipment LS-ACA"
 {
     // version NAVW113.00
 
     DefaultLayout = RDLC;
-    RDLCLayout = './Layouts/Sales - Shipment LS.rdl';
+    RDLCLayout = './Layouts/Sales - Shipment LS-ACA.rdl';
     Caption = 'Sales - Shipment';
     PreviewMode = PrintLayout;
 
@@ -200,7 +200,7 @@ report 50016 "SEC Sales - Shipment LS"
                     {
                     }
                     //NC adding new label
-                    Column(your_Orderlbl; YourOrderlbl)
+                    Column(YourOrderlbl; YourOrderlbl)
                     {
                     }
                     //<< NC adding Preferred Sender Adress
