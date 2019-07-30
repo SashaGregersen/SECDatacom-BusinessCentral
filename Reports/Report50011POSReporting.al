@@ -986,7 +986,7 @@ report 50011 "POS Reporting"
     local procedure ClearValues()
     begin
         clear(VARIDInt);
-        clear(VendorCode);
+        //clear(VendorCode);
         clear(ICPartnerCode);
         Clear(ICPartnerCode2);
         Clear(ShipmentNo);
