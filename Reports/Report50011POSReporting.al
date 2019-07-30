@@ -99,6 +99,10 @@ report 50011 "POS Reporting"
             {
 
             }
+            column(VendorNo; VendorNo)
+            {
+
+            }
 
             dataitem("Sales Invoice Header"; "Sales Invoice Header")
             {
@@ -345,6 +349,7 @@ report 50011 "POS Reporting"
                     ICPartnerCode := Customer."IC Partner Code";
                 end;
                 item.get(Sales_Invoice_Line."No.");
+                VendorNo := item."Vendor No.";
                 VendorItemNo := item."Vendor-Item-No.";
                 VARID.SetRange("Customer No.", SalesInvHeader.Reseller);
                 VARID.SetRange("Vendor No.", item."Vendor No.");
@@ -385,6 +390,8 @@ report 50011 "POS Reporting"
                                     PurchOrderPostDate := PurchInvLine."Posting Date";
                                     PurchCostPrice := PurchInvLine."Unit Cost";
                                     StandardCostPercentage := FindPurchaseDisc(PurchasePrice, Item, PurchOrderPostDate);
+                                    if Sales_Invoice_Line."Bid No." = '' then
+                                        Currency := PurchInvHeader."Currency Code";
                                 end else begin
                                     PurchLine.SetRange("Document Type", PurchLine."Document Type"::Order);
                                     PurchLine.SetRange("Document No.", PurchRcptLine."Order No.");
@@ -395,6 +402,8 @@ report 50011 "POS Reporting"
                                         PurchOrderPostDate := PurchHeader."Posting Date";
                                         PurchCostPrice := PurchLine."Unit Cost";
                                         StandardCostPercentage := FindPurchaseDisc(PurchasePrice, Item, PurchOrderPostDate);
+                                        if Sales_Invoice_Line."Bid No." = '' then
+                                            Currency := PurchHeader."Currency Code";
                                     end;
                                 end;
                                 // Find PurchCostPrice on purchase
@@ -492,6 +501,10 @@ report 50011 "POS Reporting"
 
             }
             column(Return_Shipment_Posting_Date; PurchOrderPostDate)
+            {
+
+            }
+            column(VendorNo2; VendorNo)
             {
 
             }
@@ -735,6 +748,7 @@ report 50011 "POS Reporting"
                     ICPartnerCode2 := Customer."IC Partner Code";
                 end;
                 item.get("Sales Cr.Memo Line"."No.");
+                VendorNo := item."Vendor No.";
                 VendorItemNo := item."Vendor-Item-No.";
                 VARID.Reset();
                 VARID.SetRange("Customer No.", CreditMemoHeader.Reseller);
@@ -1010,7 +1024,7 @@ report 50011 "POS Reporting"
         clear(EndCustContactEmail);
         clear(EndCustContactPhone);
         Clear(StandardCostPercentage);
-
+        clear(VendorNo);
     end;
 
     local procedure UpdatePurchInfoSerialNumbersSalesInv(TempItemLedEntrySales: record "Item Ledger Entry" temporary)
@@ -1047,6 +1061,8 @@ report 50011 "POS Reporting"
                 PurchCostPrice := PurchInvLine."Unit Cost";
                 if item.get(PurchInvLine."No.") then
                     StandardCostPercentage := FindPurchaseDisc(PurchasePrice, Item, PurchOrderPostDate);
+                if Sales_Invoice_Line."Bid No." = '' then
+                    Currency := PurchInvHeader."Currency Code";
             end;
         end else begin
             ValueEntry.SetRange("Document Type", 5); // purchase receipt
@@ -1062,6 +1078,8 @@ report 50011 "POS Reporting"
                         PurchCostPrice := PurchLine."Unit Cost";
                         if item.get(PurchLine."No.") then
                             StandardCostPercentage := FindPurchaseDisc(PurchasePrice, Item, PurchOrderPostDate);
+                        if Sales_Invoice_Line."Bid No." = '' then
+                            Currency := PurchHeader."Currency Code";
                     end;
                 end;
         end;
@@ -1076,6 +1094,7 @@ report 50011 "POS Reporting"
         ItemLedgerEntryPurch: record "Item Ledger Entry";
         PurchRcptLine: record "Purch. Rcpt. Line";
         PurchInvLine: record "Purch. Inv. Line";
+        PurchInvHeader: record "Purch. Inv. Header";
         PurchLine: record "Purchase Line";
         PurchHeader: record "Purchase Header";
         Item: record Item;
@@ -1096,11 +1115,14 @@ report 50011 "POS Reporting"
                 PurchInvLine.setrange("Order No.", PurchRcptLine."Order No.");
                 PurchInvLine.SetRange("Order Line No.", PurchRcptLine."Order Line No.");
                 if PurchInvLine.findfirst then begin
+                    PurchInvHeader.get(PurchInvLine."Document No.");
                     PurchOrderNo := PurchInvLine."Order No.";
                     PurchCostPrice := PurchInvLine."Direct Unit Cost";
                     PurchOrderPostDate := PurchInvLine."Posting Date";
                     if Item.get(PurchInvLine."No.") then
                         StandardCostPercentage := FindPurchaseDisc(PurchasePrice, Item, PurchOrderPostDate);
+                    if "Sales Cr.Memo Line"."Bid No." = '' then
+                        Currency := PurchInvHeader."Currency Code";
                 end else begin
                     if PurchLine.GET(Purchline."Document Type"::Order, PurchRcptLine."Order No.", PurchRcptLine."Order Line No.") then begin
                         PurchHeader.get(PurchLine."Document Type", Purchline."Document No.");
@@ -1109,6 +1131,8 @@ report 50011 "POS Reporting"
                         PurchOrderPostDate := PurchHeader."Posting Date";
                         if Item.get(PurchLine."No.") then
                             StandardCostPercentage := FindPurchaseDisc(PurchasePrice, Item, PurchOrderPostDate);
+                        if "Sales Cr.Memo Line"."Bid No." = '' then
+                            Currency := PurchHeader."Currency Code";
                     end;
                 end;
                 if (PurchCostPrice <> 0) and (BidUnitPurchasePrice <> 0) then
@@ -1202,6 +1226,8 @@ report 50011 "POS Reporting"
         Subsidiary: code[20];
         StandardCostPercentage: Decimal;
         PurchasePrice: record "Purchase Price";
+
+        VendorNo: code[20];
 
 
 }

@@ -18,13 +18,9 @@ codeunit 50096 "Temp Hacks"
 
     procedure RunHack()
     var
-        salesshipment: record "Sales Shipment line";
-        SalesLine: Record "Sales Line";
+        UpdateItemLedgEntry: report "Update Item Ledger Entries";
     begin
-        Salesline.get(SalesLine."Document Type"::Order, '213120000160', 10000);
-        salesshipment.get('213130000207', 10000);
-        salesshipment."Claim Amount" := SalesLine."Claim Amount";
-        salesshipment.Modify(false);
+        UpdateItemLedgEntry.Run();
     end;
 
     procedure UpdateSalesLine2()

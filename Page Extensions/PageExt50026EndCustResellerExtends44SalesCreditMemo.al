@@ -157,7 +157,20 @@ pageextension 50026 "End Customer and Reseller 6" extends 44
                     SalesOrderHandler.AddTransactionTypeToSalesDocument(Rec);
                 end;
             }
+            action("Import Serial Numbers")
+            {
+                Image = ImportExcel;
+
+                trigger OnAction()
+                var
+                    ImportSerialNumberSales: Codeunit "Import Serial Number Sales";
+                begin
+                    ImportSerialNumberSales.ImportSerialNumbers(Rec);
+                end;
+            }
+
         }
+
     }
 
 }
