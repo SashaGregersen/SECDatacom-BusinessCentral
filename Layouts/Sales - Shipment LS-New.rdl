@@ -2680,7 +2680,6 @@ Cstr(Fields!Pref_Sender_Country.Value)
               </Tablix>
             </ReportItems>
             <KeepTogether>true</KeepTogether>
-            <Top>0cm</Top>
             <Left>0.00002cm</Left>
             <Height>7.54586cm</Height>
             <Width>27.34381cm</Width>
@@ -2693,7 +2692,7 @@ Cstr(Fields!Pref_Sender_Country.Value)
       <Width>27.35264cm</Width>
       <Page>
         <PageHeader>
-          <Height>9.09629cm</Height>
+          <Height>9.14991cm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <ReportItems>
             <Image Name="CompanyInfo2Picture1">
@@ -3266,12 +3265,12 @@ Cstr(Fields!Pref_Sender_Country.Value)
                     </TextRun>
                   </TextRuns>
                   <Style>
-                    <TextAlign>Right</TextAlign>
+                    <TextAlign>Left</TextAlign>
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>8.63767cm</Top>
-              <Left>2.76318cm</Left>
+              <Top>8.76185cm</Top>
+              <Left>3.85353cm</Left>
               <Height>11pt</Height>
               <Width>6.21265cm</Width>
               <ZIndex>22</ZIndex>
@@ -3298,7 +3297,7 @@ Cstr(Fields!Pref_Sender_Country.Value)
                 </Paragraph>
               </Paragraphs>
               <Top>8.28489cm</Top>
-              <Left>3.85353cm</Left>
+              <Left>3.84472cm</Left>
               <Height>11pt</Height>
               <Width>6.22146cm</Width>
               <ZIndex>23</ZIndex>

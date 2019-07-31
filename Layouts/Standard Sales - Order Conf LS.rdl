@@ -6373,23 +6373,23 @@ End Function
         <Field Name="Endcustomer_Lbl">
           <DataField>Endcustomer_Lbl</DataField>
         </Field>
-        <Field Name="EndCustName">
-          <DataField>EndCustName</DataField>
+        <Field Name="EndCustArray1">
+          <DataField>EndCustArray1</DataField>
         </Field>
-        <Field Name="EndCustAddress">
-          <DataField>EndCustAddress</DataField>
+        <Field Name="EndCustArray2">
+          <DataField>EndCustArray2</DataField>
         </Field>
-        <Field Name="EndCustAddress2">
-          <DataField>EndCustAddress2</DataField>
+        <Field Name="EndCustArray3">
+          <DataField>EndCustArray3</DataField>
         </Field>
-        <Field Name="EndCustPostcode">
-          <DataField>EndCustPostcode</DataField>
+        <Field Name="EndCustArray4">
+          <DataField>EndCustArray4</DataField>
         </Field>
-        <Field Name="EndCustCity">
-          <DataField>EndCustCity</DataField>
+        <Field Name="EndCustCityArray5">
+          <DataField>EndCustCityArray5</DataField>
         </Field>
-        <Field Name="EndCustCountry">
-          <DataField>EndCustCountry</DataField>
+        <Field Name="EndCustCountryArray6">
+          <DataField>EndCustCountryArray6</DataField>
         </Field>
         <Field Name="Suppress_Prices_on_Printouts">
           <DataField>Suppress_Prices_on_Printouts</DataField>
