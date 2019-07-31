@@ -2,7 +2,7 @@ report 50013 "SEC Sales - Order Conf. LS"
 {
     // version NAVW113.00
 
-    RDLCLayout = './Layouts/Standard Sales - Order Conf LS-New.rdl';
+    RDLCLayout = './Layouts/Standard Sales - Order Conf LS.rdl';
     //WordLayout = './Layouts/Standard Sales - Order Conf.docx';
     Caption = 'Sales - Confirmation';
     DefaultLayout = RDLC;
