@@ -450,24 +450,26 @@ report 50061 "SEC - Sales Invoice LS-New"
             column(Endcustomer_Lbl; EndcustomerLbl)
             {
             }
-            column(EndCustName; Endcustomer.Name)
+            //>>NC added array
+            column(EndCustArray1; EndCustomerArray[1])
             {
             }
-            column(EndCustAddress; Endcustomer.Address)
+            column(EndCustArray2; EndCustomerArray[2])
             {
             }
-            Column(EndCustAddress2; Endcustomer."Address 2")
+            Column(EndCustArray3; EndCustomerArray[3])
             {
             }
-            column(EndCustPostcode; Endcustomer."Post code")
+            column(EndCustArray4; EndCustomerArray[4])
             {
             }
-            column(EndCustCity; Endcustomer.City)
+            column(EndCustCityArray5; EndCustomerArray[5])
             {
             }
-            column(EndCustCountry; EndcustomerCountryRegion.Name)
+            column(EndCustCountryArray6; EndCustomerArray[6])
             {
             }
+            //NC added array
             //<<Encustomer columns
             //>>Misc columns
             column(Suppress_Prices_on_Printouts; "Suppress Prices on Printouts")
@@ -789,6 +791,7 @@ report 50061 "SEC - Sales Invoice LS-New"
 
                     OnAfterLineOnPreDataItem(Header, Line);
                 end;
+
             }
             dataitem(WorkDescriptionLines; "Integer")
             {
@@ -1170,7 +1173,15 @@ report 50061 "SEC - Sales Invoice LS-New"
                     Clear(EndcustomerCountryRegion);
                 end;
                 //<<NC
-
+                //>>NC Arraylist
+                EndCustomerArray[1] := Endcustomer.Name;
+                EndCustomerArray[2] := Endcustomer.Address;
+                EndCustomerArray[3] := Endcustomer."Address 2";
+                EndCustomerArray[4] := Endcustomer."Post Code";
+                EndCustomerArray[5] := Endcustomer.City;
+                EndCustomerArray[6] := EndcustomerCountryRegion.Name;
+                CompressArray(EndCustomerArray);
+                //<<NC Arraylist
                 //>>NC - Getting Ship-to Country
                 if "ship-to Country/Region Code" <> '' then begin
                     ShipToCountryRegion.Get("Ship-to Country/Region Code")
@@ -1447,6 +1458,10 @@ report 50061 "SEC - Sales Invoice LS-New"
         ChecksPayableText: Text;
         ShipToAddr: array[8] of Text[90];
         CompanyAddr: array[8] of Text[90];
+        //>>NC Added Array
+        EndCustomerArray: array[6] of Text[90];
+        //<< NC added array
+
         SalesPersonText: Text[30];
         TotalText: Text[50];
         TotalExclVATText: Text[50];

@@ -357,22 +357,23 @@ report 50015 "SEC Sales - Credit Memo LS"
             column(Endcustomer_Lbl; FieldCaption("End Customer"))
             {
             }
-            column(EndCustName; Endcustomer.Name)
+            //>>NC Added Array
+            column(EndCustArray1; EndCustomerArray[1])
             {
             }
-            column(EndCustAddress; Endcustomer.Address)
+            column(EndCustArray2; EndCustomerArray[2])
             {
             }
-            Column(EndCustAddress2; Endcustomer."Address 2")
+            Column(EndCustArray3; EndCustomerArray[3])
             {
             }
-            column(EndCustPostcode; Endcustomer."Post code")
+            column(EndCustArray4; EndCustomerArray[4])
             {
             }
-            column(EndCustCity; Endcustomer.City)
+            column(EndCustCityArray5; EndCustomerArray[5])
             {
             }
-            column(EndCustCountry; EndcustomerCountryRegion.Name)
+            column(EndCustCountryArray6; EndCustomerArray[6])
             {
             }
             column(Suppress_Prices_on_Printouts; "Suppress Prices on Printouts")
@@ -556,6 +557,16 @@ report 50015 "SEC Sales - Credit Memo LS"
                     else
                         Clear(Item);
                     //<<NC
+                    //>>NC Arraylist
+                    EndCustomerArray[1] := Endcustomer.Name;
+                    EndCustomerArray[2] := Endcustomer.Address;
+                    EndCustomerArray[3] := Endcustomer."Address 2";
+                    EndCustomerArray[4] := Endcustomer."Post Code";
+                    EndCustomerArray[5] := Endcustomer.City;
+                    EndCustomerArray[6] := EndcustomerCountryRegion.Name;
+                    CompressArray(EndCustomerArray);
+                    //<<NC Arraylist
+
 
                     if "Line Discount %" = 0 then
                         LineDiscountPctText := ''
@@ -1031,6 +1042,10 @@ report 50015 "SEC Sales - Credit Memo LS"
         CustAddr: array[8] of Text[90];
         ShipToAddr: array[8] of Text[90];
         CompanyAddr: array[8] of Text[90];
+        //>>NC Added Array
+        EndCustomerArray: array[6] of Text[90];
+        //<< NC added array
+
         SalesPersonText: Text[30];
         TotalText: Text[50];
         TotalExclVATText: Text[50];
