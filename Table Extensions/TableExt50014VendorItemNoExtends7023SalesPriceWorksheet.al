@@ -43,9 +43,12 @@ tableextension 50014 "Vendor Item No." extends "Sales Price Worksheet"
     procedure CreateNewListPriceFromItem(Item: Record Item; InsertRec: Boolean)
     begin
         Validate("Sales Type", "Sales Type"::"All Customers");
-        //Validate("Item No.", Item."No."); //SDG 27-05-19        
-        Validate("Vendor No.", Item."Vendor No."); //SDG 27-05-19
-        Validate("Vendor Item No.", Item."Vendor-Item-No."); //SDG 27-05-19
+        //Validate("Item No.", Item."No."); //SDG 27-05-19
+        if (item."Vendor-Item-No." <> '') and (item."Vendor No." <> '') then begin //SDG 31-07-2019
+            Validate("Vendor No.", Item."Vendor No."); //SDG 27-05-19
+            Validate("Vendor Item No.", Item."Vendor-Item-No."); //SDG 27-05-19
+        end else //SDG 31-07-2019
+            Validate("Item No.", Item."No."); //SDG 31-07-2019
         Validate("Variant Code", 'LISTPRICE');
         Validate("Unit of Measure Code", Item."Base Unit of Measure");
         Validate("Minimum Quantity", 0);
