@@ -19,7 +19,7 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>32.93611cm</Width>
+                  <Width>27.63803cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -3227,8 +3227,8 @@
                               </TablixRowHierarchy>
                               <RepeatRowHeaders>true</RepeatRowHeaders>
                               <DataSetName>DataSet_Result</DataSetName>
-                              <Top>6.14666cm</Top>
-                              <Left>0.16045cm</Left>
+                              <Top>5.8027cm</Top>
+                              <Left>0.17395cm</Left>
                               <Height>1.61413cm</Height>
                               <Width>27.46408cm</Width>
                               <ZIndex>1</ZIndex>
@@ -3958,95 +3958,11 @@
                               <RepeatRowHeaders>true</RepeatRowHeaders>
                               <KeepTogether>true</KeepTogether>
                               <DataSetName>DataSet_Result</DataSetName>
-                              <Top>8.24229cm</Top>
-                              <Left>20.56891cm</Left>
+                              <Top>7.59322cm</Top>
+                              <Left>20.62453cm</Left>
                               <Height>2.946cm</Height>
                               <Width>7cm</Width>
                               <ZIndex>2</ZIndex>
-                              <Style>
-                                <Border>
-                                  <Style>None</Style>
-                                </Border>
-                              </Style>
-                            </Tablix>
-                            <Tablix Name="Tablix2">
-                              <TablixBody>
-                                <TablixColumns>
-                                  <TablixColumn>
-                                    <Width>27.41981cm</Width>
-                                  </TablixColumn>
-                                </TablixColumns>
-                                <TablixRows>
-                                  <TablixRow>
-                                    <Height>0.4cm</Height>
-                                    <TablixCells>
-                                      <TablixCell>
-                                        <CellContents>
-                                          <Textbox Name="Textbox51">
-                                            <CanGrow>true</CanGrow>
-                                            <KeepTogether>true</KeepTogether>
-                                            <Paragraphs>
-                                              <Paragraph>
-                                                <TextRuns>
-                                                  <TextRun>
-                                                    <Value />
-                                                    <Style>
-                                                      <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>8pt</FontSize>
-                                                    </Style>
-                                                  </TextRun>
-                                                </TextRuns>
-                                                <Style />
-                                              </Paragraph>
-                                            </Paragraphs>
-                                            <rd:DefaultName>Textbox51</rd:DefaultName>
-                                            <Style>
-                                              <Border>
-                                                <Color>LightGrey</Color>
-                                                <Style>None</Style>
-                                              </Border>
-                                              <PaddingLeft>5pt</PaddingLeft>
-                                              <PaddingRight>5pt</PaddingRight>
-                                            </Style>
-                                          </Textbox>
-                                        </CellContents>
-                                      </TablixCell>
-                                    </TablixCells>
-                                  </TablixRow>
-                                </TablixRows>
-                              </TablixBody>
-                              <TablixColumnHierarchy>
-                                <TablixMembers>
-                                  <TablixMember />
-                                </TablixMembers>
-                              </TablixColumnHierarchy>
-                              <TablixRowHierarchy>
-                                <TablixMembers>
-                                  <TablixMember>
-                                    <Group Name="Details">
-                                      <Filters>
-                                        <Filter>
-                                          <FilterExpression>=Fields!WorkDescriptionLineNumber.Value</FilterExpression>
-                                          <Operator>Between</Operator>
-                                          <FilterValues>
-                                            <FilterValue DataType="Integer">1</FilterValue>
-                                            <FilterValue DataType="Integer">99999</FilterValue>
-                                          </FilterValues>
-                                        </Filter>
-                                      </Filters>
-                                    </Group>
-                                    <Visibility>
-                                      <Hidden>=Fields!ShowWorkDescription.Value = false</Hidden>
-                                    </Visibility>
-                                  </TablixMember>
-                                </TablixMembers>
-                              </TablixRowHierarchy>
-                              <DataSetName>DataSet_Result</DataSetName>
-                              <Top>5.57027cm</Top>
-                              <Left>0.17395cm</Left>
-                              <Height>0.4cm</Height>
-                              <Width>27.41981cm</Width>
-                              <ZIndex>3</ZIndex>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -4091,7 +4007,7 @@
             <DataSetName>DataSet_Result</DataSetName>
             <Top>0.22049cm</Top>
             <Height>13.55575cm</Height>
-            <Width>32.93611cm</Width>
+            <Width>27.63803cm</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -4102,7 +4018,7 @@
         <Height>13.77624cm</Height>
         <Style />
       </Body>
-      <Width>32.93611cm</Width>
+      <Width>27.68375cm</Width>
       <Page>
         <PageHeader>
           <Height>2.31709cm</Height>
@@ -4183,10 +4099,76 @@
                     </Border>
                   </Style>
                 </Line>
+                <Textbox Name="Textbox193">
+                  <CanGrow>true</CanGrow>
+                  <KeepTogether>true</KeepTogether>
+                  <Paragraphs>
+                    <Paragraph>
+                      <TextRuns>
+                        <TextRun>
+                          <Value>=First(Fields!Page_Lbl.Value, "DataSet_Result")</Value>
+                          <Style>
+                            <FontFamily>Segoe UI</FontFamily>
+                            <FontSize>8pt</FontSize>
+                            <FontWeight>Bold</FontWeight>
+                          </Style>
+                        </TextRun>
+                        <TextRun>
+                          <Value xml:space="preserve"> </Value>
+                          <Style>
+                            <FontFamily>Segoe UI</FontFamily>
+                            <FontSize>8pt</FontSize>
+                            <FontWeight>Bold</FontWeight>
+                          </Style>
+                        </TextRun>
+                        <TextRun>
+                          <Value>=Globals!PageNumber</Value>
+                          <Style>
+                            <FontFamily>Segoe UI</FontFamily>
+                            <FontSize>8pt</FontSize>
+                            <FontWeight>Bold</FontWeight>
+                          </Style>
+                        </TextRun>
+                        <TextRun>
+                          <Value> / </Value>
+                          <Style>
+                            <FontFamily>Segoe UI</FontFamily>
+                            <FontSize>8pt</FontSize>
+                            <FontWeight>Bold</FontWeight>
+                          </Style>
+                        </TextRun>
+                        <TextRun>
+                          <Value>=Globals!TotalPages</Value>
+                          <Style>
+                            <FontFamily>Segoe UI</FontFamily>
+                            <FontSize>8pt</FontSize>
+                            <FontWeight>Bold</FontWeight>
+                          </Style>
+                        </TextRun>
+                      </TextRuns>
+                      <Style>
+                        <TextAlign>Right</TextAlign>
+                      </Style>
+                    </Paragraph>
+                  </Paragraphs>
+                  <rd:DefaultName>Textbox193</rd:DefaultName>
+                  <Top>0.57055cm</Top>
+                  <Left>4.31319cm</Left>
+                  <Height>11pt</Height>
+                  <Width>4.9cm</Width>
+                  <ZIndex>2</ZIndex>
+                  <Style>
+                    <Border>
+                      <Style>None</Style>
+                    </Border>
+                    <PaddingLeft>5pt</PaddingLeft>
+                    <PaddingRight>5pt</PaddingRight>
+                  </Style>
+                </Textbox>
               </ReportItems>
               <KeepTogether>true</KeepTogether>
               <Left>18.4cm</Left>
-              <Height>0.5cm</Height>
+              <Height>0.95861cm</Height>
               <Width>9.28375cm</Width>
               <ZIndex>1</ZIndex>
               <Style>
@@ -4240,72 +4222,6 @@
                 </Border>
               </Style>
             </Rectangle>
-            <Textbox Name="Textbox193">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>=First(Fields!Page_Lbl.Value, "DataSet_Result")</Value>
-                      <Style>
-                        <FontFamily>Segoe UI</FontFamily>
-                        <FontSize>8pt</FontSize>
-                        <FontWeight>Bold</FontWeight>
-                      </Style>
-                    </TextRun>
-                    <TextRun>
-                      <Value xml:space="preserve"> </Value>
-                      <Style>
-                        <FontFamily>Segoe UI</FontFamily>
-                        <FontSize>8pt</FontSize>
-                        <FontWeight>Bold</FontWeight>
-                      </Style>
-                    </TextRun>
-                    <TextRun>
-                      <Value>=Globals!PageNumber</Value>
-                      <Style>
-                        <FontFamily>Segoe UI</FontFamily>
-                        <FontSize>8pt</FontSize>
-                        <FontWeight>Bold</FontWeight>
-                      </Style>
-                    </TextRun>
-                    <TextRun>
-                      <Value> / </Value>
-                      <Style>
-                        <FontFamily>Segoe UI</FontFamily>
-                        <FontSize>8pt</FontSize>
-                        <FontWeight>Bold</FontWeight>
-                      </Style>
-                    </TextRun>
-                    <TextRun>
-                      <Value>=Globals!TotalPages</Value>
-                      <Style>
-                        <FontFamily>Segoe UI</FontFamily>
-                        <FontSize>8pt</FontSize>
-                        <FontWeight>Bold</FontWeight>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Right</TextAlign>
-                  </Style>
-                </Paragraph>
-              </Paragraphs>
-              <rd:DefaultName>Textbox193</rd:DefaultName>
-              <Top>0.64111cm</Top>
-              <Left>22.1cm</Left>
-              <Height>11pt</Height>
-              <Width>4.9cm</Width>
-              <ZIndex>3</ZIndex>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <PaddingLeft>5pt</PaddingLeft>
-                <PaddingRight>5pt</PaddingRight>
-              </Style>
-            </Textbox>
             <Textbox Name="Textbox11">
               <CanGrow>true</CanGrow>
               <KeepTogether>true</KeepTogether>
@@ -4329,7 +4245,10 @@
               <Left>0.1491cm</Left>
               <Height>1.11154cm</Height>
               <Width>22.68798cm</Width>
-              <ZIndex>4</ZIndex>
+              <ZIndex>3</ZIndex>
+              <Visibility>
+                <Hidden>=Globals!PageNumber &lt;&gt; 1</Hidden>
+              </Visibility>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -4365,7 +4284,7 @@
               <Left>22.83708cm</Left>
               <Height>1.11154cm</Height>
               <Width>4.77611cm</Width>
-              <ZIndex>5</ZIndex>
+              <ZIndex>4</ZIndex>
               <Visibility>
                 <Hidden>=Globals!PageNumber &lt;&gt; 1</Hidden>
               </Visibility>

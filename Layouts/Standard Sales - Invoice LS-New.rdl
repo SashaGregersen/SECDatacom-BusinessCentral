@@ -3290,8 +3290,8 @@
                               <RepeatRowHeaders>true</RepeatRowHeaders>
                               <KeepTogether>true</KeepTogether>
                               <DataSetName>DataSet_Result</DataSetName>
-                              <Top>9.80697cm</Top>
-                              <Left>20.27103cm</Left>
+                              <Top>9.99218cm</Top>
+                              <Left>19.79155cm</Left>
                               <Height>2.946cm</Height>
                               <Width>7.56985cm</Width>
                               <ZIndex>2</ZIndex>
@@ -5024,7 +5024,6 @@
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
-                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                     </TablixCells>
@@ -6821,6 +6820,7 @@
                             </Border>
                           </Style>
                         </Rectangle>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -7043,7 +7043,7 @@
               <Top>0.97578cm</Top>
               <Left>0.1793cm</Left>
               <Height>0.6882cm</Height>
-              <Width>20.09171cm</Width>
+              <Width>22.30085cm</Width>
               <ZIndex>3</ZIndex>
               <Style>
                 <Border>
@@ -7075,7 +7075,7 @@
               </Paragraphs>
               <rd:DefaultName>Textbox22</rd:DefaultName>
               <Top>1.01107cm</Top>
-              <Left>20.44739cm</Left>
+              <Left>22.58598cm</Left>
               <Height>0.74111cm</Height>
               <Width>4.77542cm</Width>
               <ZIndex>4</ZIndex>

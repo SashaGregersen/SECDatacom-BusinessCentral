@@ -2894,8 +2894,8 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>2.75857cm</Top>
-              <Left>0.0794cm</Left>
+              <Top>2.57351cm</Top>
+              <Left>0.14099cm</Left>
               <Height>11pt</Height>
               <Width>20.81173cm</Width>
               <ZIndex>8</ZIndex>
@@ -2946,8 +2946,8 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>2.61528cm</Top>
-              <Left>0.0794cm</Left>
+              <Top>2.1149cm</Top>
+              <Left>0.14101cm</Left>
               <Height>11pt</Height>
               <Width>20.81173cm</Width>
               <ZIndex>10</ZIndex>
@@ -3324,8 +3324,8 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>6.20525cm</Top>
-              <Left>21.12105cm</Left>
+              <Top>7.15775cm</Top>
+              <Left>21.13118cm</Left>
               <Height>11pt</Height>
               <Width>6.22146cm</Width>
               <ZIndex>24</ZIndex>

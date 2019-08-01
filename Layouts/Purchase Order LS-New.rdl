@@ -215,22 +215,22 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                     <Width>3.88399in</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>3.02255in</Width>
+                                    <Width>2.57688in</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>0.62275in</Width>
+                                    <Width>0.94567in</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>0.64993in</Width>
+                                    <Width>0.77493in</Width>
                                   </TablixColumn>
                                   <TablixColumn>
                                     <Width>0.84193in</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>0.98425in</Width>
+                                    <Width>0.84883in</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>0.77698in</Width>
+                                    <Width>0.93323in</Width>
                                   </TablixColumn>
                                 </TablixColumns>
                                 <TablixRows>
@@ -3727,7 +3727,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                               <Top>0.03167cm</Top>
                               <Left>0.00632cm</Left>
                               <Height>7.19662cm</Height>
-                              <Width>10.78238in</Width>
+                              <Width>10.80546in</Width>
                               <ZIndex>1</ZIndex>
                               <Style />
                             </Tablix>
@@ -9373,95 +9373,6 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="textbox83">
-                                            <KeepTogether>true</KeepTogether>
-                                            <Paragraphs>
-                                              <Paragraph>
-                                                <TextRuns>
-                                                  <TextRun>
-                                                    <Value />
-                                                    <Style>
-                                                      <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>8pt</FontSize>
-                                                    </Style>
-                                                  </TextRun>
-                                                </TextRuns>
-                                                <Style />
-                                              </Paragraph>
-                                            </Paragraphs>
-                                            <rd:DefaultName>textbox83</rd:DefaultName>
-                                            <ZIndex>8</ZIndex>
-                                            <Style>
-                                              <PaddingRight>2pt</PaddingRight>
-                                              <PaddingTop>2pt</PaddingTop>
-                                              <PaddingBottom>2pt</PaddingBottom>
-                                            </Style>
-                                          </Textbox>
-                                        </CellContents>
-                                      </TablixCell>
-                                      <TablixCell>
-                                        <CellContents>
-                                          <Textbox Name="Textbox202">
-                                            <CanGrow>true</CanGrow>
-                                            <KeepTogether>true</KeepTogether>
-                                            <Paragraphs>
-                                              <Paragraph>
-                                                <TextRuns>
-                                                  <TextRun>
-                                                    <Value />
-                                                    <Style>
-                                                      <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>8pt</FontSize>
-                                                    </Style>
-                                                  </TextRun>
-                                                </TextRuns>
-                                                <Style />
-                                              </Paragraph>
-                                            </Paragraphs>
-                                            <rd:DefaultName>Textbox202</rd:DefaultName>
-                                            <Style>
-                                              <PaddingRight>2pt</PaddingRight>
-                                              <PaddingTop>2pt</PaddingTop>
-                                              <PaddingBottom>2pt</PaddingBottom>
-                                            </Style>
-                                          </Textbox>
-                                        </CellContents>
-                                      </TablixCell>
-                                      <TablixCell>
-                                        <CellContents>
-                                          <Textbox Name="Textbox220">
-                                            <CanGrow>true</CanGrow>
-                                            <KeepTogether>true</KeepTogether>
-                                            <Paragraphs>
-                                              <Paragraph>
-                                                <TextRuns>
-                                                  <TextRun>
-                                                    <Value />
-                                                    <Style>
-                                                      <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>8pt</FontSize>
-                                                    </Style>
-                                                  </TextRun>
-                                                </TextRuns>
-                                                <Style />
-                                              </Paragraph>
-                                            </Paragraphs>
-                                            <rd:DefaultName>Textbox220</rd:DefaultName>
-                                            <Style>
-                                              <PaddingRight>2pt</PaddingRight>
-                                              <PaddingTop>2pt</PaddingTop>
-                                              <PaddingBottom>2pt</PaddingBottom>
-                                            </Style>
-                                          </Textbox>
-                                        </CellContents>
-                                      </TablixCell>
-                                    </TablixCells>
-                                  </TablixRow>
-                                  <TablixRow>
-                                    <Height>0.13889in</Height>
-                                    <TablixCells>
-                                      <TablixCell>
-                                        <CellContents>
                                           <Textbox Name="textbox64">
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
@@ -9838,7 +9749,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!ShipToAddr6.Value</Value>
+                                                    <Value>="Att.: " +Fields!ShipToContactInfo.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -9849,11 +9760,18 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               </Paragraph>
                                             </Paragraphs>
                                             <ZIndex>3</ZIndex>
+                                            <Visibility>
+                                              <Hidden>=Iif(Fields!ShipToContactInfo.Value = "", true, false)</Hidden>
+                                            </Visibility>
                                             <Style>
+                                              <Border>
+                                                <Style>None</Style>
+                                              </Border>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
+                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell>
@@ -9936,7 +9854,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!ShipToAddr7.Value</Value>
+                                                    <Value>="Phone No.: " + Fields!ShipToPhoneNumber.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -9947,7 +9865,13 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               </Paragraph>
                                             </Paragraphs>
                                             <ZIndex>2</ZIndex>
+                                            <Visibility>
+                                              <Hidden>=Iif(Fields!ShipToPhoneNumber.Value= "", true, false)</Hidden>
+                                            </Visibility>
                                             <Style>
+                                              <Border>
+                                                <Style>None</Style>
+                                              </Border>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
@@ -10027,7 +9951,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!ShipToAddr8.Value</Value>
+                                                    <Value>="E-mail: " +  Fields!ShipToEmailInfo.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -10038,7 +9962,13 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               </Paragraph>
                                             </Paragraphs>
                                             <ZIndex>1</ZIndex>
+                                            <Visibility>
+                                              <Hidden>=Iif(Fields!ShipToEmailInfo.Value = "",True,False)</Hidden>
+                                            </Visibility>
                                             <Style>
+                                              <Border>
+                                                <Style>None</Style>
+                                              </Border>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
@@ -10132,7 +10062,13 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               </Paragraph>
                                             </Paragraphs>
                                             <ZIndex>1</ZIndex>
+                                            <Visibility>
+                                              <Hidden>true</Hidden>
+                                            </Visibility>
                                             <Style>
+                                              <Border>
+                                                <Style>None</Style>
+                                              </Border>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
@@ -10258,11 +10194,6 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                           <Hidden>=IIF(Fields!SellToCustNo_PurchHeader.Value="",TRUE,FALSE)</Hidden>
                                         </Visibility>
                                       </TablixMember>
-                                      <TablixMember>
-                                        <Visibility>
-                                          <Hidden>=IIF(Fields!SellToCustNo_PurchHeader.Value="",TRUE,FALSE)</Hidden>
-                                        </Visibility>
-                                      </TablixMember>
                                       <TablixMember />
                                       <TablixMember />
                                       <TablixMember />
@@ -10295,7 +10226,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                               </Filters>
                               <Top>6.85in</Top>
                               <Left>0.0007pt</Left>
-                              <Height>1.94401in</Height>
+                              <Height>1.80512in</Height>
                               <Width>7.08328in</Width>
                               <ZIndex>6</ZIndex>
                               <Style />
@@ -12437,6 +12368,15 @@ End Function</Code>
         </Field>
         <Field Name="Ship_To_Comment">
           <DataField>Ship_To_Comment</DataField>
+        </Field>
+        <Field Name="ShipToContactInfo">
+          <DataField>ShipToContactInfo</DataField>
+        </Field>
+        <Field Name="ShipToPhoneNumber">
+          <DataField>ShipToPhoneNumber</DataField>
+        </Field>
+        <Field Name="ShipToEmailInfo">
+          <DataField>ShipToEmailInfo</DataField>
         </Field>
         <Field Name="CompanyAddr1">
           <DataField>CompanyAddr1</DataField>

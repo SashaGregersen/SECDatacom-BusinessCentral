@@ -133,9 +133,18 @@ report 50054 "SEC Purchase Order-New.Al"
             }
             column(Ship_To_Comment; "Ship-To Comment")
             {
-
             }
-            //alasd
+            //NC added columns
+            column(ShipToContactInfo; Location.Contact)
+            {
+            }
+            column(ShipToPhoneNumber; Location."Phone No.")
+            {
+            }
+            column(ShipToEmailInfo; Location."E-Mail")
+            {
+            }
+            //NC added columns
             dataitem(CopyLoop; "Integer")
             {
                 DataItemTableView = SORTING (Number);
@@ -1057,7 +1066,20 @@ report 50054 "SEC Purchase Order-New.Al"
                 VarRec.SetRange("Vendor No.", "Buy-from Vendor No.");
                 if VARRec.FindFirst() then;
                 //<< NC
+                //>> NC added Location 
+                if "Purchase Header"."Location Code" <> '' then
+                    Location.Get("Purchase Header"."Location Code");
 
+                if "Purchase Header"."Location Code" <> '' then begin
+                    CustomerLocationContact := location.Contact;
+                    CustomerLocationPhone := location."Phone No.";
+                    CustomerLocationEmail := Location."E-Mail";
+                end else begin
+                    Clear(CustomerLocationContact);
+                    Clear(CustomerLocationPhone);
+                    Clear(CustomerLocationEmail);
+                end;
+                //<< NC added Location
                 if not IsReportInPreviewMode then
                     if ArchiveDocument then
                         ArchiveManagement.StorePurchDocument("Purchase Header", LogInteraction);
@@ -1185,6 +1207,9 @@ report 50054 "SEC Purchase Order-New.Al"
         Language: Record Language;
         CurrExchRate: Record "Currency Exchange Rate";
         PurchSetup: Record "Purchases & Payables Setup";
+        //NC>> Added Record
+        Location: Record Location;
+        //NC<< 
         FormatAddr: Codeunit "Format Address";
         FormatDocument: Codeunit "Format Document";
         PurchPost: Codeunit "Purch.-Post";
@@ -1195,6 +1220,11 @@ report 50054 "SEC Purchase Order-New.Al"
         ShipToAddr: array[8] of Text[50];
         CompanyAddr: array[8] of Text[50];
         BuyFromAddr: array[8] of Text[50];
+        //NC >> added variable
+        CustomerLocationContact: Text[100];
+        CustomerLocationPhone: Text[100];
+        CustomerLocationEmail: Text[100];
+        //NC
         PurchaserText: Text[30];
         VATNoText: Text[80];
         ReferenceText: Text[80];
