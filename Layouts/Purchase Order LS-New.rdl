@@ -604,7 +604,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=CStr(Fields!Qty_PurchLine.Value) +" "+ CStr(Ucase(Fields!UOM_PurchLine.Value))</Value>
+                                                    <Value>=Cstr(Code.BlankZero((Fields!Qty_PurchLine.Value))) +" "+ (Ucase(Fields!UOM_PurchLine.Value))</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -888,7 +888,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value />
+                                                    <Value>=Fields!VendorBidNo.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -896,7 +896,9 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
-                                                <Style />
+                                                <Style>
+                                                  <TextAlign>Right</TextAlign>
+                                                </Style>
                                               </Paragraph>
                                             </Paragraphs>
                                             <rd:DefaultName>Textbox123</rd:DefaultName>
@@ -961,6 +963,9 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                             </Paragraphs>
                                             <rd:DefaultName>PurchLineNo</rd:DefaultName>
                                             <ZIndex>115</ZIndex>
+                                            <Visibility>
+                                              <Hidden>true</Hidden>
+                                            </Visibility>
                                             <DataElementOutput>NoOutput</DataElementOutput>
                                             <Style>
                                               <Border>
@@ -9771,7 +9776,6 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
-                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell>
@@ -11420,8 +11424,8 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>3.0302in</Top>
-              <Left>4.20495cm</Left>
+              <Top>3.02936in</Top>
+              <Left>4.1208cm</Left>
               <Height>11pt</Height>
               <Width>16.46558cm</Width>
               <ZIndex>18</ZIndex>
@@ -11447,8 +11451,8 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>6.20092cm</Top>
-              <Left>4.20302cm</Left>
+              <Top>6.22115cm</Top>
+              <Left>4.1208cm</Left>
               <Height>11pt</Height>
               <Width>16.50086cm</Width>
               <ZIndex>19</ZIndex>
@@ -12070,8 +12074,8 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>7.34059cm</Top>
-              <Left>4.16967cm</Left>
+              <Top>7.30652cm</Top>
+              <Left>4.1208cm</Left>
               <Height>11pt</Height>
               <Width>16.50086cm</Width>
               <ZIndex>42</ZIndex>
@@ -12123,11 +12127,39 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>6.5925cm</Top>
-              <Left>4.16967cm</Left>
+              <Top>6.62425cm</Top>
+              <Left>4.1208cm</Left>
               <Height>11pt</Height>
               <Width>16.50086cm</Width>
               <ZIndex>44</ZIndex>
+              <Style>
+                <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+            </Textbox>
+            <Textbox Name="DocDt2">
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=First(Fields!PaymentTermsDesc.Value, "DataSet_Result")</Value>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <Format>g</Format>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <Top>6.98782cm</Top>
+              <Left>4.1208cm</Left>
+              <Height>11pt</Height>
+              <Width>16.50086cm</Width>
+              <ZIndex>45</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>

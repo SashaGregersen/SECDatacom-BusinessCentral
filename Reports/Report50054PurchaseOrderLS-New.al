@@ -1220,6 +1220,8 @@ report 50054 "SEC Purchase Order-New.Al"
         ShipToAddr: array[8] of Text[50];
         CompanyAddr: array[8] of Text[50];
         BuyFromAddr: array[8] of Text[50];
+
+
         //NC >> added variable
         CustomerLocationContact: Text[100];
         CustomerLocationPhone: Text[100];
