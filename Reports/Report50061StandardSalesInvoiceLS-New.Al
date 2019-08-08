@@ -466,9 +466,6 @@ report 50061 "SEC - Sales Invoice LS-New"
             column(EndCustCityArray5; EndCustomerArray[5])
             {
             }
-            column(EndCustCountryArray6; EndCustomerArray[6])
-            {
-            }
             //NC added array
             //<<Encustomer columns
             //>>Misc columns
@@ -1177,9 +1174,8 @@ report 50061 "SEC - Sales Invoice LS-New"
                 EndCustomerArray[1] := Endcustomer.Name;
                 EndCustomerArray[2] := Endcustomer.Address;
                 EndCustomerArray[3] := Endcustomer."Address 2";
-                EndCustomerArray[4] := Endcustomer."Post Code";
-                EndCustomerArray[5] := Endcustomer.City;
-                EndCustomerArray[6] := EndcustomerCountryRegion.Name;
+                EndCustomerArray[4] := Endcustomer.City + ' ' + Endcustomer."Post Code";
+                EndCustomerArray[5] := EndcustomerCountryRegion.Name;
                 CompressArray(EndCustomerArray);
                 //<<NC Arraylist
                 //>>NC - Getting Ship-to Country
@@ -1459,7 +1455,7 @@ report 50061 "SEC - Sales Invoice LS-New"
         ShipToAddr: array[8] of Text[90];
         CompanyAddr: array[8] of Text[90];
         //>>NC Added Array
-        EndCustomerArray: array[6] of Text[90];
+        EndCustomerArray: array[5] of Text[90];
         //<< NC added array
 
         SalesPersonText: Text[30];
