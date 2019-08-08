@@ -4741,12 +4741,6 @@ End Function
         <Field Name="EndCustCityArray5">
           <DataField>EndCustCityArray5</DataField>
         </Field>
-<<<<<<< HEAD
-=======
-        <Field Name="EndCustCountryArray6">
-          <DataField>EndCustCountryArray6</DataField>
-        </Field>
->>>>>>> ca2250db22c5e65e2d52ce7109b695039decba28
         <Field Name="Suppress_Prices_on_Printouts">
           <DataField>Suppress_Prices_on_Printouts</DataField>
         </Field>

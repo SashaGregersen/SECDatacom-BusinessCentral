@@ -1148,7 +1148,7 @@ report 50013 "SEC Sales - Order Conf. LS"
         ShipToAddr: array[8] of Text[90];
         CompanyAddr: array[8] of Text[90];
         //>>NC Added Array
-        EndCustomerArray: array[6] of Text[90];
+        EndCustomerArray: array[5] of Text[90];
         //<< NC added array
         SalesPersonText: Text[30];
         TotalText: Text[50];

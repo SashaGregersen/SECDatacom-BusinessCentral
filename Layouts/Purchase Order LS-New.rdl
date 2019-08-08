@@ -695,7 +695,6 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                       <TablixCell>
                                         <CellContents>
                                           <Textbox Name="Textbox230">
-                                            <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
@@ -716,6 +715,9 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                             </Paragraphs>
                                             <rd:DefaultName>Textbox230</rd:DefaultName>
                                             <Style>
+                                              <Border>
+                                                <Style>None</Style>
+                                              </Border>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingLeft>5pt</PaddingLeft>
                                             </Style>
@@ -971,6 +973,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <Border>
                                                 <Style>None</Style>
                                               </Border>
+                                              <BackgroundColor>Orange</BackgroundColor>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
@@ -1004,6 +1007,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <Border>
                                                 <Style>None</Style>
                                               </Border>
+                                              <BackgroundColor>Orange</BackgroundColor>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingLeft>5pt</PaddingLeft>
                                               <PaddingRight>5pt</PaddingRight>
@@ -1038,6 +1042,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <Border>
                                                 <Style>None</Style>
                                               </Border>
+                                              <BackgroundColor>Orange</BackgroundColor>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingLeft>5pt</PaddingLeft>
                                               <PaddingRight>5pt</PaddingRight>
@@ -3583,7 +3588,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                       </TablixMember>
                                       <TablixMember>
                                         <Visibility>
-                                          <Hidden>=IIF(len(Fields!VendorBidNo.Value) = 0, true ,Iif(Fields!Claimable.Value = true , true, false))</Hidden>
+                                          <Hidden>true</Hidden>
                                         </Visibility>
                                         <KeepWithGroup>After</KeepWithGroup>
                                       </TablixMember>
@@ -9465,7 +9470,6 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                       <TablixCell>
                                         <CellContents>
                                           <Textbox Name="Textbox34">
-                                            <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
@@ -9504,13 +9508,12 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                       <TablixCell>
                                         <CellContents>
                                           <Textbox Name="Textbox76">
-                                            <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value />
+                                                    <Value>=Fields!EndCustAddress.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -9531,13 +9534,12 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                       <TablixCell>
                                         <CellContents>
                                           <Textbox Name="Textbox83">
-                                            <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value />
+                                                    <Value>=Fields!ResellerAddress.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -9596,7 +9598,21 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!EndCustAddress.Value</Value>
+                                                    <Value>=Fields!EndCustPostcode.Value</Value>
+                                                    <Style>
+                                                      <FontFamily>Segoe UI</FontFamily>
+                                                      <FontSize>8pt</FontSize>
+                                                    </Style>
+                                                  </TextRun>
+                                                  <TextRun>
+                                                    <Value xml:space="preserve"> </Value>
+                                                    <Style>
+                                                      <FontFamily>Segoe UI</FontFamily>
+                                                      <FontSize>8pt</FontSize>
+                                                    </Style>
+                                                  </TextRun>
+                                                  <TextRun>
+                                                    <Value>=Fields!EndCustCity.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -9623,7 +9639,21 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!ResellerAddress.Value</Value>
+                                                    <Value>=Fields!ResellerPostcode.Value</Value>
+                                                    <Style>
+                                                      <FontFamily>Segoe UI</FontFamily>
+                                                      <FontSize>8pt</FontSize>
+                                                    </Style>
+                                                  </TextRun>
+                                                  <TextRun>
+                                                    <Value xml:space="preserve"> </Value>
+                                                    <Style>
+                                                      <FontFamily>Segoe UI</FontFamily>
+                                                      <FontSize>8pt</FontSize>
+                                                    </Style>
+                                                  </TextRun>
+                                                  <TextRun>
+                                                    <Value>=Fields!ResellerCity.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -9681,21 +9711,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!EndCustPostcode.Value</Value>
-                                                    <Style>
-                                                      <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>8pt</FontSize>
-                                                    </Style>
-                                                  </TextRun>
-                                                  <TextRun>
-                                                    <Value xml:space="preserve"> </Value>
-                                                    <Style>
-                                                      <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>8pt</FontSize>
-                                                    </Style>
-                                                  </TextRun>
-                                                  <TextRun>
-                                                    <Value>=Fields!EndCustCity.Value</Value>
+                                                    <Value>=Fields!EndCustCountry.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -9722,21 +9738,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!ResellerPostcode.Value</Value>
-                                                    <Style>
-                                                      <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>8pt</FontSize>
-                                                    </Style>
-                                                  </TextRun>
-                                                  <TextRun>
-                                                    <Value xml:space="preserve"> </Value>
-                                                    <Style>
-                                                      <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>8pt</FontSize>
-                                                    </Style>
-                                                  </TextRun>
-                                                  <TextRun>
-                                                    <Value>=Fields!ResellerCity.Value</Value>
+                                                    <Value>=Fields!ResellerCountry.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -9794,7 +9796,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!EndCustCountry.Value</Value>
+                                                    <Value>="Att.: " + Fields!End_Customer_Contact_Name.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -9821,7 +9823,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!ResellerCountry.Value</Value>
+                                                    <Value>="VAR ID: " &amp; (Fields!Var_ID.Value)</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -9885,7 +9887,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>="Att.: " + Fields!End_Customer_Contact_Name.Value</Value>
+                                                    <Value>="Phone No.: " + Fields!End_Customer_Phone_No_.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -9918,7 +9920,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>="VAR ID: " &amp; (Fields!Var_ID.Value)</Value>
+                                                    <Value />
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -9989,7 +9991,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>="Phone No.: " + Fields!End_Customer_Phone_No_.Value</Value>
+                                                    <Value>="E-mail: " + Fields!End_Customer_Email_No_.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -10079,14 +10081,14 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="End_Customer_Email_No_">
+                                          <Textbox Name="Textbox141">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>="E-mail: " + Fields!End_Customer_Email_No_.Value</Value>
+                                                    <Value />
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -10096,10 +10098,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                                 <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>End_Customer_Email_No_</rd:DefaultName>
-                                            <Visibility>
-                                              <Hidden>=Iif(Fields!End_Customer_Email_No_.Value = "", true, false)</Hidden>
-                                            </Visibility>
+                                            <rd:DefaultName>Textbox141</rd:DefaultName>
                                             <Style>
                                               <Border>
                                                 <Style>None</Style>
@@ -10260,7 +10259,6 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                             </Style>
                                           </Textbox>
                                           <ColSpan>3</ColSpan>
-                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell />

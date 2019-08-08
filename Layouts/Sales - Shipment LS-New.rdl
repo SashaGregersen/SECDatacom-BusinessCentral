@@ -22,13 +22,13 @@
                 <TablixBody>
                   <TablixColumns>
                     <TablixColumn>
-                      <Width>2.97177cm</Width>
+                      <Width>3.44258cm</Width>
                     </TablixColumn>
                     <TablixColumn>
-                      <Width>14.79413cm</Width>
+                      <Width>7.75091cm</Width>
                     </TablixColumn>
                     <TablixColumn>
-                      <Width>9.57791cm</Width>
+                      <Width>7.7319cm</Width>
                     </TablixColumn>
                   </TablixColumns>
                   <TablixRows>
@@ -75,8 +75,12 @@
                                 <Paragraph>
                                   <TextRuns>
                                     <TextRun>
-                                      <Value />
-                                      <Style />
+                                      <Value>=Fields!Description_SalesShptLineCaption.Value</Value>
+                                      <Style>
+                                        <FontFamily>Segoe UI</FontFamily>
+                                        <FontSize>8pt</FontSize>
+                                        <FontWeight>Bold</FontWeight>
+                                      </Style>
                                     </TextRun>
                                   </TextRuns>
                                   <Style />
@@ -512,7 +516,7 @@
                       </TablixCells>
                     </TablixRow>
                     <TablixRow>
-                      <Height>0.41479cm</Height>
+                      <Height>0.39284cm</Height>
                       <TablixCells>
                         <TablixCell>
                           <CellContents>
@@ -553,7 +557,6 @@
                         <TablixCell>
                           <CellContents>
                             <Textbox Name="Vendor_Item_No">
-                              <CanGrow>true</CanGrow>
                               <KeepTogether>true</KeepTogether>
                               <Paragraphs>
                                 <Paragraph>
@@ -641,6 +644,7 @@
                               </Paragraphs>
                               <rd:DefaultName>Textbox4</rd:DefaultName>
                               <Style>
+                                <BackgroundColor>SeaGreen</BackgroundColor>
                                 <VerticalAlign>Top</VerticalAlign>
                                 <PaddingRight>5pt</PaddingRight>
                               </Style>
@@ -671,6 +675,7 @@
                               </Paragraphs>
                               <rd:DefaultName>Textbox18</rd:DefaultName>
                               <Style>
+                                <BackgroundColor>SeaGreen</BackgroundColor>
                                 <VerticalAlign>Top</VerticalAlign>
                                 <PaddingLeft>5pt</PaddingLeft>
                                 <PaddingRight>5pt</PaddingRight>
@@ -702,6 +707,7 @@
                               </Paragraphs>
                               <rd:DefaultName>Textbox19</rd:DefaultName>
                               <Style>
+                                <BackgroundColor>SeaGreen</BackgroundColor>
                                 <VerticalAlign>Top</VerticalAlign>
                                 <PaddingLeft>5pt</PaddingLeft>
                                 <PaddingRight>5pt</PaddingRight>
@@ -931,9 +937,15 @@
                           <KeepTogether>true</KeepTogether>
                         </TablixMember>
                         <TablixMember>
+                          <Visibility>
+                            <Hidden>=IIF(Fields!Vendor_Item_No.Value = "",TRUE,FALSE)</Hidden>
+                          </Visibility>
                           <KeepWithGroup>After</KeepWithGroup>
                         </TablixMember>
                         <TablixMember>
+                          <Visibility>
+                            <Hidden>true</Hidden>
+                          </Visibility>
                           <KeepWithGroup>After</KeepWithGroup>
                         </TablixMember>
                         <TablixMember>
@@ -972,8 +984,8 @@
                   </Filter>
                 </Filters>
                 <Top>0.05362cm</Top>
-                <Height>2.90336cm</Height>
-                <Width>27.34381cm</Width>
+                <Height>2.88141cm</Height>
+                <Width>18.92538cm</Width>
                 <Visibility>
                   <Hidden>=IIF(Fields!LineNo_SalesShptLine.Value &lt;&gt; 0,False,True)</Hidden>
                 </Visibility>
@@ -984,10 +996,10 @@
                 <TablixBody>
                   <TablixColumns>
                     <TablixColumn>
-                      <Width>3.2319cm</Width>
+                      <Width>3.93811cm</Width>
                     </TablixColumn>
                     <TablixColumn>
-                      <Width>14.90442cm</Width>
+                      <Width>14.92271cm</Width>
                     </TablixColumn>
                   </TablixColumns>
                   <TablixRows>
@@ -1053,7 +1065,7 @@
                 <Top>2.22947cm</Top>
                 <Left>0.00001cm</Left>
                 <Height>0.70556cm</Height>
-                <Width>18.13632cm</Width>
+                <Width>18.86083cm</Width>
                 <ZIndex>1</ZIndex>
                 <Visibility>
                   <Hidden>=IIF(Fields!BilltoCustNo_SalesShptHeader.Value&lt;&gt;Fields!SelltoCustNo_SalesShptHeader.Value,False,True)</Hidden>
@@ -1065,16 +1077,16 @@
                 <TablixBody>
                   <TablixColumns>
                     <TablixColumn>
-                      <Width>2.6114cm</Width>
+                      <Width>2.88276cm</Width>
                     </TablixColumn>
                     <TablixColumn>
-                      <Width>11.43824cm</Width>
+                      <Width>4.27948cm</Width>
                     </TablixColumn>
                     <TablixColumn>
-                      <Width>4.99248cm</Width>
+                      <Width>4.73467cm</Width>
                     </TablixColumn>
                     <TablixColumn>
-                      <Width>8.23875cm</Width>
+                      <Width>7.02848cm</Width>
                     </TablixColumn>
                   </TablixColumns>
                   <TablixRows>
@@ -2307,7 +2319,7 @@
                 </Filters>
                 <Top>3.37781cm</Top>
                 <Height>2.8222cm</Height>
-                <Width>27.28087cm</Width>
+                <Width>18.92539cm</Width>
                 <ZIndex>2</ZIndex>
                 <Visibility>
                   <Hidden>=IIF(Fields!TrackingSpecBufferNo.Value&lt;&gt;"",False,True)</Hidden>
@@ -2319,10 +2331,10 @@
                 <TablixBody>
                   <TablixColumns>
                     <TablixColumn>
-                      <Width>4.05201cm</Width>
+                      <Width>4.44655cm</Width>
                     </TablixColumn>
                     <TablixColumn>
-                      <Width>14.0843cm</Width>
+                      <Width>14.47884cm</Width>
                     </TablixColumn>
                   </TablixColumns>
                   <TablixRows>
@@ -2556,7 +2568,7 @@
                 </Filters>
                 <Top>2.4965in</Top>
                 <Height>1.05834cm</Height>
-                <Width>18.13631cm</Width>
+                <Width>18.92539cm</Width>
                 <ZIndex>3</ZIndex>
                 <Visibility>
                   <Hidden>=IIF(Fields!DimText.Value="",TRUE,FALSE)</Hidden>
@@ -2568,7 +2580,7 @@
                 <TablixBody>
                   <TablixColumns>
                     <TablixColumn>
-                      <Width>1.31708cm</Width>
+                      <Width>2.7295cm</Width>
                     </TablixColumn>
                   </TablixColumns>
                   <TablixRows>
@@ -2674,7 +2686,7 @@ Cstr(Fields!Pref_Sender_Country.Value)
                 <DataSetName>DataSet_Result</DataSetName>
                 <Left>6.18747in</Left>
                 <Height>0.4064cm</Height>
-                <Width>1.31708cm</Width>
+                <Width>2.7295cm</Width>
                 <ZIndex>4</ZIndex>
                 <Style />
               </Tablix>
@@ -2682,17 +2694,17 @@ Cstr(Fields!Pref_Sender_Country.Value)
             <KeepTogether>true</KeepTogether>
             <Left>0.00002cm</Left>
             <Height>7.54586cm</Height>
-            <Width>27.34381cm</Width>
+            <Width>18.92539cm</Width>
             <Style />
           </Rectangle>
         </ReportItems>
-        <Height>7.71509cm</Height>
+        <Height>7.68864cm</Height>
         <Style />
       </Body>
-      <Width>27.35264cm</Width>
+      <Width>19.09764cm</Width>
       <Page>
         <PageHeader>
-          <Height>9.14991cm</Height>
+          <Height>11.68991cm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <ReportItems>
             <Image Name="CompanyInfo2Picture1">
@@ -2700,9 +2712,9 @@ Cstr(Fields!Pref_Sender_Country.Value)
               <Value>=Convert.FromBase64String(Convert.ToBase64String(Fields!CompanyInfo2Picture.Value))</Value>
               <MIMEType>image/bmp</MIMEType>
               <Sizing>FitProportional</Sizing>
-              <Left>21.28089cm</Left>
+              <Left>13.97211cm</Left>
               <Height>5.26875mm</Height>
-              <Width>60mm</Width>
+              <Width>48.8875mm</Width>
               <Visibility>
                 <Hidden>=iif(ISNOTHING(Fields!CompanyInfo2Picture.Value) = TRUE,true,false)</Hidden>
               </Visibility>
@@ -2718,9 +2730,9 @@ Cstr(Fields!Pref_Sender_Country.Value)
               <Value>=Convert.ToBase64String(Fields!CompanyInfo1Picture.Value)</Value>
               <MIMEType>image/bmp</MIMEType>
               <Sizing>FitProportional</Sizing>
-              <Left>10.84187cm</Left>
+              <Left>6.56799cm</Left>
               <Height>5.26875mm</Height>
-              <Width>60mm</Width>
+              <Width>48.8875mm</Width>
               <ZIndex>1</ZIndex>
               <Visibility>
                 <Hidden>=iif(ISNOTHING(Fields!CompanyInfo1Picture.Value) = TRUE,true,false)</Hidden>
@@ -2747,10 +2759,10 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>4.9804cm</Top>
+              <Top>7.5204cm</Top>
               <Left>0.0794cm</Left>
               <Height>11pt</Height>
-              <Width>20.81173cm</Width>
+              <Width>7.83309cm</Width>
               <ZIndex>2</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -2763,7 +2775,7 @@ Cstr(Fields!Pref_Sender_Country.Value)
               <Sizing>FitProportional</Sizing>
               <Left>0.07938cm</Left>
               <Height>5.26875mm</Height>
-              <Width>60mm</Width>
+              <Width>48.8875mm</Width>
               <ZIndex>3</ZIndex>
               <Visibility>
                 <Hidden>=iif(ISNOTHING(Fields!CompanyInfo3Picture.Value) = TRUE,true,false)</Hidden>
@@ -2790,10 +2802,10 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>4.59235cm</Top>
-              <Left>0.0794cm</Left>
+              <Top>7.13235cm</Top>
+              <Left>0.10586cm</Left>
               <Height>11pt</Height>
-              <Width>20.81173cm</Width>
+              <Width>7.80663cm</Width>
               <ZIndex>4</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -2816,10 +2828,10 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>5.39248cm</Top>
+              <Top>7.93248cm</Top>
               <Left>0.0794cm</Left>
               <Height>11pt</Height>
-              <Width>20.81173cm</Width>
+              <Width>7.83312cm</Width>
               <ZIndex>5</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -2842,10 +2854,10 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>4.18699cm</Top>
-              <Left>0.0794cm</Left>
+              <Top>6.72699cm</Top>
+              <Left>0.10586cm</Left>
               <Height>11pt</Height>
-              <Width>20.81172cm</Width>
+              <Width>7.80662cm</Width>
               <ZIndex>6</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -2868,10 +2880,10 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>3.79574cm</Top>
-              <Left>0.0794cm</Left>
+              <Top>6.33574cm</Top>
+              <Left>0.10586cm</Left>
               <Height>11pt</Height>
-              <Width>20.81173cm</Width>
+              <Width>7.80663cm</Width>
               <ZIndex>7</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -2894,10 +2906,10 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>2.57351cm</Top>
-              <Left>0.14099cm</Left>
+              <Top>5.14879cm</Top>
+              <Left>0.07938cm</Left>
               <Height>11pt</Height>
-              <Width>20.81173cm</Width>
+              <Width>7.83311cm</Width>
               <ZIndex>8</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -2920,10 +2932,10 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>2.98435cm</Top>
-              <Left>0.07938cm</Left>
+              <Top>5.52435cm</Top>
+              <Left>0.10584cm</Left>
               <Height>11pt</Height>
-              <Width>20.81174cm</Width>
+              <Width>7.80664cm</Width>
               <ZIndex>9</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -2946,10 +2958,10 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>2.1149cm</Top>
-              <Left>0.14101cm</Left>
+              <Top>4.69018cm</Top>
+              <Left>0.10584cm</Left>
               <Height>11pt</Height>
-              <Width>20.81173cm</Width>
+              <Width>7.80663cm</Width>
               <ZIndex>10</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -2974,10 +2986,10 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>5.84227cm</Top>
-              <Left>21.05946cm</Left>
+              <Top>8.36077cm</Top>
+              <Left>11.00529cm</Left>
               <Height>11pt</Height>
-              <Width>6.22146cm</Width>
+              <Width>7.92011cm</Width>
               <ZIndex>11</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -3002,10 +3014,10 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>5.43019cm</Top>
-              <Left>21.05946cm</Left>
+              <Top>7.94869cm</Top>
+              <Left>11.00529cm</Left>
               <Height>11pt</Height>
-              <Width>6.22146cm</Width>
+              <Width>7.92011cm</Width>
               <ZIndex>12</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -3030,10 +3042,10 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>5.04214cm</Top>
-              <Left>21.05946cm</Left>
+              <Top>7.56064cm</Top>
+              <Left>11.00529cm</Left>
               <Height>11pt</Height>
-              <Width>6.22146cm</Width>
+              <Width>7.92011cm</Width>
               <ZIndex>13</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -3058,10 +3070,10 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>4.18699cm</Top>
-              <Left>21.05946cm</Left>
+              <Top>6.70549cm</Top>
+              <Left>11.00529cm</Left>
               <Height>11pt</Height>
-              <Width>6.22146cm</Width>
+              <Width>7.92011cm</Width>
               <ZIndex>14</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -3086,10 +3098,10 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>3.79574cm</Top>
-              <Left>21.06827cm</Left>
+              <Top>6.31424cm</Top>
+              <Left>11.0141cm</Left>
               <Height>11pt</Height>
-              <Width>6.21265cm</Width>
+              <Width>7.9113cm</Width>
               <ZIndex>15</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -3114,10 +3126,10 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>3.39357cm</Top>
-              <Left>21.06827cm</Left>
+              <Top>5.91207cm</Top>
+              <Left>11.0141cm</Left>
               <Height>11pt</Height>
-              <Width>6.21265cm</Width>
+              <Width>7.9113cm</Width>
               <ZIndex>16</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -3142,10 +3154,10 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>0.63271cm</Top>
-              <Left>21.13118cm</Left>
+              <Top>0.70326cm</Top>
+              <Left>12.72288cm</Left>
               <Height>11pt</Height>
-              <Width>6.21265cm</Width>
+              <Width>6.13797cm</Width>
               <ZIndex>17</ZIndex>
               <Style />
             </Textbox>
@@ -3165,7 +3177,7 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>8.67295cm</Top>
+              <Top>11.21295cm</Top>
               <Left>0.14101cm</Left>
               <Height>12.00019pt</Height>
               <Width>2.62217cm</Width>
@@ -3190,7 +3202,7 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>8.25315cm</Top>
+              <Top>10.79315cm</Top>
               <Left>0.14099cm</Left>
               <Height>11.89972pt</Height>
               <Width>3.74788cm</Width>
@@ -3216,8 +3228,8 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>7.14011cm</Top>
-              <Left>18.33056cm</Left>
+              <Top>9.65365cm</Top>
+              <Left>8.2148cm</Left>
               <Height>11.00013pt</Height>
               <Width>2.62217cm</Width>
               <ZIndex>20</ZIndex>
@@ -3242,8 +3254,8 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>6.66033cm</Top>
-              <Left>18.33056cm</Left>
+              <Top>9.17387cm</Top>
+              <Left>8.2148cm</Left>
               <Height>11pt</Height>
               <Width>2.62217cm</Width>
               <ZIndex>21</ZIndex>
@@ -3269,10 +3281,10 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>8.76185cm</Top>
+              <Top>11.30185cm</Top>
               <Left>3.85353cm</Left>
               <Height>11pt</Height>
-              <Width>6.21265cm</Width>
+              <Width>4.05894cm</Width>
               <ZIndex>22</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -3296,10 +3308,10 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>8.28489cm</Top>
+              <Top>10.82489cm</Top>
               <Left>3.84472cm</Left>
               <Height>11pt</Height>
-              <Width>6.22146cm</Width>
+              <Width>3.36743cm</Width>
               <ZIndex>23</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -3324,10 +3336,10 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>7.15775cm</Top>
-              <Left>21.13118cm</Left>
+              <Top>9.67129cm</Top>
+              <Left>11.01542cm</Left>
               <Height>11pt</Height>
-              <Width>6.22146cm</Width>
+              <Width>7.92011cm</Width>
               <ZIndex>24</ZIndex>
               <Style>
                 <Border>
@@ -3355,10 +3367,10 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>6.66386cm</Top>
-              <Left>21.13118cm</Left>
+              <Top>9.1774cm</Top>
+              <Left>11.01542cm</Left>
               <Height>11pt</Height>
-              <Width>6.22146cm</Width>
+              <Width>7.92011cm</Width>
               <ZIndex>25</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -3384,10 +3396,10 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>1.1624cm</Top>
+              <Top>3.7024cm</Top>
               <Left>0.07941cm</Left>
               <Height>20pt</Height>
-              <Width>27.20151cm</Width>
+              <Width>18.78145cm</Width>
               <ZIndex>26</ZIndex>
               <Visibility>
                 <Hidden>=Globals!PageNumber &lt;&gt; 1</Hidden>
@@ -3418,10 +3430,10 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>7.634cm</Top>
-              <Left>21.12986cm</Left>
+              <Top>10.14754cm</Top>
+              <Left>11.0141cm</Left>
               <Height>11pt</Height>
-              <Width>6.21265cm</Width>
+              <Width>7.9113cm</Width>
               <ZIndex>27</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -3444,8 +3456,8 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>7.634cm</Top>
-              <Left>7.19586in</Left>
+              <Top>10.14754cm</Top>
+              <Left>3.21328in</Left>
               <Height>11pt</Height>
               <Width>2.62217cm</Width>
               <ZIndex>28</ZIndex>
@@ -3470,10 +3482,10 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>6.63387cm</Top>
+              <Top>9.17387cm</Top>
               <Left>3.85354cm</Left>
               <Height>8.90019pt</Height>
-              <Width>14.28277cm</Width>
+              <Width>4.02359cm</Width>
               <ZIndex>29</ZIndex>
               <Style>
                 <Border>
@@ -3499,7 +3511,7 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>6.59507cm</Top>
+              <Top>9.13507cm</Top>
               <Left>0.14099cm</Left>
               <Height>11pt</Height>
               <Width>3.71255cm</Width>
@@ -3524,10 +3536,10 @@ Cstr(Fields!Pref_Sender_Country.Value)
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
-              <Top>5.78054cm</Top>
+              <Top>8.32054cm</Top>
               <Left>0.0794cm</Left>
               <Height>10pt</Height>
-              <Width>17.99532cm</Width>
+              <Width>7.83312cm</Width>
               <ZIndex>31</ZIndex>
               <Style>
                 <Border>
@@ -3556,10 +3568,10 @@ Cstr(Fields!Pref_Sender_Country.Value)
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
-              <Top>3.00686cm</Top>
-              <Left>21.06827cm</Left>
+              <Top>5.52536cm</Top>
+              <Left>11.0141cm</Left>
               <Height>10pt</Height>
-              <Width>6.21265cm</Width>
+              <Width>7.9113cm</Width>
               <ZIndex>32</ZIndex>
               <Style>
                 <Border>
@@ -3584,7 +3596,7 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>6.98313cm</Top>
+              <Top>9.52313cm</Top>
               <Left>0.14099cm</Left>
               <Height>0.4198cm</Height>
               <Width>3.71257cm</Width>
@@ -3613,10 +3625,10 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>6.98313cm</Top>
+              <Top>9.52313cm</Top>
               <Left>3.85355cm</Left>
               <Height>0.4198cm</Height>
-              <Width>14.28278cm</Width>
+              <Width>4.0236cm</Width>
               <ZIndex>34</ZIndex>
               <Style>
                 <Border>
@@ -3642,10 +3654,10 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>7.40293cm</Top>
+              <Top>9.94293cm</Top>
               <Left>3.85353cm</Left>
               <Height>0.42334cm</Height>
-              <Width>14.28278cm</Width>
+              <Width>4.0236cm</Width>
               <ZIndex>35</ZIndex>
               <Style>
                 <Border>
@@ -3671,7 +3683,7 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>7.43821cm</Top>
+              <Top>9.97821cm</Top>
               <Left>0.14101cm</Left>
               <Height>0.42334cm</Height>
               <Width>3.71256cm</Width>
@@ -3700,10 +3712,10 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>3.40768cm</Top>
+              <Top>5.94768cm</Top>
               <Left>0.07939cm</Left>
               <Height>11pt</Height>
-              <Width>20.81175cm</Width>
+              <Width>7.83313cm</Width>
               <ZIndex>37</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -3728,10 +3740,10 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>4.61385cm</Top>
-              <Left>21.06827cm</Left>
+              <Top>7.13235cm</Top>
+              <Left>11.0141cm</Left>
               <Height>11pt</Height>
-              <Width>6.21265cm</Width>
+              <Width>7.9113cm</Width>
               <ZIndex>38</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -3754,7 +3766,7 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>7.86155cm</Top>
+              <Top>10.40155cm</Top>
               <Left>0.14101cm</Left>
               <Height>0.42334cm</Height>
               <Width>3.71258cm</Width>
@@ -3783,10 +3795,10 @@ Cstr(Fields!Pref_Sender_Country.Value)
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>7.86155cm</Top>
+              <Top>10.40155cm</Top>
               <Left>3.88887cm</Left>
               <Height>0.42334cm</Height>
-              <Width>14.28278cm</Width>
+              <Width>4.0236cm</Width>
               <ZIndex>40</ZIndex>
               <Style>
                 <Border>
@@ -3802,14 +3814,14 @@ Cstr(Fields!Pref_Sender_Country.Value)
             </Border>
           </Style>
         </PageHeader>
-        <PageHeight>21cm</PageHeight>
-        <PageWidth>29.7cm</PageWidth>
+        <PageHeight>29.7cm</PageHeight>
+        <PageWidth>21cm</PageWidth>
         <InteractiveHeight>11in</InteractiveHeight>
         <InteractiveWidth>8.5in</InteractiveWidth>
         <LeftMargin>1cm</LeftMargin>
         <RightMargin>1cm</RightMargin>
         <TopMargin>1cm</TopMargin>
-        <BottomMargin>3cm</BottomMargin>
+        <BottomMargin>1cm</BottomMargin>
         <ColumnSpacing>1.27cm</ColumnSpacing>
         <Style />
       </Page>
