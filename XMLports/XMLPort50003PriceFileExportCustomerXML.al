@@ -145,10 +145,10 @@ xmlport 50003 "Price File Export Customer XML"
                     DefaultDim.setrange("Table ID", 27);
                     DefaultDim.SetFilter("Dimension Code", '<>%1', GLSetup."Global Dimension 1 Code");
                     if DefaultDim.FindFirst() then begin
-                        Dimension.Get(DefaultDim."Dimension Code");
-                        MainCategory := Dimension.Name;
-                        DimensionValue.Get(DefaultDim."Dimension Code", DefaultDim."Dimension Value Code");
-                        SubCategory := DimensionValue.Name;
+                        if Dimension.Get(DefaultDim."Dimension Code") then
+                            MainCategory := Dimension.Name;
+                        if DimensionValue.Get(DefaultDim."Dimension Code", DefaultDim."Dimension Value Code") then
+                            SubCategory := DimensionValue.Name;
                     end;
                 end;
 
