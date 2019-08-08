@@ -941,6 +941,7 @@ report 50013 "SEC Sales - Order Conf. LS"
                 end;
                 //<<NC
                 //>>NC Arraylist
+
                 EndCustomerArray[1] := Endcustomer.Name;
                 EndCustomerArray[2] := Endcustomer.Address;
                 EndCustomerArray[3] := Endcustomer."Address 2";

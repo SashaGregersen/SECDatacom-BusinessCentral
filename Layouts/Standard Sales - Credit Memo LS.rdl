@@ -7283,8 +7283,8 @@
                                 </Paragraph>
                               </Paragraphs>
                               <rd:DefaultName>CompanyLegalStatement</rd:DefaultName>
-                              <Top>16.97496cm</Top>
-                              <Left>0.46278cm</Left>
+                              <Top>16.83032cm</Top>
+                              <Left>0.26458cm</Left>
                               <Height>11pt</Height>
                               <Width>26.95207cm</Width>
                               <ZIndex>5</ZIndex>
@@ -7305,7 +7305,6 @@
                             </Border>
                           </Style>
                         </Rectangle>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -7347,10 +7346,10 @@
         <Height>17.53941cm</Height>
         <Style />
       </Body>
-      <Width>27.50882cm</Width>
+      <Width>27.54027cm</Width>
       <Page>
         <PageHeader>
-          <Height>1.22389cm</Height>
+          <Height>1.25035cm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
