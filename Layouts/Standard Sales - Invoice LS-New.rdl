@@ -3536,8 +3536,8 @@
                                 </Paragraph>
                               </Paragraphs>
                               <rd:DefaultName>PaymentMethodExtDescription</rd:DefaultName>
-                              <Top>15.38795cm</Top>
-                              <Left>0.17932cm</Left>
+                              <Top>15.67073cm</Top>
+                              <Left>0.1793cm</Left>
                               <Height>0.89104cm</Height>
                               <Width>13.35342cm</Width>
                               <ZIndex>7</ZIndex>
@@ -4585,7 +4585,6 @@
                                             </Style>
                                           </Textbox>
                                           <ColSpan>2</ColSpan>
-                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell />
@@ -6807,6 +6806,7 @@
                             </Border>
                           </Style>
                         </Rectangle>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -6850,7 +6850,7 @@
       <Width>27.3614cm</Width>
       <Page>
         <PageHeader>
-          <Height>1.75218cm</Height>
+          <Height>2.04322cm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -7028,9 +7028,12 @@
               <rd:DefaultName>Textbox15</rd:DefaultName>
               <Top>0.97578cm</Top>
               <Left>0.1793cm</Left>
-              <Height>0.6882cm</Height>
+              <Height>0.96161cm</Height>
               <Width>22.30085cm</Width>
               <ZIndex>3</ZIndex>
+              <Visibility>
+                <Hidden>=Globals!PageNumber &lt;&gt; 1</Hidden>
+              </Visibility>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -7064,9 +7067,12 @@
               <rd:DefaultName>Textbox22</rd:DefaultName>
               <Top>1.01107cm</Top>
               <Left>22.58598cm</Left>
-              <Height>0.74111cm</Height>
+              <Height>0.92632cm</Height>
               <Width>4.77542cm</Width>
               <ZIndex>4</ZIndex>
+              <Visibility>
+                <Hidden>=Globals!PageNumber &lt;&gt; 1</Hidden>
+              </Visibility>
               <Style>
                 <Border>
                   <Style>None</Style>
