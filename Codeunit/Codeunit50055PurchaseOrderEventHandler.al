@@ -12,9 +12,9 @@ codeunit 50055 "Purchase Order Event Handler"
         Item: record item;
     begin
         if rec.Type = rec.type::Item then begin
-            Item.Get(rec."No.");
-            If Item."Default Location" <> '' then
-                rec.validate("Location Code", Item."Default Location");
+            If Item.Get(rec."No.") then
+                If Item."Default Location" <> '' then
+                    rec.validate("Location Code", Item."Default Location");
         end;
     end;
 
@@ -32,11 +32,14 @@ codeunit 50055 "Purchase Order Event Handler"
         GenJnlLine.Validate(Description, InvoicePostBuffer.Description);
     end;
 
-    [EventSubscriber(ObjectType::Table, database::"Purchase Header", 'OnBeforeRecreatePurchLines', '', true, true)]
-    local procedure OnBeforeRecreatePurchLinesEvent(var PurchHeader: Record "Purchase Header")
+    [EventSubscriber(ObjectType::Table, database::"Purchase Header", 'OnRecreatePurchLinesOnBeforeInsertPurchLine', '', true, true)]
+    local procedure OnBeforeRecreatePurchLinesEvent(var PurchaseLine: Record "Purchase Line"; var TempPurchaseLine: Record "Purchase Line")
     var
-
+        Item: record item;
     begin
-
+        if PurchaseLine.type = PurchaseLine.type::Item then begin
+            if item.get(PurchaseLine."No.") then
+                PurchaseLine.validate("Vendor-Item-No", item."Vendor-Item-No.");
+        end;
     end;
 }
