@@ -2790,7 +2790,6 @@
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
-                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell>
@@ -3196,11 +3195,7 @@
                                           </SortExpression>
                                         </SortExpressions>
                                         <TablixMembers>
-                                          <TablixMember>
-                                            <Visibility>
-                                              <Hidden>=Fields!Type_Line.Value = " "</Hidden>
-                                            </Visibility>
-                                          </TablixMember>
+                                          <TablixMember />
                                           <TablixMember>
                                             <Visibility>
                                               <Hidden>=IIF(Fields!Vendor_Item_No.Value = "",TRUE,FALSE)</Hidden>
@@ -3965,6 +3960,7 @@
                             </Border>
                           </Style>
                         </Rectangle>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
