@@ -883,8 +883,12 @@ codeunit 50054 "Sales Order Event Handler"
 
     [EventSubscriber(ObjectType::codeunit, codeunit::"Sales-Post", 'OnAfterPostSalesDoc', '', true, true)]
     local procedure OnAfterPostSalesDocEvent(VAR SalesHeader: Record "Sales Header"; VAR GenJnlPostLine: Codeunit "Gen. Jnl.-Post Line"; SalesShptHdrNo: Code[20]; RetRcpHdrNo: Code[20]; SalesInvHdrNo: Code[20]; SalesCrMemoHdrNo: Code[20]; CommitIsSuppressed: Boolean)
-    begin
+    var
 
+    begin
+        if SalesShptHdrNo <> '' then begin
+            //Kald xmlport til eksport af felter til Consignor
+        end;
     end;
 
     procedure AddTransactionTypeToSalesDocument(var SalesHeader: Record "Sales Header");
