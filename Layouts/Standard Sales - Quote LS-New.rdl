@@ -2731,7 +2731,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Cstr((Code.BlankZero(Fields!Quantity_Line.Value))) +" " + Fields!UnitOfMeasure.Value</Value>
+                                                    <Value>=iif(Fields!Quantity_Line.Value = "", "" ,Cstr(Fields!Quantity_Line.Value) + " " + Fields!UnitOfMeasure.Value)</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -2753,6 +2753,7 @@
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
+                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell>
@@ -3960,7 +3961,6 @@
                             </Border>
                           </Style>
                         </Rectangle>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
