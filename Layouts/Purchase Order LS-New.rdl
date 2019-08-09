@@ -2003,6 +2003,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                             </Paragraphs>
                                             <rd:DefaultName>Textbox112</rd:DefaultName>
                                             <Style>
+                                              <BackgroundColor>Orange</BackgroundColor>
                                               <PaddingRight>0.0625in</PaddingRight>
                                               <PaddingBottom>2pt</PaddingBottom>
                                             </Style>
@@ -2039,6 +2040,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <Border>
                                                 <Style>None</Style>
                                               </Border>
+                                              <BackgroundColor>Orange</BackgroundColor>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingLeft>5pt</PaddingLeft>
                                             </Style>
@@ -2073,6 +2075,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <TopBorder>
                                                 <Style>Solid</Style>
                                               </TopBorder>
+                                              <BackgroundColor>Orange</BackgroundColor>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingLeft>5pt</PaddingLeft>
                                             </Style>
@@ -3637,9 +3640,6 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                     </Visibility>
                                   </TablixMember>
                                   <TablixMember>
-                                    <Visibility>
-                                      <Hidden>=IIF(SUM(Fields!VATAmount.Value)=0,FALSE,TRUE)</Hidden>
-                                    </Visibility>
                                     <KeepTogether>true</KeepTogether>
                                   </TablixMember>
                                   <TablixMember>
@@ -3649,7 +3649,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                   </TablixMember>
                                   <TablixMember>
                                     <Visibility>
-                                      <Hidden>=IIF(Fields!PricesInclVAT_PurchHeader.Value=FALSE AND SUM(Fields!VATAmount.Value)&lt;&gt;0,FALSE,TRUE)</Hidden>
+                                      <Hidden>true</Hidden>
                                     </Visibility>
                                   </TablixMember>
                                   <TablixMember>
@@ -9851,7 +9851,6 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
-                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                     </TablixCells>
