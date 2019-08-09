@@ -881,6 +881,12 @@ codeunit 50054 "Sales Order Event Handler"
         rec.SetDropShipment();
     end;
 
+    [EventSubscriber(ObjectType::codeunit, codeunit::"Sales-Post", 'OnAfterPostSalesDoc', '', true, true)]
+    local procedure OnAfterPostSalesDocEvent(VAR SalesHeader: Record "Sales Header"; VAR GenJnlPostLine: Codeunit "Gen. Jnl.-Post Line"; SalesShptHdrNo: Code[20]; RetRcpHdrNo: Code[20]; SalesInvHdrNo: Code[20]; SalesCrMemoHdrNo: Code[20]; CommitIsSuppressed: Boolean)
+    begin
+
+    end;
+
     procedure AddTransactionTypeToSalesDocument(var SalesHeader: Record "Sales Header");
     var
         SalesSetup: Record "Sales & Receivables Setup";
