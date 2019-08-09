@@ -122,4 +122,15 @@ codeunit 50056 "Req Worksheet Event Handler"
             end;
         end;
     end;
+
+    [EventSubscriber(ObjectType::Codeunit, codeunit::"Req. Wksh.-Make Order", 'OnBeforePurchOrderLineInsert', '', true, true)]
+    local procedure OnBeforePurchOrderLineInsertEvent(VAR PurchOrderHeader: Record "Purchase Header"; VAR PurchOrderLine: Record "Purchase Line"; VAR ReqLine: Record "Requisition Line"; CommitIsSuppressed: Boolean)
+    var
+        Item: record item;
+    begin
+        if PurchOrderLine.Type = PurchOrderLine.Type::Item then begin
+            if item.get(PurchOrderLine."No.") then
+                PurchOrderLine.Validate("Vendor-Item-No", item."Vendor-Item-No.");
+        end;
+    end;
 }
