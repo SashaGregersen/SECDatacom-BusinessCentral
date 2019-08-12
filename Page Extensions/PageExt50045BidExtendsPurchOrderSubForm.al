@@ -13,7 +13,7 @@ pageextension 50045 "Bid on Purchase Line" extends "Purchase Order Subform"
 
 
         }
-        addafter("No.")
+        /* addafter("No.")
         {
             field("Vendor-Item-No"; "Vendor-Item-No")
             {
@@ -21,7 +21,7 @@ pageextension 50045 "Bid on Purchase Line" extends "Purchase Order Subform"
                 ApplicationArea = all;
                 Editable = false;
             }
-        }
+        } */
     }
 
 
