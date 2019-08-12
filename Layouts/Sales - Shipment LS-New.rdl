@@ -28,7 +28,7 @@
                       <Width>7.75091cm</Width>
                     </TablixColumn>
                     <TablixColumn>
-                      <Width>7.30792cm</Width>
+                      <Width>7.25218cm</Width>
                     </TablixColumn>
                   </TablixColumns>
                   <TablixRows>
@@ -982,7 +982,7 @@
                 </Filters>
                 <Top>0.05362cm</Top>
                 <Height>2.88141cm</Height>
-                <Width>18.50141cm</Width>
+                <Width>18.44567cm</Width>
                 <Visibility>
                   <Hidden>=IIF(Fields!LineNo_SalesShptLine.Value &lt;&gt; 0,False,True)</Hidden>
                 </Visibility>
