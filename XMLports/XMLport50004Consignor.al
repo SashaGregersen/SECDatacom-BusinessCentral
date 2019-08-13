@@ -520,14 +520,12 @@ xmlport 50004 "Consignor"
     end;
 
 
-    procedure CreateFileLocation(SalesHeader: record "Sales Header"): Text
+    procedure CreateFileLocation(SalesHeader: record "Sales Header"; SalesReceive: record "Sales & Receivables Setup"): Text
     var
         PriceFileExport: Report "Price File Export Customer";
         CurrDate: Text;
         CurrTime: Text;
-        SalesReceive: record "Sales & Receivables Setup";
     begin
-        SalesReceive.get;
         exit(SalesReceive."Consignor Path" + SalesHeader."No." + '_' + format(CurrentDateTime, 0, '<Day,2>-<Month,2>-<Year4>_<Hours24,2><Minutes,2><Seconds,2>') + '.csv');
     end;
 

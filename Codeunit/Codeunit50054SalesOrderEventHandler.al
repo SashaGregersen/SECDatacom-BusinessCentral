@@ -889,21 +889,25 @@ codeunit 50054 "Sales Order Event Handler"
         ConsignorCSVFile: file;
         XMLStream: OutStream;
         WarehouseActHeader: record "Warehouse Activity Header";
+        SalesReceive: record "Sales & Receivables Setup";
     begin
         if SalesShptHdrNo <> '' then begin
             WarehouseActHeader.setrange("Source No.", SalesHeader."No.");
             WarehouseActHeader.setrange("Source Type", 37);
             if WarehouseActHeader.FindFirst() then begin
-                //Kald xmlport til eksport af felter til Consignor
-                Filelocation := Consignor.CreateFileLocation(SalesHeader);
-                Consignor.SetPostedSalesShipmentNo(SalesShptHdrNo);                
-                SalesHeader.SetRecFilter();
-                Consignor.SetTableView(SalesHeader);
-                ConsignorCSVFile.CREATE(Filelocation);
-                ConsignorCSVFile.CreateOutStream(XMLStream);
-                Consignor.SetDestination(XMLStream);
-                Consignor.Export();
-                ConsignorCSVFile.Close();
+                SalesReceive.get;
+                if SalesReceive."Consignor Path" <> '' then begin
+                    //Kald xmlport til eksport af felter til Consignor
+                    Filelocation := Consignor.CreateFileLocation(SalesHeader, SalesReceive);
+                    Consignor.SetPostedSalesShipmentNo(SalesShptHdrNo);
+                    SalesHeader.SetRecFilter();
+                    Consignor.SetTableView(SalesHeader);
+                    ConsignorCSVFile.CREATE(Filelocation);
+                    ConsignorCSVFile.CreateOutStream(XMLStream);
+                    Consignor.SetDestination(XMLStream);
+                    Consignor.Export();
+                    ConsignorCSVFile.Close();
+                end;
             end;
         end;
     end;
