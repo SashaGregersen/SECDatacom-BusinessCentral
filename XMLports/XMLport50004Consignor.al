@@ -63,13 +63,7 @@ xmlport 50004 "Consignor"
                         ReceiverRef := 'ReceiverRef';
                     end;
                 }
-                textelement(GoodsTypeTxt)
-                {
-                    trigger OnBeforePassVariable()
-                    begin
-                        GoodsTypeTxt := 'GoodsType';
-                    end;
-                }
+
                 textelement(ReceiverName1)
                 {
                     trigger OnBeforePassVariable()
@@ -340,10 +334,6 @@ xmlport 50004 "Consignor"
                 {
 
                 }
-                textelement(GoodsType)
-                {
-                    //Det tidligste tidspunkt transportøreren skal levere forsendelsen ??
-                }
 
                 fieldelement(ReceiverName1; SalesHeader."Ship-to Name")
                 {
@@ -489,7 +479,7 @@ xmlport 50004 "Consignor"
                 begin
                     CompanyInfo.get;
                     PostedSalesShipNo := NewPostedSalesShipmentNo;
-                    GoodsType := format(WorkDate(), 0, '<Day,2>-<Month,2>-<Year4>');
+                    //GoodsType := format(WorkDate(), 0, '<Day,2>-<Month,2>-<Year4>');
                     SenderName1 := CompanyInfo."Ship-to Name";
                     SenderAddress1 := CompanyInfo."Ship-to Address";
                     SenderAddress2 := CompanyInfo."Ship-to Address 2";
