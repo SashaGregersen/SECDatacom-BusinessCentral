@@ -38,6 +38,10 @@ tableextension 50027 "Synchronize Customer" extends "Sales & Receivables Setup"
             DataClassification = ToBeClassified;
             TableRelation = "G/L Account";
         }
+        field(50007; "Consignor Path"; Text[250])
+        {
+            DataClassification = CustomerContent;
+        }
 
         field(50100; "Project Item Template"; code[10])
         {
