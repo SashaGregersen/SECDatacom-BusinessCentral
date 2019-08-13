@@ -19,7 +19,7 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>27.43462cm</Width>
+                  <Width>26.8735cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -212,25 +212,25 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                               <TablixBody>
                                 <TablixColumns>
                                   <TablixColumn>
-                                    <Width>3.56107in</Width>
+                                    <Width>3.52951in</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>2.57688in</Width>
+                                    <Width>2.54532in</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>0.9116in</Width>
+                                    <Width>0.84848in</Width>
                                   </TablixColumn>
                                   <TablixColumn>
                                     <Width>0.03125in</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>1.21693in</Width>
+                                    <Width>1.18537in</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>1.2655in</Width>
+                                    <Width>1.23394in</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>1.23531in</Width>
+                                    <Width>1.20375in</Width>
                                   </TablixColumn>
                                 </TablixColumns>
                                 <TablixRows>
@@ -1360,7 +1360,8 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                                   <TextRun>
                                                     <Value>=Last(Fields!TotalSubTotal.Value)</Value>
                                                     <Style>
-                                                      <FontSize>9pt</FontSize>
+                                                      <FontFamily>Segoe UI</FontFamily>
+                                                      <FontSize>8pt</FontSize>
                                                       <FontWeight>Bold</FontWeight>
                                                       <Format>=Fields!LineAmt_PurchLineFormat.Value</Format>
                                                     </Style>
@@ -1490,7 +1491,8 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                                   <TextRun>
                                                     <Value>=Last(Fields!TotalInvoiceDiscountAmount.Value)</Value>
                                                     <Style>
-                                                      <FontSize>9pt</FontSize>
+                                                      <FontFamily>Segoe UI</FontFamily>
+                                                      <FontSize>8pt</FontSize>
                                                       <Format>=Fields!InvDiscAmt_PurchLineFormat.Value</Format>
                                                     </Style>
                                                   </TextRun>
@@ -1604,6 +1606,9 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               </Paragraph>
                                             </Paragraphs>
                                             <rd:DefaultName>Textbox163</rd:DefaultName>
+                                            <Visibility>
+                                              <Hidden>=IIF(Fields!VATAmount.Value &lt;&gt; 0,true,false)</Hidden>
+                                            </Visibility>
                                             <Style>
                                               <Border />
                                               <VerticalAlign>Top</VerticalAlign>
@@ -1702,6 +1707,9 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               </Paragraph>
                                             </Paragraphs>
                                             <rd:DefaultName>Textbox142</rd:DefaultName>
+                                            <Visibility>
+                                              <Hidden>=IIF(Fields!VATAmount.Value &lt;&gt; 0,true,false)</Hidden>
+                                            </Visibility>
                                             <Style>
                                               <Border>
                                                 <Style>None</Style>
@@ -1837,6 +1845,9 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               </Paragraph>
                                             </Paragraphs>
                                             <rd:DefaultName>Textbox78</rd:DefaultName>
+                                            <Visibility>
+                                              <Hidden>=IIF(Fields!VATAmount.Value &lt;&gt; 0,true,false)</Hidden>
+                                            </Visibility>
                                             <Style>
                                               <Border>
                                                 <Style>None</Style>
@@ -1858,7 +1869,8 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                                   <TextRun>
                                                     <Value>=Last(Fields!TotalAmount.Value)</Value>
                                                     <Style>
-                                                      <FontSize>9pt</FontSize>
+                                                      <FontFamily>Segoe UI</FontFamily>
+                                                      <FontSize>8pt</FontSize>
                                                       <FontWeight>Bold</FontWeight>
                                                       <Format>=Fields!TotalInclVATFormat.Value</Format>
                                                     </Style>
@@ -1870,6 +1882,9 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               </Paragraph>
                                             </Paragraphs>
                                             <rd:DefaultName>Textbox59</rd:DefaultName>
+                                            <Visibility>
+                                              <Hidden>=IIF(Fields!VATAmount.Value &lt;&gt; 0,true,false)</Hidden>
+                                            </Visibility>
                                             <Style>
                                               <Border>
                                                 <Style>None</Style>
@@ -2083,7 +2098,8 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                                   <TextRun>
                                                     <Value />
                                                     <Style>
-                                                      <FontSize>9pt</FontSize>
+                                                      <FontFamily>Segoe UI</FontFamily>
+                                                      <FontSize>8pt</FontSize>
                                                       <FontWeight>Bold</FontWeight>
                                                     </Style>
                                                   </TextRun>
@@ -2109,7 +2125,8 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                                   <TextRun>
                                                     <Value>=Last(Fields!TotalAmount.Value)</Value>
                                                     <Style>
-                                                      <FontSize>9pt</FontSize>
+                                                      <FontFamily>Segoe UI</FontFamily>
+                                                      <FontSize>8pt</FontSize>
                                                       <FontWeight>Bold</FontWeight>
                                                       <Format>=Fields!TotalInclVATFormat.Value</Format>
                                                     </Style>
@@ -3019,7 +3036,6 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <Hidden>=iif(Fields!TotalAmountInclVAT.Value,true,false)</Hidden>
                                             </Visibility>
                                             <Style>
-                                              <BackgroundColor>Red</BackgroundColor>
                                               <PaddingRight>0.0625in</PaddingRight>
                                               <PaddingBottom>2pt</PaddingBottom>
                                             </Style>
@@ -3048,7 +3064,6 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                             </Paragraphs>
                                             <rd:DefaultName>Textbox191</rd:DefaultName>
                                             <Style>
-                                              <BackgroundColor>Red</BackgroundColor>
                                               <PaddingRight>0.0625in</PaddingRight>
                                               <PaddingBottom>2pt</PaddingBottom>
                                             </Style>
@@ -3064,7 +3079,15 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value />
+                                                    <Value xml:space="preserve"> </Value>
+                                                    <Style>
+                                                      <FontFamily>Segoe UI</FontFamily>
+                                                      <FontSize>8pt</FontSize>
+                                                      <FontWeight>Bold</FontWeight>
+                                                    </Style>
+                                                  </TextRun>
+                                                  <TextRun>
+                                                    <Value>=Fields!VATAmtLineVATAmtCaption.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -3072,12 +3095,19 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
-                                                <Style />
+                                                <Style>
+                                                  <TextAlign>Right</TextAlign>
+                                                </Style>
                                               </Paragraph>
                                             </Paragraphs>
                                             <rd:DefaultName>Textbox192</rd:DefaultName>
+                                            <Visibility>
+                                              <Hidden>=IIF(Fields!VATAmount.Value=0,TRUE,FALSE)</Hidden>
+                                            </Visibility>
                                             <Style>
-                                              <BackgroundColor>Red</BackgroundColor>
+                                              <Border>
+                                                <Style>None</Style>
+                                              </Border>
                                               <PaddingRight>0.0625in</PaddingRight>
                                               <PaddingBottom>2pt</PaddingBottom>
                                             </Style>
@@ -3104,13 +3134,17 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
-                                                <Style />
+                                                <Style>
+                                                  <TextAlign>Right</TextAlign>
+                                                </Style>
                                               </Paragraph>
                                             </Paragraphs>
                                             <rd:DefaultName>Textbox250</rd:DefaultName>
+                                            <Visibility>
+                                              <Hidden>=IIF(Fields!VATAmount.Value=0,TRUE,FALSE)</Hidden>
+                                            </Visibility>
                                             <Style>
                                               <Border />
-                                              <BackgroundColor>Red</BackgroundColor>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingLeft>5pt</PaddingLeft>
                                             </Style>
@@ -3126,12 +3160,11 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!TotalAmountInclVAT.Value</Value>
+                                                    <Value>=Fields!VATAmount.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
-                                                      <FontWeight>Bold</FontWeight>
-                                                      <Format>=Fields!TotalAmountInclVATFormat.Value</Format>
+                                                      <Format>=Fields!VATAmountFormat.Value</Format>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -3141,12 +3174,8 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               </Paragraph>
                                             </Paragraphs>
                                             <ZIndex>68</ZIndex>
-                                            <Visibility>
-                                              <Hidden>=iif(Fields!TotalAmountInclVAT.Value,true,false)</Hidden>
-                                            </Visibility>
                                             <Style>
                                               <Border />
-                                              <BackgroundColor>Red</BackgroundColor>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingLeft>5pt</PaddingLeft>
                                             </Style>
@@ -3179,7 +3208,6 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                             <rd:DefaultName>textbox296</rd:DefaultName>
                                             <ZIndex>93</ZIndex>
                                             <Style>
-                                              <BackgroundColor>Red</BackgroundColor>
                                               <PaddingRight>0.0625in</PaddingRight>
                                               <PaddingBottom>2pt</PaddingBottom>
                                             </Style>
@@ -3207,7 +3235,6 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                             </Paragraphs>
                                             <rd:DefaultName>Textbox195</rd:DefaultName>
                                             <Style>
-                                              <BackgroundColor>Red</BackgroundColor>
                                               <PaddingRight>0.0625in</PaddingRight>
                                               <PaddingBottom>2pt</PaddingBottom>
                                             </Style>
@@ -3223,19 +3250,27 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value />
+                                                    <Value>=Fields!VALVATBaseLCYCaption.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
+                                                      <FontWeight>Bold</FontWeight>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
-                                                <Style />
+                                                <Style>
+                                                  <TextAlign>Right</TextAlign>
+                                                </Style>
                                               </Paragraph>
                                             </Paragraphs>
                                             <rd:DefaultName>Textbox196</rd:DefaultName>
+                                            <Visibility>
+                                              <Hidden>=IIF(Fields!VATAmount.Value=0,TRUE,FALSE)</Hidden>
+                                            </Visibility>
                                             <Style>
-                                              <BackgroundColor>Red</BackgroundColor>
+                                              <Border>
+                                                <Style>None</Style>
+                                              </Border>
                                               <PaddingRight>0.0625in</PaddingRight>
                                               <PaddingBottom>2pt</PaddingBottom>
                                             </Style>
@@ -3258,15 +3293,23 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
+                                                      <FontWeight>Bold</FontWeight>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
-                                                <Style />
+                                                <Style>
+                                                  <TextAlign>Right</TextAlign>
+                                                </Style>
                                               </Paragraph>
                                             </Paragraphs>
                                             <rd:DefaultName>Textbox251</rd:DefaultName>
+                                            <Visibility>
+                                              <Hidden>=IIF(Fields!VATAmount.Value=0,TRUE,FALSE)</Hidden>
+                                            </Visibility>
                                             <Style>
-                                              <BackgroundColor>Red</BackgroundColor>
+                                              <Border>
+                                                <Style>None</Style>
+                                              </Border>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingLeft>5pt</PaddingLeft>
                                             </Style>
@@ -3282,11 +3325,11 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!VATAmount.Value</Value>
+                                                    <Value>=Fields!VATBaseAmount.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
-                                                      <Format>=Fields!VATAmountFormat.Value</Format>
+                                                      <Format>=Fields!VATBaseAmountFormat.Value</Format>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -3297,7 +3340,6 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                             </Paragraphs>
                                             <ZIndex>86</ZIndex>
                                             <Style>
-                                              <BackgroundColor>Red</BackgroundColor>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingLeft>5pt</PaddingLeft>
                                             </Style>
@@ -3330,7 +3372,6 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                             <rd:DefaultName>textbox350</rd:DefaultName>
                                             <ZIndex>101</ZIndex>
                                             <Style>
-                                              <BackgroundColor>Red</BackgroundColor>
                                               <PaddingRight>0.0625in</PaddingRight>
                                               <PaddingBottom>2pt</PaddingBottom>
                                             </Style>
@@ -3358,7 +3399,6 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                             </Paragraphs>
                                             <rd:DefaultName>Textbox205</rd:DefaultName>
                                             <Style>
-                                              <BackgroundColor>Red</BackgroundColor>
                                               <PaddingRight>0.0625in</PaddingRight>
                                               <PaddingBottom>2pt</PaddingBottom>
                                             </Style>
@@ -3374,19 +3414,27 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value />
+                                                    <Value>=Fields!TotalText.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
+                                                      <FontWeight>Bold</FontWeight>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
-                                                <Style />
+                                                <Style>
+                                                  <TextAlign>Right</TextAlign>
+                                                </Style>
                                               </Paragraph>
                                             </Paragraphs>
                                             <rd:DefaultName>Textbox206</rd:DefaultName>
+                                            <Visibility>
+                                              <Hidden>=IIF(Fields!VATAmount.Value=0,TRUE,FALSE)</Hidden>
+                                            </Visibility>
                                             <Style>
-                                              <BackgroundColor>Red</BackgroundColor>
+                                              <Border>
+                                                <Style>None</Style>
+                                              </Border>
                                               <PaddingRight>0.0625in</PaddingRight>
                                               <PaddingBottom>2pt</PaddingBottom>
                                             </Style>
@@ -3409,15 +3457,23 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
+                                                      <FontWeight>Bold</FontWeight>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
-                                                <Style />
+                                                <Style>
+                                                  <TextAlign>Right</TextAlign>
+                                                </Style>
                                               </Paragraph>
                                             </Paragraphs>
                                             <rd:DefaultName>Textbox252</rd:DefaultName>
+                                            <Visibility>
+                                              <Hidden>=IIF(Fields!VATAmount.Value=0,TRUE,FALSE)</Hidden>
+                                            </Visibility>
                                             <Style>
-                                              <BackgroundColor>Red</BackgroundColor>
+                                              <Border>
+                                                <Style>None</Style>
+                                              </Border>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingLeft>5pt</PaddingLeft>
                                             </Style>
@@ -3433,11 +3489,12 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!VATBaseAmount.Value</Value>
+                                                    <Value>=Fields!TotalAmountInclVAT.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
-                                                      <Format>=Fields!VATBaseAmountFormat.Value</Format>
+                                                      <FontWeight>Bold</FontWeight>
+                                                      <Format>=Fields!TotalAmountInclVATFormat.Value</Format>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -3449,7 +3506,14 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                             <rd:DefaultName>textbox358</rd:DefaultName>
                                             <ZIndex>94</ZIndex>
                                             <Style>
-                                              <BackgroundColor>Red</BackgroundColor>
+                                              <Border>
+                                                <Style>None</Style>
+                                              </Border>
+                                              <TopBorder>
+                                                <Color>Black</Color>
+                                                <Style>Solid</Style>
+                                                <Width>1pt</Width>
+                                              </TopBorder>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingLeft>5pt</PaddingLeft>
                                             </Style>
@@ -3651,7 +3715,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                               <Top>0.03167cm</Top>
                               <Left>0.00632cm</Left>
                               <Height>7.02024cm</Height>
-                              <Width>10.79854in</Width>
+                              <Width>10.57763in</Width>
                               <ZIndex>1</ZIndex>
                               <Style />
                             </Tablix>
@@ -7288,8 +7352,8 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                   </FilterValues>
                                 </Filter>
                               </Filters>
-                              <Top>10.9in</Top>
-                              <Left>0.00002cm</Left>
+                              <Top>10.78542in</Top>
+                              <Left>0.00721cm</Left>
                               <Height>1.01944in</Height>
                               <Width>7.08327in</Width>
                               <ZIndex>4</ZIndex>
@@ -9004,8 +9068,8 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                   </FilterValues>
                                 </Filter>
                               </Filters>
-                              <Top>8.80833in</Top>
-                              <Left>0.00716cm</Left>
+                              <Top>8.69375in</Top>
+                              <Left>0.01435cm</Left>
                               <Height>2.0622in</Height>
                               <Width>7.08329in</Width>
                               <ZIndex>5</ZIndex>
@@ -10791,7 +10855,8 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                   </FilterValues>
                                 </Filter>
                               </Filters>
-                              <Top>30.4cm</Top>
+                              <Top>30.10896cm</Top>
+                              <Left>0.00719cm</Left>
                               <Height>0.85278cm</Height>
                               <Width>17.99872cm</Width>
                               <ZIndex>8</ZIndex>
@@ -10803,7 +10868,11 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                             </Tablix>
                           </ReportItems>
                           <KeepTogether>true</KeepTogether>
-                          <Style />
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                          </Style>
                         </Rectangle>
                         <rd:Selected>true</rd:Selected>
                       </CellContents>
@@ -10863,14 +10932,14 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
             <DataSetName>DataSet_Result</DataSetName>
             <Left>0.14075cm</Left>
             <Height>31.25278cm</Height>
-            <Width>27.43462cm</Width>
+            <Width>26.8735cm</Width>
             <Style />
           </Tablix>
         </ReportItems>
         <Height>31.3cm</Height>
         <Style />
       </Body>
-      <Width>27.64015cm</Width>
+      <Width>27.05807cm</Width>
       <Page>
         <PageHeader>
           <Height>8.25902cm</Height>
@@ -10999,7 +11068,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Top>7.50266cm</Top>
               <Left>23.53754cm</Left>
               <Height>11pt</Height>
-              <Width>3.98432cm</Width>
+              <Width>3.45515cm</Width>
               <ZIndex>4</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -11276,7 +11345,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Top>1.8609cm</Top>
               <Left>12.35018cm</Left>
               <Height>11pt</Height>
-              <Width>15.16507cm</Width>
+              <Width>14.6359cm</Width>
               <ZIndex>15</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -11303,7 +11372,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Top>4.33556cm</Top>
               <Left>12.90749cm</Left>
               <Height>11pt</Height>
-              <Width>14.60773cm</Width>
+              <Width>14.07856cm</Width>
               <ZIndex>16</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -11330,7 +11399,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Top>3.98278cm</Top>
               <Left>12.90749cm</Left>
               <Height>11pt</Height>
-              <Width>14.60773cm</Width>
+              <Width>14.07856cm</Width>
               <ZIndex>17</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -11411,7 +11480,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Top>7.10051cm</Top>
               <Left>23.55524cm</Left>
               <Height>11pt</Height>
-              <Width>3.95998cm</Width>
+              <Width>3.43081cm</Width>
               <ZIndex>20</ZIndex>
               <Style>
                 <Border />
@@ -11439,7 +11508,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Top>6.69212cm</Top>
               <Left>23.5484cm</Left>
               <Height>11pt</Height>
-              <Width>3.95645cm</Width>
+              <Width>3.42728cm</Width>
               <ZIndex>21</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -11466,7 +11535,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Top>6.24409cm</Top>
               <Left>23.56541cm</Left>
               <Height>11pt</Height>
-              <Width>3.95645cm</Width>
+              <Width>3.42728cm</Width>
               <ZIndex>22</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -11493,7 +11562,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Top>5.46446cm</Top>
               <Left>15.53153cm</Left>
               <Height>11pt</Height>
-              <Width>11.97332cm</Width>
+              <Width>11.44415cm</Width>
               <ZIndex>23</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -11520,7 +11589,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Top>4.68834cm</Top>
               <Left>15.54191cm</Left>
               <Height>11pt</Height>
-              <Width>11.97332cm</Width>
+              <Width>11.44415cm</Width>
               <ZIndex>24</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -11547,7 +11616,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Top>3.63001cm</Top>
               <Left>12.90749cm</Left>
               <Height>11pt</Height>
-              <Width>14.60773cm</Width>
+              <Width>14.07856cm</Width>
               <ZIndex>25</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -11574,7 +11643,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Top>3.27723cm</Top>
               <Left>12.90749cm</Left>
               <Height>11pt</Height>
-              <Width>14.60773cm</Width>
+              <Width>14.07856cm</Width>
               <ZIndex>26</ZIndex>
               <Visibility>
                 <Hidden>true</Hidden>
@@ -11607,7 +11676,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Top>2.92445cm</Top>
               <Left>12.90749cm</Left>
               <Height>11pt</Height>
-              <Width>14.60773cm</Width>
+              <Width>14.07856cm</Width>
               <ZIndex>27</ZIndex>
               <Visibility>
                 <Hidden>true</Hidden>
@@ -11640,7 +11709,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Top>2.57166cm</Top>
               <Left>12.93569cm</Left>
               <Height>11pt</Height>
-              <Width>14.60773cm</Width>
+              <Width>14.07856cm</Width>
               <ZIndex>28</ZIndex>
               <Visibility>
                 <Hidden>true</Hidden>
@@ -11673,7 +11742,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               </Paragraphs>
               <Left>1.74807cm</Left>
               <Height>20pt</Height>
-              <Width>25.79535cm</Width>
+              <Width>25.23972cm</Width>
               <ZIndex>29</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -11930,7 +11999,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Top>5.0764cm</Top>
               <Left>15.54191cm</Left>
               <Height>11pt</Height>
-              <Width>11.97332cm</Width>
+              <Width>11.44415cm</Width>
               <ZIndex>39</ZIndex>
               <Style>
                 <Border>

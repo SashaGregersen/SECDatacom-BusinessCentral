@@ -428,6 +428,33 @@ report 50051 "SalesOrdConfLS-New"
             column(EndCustCityArray5; EndCustomerArray[5])
             {
             }
+            column(EndCustArray6; EndCustomerArray[6])
+            {
+            }
+            column(EndCustArray7; EndCustomerArray[7])
+            {
+            }
+            column(EndCustomerArray8; EndCustomerArray[8])
+            {
+            }
+            column(EndCustEmail; EndCustEmail)
+            {
+            }
+            column(EndCustName; EndCustName)
+            {
+            }
+            column(EndCustPhone; EndCustPhone)
+            {
+            }
+            column(ShipToEmail; ShipToEmail)
+            {
+            }
+            column(ShipToPhone; ShipToPhone)
+            {
+            }
+            column(ShipToName; ShipToName)
+            {
+            }
             column(Suppress_Prices_on_Printouts; "Suppress Prices on Printouts")
             {
             }
@@ -920,6 +947,9 @@ report 50051 "SalesOrdConfLS-New"
                 //>>NC - Getting Endcustomer info    
                 if "End Customer" <> '' then begin
                     Endcustomer.Get("End Customer");
+                    EndCustEmail := Endcustomer."E-Mail";
+                    EndCustPhone := endcustomer."Phone No.";
+                    EndCustName := endcustomer.Contact;
                     if Endcustomer."Country/Region Code" <> '' then
                         EndcustomerCountryRegion.get(Endcustomer."Country/Region Code")
                     else
@@ -929,16 +959,36 @@ report 50051 "SalesOrdConfLS-New"
                     Clear(EndcustomerCountryRegion);
                 end;
                 //<<NC
-
                 //>>NC Arraylist
                 EndCustomerArray[1] := Endcustomer.Name;
                 EndCustomerArray[2] := Endcustomer.Address;
                 EndCustomerArray[3] := Endcustomer."Address 2";
                 EndCustomerArray[4] := Endcustomer.City + ' ' + Endcustomer."Post Code";
                 EndCustomerArray[5] := EndcustomerCountryRegion.Name;
+                EndcustomerArray[6] := EndCustEmail;
+                EndCustomerArray[7] := EndCustPhone;
+                EndCustomerArray[8] := EndCustName;
                 CompressArray(EndCustomerArray);
                 //<<NC Arraylist
 
+                if "Drop-Shipment" = true then begin
+                    ShipToEmail := endcustomer."E-Mail";
+                    ShipToPhone := endcustomer."Phone No.";
+                    ShipToName := endcustomer.Contact;
+                end else begin
+                    if "Ship-to Code" <> '' then begin
+                        ShipTo.Get("Ship-to Code");
+                        ShipToEmail := ShipTo."E-Mail";
+                        ShipToEmail := Shipto."Phone No.";
+                        ShipToName := ShipTo.Contact;
+                    end else begin
+
+                        Clear(ShipToEmail);
+                        Clear(ShipToPhone);
+                        Clear(ShipToName);
+                    end;
+                end;
+                //<<NC
                 //>>NC - Getting Ship-to Country
                 if "Ship-to Country/Region Code" <> '' then begin
                     ShipToCountryRegion.Get("Ship-to Country/Region Code")
@@ -1144,8 +1194,17 @@ report 50051 "SalesOrdConfLS-New"
         ShipToAddr: array[8] of Text[90];
         CompanyAddr: array[8] of Text[90];
         //>>NC Added Array
-        EndCustomerArray: array[5] of Text[90];
+        EndCustomerArray: array[8] of Text[90];
         //<< NC added array
+        //>>NC added variables
+        EndCustPhone: text[30];
+        EndCustEmail: text[80];
+        EndCustContactName: text[100];
+        EndCustName: text[100];
+        ShipToName: text[100];
+        ShipToEmail: text[100];
+        ShipToPhone: text[100];
+        //<<NC
         SalesPersonText: Text[30];
         TotalText: Text[50];
         TotalExclVATText: Text[50];
@@ -1190,9 +1249,12 @@ report 50051 "SalesOrdConfLS-New"
         ShowWorkDescription: Boolean;
         Item: Record Item;
         Endcustomer: Record Customer;
+        SalesHeader: Record "Sales Header";
         ResellerCountryRegion: Record "Country/Region";
         EndcustomerCountryRegion: Record "Country/Region";
         ShipToCountryRegion: Record "Country/Region";
+        Customer: Record Customer; //NC
+        ShipTo: Record "Ship-to Address";
         WorkDescriptionLine: Text;
 
     local procedure InitLogInteraction()
