@@ -965,9 +965,9 @@ report 50051 "SalesOrdConfLS-New"
                 EndCustomerArray[3] := Endcustomer."Address 2";
                 EndCustomerArray[4] := Endcustomer.City + ' ' + Endcustomer."Post Code";
                 EndCustomerArray[5] := EndcustomerCountryRegion.Name;
-                EndcustomerArray[6] := EndCustEmail;
+                EndcustomerArray[6] := EndCustName;
                 EndCustomerArray[7] := EndCustPhone;
-                EndCustomerArray[8] := EndCustName;
+                EndCustomerArray[8] := EndCustEmail;
                 CompressArray(EndCustomerArray);
                 //<<NC Arraylist
 
@@ -979,13 +979,12 @@ report 50051 "SalesOrdConfLS-New"
                     if "Ship-to Code" <> '' then begin
                         ShipTo.Get("Ship-to Code");
                         ShipToEmail := ShipTo."E-Mail";
-                        ShipToEmail := Shipto."Phone No.";
+                        ShipToPhone := Shipto."Phone No.";
                         ShipToName := ShipTo.Contact;
-                    end else begin
-
-                        Clear(ShipToEmail);
-                        Clear(ShipToPhone);
-                        Clear(ShipToName);
+                    End else begin
+                        ShipToEmail := ShipTo."E-Mail";
+                        ShipToPhone := Shipto."Phone No.";
+                        ShipToName := ShipTo.Contact;
                     end;
                 end;
                 //<<NC
