@@ -15,7 +15,7 @@ pageextension 50099 "Temp Hacks" extends "Company Information"
             {
                 ApplicationArea = all;
                 Image = ApplyTemplate;
-                Caption = 'Run Hack';
+                Caption = 'Update Item Ledger Entries';
 
                 trigger OnAction()
                 var
