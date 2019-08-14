@@ -26,6 +26,11 @@ pageextension 50035 "Synchronize Customer" extends "Sales & Receivables Setup"
                 TableRelation = Item;
             }
 
+            field("Consignor Path"; "Consignor Path")
+            {
+                ApplicationArea = all;
+            }
+
             field("Cygate Customer No."; "Cygate Customer No.")
             {
                 ApplicationArea = all;

@@ -29,6 +29,7 @@ codeunit 50010 "Bid Management"
         ICPartner: record "IC Partner";
         VendorNo: code[20];
         ItemDiscGroup: record "Item Discount Group";
+        CurrencyCode: code[20];
     begin
         ICPartner.ChangeCompany(CompanyNameToCopyTo);
         ICPartner.SetRange("Inbox Details", CompanyName);
@@ -50,15 +51,33 @@ codeunit 50010 "Bid Management"
         BidPrice.SetRange("Bid No.", BidToCopy."No.");
         if BidPrice.FindSet() then
             repeat
-                if (BidPrice."Currency Code" = '') and (GLSetup."LCY Code" <> GLSetupInOtherCompany."LCY Code") then
+                //NC.00.01 130819 SDG - change to support local currency
+                //>>>
+                /*if (BidPrice."Currency Code" = '') and (GLSetup."LCY Code" <> GLSetupInOtherCompany."LCY Code") then
                     BidPrice."Currency Code" := GLSetup."LCY Code";
+                if BidPrice."Currency Code" = GLSetupInOtherCompany."LCY Code" then
+                    BidPrice."Currency Code" := ''; */
+                CurrencyCode := BidPrice."Currency Code";
+                if (BidPrice."Currency Code" = '') and (GLSetup."LCY Code" <> GLSetupInOtherCompany."LCY Code") then
+                    CurrencyCode := GLSetup."LCY Code";
+                if BidPrice."Currency Code" = GLSetupInOtherCompany."LCY Code" then
+                    CurrencyCode := '';
+                //<<<
                 Item.Get(BidPrice."item No.");
                 BidPriceToCopyTo.ChangeCompany(CompanyNameToCopyTo);
-                if not BidPriceToCopyTo.get(BidPrice."Bid No.", BidPrice."item No.", BidPrice."Customer No.", BidPrice."Currency Code") then begin
+                if not BidPriceToCopyTo.get(BidPrice."Bid No.", BidPrice."item No.", BidPrice."Customer No.", CurrencyCode) then begin
                     BidPriceToCopyTo := BidPrice;
+                    //NC.00.01 130819 SDG - change to support local currency
+                    //>>>
+                    if (BidPrice."Currency Code" = '') and (GLSetup."LCY Code" <> GLSetupInOtherCompany."LCY Code") then
+                        BidPriceToCopyTo."Currency Code" := GLSetup."LCY Code";
+                    if BidPrice."Currency Code" = GLSetupInOtherCompany."LCY Code" then
+                        BidPriceToCopyTo."Currency Code" := '';
+                    //<<<
                     BidPriceToCopyTo.Insert(false);
                 end else
                     BidPriceToCopyTo.TransferFields(BidPrice, false);
+
                 if Item."Transfer Price %" <> 0 then
                     BidPriceToCopyTo.Validate("Bid Unit Purchase Price", bidprice."Bid Unit Purchase Price" / (1 - (Item."Transfer Price %" / 100)));
                 BidPriceToCopyTo.Claimable := false; // To find correct purchase price in IC companies in create purchase order

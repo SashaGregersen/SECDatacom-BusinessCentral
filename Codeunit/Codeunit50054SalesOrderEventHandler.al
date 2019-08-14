@@ -884,10 +884,31 @@ codeunit 50054 "Sales Order Event Handler"
     [EventSubscriber(ObjectType::codeunit, codeunit::"Sales-Post", 'OnAfterPostSalesDoc', '', true, true)]
     local procedure OnAfterPostSalesDocEvent(VAR SalesHeader: Record "Sales Header"; VAR GenJnlPostLine: Codeunit "Gen. Jnl.-Post Line"; SalesShptHdrNo: Code[20]; RetRcpHdrNo: Code[20]; SalesInvHdrNo: Code[20]; SalesCrMemoHdrNo: Code[20]; CommitIsSuppressed: Boolean)
     var
-
+        Consignor: xmlport Consignor;
+        Filelocation: text;
+        ConsignorCSVFile: file;
+        XMLStream: OutStream;
+        WarehouseActHeader: record "Warehouse Activity Header";
+        SalesReceive: record "Sales & Receivables Setup";
     begin
         if SalesShptHdrNo <> '' then begin
-            //Kald xmlport til eksport af felter til Consignor
+            WarehouseActHeader.setrange("Source No.", SalesHeader."No.");
+            WarehouseActHeader.setrange("Source Type", 37);
+            if WarehouseActHeader.FindFirst() then begin
+                SalesReceive.get;
+                if SalesReceive."Consignor Path" <> '' then begin
+                    //Kald xmlport til eksport af felter til Consignor
+                    Filelocation := Consignor.CreateFileLocation(SalesHeader, SalesReceive);
+                    Consignor.SetPostedSalesShipmentNo(SalesShptHdrNo);
+                    SalesHeader.SetRecFilter();
+                    Consignor.SetTableView(SalesHeader);
+                    ConsignorCSVFile.CREATE(Filelocation);
+                    ConsignorCSVFile.CreateOutStream(XMLStream);
+                    Consignor.SetDestination(XMLStream);
+                    Consignor.Export();
+                    ConsignorCSVFile.Close();
+                end;
+            end;
         end;
     end;
 
