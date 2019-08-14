@@ -965,29 +965,23 @@ report 50051 "SalesOrdConfLS-New"
                 EndCustomerArray[3] := Endcustomer."Address 2";
                 EndCustomerArray[4] := Endcustomer.City + ' ' + Endcustomer."Post Code";
                 EndCustomerArray[5] := EndcustomerCountryRegion.Name;
-                EndcustomerArray[6] := EndCustEmail;
+                EndcustomerArray[6] := EndCustName;
                 EndCustomerArray[7] := EndCustPhone;
-                EndCustomerArray[8] := EndCustName;
+                EndCustomerArray[8] := EndCustEmail;
                 CompressArray(EndCustomerArray);
                 //<<NC Arraylist
+
+                //NC>> 
+                ShipToEmail := "Ship-to Email";
+                ShipToPhone := "Ship-to Phone No.";
+                ShipToName := "Ship-to Contact";
 
                 if "Drop-Shipment" = true then begin
                     ShipToEmail := endcustomer."E-Mail";
                     ShipToPhone := endcustomer."Phone No.";
                     ShipToName := endcustomer.Contact;
-                end else begin
-                    if "Ship-to Code" <> '' then begin
-                        ShipTo.Get("Ship-to Code");
-                        ShipToEmail := ShipTo."E-Mail";
-                        ShipToEmail := Shipto."Phone No.";
-                        ShipToName := ShipTo.Contact;
-                    end else begin
-
-                        Clear(ShipToEmail);
-                        Clear(ShipToPhone);
-                        Clear(ShipToName);
-                    end;
                 end;
+
                 //<<NC
                 //>>NC - Getting Ship-to Country
                 if "Ship-to Country/Region Code" <> '' then begin
