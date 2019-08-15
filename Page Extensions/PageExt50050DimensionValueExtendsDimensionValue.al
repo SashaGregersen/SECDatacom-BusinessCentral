@@ -1,4 +1,4 @@
-pageextension 50050 "Dimension Value" extends "Dimension Value List"
+pageextension 50050 "Dimension Value" extends "Dimension Values"
 {
     layout
     {
@@ -16,6 +16,4 @@ pageextension 50050 "Dimension Value" extends "Dimension Value List"
         // Add changes to page actions here
     }
 
-    var
-        myInt: Integer;
 }
