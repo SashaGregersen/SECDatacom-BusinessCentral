@@ -640,6 +640,7 @@ report 50061 "SEC - Sales Invoice LS-New"
                 column(Vendor_Item_No; Item."Vendor-Item-No.")
                 {
                 }
+
                 dataitem(ShipmentLine; "Sales Shipment Buffer")
                 {
                     DataItemTableView = SORTING ("Document No.", "Line No.", "Entry No.");
@@ -1447,6 +1448,7 @@ report 50061 "SEC - Sales Invoice LS-New"
         RespCenter: Record "Responsibility Center";
         Language: Record Language;
         VATClause: Record "VAT Clause";
+        TrackingSpecBuffer: Record "Tracking Specification" temporary;
         TempLineFeeNoteOnReportHist: Record "Line Fee Note on Report Hist." temporary;
         FormatAddr: Codeunit "Format Address";
         FormatDocument: Codeunit "Format Document";
@@ -1461,7 +1463,7 @@ report 50061 "SEC - Sales Invoice LS-New"
         //>>NC Added Array
         EndCustomerArray: array[5] of Text[90];
         //<< NC added array
-
+        ItemTrackingDocMgt: Codeunit "Item Tracking Doc. Management"; //NC
         SalesPersonText: Text[30];
         TotalText: Text[50];
         TotalExclVATText: Text[50];
