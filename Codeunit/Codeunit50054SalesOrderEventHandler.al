@@ -891,7 +891,7 @@ codeunit 50054 "Sales Order Event Handler"
         WarehouseActHeader: record "Warehouse Activity Header";
         SalesReceive: record "Sales & Receivables Setup";
     begin
-        if SalesShptHdrNo <> '' then begin
+        /* if SalesShptHdrNo <> '' then begin
             WarehouseActHeader.setrange("Source No.", SalesHeader."No.");
             WarehouseActHeader.setrange("Source Type", 37);
             if WarehouseActHeader.FindFirst() then begin
@@ -909,7 +909,7 @@ codeunit 50054 "Sales Order Event Handler"
                     ConsignorCSVFile.Close();
                 end;
             end;
-        end;
+        end; */
     end;
 
     procedure AddTransactionTypeToSalesDocument(var SalesHeader: Record "Sales Header");

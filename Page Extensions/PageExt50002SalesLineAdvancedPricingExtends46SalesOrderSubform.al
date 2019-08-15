@@ -83,6 +83,14 @@ pageextension 50002 "Sales Line Bid" extends "Sales Order Subform"
         {
             Visible = false;
         }
+
+        addafter("No.")
+        {
+            field("Vendor Item No."; "Vendor Item No.")
+            {
+                ApplicationArea = all;
+            }
+        }
     }
 
     actions
