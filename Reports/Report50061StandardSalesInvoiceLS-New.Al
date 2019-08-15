@@ -446,6 +446,9 @@ report 50061 "SEC - Sales Invoice LS-New"
             {
             }
             //>> NC columns
+            column(SerialNoCaption; SerialNoCaptionLbl)
+            {
+            }
             //>>Endcustomer columns
             column(Endcustomer_Lbl; EndcustomerLbl)
             {
@@ -1174,10 +1177,11 @@ report 50061 "SEC - Sales Invoice LS-New"
                 EndCustomerArray[1] := Endcustomer.Name;
                 EndCustomerArray[2] := Endcustomer.Address;
                 EndCustomerArray[3] := Endcustomer."Address 2";
-                EndCustomerArray[4] := Endcustomer.City + ' ' + Endcustomer."Post Code";
+                EndCustomerArray[4] := Endcustomer."Post Code" + ' ' + Endcustomer.City;
                 EndCustomerArray[5] := EndcustomerCountryRegion.Name;
                 CompressArray(EndCustomerArray);
-                //<<NC Arraylist
+                //<<NC Array
+
                 //>>NC - Getting Ship-to Country
                 if "ship-to Country/Region Code" <> '' then begin
                     ShipToCountryRegion.Get("Ship-to Country/Region Code")
@@ -1539,7 +1543,8 @@ report 50061 "SEC - Sales Invoice LS-New"
         PaymentID: Code[16];
         PmtIDLength: Integer;
         PrintFIK: Boolean;
-
+        SerialNoCaptionLbl: Label 'Serial No.';
+        ItemLedgerEntry: Record "Item Ledger Entry";
         //<<PM
         //<<NC variables
         PricePerLbl: Label 'Price per';

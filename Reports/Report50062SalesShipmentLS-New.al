@@ -827,7 +827,8 @@ report 50062 "SEC Sales - Shipment LS-New"
         PageCaptionCap: Label 'Page %1 of %2';
         PackageTrackingNo: label 'Package Tracking No.';
         ShippingAgent: label 'Shipping Agent';
-        YourOrderLbl: label 'Your Order';
+        YourOrderLbl: label 'Your Order'; //NC
+
 
 
     procedure InitLogInteraction()

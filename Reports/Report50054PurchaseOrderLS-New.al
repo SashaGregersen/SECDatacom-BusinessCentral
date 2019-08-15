@@ -107,6 +107,32 @@ report 50054 "SEC Purchase Order-New.Al"
             {
 
             }
+            //>>NC added array
+            column(EndCustArray1; EndCustomerArray[1])
+            {
+            }
+            column(EndCustArray2; EndCustomerArray[2])
+            {
+            }
+            Column(EndCustArray3; EndCustomerArray[3])
+            {
+            }
+            column(EndCustArray4; EndCustomerArray[4])
+            {
+            }
+            column(EndCustCityArray5; EndCustomerArray[5])
+            {
+            }
+            column(EndCustArray6; EndCustomerArray[6])
+            {
+            }
+            column(EndCustArray7; EndCustomerArray[7])
+            {
+            }
+            column(EndCustomerArray8; EndCustomerArray[8])
+            {
+            }
+            //NC added array
             column(Reseller_Lbl; FieldCaption("Reseller"))
             {
             }
@@ -1049,6 +1075,18 @@ report 50054 "SEC Purchase Order-New.Al"
                     Clear(EndCustName);
                 end;
 
+                //>>NC Arraylist
+                EndCustomerArray[1] := Endcustomer.Name;
+                EndCustomerArray[2] := Endcustomer.Address;
+                EndCustomerArray[3] := Endcustomer."Address 2";
+                EndCustomerArray[4] := Endcustomer."Post Code" + ' ' + Endcustomer.City;
+                EndCustomerArray[5] := EndcustomerCountryRegion.Name;
+                EndcustomerArray[6] := EndCustName;
+                EndCustomerArray[7] := EndCustPhone;
+                EndCustomerArray[8] := EndCustEmail;
+                CompressArray(EndCustomerArray);
+                //<<NC Array
+
                 if "Reseller" <> '' then begin
                     Resell.Get("Reseller");
                     if Resell."Country/Region Code" <> '' then
@@ -1220,8 +1258,7 @@ report 50054 "SEC Purchase Order-New.Al"
         ShipToAddr: array[8] of Text[50];
         CompanyAddr: array[8] of Text[50];
         BuyFromAddr: array[8] of Text[50];
-
-
+        EndCustomerArray: array[8] of Text[90]; //<< NC added array
         //NC >> added variable
         CustomerLocationContact: Text[100];
         CustomerLocationPhone: Text[100];
