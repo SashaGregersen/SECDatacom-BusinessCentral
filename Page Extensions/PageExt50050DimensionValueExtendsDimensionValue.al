@@ -6,7 +6,7 @@ pageextension 50050 "Dimension Value" extends "Dimension Values"
         {
             field("Exclude from Price file"; "Exclude from Price file")
             {
-
+                ApplicationArea = all;
             }
         }
     }
