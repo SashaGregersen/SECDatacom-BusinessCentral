@@ -218,8 +218,13 @@ xmlport 50002 "Price File Export Customer CSV"
                     salesprice.Reset();
                     if AdvPriceMgt.FindListPriceForitem(item."No.", CurrencyFilter, salesprice) then
                         ListPriceDec := salesprice."Unit Price"
-                    else
-                        currXMLport.Skip();
+                    else begin
+                        if AdvPriceMgt.FindCostMarkupPrice(item."No.", CurrencyFilter, salesprice) then
+                            ListPriceDec := salesprice."Unit Price";
+                        if ListPriceDec = 0 then
+                            currXMLport.Skip();
+                    end;
+
 
                     if ItemCategory.Get(Item."Item Category Code") then begin
                         if ItemCategory."Overwrite Quantity" then
