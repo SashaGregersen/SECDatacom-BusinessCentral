@@ -181,6 +181,8 @@ xmlport 50001 "Price File Export CSV"
                     DefaultDim: record "Default Dimension";
                     Dimension: Record Dimension;
                     DimensionValue: Record "Dimension Value";
+                    DefaultDim2: record "Default Dimension";
+                    DimensionValue2: Record "Dimension Value";
                     ItemExportMgt: Codeunit "Item Export Management";
                     CurrencyExchRate: Record "Currency Exchange Rate";
                     CurrencyFactor: Decimal;
@@ -195,6 +197,11 @@ xmlport 50001 "Price File Export CSV"
 
                     if not item."Use on Website" then
                         currXMLport.Skip();
+
+                    if DefaultDim2.get(27, item."No.", GLSetup."Global Dimension 1 Code") then
+                        if DimensionValue2.Get(DefaultDim2."Dimension Code", DefaultDim2."Dimension Value Code") then
+                            if DimensionValue2."Exclude from Price file" then
+                                currXMLport.skip;
 
                     CostDec := 0;
 
