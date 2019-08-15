@@ -197,14 +197,10 @@ xmlport 50002 "Price File Export Customer CSV"
                     if not item."Use on Website" then
                         currXMLport.Skip();
 
-                    DefaultDim2.setrange("No.", item."No.");
-                    DefaultDim2.setrange("Table ID", 27);
-                    DefaultDim2.Setrange("Dimension Code", GLSetup."Global Dimension 1 Code");
-                    if DefaultDim2.FindFirst() then begin
+                    if DefaultDim2.get(27, item."No.", item."Global Dimension 1 Code") then
                         if DimensionValue2.Get(DefaultDim."Dimension Code", DefaultDim."Dimension Value Code") then
                             if DimensionValue2."Exclude from Price file" then
                                 currXMLport.skip;
-                    end;
 
                     CostDec := 0;
 
