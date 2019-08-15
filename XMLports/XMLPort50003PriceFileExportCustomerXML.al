@@ -122,8 +122,16 @@ xmlport 50003 "Price File Export Customer XML"
                                 CostDec := CurrencyExchRate.ExchangeAmtFCYToFCY(WorkDate(), PurchasePrice."Currency Code", CurrencyFilter, PurchasePrice."Direct Unit Cost");
                         end; */
                     salesprice.Reset();
-                    AdvPriceMgt.FindListPriceForitem(item."No.", CurrencyFilter, salesprice);
-                    ListPriceDec := salesprice."Unit Price";
+                    salesprice.ClearMarks();
+                    if AdvPriceMgt.FindListPriceForitem(item."No.", CurrencyFilter, salesprice) then
+                        ListPriceDec := salesprice."Unit Price"
+                    else begin
+                        if AdvPriceMgt.FindCostMarkupPrice(item."No.", CurrencyFilter, salesprice) then
+                            ListPriceDec := salesprice."Unit Price"
+                        else
+                            ListPriceDec := 0;
+                    end;
+
                     if ListPriceDec = 0 then
                         currXMLport.Skip();
 

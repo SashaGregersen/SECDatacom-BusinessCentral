@@ -700,14 +700,13 @@ codeunit 50000 "Advanced Price Management"
         UpdateReport.RunModal();
     End;
 
-    procedure FindCostMarkupPrice(Itemno: code[20]; CurrencyCode: code[20]; SalesPrice: record "Sales Price"): Boolean
+    procedure FindCostMarkupPrice(Itemno: code[20]; CurrencyCode: code[20]; var SalesPrice: record "Sales Price"): Boolean
     begin
         Salesprice.SetRange("Item No.", Itemno);
         Salesprice.SetRange("Sales Type", Salesprice."Sales Type"::"All Customers");
         Salesprice.SetFilter("Variant Code", '<>LISTPRICE');
         Salesprice.SetRange("Currency Code", CurrencyCode);
-        if SalesPrice.FindLast() then
-            exit(true);
+        exit(SalesPrice.FindLast());
     end;
 
 }

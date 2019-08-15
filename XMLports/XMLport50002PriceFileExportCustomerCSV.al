@@ -216,15 +216,18 @@ xmlport 50002 "Price File Export Customer CSV"
                                 CostDec := CurrencyExchRate.ExchangeAmtFCYToFCY(WorkDate(), PurchasePrice."Currency Code", CurrencyFilter, PurchasePrice."Direct Unit Cost");
                         end; */
                     salesprice.Reset();
+                    salesprice.ClearMarks();
                     if AdvPriceMgt.FindListPriceForitem(item."No.", CurrencyFilter, salesprice) then
                         ListPriceDec := salesprice."Unit Price"
                     else begin
                         if AdvPriceMgt.FindCostMarkupPrice(item."No.", CurrencyFilter, salesprice) then
-                            ListPriceDec := salesprice."Unit Price";
-                        if ListPriceDec = 0 then
-                            currXMLport.Skip();
+                            ListPriceDec := salesprice."Unit Price"
+                        else
+                            ListPriceDec := 0;
                     end;
 
+                    if ListPriceDec = 0 then
+                        currXMLport.Skip();
 
                     if ItemCategory.Get(Item."Item Category Code") then begin
                         if ItemCategory."Overwrite Quantity" then
