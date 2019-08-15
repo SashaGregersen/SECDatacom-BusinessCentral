@@ -239,6 +239,32 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
             DataClassification = ToBeClassified;
             Editable = false;
         }
+        field(50035; "Vendor Item No."; text[60])
+        {
+            DataClassification = CustomerContent;
+            //TableRelation = item;
+
+            trigger OnLookup()
+            var
+                Item: record item;
+            begin
+                item.setrange("Vendor-Item-No.", "Vendor Item No.");
+                if not item.FindFirst() then
+                    Clear("Vendor Item No.");
+                if page.RunModal(page::"Item List", Item, item."Vendor-Item-No.") = action::LookupOK then begin
+                    Validate("Vendor Item No.", item."Vendor-Item-No.");
+                    Validate("No.", item."No.");
+                end;
+            end;
+
+            trigger Onvalidate()
+            var
+
+            begin
+                if "Vendor Item No." = '' then
+                    validate("No.", '');
+            end;
+        }
     }
 
     procedure updateBidPrices(BidPrices: Record "Bid Item Price"; NewClaimableValue: Boolean; IsProjectSales: Boolean)
