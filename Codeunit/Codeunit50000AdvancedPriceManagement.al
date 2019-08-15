@@ -699,4 +699,15 @@ codeunit 50000 "Advanced Price Management"
         UpdateReport.UseRequestPage(false);
         UpdateReport.RunModal();
     End;
+
+    procedure FindCostMarkupPrice(Itemno: code[20]; CurrencyCode: code[20]; SalesPrice: record "Sales Price"): Boolean
+    begin
+        Salesprice.SetRange("Item No.", Itemno);
+        Salesprice.SetRange("Sales Type", Salesprice."Sales Type"::"All Customers");
+        Salesprice.SetFilter("Variant Code", '<>LISTPRICE');
+        Salesprice.SetRange("Currency Code", CurrencyCode);
+        if SalesPrice.FindLast() then
+            exit(true);
+    end;
+
 }

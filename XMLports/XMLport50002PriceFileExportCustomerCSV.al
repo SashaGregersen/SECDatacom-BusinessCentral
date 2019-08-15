@@ -177,9 +177,9 @@ xmlport 50002 "Price File Export Customer CSV"
                     ItemCategory: record "Item Category";
                     DefaultDim: record "Default Dimension";
                     DefaultDim2: record "Default Dimension";
+                    DimensionValue2: Record "Dimension Value";
                     Dimension: Record Dimension;
                     DimensionValue: Record "Dimension Value";
-                    DimensionValue2: Record "Dimension Value";
                     ItemExportMgt: Codeunit "Item Export Management";
                     CurrencyExchRate: Record "Currency Exchange Rate";
                     CurrencyFactor: Decimal;
@@ -197,14 +197,10 @@ xmlport 50002 "Price File Export Customer CSV"
                     if not item."Use on Website" then
                         currXMLport.Skip();
 
-                    DefaultDim2.setrange("No.", item."No.");
-                    DefaultDim2.setrange("Table ID", 27);
-                    DefaultDim2.Setrange("Dimension Code", GLSetup."Global Dimension 1 Code");
-                    if DefaultDim2.FindFirst() then begin
-                        if DimensionValue2.Get(DefaultDim."Dimension Code", DefaultDim."Dimension Value Code") then
+                    if DefaultDim2.get(27, item."No.", GLSetup."Global Dimension 1 Code") then
+                        if DimensionValue2.Get(DefaultDim2."Dimension Code", DefaultDim2."Dimension Value Code") then
                             if DimensionValue2."Exclude from Price file" then
                                 currXMLport.skip;
-                    end;
 
                     CostDec := 0;
 
@@ -222,8 +218,13 @@ xmlport 50002 "Price File Export Customer CSV"
                     salesprice.Reset();
                     if AdvPriceMgt.FindListPriceForitem(item."No.", CurrencyFilter, salesprice) then
                         ListPriceDec := salesprice."Unit Price"
-                    else
-                        currXMLport.Skip();
+                    else begin
+                        if AdvPriceMgt.FindCostMarkupPrice(item."No.", CurrencyFilter, salesprice) then
+                            ListPriceDec := salesprice."Unit Price";
+                        if ListPriceDec = 0 then
+                            currXMLport.Skip();
+                    end;
+
 
                     if ItemCategory.Get(Item."Item Category Code") then begin
                         if ItemCategory."Overwrite Quantity" then
