@@ -848,7 +848,7 @@ report 50052 "SEC Sales - Quote LS-New"
                 EndCustomerArray[1] := Endcustomer.Name;
                 EndCustomerArray[2] := Endcustomer.Address;
                 EndCustomerArray[3] := Endcustomer."Address 2";
-                EndCustomerArray[4] := Endcustomer.City + ' ' + Endcustomer."Post Code";
+                EndCustomerArray[4] := Endcustomer."Post Code" + ' ' + Endcustomer.City;
                 EndCustomerArray[5] := EndcustomerCountryRegion.Name;
                 CompressArray(EndCustomerArray);
                 //<<NC Arraylist
