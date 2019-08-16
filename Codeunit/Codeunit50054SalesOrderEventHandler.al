@@ -49,7 +49,6 @@ codeunit 50054 "Sales Order Event Handler"
                 exit;
             if item."Default Location" <> '' then
                 rec.validate("Location Code", item."Default Location");
-            rec.validate("Vendor Item No.", item."Vendor-Item-No.");
             PriceEventHandler.UpdateListPriceAndDiscount(rec, Item);
             if Item."Blocked from purchase" = true then begin
                 SubItem.SetRange("No.", Item."No.");
