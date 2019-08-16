@@ -38,7 +38,7 @@ codeunit 50057 "IC Event Handler"
     var
         Customer: record customer;
     begin
-        //LocalSalesHeader."External Document No." := SalesHeaderOtherCompany."External Document No.";
+        LocalSalesHeader."End Customer Reference" := SalesHeaderOtherCompany."End Customer Reference";
         LocalSalesHeader.Subsidiary := SubsidiaryCustomerNo;
         LocalSalesHeader.Reseller := SalesHeaderOtherCompany.Reseller;
         if SalesHeaderOtherCompany."End Customer" <> '' then

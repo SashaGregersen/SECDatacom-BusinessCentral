@@ -316,6 +316,10 @@ tableextension 50021 "End Customer and Reseller" extends 36
         {
             DataClassification = CustomerContent;
         }
+        Field(50024; "End Customer Reference"; code[35])
+        {
+            DataClassification = CustomerContent;
+        }
 
     }
     procedure SetShipToAddressOnSalesOrder(Customer: record customer)

@@ -52,6 +52,11 @@ tableextension 50023 "End Customer and Reseller 3" extends 110
             DataClassification = CustomerContent;
             Editable = false;
         }
+        Field(50024; "End Customer Reference"; code[35])
+        {
+            DataClassification = CustomerContent;
+            Editable = false;
+        }
     }
 
     var
