@@ -3,7 +3,7 @@ codeunit 50053 "Vendor Item No Event Handler"
     SingleInstance = true;
     EventSubscriberInstance = StaticAutomatic;
 
-    [EventSubscriber(ObjectType::table, database::"Purchase Line", 'OnAfterInsertEvent', '', true, true)]
+    /* [EventSubscriber(ObjectType::table, database::"Purchase Line", 'OnAfterInsertEvent', '', true, true)]
 
     local procedure OnAfterInsertPurchaseLineEvent(var rec: record "Purchase Line"; runtrigger: Boolean)
     var
@@ -31,7 +31,7 @@ codeunit 50053 "Vendor Item No Event Handler"
                 rec.validate("Vendor-Item-No", item."Vendor-Item-No.");
                 rec.Modify(false);
             end;
-    end;
+    end; */
 
     [EventSubscriber(ObjectType::Table, database::"Item Vendor", 'OnAfterValidateEvent', 'Item No.', true, true)]
     local procedure OnAfterModifyVendorItemNoOnItemVendorEvent(var Rec: record "Item Vendor")
