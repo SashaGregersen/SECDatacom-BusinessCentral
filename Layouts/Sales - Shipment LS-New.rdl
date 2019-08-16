@@ -3273,10 +3273,24 @@ Cstr(Fields!Pref_Sender_Country.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Fields!ExternalDocumentNo_SalesShptHeader.Value + " "+ Fields!EndCustRef.Value</Value>
+                      <Value>=Fields!ExternalDocumentNo_SalesShptHeader.Value</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
-                        <FontSize>8pt</FontSize>
+                        <FontSize>9pt</FontSize>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value xml:space="preserve"> </Value>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>9pt</FontSize>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value>=Fields!EndCustRef.Value</Value>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>9pt</FontSize>
                       </Style>
                     </TextRun>
                   </TextRuns>
