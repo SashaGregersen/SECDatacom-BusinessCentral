@@ -38,7 +38,7 @@ codeunit 50057 "IC Event Handler"
     var
         Customer: record customer;
     begin
-        LocalSalesHeader."External Document No." := SalesHeaderOtherCompany."External Document No.";
+        //LocalSalesHeader."External Document No." := SalesHeaderOtherCompany."External Document No.";
         LocalSalesHeader.Subsidiary := SubsidiaryCustomerNo;
         LocalSalesHeader.Reseller := SalesHeaderOtherCompany.Reseller;
         if SalesHeaderOtherCompany."End Customer" <> '' then
@@ -174,7 +174,9 @@ codeunit 50057 "IC Event Handler"
             repeat
                 if POLineInOtherCompany.Get(POLineInOtherCompany."Document Type"::Order, SalesShptLine."IC PO No.", SalesShptLine."IC PO Line No.") then begin
                     POLineInOtherCompany."Qty. to Receive" := SalesShptLine.Quantity;
+                    POLineInOtherCompany."Qty. to Receive (Base)" := SalesShptLine.Quantity;
                     POLineInOtherCompany."Qty. to Invoice" := 0;
+                    POLineInOtherCompany."Qty. to Invoice (Base)" := 0;
                     POLineInOtherCompany.Modify(false);
                 end;
             until SalesShptLine.Next() = 0;
@@ -224,7 +226,9 @@ codeunit 50057 "IC Event Handler"
             repeat
                 if SOLineInOtherCompany.Get(SOLineInOtherCompany."Document Type"::Order, SalesShptLine."IC SO No.", SalesShptLine."IC SO Line No.") then begin
                     SOLineInOtherCompany."Qty. to Ship" := SalesShptLine.Quantity;
+                    SOLineInOtherCompany."Qty. to Ship (Base)" := SalesShptLine.Quantity;
                     SOLineInOtherCompany."Qty. to Invoice" := 0;
+                    SOLineInOtherCompany."Qty. to Invoice (Base)" := 0;
                     SOLineInOtherCompany.Modify(false);
                 end;
             until SalesShptLine.Next() = 0;
@@ -245,6 +249,7 @@ codeunit 50057 "IC Event Handler"
             repeat
                 if POLineInOtherCompany.Get(POLineInOtherCompany."Document Type"::Order, SalesInvLine."IC PO No.", SalesInvLine."IC PO Line No.") then begin
                     POLineInOtherCompany."Qty. to Invoice" := SalesInvLine.Quantity;
+                    POLineInOtherCompany."Qty. to Invoice (Base)" := SalesInvLine.Quantity;
                     POLineInOtherCompany.Modify(false);
                     if GetPurchaseHeaderFromOtherCompany(POLineInOtherCompany, POInOtherCompany, OtherCompanyName) then begin
                         POInOtherCompany."Vendor Invoice No." := SalesInvHdrNo;
@@ -270,6 +275,7 @@ codeunit 50057 "IC Event Handler"
             repeat
                 if SOLineInOtherCompany.Get(SOLineInOtherCompany."Document Type"::Order, SalesInvLine."IC SO No.", SalesInvLine."IC SO Line No.") then begin
                     SOLineInOtherCompany."Qty. to Invoice" := SalesInvLine.Quantity;
+                    SOLineInOtherCompany."Qty. to Invoice (Base)" := SalesInvLine.Quantity;
                     SOLineInOtherCompany.Modify(false);
                 end;
             until SalesInvLine.Next() = 0;
@@ -364,6 +370,8 @@ codeunit 50057 "IC Event Handler"
     begin
         if SalesHeader.Subsidiary <> '' then begin
             GetICPartner(ICpartner, SalesHeader.Subsidiary);
+            if SalesShipmentHeader."No." <> '' then
+                UpdateSalesShipmentWithExcDocFromSOInOtherCompany(SalesHeader, SalesShipmentHeader, ICpartner."Inbox Details");
             UpdateReceiptsOnPurchaseOrderInOtherCompany(SalesShipmentHeader."No.", ICpartner."Inbox Details");
             TransferSerialNosFromShipmentToOtherCompany(SalesShipmentHeader."No.", ICpartner."Inbox Details");
             AddICPurchaseOrderToTempList(SalesShipmentHeader."No.", ICpartner."Inbox Details", TempICPurchOrder);
@@ -392,6 +400,21 @@ codeunit 50057 "IC Event Handler"
                     ICSalesOrder := TempICSalesOrder;
                     ICSyncMgt.PostSalesOrderInOtherCompany(ICSalesOrder, ICpartner."Inbox Details");
                 until TempICPurchOrder.Next() = 0;
+        end;
+    end;
+
+    local procedure UpdateSalesShipmentWithExcDocFromSOInOtherCompany(SalesHeader: record "Sales Header"; SalesShipHeader: Record "Sales Shipment Header"; ICpartner: text[250])
+    var
+        SOInOtherCompany: record "Sales Header";
+        SalesShipLine: record "Sales Shipment Line";
+    begin
+        SalesShipLine.SetRange("Document No.", SalesShipHeader."No.");
+        if SalesShipLine.FindLast() then begin
+            SOInOtherCompany.ChangeCompany(ICpartner);
+            if SOInOtherCompany.get(salesheader."Document Type", SalesShipLine."IC SO No.") then begin
+                SalesShipHeader."External Document No." := SOInOtherCompany."External Document No.";
+                SalesShipHeader.Modify(false);
+            end;
         end;
     end;
 }

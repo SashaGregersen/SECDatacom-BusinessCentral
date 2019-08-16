@@ -241,6 +241,10 @@ pageextension 50021 "End Customer and Reseller" extends 42
                     CreatePurchOrder: Codeunit "Create Purchase Order";
                     PurchHeader: record "Purchase Header";
                 begin
+                    Rec.TestField("External Document No.");
+                    rec.TestField("Ship-to Contact");
+                    rec.TestField("Ship-to Email");
+                    rec.TestField("Ship-to Phone No.");
                     CreatePurchOrder.CreatePurchOrderFromSalesOrder(Rec);
                 end;
             }
@@ -253,14 +257,6 @@ pageextension 50021 "End Customer and Reseller" extends 42
 
         addlast(Processing)
         {
-            action(ShowMyReport)
-            {
-                Image = ItemGroup;
-                trigger OnAction();
-                begin
-                    SalesOrder.Run();
-                end;
-            }
 
             action(AddTransActionType)
             {
@@ -329,7 +325,6 @@ pageextension 50021 "End Customer and Reseller" extends 42
         }
     }
     var
-        SalesOrder: report 50013;
         EdiDocument: Boolean;
 
     trigger OnAfterGetCurrRecord();
