@@ -17,6 +17,4 @@ pageextension 50076 "Get Posted Doc Lines" extends "Get Post.Doc - S.InvLn Subfo
         // Add changes to page actions here
     }
 
-    var
-        myInt: Integer;
 }
