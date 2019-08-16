@@ -89,6 +89,7 @@ pageextension 50002 "Sales Line Bid" extends "Sales Order Subform"
             field("Vendor Item No."; "Vendor Item No.")
             {
                 ApplicationArea = all;
+                Editable = false;
             }
         }
     }

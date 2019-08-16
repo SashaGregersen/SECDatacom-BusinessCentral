@@ -881,6 +881,23 @@ codeunit 50054 "Sales Order Event Handler"
         rec.SetDropShipment();
     end;
 
+    [EventSubscriber(ObjectType::table, database::"Sales Header", 'OnAfterRecreateSalesLine', '', true, true)]
+    local procedure OnAfterRecreateSalesLineEvent(var SalesLine: Record "Sales Line"; var TempSalesLine: Record "Sales Line")
+    var
+        Item: record item;
+    begin
+        if SalesLine.type <> SalesLine.Type::Item then
+            exit;
+        if item.get(SalesLine."No.") then
+            SalesLine."Vendor Item No." := Item."Vendor-Item-No.";
+    end;
+
+    [EventSubscriber(ObjectType::table, database::"Sales Line", 'OnAfterCopyFromItem', '', true, true)]
+    local procedure OnAfterCopyFromItemEvent(var SalesLine: Record "Sales Line"; Item: Record Item)
+    begin
+        SalesLine."Vendor Item No." := item."Vendor-Item-No.";
+    end;
+
     [EventSubscriber(ObjectType::codeunit, codeunit::"Sales-Post", 'OnAfterPostSalesDoc', '', true, true)]
     local procedure OnAfterPostSalesDocEvent(VAR SalesHeader: Record "Sales Header"; VAR GenJnlPostLine: Codeunit "Gen. Jnl.-Post Line"; SalesShptHdrNo: Code[20]; RetRcpHdrNo: Code[20]; SalesInvHdrNo: Code[20]; SalesCrMemoHdrNo: Code[20]; CommitIsSuppressed: Boolean)
     var

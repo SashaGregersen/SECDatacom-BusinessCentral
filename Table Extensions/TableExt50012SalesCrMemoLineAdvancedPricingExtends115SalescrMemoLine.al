@@ -124,6 +124,19 @@ tableextension 50012 "Sales Cr.Memo Adv. Pricing" extends "Sales Cr.Memo Line"
             DataClassification = ToBeClassified;
             Editable = false;
         }
+        field(50035; "Vendor Item No."; text[60])
+        {
+            DataClassification = CustomerContent;
+            TableRelation = item;
+
+            trigger Onvalidate()
+            var
+                Item: record item;
+            begin
+                IF Type <> Type::Item THEN
+                    EXIT;
+            end;
+        }
     }
 
 }
