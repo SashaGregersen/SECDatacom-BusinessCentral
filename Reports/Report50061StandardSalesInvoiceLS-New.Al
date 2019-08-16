@@ -640,6 +640,11 @@ report 50061 "SEC - Sales Invoice LS-New"
                 column(Vendor_Item_No; Item."Vendor-Item-No.")
                 {
                 }
+                //aca
+                column(TempSalesInvoiceLine; TempSalesInvoiceLine.Description)
+                {
+
+                }
 
                 dataitem(ShipmentLine; "Sales Shipment Buffer")
                 {
@@ -771,6 +776,11 @@ report 50061 "SEC - Sales Invoice LS-New"
                         JobNoLbl := '';
 
                     FormatDocument.SetSalesInvoiceLine(Line, FormattedQuantity, FormattedUnitPrice, FormattedVATPct, FormattedLineAmount);
+
+                    //ACA
+                    GetSerialLotNo();
+                    //ACA
+
                 end;
 
                 trigger OnPreDataItem()
@@ -1547,6 +1557,9 @@ report 50061 "SEC - Sales Invoice LS-New"
         PrintFIK: Boolean;
         SerialNoCaptionLbl: Label 'Serial No.';
         ItemLedgerEntry: Record "Item Ledger Entry";
+        TempSalesInvoiceLine: Record "Sales Invoice Line" temporary;
+        HighestLineNo: Integer;
+        SpacePointer: Integer;
         //<<PM
         //<<NC variables
         PricePerLbl: Label 'Price per';
@@ -1790,5 +1803,63 @@ report 50061 "SEC - Sales Invoice LS-New"
         // </PM>
     end;
     //<<NC
-}
+    //ACA Added function to get SerialNo.
+    local procedure GetSerialLotNo();
+    VAR
+        ItemTrackingMgt: Codeunit "Item Tracing Mgt.";
+        TempItemLedgEntry: Record "Item Ledger Entry" temporary;
+        InvoiceRowID: Text[150];
+        LineNo: Integer;
+        Inserted: Boolean;
+        SerialLot: Code[60];
+        ValueEntryRelation: Record "Value Entry Relation";
+        ValueEntry: Record "Value Entry";
+        ItemLedgEntry: Record "Item Ledger Entry";
+    BEGIN
+        IF TempSalesInvoiceLine.Type <> TempSalesInvoiceLine.Type::Item THEN
+            EXIT;
+        TempItemLedgEntry.RESET;
+        TempItemLedgEntry.DELETEALL;
+        InvoiceRowID := TempSalesInvoiceLine.RowID1;
+        ValueEntryRelation.RESET;
+        ValueEntryRelation.SETCURRENTKEY("Source RowId");
+        ValueEntryRelation.SETRANGE("Source RowId", InvoiceRowID);
+        IF ValueEntryRelation.FIND('-') THEN BEGIN
+            REPEAT
+                ValueEntry.GET(ValueEntryRelation."Value Entry No.");
+                ItemLedgEntry.GET(ValueEntry."Item Ledger Entry No.");
+                TempItemLedgEntry := ItemLedgEntry;
+                TempItemLedgEntry.Quantity := ValueEntry."Invoiced Quantity";
+                IF TempItemLedgEntry."Entry Type" IN [TempItemLedgEntry."Entry Type"::Purchase, TempItemLedgEntry."Entry Type"::Sale] THEN
+                    IF TempItemLedgEntry.Quantity <> 0 THEN
+                        TempItemLedgEntry.INSERT;
+            UNTIL ValueEntryRelation.NEXT = 0;
+        END;
+        IF TempItemLedgEntry.FINDFIRST THEN
+            REPEAT
+                SerialLot := TempItemLedgEntry."Serial No." + ' ' + TempItemLedgEntry."Lot No.";
+                WITH TempSalesInvoiceLine DO BEGIN
+                    INIT;
+                    "Document No." := Header."No."; // "Sales Invoice Header"."No.";
+                    "Line No." := HighestLineNo + 10;
+                    HighestLineNo := "Line No.";
+                END;
+                IF STRLEN(SerialLot) + 1 <= MAXSTRLEN(TempSalesInvoiceLine.Description) THEN BEGIN
+                    TempSalesInvoiceLine.Description := SerialLot;
+                    TempSalesInvoiceLine."Description 2" := '';
+                END ELSE BEGIN
+                    SpacePointer := MAXSTRLEN(TempSalesInvoiceLine.Description) + 1;
+                    WHILE (SpacePointer > 1) AND (SerialLot[SpacePointer] <> ' ') DO
+                        SpacePointer := SpacePointer - 1;
+                    IF SpacePointer = 1 THEN
+                        SpacePointer := MAXSTRLEN(TempSalesInvoiceLine.Description) + 1;
+                    TempSalesInvoiceLine.Description := COPYSTR(SerialLot, 1, SpacePointer - 1);
+                    TempSalesInvoiceLine."Description 2" :=
+                      COPYSTR(COPYSTR(SerialLot, SpacePointer + 1), 1, MAXSTRLEN(TempSalesInvoiceLine."Description 2"));
+                END;
+                TempSalesInvoiceLine.INSERT;
+            UNTIL TempItemLedgEntry.NEXT = 0;
+    END;
 
+}
+//<< Aca
