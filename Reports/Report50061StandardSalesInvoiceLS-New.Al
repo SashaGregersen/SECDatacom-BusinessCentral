@@ -641,7 +641,7 @@ report 50061 "SEC - Sales Invoice LS-New"
                 {
                 }
                 //aca
-                column(TempSalesInvoiceLine; TempSalesInvoiceLine.Description)
+                column(TempSalesInvoiceLine; TempSalesInvoiceLine.
                 {
 
                 }

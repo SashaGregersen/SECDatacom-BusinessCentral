@@ -73,6 +73,14 @@ pageextension 50042 "Sales Quote Subform" extends "Sales Quote Subform"
                 ApplicationArea = All;
             }
         }
+        addafter("No.")
+        {
+            field("Vendor Item No."; "Vendor Item No.")
+            {
+                ApplicationArea = all;
+                Editable = false;
+            }
+        }
 
     }
 

@@ -72,6 +72,14 @@ pageextension 50071 "PostedSalesInvoiceSubform" extends "Posted Sales Invoice Su
                 ApplicationArea = All;
             }
         }
+        addafter("No.")
+        {
+            field("Vendor Item No."; "Vendor Item No.")
+            {
+                ApplicationArea = all;
+                Editable = false;
+            }
+        }
 
     }
 }

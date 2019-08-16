@@ -109,6 +109,19 @@ tableextension 50045 "Ret. Receipt Line Adv. Pricing" extends "Return Receipt Li
             DataClassification = ToBeClassified;
             Editable = false;
         }
+        field(50035; "Vendor Item No."; text[60])
+        {
+            DataClassification = CustomerContent;
+            TableRelation = item;
+
+            trigger Onvalidate()
+            var
+                Item: record item;
+            begin
+                IF Type <> Type::Item THEN
+                    EXIT;
+            end;
+        }
     }
 
 }

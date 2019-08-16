@@ -1,18 +1,7 @@
-pageextension 50045 "Bid on Purchase Line" extends "Purchase Order Subform"
+pageextension 50074 "Posted Purch Cr. Memo" extends "Posted Purch. Cr. Memo Subform"
 {
     layout
     {
-        addbefore("Direct Unit Cost")
-        {
-
-
-            Field("Bid No."; "Bid No.")
-            {
-                ApplicationArea = All;
-            }
-
-
-        }
         addafter("No.")
         {
             field("Vendor-Item-No"; "Vendor-Item-No")
@@ -24,5 +13,8 @@ pageextension 50045 "Bid on Purchase Line" extends "Purchase Order Subform"
         }
     }
 
-
+    actions
+    {
+        // Add changes to page actions here
+    }
 }

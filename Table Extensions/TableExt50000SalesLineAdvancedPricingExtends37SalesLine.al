@@ -239,7 +239,7 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
             DataClassification = ToBeClassified;
             Editable = false;
         }
-        /* field(50035; "Vendor Item No."; text[60])
+        field(50035; "Vendor Item No."; text[60])
         {
             DataClassification = CustomerContent;
             TableRelation = item;
@@ -250,14 +250,8 @@ tableextension 50000 "Sales Line Bid" extends "Sales Line"
             begin
                 IF Type <> Type::Item THEN
                     EXIT;
-
-                if "Vendor Item No." = '' then
-                    validate("No.", '');
-
-                if item.get("No.") then
-                    Validate("Vendor Item No.", item."Vendor-Item-No.");
             end;
-        } */
+        }
     }
 
     procedure updateBidPrices(BidPrices: Record "Bid Item Price"; NewClaimableValue: Boolean; IsProjectSales: Boolean)

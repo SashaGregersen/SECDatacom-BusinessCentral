@@ -42,4 +42,11 @@ codeunit 50055 "Purchase Order Event Handler"
                 PurchaseLine.validate("Vendor-Item-No", item."Vendor-Item-No.");
         end;
     end;
+
+    [EventSubscriber(ObjectType::table, database::"Purchase Line", 'OnAfterAssignItemValues', '', true, true)]
+
+    local procedure OnAfterAssignItemValuesEvent(Item: Record Item; var PurchLine: Record "Purchase Line")
+    begin
+        PurchLine."Vendor-Item-No" := item."Vendor-Item-No.";
+    end;
 }

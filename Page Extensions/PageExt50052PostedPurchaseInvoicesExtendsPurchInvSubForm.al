@@ -1,18 +1,7 @@
-pageextension 50045 "Bid on Purchase Line" extends "Purchase Order Subform"
+pageextension 50052 "Posted Purchase Invoices" extends "Posted Purch. Invoice Subform"
 {
     layout
     {
-        addbefore("Direct Unit Cost")
-        {
-
-
-            Field("Bid No."; "Bid No.")
-            {
-                ApplicationArea = All;
-            }
-
-
-        }
         addafter("No.")
         {
             field("Vendor-Item-No"; "Vendor-Item-No")
@@ -24,5 +13,9 @@ pageextension 50045 "Bid on Purchase Line" extends "Purchase Order Subform"
         }
     }
 
+    actions
+    {
+        // Add changes to page actions here
+    }
 
 }
