@@ -3273,7 +3273,7 @@ Cstr(Fields!Pref_Sender_Country.Value)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Fields!ExternalDocumentNo_SalesShptHeader.Value</Value>
+                      <Value>=Fields!ExternalDocumentNo_SalesShptHeader.Value + " "+ Fields!EndCustRef.Value</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -4018,6 +4018,9 @@ End Function
         </Field>
         <Field Name="YourOrderlbl">
           <DataField>YourOrderlbl</DataField>
+        </Field>
+        <Field Name="EndCustRef">
+          <DataField>EndCustRef</DataField>
         </Field>
         <Field Name="Package_Tracking_No">
           <DataField>Package_Tracking_No</DataField>

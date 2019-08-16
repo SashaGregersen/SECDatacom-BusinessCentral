@@ -203,6 +203,10 @@ report 50062 "SEC Sales - Shipment LS-New"
                     Column(YourOrderlbl; YourOrderlbl)
                     {
                     }
+                    column(EndCustRef; "Sales Shipment Header"."End Customer Reference")
+                    {
+
+                    }
                     //<< NC adding Preferred Sender Adress
                     //>>NC.00.01 SDG 25-07-19
                     column(Package_Tracking_No; "Sales Shipment Header"."Package Tracking No.")
