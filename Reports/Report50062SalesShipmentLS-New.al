@@ -207,6 +207,10 @@ report 50062 "SEC Sales - Shipment LS-New"
                     {
 
                     }
+                    column(EndCustomerReferencelbl; EndCustomerReferencelbl)
+                    {
+
+                    }
                     //<< NC adding Preferred Sender Adress
                     //>>NC.00.01 SDG 25-07-19
                     column(Package_Tracking_No; "Sales Shipment Header"."Package Tracking No.")
@@ -822,6 +826,7 @@ report 50062 "SEC Sales - Shipment LS-New"
         DescriptionCaptionLbl: Label 'Description';
         NoCaptionLbl: Label 'No.';
         VendorItemNoLbl: Label 'Vendor Item No.';
+        EndCustomerReferencelbl: Label 'End Customer Reference';
         Item: Record Item;
         Reseller: Record Customer;
         PrefSender: Record "Ship-to Address";
