@@ -34,53 +34,55 @@ codeunit 50004 "Create Purchase Order"
         SalesLine.setfilter("No.", '<>%1', SalesReceive."Freight Item");
         if SalesLine.FindSet() then
             repeat
-                Item.Get(SalesLine."No."); //SDG 22-07-19
-                if item.Type = item.type::Inventory then begin //SDG 22-07-19
-                    SalesLine.CalcFields("Reserved Quantity");
-                    QtyToPurchase := SalesLine."Quantity" - SalesLine."Reserved Quantity";
-                    if QtyToPurchase <> 0 then begin
-                        VendorNo := AdvPriceMgt.GetVendorNoForItem(SalesLine."No.");
-                        //Item.Get(SalesLine."No."); //SDG 22-07-19
-                        case SalesHeader."Purchase Currency Method" of
-                            SalesHeader."Purchase Currency Method"::"Local Currency":
-                                CurrencyCode := '';
-                            SalesHeader."Purchase Currency Method"::"Vendor Currency":
-                                CurrencyCode := Item."Vendor Currency";
-                            SalesHeader."Purchase Currency Method"::"Same Currency":
-                                CurrencyCode := SalesHeader."Purchase Currency Code";
-                        end;
-
-                        Clear(PurchasePrice);
-                        if SalesLine."Bid No." <> '' then begin
-                            Clear(BidPrice);
-                            if not BidMgt.GetBestBidPrice(SalesLine."Bid No.", SalesLine."Sell-to Customer No.", SalesLine."No.", CurrencyCode, BidPrice) then
-                                Clear(PurchasePrice)
-                            else begin
-                                BidMgt.MakePurchasePriceFromBidPrice(BidPrice, PurchasePrice, SalesLine);
+                if SalesLine.Quantity <> SalesLine."Qty. Shipped (Base)" then begin //SDG 16-08-2019
+                    Item.Get(SalesLine."No."); //SDG 22-07-19
+                    if item.Type = item.type::Inventory then begin //SDG 22-07-19
+                        SalesLine.CalcFields("Reserved Quantity");
+                        QtyToPurchase := SalesLine."Quantity" - SalesLine."Reserved Quantity" - SalesLine."Qty. Shipped (Base)";
+                        if QtyToPurchase <> 0 then begin
+                            VendorNo := AdvPriceMgt.GetVendorNoForItem(SalesLine."No.");
+                            //Item.Get(SalesLine."No."); //SDG 22-07-19
+                            case SalesHeader."Purchase Currency Method" of
+                                SalesHeader."Purchase Currency Method"::"Local Currency":
+                                    CurrencyCode := '';
+                                SalesHeader."Purchase Currency Method"::"Vendor Currency":
+                                    CurrencyCode := Item."Vendor Currency";
+                                SalesHeader."Purchase Currency Method"::"Same Currency":
+                                    CurrencyCode := SalesHeader."Purchase Currency Code";
                             end;
-                        end else begin
-                            AdvPriceMgt.FindBestPurchasePrice(SalesLine."No.", VendorNo, CurrencyCode, SalesLine."Variant Code", PurchasePrice);
-                        end;
-                        if PurchasePrice."Currency Code" <> CurrencyCode then begin
-                            PurchasePrice."Direct Unit Cost" := CurrExchRate.ExchangeAmount(PurchasePrice."Direct Unit Cost",
-                                                                                            PurchasePrice."Currency Code",
-                                                                                            CurrencyCode, WorkDate());
-                            PurchasePrice."Currency Code" := CurrencyCode;
-                        end;
 
-                        //if PurchasePrice."Direct Unit Cost" <> 0 then begin //check på <> 0 bør fjernes
-                        if not FindTempPurchaseHeader(VendorNo, CurrencyCode, TempPurchHeader) then begin
-                            MessageTxt := MessageTxt + CreatePurchHeader(SalesHeader, VendorNo, CurrencyCode, GetVendorBidNo(SalesLine."Bid No."), PurchHeader) + '/';
-                            TempPurchHeader := PurchHeader;
-                            TempPurchHeader.Insert(false);
-                        end else
-                            PurchHeader.Get(TempPurchHeader."Document Type", TempPurchHeader."No.");
-                        CreatePurchLine(PurchHeader, SalesHeader, SalesLine, PurchasePrice."Direct Unit Cost", PurchLine);
-                        ReserveItemOnPurchOrder(SalesLine, PurchLine);
-                        GlobalLineCounter := GlobalLineCounter + 1;
-                        //end;
-                    end;
-                end; //SDG 22-07-19
+                            Clear(PurchasePrice);
+                            if SalesLine."Bid No." <> '' then begin
+                                Clear(BidPrice);
+                                if not BidMgt.GetBestBidPrice(SalesLine."Bid No.", SalesLine."Sell-to Customer No.", SalesLine."No.", CurrencyCode, BidPrice) then
+                                    Clear(PurchasePrice)
+                                else begin
+                                    BidMgt.MakePurchasePriceFromBidPrice(BidPrice, PurchasePrice, SalesLine);
+                                end;
+                            end else begin
+                                AdvPriceMgt.FindBestPurchasePrice(SalesLine."No.", VendorNo, CurrencyCode, SalesLine."Variant Code", PurchasePrice);
+                            end;
+                            if PurchasePrice."Currency Code" <> CurrencyCode then begin
+                                PurchasePrice."Direct Unit Cost" := CurrExchRate.ExchangeAmount(PurchasePrice."Direct Unit Cost",
+                                                                                                PurchasePrice."Currency Code",
+                                                                                                CurrencyCode, WorkDate());
+                                PurchasePrice."Currency Code" := CurrencyCode;
+                            end;
+
+                            //if PurchasePrice."Direct Unit Cost" <> 0 then begin //check på <> 0 bør fjernes
+                            if not FindTempPurchaseHeader(VendorNo, CurrencyCode, TempPurchHeader) then begin
+                                MessageTxt := MessageTxt + CreatePurchHeader(SalesHeader, VendorNo, CurrencyCode, GetVendorBidNo(SalesLine."Bid No."), PurchHeader) + '/';
+                                TempPurchHeader := PurchHeader;
+                                TempPurchHeader.Insert(false);
+                            end else
+                                PurchHeader.Get(TempPurchHeader."Document Type", TempPurchHeader."No.");
+                            CreatePurchLine(PurchHeader, SalesHeader, SalesLine, PurchasePrice."Direct Unit Cost", PurchLine);
+                            ReserveItemOnPurchOrder(SalesLine, PurchLine);
+                            GlobalLineCounter := GlobalLineCounter + 1;
+                            //end;
+                        end;
+                    end; //SDG 22-07-19
+                end; //SDG 16-08-2019
             until SalesLine.next = 0;
 
         if TempPurchHeader.FindSet() then
@@ -156,7 +158,7 @@ codeunit 50004 "Create Purchase Order"
         PurchLine.Validate(Type, SalesLine.Type);
         PurchLine.Validate("No.", SalesLine."No.");
         PurchLine.Validate("Location Code", SalesLine."Location Code");
-        PurchLine.Validate(Quantity, (SalesLine.Quantity - SalesLine."Reserved Quantity"));
+        PurchLine.Validate(Quantity, (SalesLine.Quantity - SalesLine."Reserved Quantity" - SalesLine."Qty. Shipped (Base)"));
         PurchLine.Validate("Expected Receipt Date", SalesLine."Shipment Date");
         if SalesLine."Bid No." <> '' then
             PurchLine.Validate("Bid No.", SalesLine."Bid No.");
@@ -185,7 +187,7 @@ codeunit 50004 "Create Purchase Order"
         ReservationEntry.Validate(Positive, false);
         ReservationEntry.Validate("Item No.", SalesLine."No.");
         ReservationEntry.Validate("Location Code", SalesLine."Location Code");
-        ReservationEntry.Validate("Quantity (Base)", (-SalesLine."Quantity (Base)" + SalesLine."Reserved Qty. (Base)"));
+        ReservationEntry.Validate("Quantity (Base)", (-SalesLine."Quantity (Base)" + SalesLine."Reserved Qty. (Base)") + SalesLine."Qty. Shipped (Base)");
         ReservationEntry.Validate("Reservation Status", ReservationEntry."Reservation Status"::Reservation);
         ReservationEntry.Validate("Source Type", 37);
         ReservationEntry.Validate("Source Subtype", 1);

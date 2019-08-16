@@ -640,11 +640,6 @@ report 50061 "SEC - Sales Invoice LS-New"
                 column(Vendor_Item_No; Item."Vendor-Item-No.")
                 {
                 }
-                //aca
-                column(TempSalesInvoiceLine; TempSalesInvoiceLine.
-                {
-
-                }
 
                 dataitem(ShipmentLine; "Sales Shipment Buffer")
                 {
@@ -704,6 +699,7 @@ report 50061 "SEC - Sales Invoice LS-New"
                           AssemblyLine, ValueEntry."Document Type"::"Sales Invoice", Line."Document No.", Line."Line No.");
                     end;
                 }
+
 
                 trigger OnAfterGetRecord()
                 var
@@ -777,8 +773,12 @@ report 50061 "SEC - Sales Invoice LS-New"
 
                     FormatDocument.SetSalesInvoiceLine(Line, FormattedQuantity, FormattedUnitPrice, FormattedVATPct, FormattedLineAmount);
 
-                    //ACA
-                    GetSerialLotNo();
+                    ItemLedgerEntry.setrange("Document No.", Line."Document No.");
+                    ItemLedgerEntry.setrange("Item No.", line."No.");
+                    if FindFirst then
+
+                        //ACA
+                        GetSerialLotNo();
                     //ACA
 
                 end;
