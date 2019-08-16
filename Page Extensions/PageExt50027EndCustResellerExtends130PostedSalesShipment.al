@@ -35,6 +35,14 @@ pageextension 50027 "End Customer and Reseller 7" extends 130
                 Editable = false;
             }
         }
+        addafter("External Document No.")
+        {
+            field("End Customer Reference"; "End Customer Reference")
+            {
+                ApplicationArea = all;
+                Editable = false;
+            }
+        }
 
 
     }
