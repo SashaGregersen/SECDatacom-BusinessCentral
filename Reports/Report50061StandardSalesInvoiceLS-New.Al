@@ -773,14 +773,6 @@ report 50061 "SEC - Sales Invoice LS-New"
 
                     FormatDocument.SetSalesInvoiceLine(Line, FormattedQuantity, FormattedUnitPrice, FormattedVATPct, FormattedLineAmount);
 
-                    ItemLedgerEntry.setrange("Document No.", Line."Document No.");
-                    ItemLedgerEntry.setrange("Item No.", line."No.");
-                    if FindFirst then
-
-                        //ACA
-                        GetSerialLotNo();
-                    //ACA
-
                 end;
 
                 trigger OnPreDataItem()
@@ -1803,7 +1795,9 @@ report 50061 "SEC - Sales Invoice LS-New"
         // </PM>
     end;
     //<<NC
-    //ACA Added function to get SerialNo.
+
+    /*
+    //ACA
     local procedure GetSerialLotNo();
     VAR
         ItemTrackingMgt: Codeunit "Item Tracing Mgt.";
@@ -1860,6 +1854,6 @@ report 50061 "SEC - Sales Invoice LS-New"
                 TempSalesInvoiceLine.INSERT;
             UNTIL TempItemLedgEntry.NEXT = 0;
     END;
-
+    //<< Aca
+    */
 }
-//<< Aca
