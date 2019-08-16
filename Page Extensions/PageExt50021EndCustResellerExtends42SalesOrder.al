@@ -96,6 +96,10 @@ pageextension 50021 "End Customer and Reseller" extends 42
         }
         addafter("External Document No.")
         {
+            field("End Customer Reference"; "End Customer Reference")
+            {
+                ApplicationArea = all;
+            }
             field("Drop-Shipment"; "Drop-Shipment")
             {
                 ApplicationArea = all;
