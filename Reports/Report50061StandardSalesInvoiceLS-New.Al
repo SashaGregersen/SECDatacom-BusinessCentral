@@ -640,6 +640,9 @@ report 50061 "SEC - Sales Invoice LS-New"
                 column(Vendor_Item_No; Item."Vendor-Item-No.")
                 {
                 }
+                column(SerialNo; SerialNo)
+                {
+                }
                 dataitem(ShipmentLine; "Sales Shipment Buffer")
                 {
                     DataItemTableView = SORTING ("Document No.", "Line No.", "Entry No.");
@@ -660,7 +663,6 @@ report 50061 "SEC - Sales Invoice LS-New"
                     column(Quantity_ShipmentLine_Lbl; FieldCaption(Quantity))
                     {
                     }
-
                     trigger OnPreDataItem()
                     begin
                         SetRange("Line No.", Line."Line No.");
@@ -675,10 +677,6 @@ report 50061 "SEC - Sales Invoice LS-New"
                     }
                     column(Description_AssemblyLine; Description)
                     {
-                    }
-                    column(SerialNo; SerialNo)
-                    {
-
                     }
                     column(Quantity_AssemblyLine; Quantity)
                     {
@@ -773,11 +771,12 @@ report 50061 "SEC - Sales Invoice LS-New"
                     else
                         JobNoLbl := '';
 
-                    TempSalesInvoiceLine := Line; //NC-ACA
-                    Clear(SerialNo); // ACA
-                    GetSerialLotNo(); //NC-ACA
 
                     FormatDocument.SetSalesInvoiceLine(Line, FormattedQuantity, FormattedUnitPrice, FormattedVATPct, FormattedLineAmount);
+                    //NC-ACA
+                    Clear(SerialNo); // NC-ACA
+                    TempSalesInvoiceLine := Line;
+                    GetSerialLotNo(); //NC-ACA
                 end;
 
                 trigger OnPreDataItem()
@@ -1818,7 +1817,6 @@ report 50061 "SEC - Sales Invoice LS-New"
         ValueEntryRelation: Record "Value Entry Relation";
         ValueEntry: Record "Value Entry";
         ItemLedgEntry: Record "Item Ledger Entry";
-        SerialNumber: Text;
     BEGIN
         IF TempSalesInvoiceLine.Type <> TempSalesInvoiceLine.Type::Item THEN
             EXIT;
@@ -1861,13 +1859,10 @@ report 50061 "SEC - Sales Invoice LS-New"
                     TempSalesInvoiceLine."Description 2" :=
                       COPYSTR(COPYSTR(SerialLot, SpacePointer + 1), 1, MAXSTRLEN(TempSalesInvoiceLine."Description 2"));
                 END;
-                SerialNo := TempSalesInvoiceLine.Description;
+                SerialNo += TempSalesInvoiceLine.Description + '  ||  ';
                 TempSalesInvoiceLine.INSERT;
-                Message(SerialNo);
             UNTIL TempItemLedgEntry.NEXT = 0;
     END;
 
     //<< Aca
-    //>>ACA new serial no.
-
 }

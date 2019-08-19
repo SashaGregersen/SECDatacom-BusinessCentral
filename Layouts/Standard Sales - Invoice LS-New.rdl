@@ -1040,7 +1040,6 @@
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
-                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell>
@@ -1864,6 +1863,9 @@
                                             <KeepWithGroup>After</KeepWithGroup>
                                           </TablixMember>
                                           <TablixMember>
+                                            <Visibility>
+                                              <Hidden>=iif(Fields!SerialNo.Value = "",true,false)</Hidden>
+                                            </Visibility>
                                             <KeepWithGroup>After</KeepWithGroup>
                                           </TablixMember>
                                           <TablixMember>
@@ -8017,6 +8019,9 @@ End Function
         <Field Name="Vendor_Item_No">
           <DataField>Vendor_Item_No</DataField>
         </Field>
+        <Field Name="SerialNo">
+          <DataField>SerialNo</DataField>
+        </Field>
         <Field Name="DocumentNo_ShipmentLine">
           <DataField>DocumentNo_ShipmentLine</DataField>
         </Field>
@@ -8040,9 +8045,6 @@ End Function
         </Field>
         <Field Name="Description_AssemblyLine">
           <DataField>Description_AssemblyLine</DataField>
-        </Field>
-        <Field Name="SerialNo">
-          <DataField>SerialNo</DataField>
         </Field>
         <Field Name="Quantity_AssemblyLine">
           <DataField>Quantity_AssemblyLine</DataField>
