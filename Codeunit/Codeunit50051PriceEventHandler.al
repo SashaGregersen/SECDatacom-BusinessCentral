@@ -104,6 +104,12 @@ codeunit 50051 "Price Event Handler"
             exit;
         Rec."Allow Line Disc." := false;
         Rec.Modify(false);
+        if rec."Allow Zero Price" then
+            if rec."Unit Price" = 1 then begin
+                rec."Unit Price" := 0;
+                rec."Allow Zero Price" := false;
+                rec.Modify(false);
+            end;
         AdvPriceMgt.CloseOldSalesPrices(Rec);
     end;
 
@@ -116,6 +122,21 @@ codeunit 50051 "Price Event Handler"
             exit;
         Rec."Allow Line Disc." := false;
         Rec.Modify(false);
+        if rec."Allow Zero Price" then
+            if rec."Unit Price" = 1 then begin
+                rec."Unit Price" := 0;
+                rec."Allow Zero Price" := false;
+                rec.Modify(false);
+            end;
+    end;
+
+    [EventSubscriber(ObjectType::Report, report::"Implement Price Change", 'OnAfterCopytoSalesPrice', '', true, true)]
+    local procedure OnAfterCopytoSalesPriceOnAfterEvent(var SalesPrice: Record "Sales Price"; SalesPriceWorksheet: Record "Sales Price Worksheet")
+    begin
+        if SalesPrice."Unit Price" = 0 then begin
+            SalesPrice."Allow Zero Price" := true;
+            SalesPrice."Unit Price" := 1;
+        end;
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Sales Line Discount", 'OnAfterModifyEvent', '', true, true)]
