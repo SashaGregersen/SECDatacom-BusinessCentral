@@ -640,7 +640,6 @@ report 50061 "SEC - Sales Invoice LS-New"
                 column(Vendor_Item_No; Item."Vendor-Item-No.")
                 {
                 }
-
                 dataitem(ShipmentLine; "Sales Shipment Buffer")
                 {
                     DataItemTableView = SORTING ("Document No.", "Line No.", "Entry No.");
@@ -677,6 +676,10 @@ report 50061 "SEC - Sales Invoice LS-New"
                     column(Description_AssemblyLine; Description)
                     {
                     }
+                    column(SerialNo; SerialNo)
+                    {
+
+                    }
                     column(Quantity_AssemblyLine; Quantity)
                     {
                         DecimalPlaces = 0 : 5;
@@ -687,7 +690,6 @@ report 50061 "SEC - Sales Invoice LS-New"
                     column(VariantCode_AssemblyLine; "Variant Code")
                     {
                     }
-
                     trigger OnPreDataItem()
                     var
                         ValueEntry: Record "Value Entry";
@@ -771,9 +773,11 @@ report 50061 "SEC - Sales Invoice LS-New"
                     else
                         JobNoLbl := '';
 
-                    FormatDocument.SetSalesInvoiceLine(Line, FormattedQuantity, FormattedUnitPrice, FormattedVATPct, FormattedLineAmount);
+                    TempSalesInvoiceLine := Line; //NC-ACA
+                    Clear(SerialNo); // ACA
+                    GetSerialLotNo(); //NC-ACA
 
-                    GetSerialLotNo2();
+                    FormatDocument.SetSalesInvoiceLine(Line, FormattedQuantity, FormattedUnitPrice, FormattedVATPct, FormattedLineAmount);
                 end;
 
                 trigger OnPreDataItem()
@@ -1015,6 +1019,7 @@ report 50061 "SEC - Sales Invoice LS-New"
                     end else
                         if TempLineFeeNoteOnReportHist.Next = 0 then
                             CurrReport.Break;
+
                 end;
             }
             dataitem(PaymentReportingArgument; "Payment Reporting Argument")
@@ -1555,6 +1560,7 @@ report 50061 "SEC - Sales Invoice LS-New"
         TempSalesInvoiceLine: Record "Sales Invoice Line" temporary;
         HighestLineNo: Integer;
         SpacePointer: Integer;
+        SerialNo: Text;
         //<<ACA
         //<<NC variables
         PricePerLbl: Label 'Price per';
@@ -1800,7 +1806,7 @@ report 50061 "SEC - Sales Invoice LS-New"
     //<<NC
 
     //ACA
-    /*
+
     local procedure GetSerialLotNo();
     VAR
         ItemTrackingMgt: Codeunit "Item Tracing Mgt.";
@@ -1812,7 +1818,7 @@ report 50061 "SEC - Sales Invoice LS-New"
         ValueEntryRelation: Record "Value Entry Relation";
         ValueEntry: Record "Value Entry";
         ItemLedgEntry: Record "Item Ledger Entry";
-        Foo: Text;
+        SerialNumber: Text;
     BEGIN
         IF TempSalesInvoiceLine.Type <> TempSalesInvoiceLine.Type::Item THEN
             EXIT;
@@ -1855,71 +1861,13 @@ report 50061 "SEC - Sales Invoice LS-New"
                     TempSalesInvoiceLine."Description 2" :=
                       COPYSTR(COPYSTR(SerialLot, SpacePointer + 1), 1, MAXSTRLEN(TempSalesInvoiceLine."Description 2"));
                 END;
+                SerialNo := TempSalesInvoiceLine.Description;
                 TempSalesInvoiceLine.INSERT;
-                Foo := TempSalesInvoiceLine.Description;
+                Message(SerialNo);
             UNTIL TempItemLedgEntry.NEXT = 0;
-        Message('Hej' + Foo);
     END;
-    */
+
     //<< Aca
     //>>ACA new serial no.
-    local procedure GetSerialLotNo2();
-    var
-        ItemTrackingMgt: Codeunit "Item Tracing Mgt.";
-        TempItemLedgEntry: Record "Item Ledger Entry" temporary;
-        TempSalesCommentLine: Record "Sales Comment Line" temporary;
-        InvoiceRowID: Text[150];
-        LineNo: Integer;
-        Inserted: Boolean;
-        SerialLot: Code[60];
-        ValueEntryRelation: Record "Value Entry Relation";
-        ValueEntry: Record "Value Entry";
-        ItemLedgEntry: Record "Item Ledger Entry";
-        Foo: Text;
-    BEGIN
-        // IF TempSalesInvoiceLine.Type <> TempSalesInvoiceLine.Type::Item THEN
-        //      EXIT;
-        TempItemLedgEntry.RESET;
-        TempItemLedgEntry.DELETEALL;
-        InvoiceRowID := TempSalesInvoiceLine.RowID1;
-        ValueEntryRelation.RESET;
-        ValueEntryRelation.SETCURRENTKEY("Source RowId");
-        ValueEntryRelation.SETRANGE("Source RowId", InvoiceRowID);
-        IF ValueEntryRelation.FIND('-') THEN BEGIN
-            REPEAT
-                ValueEntry.GET(ValueEntryRelation."Value Entry No.");
-                ItemLedgEntry.GET(ValueEntry."Item Ledger Entry No.");
-                TempItemLedgEntry := ItemLedgEntry;
-                TempItemLedgEntry.Quantity := ValueEntry."Invoiced Quantity";
-                IF TempItemLedgEntry."Entry Type" IN [TempItemLedgEntry."Entry Type"::Purchase, TempItemLedgEntry."Entry Type"::Sale] THEN
-                    IF TempItemLedgEntry.Quantity <> 0 THEN
-                        TempItemLedgEntry.INSERT;
-            UNTIL ValueEntryRelation.NEXT = 0;
-        END;
-        IF TempItemLedgEntry.FINDFIRST THEN
-            REPEAT
-                SerialLot := TempItemLedgEntry."Serial No." + ' ' + TempItemLedgEntry."Lot No.";
-                Inserted := FALSE;
-                IF TempSalesCommentLine.GET(TempSalesCommentLine."Document Type"::"Posted Invoice", TempSalesInvoiceLine."Document No.",
-                TempSalesInvoiceLine."Line No.", LineNo) THEN BEGIN
-                    IF MAXSTRLEN(TempSalesCommentLine.Comment) >=
-                       STRLEN(TempSalesCommentLine.Comment + SerialLot) + 1 THEN BEGIN
-                        TempSalesCommentLine.Comment += ',' + SerialLot;
-                        TempSalesCommentLine.MODIFY;
-                        Inserted := TRUE;
-                    END;
-                END;
-                IF NOT Inserted THEN BEGIN
-                    LineNo += 10000;
-                    TempSalesCommentLine.INIT;
-                    TempSalesCommentLine."Document Type" := TempSalesCommentLine."Document Type"::"Posted Invoice";
-                    TempSalesCommentLine."No." := TempSalesInvoiceLine."Document No.";
-                    TempSalesCommentLine."Document Line No." := TempSalesInvoiceLine."Line No.";
-                    TempSalesCommentLine."Line No." := LineNo;
-                    TempSalesCommentLine.Comment := TempSalesCommentLine.Comment + SerialLot;
-                    TempSalesCommentLine.INSERT;
-                END;
-            UNTIL TempItemLedgEntry.NEXT = 0;
-        Message('TEST' + Foo);
-    End;
+
 }
