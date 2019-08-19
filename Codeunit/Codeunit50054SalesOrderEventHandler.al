@@ -590,6 +590,18 @@ codeunit 50054 "Sales Order Event Handler"
             until TmpLocation.Next() = 0;
     end;
 
+    [EventSubscriber(ObjectType::Table, database::"Sales Header", 'OnAfterSetFieldsBilltoCustomer', '', true, true)]
+    local procedure OnAfterSetFieldsBilltoCustomerEvent(var SalesHeader: Record "Sales Header"; Customer: Record Customer)
+    var
+        SalesPerson: record "Salesperson/Purchaser";
+        UserSetup: record "User Setup";
+    begin
+        if UserSetup.get(UserId) then
+            if SalesPerson.get(UserSetup."Salespers./Purch. Code") then
+                IF NOT Salesperson.VerifySalesPersonPurchaserPrivacyBlocked(Salesperson) THEN
+                    SalesHeader.validate("Salesperson Code", SalesPerson.Code);
+    end;
+
     procedure SECGetShippingAdviceLocations(var WarehouseRequest: Record "Warehouse Request"; var TmpLocation: Record Location; SalesHeader: Record "Sales Header")
     var
         Location: Record Location;
