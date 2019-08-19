@@ -1,4 +1,4 @@
-report 50003 "Price File Export"
+report 50003 "Price File Export Webshop"
 {
     UsageCategory = Administration;
     ApplicationArea = All;
