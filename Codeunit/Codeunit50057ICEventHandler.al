@@ -217,6 +217,7 @@ codeunit 50057 "IC Event Handler"
         SalesShptHeader: Record "Sales Shipment Header";
         SalesShptLine: Record "Sales Shipment Line";
         SOLineInOtherCompany: Record "sales Line";
+        SOHeaderInOtherCompany: record "Sales Header";
     begin
         if not SalesShptHeader.Get(SalesShptHdrNo) then
             exit;
@@ -232,6 +233,11 @@ codeunit 50057 "IC Event Handler"
                     SOLineInOtherCompany.Modify(false);
                 end;
             until SalesShptLine.Next() = 0;
+        SOHeaderInOtherCompany.ChangeCompany(OtherCompanyName);
+        if SOHeaderInOtherCompany.get(SOLineInOtherCompany."Document Type"::Order, SalesShptLine."IC SO No.") then begin
+            SOHeaderInOtherCompany."Package Tracking No." := SalesShptHeader."Package Tracking No.";
+            SOHeaderInOtherCompany.Modify(false);
+        end;
     end;
 
     local procedure UpdateInvoiceOnPurchaseOrderInOtherCompany(SalesInvHdrNo: Code[20]; OtherCompanyName: text[35])
