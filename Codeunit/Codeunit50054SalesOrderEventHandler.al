@@ -1284,4 +1284,57 @@ codeunit 50054 "Sales Order Event Handler"
                 end;
         end;
     end;
+
+    /* [EventSubscriber(ObjectType::Codeunit, codeunit::"Whse.-Activity-Post", 'OnBeforeUpdateSourceDocument', '', true, true)]
+    local procedure OnBeforeUpdateSourceDocumentEvent(var TempWhseActivLine: Record "Warehouse Activity Line")
+    var
+        SalesReceive: record "Sales & Receivables Setup";
+        SalesLine: record "Sales Line";
+        WhseActivLineTEMP: record "Warehouse Activity Line" temporary;
+        AcitivityType: option " ;Put-away;Pick;Movement;Invt. Put-away;Invt. Pick;Invt. Movement";
+        ActivityNo: code[20];
+        SourceSubtype: option "0;1;2;3;4;5;6;7;8;9;10";
+        SourceNo: code[20];
+        SourceType: integer;
+    begin
+
+        if TempWhseActivLine."Source Document" = TempWhseActivLine."Source Document"::"Sales Order" then begin
+            if SalesReceive.get then begin
+                SalesLine.setrange("Document No.", TempWhseActivLine."Source No.");
+                SalesLine.setrange("Document Type", TempWhseActivLine."Source Subtype");
+                SalesLine.setrange(Type, SalesLine.type::Item);
+                SalesLine.setrange("No.", SalesReceive."Freight Item");
+                if SalesLine.FindFirst() then begin
+                    if SalesLine.Quantity = SalesLine."Qty. Shipped (Base)" then
+                        exit;
+                    AcitivityType := TempWhseActivLine."Activity Type";
+                    ActivityNo := TempWhseActivLine."No.";
+                    SourceSubtype := TempWhseActivLine."Source Subtype";
+                    SourceNo := TempWhseActivLine."Source No.";
+                    SourceType := TempWhseActivLine."Source Type";
+                    TempWhseActivLine.Init();
+                    TempWhseActivLine."Activity Type" := AcitivityType;
+                    TempWhseActivLine."No." := ActivityNo;
+                    TempWhseActivLine."Line No." := FindLastLineNo(TempWhseActivLine);
+                    TempWhseActivLine."Source Subtype" := SourceSubtype;
+                    TempWhseActivLine."Source No." := SourceNo;
+                    TempWhseActivLine."Source Line No." := SalesLine."Line No.";
+                    TempWhseActivLine."Source Type" := SourceType;
+                    TempWhseActivLine."Source Document" := TempWhseActivLine."Source Document"::"Sales Order";
+                    TempWhseActivLine."Item No." := SalesLine."No.";
+                    if TempWhseActivLine.Insert() then begin
+                        TempWhseActivLine.RESET;
+                        TempWhseActivLine.FIND('-');
+                    end;               
+
+                end;
+            end;
+        end;
+    end; */
+
+    local procedure FindLastLineNo(WhseActivLine: record "Warehouse Activity Line"): Integer
+    begin
+        if WhseActivLine.FindLast() then
+            exit(WhseActivLine."Line No." + 10000);
+    end;
 }
