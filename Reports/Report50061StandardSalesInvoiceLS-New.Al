@@ -640,7 +640,9 @@ report 50061 "SEC - Sales Invoice LS-New"
                 column(Vendor_Item_No; Item."Vendor-Item-No.")
                 {
                 }
-
+                column(SerialNo; SerialNo)
+                {
+                }
                 dataitem(ShipmentLine; "Sales Shipment Buffer")
                 {
                     DataItemTableView = SORTING ("Document No.", "Line No.", "Entry No.");
@@ -661,7 +663,6 @@ report 50061 "SEC - Sales Invoice LS-New"
                     column(Quantity_ShipmentLine_Lbl; FieldCaption(Quantity))
                     {
                     }
-
                     trigger OnPreDataItem()
                     begin
                         SetRange("Line No.", Line."Line No.");
@@ -687,7 +688,6 @@ report 50061 "SEC - Sales Invoice LS-New"
                     column(VariantCode_AssemblyLine; "Variant Code")
                     {
                     }
-
                     trigger OnPreDataItem()
                     var
                         ValueEntry: Record "Value Entry";
@@ -771,8 +771,12 @@ report 50061 "SEC - Sales Invoice LS-New"
                     else
                         JobNoLbl := '';
 
-                    FormatDocument.SetSalesInvoiceLine(Line, FormattedQuantity, FormattedUnitPrice, FormattedVATPct, FormattedLineAmount);
 
+                    FormatDocument.SetSalesInvoiceLine(Line, FormattedQuantity, FormattedUnitPrice, FormattedVATPct, FormattedLineAmount);
+                    //NC-ACA
+                    Clear(SerialNo); // NC-ACA
+                    TempSalesInvoiceLine := Line;
+                    GetSerialLotNo(); //NC-ACA
                 end;
 
                 trigger OnPreDataItem()
@@ -1014,6 +1018,7 @@ report 50061 "SEC - Sales Invoice LS-New"
                     end else
                         if TempLineFeeNoteOnReportHist.Next = 0 then
                             CurrReport.Break;
+
                 end;
             }
             dataitem(PaymentReportingArgument; "Payment Reporting Argument")
@@ -1547,12 +1552,15 @@ report 50061 "SEC - Sales Invoice LS-New"
         PaymentID: Code[16];
         PmtIDLength: Integer;
         PrintFIK: Boolean;
+        //<<PM
+        //>>ACA
         SerialNoCaptionLbl: Label 'Serial No.';
         ItemLedgerEntry: Record "Item Ledger Entry";
         TempSalesInvoiceLine: Record "Sales Invoice Line" temporary;
         HighestLineNo: Integer;
         SpacePointer: Integer;
-        //<<PM
+        SerialNo: Text;
+        //<<ACA
         //<<NC variables
         PricePerLbl: Label 'Price per';
 
@@ -1796,8 +1804,8 @@ report 50061 "SEC - Sales Invoice LS-New"
     end;
     //<<NC
 
-    /*
     //ACA
+
     local procedure GetSerialLotNo();
     VAR
         ItemTrackingMgt: Codeunit "Item Tracing Mgt.";
@@ -1851,9 +1859,10 @@ report 50061 "SEC - Sales Invoice LS-New"
                     TempSalesInvoiceLine."Description 2" :=
                       COPYSTR(COPYSTR(SerialLot, SpacePointer + 1), 1, MAXSTRLEN(TempSalesInvoiceLine."Description 2"));
                 END;
+                SerialNo += TempSalesInvoiceLine.Description + '  ||  ';
                 TempSalesInvoiceLine.INSERT;
             UNTIL TempItemLedgEntry.NEXT = 0;
     END;
+
     //<< Aca
-    */
 }
