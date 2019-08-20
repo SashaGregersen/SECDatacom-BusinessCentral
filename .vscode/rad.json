@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 ﻿{"Added":[],"Modified":[{"Id":50061,"Kind":13,"Name":"SEC - Sales Invoice LS-New","PackagePath":"/src/Reports/Report50061StandardSalesInvoiceLS-New.Al"}],"Removed":[]}
+=======
+﻿{"Added":[],"Modified":[{"Id":50010,"Kind":10,"Name":"Serial No. Intercompany Exch.","PackagePath":"/src/Tables/Table50010SerialNoICExchange.al"}],"Removed":[]}
+>>>>>>> 60efed116bca9197ad14d2d7f9d746b2b3b3f8fc
