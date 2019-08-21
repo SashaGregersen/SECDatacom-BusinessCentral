@@ -55,18 +55,23 @@ table 50012 "Consignor Label Information"
 
     keys
     {
-        key(PK; "Entry No.")
+        key(PK; "Entry No.", "Sales Order No.")
         {
             Clustered = true;
         }
     }
 
-    var
-        myInt: Integer;
-
     trigger OnInsert()
+    var
+        ConsigLablInfo: record "Consignor Label Information";
     begin
+        if "Entry No." = 0 then begin
+            if ConsigLablInfo.FindLast() then
+                "Entry No." := ConsigLablInfo."Entry No." + 1
+            else
+                "Entry No." := 1;
 
+        end;
     end;
 
     trigger OnModify()

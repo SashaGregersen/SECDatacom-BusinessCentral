@@ -267,20 +267,20 @@ xmlport 50004 "Consignor"
                         VolumeTxt := 'Volume';
                     end;
                 }
-                /* textelement(NoUnitTxt)
+                textelement(NoUnitTxt)
                 {
                     trigger OnBeforePassVariable()
                     begin
                         NoUnitTxt := 'No. Unit';
                     end;
-                } */
-                textelement(UnitOfMeasurementTxt)
+                }
+                /* textelement(UnitOfMeasurementTxt)
                 {
                     trigger OnBeforePassVariable()
                     begin
                         UnitOfMeasurementtxt := 'Unit of Measurement';
                     end;
-                }
+                } */
                 /* textelement(DescriptionTxt)
                 {
                     trigger OnBeforePassVariable()
@@ -466,14 +466,14 @@ xmlport 50004 "Consignor"
                     //hentes fra ny tabel
                 }
                 // skal udfyldes ved afsendelse til NOK
-                /* textelement(NoUnit)
+                textelement(NoUnit)
                 {
 
-                } */
-                textelement(UnitOfMeasurement)
+                }
+                /* textelement(UnitOfMeasurement)
                 {
                     // PC - Piece - hentes fra inventory setup
-                }
+                } */
                 /* textelement(Description)
                 {
                     //beskrivelse af varer i pakke
@@ -497,9 +497,17 @@ xmlport 50004 "Consignor"
                 trigger OnAfterGetRecord()
                 var
                     CompanyInfo: record "Company Information";
-                    Item: record item;
+                    ShippingAgent: record "Shipping Agent";
+                    ShipAgentService: record "Shipping Agent Services";
+                    ConsignorLabel: record "Consignor Label Information";
+                    SalesShipmentLine: record "Sales Shipment Line";
+                    SalesLine: record "Sales Line";
+                    NoOfUnits: Decimal;
+                    UnitValueDec: Decimal;
                 begin
                     CompanyInfo.get;
+                    if ShippingAgent.get(SalesHeader."Shipping Agent Code") then
+                        ActorAlias := ShippingAgent."Account No.";
                     PostedSalesShipNo := NewPostedSalesShipmentNo;
                     SenderName1 := CompanyInfo."Ship-to Name";
                     SenderAddress1 := CompanyInfo."Ship-to Address";
@@ -507,10 +515,27 @@ xmlport 50004 "Consignor"
                     SenderCity := CompanyInfo."Ship-to City";
                     SenderCountry := CompanyInfo."Ship-to Country/Region Code";
                     SenderPostNo := CompanyInfo."Ship-to Post Code";
-                    /* NumberLine :=
-                    Weight :=  */
+                    ConsignorLabel.setrange("Sales Order No.", SalesHeader."No.");
+                    if ConsignorLabel.FindFirst() then begin
+                        NumberLine := format(ConsignorLabel."Number of Labels");
+                        Weight := format(ConsignorLabel.Weight);
+                        Length := format(ConsignorLabel.Length);
+                        Height := format(ConsignorLabel.Height);
+                        Width := format(ConsignorLabel.Width);
+                        Volume := format(ConsignorLabel.Volume);
+                        ConsignorLabel.Delete();
+                    end;
+                    SalesShipmentLine.setrange("Document No.", PostedSalesShipNo);
+                    SalesShipmentLine.setfilter(Quantity, '<>0');
+                    if SalesShipmentLine.FindSet() then
+                        repeat
+                            NoOfUnits := NoOfUnits + SalesShipmentLine.Quantity;
+                            if SalesLine.get(SalesHeader."Document Type", SalesShipmentLine."Order No.", SalesShipmentLine."Order Line No.") then
+                                UnitValueDec := UnitValueDec + (SalesLine."Unit Price" * SalesShipmentLine.Quantity);
+                        until SalesShipmentLine.next = 0;
 
-
+                    NoUnit := format(NoOfUnits);
+                    UnitValue := format(UnitValueDec);
                 end;
             }
 
