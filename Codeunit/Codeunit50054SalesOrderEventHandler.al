@@ -68,7 +68,7 @@ codeunit 50054 "Sales Order Event Handler"
                 end;
             end;
             salesheader.get(rec."Document Type", rec."Document No.");
-            bid.setrange("Vendor No.", Item."Vendor No.");
+            //bid.setrange("Vendor No.", Item."Vendor No.");
             bid.SetFilter("Expiry Date", '>=%1|%2', Today, 0D);
             bid.setrange(Deactivate, false);
             bid.setrange("One Time Bid", false);
