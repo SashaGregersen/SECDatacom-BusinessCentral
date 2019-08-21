@@ -2022,6 +2022,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                             </Paragraphs>
                                             <rd:DefaultName>Textbox17</rd:DefaultName>
                                             <Style>
+                                              <BackgroundColor>Aqua</BackgroundColor>
                                               <PaddingRight>0.0625in</PaddingRight>
                                               <PaddingBottom>2pt</PaddingBottom>
                                             </Style>
@@ -2050,6 +2051,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                             </Paragraphs>
                                             <rd:DefaultName>Textbox173</rd:DefaultName>
                                             <Style>
+                                              <BackgroundColor>Aqua</BackgroundColor>
                                               <PaddingRight>0.0625in</PaddingRight>
                                               <PaddingBottom>2pt</PaddingBottom>
                                             </Style>
@@ -2078,6 +2080,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                             </Paragraphs>
                                             <rd:DefaultName>Textbox174</rd:DefaultName>
                                             <Style>
+                                              <BackgroundColor>Aqua</BackgroundColor>
                                               <PaddingRight>0.0625in</PaddingRight>
                                               <PaddingBottom>2pt</PaddingBottom>
                                             </Style>
@@ -2109,6 +2112,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                             </Paragraphs>
                                             <rd:DefaultName>Textbox239</rd:DefaultName>
                                             <Style>
+                                              <BackgroundColor>Aqua</BackgroundColor>
                                               <PaddingLeft>5pt</PaddingLeft>
                                             </Style>
                                           </Textbox>
@@ -2140,6 +2144,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                             <rd:DefaultName>textbox115</rd:DefaultName>
                                             <ZIndex>36</ZIndex>
                                             <Style>
+                                              <BackgroundColor>Aqua</BackgroundColor>
                                               <PaddingLeft>5pt</PaddingLeft>
                                             </Style>
                                           </Textbox>
@@ -2171,6 +2176,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                             <rd:DefaultName>textbox201</rd:DefaultName>
                                             <ZIndex>51</ZIndex>
                                             <Style>
+                                              <BackgroundColor>Aqua</BackgroundColor>
                                               <PaddingRight>0.0625in</PaddingRight>
                                               <PaddingBottom>2pt</PaddingBottom>
                                             </Style>
@@ -2198,6 +2204,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                             </Paragraphs>
                                             <rd:DefaultName>Textbox178</rd:DefaultName>
                                             <Style>
+                                              <BackgroundColor>Aqua</BackgroundColor>
                                               <PaddingRight>0.0625in</PaddingRight>
                                               <PaddingBottom>2pt</PaddingBottom>
                                             </Style>
@@ -2225,6 +2232,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                             </Paragraphs>
                                             <rd:DefaultName>Textbox179</rd:DefaultName>
                                             <Style>
+                                              <BackgroundColor>Aqua</BackgroundColor>
                                               <PaddingRight>0.0625in</PaddingRight>
                                               <PaddingBottom>2pt</PaddingBottom>
                                             </Style>
@@ -2255,6 +2263,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                             </Paragraphs>
                                             <rd:DefaultName>Textbox240</rd:DefaultName>
                                             <Style>
+                                              <BackgroundColor>Aqua</BackgroundColor>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingLeft>5pt</PaddingLeft>
                                             </Style>
@@ -2286,6 +2295,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                             <rd:DefaultName>textbox256</rd:DefaultName>
                                             <ZIndex>44</ZIndex>
                                             <Style>
+                                              <BackgroundColor>Aqua</BackgroundColor>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingLeft>5pt</PaddingLeft>
                                             </Style>
@@ -2383,7 +2393,9 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                             </Paragraphs>
                                             <rd:DefaultName>Textbox223</rd:DefaultName>
                                             <Style>
-                                              <Border />
+                                              <Border>
+                                                <Style>None</Style>
+                                              </Border>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingLeft>5pt</PaddingLeft>
                                             </Style>
@@ -2484,9 +2496,9 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <Hidden>=iif(Fields!TotalAmountInclVAT.Value=0,true,false)</Hidden>
                                             </Visibility>
                                             <Style>
-                                              <TopBorder>
-                                                <Style>Solid</Style>
-                                              </TopBorder>
+                                              <Border>
+                                                <Style>None</Style>
+                                              </Border>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingLeft>5pt</PaddingLeft>
                                             </Style>
@@ -2523,6 +2535,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <Hidden>=iif(Fields!TotalAmountInclVAT.Value=0,true,false)</Hidden>
                                             </Visibility>
                                             <Style>
+                                              <BackgroundColor>LimeGreen</BackgroundColor>
                                               <PaddingRight>0.0625in</PaddingRight>
                                               <PaddingBottom>2pt</PaddingBottom>
                                             </Style>
@@ -2551,6 +2564,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                             </Paragraphs>
                                             <rd:DefaultName>Textbox182</rd:DefaultName>
                                             <Style>
+                                              <BackgroundColor>LimeGreen</BackgroundColor>
                                               <PaddingRight>0.0625in</PaddingRight>
                                               <PaddingBottom>2pt</PaddingBottom>
                                             </Style>
@@ -2579,6 +2593,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                             </Paragraphs>
                                             <rd:DefaultName>Textbox183</rd:DefaultName>
                                             <Style>
+                                              <BackgroundColor>LimeGreen</BackgroundColor>
                                               <PaddingRight>0.0625in</PaddingRight>
                                               <PaddingBottom>2pt</PaddingBottom>
                                             </Style>
@@ -2613,6 +2628,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <Border>
                                                 <Style>None</Style>
                                               </Border>
+                                              <BackgroundColor>LimeGreen</BackgroundColor>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingLeft>5pt</PaddingLeft>
                                             </Style>
@@ -2649,6 +2665,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                             </Visibility>
                                             <Style>
                                               <Border />
+                                              <BackgroundColor>LimeGreen</BackgroundColor>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingLeft>5pt</PaddingLeft>
                                             </Style>
@@ -2681,6 +2698,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                             <rd:DefaultName>textbox109</rd:DefaultName>
                                             <ZIndex>67</ZIndex>
                                             <Style>
+                                              <BackgroundColor>LimeGreen</BackgroundColor>
                                               <PaddingRight>0.0625in</PaddingRight>
                                               <PaddingBottom>2pt</PaddingBottom>
                                             </Style>
@@ -2708,6 +2726,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                             </Paragraphs>
                                             <rd:DefaultName>Textbox187</rd:DefaultName>
                                             <Style>
+                                              <BackgroundColor>LimeGreen</BackgroundColor>
                                               <PaddingRight>0.0625in</PaddingRight>
                                               <PaddingBottom>2pt</PaddingBottom>
                                             </Style>
@@ -2735,6 +2754,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                             </Paragraphs>
                                             <rd:DefaultName>Textbox188</rd:DefaultName>
                                             <Style>
+                                              <BackgroundColor>LimeGreen</BackgroundColor>
                                               <PaddingRight>0.0625in</PaddingRight>
                                               <PaddingBottom>2pt</PaddingBottom>
                                             </Style>
@@ -2768,6 +2788,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <Border>
                                                 <Style>None</Style>
                                               </Border>
+                                              <BackgroundColor>LimeGreen</BackgroundColor>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingLeft>5pt</PaddingLeft>
                                             </Style>
@@ -2799,207 +2820,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                             <rd:DefaultName>textbox277</rd:DefaultName>
                                             <ZIndex>60</ZIndex>
                                             <Style>
-                                              <VerticalAlign>Top</VerticalAlign>
-                                              <PaddingLeft>5pt</PaddingLeft>
-                                            </Style>
-                                          </Textbox>
-                                        </CellContents>
-                                      </TablixCell>
-                                    </TablixCells>
-                                  </TablixRow>
-                                  <TablixRow>
-                                    <Height>0.17638cm</Height>
-                                    <TablixCells>
-                                      <TablixCell>
-                                        <CellContents>
-                                          <Textbox Name="Textbox234">
-                                            <CanGrow>true</CanGrow>
-                                            <KeepTogether>true</KeepTogether>
-                                            <Paragraphs>
-                                              <Paragraph>
-                                                <TextRuns>
-                                                  <TextRun>
-                                                    <Value />
-                                                    <Style>
-                                                      <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>8pt</FontSize>
-                                                      <FontWeight>Bold</FontWeight>
-                                                    </Style>
-                                                  </TextRun>
-                                                </TextRuns>
-                                                <Style />
-                                              </Paragraph>
-                                            </Paragraphs>
-                                            <rd:DefaultName>Textbox234</rd:DefaultName>
-                                            <Style>
-                                              <PaddingRight>0.0625in</PaddingRight>
-                                              <PaddingBottom>2pt</PaddingBottom>
-                                            </Style>
-                                          </Textbox>
-                                          <ColSpan>5</ColSpan>
-                                        </CellContents>
-                                      </TablixCell>
-                                      <TablixCell />
-                                      <TablixCell />
-                                      <TablixCell />
-                                      <TablixCell />
-                                      <TablixCell>
-                                        <CellContents>
-                                          <Textbox Name="Textbox248">
-                                            <CanGrow>true</CanGrow>
-                                            <KeepTogether>true</KeepTogether>
-                                            <Paragraphs>
-                                              <Paragraph>
-                                                <TextRuns>
-                                                  <TextRun>
-                                                    <Value />
-                                                    <Style>
-                                                      <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>8pt</FontSize>
-                                                      <FontWeight>Bold</FontWeight>
-                                                    </Style>
-                                                  </TextRun>
-                                                </TextRuns>
-                                                <Style />
-                                              </Paragraph>
-                                            </Paragraphs>
-                                            <rd:DefaultName>Textbox248</rd:DefaultName>
-                                            <Style>
-                                              <Border>
-                                                <Style>None</Style>
-                                              </Border>
-                                              <VerticalAlign>Top</VerticalAlign>
-                                              <PaddingLeft>5pt</PaddingLeft>
-                                            </Style>
-                                          </Textbox>
-                                        </CellContents>
-                                      </TablixCell>
-                                      <TablixCell>
-                                        <CellContents>
-                                          <Textbox Name="Textbox245">
-                                            <CanGrow>true</CanGrow>
-                                            <KeepTogether>true</KeepTogether>
-                                            <Paragraphs>
-                                              <Paragraph>
-                                                <TextRuns>
-                                                  <TextRun>
-                                                    <Value />
-                                                    <Style>
-                                                      <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>8pt</FontSize>
-                                                      <FontWeight>Bold</FontWeight>
-                                                    </Style>
-                                                  </TextRun>
-                                                </TextRuns>
-                                                <Style />
-                                              </Paragraph>
-                                            </Paragraphs>
-                                            <rd:DefaultName>Textbox245</rd:DefaultName>
-                                            <Style>
-                                              <Border />
-                                              <VerticalAlign>Top</VerticalAlign>
-                                              <PaddingLeft>5pt</PaddingLeft>
-                                            </Style>
-                                          </Textbox>
-                                        </CellContents>
-                                      </TablixCell>
-                                    </TablixCells>
-                                  </TablixRow>
-                                  <TablixRow>
-                                    <Height>0.17638cm</Height>
-                                    <TablixCells>
-                                      <TablixCell>
-                                        <CellContents>
-                                          <Textbox Name="Textbox246">
-                                            <CanGrow>true</CanGrow>
-                                            <KeepTogether>true</KeepTogether>
-                                            <Paragraphs>
-                                              <Paragraph>
-                                                <TextRuns>
-                                                  <TextRun>
-                                                    <Value />
-                                                    <Style>
-                                                      <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>8pt</FontSize>
-                                                      <FontWeight>Bold</FontWeight>
-                                                    </Style>
-                                                  </TextRun>
-                                                </TextRuns>
-                                                <Style />
-                                              </Paragraph>
-                                            </Paragraphs>
-                                            <rd:DefaultName>Textbox246</rd:DefaultName>
-                                            <Style>
-                                              <PaddingRight>0.0625in</PaddingRight>
-                                              <PaddingBottom>2pt</PaddingBottom>
-                                            </Style>
-                                          </Textbox>
-                                          <ColSpan>5</ColSpan>
-                                        </CellContents>
-                                      </TablixCell>
-                                      <TablixCell />
-                                      <TablixCell />
-                                      <TablixCell />
-                                      <TablixCell />
-                                      <TablixCell>
-                                        <CellContents>
-                                          <Textbox Name="Textbox249">
-                                            <CanGrow>true</CanGrow>
-                                            <KeepTogether>true</KeepTogether>
-                                            <Paragraphs>
-                                              <Paragraph>
-                                                <TextRuns>
-                                                  <TextRun>
-                                                    <Value />
-                                                    <Style>
-                                                      <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>8pt</FontSize>
-                                                      <FontWeight>Bold</FontWeight>
-                                                    </Style>
-                                                  </TextRun>
-                                                </TextRuns>
-                                                <Style />
-                                              </Paragraph>
-                                            </Paragraphs>
-                                            <rd:DefaultName>Textbox249</rd:DefaultName>
-                                            <Style>
-                                              <Border>
-                                                <Style>None</Style>
-                                              </Border>
-                                              <VerticalAlign>Top</VerticalAlign>
-                                              <PaddingLeft>5pt</PaddingLeft>
-                                            </Style>
-                                          </Textbox>
-                                        </CellContents>
-                                      </TablixCell>
-                                      <TablixCell>
-                                        <CellContents>
-                                          <Textbox Name="Textbox263">
-                                            <CanGrow>true</CanGrow>
-                                            <KeepTogether>true</KeepTogether>
-                                            <Paragraphs>
-                                              <Paragraph>
-                                                <TextRuns>
-                                                  <TextRun>
-                                                    <Value />
-                                                    <Style>
-                                                      <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>8pt</FontSize>
-                                                      <FontWeight>Bold</FontWeight>
-                                                    </Style>
-                                                  </TextRun>
-                                                </TextRuns>
-                                                <Style />
-                                              </Paragraph>
-                                            </Paragraphs>
-                                            <rd:DefaultName>Textbox263</rd:DefaultName>
-                                            <Visibility>
-                                              <Hidden>=iif(Fields!TotalAmountInclVAT.Value,true,false)</Hidden>
-                                            </Visibility>
-                                            <Style>
-                                              <TopBorder>
-                                                <Style>Solid</Style>
-                                              </TopBorder>
+                                              <BackgroundColor>LimeGreen</BackgroundColor>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingLeft>5pt</PaddingLeft>
                                             </Style>
@@ -3632,20 +3453,15 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                   </TablixMember>
                                   <TablixMember>
                                     <Visibility>
-                                      <Hidden>=IIF(Fields!PricesInclVAT_PurchHeader.Value=FALSE AND SUM(Fields!VATAmount.Value)&lt;&gt;0,FALSE,TRUE)</Hidden>
+                                      <Hidden>true</Hidden>
                                     </Visibility>
                                     <KeepTogether>true</KeepTogether>
                                   </TablixMember>
                                   <TablixMember>
                                     <Visibility>
-                                      <Hidden>=IIF(Fields!PricesInclVAT_PurchHeader.Value=FALSE AND SUM(Fields!VATAmount.Value)&lt;&gt;0,FALSE,TRUE)</Hidden>
+                                      <Hidden>true</Hidden>
                                     </Visibility>
                                     <KeepTogether>true</KeepTogether>
-                                  </TablixMember>
-                                  <TablixMember>
-                                    <Visibility>
-                                      <Hidden>=IIF(Fields!PricesInclVAT_PurchHeader.Value=FALSE AND SUM(Fields!VATAmount.Value)&lt;&gt;0,FALSE,TRUE)</Hidden>
-                                    </Visibility>
                                   </TablixMember>
                                   <TablixMember>
                                     <Visibility>
@@ -3656,39 +3472,34 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                     <Visibility>
                                       <Hidden>=IIF(Fields!PricesInclVAT_PurchHeader.Value=FALSE AND SUM(Fields!VATAmount.Value)&lt;&gt;0,FALSE,TRUE)</Hidden>
                                     </Visibility>
-                                    <KeepTogether>true</KeepTogether>
                                   </TablixMember>
                                   <TablixMember>
                                     <Visibility>
-                                      <Hidden>=IIF(SUM(Fields!VATDiscountAmount.Value)&lt;&gt;0 AND SUM(Fields!VATAmount.Value)&lt;&gt;0 AND Fields!PricesInclVAT_PurchHeader.Value=TRUE AND SUM(Fields!VATBaseDisc_PurchHeader.Value)&lt;&gt;0,FALSE,TRUE)</Hidden>
+                                      <Hidden>true</Hidden>
                                     </Visibility>
                                     <KeepTogether>true</KeepTogether>
                                   </TablixMember>
                                   <TablixMember>
                                     <Visibility>
-                                      <Hidden>=IIF(Fields!PricesInclVAT_PurchHeader.Value=TRUE AND SUM(Fields!VATAmount.Value)&lt;&gt;0,FALSE,TRUE)</Hidden>
-                                    </Visibility>
-                                  </TablixMember>
-                                  <TablixMember>
-                                    <Visibility>
-                                      <Hidden>=IIF(Fields!PricesInclVAT_PurchHeader.Value=TRUE AND SUM(Fields!VATAmount.Value)&lt;&gt;0,FALSE,TRUE)</Hidden>
-                                    </Visibility>
-                                  </TablixMember>
-                                  <TablixMember>
-                                    <Visibility>
-                                      <Hidden>=IIF(Fields!PricesInclVAT_PurchHeader.Value=TRUE AND SUM(Fields!VATAmount.Value)&lt;&gt;0,FALSE,TRUE)</Hidden>
+                                      <Hidden>true</Hidden>
                                     </Visibility>
                                     <KeepTogether>true</KeepTogether>
                                   </TablixMember>
                                   <TablixMember>
                                     <Visibility>
-                                      <Hidden>=IIF(Fields!PricesInclVAT_PurchHeader.Value=TRUE AND SUM(Fields!VATAmount.Value)&lt;&gt;0,FALSE,TRUE)</Hidden>
+                                      <Hidden>=IIF(Fields!VATAmount.Value=0,TRUE,FALSE)</Hidden>
                                     </Visibility>
                                     <KeepTogether>true</KeepTogether>
                                   </TablixMember>
                                   <TablixMember>
                                     <Visibility>
-                                      <Hidden>=IIF(Fields!PricesInclVAT_PurchHeader.Value=TRUE AND SUM(Fields!VATAmount.Value)&lt;&gt;0,FALSE,TRUE)</Hidden>
+                                      <Hidden>=IIF(Fields!VATAmount.Value=0,TRUE,FALSE)</Hidden>
+                                    </Visibility>
+                                    <KeepTogether>true</KeepTogether>
+                                  </TablixMember>
+                                  <TablixMember>
+                                    <Visibility>
+                                      <Hidden>=IIF(Fields!VATAmount.Value=0,TRUE,FALSE)</Hidden>
                                     </Visibility>
                                     <KeepTogether>true</KeepTogether>
                                   </TablixMember>
@@ -3714,7 +3525,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                               </SortExpressions>
                               <Top>0.03167cm</Top>
                               <Left>0.00632cm</Left>
-                              <Height>7.02024cm</Height>
+                              <Height>6.66748cm</Height>
                               <Width>10.57762in</Width>
                               <ZIndex>1</ZIndex>
                               <Style />

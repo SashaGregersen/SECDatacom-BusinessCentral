@@ -1074,16 +1074,16 @@
                 <TablixBody>
                   <TablixColumns>
                     <TablixColumn>
-                      <Width>2.76283cm</Width>
+                      <Width>3.44258cm</Width>
                     </TablixColumn>
                     <TablixColumn>
-                      <Width>4.15955cm</Width>
+                      <Width>0.67975cm</Width>
                     </TablixColumn>
                     <TablixColumn>
-                      <Width>4.61474cm</Width>
+                      <Width>8.1259cm</Width>
                     </TablixColumn>
                     <TablixColumn>
-                      <Width>6.90855cm</Width>
+                      <Width>6.19744cm</Width>
                     </TablixColumn>
                   </TablixColumns>
                   <TablixRows>
@@ -1614,6 +1614,7 @@
                         <TablixCell>
                           <CellContents>
                             <Textbox Name="textbox38">
+                              <CanGrow>true</CanGrow>
                               <KeepTogether>true</KeepTogether>
                               <Paragraphs>
                                 <Paragraph>
@@ -1746,6 +1747,7 @@
                         <TablixCell>
                           <CellContents>
                             <Textbox Name="Description">
+                              <CanGrow>true</CanGrow>
                               <KeepTogether>true</KeepTogether>
                               <Paragraphs>
                                 <Paragraph>
@@ -2233,7 +2235,11 @@
                 <TablixColumnHierarchy>
                   <TablixMembers>
                     <TablixMember />
-                    <TablixMember />
+                    <TablixMember>
+                      <Visibility>
+                        <Hidden>true</Hidden>
+                      </Visibility>
+                    </TablixMember>
                     <TablixMember />
                     <TablixMember />
                   </TablixMembers>
@@ -2698,7 +2704,7 @@ Cstr(Fields!Pref_Sender_Country.Value)
         <Height>7.68864cm</Height>
         <Style />
       </Body>
-      <Width>18.67431cm</Width>
+      <Width>18.66189cm</Width>
       <Page>
         <PageHeader>
           <Height>11.68991cm</Height>
@@ -2759,7 +2765,7 @@ Cstr(Fields!Pref_Sender_Country.Value)
               <Top>7.5204cm</Top>
               <Left>0.10586cm</Left>
               <Height>11pt</Height>
-              <Width>7.83309cm</Width>
+              <Width>7.80661cm</Width>
               <ZIndex>2</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -2880,7 +2886,7 @@ Cstr(Fields!Pref_Sender_Country.Value)
               <Top>5.14879cm</Top>
               <Left>0.10584cm</Left>
               <Height>11pt</Height>
-              <Width>7.83311cm</Width>
+              <Width>7.80663cm</Width>
               <ZIndex>7</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -3660,7 +3666,7 @@ Cstr(Fields!Pref_Sender_Country.Value)
               <Top>5.94768cm</Top>
               <Left>0.10586cm</Left>
               <Height>11pt</Height>
-              <Width>7.83313cm</Width>
+              <Width>7.80666cm</Width>
               <ZIndex>35</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
