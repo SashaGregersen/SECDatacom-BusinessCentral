@@ -1297,7 +1297,7 @@ codeunit 50054 "Sales Order Event Handler"
         SourceNo: code[20];
         SourceType: integer;
     begin
-
+        //check for freight item and insert in tempwhseactivline
         if TempWhseActivLine."Source Document" = TempWhseActivLine."Source Document"::"Sales Order" then begin
             if SalesReceive.get then begin
                 SalesLine.setrange("Document No.", TempWhseActivLine."Source No.");
@@ -1322,10 +1322,19 @@ codeunit 50054 "Sales Order Event Handler"
                     TempWhseActivLine."Source Type" := SourceType;
                     TempWhseActivLine."Source Document" := TempWhseActivLine."Source Document"::"Sales Order";
                     TempWhseActivLine."Item No." := SalesLine."No.";
+                    TempWhseActivLine.Quantity := SalesLine.Quantity;
+                    TempWhseActivLine."Qty. (Base)" := SalesLine.Quantity;
+                    TempWhseActivLine."Qty. Handled" := 0;
+                    TempWhseActivLine."Qty. Handled (Base)" := 0;
+                    TempWhseActivLine."Qty. Outstanding (Base)" := SalesLine."Outstanding Quantity";
+                    TempWhseActivLine."Qty. Outstanding" := SalesLine."Outstanding Quantity";
+                    TempWhseActivLine."Qty. per Unit of Measure" := 1;
+                    TempWhseActivLine."Qty. to Handle" := SalesLine."Outstanding Quantity";
+                    TempWhseActivLine."Qty. to Handle (Base)" := SalesLine."Outstanding Quantity";
                     if TempWhseActivLine.Insert() then begin
                         TempWhseActivLine.RESET;
                         TempWhseActivLine.FIND('-');
-                    end;               
+                    end;
 
                 end;
             end;
