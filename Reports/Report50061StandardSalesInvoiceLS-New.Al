@@ -640,7 +640,7 @@ report 50061 "SEC - Sales Invoice LS-New"
                 column(Vendor_Item_No; Item."Vendor-Item-No.")
                 {
                 }
-                column(SerialNo; SerialNo)
+                column(SerialNo; SerialNo) //NC (ACA)
                 {
                 }
                 dataitem(ShipmentLine; "Sales Shipment Buffer")
@@ -1804,8 +1804,7 @@ report 50061 "SEC - Sales Invoice LS-New"
     end;
     //<<NC
 
-    //ACA
-
+    //NC (ACA) Serial No. 
     local procedure GetSerialLotNo();
     VAR
         ItemTrackingMgt: Codeunit "Item Tracing Mgt.";
