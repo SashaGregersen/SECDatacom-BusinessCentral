@@ -37,6 +37,21 @@ pageextension 50099 "Temp Hacks" extends "Company Information"
                     UpdateWareEntry.Run();
                 end;
             }
+
+            action(ResetSetupTableAfterRestore)
+            {
+                ApplicationArea = all;
+                Image = Restore;
+                Caption = 'Reset Setup Table After Company Restore';
+
+                trigger OnAction()
+                var
+                    UpdateCompanyInfo: report "Update TST & DEV after restor";
+                begin
+                    UpdateCompanyInfo.Run();
+                end;
+            }
+
             /*  action(MAHATempHacks2)
              {
                  ApplicationArea = all;
