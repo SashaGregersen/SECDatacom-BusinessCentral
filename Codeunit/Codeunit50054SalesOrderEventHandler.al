@@ -924,13 +924,13 @@ codeunit 50054 "Sales Order Event Handler"
             WarehouseActHeader.setrange("Source No.", SalesHeader."No.");
             WarehouseActHeader.setrange("Source Type", 37);
             if WarehouseActHeader.FindFirst() then begin
-                SalesReceive.get;
+                if not SalesReceive.get then
+                    exit;
                 if SalesReceive."Consignor Path" <> '' then begin
                     //Kald xmlport til eksport af felter til Consignor
                     Filelocation := Consignor.CreateFileLocation(SalesHeader, SalesReceive);
                     Consignor.SetPostedSalesShipmentNo(SalesShptHdrNo);
-                    SalesHeader.SetRecFilter();
-                    Consignor.SetTableView(SalesHeader);
+                    Consignor.SetSalesHeaderNoDocType(SalesHeader."No.", SalesHeader."Document Type");
                     ConsignorCSVFile.CREATE(Filelocation);
                     ConsignorCSVFile.CreateOutStream(XMLStream);
                     Consignor.SetDestination(XMLStream);
@@ -1285,7 +1285,7 @@ codeunit 50054 "Sales Order Event Handler"
         end;
     end;
 
-    /* [EventSubscriber(ObjectType::Codeunit, codeunit::"Whse.-Activity-Post", 'OnBeforeUpdateSourceDocument', '', true, true)]
+    [EventSubscriber(ObjectType::Codeunit, codeunit::"Whse.-Activity-Post", 'OnBeforeUpdateSourceDocument', '', true, true)]
     local procedure OnBeforeUpdateSourceDocumentEvent(var TempWhseActivLine: Record "Warehouse Activity Line")
     var
         SalesReceive: record "Sales & Receivables Setup";
@@ -1339,7 +1339,7 @@ codeunit 50054 "Sales Order Event Handler"
                 end;
             end;
         end;
-    end; */
+    end;
 
     local procedure FindLastLineNo(WhseActivLine: record "Warehouse Activity Line"): Integer
     begin

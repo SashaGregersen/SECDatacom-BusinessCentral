@@ -14,11 +14,11 @@ xmlport 50004 "Consignor"
             tableelement(ItemTableTitle; integer)
             {
                 SourceTableView = SORTING (Number) WHERE (Number = CONST (1));
-                textelement(CarrierCode)
+                textelement(CarrierCodeTxt)
                 {
                     trigger OnBeforePassVariable()
                     begin
-                        CarrierCode := 'Carrier Code';
+                        CarrierCodeTxt := 'Carrier Code';
                     end;
                 }
                 /* textelement(Services)
@@ -35,131 +35,131 @@ xmlport 50004 "Consignor"
                         ActorAliasTxt := 'Actor Alias';
                     end;
                 }
-                textelement(OrderNumber)
+                textelement(OrderNumberTxt)
                 {
                     trigger OnBeforePassVariable()
                     begin
-                        OrderNumber := 'OrderNumber';
+                        OrderNumberTxt := 'OrderNumber';
                     end;
                 }
-                textelement(AdditionalOrderNumber)
+                textelement(AdditionalOrderNumberTxt)
                 {
                     trigger OnBeforePassVariable()
                     begin
-                        AdditionalOrderNumber := 'Additional OrderNumber';
+                        AdditionalOrderNumberTxt := 'Additional OrderNumber';
                     end;
                 }
-                textelement(MessageToCarrier)
+                /* textelement(MessageToCarrierTxt)
                 {
                     trigger OnBeforePassVariable()
                     begin
-                        MessageToCarrier := 'Message To Carrier';
+                        MessageToCarrierTxt := 'Message To Carrier';
+                    end;
+                } */
+                textelement(MessageToReceiverTxt)
+                {
+                    trigger OnBeforePassVariable()
+                    begin
+                        MessageToReceiverTxt := 'Message To Receiver';
                     end;
                 }
-                textelement(MessageToReceiver)
+                /* textelement(MessageToDriverTxt)
                 {
                     trigger OnBeforePassVariable()
                     begin
-                        MessageToCarrier := 'Message To Receiver';
+                        MessageToCarrierTxt := 'Message To Driver';
                     end;
-                }
-                textelement(MessageToDriver)
+                } */
+                textelement(ReceiverRefTxt)
                 {
                     trigger OnBeforePassVariable()
                     begin
-                        MessageToCarrier := 'Message To Driver';
-                    end;
-                }
-                textelement(ReceiverRef)
-                {
-                    trigger OnBeforePassVariable()
-                    begin
-                        ReceiverRef := 'ReceiverRef';
+                        ReceiverRefTxt := 'ReceiverRef';
                     end;
                 }
 
-                textelement(ReceiverName1)
+                textelement(ReceiverName1Txt)
                 {
                     trigger OnBeforePassVariable()
                     begin
-                        ReceiverName1 := 'Receiver Name 1';
+                        ReceiverName1Txt := 'Receiver Name 1';
                     end;
                 }
-                textelement(ReceiverName2)
+                textelement(ReceiverName2Txt)
                 {
                     trigger OnBeforePassVariable()
                     begin
-                        ReceiverName2 := 'Receiver Name 2';
+                        ReceiverName2Txt := 'Receiver Name 2';
                     end;
                 }
-                textelement(ReceiverAttention)
+                textelement(ReceiverAttentionTxt)
                 {
                     trigger OnBeforePassVariable()
                     begin
-                        ReceiverAttention := 'Receiver Attention';
+                        ReceiverAttentionTxt := 'Receiver Attention';
                     end;
                 }
-                textelement(ReceiverAddress1)
+                textelement(ReceiverAddress1Txt)
                 {
                     trigger OnBeforePassVariable()
                     begin
-                        ReceiverAddress1 := 'Receiver Address 1';
+                        ReceiverAddress1Txt := 'Receiver Address 1';
                     end;
                 }
-                textelement(ReceiverAddress2)
+                textelement(ReceiverAddress2Txt)
                 {
                     trigger OnBeforePassVariable()
                     begin
-                        ReceiverAddress2 := 'Receiver Address 2';
+                        ReceiverAddress2Txt := 'Receiver Address 2';
                     end;
                 }
-                textelement(ReceiverPostNo)
+                textelement(ReceiverPostNoTxt)
                 {
                     trigger OnBeforePassVariable()
                     begin
-                        ReceiverPostNo := 'Receiver Post No.';
+                        ReceiverPostNoTxt := 'Receiver Post No.';
                     end;
                 }
-                textelement(ReceiverCity)
+                textelement(ReceiverCityTxt)
                 {
                     trigger OnBeforePassVariable()
                     begin
-                        ReceiverCity := 'Receiver City';
+                        ReceiverCityTxt := 'Receiver City';
                     end;
                 }
-                textelement(ReceiverCountry)
+                textelement(ReceiverCountryTxt)
                 {
                     trigger OnBeforePassVariable()
                     begin
-                        ReceiverCountry := 'Receiver Country';
+                        ReceiverCountryTxt := 'Receiver Country';
                     end;
                 }
-                textelement(ReceiverPhone)
+                textelement(ReceiverPhoneTxt)
                 {
                     trigger OnBeforePassVariable()
                     begin
-                        ReceiverPhone := 'Receiver Phone';
+                        ReceiverPhoneTxt := 'Receiver Phone';
                     end;
                 }
-                textelement(ReceiverFax)
+                textelement(ReceiverFaxTxt)
                 {
                     trigger OnBeforePassVariable()
                     begin
-                        ReceiverFax := 'Receiver Fax';
+                        ReceiverFaxTxt := 'Receiver Fax';
                     end;
                 }
-                textelement(ReceiverMobile)
+                textelement(ReceiverMobileTxt)
                 {
                     trigger OnBeforePassVariable()
                     begin
-                        ReceiverMobile := 'Receiver Mobile';
+                        ReceiverMobileTxt := 'Receiver Mobile';
                     end;
                 }
-                textelement(ReceiverEmail)
+                textelement(ReceiverEmailTxt)
                 {
                     trigger OnBeforePassVariable()
                     begin
-                        ReceiverEmail := 'Receiver Email';
+                        ReceiverEmailTxt := 'Receiver Email';
                     end;
                 }
                 textelement(VATTxt)
@@ -211,13 +211,7 @@ xmlport 50004 "Consignor"
                         SenderCountryTxt := 'Sender Country';
                     end;
                 }
-                textelement(NumberLineTxt)
-                {
-                    trigger OnBeforePassVariable()
-                    begin
-                        NumberLineTxt := 'Number of Labels';
-                    end;
-                }
+
                 textelement(GoodsTypeLineTxt)
                 {
                     trigger OnBeforePassVariable()
@@ -267,20 +261,20 @@ xmlport 50004 "Consignor"
                         VolumeTxt := 'Volume';
                     end;
                 }
-                /* textelement(NoUnitTxt)
+                textelement(NoUnitTxt)
                 {
                     trigger OnBeforePassVariable()
                     begin
                         NoUnitTxt := 'No. Unit';
                     end;
-                } */
-                textelement(UnitOfMeasurementTxt)
+                }
+                /* textelement(UnitOfMeasurementTxt)
                 {
                     trigger OnBeforePassVariable()
                     begin
                         UnitOfMeasurementtxt := 'Unit of Measurement';
                     end;
-                }
+                } */
                 /* textelement(DescriptionTxt)
                 {
                     trigger OnBeforePassVariable()
@@ -316,11 +310,20 @@ xmlport 50004 "Consignor"
                         ReasonForExportTxt := 'Reason For Export';
                     end;
                 } */
+                textelement(NumberLineTxt)
+                {
+                    trigger OnBeforePassVariable()
+                    begin
+                        NumberLineTxt := 'Number of Labels';
+                    end;
+                }
             }
-            tableelement(SalesHeader; "Sales Header")
+
+            tableelement(Integer; Integer)
             {
 
-                fieldelement(Carriercode; SalesHeader."Shipping Agent Code")
+
+                Textelement(Carriercode)
                 {
 
                 }
@@ -332,80 +335,80 @@ xmlport 50004 "Consignor"
                 {
                     //Hvilken konto der skal bruges hos de forskellige transportører 
                 }
-                fieldelement(OrderNumber; SalesHeader."No.")
+                Textelement(OrderNumber)
                 {
 
                 }
-                textelement(PostedSalesShipNo)
+                Textelement(PostedSalesShipNo)
                 {
 
                 }
-                fieldelement(MessageToCarrier; SalesHeader."Ship-to Comment")
+                /* Textelement(MessageToCarrier)
+                {
+
+                } */
+                Textelement(MessageToReceiver)
                 {
 
                 }
-                fieldelement(MessageToReceiver; SalesHeader."Ship-to Comment")
-                {
+                // Textelement(MessageToDriver)
+                // {
 
-                }
-                fieldelement(MessageToDriver; SalesHeader."Ship-to Comment")
-                {
-
-                }
-                fieldelement(ReceiverRef; SalesHeader."External Document No.")
+                // }
+                Textelement(ReceiverRef)
                 {
 
                 }
 
-                fieldelement(ReceiverName1; SalesHeader."Ship-to Name")
+                Textelement(ReceiverName1)
                 {
 
                 }
-                fieldelement(ReceiverName2; SalesHeader."Ship-to Name 2")
+                Textelement(ReceiverName2)
                 {
 
                 }
-                fieldelement(ReceiverAttention; SalesHeader."Ship-to Contact")
+                Textelement(ReceiverAttention)
                 {
 
                 }
-                fieldelement(ReceiverAddress1; SalesHeader."Ship-to Address")
+                Textelement(ReceiverAddress1)
                 {
 
                 }
-                fieldelement(ReceiverAddres2; SalesHeader."Ship-to Address 2")
+                Textelement(ReceiverAddres2)
                 {
 
                 }
-                fieldelement(ReceiverPostNo; SalesHeader."Ship-to Post Code")
+                Textelement(ReceiverPostNo)
                 {
 
                 }
-                fieldelement(ReceiverCity; SalesHeader."Ship-to City")
+                Textelement(ReceiverCity)
                 {
 
                 }
-                fieldelement(ReceiverCountry; SalesHeader."Ship-to Country/Region Code")
+                Textelement(ReceiverCountry)
                 {
 
                 }
-                fieldelement(ReceiverPhone; SalesHeader."Ship-to Phone No.")
+                Textelement(ReceiverPhone)
                 {
 
                 }
-                fieldelement(ReceiverFax; SalesHeader."OIOUBL-Sell-to Contact Fax No.")
+                Textelement(ReceiverFax)
                 {
 
                 }
-                fieldelement(ReceiverMobile; SalesHeader."Ship-to Phone No.")
+                Textelement(ReceiverMobile)
                 {
 
                 }
-                fieldelement(ReceiverEmail; SalesHeader."Ship-to Email")
+                Textelement(ReceiverEmail)
                 {
 
                 }
-                fieldelement(VAT; SalesHeader."VAT Registration No.")
+                Textelement(VAT)
                 {
 
                 }
@@ -433,11 +436,8 @@ xmlport 50004 "Consignor"
                 {
 
                 }
-                textelement(NumberLine)
-                {
-                    //Antallet af pakker/enheder på godslinjen
-                }
-                fieldelement(GoodsTypeLine; SalesHeader."Shipping Agent Service Code")
+
+                textelement(GoodsTypeLine)
                 {
                     //Godstype, definerer typen på pakken/godset, fx palle, tønde, box osv.
                 }
@@ -466,14 +466,14 @@ xmlport 50004 "Consignor"
                     //hentes fra ny tabel
                 }
                 // skal udfyldes ved afsendelse til NOK
-                /* textelement(NoUnit)
+                textelement(NoUnit)
                 {
 
-                } */
-                textelement(UnitOfMeasurement)
+                }
+                /* textelement(UnitOfMeasurement)
                 {
                     // PC - Piece - hentes fra inventory setup
-                }
+                } */
                 /* textelement(Description)
                 {
                     //beskrivelse af varer i pakke
@@ -486,7 +486,7 @@ xmlport 50004 "Consignor"
                 {
                     //hentes fra ny tabel
                 }
-                fieldelement(CustomsInfoCurrency; SalesHeader."Currency Code")
+                Textelement(CustomsInfoCurrency)
                 {
                     // salesheader currency
                 }
@@ -494,12 +494,71 @@ xmlport 50004 "Consignor"
                 {
 
                 } */
+                textelement(NumberLine)
+                {
+                    //Antallet af pakker/enheder på godslinjen
+                }
+
+                trigger OnPreXmlItem()
+                var
+                    ConsignorLabel: record "Consignor Label Information";
+                begin
+                    if not SalesHeader.get(NewDocType, NewSalesHeaderNo) then
+                        exit;
+                    ConsignorLabel.setrange("Sales Order No.", SalesHeader."No.");
+                    if ConsignorLabel.FindSet() then
+                        Integer.setrange(Number, 1, ConsignorLabel.Count)
+                    else
+                        currXMLport.skip;
+                end;
+
                 trigger OnAfterGetRecord()
                 var
                     CompanyInfo: record "Company Information";
-                    Item: record item;
+                    ShippingAgent: record "Shipping Agent";
+                    ShipAgentService: record "Shipping Agent Services";
+                    ConsignorLabel: record "Consignor Label Information";
+                    SalesShipmentHeader: record "Sales Shipment Header";
+                    SalesShipmentLine: record "Sales Shipment Line";
+                    SalesLine: record "Sales Line";
+                    NoOfUnits: Decimal;
+                    UnitValueDec: Decimal;
+                    Location: record Location;
+                    SalesReceive: record "Sales & Receivables Setup";
+                    GlSetup: record "General Ledger Setup";
                 begin
-                    CompanyInfo.get;
+                    if not SalesReceive.get then
+                        exit;
+                    if not CompanyInfo.get then
+                        exit;
+                    if not GlSetup.get then
+                        exit;
+
+                    Carriercode := SalesHeader."Shipping Agent Code";
+                    if SalesHeader."Currency Code" = '' then
+                        CustomsInfoCurrency := GlSetup."LCY Code"
+                    else
+                        CustomsInfoCurrency := SalesHeader."Currency Code";
+                    MessageToReceiver := SalesHeader."Ship-to Comment"; //End Customer PO ref
+                    OrderNumber := SalesHeader."No.";
+                    ReceiverAddress1 := SalesHeader."Ship-to Address";
+                    ReceiverAddres2 := SalesHeader."Ship-to Address 2";
+                    ReceiverAttention := SalesHeader."Ship-to Contact";
+                    ReceiverCity := SalesHeader."Ship-to City";
+                    ReceiverCountry := SalesHeader."Ship-to Country/Region Code";
+                    ReceiverEmail := SalesHeader."Ship-to Email";
+                    ReceiverFax := SalesHeader."OIOUBL-Sell-to Contact Fax No.";
+                    ReceiverMobile := SalesHeader."Ship-to Phone No.";
+                    ReceiverName1 := SalesHeader."Ship-to Name";
+                    ReceiverName2 := SalesHeader."Ship-to Name 2";
+                    ReceiverPhone := SalesHeader."Ship-to Phone No.";
+                    ReceiverPostNo := SalesHeader."Ship-to Post Code";
+                    if SalesShipmentHeader.get(PostedSalesShipNo) then
+                        ReceiverRef := SalesShipmentHeader."External Document No."; //Reseller PO Ref
+                    VAT := SalesHeader."VAT Registration No.";
+
+                    if ShippingAgent.get(SalesHeader."Shipping Agent Code") then
+                        ActorAlias := ShippingAgent."Account No.";
                     PostedSalesShipNo := NewPostedSalesShipmentNo;
                     SenderName1 := CompanyInfo."Ship-to Name";
                     SenderAddress1 := CompanyInfo."Ship-to Address";
@@ -507,14 +566,42 @@ xmlport 50004 "Consignor"
                     SenderCity := CompanyInfo."Ship-to City";
                     SenderCountry := CompanyInfo."Ship-to Country/Region Code";
                     SenderPostNo := CompanyInfo."Ship-to Post Code";
-                    /* NumberLine :=
-                    Weight :=  */
 
+                    ConsignorLabel.setrange("Sales Order No.", SalesHeader."No.");
+                    if ConsignorLabel.FindFirst() then begin
+                        NumberLine := format(ConsignorLabel."Number of Labels");
+                        Weight := format(ConsignorLabel.Weight);
+                        Length := format(ConsignorLabel.Length);
+                        Height := format(ConsignorLabel.Height);
+                        Width := format(ConsignorLabel.Width);
+                        Volume := format(ConsignorLabel.Volume);
+                        GoodsTypeLine := format(ConsignorLabel."Goods Type");
+                    end;
+                    ConsignorLabel.Delete();
 
+                    Location.setrange("Require Pick", true);
+                    if Location.findset then
+                        repeat
+                            SalesShipmentLine.setrange("Document No.", PostedSalesShipNo);
+                            SalesShipmentLine.SetRange("Location Code", Location.Code);
+                            SalesShipmentLine.setfilter("No.", '<>%1', SalesReceive."Freight Item");
+                            SalesShipmentLine.setfilter(Quantity, '<>0');
+                            if SalesShipmentLine.FindSet() then
+                                repeat
+                                    NoOfUnits := NoOfUnits + SalesShipmentLine.Quantity;
+                                    if SalesLine.get(SalesHeader."Document Type", SalesShipmentLine."Order No.", SalesShipmentLine."Order Line No.") then
+                                        UnitValueDec := UnitValueDec + (SalesLine."Unit Price" * SalesShipmentLine.Quantity);
+                                until SalesShipmentLine.next = 0;
+                        Until Location.next = 0;
+
+                    NoUnit := format(NoOfUnits);
+                    UnitValue := format(UnitValueDec);
                 end;
+
+
             }
 
-            tableelement(Integer; Integer)
+            tableelement(Integer2; Integer)
             {
                 SourceTableView = SORTING (Number) WHERE (Number = CONST (0));
 
@@ -527,6 +614,12 @@ xmlport 50004 "Consignor"
     Procedure SetPostedSalesShipmentNo(No: code[20])
     begin
         NewPostedSalesShipmentNo := No;
+    end;
+
+    procedure SetSalesHeaderNoDocType(No: code[20]; DocType: Integer)
+    begin
+        NewSalesHeaderNo := No;
+        NewDocType := DocType;
     end;
 
 
@@ -542,5 +635,7 @@ xmlport 50004 "Consignor"
 
     var
         NewPostedSalesShipmentNo: code[20];
-
+        NewSalesHeaderNo: code[20];
+        NewDocType: integer;
+        SalesHeader: record "Sales Header";
 }
