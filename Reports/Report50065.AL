@@ -138,6 +138,7 @@ report 50065 "Update TST & DEV after restor"
                                 SalesSetup."OIOUBL-Fin. Chrg. Memo Path" := '';
                                 SalesSetup."Cygate Customer No." := '';
                                 SalesSetup."Cygate Endpoint" := '';
+                                SalesSetup."Consignor Path" := '';
                                 SalesSetup.MODIFY;
 
                             End;
@@ -279,6 +280,7 @@ report 50065 "Update TST & DEV after restor"
                                 SalesSetup."OIOUBL-Fin. Chrg. Memo Path" := '';
                                 SalesSetup."Cygate Customer No." := '';
                                 SalesSetup."Cygate Endpoint" := '';
+                                SalesSetup."Consignor Path" := '';
                                 SalesSetup.MODIFY;
 
                             End;
