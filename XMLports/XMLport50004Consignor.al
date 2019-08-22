@@ -21,13 +21,13 @@ xmlport 50004 "Consignor"
                         CarrierCode := 'Carrier Code';
                     end;
                 }
-                textelement(Services)
+                /* textelement(Services)
                 {
                     trigger OnBeforePassVariable()
                     begin
-                        Services := 'Services';
+                        Services := 'Service';
                     end;
-                }
+                } */
                 textelement(ActorAliasTxt)
                 {
                     trigger OnBeforePassVariable()
@@ -54,6 +54,20 @@ xmlport 50004 "Consignor"
                     trigger OnBeforePassVariable()
                     begin
                         MessageToCarrier := 'Message To Carrier';
+                    end;
+                }
+                textelement(MessageToReceiver)
+                {
+                    trigger OnBeforePassVariable()
+                    begin
+                        MessageToCarrier := 'Message To Receiver';
+                    end;
+                }
+                textelement(MessageToDriver)
+                {
+                    trigger OnBeforePassVariable()
+                    begin
+                        MessageToCarrier := 'Message To Driver';
                     end;
                 }
                 textelement(ReceiverRef)
@@ -201,14 +215,14 @@ xmlport 50004 "Consignor"
                 {
                     trigger OnBeforePassVariable()
                     begin
-                        NumberLineTxt := 'Number Line';
+                        NumberLineTxt := 'Number of Labels';
                     end;
                 }
                 textelement(GoodsTypeLineTxt)
                 {
                     trigger OnBeforePassVariable()
                     begin
-                        GoodsTypeLineTxt := 'GoodsType Line';
+                        GoodsTypeLineTxt := 'GoodsType';
                     end;
                 }
                 textelement(WeightTxt)
@@ -218,13 +232,13 @@ xmlport 50004 "Consignor"
                         WeightTxt := 'Weight';
                     end;
                 }
-                textelement(ContentsTxt)
+                /* textelement(ContentsTxt)
                 {
                     trigger OnBeforePassVariable()
                     begin
                         ContentsTxt := 'Contents';
                     end;
-                }
+                } */
                 textelement(LengthTxt)
                 {
                     trigger OnBeforePassVariable()
@@ -253,13 +267,13 @@ xmlport 50004 "Consignor"
                         VolumeTxt := 'Volume';
                     end;
                 }
-                textelement(NoUnitTxt)
+                /* textelement(NoUnitTxt)
                 {
                     trigger OnBeforePassVariable()
                     begin
                         NoUnitTxt := 'No. Unit';
                     end;
-                }
+                } */
                 textelement(UnitOfMeasurementTxt)
                 {
                     trigger OnBeforePassVariable()
@@ -267,20 +281,20 @@ xmlport 50004 "Consignor"
                         UnitOfMeasurementtxt := 'Unit of Measurement';
                     end;
                 }
-                textelement(DescriptionTxt)
+                /* textelement(DescriptionTxt)
                 {
                     trigger OnBeforePassVariable()
                     begin
                         Descriptiontxt := 'Description';
                     end;
-                }
-                textelement(CountryofOriginTxt)
+                } */
+                /* textelement(CountryofOriginTxt)
                 {
                     trigger OnBeforePassVariable()
                     begin
                         CountryofOrigintxt := 'CountryofOrigin';
                     end;
-                }
+                } */
                 textelement(UnitValueTxt)
                 {
                     trigger OnBeforePassVariable()
@@ -295,13 +309,13 @@ xmlport 50004 "Consignor"
                         CustomsInfoCurrencyTxt := 'Customs Info Currency';
                     end;
                 }
-                textelement(ReasonForExportTxt)
+                /* textelement(ReasonForExportTxt)
                 {
                     trigger OnBeforePassVariable()
                     begin
                         ReasonForExportTxt := 'Reason For Export';
                     end;
-                }
+                } */
             }
             tableelement(SalesHeader; "Sales Header")
             {
@@ -310,10 +324,10 @@ xmlport 50004 "Consignor"
                 {
 
                 }
-                fieldelement(Services; SalesHeader."Shipping Agent Service Code")
+                /* fieldelement(Services; SalesHeader."Shipping Agent Service Code")
                 {
 
-                }
+                } */
                 Textelement(ActorAlias)
                 {
                     //Hvilken konto der skal bruges hos de forskellige transportører 
@@ -328,7 +342,15 @@ xmlport 50004 "Consignor"
                 }
                 fieldelement(MessageToCarrier; SalesHeader."Ship-to Comment")
                 {
-                    //Find out if this is a message for receiver, driver or carrier?
+
+                }
+                fieldelement(MessageToReceiver; SalesHeader."Ship-to Comment")
+                {
+
+                }
+                fieldelement(MessageToDriver; SalesHeader."Ship-to Comment")
+                {
+
                 }
                 fieldelement(ReceiverRef; SalesHeader."External Document No.")
                 {
@@ -415,7 +437,7 @@ xmlport 50004 "Consignor"
                 {
                     //Antallet af pakker/enheder på godslinjen
                 }
-                textelement(GoodsTypeLine)
+                fieldelement(GoodsTypeLine; SalesHeader."Shipping Agent Service Code")
                 {
                     //Godstype, definerer typen på pakken/godset, fx palle, tønde, box osv.
                 }
@@ -423,55 +445,55 @@ xmlport 50004 "Consignor"
                 {
 
                 }
-                textelement(Contents)
+                /* textelement(Contents)
                 {
 
-                }
+                } */
                 textelement(Length)
                 {
-
+                    //hentes fra ny tabel
                 }
                 textelement(Width)
                 {
-
+                    //hentes fra ny tabel
                 }
                 textelement(Height)
                 {
-
+                    //hentes fra ny tabel
                 }
                 textelement(Volume)
                 {
-
+                    //hentes fra ny tabel
                 }
                 // skal udfyldes ved afsendelse til NOK
-                textelement(NoUnit)
+                /* textelement(NoUnit)
                 {
 
-                }
+                } */
                 textelement(UnitOfMeasurement)
                 {
-                    // PC - Piece
+                    // PC - Piece - hentes fra inventory setup
                 }
-                textelement(Description)
+                /* textelement(Description)
                 {
                     //beskrivelse af varer i pakke
-                }
-                textelement(CountryofOrigin)
+                } */
+                /* textelement(CountryofOrigin)
                 {
                     //hentes fra varekortet - hvad hvis der er forskellige?
-                }
+                } */
                 textelement(UnitValue)
                 {
-                    //enhedens værdi
+                    //hentes fra ny tabel
                 }
-                textelement(CustomsInfoCurrency)
+                fieldelement(CustomsInfoCurrency; SalesHeader."Currency Code")
                 {
                     // salesheader currency
                 }
-                textelement(ReasonForExport)
+                /* textelement(ReasonForExport)
                 {
 
-                }
+                } */
                 trigger OnAfterGetRecord()
                 var
                     CompanyInfo: record "Company Information";
@@ -479,17 +501,15 @@ xmlport 50004 "Consignor"
                 begin
                     CompanyInfo.get;
                     PostedSalesShipNo := NewPostedSalesShipmentNo;
-                    //GoodsType := format(WorkDate(), 0, '<Day,2>-<Month,2>-<Year4>');
                     SenderName1 := CompanyInfo."Ship-to Name";
                     SenderAddress1 := CompanyInfo."Ship-to Address";
                     SenderAddress2 := CompanyInfo."Ship-to Address 2";
                     SenderCity := CompanyInfo."Ship-to City";
                     SenderCountry := CompanyInfo."Ship-to Country/Region Code";
                     SenderPostNo := CompanyInfo."Ship-to Post Code";
-                    NumberLine := format(1); //????
-                    GoodsTypeLine := 'Packet'; //????
-                    Weight := '40,6'; // ??
-                    Contents := 'Computer Hardware'; //??
+                    /* NumberLine :=
+                    Weight :=  */
+
 
                 end;
             }
