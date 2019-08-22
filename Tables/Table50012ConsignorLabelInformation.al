@@ -51,6 +51,18 @@ table 50012 "Consignor Label Information"
         {
             DataClassification = CustomerContent;
         }
+        field(9; "Goods Type"; code[10])
+        {
+            DataClassification = ToBeClassified;
+
+            trigger OnLookup()
+            var
+                shippingagent: record "Shipping Agent Services";
+            begin
+                if page.RunModal(page::"Shipping Agent Services", shippingagent) = Action::LookupOK then
+                    validate("Goods Type", shippingagent.Code);
+            end;
+        }
     }
 
     keys
@@ -70,7 +82,6 @@ table 50012 "Consignor Label Information"
                 "Entry No." := ConsigLablInfo."Entry No." + 1
             else
                 "Entry No." := 1;
-
         end;
     end;
 

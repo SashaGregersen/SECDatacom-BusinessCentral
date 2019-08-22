@@ -73,7 +73,17 @@ report 50003 "Price File Export Webshop"
                 {
                     field(Customer; Customer."No.")
                     {
-                        TableRelation = customer;
+
+                        trigger OnLookup(var text: text): Boolean
+                        var
+
+                        begin
+                            if not Customer.Get(customer."No.") then
+                                Clear(customer);
+                            Customer.SetRange("Customer Type", customer."Customer Type"::Reseller);
+                            IF page.RunModal(page::"Customer List", Customer, customer."No.") = Action::LookupOK then
+                                customer."No." := customer."No.";
+                        end;
                     }
                     field("Currency code"; currency.Code)
                     {

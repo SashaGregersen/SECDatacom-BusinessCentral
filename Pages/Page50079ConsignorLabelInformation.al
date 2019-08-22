@@ -19,6 +19,10 @@ page 50079 "Consignor Label Information"
                 {
                     ApplicationArea = All;
                 }
+                field("Goods Type"; "Goods Type")
+                {
+                    ApplicationArea = all;
+                }
                 field(Weight; Weight)
                 {
                     ApplicationArea = All;
