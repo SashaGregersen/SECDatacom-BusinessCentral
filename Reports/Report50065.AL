@@ -1,4 +1,4 @@
-report 50018 "Update TST & DEV after restor2"
+report 50065 "Update TST & DEV after restor"
 {
     // CHHO 08-19-2019 - Report to update system indicator and data in the test or development database, to make sure no NAVPROD paths are used
 
@@ -62,9 +62,11 @@ report 50018 "Update TST & DEV after restor2"
                                 SMTPMailSetup.DeleteAll;
 
                             //PAYMENT MANGEMENT IN NAVDEV
-                            PaymentSetup.ChangeCompany(Company.Name);
-                            if PaymentSetup.Get then
-                                PaymentSetup.DeleteAll;
+                            /*
+                              PaymentSetup.ChangeCompany(Company.Name);
+                              if PaymentSetup.Get then
+                                  PaymentSetup.DeleteAll;
+                              */
 
                             // CRM INTEGRATION
                             CRMConnectionSetup.ChangeCompany(Company.Name);
@@ -127,18 +129,25 @@ report 50018 "Update TST & DEV after restor2"
                             END;
                             */
 
+                            //UPDATE SALES SETUP IN NAVDEV
+                            SalesSetup.CHANGECOMPANY(Company.Name);
+                            if SalesSetup.GET then begin
+                                SalesSetup."OIOUBL-Invoice Path" := '';
+                                SalesSetup."OIOUBL-Cr. Memo Path" := '';
+                                SalesSetup."OIOUBL-Reminder Path" := '';
+                                SalesSetup."OIOUBL-Fin. Chrg. Memo Path" := '';
+                                SalesSetup."Cygate Customer No." := '';
+                                SalesSetup."Cygate Endpoint" := '';
+                                SalesSetup.MODIFY;
+
+                            End;
 
                             //UPDATE SALES SETUP IN NAVDEV
-                            //UPDATE MANUALLY IN BUSINESS CENTRAL SINCE FIELDS ARE OBSOLETE AND MOVED TO EXTENSION.
-                            /*
-                            SalesSetup.CHANGECOMPANY(Company.Name);
-                            SalesSetup.GET;
-                            SalesSetup."OIOUBL Invoice Path" := '';
-                            SalesSetup."OIOUBL Cr. Memo Path" := '';
-                            SalesSetup."OIOUBL Reminder Path" := '';
-                            SalesSetup."OIOUBL Fin. Chrg. Memo Path" := '';
-                            SalesSetup.MODIFY;
-                            */
+                            InventorySetup.ChangeCompany(company.Name);
+                            if InventorySetup.Get then begin
+                                InventorySetup."Price file location" := '';
+                                InventorySetup."Price file location 2" := '';
+                            end;
                         end;
 
                         //NAVTEST
@@ -191,10 +200,11 @@ report 50018 "Update TST & DEV after restor2"
                                 DocumentOutputSMTPSetup.DeleteAll;
 
                             //PAYMENT MANGEMENT IN NAVDEV
-                            PaymentSetup.ChangeCompany(Company.Name);
-                            if PaymentSetup.Get then
-                                PaymentSetup.DeleteAll;
-
+                            /*
+                             PaymentSetup.ChangeCompany(Company.Name);
+                             if PaymentSetup.Get then
+                                 PaymentSetup.DeleteAll;
+                             */
                             // CRM INTEGRATION
                             CRMConnectionSetup.ChangeCompany(Company.Name);
                             if CRMConnectionSetup.Get then begin
@@ -261,15 +271,25 @@ report 50018 "Update TST & DEV after restor2"
 
                             //UPDATE SALES SETUP IN NAVTEST
                             //UPDATE MANUALLY IN BUSINESS CENTRAL SINCE FIELDS ARE OBSOLETE AND MOVED TO EXTENSION.
-                            /*
                             SalesSetup.CHANGECOMPANY(Company.Name);
-                            SalesSetup.GET;
-                            SalesSetup."OIOUBL Invoice Path" := '';
-                            SalesSetup."OIOUBL Cr. Memo Path" := '';
-                            SalesSetup."OIOUBL Reminder Path" := '';
-                            SalesSetup."OIOUBL Fin. Chrg. Memo Path" := '';
-                            SalesSetup.MODIFY;
-                            */
+                            if SalesSetup.GET then begin
+                                SalesSetup."OIOUBL-Invoice Path" := '';
+                                SalesSetup."OIOUBL-Cr. Memo Path" := '';
+                                SalesSetup."OIOUBL-Reminder Path" := '';
+                                SalesSetup."OIOUBL-Fin. Chrg. Memo Path" := '';
+                                SalesSetup."Cygate Customer No." := '';
+                                SalesSetup."Cygate Endpoint" := '';
+                                SalesSetup.MODIFY;
+
+                            End;
+
+                            //UPDATE SALES SETUP IN NAVTEST
+                            //UPDATE MANUALLY IN BUSINESS CENTRAL SINCE FIELDS ARE OBSOLETE AND MOVED TO EXTENSION.
+                            InventorySetup.ChangeCompany(company.Name);
+                            if InventorySetup.Get then begin
+                                InventorySetup."Price file location" := '';
+                                InventorySetup."Price file location 2" := '';
+                            end;
                         end;
                     until Company.Next = 0;
 
