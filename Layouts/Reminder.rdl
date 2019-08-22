@@ -5419,7 +5419,7 @@ Cstr(Fields!CompanyInfoEMail.Value)
               <MIMEType>image/bmp</MIMEType>
               <Sizing>FitProportional</Sizing>
               <Left>0.02794cm</Left>
-              <Height>21.9375mm</Height>
+              <Height>6.0625mm</Height>
               <Width>60mm</Width>
               <ZIndex>42</ZIndex>
               <Visibility>
@@ -5437,7 +5437,7 @@ Cstr(Fields!CompanyInfoEMail.Value)
               <MIMEType>image/bmp</MIMEType>
               <Sizing>FitProportional</Sizing>
               <Left>6.02794cm</Left>
-              <Height>21.9375mm</Height>
+              <Height>6.0625mm</Height>
               <Width>60mm</Width>
               <ZIndex>43</ZIndex>
               <Visibility>
@@ -5455,7 +5455,7 @@ Cstr(Fields!CompanyInfoEMail.Value)
               <MIMEType>image/bmp</MIMEType>
               <Sizing>FitProportional</Sizing>
               <Left>12.02794cm</Left>
-              <Height>21.9375mm</Height>
+              <Height>6.0625mm</Height>
               <Width>60mm</Width>
               <ZIndex>44</ZIndex>
               <Visibility>
@@ -5483,9 +5483,9 @@ Cstr(Fields!CompanyInfoEMail.Value)
               </Paragraphs>
               <rd:DefaultName>Textbox3</rd:DefaultName>
               <Top>2.37014cm</Top>
-              <Left>0.11274cm</Left>
+              <Left>5.58962cm</Left>
               <Height>3.38631cm</Height>
-              <Width>10.48846cm</Width>
+              <Width>5.01158cm</Width>
               <ZIndex>45</ZIndex>
               <Style>
                 <Border>

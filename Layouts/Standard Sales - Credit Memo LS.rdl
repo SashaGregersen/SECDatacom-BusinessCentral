@@ -19,7 +19,7 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>27.15027cm</Width>
+                  <Width>27.15028cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -3360,7 +3360,7 @@
                               <Top>0.07056cm</Top>
                               <Left>0.89958cm</Left>
                               <Height>7.30708cm</Height>
-                              <Width>26.25069cm</Width>
+                              <Width>26.2507cm</Width>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -3373,10 +3373,10 @@
                               <TablixBody>
                                 <TablixColumns>
                                   <TablixColumn>
-                                    <Width>2.09313cm</Width>
+                                    <Width>3.93286cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>11.39064cm</Width>
+                                    <Width>9.55089cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
                                     <Width>1.77707cm</Width>
@@ -4560,6 +4560,7 @@
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
+                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell>
@@ -5134,6 +5135,9 @@
                                             <KeepWithGroup>After</KeepWithGroup>
                                           </TablixMember>
                                           <TablixMember>
+                                            <Visibility>
+                                              <Hidden>=IIF(Fields!Vendor_Item_No.Value = "",TRUE,FALSE)</Hidden>
+                                            </Visibility>
                                             <KeepWithGroup>After</KeepWithGroup>
                                           </TablixMember>
                                           <TablixMember>
@@ -7243,7 +7247,7 @@
                               <Top>10.31037cm</Top>
                               <Left>20.07089cm</Left>
                               <Height>2.946cm</Height>
-                              <Width>7.07937cm</Width>
+                              <Width>7.07936cm</Width>
                               <ZIndex>4</ZIndex>
                               <Style>
                                 <Border>
@@ -7270,7 +7274,6 @@
                               </Paragraphs>
                               <rd:DefaultName>CompanyLegalStatement</rd:DefaultName>
                               <Top>16.83032cm</Top>
-                              <Left>0cm</Left>
                               <Height>11pt</Height>
                               <Width>26.95207cm</Width>
                               <ZIndex>5</ZIndex>
@@ -7291,7 +7294,6 @@
                             </Border>
                           </Style>
                         </Rectangle>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -7322,7 +7324,7 @@
             <Top>0.17639cm</Top>
             <Left>0.01959cm</Left>
             <Height>17.36302cm</Height>
-            <Width>27.15027cm</Width>
+            <Width>27.15028cm</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -7333,7 +7335,7 @@
         <Height>17.53941cm</Height>
         <Style />
       </Body>
-      <Width>27.24923cm</Width>
+      <Width>27.26991cm</Width>
       <Page>
         <PageHeader>
           <Height>1.25035cm</Height>
