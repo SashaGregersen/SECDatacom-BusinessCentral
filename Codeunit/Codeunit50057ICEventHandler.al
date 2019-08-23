@@ -74,6 +74,8 @@ codeunit 50057 "IC Event Handler"
     end;
 
     local procedure CopyAdvPricingLineFields(LocalSalesLine: Record "Sales Line"; SalesLineOtherCompany: Record "Sales Line")
+    var
+        Item: record item;
     begin
         //der skal noget currency ind over de her felter...
         LocalSalesLine."Bid No." := SalesLineOtherCompany."Bid No.";
@@ -81,6 +83,10 @@ codeunit 50057 "IC Event Handler"
         LocalSalesLine."Bid Unit Sales Price" := SalesLineOtherCompany."Bid Unit Sales Price";
         LocalSalesLine."Bid Purchase Discount" := SalesLineOtherCompany."Bid Purchase Discount";
         LocalSalesLine."Bid Unit Purchase Price" := SalesLineOtherCompany."Bid Unit Purchase Price";
+        if item.get(LocalSalesLine."No.") then begin
+            if item.Type = item.type::Inventory then
+                LocalSalesLine.AutoReserve();
+        end;
     end;
 
     local procedure GetPurchaseLineFromOtherCompany(ICInboxSalesLine: Record "IC Inbox Sales Line"; var PurchaseLineOtherCompany: Record "Purchase Line"; OtherCompanyName: text[30]): Boolean
