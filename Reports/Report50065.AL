@@ -200,6 +200,10 @@ report 50065 "Update TST & DEV after restor"
                             if DocumentOutputSMTPSetup.Get then
                                 DocumentOutputSMTPSetup.DeleteAll;
 
+                            //SMTP MAIL SETUP IN NAVTEST
+                            SMTPMailSetup.ChangeCompany(Company.Name);
+                            if SMTPMailSetup.Get then
+                                SMTPMailSetup.DeleteAll;
                             //PAYMENT MANGEMENT IN NAVDEV
                             /*
                              PaymentSetup.ChangeCompany(Company.Name);
