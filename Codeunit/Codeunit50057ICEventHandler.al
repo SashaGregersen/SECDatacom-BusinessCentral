@@ -239,11 +239,15 @@ codeunit 50057 "IC Event Handler"
                     SOLineInOtherCompany.Modify(false);
                 end;
             until SalesShptLine.Next() = 0;
+
+
         SOHeaderInOtherCompany.ChangeCompany(OtherCompanyName);
         if SOHeaderInOtherCompany.get(SOLineInOtherCompany."Document Type"::Order, SalesShptLine."IC SO No.") then begin
             SOHeaderInOtherCompany."Package Tracking No." := SalesShptHeader."Package Tracking No.";
             SOHeaderInOtherCompany.Modify(false);
         end;
+
+        UpdateFreightOnShipmentOnSalesOrdreInOtherCompany(SOLineInOtherCompany."Document Type", SOLineInOtherCompany."Document No.", OtherCompanyName);
     end;
 
     local procedure UpdateInvoiceOnPurchaseOrderInOtherCompany(SalesInvHdrNo: Code[20]; OtherCompanyName: text[35])
@@ -291,10 +295,13 @@ codeunit 50057 "IC Event Handler"
                     SOLineInOtherCompany.Modify(false);
                 end;
             until SalesInvLine.Next() = 0;
+
         if SOHeaderInOtherCompany.get(SOLineInOtherCompany."Document Type"::Order, SalesInvLine."IC SO No.") then begin
             SOHeaderInOtherCompany."Package Tracking No." := SalesInvHeader."Package Tracking No.";
             SOHeaderInOtherCompany.Modify(false);
         end;
+
+        UpdateFreightOnInvoiceInOtherCompany(SOLineInOtherCompany."Document Type", SOLineInOtherCompany."Document No.", OtherCompanyName);
     end;
 
     local procedure AddICPurchaseOrderToTempList(HeaderNo: Code[20]; OtherCompanyName: text[35]; var TempPOList: Record "Purchase Header" temporary)
@@ -428,5 +435,54 @@ codeunit 50057 "IC Event Handler"
                 SalesShipHeader.Modify(false);
             end;
         end;
+    end;
+
+    local procedure UpdateFreightOnShipmentOnSalesOrdreInOtherCompany(DocTypeOtherCompany: integer; DocNoOtherCompany: code[20]; OtherCompanyName: text[35])
+    var
+        SOLineInOtherCompany: record "Sales Line";
+        Salesreceive: record "Sales & Receivables Setup";
+    begin
+        Salesreceive.ChangeCompany(OtherCompanyName);
+        if not Salesreceive.get then
+            exit;
+        SOLineInOtherCompany.ChangeCompany(OtherCompanyName);
+        SOLineInOtherCompany.SetRange("Document Type", DocTypeOtherCompany);
+        SOLineInOtherCompany.SetRange("Document No.", DocNoOtherCompany);
+        SOLineInOtherCompany.setrange("No.", Salesreceive."Freight Item");
+        if SOLineInOtherCompany.FindSet() then begin
+            repeat
+                if SOLineInOtherCompany.Quantity <> SOLineInOtherCompany."Qty. Shipped (Base)" then begin
+                    SOLineInOtherCompany."Qty. to Ship" := SOLineInOtherCompany.Quantity;
+                    SOLineInOtherCompany."Qty. to Ship (Base)" := SOLineInOtherCompany.Quantity;
+                    SOLineInOtherCompany."Qty. to Invoice" := 0;
+                    SOLineInOtherCompany."Qty. to Invoice (Base)" := 0;
+                    SOLineInOtherCompany.Modify(false);
+                end;
+            until SOLineInOtherCompany.next = 0;
+        end;
+    end;
+
+    local procedure UpdateFreightOnInvoiceInOtherCompany(DocTypeOtherCompany: integer; DocNoOtherCompany: code[20]; OtherCompanyName: text[35])
+    var
+        SOLineInOtherCompany: record "Sales Line";
+        Salesreceive: record "Sales & Receivables Setup";
+    begin
+        Salesreceive.ChangeCompany(OtherCompanyName);
+        if not Salesreceive.get then
+            exit;
+        SOLineInOtherCompany.ChangeCompany(OtherCompanyName);
+        SOLineInOtherCompany.SetRange("Document Type", DocTypeOtherCompany);
+        SOLineInOtherCompany.SetRange("Document No.", DocNoOtherCompany);
+        SOLineInOtherCompany.setrange("No.", Salesreceive."Freight Item");
+        if SOLineInOtherCompany.FindSet() then begin
+            repeat
+                if SOLineInOtherCompany.Quantity <> SOLineInOtherCompany."Qty. Invoiced (Base)" then begin
+                    SOLineInOtherCompany."Qty. to Invoice" := SOLineInOtherCompany.Quantity;
+                    SOLineInOtherCompany."Qty. to Invoice (Base)" := SOLineInOtherCompany.Quantity;
+                    SOLineInOtherCompany.Modify(false);
+                end;
+            until SOLineInOtherCompany.next = 0;
+        end;
+
     end;
 }
