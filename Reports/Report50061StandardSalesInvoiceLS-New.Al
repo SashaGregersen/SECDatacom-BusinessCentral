@@ -1804,7 +1804,7 @@ report 50061 "SEC - Sales Invoice LS-New"
     end;
     //<<NC
 
-    //NC (ACA) Serial No. 
+    //NC ACA added Serial No. 
     local procedure GetSerialLotNo();
     VAR
         ItemTrackingMgt: Codeunit "Item Tracing Mgt.";
@@ -1858,10 +1858,10 @@ report 50061 "SEC - Sales Invoice LS-New"
                     TempSalesInvoiceLine."Description 2" :=
                       COPYSTR(COPYSTR(SerialLot, SpacePointer + 1), 1, MAXSTRLEN(TempSalesInvoiceLine."Description 2"));
                 END;
-                SerialNo += TempSalesInvoiceLine.Description + '  ||  ';
+                SerialNo += TempSalesInvoiceLine.Description + '  |  ';
                 TempSalesInvoiceLine.INSERT;
             UNTIL TempItemLedgEntry.NEXT = 0;
     END;
 
-    //<< Aca
+    //<<NC Aca
 }

@@ -138,6 +138,7 @@ report 50065 "Update TST & DEV after restor"
                                 SalesSetup."OIOUBL-Fin. Chrg. Memo Path" := '';
                                 SalesSetup."Cygate Customer No." := '';
                                 SalesSetup."Cygate Endpoint" := '';
+                                SalesSetup."Consignor Path" := '';
                                 SalesSetup.MODIFY;
 
                             End;
@@ -199,6 +200,10 @@ report 50065 "Update TST & DEV after restor"
                             if DocumentOutputSMTPSetup.Get then
                                 DocumentOutputSMTPSetup.DeleteAll;
 
+                            //SMTP MAIL SETUP IN NAVTEST
+                            SMTPMailSetup.ChangeCompany(Company.Name);
+                            if SMTPMailSetup.Get then
+                                SMTPMailSetup.DeleteAll;
                             //PAYMENT MANGEMENT IN NAVDEV
                             /*
                              PaymentSetup.ChangeCompany(Company.Name);
@@ -279,6 +284,7 @@ report 50065 "Update TST & DEV after restor"
                                 SalesSetup."OIOUBL-Fin. Chrg. Memo Path" := '';
                                 SalesSetup."Cygate Customer No." := '';
                                 SalesSetup."Cygate Endpoint" := '';
+                                SalesSetup."Consignor Path" := '';
                                 SalesSetup.MODIFY;
 
                             End;
