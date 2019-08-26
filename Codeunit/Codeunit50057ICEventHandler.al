@@ -2,6 +2,7 @@ codeunit 50057 "IC Event Handler"
 {
     SingleInstance = true;
     EventSubscriberInstance = StaticAutomatic;
+    Permissions = tabledata 110 = m;
 
     [EventSubscriber(ObjectType::Codeunit, codeunit::ICInboxOutboxMgt, 'OnAfterCreateSalesLines', '', true, true)]
     local procedure OnAfterCreateSalesLinesICIOMgt(ICInboxSalesLine: Record "IC Inbox Sales Line"; var SalesLine: Record "Sales Line")
