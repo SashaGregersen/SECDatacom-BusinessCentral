@@ -203,20 +203,10 @@ xmlport 50001 "Price File Export CSV"
                             if DimensionValue2."Exclude from Price file" then
                                 currXMLport.skip;
 
-                    CostDec := 0;
-
-                    if ItemExportMgt.FindPurchasePrice(PurchasePrice, Item) then
-                        if PurchasePrice."Currency Code" = CurrencyFilter then
-                            CostDec := PurchasePrice."Direct Unit Cost"
-                        else begin
-                            CurrencyFactor := CurrencyExchRate.GetCurrentCurrencyFactor(PurchasePrice."Currency Code");
-                            if CurrencyFilter = '' then
-                                CostDec := CurrencyExchRate.ExchangeAmtFCYToLCY(WorkDate(), PurchasePrice."Currency Code", PurchasePrice."Direct Unit Cost", CurrencyFactor)
-                            else
-                                CostDec := CurrencyExchRate.ExchangeAmtFCYToFCY(WorkDate(), PurchasePrice."Currency Code", CurrencyFilter, PurchasePrice."Direct Unit Cost");
-                        end;
-
-                    ListPriceDec := ItemExportMgt.FindItemPriceForCustomer(Item."No.", CustomerNo, CurrencyFilter);
+                    CostDec := ItemExportMgt.FindItemPriceForCustomer(Item."No.", CustomerNo, CurrencyFilter);
+                    if CostDec = 0 then
+                        currXMLport.Skip();
+                    ListPriceDec := ItemExportMgt.GetlistPrice(Item."No.", CurrencyFilter);
                     if ListPriceDec = 0 then
                         currXMLport.Skip();
 

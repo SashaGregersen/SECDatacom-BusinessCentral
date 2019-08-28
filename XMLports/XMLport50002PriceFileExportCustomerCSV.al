@@ -205,27 +205,9 @@ xmlport 50002 "Price File Export Customer CSV"
                     CostDec := 0;
 
                     CostDec := ItemExportMgt.FindItemPriceForCustomer(Item."No.", CustomerNo, CurrencyFilter);
-                    /* if ItemExportMgt.FindPurchasePrice(PurchasePrice, Item) then
-                        if PurchasePrice."Currency Code" = CurrencyFilter then
-                            CostDec := PurchasePrice."Direct Unit Cost"
-                        else begin
-                            CurrencyFactor := CurrencyExchRate.GetCurrentCurrencyFactor(PurchasePrice."Currency Code");
-                            if CurrencyFilter = '' then
-                                CostDec := CurrencyExchRate.ExchangeAmtFCYToLCY(WorkDate(), PurchasePrice."Currency Code", PurchasePrice."Direct Unit Cost", CurrencyFactor)
-                            else
-                                CostDec := CurrencyExchRate.ExchangeAmtFCYToFCY(WorkDate(), PurchasePrice."Currency Code", CurrencyFilter, PurchasePrice."Direct Unit Cost");
-                        end; */
-                    salesprice.Reset();
-                    salesprice.ClearMarks();
-                    if AdvPriceMgt.FindListPriceForitem(item."No.", CurrencyFilter, salesprice) then
-                        ListPriceDec := salesprice."Unit Price"
-                    else begin
-                        if AdvPriceMgt.FindCostMarkupPrice(item."No.", CurrencyFilter, salesprice) then
-                            ListPriceDec := salesprice."Unit Price"
-                        else
-                            ListPriceDec := 0;
-                    end;
-
+                    if CostDec = 0 then
+                        currXMLport.Skip();
+                    ListPriceDec := ItemExportMgt.GetlistPrice(Item."No.", CurrencyFilter);
                     if ListPriceDec = 0 then
                         currXMLport.Skip();
 

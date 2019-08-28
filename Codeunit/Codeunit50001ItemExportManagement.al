@@ -54,4 +54,21 @@ codeunit 50001 "Item Export Management"
         exit(PurchPrice.FindFirst);
     end;
 
+    procedure GetlistPrice(ItemNo: Code[20]; CurrencyFilter: Text): Decimal
+    var
+        SalesPrice: Record "Sales Price";
+        AdvPriceMgt: Codeunit "Advanced Price Management";
+    begin
+        salesprice.Reset();
+        salesprice.ClearMarks();
+        if AdvPriceMgt.FindListPriceForitem(ItemNo, CurrencyFilter, salesprice) then
+            exit(salesprice."Unit Price")
+        else begin
+            if AdvPriceMgt.FindCostMarkupPrice(ItemNo, CurrencyFilter, salesprice) then
+                exit(salesprice."Unit Price")
+            else
+                exit(0);
+        end;
+    end;
+
 }
