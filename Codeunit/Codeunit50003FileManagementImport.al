@@ -206,8 +206,13 @@ codeunit 50003 "File Management Import"
         TempCSVBufferGlobalDim1: Record "CSV Buffer" temporary;
         TempCSVBufferDescription: Record "CSV Buffer" temporary;
         ImportTypeDiff: Integer;
+        DefaultDimension: Record "Default Dimension";
+        GLSetup: Record "General Ledger Setup";
     begin
-        if not SalesSetup.Get then exit;
+        if not SalesSetup.Get() then
+            Error('You have to set up the Sales&receivables setup');
+        if not GLSetup.Get() then
+            Error('You have to set up the General Ledger setup');
 
         if ImportType = ImportType::LinesImport then
             ImportTypeDiff := 5;
@@ -288,8 +293,14 @@ codeunit 50003 "File Management Import"
                         if TempCSVBufferGlobalDim1.Value <> '' then begin
                             Item.Validate("Global Dimension 1 Code", TempCSVBufferGlobalDim1.Value);
                             Item.Modify(true);
+                        end else begin
+                            if DefaultDim.Get(Database::Item, GLSetup."Global Dimension 1 Code", Item."No.") then begin
+                                Item.Validate("Global Dimension 1 Code", DefaultDim."Dimension Value Code");
+                                Item.Modify(true);
+                            end;
                         end;
                     end;
+
                     TempCSVBufferDescription.SetRange("Line No.", TempCSVBuffer."Line No.");
                     if TempCSVBufferDescription.FindFirst() then begin
                         if TempCSVBufferDescription.Value <> '' then begin
