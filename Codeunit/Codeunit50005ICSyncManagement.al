@@ -272,6 +272,22 @@ codeunit 50005 "IC Sync Management"
             until CompanyTemp.Next() = 0;
     end;
 
+    procedure DeleteDefaultDimInOtherCompanies(DefaultDim: Record "Default Dimension")
+
+    var
+        CompanyTemp: Record Company temporary;
+        SessionID: Integer;
+    begin
+        GetCompaniesToSyncTo(CompanyTemp);
+        if CompanyTemp.Count() = 0 then
+            exit;
+        if CompanyTemp.FindSet() then
+            repeat
+                SessionID := RunDeleteDefaultDimInOtherCompany(DefaultDim, CompanyTemp.Name);
+                CheckSessionForTimeoutAndError(SessionID, 5, CompanyTemp.Name);
+            until CompanyTemp.Next() = 0;
+    end;
+
     procedure InsertModifyItemTranslationInOtherCompanies(ItemTrans: Record "Item Translation")
 
     var
@@ -499,6 +515,17 @@ codeunit 50005 "IC Sync Management"
         SessionEventComment: Text;
     begin
         OK := StartSession(SessionID, 50015, RunInCompany, DefaultDim);
+        if not OK then
+            Error(GetLastErrorText());
+        Commit();
+    end;
+
+    local procedure RunDeleteDefaultDimInOtherCompany(DefaultDim: record "Default Dimension"; RunInCompany: Text) SessionID: Integer
+    var
+        OK: Boolean;
+        SessionEventComment: Text;
+    begin
+        OK := StartSession(SessionID, 50028, RunInCompany, DefaultDim);
         if not OK then
             Error(GetLastErrorText());
         Commit();

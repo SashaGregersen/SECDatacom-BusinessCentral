@@ -202,6 +202,20 @@ codeunit 50050 "Item Event handler"
         SyncMasterData.SynchronizeDefaultDimensionToCompany(Rec);
     end;
 
+    [EventSubscriber(ObjectType::table, database::"Default Dimension", 'OnAfterDeleteEvent', '', true, true)]
+    local procedure DefaultDimOnAfterDeleteEvent(var Rec: Record "Default Dimension"; runtrigger: Boolean)
+    var
+        SyncMasterData: Codeunit "Synchronize Master Data";
+    begin
+        if not runtrigger then
+            exit;
+        if rec.IsTemporary() then
+            exit;
+        if rec."Table ID" <> 27 then
+            exit;
+        SyncMasterData.SynchronizeDeleteDefaultDimensionToCompany(Rec);
+    end;
+
     [EventSubscriber(ObjectType::table, database::"Item Translation", 'OnAfterinsertEvent', '', true, true)]
     local procedure ItemTranslationOnAfterInsertEvent(var Rec: Record "Item Translation"; runtrigger: Boolean)
     var

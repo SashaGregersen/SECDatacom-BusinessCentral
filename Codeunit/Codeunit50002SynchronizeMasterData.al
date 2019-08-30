@@ -103,6 +103,13 @@ codeunit 50002 "Synchronize Master Data"
         ICSyncMgt.InsertModifyDefaultDimInOtherCompanies(DefaultDim);
     End;
 
+    procedure SynchronizeDeleteDefaultDimensionToCompany(DefaultDim: Record "Default Dimension")
+    var
+        ICSyncMgt: Codeunit "IC Sync Management";
+    begin
+        ICSyncMgt.DeleteDefaultDimInOtherCompanies(DefaultDim);
+    End;
+
     procedure SynchronizeItemTranslationToCompany(ItemTrans: Record "Item Translation")
     var
         ICSyncMgt: Codeunit "IC Sync Management";

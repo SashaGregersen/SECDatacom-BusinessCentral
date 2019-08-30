@@ -25,6 +25,10 @@ page 50001 "Bid Prices"
                 {
                     ApplicationArea = all;
                 }
+                field("Vendor Item No."; "Vendor Item No.")
+                {
+                    ApplicationArea = all;
+                }
                 field("Customer No."; "Customer No.")
                 {
                     ApplicationArea = alL;
@@ -91,7 +95,34 @@ page 50001 "Bid Prices"
                     Message('Bid No. %1 created', Bid."No.");
                 end;
             }
+            //>>NC 
+            //Funktion til opdatering af Vendor Item No. efter tilføjet nyt felt.
+            action(UpdateVendorItemNumber)
+            {
+                Caption = 'Update Vendor Item No.';
+                ToolTip = 'Only used 1 time for updating legacy data with Vendor Item No.';
 
+                Image = NewItem;
+
+                trigger OnAction();
+                var
+                    BidPrices: Record "Bid Item Price";
+                    item: Record Item;
+                begin
+                    BidPrices.SetFilter("item No.", '<>%1', '''');
+                    If BidPrices.FindSet then begin
+                        repeat
+                            if item.get(BidPrices."item No.") then begin
+                                BidPrices."Vendor Item No." := item."Vendor Item No.";
+                                BidPrices.Modify();
+                            end;
+                        until bidprices.Next = 0;
+                    end;
+                    Message('Updated' + Format(BidPrices.Count()) + ' bid prices w. vendor item no.');
+
+                end;
+                //<<NC
+            }
         }
     }
 

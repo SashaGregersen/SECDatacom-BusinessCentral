@@ -18,6 +18,17 @@ codeunit 50052 "Customer Event Handler"
         end;
     end;
 
+    [EventSubscriber(ObjectType::Table, database::"Customer Price Group", 'OnAfterRenameEvent', '', true, true)]
+    local procedure CustomerPriceGroupOnAfterRename(var Rec: Record "Customer Price Group"; var xRec: Record "Customer Price Group"; Runtrigger: Boolean)
+    var
+        CustomerDiscountGroup: Record "Customer Discount Group";
+    begin
+        if not Runtrigger then
+            exit;
+        If CustomerDiscountGroup.Get(xRec.Code) then
+            CustomerDiscountGroup.Rename(Rec.Code)
+    end;
+
     [EventSubscriber(ObjectType::Table, database::"Customer Discount Group", 'OnAfterInsertEvent', '', true, true)]
     local procedure CustomerDiscountGroupOnAfterinsert(var Rec: Record "Customer Discount Group"; RunTrigger: Boolean)
     var
@@ -32,6 +43,17 @@ codeunit 50052 "Customer Event Handler"
             CustomerPriceGroup."Allow Line Disc." := false;
             CustomerPriceGroup.Insert(false);
         end;
+    end;
+
+    [EventSubscriber(ObjectType::Table, database::"Customer Discount Group", 'OnAfterRenameEvent', '', true, true)]
+    local procedure CustomerDiscountGroupOnAfterRename(var Rec: Record "Customer Discount Group"; xRec: record "Customer Discount Group"; RunTrigger: Boolean)
+    var
+        CustomerPriceGroup: Record "Customer Price Group";
+    begin
+        if not Runtrigger then
+            exit;
+        If CustomerpriceGroup.Get(xRec.Code) then
+            CustomerPriceGroup.Rename(rec.Code)
     end;
 
     [EventSubscriber(ObjectType::Table, database::"Sales Header", 'OnAfterCopySellToCustomerAddressFieldsFromCustomer', '', true, true)]
