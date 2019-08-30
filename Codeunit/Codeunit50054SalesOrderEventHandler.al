@@ -1285,6 +1285,7 @@ codeunit 50054 "Sales Order Event Handler"
         end;
     end;
 
+    /*
     [EventSubscriber(ObjectType::Codeunit, codeunit::"Whse.-Activity-Post", 'OnBeforeUpdateSourceDocument', '', true, true)]
     local procedure OnBeforeUpdateSourceDocumentEvent(var TempWhseActivLine: Record "Warehouse Activity Line")
     var
@@ -1340,6 +1341,7 @@ codeunit 50054 "Sales Order Event Handler"
             end;
         end;
     end;
+    */
 
     local procedure FindLastLineNo(WhseActivLine: record "Warehouse Activity Line"): Integer
     begin
