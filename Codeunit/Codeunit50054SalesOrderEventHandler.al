@@ -1285,7 +1285,7 @@ codeunit 50054 "Sales Order Event Handler"
         end;
     end;
 
-    /*
+
     [EventSubscriber(ObjectType::Codeunit, codeunit::"Whse.-Activity-Post", 'OnBeforeUpdateSourceDocument', '', true, true)]
     local procedure OnBeforeUpdateSourceDocumentEvent(var TempWhseActivLine: Record "Warehouse Activity Line")
     var
@@ -1313,6 +1313,7 @@ codeunit 50054 "Sales Order Event Handler"
                     SourceSubtype := TempWhseActivLine."Source Subtype";
                     SourceNo := TempWhseActivLine."Source No.";
                     SourceType := TempWhseActivLine."Source Type";
+                    WhseActivLineTEMP := TempWhseActivLine;
                     TempWhseActivLine.Init();
                     TempWhseActivLine."Activity Type" := AcitivityType;
                     TempWhseActivLine."No." := ActivityNo;
@@ -1332,16 +1333,15 @@ codeunit 50054 "Sales Order Event Handler"
                     TempWhseActivLine."Qty. per Unit of Measure" := 1;
                     TempWhseActivLine."Qty. to Handle" := SalesLine."Outstanding Quantity";
                     TempWhseActivLine."Qty. to Handle (Base)" := SalesLine."Outstanding Quantity";
-                    if TempWhseActivLine.Insert() then begin
-                        TempWhseActivLine.RESET;
-                        TempWhseActivLine.FIND('-');
-                    end;
-
+                    if TempWhseActivLine.Insert() then;
+                    TempWhseActivLine := WhseActivLineTEMP;
                 end;
+
             end;
         end;
     end;
-    */
+
+
 
     local procedure FindLastLineNo(WhseActivLine: record "Warehouse Activity Line"): Integer
     begin
