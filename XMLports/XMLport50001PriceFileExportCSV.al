@@ -206,7 +206,7 @@ xmlport 50001 "Price File Export CSV"
                     CostDec := ItemExportMgt.FindItemPriceForCustomer(Item."No.", CustomerNo, CurrencyFilter);
                     if CostDec = 0 then
                         currXMLport.Skip();
-                    ListPriceDec := ItemExportMgt.GetlistPrice(Item."No.", CurrencyFilter);
+                    ListPriceDec := ItemExportMgt.FindSECPurchasePrice(Item."No.", CurrencyFilter);
                     if ListPriceDec = 0 then
                         currXMLport.Skip();
 
