@@ -18,17 +18,14 @@ report 50003 "Price File Export Webshop"
                 ItemNo: code[20];
             begin
                 if customer."No." = '' then
-                    Error('You cannot run the report without selecting a customer')
-                else begin
-                    PriceExportCSV.SetCustomerFilter(customer);
-                    PriceExportXML.SetCustomerFilter(customer);
-                end;
+                    Error('You cannot run the report without selecting a customer');
 
-                PriceExportCSV.SetCurrencyFilter(currency.Code);
-                PriceExportXML.SetCurrencyFilter(currency.Code);
+                Filelocation := createfilelocationpath(ExportCSV, false);
+                FinalFilelocation := CreateFileLocationPath(ExportCSV, true);
 
                 IF ExportCSV = true then begin
-                    Filelocation := createfilelocationpath(true);
+                    PriceExportCSV.SetCustomerFilter(customer);
+                    PriceExportCSV.SetCurrencyFilter(currency.Code);
                     PriceExportCSV.SetTableView(Item);
                     PriceXmlFile.CREATE(Filelocation);
                     PriceXmlFile.CREATEOUTSTREAM(XmlStream);
@@ -36,7 +33,8 @@ report 50003 "Price File Export Webshop"
                     PriceExportCSV.export;
                     PriceXmlFile.CLOSE;
                 end else begin
-                    Filelocation := createfilelocationpath(false);
+                    PriceExportXML.SetCustomerFilter(customer);
+                    PriceExportXML.SetCurrencyFilter(currency.Code);
                     PriceExportxml.SetTableView(Item);
                     PriceXmlFile.CREATE(Filelocation);
                     PriceXmlFile.CREATEOUTSTREAM(XmlStream);
@@ -45,6 +43,8 @@ report 50003 "Price File Export Webshop"
                     PriceXmlFile.CLOSE;
                 end;
 
+                if File.Copy(Filelocation, FinalFileLocation) then
+                    File.Erase(Filelocation)
             end;
 
             trigger OnAfterGetRecord()
@@ -58,7 +58,7 @@ report 50003 "Price File Export Webshop"
             var
 
             begin
-                Message('Price File Exported to %1', Filelocation);
+                Message('Price File Exported to %1', FinalFilelocation);
             end;
         }
     }
@@ -102,23 +102,36 @@ report 50003 "Price File Export Webshop"
     var
         customer: record customer;
         Filelocation: text;
+        FinalFilelocation: text;
         ExportCSV: Boolean;
         currency: record Currency;
 
-    procedure CreateFileLocationPath(FormatCSV: Boolean) Filelocation: Text
+    procedure CreateFileLocationPath(FormatCSV: Boolean; CreateFinalLocation: Boolean) Filelocation: Text
     var
         CurrDate: text;
         InvtSetup: record "Inventory Setup";
     begin
         InvtSetup.Get();
-        if (InvtSetup."Price file location 2" = '') then
-            Error('Webshop Price File Location is missing in Inventory Setup');
-        if FormatCSV = true then begin
-            FormatCurrentDateTime(CurrDate);
-            Filelocation := InvtSetup."Price file location 2" + '\Pricelist-' + '' + CurrDate + '-' + customer."No." + '' + '.csv';
+        if CreateFinalLocation then begin
+            if (InvtSetup."Webshop Price file location" = '') then
+                Error('Webshop Price File Location is missing in Inventory Setup');
+            if FormatCSV = true then begin
+                FormatCurrentDateTime(CurrDate);
+                Filelocation := InvtSetup."Webshop Price file location" + '\Pricelist-' + '' + CurrDate + '-' + customer."No." + '' + '.csv';
+            end else begin
+                FormatCurrentDateTime(CurrDate);
+                Filelocation := InvtSetup."Webshop Price file location" + '\Pricelist-' + '' + CurrDate + '-' + customer."No." + '' + '.xml';
+            end;
         end else begin
-            FormatCurrentDateTime(CurrDate);
-            Filelocation := InvtSetup."Price file location 2" + '\Pricelist-' + '' + CurrDate + '-' + customer."No." + '' + '.xml';
+            if (InvtSetup."Webshop file temp location" = '') then
+                Error('Webshop Price File Location is missing in Inventory Setup');
+            if FormatCSV = true then begin
+                FormatCurrentDateTime(CurrDate);
+                Filelocation := InvtSetup."Webshop file temp location" + '\Pricelist-' + '' + CurrDate + '-' + customer."No." + '' + '.csv';
+            end else begin
+                FormatCurrentDateTime(CurrDate);
+                Filelocation := InvtSetup."Webshop file temp location" + '\Pricelist-' + '' + CurrDate + '-' + customer."No." + '' + '.xml';
+            end;
         end;
     end;
 

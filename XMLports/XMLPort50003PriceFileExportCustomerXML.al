@@ -37,12 +37,12 @@ xmlport 50003 "Price File Export Customer XML"
                             Currency := CurrencyFilter;
                     end;
                 }
-                Textelement(Cost)
+                Textelement(CustomerPrice)
                 {
                     trigger OnBeforePassVariable()
                     begin
-                        CostDec := Round(CostDec, 0.01);
-                        cost := format(CostDec, 0, 1);
+                        CustomerPriceDec := Round(CustomerPriceDec, 0.01);
+                        CustomerPrice := format(CustomerPriceDec, 0, 1);
                     end;
                 }
                 textelement(List_Price)
@@ -92,9 +92,9 @@ xmlport 50003 "Price File Export Customer XML"
                     CurrencyFactor: Decimal;
                     AdvPriceMgt: codeunit "Advanced Price Management";
                 begin
-                    clear(Cost);
+                    clear(CustomerPrice);
                     Clear(List_Price);
-                    Clear(CostDec);
+                    Clear(CustomerPriceDec);
                     Clear(ListPriceDec);
                     Clear(Maincategory);
                     Clear(Subcategory);
@@ -108,14 +108,12 @@ xmlport 50003 "Price File Export Customer XML"
                             if DimensionValue2."Exclude from Price file" then
                                 currXMLport.skip;
 
-                    CostDec := 0;
+                    CustomerPriceDec := 0;
 
-                    CostDec := ItemExportMgt.FindItemPriceForCustomer(Item."No.", CustomerNo, CurrencyFilter);
-                    if CostDec = 0 then
+                    CustomerPriceDec := ItemExportMgt.FindItemPriceForCustomer(Item."No.", CustomerNo, CurrencyFilter);
+                    if CustomerPriceDec = 0 then
                         currXMLport.Skip();
                     ListPriceDec := ItemExportMgt.GetlistPrice(Item."No.", CurrencyFilter);
-                    if ListPriceDec = 0 then
-                        currXMLport.Skip();
 
                     if ItemCategory.Get(Item."Item Category Code") then begin
                         if ItemCategory."Overwrite Quantity" then
@@ -174,7 +172,7 @@ xmlport 50003 "Price File Export Customer XML"
         salesprice: record "Sales Price";
         PurchasePrice: record "Purchase Price";
         GLSetup: record "General Ledger Setup";
-        CostDec: decimal;
+        CustomerPriceDec: decimal;
         ListPriceDec: Decimal;
 
     procedure SetCurrencyFilter(NewCurrencyFilter: Text)

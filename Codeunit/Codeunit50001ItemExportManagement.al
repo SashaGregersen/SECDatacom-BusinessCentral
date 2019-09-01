@@ -43,15 +43,21 @@ codeunit 50001 "Item Export Management"
         end;
     end;
 
-    procedure FindPurchasePrice(var PurchPrice: record "Purchase Price"; item: record Item): Boolean
+    procedure FindSECPurchasePrice(ItemNo: Code[20]; CurrencyCode: Code[10]): Decimal
+    var
+        AdvPricemgt: Codeunit "Advanced Price Management";
+        PurchPrice: record "Purchase Price";
+        Item: Record Item;
+        ExchRate: Record "Currency Exchange Rate";
     begin
-        PurchPrice.setrange("Vendor No.", Item."Vendor No.");
-        PurchPrice.setrange("Item No.", Item."No.");
-        PurchPrice.setrange("Unit of Measure Code", item."Base Unit of Measure");
-        PurchPrice.setrange("Currency Code", item."Vendor Currency");
-        PurchPrice.SetRange("Ending Date", 0D);
-        PurchPrice.SetFilter("Starting Date", '%1|<%2', WorkDate(), WorkDate());
-        exit(PurchPrice.FindFirst);
+        if not Item.Get(ItemNo) then
+            exit(0);
+        if not AdvPricemgt.FindBestPurchasePrice(ItemNo, Item."Vendor No.", CurrencyCode, '', PurchPrice) then
+            exit(0);
+        if PurchPrice."Currency Code" = CurrencyCode then
+            exit(PurchPrice."Direct Unit Cost")
+        else
+            exit(ExchRate.ExchangeAmount(PurchPrice."Direct Unit Cost", PurchPrice."Currency Code", CurrencyCode, WorkDate()));
     end;
 
     procedure GetlistPrice(ItemNo: Code[20]; CurrencyFilter: Text): Decimal

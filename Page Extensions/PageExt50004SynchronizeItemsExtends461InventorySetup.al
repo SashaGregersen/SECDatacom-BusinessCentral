@@ -19,11 +19,19 @@ pageextension 50004 "Synchronize items" extends "Inventory Setup"
 
         addafter("Default Costing Method")
         {
-            field("Price file location"; "Price file location")
+            field("Price file location"; "Customer Price file location")
             {
                 ApplicationArea = all;
             }
-            field("Price file location 2"; "Price file location 2")
+            field("Price file location 2"; "Webshop Price file location")
+            {
+                ApplicationArea = all;
+            }
+            field("Price file location 3"; "Customer Price file temp loc.")
+            {
+                ApplicationArea = all;
+            }
+            field("Price file location 4"; "Webshop file temp location")
             {
                 ApplicationArea = all;
             }
