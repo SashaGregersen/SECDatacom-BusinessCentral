@@ -113,14 +113,14 @@ report 50003 "Price File Export Webshop"
     begin
         InvtSetup.Get();
         if CreateFinalLocation then begin
-            if (InvtSetup."Webshop Price file location" = '') then
+            if (InvtSetup."Price file location 2" = '') then
                 Error('Webshop Price File Location is missing in Inventory Setup');
             if FormatCSV = true then begin
                 FormatCurrentDateTime(CurrDate);
-                Filelocation := InvtSetup."Webshop Price file location" + '\Pricelist-' + '' + CurrDate + '-' + customer."No." + '' + '.csv';
+                Filelocation := InvtSetup."Price file location 2" + '\Pricelist-' + '' + CurrDate + '-' + customer."No." + '' + '.csv';
             end else begin
                 FormatCurrentDateTime(CurrDate);
-                Filelocation := InvtSetup."Webshop Price file location" + '\Pricelist-' + '' + CurrDate + '-' + customer."No." + '' + '.xml';
+                Filelocation := InvtSetup."Price file location 2" + '\Pricelist-' + '' + CurrDate + '-' + customer."No." + '' + '.xml';
             end;
         end else begin
             if (InvtSetup."Webshop file temp location" = '') then

@@ -113,14 +113,14 @@ report 50025 "Price File Export Customer"
     begin
         InvtSetup.Get();
         if CreateFinalLocation then begin
-            if (InvtSetup."Customer Price file location" = '') then
+            if (InvtSetup."Price file location" = '') then
                 Error('Customer Price File Location is missing in Inventory Setup');
             if FormatCSV = true then begin
                 FormatCurrentDateTime(CurrDate);
-                Filelocation := InvtSetup."Customer Price file location" + '\Pricelist-' + '' + CurrDate + '-' + customer."No." + '' + '.csv';
+                Filelocation := InvtSetup."Price file location" + '\Pricelist-' + '' + CurrDate + '-' + customer."No." + '' + '.csv';
             end else begin
                 FormatCurrentDateTime(CurrDate);
-                Filelocation := InvtSetup."Customer Price file location" + '\Pricelist-' + '' + CurrDate + '-' + customer."No." + '' + '.xml';
+                Filelocation := InvtSetup."Price file location" + '\Pricelist-' + '' + CurrDate + '-' + customer."No." + '' + '.xml';
             end;
         end else begin
             if (InvtSetup."Customer Price file temp loc." = '') then

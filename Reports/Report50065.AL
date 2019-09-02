@@ -146,9 +146,9 @@ report 50065 "Update TST & DEV after restor"
                             //UPDATE SALES SETUP IN NAVDEV
                             InventorySetup.ChangeCompany(company.Name);
                             if InventorySetup.Get then begin
-                                InventorySetup."Customer Price file location" := '';
+                                InventorySetup."Price file location" := '';
                                 InventorySetup."Customer Price file temp loc." := '';
-                                InventorySetup."Webshop Price file location" := '';
+                                InventorySetup."Price file location 2" := '';
                                 InventorySetup."Webshop file temp location" := '';
                             end;
                         end;
@@ -295,9 +295,9 @@ report 50065 "Update TST & DEV after restor"
                             //UPDATE MANUALLY IN BUSINESS CENTRAL SINCE FIELDS ARE OBSOLETE AND MOVED TO EXTENSION.
                             InventorySetup.ChangeCompany(company.Name);
                             if InventorySetup.Get then begin
-                                InventorySetup."Customer Price file location" := '';
+                                InventorySetup."Price file location" := '';
                                 InventorySetup."Customer Price file temp loc." := '';
-                                InventorySetup."Webshop Price file location" := '';
+                                InventorySetup."Price file location 2" := '';
                                 InventorySetup."Webshop file temp location" := '';
                             end;
                         end;
