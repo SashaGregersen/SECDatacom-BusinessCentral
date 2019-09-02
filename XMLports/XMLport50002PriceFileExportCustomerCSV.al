@@ -207,7 +207,7 @@ xmlport 50002 "Price File Export Customer CSV"
                     CustomerPriceDec := ItemExportMgt.FindItemPriceForCustomer(Item."No.", CustomerNo, CurrencyFilter);
                     if CustomerPriceDec = 0 then
                         currXMLport.Skip();
-                    ListPriceDec := ItemExportMgt.GetlistPrice(Item."No.", CurrencyFilter);
+                    ListPriceDec := ItemExportMgt.GetlistPrice(Item."No.", CurrencyFilter, false);
 
                     if ItemCategory.Get(Item."Item Category Code") then begin
                         if ItemCategory."Overwrite Quantity" then

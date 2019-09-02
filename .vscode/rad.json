@@ -1,1 +1,1 @@
-﻿{"Added":[],"Modified":[],"Removed":[]}
+﻿{"Added":[],"Modified":[{"Id":50025,"Kind":13,"Name":"Price File Export Customer","PackagePath":"/src/Reports/Report50025PriceFileExportCustomer.al"},{"Id":50001,"Kind":15,"Name":"Price File Export CSV","PackagePath":"/src/XMLports/XMLport50001PriceFileExportCSV.al"},{"Id":50003,"Kind":13,"Name":"Price File Export Webshop","PackagePath":"/src/Reports/Report50003PriceFileExport.al"}],"Removed":[]}

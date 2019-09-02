@@ -60,7 +60,7 @@ codeunit 50001 "Item Export Management"
             exit(ExchRate.ExchangeAmount(PurchPrice."Direct Unit Cost", PurchPrice."Currency Code", CurrencyCode, WorkDate()));
     end;
 
-    procedure GetlistPrice(ItemNo: Code[20]; CurrencyFilter: Text): Decimal
+    procedure GetlistPrice(ItemNo: Code[20]; CurrencyFilter: Text; UseMarkupAsListPrice: Boolean): Decimal
     var
         SalesPrice: Record "Sales Price";
         AdvPriceMgt: Codeunit "Advanced Price Management";
@@ -70,9 +70,12 @@ codeunit 50001 "Item Export Management"
         if AdvPriceMgt.FindListPriceForitem(ItemNo, CurrencyFilter, salesprice) then
             exit(salesprice."Unit Price")
         else begin
-            if AdvPriceMgt.FindCostMarkupPrice(ItemNo, CurrencyFilter, salesprice) then
-                exit(salesprice."Unit Price")
-            else
+            if UseMarkupAsListPrice then begin
+                if AdvPriceMgt.FindCostMarkupPrice(ItemNo, CurrencyFilter, salesprice) then
+                    exit(salesprice."Unit Price")
+                else
+                    exit(0);
+            end else
                 exit(0);
         end;
     end;
