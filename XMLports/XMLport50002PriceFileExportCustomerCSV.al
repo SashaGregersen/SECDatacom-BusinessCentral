@@ -146,11 +146,14 @@ xmlport 50002 "Price File Export Customer CSV"
                     begin
                         ListPriceDec := round(ListPriceDec, 0.01);
                         List_Price := Format(ListPriceDec, 0, 1);
+                        if List_Price = '0' then
+                            List_Price := '';
                     end;
 
                 }
                 fieldelement(Manufacturer; item."Global Dimension 1 Code")
                 {
+
                 }
                 textelement(Maincategory)
                 {

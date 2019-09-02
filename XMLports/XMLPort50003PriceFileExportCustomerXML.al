@@ -52,6 +52,8 @@ xmlport 50003 "Price File Export Customer XML"
                     begin
                         ListPriceDec := round(ListPriceDec, 0.01);
                         List_Price := Format(ListPriceDec, 0, 1);
+                        if List_Price = '0' then
+                            List_Price := '';
                     end;
 
                 }
