@@ -2269,10 +2269,10 @@
                                     <Width>3.8cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>10.4978cm</Width>
+                                    <Width>9.65449cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>1.53235cm</Width>
+                                    <Width>2.72124cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
                                     <Width>1.98011cm</Width>
@@ -2281,7 +2281,7 @@
                                     <Width>2.10838cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>2.48982cm</Width>
+                                    <Width>2.1194cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
                                     <Width>1.88543cm</Width>
@@ -2686,6 +2686,7 @@
                                       <TablixCell>
                                         <CellContents>
                                           <Textbox Name="Description_Line_2">
+                                            <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
@@ -3212,7 +3213,7 @@
                               <Top>5.8027cm</Top>
                               <Left>0.17395cm</Left>
                               <Height>1.61413cm</Height>
-                              <Width>27.46408cm</Width>
+                              <Width>27.43924cm</Width>
                               <ZIndex>1</ZIndex>
                               <Style>
                                 <Border>
