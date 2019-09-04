@@ -132,6 +132,36 @@ report 50054 "SEC Purchase Order-New.Al"
             column(EndCustomerArray8; EndCustomerArray[8])
             {
             }
+            column(ShipToArray1; ShipToArray[1])
+            {
+            }
+            column(ShipToArray2; ShipToArray[2])
+            {
+            }
+            column(ShipToArray3; ShipToArray[3])
+            {
+
+            }
+            column(ShipToArray4; ShipToArray[4])
+            {
+
+            }
+            column(ShipToArray5; ShipToArray[5])
+            {
+
+            }
+            column(ShipToArray6; ShipToArray[6])
+            {
+
+            }
+            column(ShipToArray7; ShipToArray[7])
+            {
+
+            }
+            column(ShipToArray8; ShipToArray[8])
+            {
+
+            }
             //NC added array
             column(Reseller_Lbl; FieldCaption("Reseller"))
             {
@@ -325,8 +355,23 @@ report 50054 "SEC Purchase Order-New.Al"
                     {
                     }
                     column(BuyFrmVendNo_PurchHeaderCaption; "Purchase Header".FieldCaption("Buy-from Vendor No."))
+
                     {
                     }
+                    //>> ACA NC
+                    column(VATNolbl; VATNolbl)
+                    {
+
+                    }
+                    column(PurchaseOrderLbl; PurchaseOrderLbl)
+                    {
+
+                    }
+                    column(Pagelbl; Pagelbl)
+                    {
+
+                    }
+                    //<<ACA NC
                     column(PricesInclVAT_PurchHeaderCaption; "Purchase Header".FieldCaption("Prices Including VAT"))
                     {
                     }
@@ -1072,7 +1117,7 @@ report 50054 "SEC Purchase Order-New.Al"
                     Clear(EndcustomerCountryRegion);
                     Clear(EndCustEmail);
                     Clear(EndCustPhone);
-                    Clear(EndCustName);
+                    Clear(EndCustContactName);
                 end;
 
                 //>>NC Arraylist
@@ -1081,10 +1126,22 @@ report 50054 "SEC Purchase Order-New.Al"
                 EndCustomerArray[3] := Endcustomer."Address 2";
                 EndCustomerArray[4] := Endcustomer."Post Code" + ' ' + Endcustomer.City;
                 EndCustomerArray[5] := EndcustomerCountryRegion.Name;
-                EndcustomerArray[6] := EndCustName;
+                EndcustomerArray[6] := EndCustContactName;
                 EndCustomerArray[7] := EndCustPhone;
                 EndCustomerArray[8] := EndCustEmail;
                 CompressArray(EndCustomerArray);
+
+                ShipToCountryRegion.Get("Ship-to Country/Region Code");
+                ShipToArray[1] := "Ship-to Name";
+                ShipToArray[2] := "Ship-to Address";
+                ShipToArray[3] := "Ship-to Address 2";
+                ShipToArray[4] := "Ship-to Post Code" + ' ' + "Ship-to City";
+                ShipToArray[5] := ShipToCountryRegion.Name;
+                ShipToarray[6] := location.Contact;
+                ShipToArray[7] := location."Phone No.";
+                ShipToArray[8] := location."E-Mail";
+                CompressArray(ShipToArray);
+
                 //<<NC Array
 
                 if "Reseller" <> '' then begin
@@ -1259,6 +1316,8 @@ report 50054 "SEC Purchase Order-New.Al"
         CompanyAddr: array[8] of Text[50];
         BuyFromAddr: array[8] of Text[50];
         EndCustomerArray: array[8] of Text[90]; //<< NC added array
+
+        ShipToArray: array[8] of Text[90];      //<< NC added array
         //NC >> added variable
         CustomerLocationContact: Text[100];
         CustomerLocationPhone: Text[100];
@@ -1306,7 +1365,7 @@ report 50054 "SEC Purchase Order-New.Al"
         TotalAmount: Decimal;
         TotalInvoiceDiscountAmount: Decimal;
         CompanyInfoPhoneNoCaptionLbl: Label 'Phone No.';
-        CompanyInfoVATRegNoCaptionLbl: Label 'VAT Registration No.';
+        CompanyInfoVATRegNoCaptionLbl: Label 'VAT No.';
         CompanyInfoGiroNoCaptionLbl: Label 'Giro No.';
         CompanyInfoBankNameCaptionLbl: Label 'Bank';
         CompanyInfoBankAccNoCaptionLbl: Label 'Account No.';
@@ -1343,6 +1402,9 @@ report 50054 "SEC Purchase Order-New.Al"
         EmailIDCaptionLbl: Label 'Email';
         AllowInvoiceDiscCaptionLbl: Label 'Allow Invoice Discount';
         BidNoLbl: Label 'Bid No.';
+        VATNolbl: Label 'VAT No.';
+        PurchaseOrderLbl: Label 'Purchase Order';
+        Pagelbl: label 'Page';
         PrepmtLoopLineNo: Integer;
         //>> NC Global Variables
         Endcustomer: Record Customer;
@@ -1356,6 +1418,7 @@ report 50054 "SEC Purchase Order-New.Al"
         EndCustContactName: text[100];
         EndCustName: text[100];
         Contact: record contact;
+        ShipToCountryRegion: Record "Country/Region";
         //<< NC
         TotalPrepmtLineAmount: Decimal;
         VARRec: Record "VAR";

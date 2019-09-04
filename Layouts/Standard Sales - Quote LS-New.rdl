@@ -2269,10 +2269,10 @@
                                     <Width>3.8cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>9.65449cm</Width>
+                                    <Width>9.46928cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>2.72124cm</Width>
+                                    <Width>2.90645cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
                                     <Width>1.98011cm</Width>
@@ -2721,6 +2721,7 @@
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
+                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell>
@@ -3961,7 +3962,6 @@
                             </Border>
                           </Style>
                         </Rectangle>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
