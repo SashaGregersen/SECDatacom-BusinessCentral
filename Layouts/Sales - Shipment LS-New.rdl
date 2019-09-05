@@ -1411,10 +1411,13 @@
                                             </Paragraphs>
                                             <ZIndex>33</ZIndex>
                                             <Visibility>
-                                              <Hidden>=IIF((Fields!Type_SalesShptLine.Value = "1") AND (NOT Fields!ShowInternalInfo.Value),True,False)</Hidden>
+                                              <Hidden>true</Hidden>
                                             </Visibility>
                                             <DataElementOutput>NoOutput</DataElementOutput>
                                             <Style>
+                                              <Border>
+                                                <Style>None</Style>
+                                              </Border>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
@@ -1597,7 +1600,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value />
+                                                    <Value>=Fields!Vendor_Item_No.Value</Value>
                                                     <Style>
                                                       <FontStyle>Normal</FontStyle>
                                                       <FontFamily>Segoe UI</FontFamily>
@@ -1641,7 +1644,13 @@
                                               </Paragraph>
                                             </Paragraphs>
                                             <rd:DefaultName>Textbox18</rd:DefaultName>
+                                            <Visibility>
+                                              <Hidden>=Iif(Fields!TrackingSpecBufferNo.Value = "", true, false)</Hidden>
+                                            </Visibility>
                                             <Style>
+                                              <Border>
+                                                <Style>None</Style>
+                                              </Border>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingLeft>5pt</PaddingLeft>
                                               <PaddingRight>5pt</PaddingRight>
@@ -1908,9 +1917,6 @@
                                         <KeepWithGroup>After</KeepWithGroup>
                                       </TablixMember>
                                       <TablixMember>
-                                        <Visibility>
-                                          <Hidden>=Iif(Fields!TrackingSpecBufferNo.Value = "", true, false)</Hidden>
-                                        </Visibility>
                                         <KeepWithGroup>After</KeepWithGroup>
                                       </TablixMember>
                                       <TablixMember>
@@ -2497,7 +2503,6 @@
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
-                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell>
@@ -3465,6 +3470,7 @@
                             </Border>
                           </Style>
                         </Rectangle>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -3579,20 +3585,28 @@
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>0.59743cm</Top>
-              <Left>0.7974cm</Left>
+              <Top>2.05908cm</Top>
+              <Left>4.09869cm</Left>
               <Height>11pt</Height>
-              <Width>17.94299cm</Width>
+              <Width>14.64167cm</Width>
               <ZIndex>3</ZIndex>
-              <Style />
+              <Visibility>
+                <Hidden>true</Hidden>
+              </Visibility>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+              </Style>
             </Textbox>
             <Textbox Name="SalesShptCaption">
+              <CanGrow>true</CanGrow>
               <KeepTogether>true</KeepTogether>
               <Paragraphs>
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(32,1)</Value>
+                      <Value>=First(Fields!SalesShipmentLbl.Value, "DataSet_Result")</Value>
                       <Style>
                         <FontStyle>Normal</FontStyle>
                         <FontFamily>Segoe UI</FontFamily>
@@ -3606,19 +3620,86 @@
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>1.1266cm</Top>
-              <Left>0.79741cm</Left>
+              <Top>1.1901cm</Top>
+              <Left>4.09869cm</Left>
               <Height>20pt</Height>
-              <Width>17.94298cm</Width>
+              <Width>14.6417cm</Width>
               <ZIndex>4</ZIndex>
               <Visibility>
-                <Hidden>=Globals!PageNumber &lt;&gt; 1</Hidden>
+                <Hidden>=Globals!PageNumber &lt;&gt;1</Hidden>
               </Visibility>
               <Style>
                 <Border>
                   <Style>None</Style>
                 </Border>
                 <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox10">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=First(Fields!Pagelbl.Value, "DataSet_Result")</Value>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value xml:space="preserve"> </Value>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value>=Globals!PageNumber</Value>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value> / </Value>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value>=Globals!TotalPages</Value>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox10</rd:DefaultName>
+              <Top>0.60096cm</Top>
+              <Left>0.37408cm</Left>
+              <Height>0.48331cm</Height>
+              <Width>18.33112cm</Width>
+              <ZIndex>5</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
               </Style>
             </Textbox>
           </ReportItems>
@@ -3893,6 +3974,12 @@ End Function
         </Field>
         <Field Name="EndCustomerReferencelbl">
           <DataField>EndCustomerReferencelbl</DataField>
+        </Field>
+        <Field Name="Pagelbl">
+          <DataField>Pagelbl</DataField>
+        </Field>
+        <Field Name="SalesShipmentLbl">
+          <DataField>SalesShipmentLbl</DataField>
         </Field>
         <Field Name="Package_Tracking_No">
           <DataField>Package_Tracking_No</DataField>
