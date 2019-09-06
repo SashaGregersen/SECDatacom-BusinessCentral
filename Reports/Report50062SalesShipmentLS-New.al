@@ -558,7 +558,6 @@ report 50062 "SEC Sales - Shipment LS-New"
                             {
                             }
                         }
-
                         trigger OnAfterGetRecord()
                         begin
                             if Number = 1 then
@@ -846,6 +845,7 @@ report 50062 "SEC Sales - Shipment LS-New"
         YourOrderLbl: label 'Your Order'; //NC
         Pagelbl: label 'Page';//NC
         SalesShipmentLbl: Label 'Sales Shipment'; //NC
+        VendorItemNo1: Text[90];
 
 
 

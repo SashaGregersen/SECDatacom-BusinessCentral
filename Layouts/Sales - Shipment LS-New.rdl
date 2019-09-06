@@ -2042,7 +2042,6 @@
                                             </Style>
                                           </Textbox>
                                           <ColSpan>2</ColSpan>
-                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell />
@@ -2205,7 +2204,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!Vendor_Item_No.Value</Value>
+                                                    <Value />
                                                     <Style>
                                                       <FontStyle>Normal</FontStyle>
                                                       <FontFamily>Segoe UI</FontFamily>
@@ -2285,7 +2284,6 @@
                                             </Visibility>
                                             <DataElementOutput>NoOutput</DataElementOutput>
                                             <Style>
-                                              <BackgroundColor>LimeGreen</BackgroundColor>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
@@ -2350,14 +2348,13 @@
                                             </Paragraphs>
                                             <ZIndex>9</ZIndex>
                                             <Visibility>
-                                              <Hidden>=IIF(Fields!ShowGroup.Value = "False",False,True)</Hidden>
+                                              <Hidden>true</Hidden>
                                             </Visibility>
                                             <DataElementOutput>NoOutput</DataElementOutput>
                                             <Style>
                                               <Border>
                                                 <Style>None</Style>
                                               </Border>
-                                              <BackgroundColor>Aqua</BackgroundColor>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
@@ -2486,7 +2483,13 @@
                                               </Paragraph>
                                             </Paragraphs>
                                             <rd:DefaultName>Textbox100</rd:DefaultName>
+                                            <Visibility>
+                                              <Hidden>true</Hidden>
+                                            </Visibility>
                                             <Style>
+                                              <Border>
+                                                <Style>None</Style>
+                                              </Border>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
@@ -2945,6 +2948,7 @@
                             </Border>
                           </Style>
                         </Rectangle>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
