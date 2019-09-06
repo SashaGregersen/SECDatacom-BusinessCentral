@@ -54,7 +54,7 @@ xmlport 50001 "Price File Export CSV"
                 {
                     trigger OnBeforePassVariable()
                     begin
-                        CostLbl := 'Cost';
+                        CostLbl := 'SEC Cost';
                     end;
                 }
                 textelement(List_PriceLbl)
@@ -62,7 +62,7 @@ xmlport 50001 "Price File Export CSV"
 
                     trigger OnBeforePassVariable()
                     begin
-                        List_PriceLbl := 'Sales Price';
+                        List_PriceLbl := 'Customer Price';
                     end;
                 }
                 textelement(Manufacturer)
@@ -203,12 +203,10 @@ xmlport 50001 "Price File Export CSV"
                             if DimensionValue2."Exclude from Price file" then
                                 currXMLport.skip;
 
-                    CostDec := ItemExportMgt.FindItemPriceForCustomer(Item."No.", CustomerNo, CurrencyFilter);
-                    if CostDec = 0 then
-                        currXMLport.Skip();
-                    CustomerPriceDec := ItemExportMgt.FindSECPurchasePrice(Item."No.", CurrencyFilter);
+                    CustomerPriceDec := ItemExportMgt.FindItemPriceForCustomer(Item."No.", CustomerNo, CurrencyFilter);
                     if CustomerPriceDec = 0 then
                         currXMLport.Skip();
+                    CostDec := ItemExportMgt.FindSECPurchasePrice(Item."No.", CurrencyFilter);
 
                     if ItemCategory.Get(Item."Item Category Code") then begin
                         if ItemCategory."Overwrite Quantity" then
