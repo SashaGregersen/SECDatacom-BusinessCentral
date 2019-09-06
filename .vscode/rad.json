@@ -1,1 +1,1 @@
-﻿{"Added":[],"Modified":[],"Removed":[]}
+﻿{"Added":[],"Modified":[{"Id":50020,"Kind":12,"Name":"Error Log","PackagePath":"/src/Pages/Page50020ErrorLog.al"},{"Id":50005,"Kind":11,"Name":"IC Sync Management","PackagePath":"/src/Codeunit/Codeunit50005ICSyncManagement.al"},{"Id":50013,"Kind":10,"Name":"Error Log","PackagePath":"/src/Tables/Table50013ErrorLog.al"}],"Removed":[]}

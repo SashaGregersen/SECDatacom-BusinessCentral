@@ -478,7 +478,7 @@ codeunit 50005 "IC Sync Management"
             if CopyStr(SessionEventComment, 1, 14) <> 'Scheduled task' then begin
                 //Error('Session in company %1 ended with an error: %2', RunningInCompany, SessionEventComment);
                 ErrorLog.init;
-                ErrorLog."Error No." := ErrorLog.GetLastUsedErrorLog();
+                ErrorLog."Error No." := ErrorLog.GetLastUsedErrorLogNo();
                 ErrorLog."Error Text" := StrSubstNo('Session in company %1 ended with an error: %2', RunningInCompany, SessionEventComment);
                 ErrorLog."Source Table" := 36;
                 ErrorLog."Source Document Type" := LocalSalesHeader."Document Type";
@@ -503,7 +503,7 @@ codeunit 50005 "IC Sync Management"
             if CopyStr(SessionEventComment, 1, 14) <> 'Scheduled task' then begin
                 //Error('Session in company %1 ended with an error: %2', RunningInCompany, SessionEventComment);
                 ErrorLog.init;
-                ErrorLog."Error No." := ErrorLog.GetLastUsedErrorLog();
+                ErrorLog."Error No." := ErrorLog.GetLastUsedErrorLogNo();
                 ErrorLog."Error Text" := StrSubstNo('Session in company %1 ended with an error: %2', RunningInCompany, SessionEventComment);
                 ErrorLog."Source Table" := 38;
                 ErrorLog."Source Document Type" := LocalSalesHeader."Document Type";

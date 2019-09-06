@@ -11722,12 +11722,9 @@ End Function</Code>
         <Field Name="Ship_To_Comment">
           <DataField>Ship_To_Comment</DataField>
         </Field>
-<<<<<<< HEAD
-=======
         <Field Name="ShipToCommentLbl">
           <DataField>ShipToCommentLbl</DataField>
         </Field>
->>>>>>> 311c5837236b28dd22d1b9f3cc8131b84392187e
         <Field Name="ShipToContactInfo">
           <DataField>ShipToContactInfo</DataField>
         </Field>
@@ -11821,8 +11818,6 @@ End Function</Code>
         <Field Name="BuyFromAddr8">
           <DataField>BuyFromAddr8</DataField>
         </Field>
-<<<<<<< HEAD
-=======
         <Field Name="BuyfromArray1">
           <DataField>BuyfromArray1</DataField>
         </Field>
@@ -11847,7 +11842,6 @@ End Function</Code>
         <Field Name="BuyfromArray8">
           <DataField>BuyfromArray8</DataField>
         </Field>
->>>>>>> 311c5837236b28dd22d1b9f3cc8131b84392187e
         <Field Name="PricesInclVAT_PurchHeader">
           <DataField>PricesInclVAT_PurchHeader</DataField>
         </Field>
