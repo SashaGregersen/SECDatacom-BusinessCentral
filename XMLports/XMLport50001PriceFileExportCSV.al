@@ -62,7 +62,7 @@ xmlport 50001 "Price File Export CSV"
 
                     trigger OnBeforePassVariable()
                     begin
-                        List_PriceLbl := 'List Price';
+                        List_PriceLbl := 'Sales Price';
                     end;
                 }
                 textelement(Manufacturer)

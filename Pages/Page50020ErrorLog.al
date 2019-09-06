@@ -4,6 +4,7 @@ page 50020 "Error Log"
     ApplicationArea = All;
     UsageCategory = Lists;
     SourceTable = "Error Log";
+    Editable = false;
 
     layout
     {
