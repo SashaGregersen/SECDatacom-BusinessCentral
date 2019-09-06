@@ -19,7 +19,7 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>26.50705cm</Width>
+                  <Width>26.50701cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -42,7 +42,7 @@
                                 </TablixColumns>
                                 <TablixRows>
                                   <TablixRow>
-                                    <Height>0.38445cm</Height>
+                                    <Height>0.17638cm</Height>
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
@@ -52,7 +52,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value />
+                                                    <Value>=Fields!PaymentTermsDescCaption.Value</Value>
                                                     <Style>
                                                       <FontSize>9pt</FontSize>
                                                       <Color>DodgerBlue</Color>
@@ -127,7 +127,7 @@ Cstr(Fields!ResellerCountry.Value) + Chr(177) +
 Cstr(Fields!Var_ID_Lbl.Value) + Chr(177) + 
 Cstr(Fields!Var_ID.Value) + Chr(177) +
 
-Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
+Cstr(Fields!ShipmentMethodCode.Value) + Chr(177) + Cstr(Fields!BuyfromArray1.Value) + Chr(177)  + Cstr(Fields!BuyfromArray2.Value) + Chr(177) + Cstr(Fields!BuyfromArray3.Value) + Chr(177)  + Cstr(Fields!BuyfromArray4.Value) + Chr(177) + Cstr(Fields!BuyfromArray5.Value) + Chr(177)  + Cstr(Fields!BuyfromArray6.Value),1)</Hidden>
                                             </Visibility>
                                             <Style>
                                               <Border>
@@ -200,8 +200,9 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                   </FilterValues>
                                 </Filter>
                               </Filters>
-                              <Left>0in</Left>
-                              <Height>0.38445cm</Height>
+                              <Top>6.72561cm</Top>
+                              <Left>2.70084in</Left>
+                              <Height>0.17638cm</Height>
                               <Width>1.25779cm</Width>
                               <Visibility>
                                 <Hidden>true</Hidden>
@@ -3401,7 +3402,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                   <Value>=Fields!DocType_PurchHeader.Value</Value>
                                 </SortExpression>
                               </SortExpressions>
-                              <Top>0.03167cm</Top>
+                              <Top>0.05813cm</Top>
                               <Left>0.00632cm</Left>
                               <Height>6.66748cm</Height>
                               <Width>10.43334in</Width>
@@ -5990,6 +5991,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                 </Filter>
                               </Filters>
                               <Top>2.72in</Top>
+                              <Left>0.00002cm</Left>
                               <Height>1.01944in</Height>
                               <Width>7.08609in</Width>
                               <ZIndex>3</ZIndex>
@@ -8972,7 +8974,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!ShipToAddr1.Value</Value>
+                                                    <Value>=Fields!ShipToArray1.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -9058,7 +9060,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!ShipToAddr2.Value</Value>
+                                                    <Value>=Fields!ShipToArray2.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -9153,7 +9155,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!ShipToAddr3.Value</Value>
+                                                    <Value>=Fields!ShipToArray3.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -9253,7 +9255,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!ShipToAddr4.Value</Value>
+                                                    <Value>=Fields!ShipToArray4.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -9338,7 +9340,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!ShipToAddr5.Value</Value>
+                                                    <Value>=Fields!ShipToArray5.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -9433,7 +9435,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>="Phone No.: " + Fields!ShipToPhoneNumber.Value</Value>
+                                                    <Value>=Fields!ShipToArray6.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -9444,9 +9446,6 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               </Paragraph>
                                             </Paragraphs>
                                             <rd:DefaultName>Textbox69</rd:DefaultName>
-                                            <Visibility>
-                                              <Hidden>=Iif(Fields!ShipToPhoneNumber.Value= "", true, false)</Hidden>
-                                            </Visibility>
                                             <Style>
                                               <Border>
                                                 <Style>None</Style>
@@ -9534,7 +9533,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>="E-mail: " +  Fields!ShipToEmailInfo.Value</Value>
+                                                    <Value>=Fields!ShipToArray7.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -9545,9 +9544,6 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               </Paragraph>
                                             </Paragraphs>
                                             <ZIndex>2</ZIndex>
-                                            <Visibility>
-                                              <Hidden>=Iif(Fields!ShipToEmailInfo.Value= "", true, false)</Hidden>
-                                            </Visibility>
                                             <Style>
                                               <Border>
                                                 <Style>None</Style>
@@ -9629,7 +9625,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value />
+                                                    <Value>=Fields!ShipToArray8.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -9724,10 +9720,11 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value />
+                                                    <Value>=Fields!ShipToCommentLbl.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
+                                                      <FontWeight>Bold</FontWeight>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -9743,62 +9740,11 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
+                                          <ColSpan>3</ColSpan>
                                         </CellContents>
                                       </TablixCell>
-                                      <TablixCell>
-                                        <CellContents>
-                                          <Textbox Name="Textbox31">
-                                            <CanGrow>true</CanGrow>
-                                            <KeepTogether>true</KeepTogether>
-                                            <Paragraphs>
-                                              <Paragraph>
-                                                <TextRuns>
-                                                  <TextRun>
-                                                    <Value />
-                                                    <Style>
-                                                      <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>8pt</FontSize>
-                                                    </Style>
-                                                  </TextRun>
-                                                </TextRuns>
-                                                <Style />
-                                              </Paragraph>
-                                            </Paragraphs>
-                                            <rd:DefaultName>Textbox31</rd:DefaultName>
-                                            <Style>
-                                              <VerticalAlign>Top</VerticalAlign>
-                                              <PaddingRight>5pt</PaddingRight>
-                                            </Style>
-                                          </Textbox>
-                                        </CellContents>
-                                      </TablixCell>
-                                      <TablixCell>
-                                        <CellContents>
-                                          <Textbox Name="Textbox231">
-                                            <CanGrow>true</CanGrow>
-                                            <KeepTogether>true</KeepTogether>
-                                            <Paragraphs>
-                                              <Paragraph>
-                                                <TextRuns>
-                                                  <TextRun>
-                                                    <Value />
-                                                    <Style>
-                                                      <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>8pt</FontSize>
-                                                    </Style>
-                                                  </TextRun>
-                                                </TextRuns>
-                                                <Style />
-                                              </Paragraph>
-                                            </Paragraphs>
-                                            <rd:DefaultName>Textbox231</rd:DefaultName>
-                                            <Style>
-                                              <VerticalAlign>Top</VerticalAlign>
-                                              <PaddingRight>5pt</PaddingRight>
-                                            </Style>
-                                          </Textbox>
-                                        </CellContents>
-                                      </TablixCell>
+                                      <TablixCell />
+                                      <TablixCell />
                                     </TablixCells>
                                   </TablixRow>
                                   <TablixRow>
@@ -9813,7 +9759,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>="Ship-To Comment: " + Fields!Ship_To_Comment.Value</Value>
+                                                    <Value>=Fields!Ship_To_Comment.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -10402,6 +10348,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
+                                                      <FontWeight>Bold</FontWeight>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -10455,6 +10402,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
+                                                      <FontWeight>Bold</FontWeight>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -10469,7 +10417,8 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="DimText">
+                                          <Textbox Name="HdrDimCaption2">
+                                            <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
@@ -10485,7 +10434,8 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                                                 <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>DimText</rd:DefaultName>
+                                            <rd:DefaultName>HdrDimCaption</rd:DefaultName>
+                                            <ZIndex>1</ZIndex>
                                             <Style />
                                           </Textbox>
                                         </CellContents>
@@ -10596,17 +10546,17 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
             <DataSetName>DataSet_Result</DataSetName>
             <Left>0.14075cm</Left>
             <Height>30.96174cm</Height>
-            <Width>26.50705cm</Width>
+            <Width>26.50701cm</Width>
             <Style />
           </Tablix>
         </ReportItems>
-        <Height>31.06757cm</Height>
+        <Height>30.96174cm</Height>
         <Style />
       </Body>
-      <Width>26.72321cm</Width>
+      <Width>26.75359cm</Width>
       <Page>
         <PageHeader>
-          <Height>8.3034cm</Height>
+          <Height>7.19215cm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -10626,7 +10576,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>5.63406cm</Top>
+              <Top>4.80856cm</Top>
               <Left>4.23317cm</Left>
               <Height>11pt</Height>
               <Width>11.2615cm</Width>
@@ -10650,7 +10600,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>5.61995cm</Top>
+              <Top>4.79445cm</Top>
               <Left>0.14707cm</Left>
               <Height>11pt</Height>
               <Width>3.68249cm</Width>
@@ -10677,7 +10627,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>7.54704cm</Top>
+              <Top>6.65804cm</Top>
               <Left>23.53754cm</Left>
               <Height>11pt</Height>
               <Width>3.03182cm</Width>
@@ -10702,68 +10652,12 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>7.54704cm</Top>
+              <Top>6.65804cm</Top>
               <Left>19.97186cm</Left>
               <Height>11pt</Height>
               <Width>3.4601cm</Width>
               <ZIndex>3</ZIndex>
               <Style>
-                <VerticalAlign>Middle</VerticalAlign>
-              </Style>
-            </Textbox>
-            <Textbox Name="PurchHdrVATRegNo1">
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>=Code.GetData(10,1)</Value>
-                      <Style>
-                        <FontFamily>Segoe UI</FontFamily>
-                        <FontSize>8pt</FontSize>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style />
-                </Paragraph>
-              </Paragraphs>
-              <Top>4.91264cm</Top>
-              <Left>4.16967cm</Left>
-              <Height>11pt</Height>
-              <Width>8.72211cm</Width>
-              <ZIndex>4</ZIndex>
-              <Style>
-                <VerticalAlign>Middle</VerticalAlign>
-              </Style>
-            </Textbox>
-            <Textbox Name="VATNoText1">
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>=First(Fields!VATNolbl.Value, "DataSet_Result")</Value>
-                      <Style>
-                        <FontFamily>Segoe UI</FontFamily>
-                        <FontSize>8pt</FontSize>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style />
-                </Paragraph>
-              </Paragraphs>
-              <Top>4.91264cm</Top>
-              <Left>0.14796cm</Left>
-              <Height>11pt</Height>
-              <Width>3.84532cm</Width>
-              <ZIndex>5</ZIndex>
-              <Visibility>
-                <Hidden>=iif(Code.GetData(10,1) &lt;&gt; "",False,True)</Hidden>
-              </Visibility>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
             </Textbox>
@@ -10783,11 +10677,11 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>2.92267in</Top>
+              <Top>2.59767in</Top>
               <Left>0.14707cm</Left>
               <Height>11pt</Height>
               <Width>3.68249cm</Width>
-              <ZIndex>6</ZIndex>
+              <ZIndex>4</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -10808,11 +10702,11 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>6.08655cm</Top>
+              <Top>5.26105cm</Top>
               <Left>0.16747cm</Left>
               <Height>11pt</Height>
               <Width>3.68249cm</Width>
-              <ZIndex>7</ZIndex>
+              <ZIndex>5</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -10839,7 +10733,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Left>12.90749cm</Left>
               <Height>11pt</Height>
               <Width>13.65523cm</Width>
-              <ZIndex>8</ZIndex>
+              <ZIndex>6</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -10866,7 +10760,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Left>12.90749cm</Left>
               <Height>11pt</Height>
               <Width>13.65523cm</Width>
-              <ZIndex>9</ZIndex>
+              <ZIndex>7</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -10889,11 +10783,11 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>2.94819in</Top>
+              <Top>2.62319in</Top>
               <Left>4.23317cm</Left>
               <Height>11pt</Height>
               <Width>11.22622cm</Width>
-              <ZIndex>10</ZIndex>
+              <ZIndex>8</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -10916,65 +10810,11 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>6.07503cm</Top>
+              <Top>5.24953cm</Top>
               <Left>4.23317cm</Left>
               <Height>11pt</Height>
               <Width>11.2615cm</Width>
-              <ZIndex>11</ZIndex>
-              <Style>
-                <VerticalAlign>Middle</VerticalAlign>
-              </Style>
-            </Textbox>
-            <Textbox Name="CmpnyEmail">
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value />
-                      <Style>
-                        <FontFamily>Segoe UI</FontFamily>
-                        <FontSize>8pt</FontSize>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Right</TextAlign>
-                  </Style>
-                </Paragraph>
-              </Paragraphs>
-              <Top>5.36773cm</Top>
-              <Left>15.57714cm</Left>
-              <Height>11pt</Height>
-              <Width>10.96483cm</Width>
-              <ZIndex>12</ZIndex>
-              <Style>
-                <VerticalAlign>Middle</VerticalAlign>
-              </Style>
-            </Textbox>
-            <Textbox Name="CmpnyPhone">
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value />
-                      <Style>
-                        <FontFamily>Segoe UI</FontFamily>
-                        <FontSize>8pt</FontSize>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Right</TextAlign>
-                  </Style>
-                </Paragraph>
-              </Paragraphs>
-              <Top>4.59161cm</Top>
-              <Left>15.57714cm</Left>
-              <Height>11pt</Height>
-              <Width>10.97521cm</Width>
-              <ZIndex>13</ZIndex>
+              <ZIndex>9</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -11001,7 +10841,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Left>12.90749cm</Left>
               <Height>11pt</Height>
               <Width>13.65523cm</Width>
-              <ZIndex>14</ZIndex>
+              <ZIndex>10</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -11028,7 +10868,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Left>12.90749cm</Left>
               <Height>11pt</Height>
               <Width>13.65523cm</Width>
-              <ZIndex>15</ZIndex>
+              <ZIndex>11</ZIndex>
               <Visibility>
                 <Hidden>true</Hidden>
               </Visibility>
@@ -11061,7 +10901,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Left>12.90749cm</Left>
               <Height>11pt</Height>
               <Width>13.65523cm</Width>
-              <ZIndex>16</ZIndex>
+              <ZIndex>12</ZIndex>
               <Visibility>
                 <Hidden>true</Hidden>
               </Visibility>
@@ -11090,11 +10930,11 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>2.29854cm</Top>
-              <Left>12.93569cm</Left>
+              <Top>2.26327cm</Top>
+              <Left>12.90923cm</Left>
               <Height>11pt</Height>
               <Width>13.65523cm</Width>
-              <ZIndex>17</ZIndex>
+              <ZIndex>13</ZIndex>
               <Visibility>
                 <Hidden>true</Hidden>
               </Visibility>
@@ -11111,7 +10951,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=First(Fields!PurchaseOrderLbl.Value, "DataSet_Result")</Value>
+                      <Value>=First(Fields!PurchaseOrderLbl.Value, "DataSet_Result") +" "+Code.GetData(16,1)</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>14pt</FontSize>
@@ -11127,8 +10967,8 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Top>0.73758cm</Top>
               <Left>1.74807cm</Left>
               <Height>20pt</Height>
-              <Width>24.81639cm</Width>
-              <ZIndex>18</ZIndex>
+              <Width>24.81465cm</Width>
+              <ZIndex>14</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -11153,7 +10993,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Left>0.14791cm</Left>
               <Height>11pt</Height>
               <Width>12.35473cm</Width>
-              <ZIndex>19</ZIndex>
+              <ZIndex>15</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -11178,7 +11018,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Left>0.14791cm</Left>
               <Height>11pt</Height>
               <Width>12.35473cm</Width>
-              <ZIndex>20</ZIndex>
+              <ZIndex>16</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -11189,7 +11029,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(6,1)</Value>
+                      <Value>=First(Fields!VATNolbl.Value, "DataSet_Result")+ " " + Code.GetData(69,1)</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -11203,8 +11043,14 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Left>0.14791cm</Left>
               <Height>11pt</Height>
               <Width>12.35473cm</Width>
-              <ZIndex>21</ZIndex>
+              <ZIndex>17</ZIndex>
+              <Visibility>
+                <Hidden>=iif(Code.GetData(69,1) &lt;&gt; "",false,true)</Hidden>
+              </Visibility>
               <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
             </Textbox>
@@ -11214,7 +11060,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(5,1)</Value>
+                      <Value>=Code.GetData(68,1)</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -11228,7 +11074,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Left>0.14791cm</Left>
               <Height>11pt</Height>
               <Width>12.35473cm</Width>
-              <ZIndex>22</ZIndex>
+              <ZIndex>18</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -11239,7 +11085,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(4,1)</Value>
+                      <Value>=Code.GetData(67,1)</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -11253,7 +11099,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Left>0.16747cm</Left>
               <Height>11pt</Height>
               <Width>12.35473cm</Width>
-              <ZIndex>23</ZIndex>
+              <ZIndex>19</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -11264,7 +11110,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(3,1)</Value>
+                      <Value>=Code.GetData(66,1)</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -11278,7 +11124,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Left>0.16747cm</Left>
               <Height>11pt</Height>
               <Width>12.35473cm</Width>
-              <ZIndex>24</ZIndex>
+              <ZIndex>20</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -11289,7 +11135,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(2,1)</Value>
+                      <Value>=Code.GetData(65,1)</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -11303,7 +11149,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
               <Left>0.16747cm</Left>
               <Height>11pt</Height>
               <Width>12.35473cm</Width>
-              <ZIndex>25</ZIndex>
+              <ZIndex>21</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -11314,7 +11160,7 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(1,1)</Value>
+                      <Value>=Code.GetData(64,1)</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -11324,44 +11170,14 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>0.63411in</Top>
+              <Top>0.62161in</Top>
               <Left>0.16747cm</Left>
               <Height>11pt</Height>
               <Width>11.69158cm</Width>
-              <ZIndex>26</ZIndex>
+              <ZIndex>22</ZIndex>
               <Style>
                 <Border />
                 <VerticalAlign>Middle</VerticalAlign>
-              </Style>
-            </Textbox>
-            <Textbox Name="HomePage">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value />
-                      <Style>
-                        <FontFamily>Segoe UI</FontFamily>
-                        <FontSize>8pt</FontSize>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Right</TextAlign>
-                  </Style>
-                </Paragraph>
-              </Paragraphs>
-              <Top>4.97967cm</Top>
-              <Left>15.57714cm</Left>
-              <Height>11pt</Height>
-              <Width>10.97521cm</Width>
-              <ZIndex>27</ZIndex>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
               </Style>
             </Textbox>
             <Textbox Name="pymtTermsCaption">
@@ -11380,11 +11196,11 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>6.55595cm</Top>
+              <Top>5.73045cm</Top>
               <Left>0.14707cm</Left>
               <Height>11pt</Height>
               <Width>3.68249cm</Width>
-              <ZIndex>28</ZIndex>
+              <ZIndex>23</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -11405,11 +11221,11 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>7.00397cm</Top>
+              <Top>6.17847cm</Top>
               <Left>0.14707cm</Left>
               <Height>11pt</Height>
               <Width>3.68249cm</Width>
-              <ZIndex>29</ZIndex>
+              <ZIndex>24</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -11430,11 +11246,11 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>7.0334cm</Top>
+              <Top>6.2079cm</Top>
               <Left>4.23317cm</Left>
               <Height>11pt</Height>
               <Width>11.2615cm</Width>
-              <ZIndex>30</ZIndex>
+              <ZIndex>25</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -11455,11 +11271,11 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>7.07785cm</Top>
+              <Top>6.18885cm</Top>
               <Left>19.97186cm</Left>
               <Height>11pt</Height>
               <Width>3.42456cm</Width>
-              <ZIndex>31</ZIndex>
+              <ZIndex>26</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -11483,11 +11299,11 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>7.07785cm</Top>
+              <Top>6.18885cm</Top>
               <Left>23.53754cm</Left>
               <Height>11pt</Height>
               <Width>3.02692cm</Width>
-              <ZIndex>32</ZIndex>
+              <ZIndex>27</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -11511,43 +11327,13 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>6.55595cm</Top>
+              <Top>5.73045cm</Top>
               <Left>4.23317cm</Left>
               <Height>11pt</Height>
               <Width>11.2615cm</Width>
-              <ZIndex>33</ZIndex>
+              <ZIndex>28</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
-              </Style>
-            </Textbox>
-            <Textbox Name="Textbox4">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value />
-                      <Style />
-                    </TextRun>
-                  </TextRuns>
-                  <Style />
-                </Paragraph>
-              </Paragraphs>
-              <rd:DefaultName>Textbox4</rd:DefaultName>
-              <Top>6.02079cm</Top>
-              <Left>15.97766cm</Left>
-              <Height>0.6cm</Height>
-              <Width>10.56431cm</Width>
-              <ZIndex>34</ZIndex>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <PaddingLeft>2pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
               </Style>
             </Textbox>
             <Textbox Name="Textbox101">
@@ -11603,11 +11389,44 @@ Cstr(Fields!ShipmentMethodCode.Value), 1)</Hidden>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox101</rd:DefaultName>
-              <Top>0.03175cm</Top>
+              <Top>0.0635cm</Top>
               <Left>20.47103cm</Left>
               <Height>15.00778pt</Height>
-              <Width>6.09833cm</Width>
-              <ZIndex>35</ZIndex>
+              <Width>6.09169cm</Width>
+              <ZIndex>29</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox4">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=Code.GetData(30,1) &amp; " " &amp; Code.GetGroupPageNumber(ReportItems!NewPage.Value,Globals!PageNumber)</Value>
+                      <Style />
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox4</rd:DefaultName>
+              <Top>1.61952cm</Top>
+              <Left>17.2212cm</Left>
+              <Height>11pt</Height>
+              <Width>8.50604cm</Width>
+              <ZIndex>30</ZIndex>
+              <Visibility>
+                <Hidden>true</Hidden>
+              </Visibility>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -11903,6 +11722,12 @@ End Function</Code>
         <Field Name="Ship_To_Comment">
           <DataField>Ship_To_Comment</DataField>
         </Field>
+<<<<<<< HEAD
+=======
+        <Field Name="ShipToCommentLbl">
+          <DataField>ShipToCommentLbl</DataField>
+        </Field>
+>>>>>>> 311c5837236b28dd22d1b9f3cc8131b84392187e
         <Field Name="ShipToContactInfo">
           <DataField>ShipToContactInfo</DataField>
         </Field>
@@ -11996,6 +11821,33 @@ End Function</Code>
         <Field Name="BuyFromAddr8">
           <DataField>BuyFromAddr8</DataField>
         </Field>
+<<<<<<< HEAD
+=======
+        <Field Name="BuyfromArray1">
+          <DataField>BuyfromArray1</DataField>
+        </Field>
+        <Field Name="BuyfromArray2">
+          <DataField>BuyfromArray2</DataField>
+        </Field>
+        <Field Name="BuyfromArray3">
+          <DataField>BuyfromArray3</DataField>
+        </Field>
+        <Field Name="BuyfromArray4">
+          <DataField>BuyfromArray4</DataField>
+        </Field>
+        <Field Name="BuyfromArray5">
+          <DataField>BuyfromArray5</DataField>
+        </Field>
+        <Field Name="BuyfromArray6">
+          <DataField>BuyfromArray6</DataField>
+        </Field>
+        <Field Name="BuyfromArray7">
+          <DataField>BuyfromArray7</DataField>
+        </Field>
+        <Field Name="BuyfromArray8">
+          <DataField>BuyfromArray8</DataField>
+        </Field>
+>>>>>>> 311c5837236b28dd22d1b9f3cc8131b84392187e
         <Field Name="PricesInclVAT_PurchHeader">
           <DataField>PricesInclVAT_PurchHeader</DataField>
         </Field>

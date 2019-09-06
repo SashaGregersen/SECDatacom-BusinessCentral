@@ -65,7 +65,7 @@ table 50013 "Error Log"
 
     end;
 
-    Procedure GetLastUsedErrorLog(): Integer
+    Procedure GetLastUsedErrorLogNo(): Integer
     var
 
     begin

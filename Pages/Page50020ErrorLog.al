@@ -11,6 +11,10 @@ page 50020 "Error Log"
         {
             repeater("Error Logs")
             {
+                field("Source Table"; "Source Table")
+                {
+                    ApplicationArea = all;
+                }
                 field("Source No."; "Source No.")
                 {
                     ApplicationArea = All;
