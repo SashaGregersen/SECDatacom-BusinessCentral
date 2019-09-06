@@ -1,4 +1,4 @@
-table 50013 "Error Log"
+table 50014 "Error Log"
 {
     DataClassification = ToBeClassified;
 
