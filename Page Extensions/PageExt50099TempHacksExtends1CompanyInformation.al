@@ -51,6 +51,20 @@ pageextension 50099 "Temp Hacks" extends "Company Information"
                     UpdateCompanyInfo.Run();
                 end;
             }
+            action(FixLineAmountLCY)
+            {
+                ApplicationArea = all;
+                Image = Restore;
+                Caption = 'Fix Line Amount LCY problem';
+
+                trigger OnAction()
+                var
+                    FixLineAmountProblem: report "Fix Problem Line Amount LCY";
+                begin
+                    FixLineAmountProblem.Run();
+                end;
+            }
+
 
             /*  action(MAHATempHacks2)
              {
