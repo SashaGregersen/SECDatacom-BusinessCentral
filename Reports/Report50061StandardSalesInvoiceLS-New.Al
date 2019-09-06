@@ -232,7 +232,6 @@ report 50061 "SEC - Sales Invoice LS-New"
             Column(Ship_To_Country; ShipToCountryRegion.Name)
             {
             }
-            //<<NC
             column(PaymentTermsDescription; PaymentTerms.Description)
             {
             }

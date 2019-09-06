@@ -24,7 +24,7 @@
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>17.93126cm</Height>
+                  <Height>17.24334cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -736,7 +736,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!VATPct_Line.Value</Value>
+                                                    <Value>=Code.BlankZero(Fields!VATPct_Line.Value)</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -772,7 +772,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!LineDiscountPercent_Line.Value</Value>
+                                                    <Value>=Code.BlankZero(Fields!LineDiscountPercent_Line.Value)</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -7077,6 +7077,7 @@
                             </Border>
                           </Style>
                         </Rectangle>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -7105,7 +7106,7 @@
             </TablixRowHierarchy>
             <DataSetName>DataSet_Result</DataSetName>
             <Top>0.0882cm</Top>
-            <Height>17.93126cm</Height>
+            <Height>17.24334cm</Height>
             <Width>27.3614cm</Width>
             <Style>
               <Border>
@@ -7114,10 +7115,10 @@
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>18.01946cm</Height>
+        <Height>17.38446cm</Height>
         <Style />
       </Body>
-      <Width>27.49369cm</Width>
+      <Width>27.3614cm</Width>
       <Page>
         <PageHeader>
           <Height>2.04322cm</Height>
@@ -7199,11 +7200,77 @@
                     </Border>
                   </Style>
                 </Line>
+                <Textbox Name="Page_Lbl">
+                  <CanGrow>true</CanGrow>
+                  <KeepTogether>true</KeepTogether>
+                  <Paragraphs>
+                    <Paragraph>
+                      <TextRuns>
+                        <TextRun>
+                          <Value>=First(Fields!Page_Lbl.Value, "DataSet_Result")</Value>
+                          <Style>
+                            <FontFamily>Segoe UI</FontFamily>
+                            <FontSize>8pt</FontSize>
+                            <FontWeight>Bold</FontWeight>
+                          </Style>
+                        </TextRun>
+                        <TextRun>
+                          <Value xml:space="preserve"> </Value>
+                          <Style>
+                            <FontFamily>Segoe UI</FontFamily>
+                            <FontSize>8pt</FontSize>
+                            <FontWeight>Bold</FontWeight>
+                          </Style>
+                        </TextRun>
+                        <TextRun>
+                          <Value>=Globals!PageNumber</Value>
+                          <Style>
+                            <FontFamily>Segoe UI</FontFamily>
+                            <FontSize>8pt</FontSize>
+                            <FontWeight>Bold</FontWeight>
+                          </Style>
+                        </TextRun>
+                        <TextRun>
+                          <Value> / </Value>
+                          <Style>
+                            <FontFamily>Segoe UI</FontFamily>
+                            <FontSize>8pt</FontSize>
+                            <FontWeight>Bold</FontWeight>
+                          </Style>
+                        </TextRun>
+                        <TextRun>
+                          <Value>=Globals!TotalPages</Value>
+                          <Style>
+                            <FontFamily>Segoe UI</FontFamily>
+                            <FontSize>8pt</FontSize>
+                            <FontWeight>Bold</FontWeight>
+                          </Style>
+                        </TextRun>
+                      </TextRuns>
+                      <Style>
+                        <TextAlign>Right</TextAlign>
+                      </Style>
+                    </Paragraph>
+                  </Paragraphs>
+                  <rd:DefaultName>Page_Lbl</rd:DefaultName>
+                  <Top>0.54111cm</Top>
+                  <Left>4.35158cm</Left>
+                  <Height>11pt</Height>
+                  <Width>4.82062cm</Width>
+                  <ZIndex>2</ZIndex>
+                  <Style>
+                    <Border>
+                      <Style>None</Style>
+                    </Border>
+                    <PaddingLeft>5pt</PaddingLeft>
+                    <PaddingRight>5pt</PaddingRight>
+                  </Style>
+                </Textbox>
               </ReportItems>
               <KeepTogether>true</KeepTogether>
               <Left>18.08202cm</Left>
-              <Height>0.5cm</Height>
-              <Width>9.2cm</Width>
+              <Height>0.92917cm</Height>
+              <Width>9.25158cm</Width>
               <ZIndex>1</ZIndex>
               <Style>
                 <Border>
@@ -7211,72 +7278,6 @@
                 </Border>
               </Style>
             </Rectangle>
-            <Textbox Name="Page_Lbl">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>=First(Fields!Page_Lbl.Value, "DataSet_Result")</Value>
-                      <Style>
-                        <FontFamily>Segoe UI</FontFamily>
-                        <FontSize>8pt</FontSize>
-                        <FontWeight>Bold</FontWeight>
-                      </Style>
-                    </TextRun>
-                    <TextRun>
-                      <Value xml:space="preserve"> </Value>
-                      <Style>
-                        <FontFamily>Segoe UI</FontFamily>
-                        <FontSize>8pt</FontSize>
-                        <FontWeight>Bold</FontWeight>
-                      </Style>
-                    </TextRun>
-                    <TextRun>
-                      <Value>=Globals!PageNumber</Value>
-                      <Style>
-                        <FontFamily>Segoe UI</FontFamily>
-                        <FontSize>8pt</FontSize>
-                        <FontWeight>Bold</FontWeight>
-                      </Style>
-                    </TextRun>
-                    <TextRun>
-                      <Value> / </Value>
-                      <Style>
-                        <FontFamily>Segoe UI</FontFamily>
-                        <FontSize>8pt</FontSize>
-                        <FontWeight>Bold</FontWeight>
-                      </Style>
-                    </TextRun>
-                    <TextRun>
-                      <Value>=Globals!TotalPages</Value>
-                      <Style>
-                        <FontFamily>Segoe UI</FontFamily>
-                        <FontSize>8pt</FontSize>
-                        <FontWeight>Bold</FontWeight>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Right</TextAlign>
-                  </Style>
-                </Paragraph>
-              </Paragraphs>
-              <rd:DefaultName>Page_Lbl</rd:DefaultName>
-              <Top>0.54111cm</Top>
-              <Left>22.1278cm</Left>
-              <Height>11pt</Height>
-              <Width>4.9cm</Width>
-              <ZIndex>2</ZIndex>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <PaddingLeft>5pt</PaddingLeft>
-                <PaddingRight>5pt</PaddingRight>
-              </Style>
-            </Textbox>
             <Textbox Name="Textbox15">
               <CanGrow>true</CanGrow>
               <KeepTogether>true</KeepTogether>
@@ -7297,10 +7298,10 @@
               </Paragraphs>
               <rd:DefaultName>Textbox15</rd:DefaultName>
               <Top>0.97578cm</Top>
-              <Left>0.1793cm</Left>
+              <Left>0.08405cm</Left>
               <Height>0.96161cm</Height>
               <Width>22.30085cm</Width>
-              <ZIndex>3</ZIndex>
+              <ZIndex>2</ZIndex>
               <Visibility>
                 <Hidden>=Globals!PageNumber &lt;&gt; 1</Hidden>
               </Visibility>
@@ -7338,8 +7339,8 @@
               <Top>1.01107cm</Top>
               <Left>22.58598cm</Left>
               <Height>0.92632cm</Height>
-              <Width>4.77542cm</Width>
-              <ZIndex>4</ZIndex>
+              <Width>4.66824cm</Width>
+              <ZIndex>3</ZIndex>
               <Visibility>
                 <Hidden>=Globals!PageNumber &lt;&gt; 1</Hidden>
               </Visibility>

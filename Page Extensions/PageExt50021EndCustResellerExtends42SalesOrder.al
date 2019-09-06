@@ -326,6 +326,7 @@ pageextension 50021 "End Customer and Reseller" extends 42
                     page.RunModal(Page::"General Journal Provisions", GnlJnlLine);
                 end;
             }
+
         }
     }
     var

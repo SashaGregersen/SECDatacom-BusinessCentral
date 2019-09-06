@@ -428,7 +428,7 @@ codeunit 50005 "IC Sync Management"
         end;
     end;
 
-    procedure PostPurchaseOrderInOtherCompany(PurchaseOrder: Record "Purchase Header"; PostInCompanyName: Text[35])
+    procedure PostPurchaseOrderInOtherCompany(PurchaseOrder: Record "Purchase Header"; PostInCompanyName: Text[35]; SalesHeader: record "Sales Header")
 
     var
         SessionID: Integer;
@@ -436,10 +436,10 @@ codeunit 50005 "IC Sync Management"
         if PostInCompanyName = '' then
             exit;
         SessionID := RunPostPurchaseOrderInOtherCompany(PurchaseOrder, PostInCompanyName);
-        CheckSessionForTimeoutAndError(SessionID, 180, PostInCompanyName);
+        CheckSessionForTimeoutAndErrorOnICPO(SessionID, 180, PostInCompanyName, PurchaseOrder, SalesHeader);
     end;
 
-    procedure PostSalesOrderInOtherCompany(SalesOrder: Record "Sales Header"; PostInCompanyName: Text[35])
+    procedure PostSalesOrderInOtherCompany(SalesOrder: Record "Sales Header"; PostInCompanyName: Text[35]; SalesHeader: record "Sales Header")
 
     var
         SessionID: Integer;
@@ -447,7 +447,7 @@ codeunit 50005 "IC Sync Management"
         if PostInCompanyName = '' then
             exit;
         SessionID := RunPostSalesOrderInOtherCompany(SalesOrder, PostInCompanyName);
-        CheckSessionForTimeoutAndError(SessionID, 180, PostInCompanyName);
+        CheckSessionForTimeoutAndErrorOnICSO(SessionID, 180, PostInCompanyName, SalesOrder, SalesHeader);
     end;
 
 
@@ -462,6 +462,56 @@ codeunit 50005 "IC Sync Management"
         if SessionEventComment <> '' then begin
             if CopyStr(SessionEventComment, 1, 14) <> 'Scheduled task' then
                 Error('Session in company %1 ended with an error: %2', RunningInCompany, SessionEventComment);
+        end;
+    end;
+
+    local procedure CheckSessionForTimeoutAndErrorOnICSO(SessionID: Integer; SessionTimerSeconds: Integer; RunningInCompany: Text; ICSalesOrder: record "Sales Header"; LocalSalesHeader: record "Sales Header")
+    //needs to be refactored so the error message is returned to the calling procedure - then the calling procedure can take corrective measures before making the error
+    var
+        OK: Boolean;
+        SessionEventComment: Text;
+        ErrorLog: record "Error Log";
+    begin
+        if SessionTimedOut(SessionID, SessionTimerSeconds, SessionEventComment) then
+            StopSession(SessionID, StrSubstNo('Session timed out in company %', RunningInCompany));
+        if SessionEventComment <> '' then begin
+            if CopyStr(SessionEventComment, 1, 14) <> 'Scheduled task' then begin
+                //Error('Session in company %1 ended with an error: %2', RunningInCompany, SessionEventComment);
+                ErrorLog.init;
+                ErrorLog."Error No." := ErrorLog.GetLastUsedErrorLogNo();
+                ErrorLog."Error Text" := StrSubstNo('Session in company %1 ended with an error: %2', RunningInCompany, SessionEventComment);
+                ErrorLog."Source Table" := 36;
+                ErrorLog."Source Document Type" := LocalSalesHeader."Document Type";
+                ErrorLog."Source No." := LocalSalesHeader."No.";
+                ErrorLog."IC Source No." := ICSalesOrder."No.";
+                ErrorLog.Insert(false);
+            end;
+
+        end;
+    end;
+
+    local procedure CheckSessionForTimeoutAndErrorOnICPO(SessionID: Integer; SessionTimerSeconds: Integer; RunningInCompany: Text; ICPurchOrder: record "Purchase Header"; LocalSalesHeader: record "Sales Header")
+    //needs to be refactored so the error message is returned to the calling procedure - then the calling procedure can take corrective measures before making the error
+    var
+        OK: Boolean;
+        SessionEventComment: Text;
+        ErrorLog: record "Error Log";
+    begin
+        if SessionTimedOut(SessionID, SessionTimerSeconds, SessionEventComment) then
+            StopSession(SessionID, StrSubstNo('Session timed out in company %', RunningInCompany));
+        if SessionEventComment <> '' then begin
+            if CopyStr(SessionEventComment, 1, 14) <> 'Scheduled task' then begin
+                //Error('Session in company %1 ended with an error: %2', RunningInCompany, SessionEventComment);
+                ErrorLog.init;
+                ErrorLog."Error No." := ErrorLog.GetLastUsedErrorLogNo();
+                ErrorLog."Error Text" := StrSubstNo('Session in company %1 ended with an error: %2', RunningInCompany, SessionEventComment);
+                ErrorLog."Source Table" := 38;
+                ErrorLog."Source Document Type" := LocalSalesHeader."Document Type";
+                ErrorLog."Source No." := LocalSalesHeader."No.";
+                ErrorLog."IC Source No." := ICPurchOrder."No.";
+                ErrorLog.Insert(false);
+            end;
+
         end;
     end;
 

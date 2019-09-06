@@ -413,12 +413,12 @@ codeunit 50057 "IC Event Handler"
             if TempICPurchOrder.FindSet() then
                 repeat
                     ICPurchOrder := TempICPurchOrder;
-                    ICSyncMgt.PostPurchaseOrderInOtherCompany(ICPurchOrder, ICpartner."Inbox Details");
+                    ICSyncMgt.PostPurchaseOrderInOtherCompany(ICPurchOrder, ICpartner."Inbox Details", SalesHeader);
                 until TempICPurchOrder.Next() = 0;
             if TempICSalesOrder.FindSet() then
                 repeat
                     ICSalesOrder := TempICSalesOrder;
-                    ICSyncMgt.PostSalesOrderInOtherCompany(ICSalesOrder, ICpartner."Inbox Details");
+                    ICSyncMgt.PostSalesOrderInOtherCompany(ICSalesOrder, ICpartner."Inbox Details", SalesHeader);
                 until TempICPurchOrder.Next() = 0;
         end;
     end;
@@ -485,5 +485,19 @@ codeunit 50057 "IC Event Handler"
             until SOLineInOtherCompany.next = 0;
         end;
 
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, codeunit::"Sales-Post", 'OnAfterPostSalesDoc', '', true, true)]
+    local procedure OnAfterPostSalesDocEvent(VAR SalesHeader: Record "Sales Header"; VAR GenJnlPostLine: Codeunit "Gen. Jnl.-Post Line"; SalesShptHdrNo: Code[20]; RetRcpHdrNo: Code[20]; SalesInvHdrNo: Code[20]; SalesCrMemoHdrNo: Code[20]; CommitIsSuppressed: Boolean)
+    var
+        ErrorLog: record "Error Log";
+    begin
+        Commit();
+        ErrorLog.setrange("Source No.", SalesHeader."No.");
+        ErrorLog.setrange("Source Document Type", SalesHeader."Document Type");
+        ErrorLog.setrange("Source Table", 36);
+        if ErrorLog.FindFirst() then begin
+            page.RunModal(page::"Error Log", ErrorLog);
+        end;
     end;
 }

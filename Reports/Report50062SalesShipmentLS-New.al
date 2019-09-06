@@ -211,6 +211,13 @@ report 50062 "SEC Sales - Shipment LS-New"
                     {
 
                     }
+                    column(Pagelbl; Pagelbl)
+                    {
+
+                    }
+                    column(SalesShipmentLbl; SalesShipmentLbl)
+                    {
+                    }
                     //<< NC adding Preferred Sender Adress
                     //>>NC.00.01 SDG 25-07-19
                     column(Package_Tracking_No; "Sales Shipment Header"."Package Tracking No.")
@@ -551,7 +558,6 @@ report 50062 "SEC Sales - Shipment LS-New"
                             {
                             }
                         }
-
                         trigger OnAfterGetRecord()
                         begin
                             if Number = 1 then
@@ -837,6 +843,9 @@ report 50062 "SEC Sales - Shipment LS-New"
         PackageTrackingNo: label 'Package Tracking No.';
         ShippingAgent: label 'Shipping Agent';
         YourOrderLbl: label 'Your Order'; //NC
+        Pagelbl: label 'Page';//NC
+        SalesShipmentLbl: Label 'Sales Shipment'; //NC
+        VendorItemNo1: Text[90];
 
 
 
