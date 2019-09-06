@@ -492,8 +492,10 @@ codeunit 50057 "IC Event Handler"
     var
         ErrorLog: record "Error Log";
     begin
+        Commit();
         ErrorLog.setrange("Source No.", SalesHeader."No.");
         ErrorLog.setrange("Source Document Type", SalesHeader."Document Type");
+        ErrorLog.setrange("Source Table", 36);
         if ErrorLog.FindFirst() then begin
             page.RunModal(page::"Error Log", ErrorLog);
         end;
