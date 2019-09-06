@@ -180,11 +180,13 @@ codeunit 50057 "IC Event Handler"
         if SalesShptLine.FindSet() then
             repeat
                 if POLineInOtherCompany.Get(POLineInOtherCompany."Document Type"::Order, SalesShptLine."IC PO No.", SalesShptLine."IC PO Line No.") then begin
-                    POLineInOtherCompany."Qty. to Receive" := SalesShptLine.Quantity;
-                    POLineInOtherCompany."Qty. to Receive (Base)" := SalesShptLine.Quantity;
-                    POLineInOtherCompany."Qty. to Invoice" := 0;
-                    POLineInOtherCompany."Qty. to Invoice (Base)" := 0;
-                    POLineInOtherCompany.Modify(false);
+                    if POLineInOtherCompany."Outstanding Quantity" <> 0 then begin
+                        POLineInOtherCompany."Qty. to Receive" := SalesShptLine.Quantity;
+                        POLineInOtherCompany."Qty. to Receive (Base)" := SalesShptLine.Quantity;
+                        POLineInOtherCompany."Qty. to Invoice" := 0;
+                        POLineInOtherCompany."Qty. to Invoice (Base)" := 0;
+                        POLineInOtherCompany.Modify(false);
+                    end;
                 end;
             until SalesShptLine.Next() = 0;
     end;
@@ -233,11 +235,13 @@ codeunit 50057 "IC Event Handler"
         if SalesShptLine.FindSet() then
             repeat
                 if SOLineInOtherCompany.Get(SOLineInOtherCompany."Document Type"::Order, SalesShptLine."IC SO No.", SalesShptLine."IC SO Line No.") then begin
-                    SOLineInOtherCompany."Qty. to Ship" := SalesShptLine.Quantity;
-                    SOLineInOtherCompany."Qty. to Ship (Base)" := SalesShptLine.Quantity;
-                    SOLineInOtherCompany."Qty. to Invoice" := 0;
-                    SOLineInOtherCompany."Qty. to Invoice (Base)" := 0;
-                    SOLineInOtherCompany.Modify(false);
+                    if SOLineInOtherCompany."Outstanding Quantity" <> 0 then begin
+                        SOLineInOtherCompany."Qty. to Ship" := SalesShptLine.Quantity;
+                        SOLineInOtherCompany."Qty. to Ship (Base)" := SalesShptLine.Quantity;
+                        SOLineInOtherCompany."Qty. to Invoice" := 0;
+                        SOLineInOtherCompany."Qty. to Invoice (Base)" := 0;
+                        SOLineInOtherCompany.Modify(false);
+                    end;
                 end;
             until SalesShptLine.Next() = 0;
 
@@ -265,12 +269,14 @@ codeunit 50057 "IC Event Handler"
         if SalesInvLine.FindSet() then
             repeat
                 if POLineInOtherCompany.Get(POLineInOtherCompany."Document Type"::Order, SalesInvLine."IC PO No.", SalesInvLine."IC PO Line No.") then begin
-                    POLineInOtherCompany."Qty. to Invoice" := SalesInvLine.Quantity;
-                    POLineInOtherCompany."Qty. to Invoice (Base)" := SalesInvLine.Quantity;
-                    POLineInOtherCompany.Modify(false);
-                    if GetPurchaseHeaderFromOtherCompany(POLineInOtherCompany, POInOtherCompany, OtherCompanyName) then begin
-                        POInOtherCompany."Vendor Invoice No." := SalesInvHdrNo;
-                        POInOtherCompany.Modify(false);
+                    if POLineInOtherCompany."Qty. Rcd. Not Invoiced" <> 0 then begin
+                        POLineInOtherCompany."Qty. to Invoice" := SalesInvLine.Quantity;
+                        POLineInOtherCompany."Qty. to Invoice (Base)" := SalesInvLine.Quantity;
+                        POLineInOtherCompany.Modify(false);
+                        if GetPurchaseHeaderFromOtherCompany(POLineInOtherCompany, POInOtherCompany, OtherCompanyName) then begin
+                            POInOtherCompany."Vendor Invoice No." := SalesInvHdrNo;
+                            POInOtherCompany.Modify(false);
+                        end;
                     end;
                 end;
             until SalesInvLine.Next() = 0;
@@ -291,9 +297,11 @@ codeunit 50057 "IC Event Handler"
         if SalesInvLine.FindSet() then
             repeat
                 if SOLineInOtherCompany.Get(SOLineInOtherCompany."Document Type"::Order, SalesInvLine."IC SO No.", SalesInvLine."IC SO Line No.") then begin
-                    SOLineInOtherCompany."Qty. to Invoice" := SalesInvLine.Quantity;
-                    SOLineInOtherCompany."Qty. to Invoice (Base)" := SalesInvLine.Quantity;
-                    SOLineInOtherCompany.Modify(false);
+                    if SOLineInOtherCompany."Qty. Shipped Not Invoiced" <> 0 then begin
+                        SOLineInOtherCompany."Qty. to Invoice" := SalesInvLine.Quantity;
+                        SOLineInOtherCompany."Qty. to Invoice (Base)" := SalesInvLine.Quantity;
+                        SOLineInOtherCompany.Modify(false);
+                    end;
                 end;
             until SalesInvLine.Next() = 0;
 
@@ -496,8 +504,7 @@ codeunit 50057 "IC Event Handler"
         ErrorLog.setrange("Source No.", SalesHeader."No.");
         ErrorLog.setrange("Source Document Type", SalesHeader."Document Type");
         ErrorLog.setrange("Source Table", 36);
-        if ErrorLog.FindFirst() then begin
+        if ErrorLog.FindFirst() then
             page.RunModal(page::"Error Log", ErrorLog);
-        end;
     end;
 }
