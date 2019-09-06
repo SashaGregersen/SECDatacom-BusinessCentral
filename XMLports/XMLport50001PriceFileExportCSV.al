@@ -133,21 +133,21 @@ xmlport 50001 "Price File Export CSV"
                             Currency := CurrencyFilter;
                     end;
                 }
-                Textelement(Cost)
+                Textelement(SECCost)
                 {
                     trigger OnBeforePassVariable()
                     begin
                         CostDec := Round(CostDec, 0.01);
-                        cost := format(CostDec, 0, 1);
+                        SECCost := format(CostDec, 0, 1);
                     end;
                 }
-                textelement(List_Price)
+                textelement(CustomerPrice)
                 {
 
                     trigger OnBeforePassVariable()
                     begin
-                        ListPriceDec := round(ListPriceDec, 0.01);
-                        List_Price := Format(ListPriceDec, 0, 1);
+                        CustomerPriceDec := round(CustomerPriceDec, 0.01);
+                        CustomerPrice := Format(CustomerPriceDec, 0, 1);
                     end;
 
                 }
@@ -187,10 +187,10 @@ xmlport 50001 "Price File Export CSV"
                     CurrencyExchRate: Record "Currency Exchange Rate";
                     CurrencyFactor: Decimal;
                 begin
-                    clear(Cost);
-                    Clear(List_Price);
+                    clear(SECCost);
+                    Clear(CustomerPrice);
                     Clear(CostDec);
-                    Clear(ListPriceDec);
+                    Clear(CustomerPriceDec);
                     Clear(Maincategory);
                     Clear(Subcategory);
                     Clear(Stock);
@@ -206,8 +206,8 @@ xmlport 50001 "Price File Export CSV"
                     CostDec := ItemExportMgt.FindItemPriceForCustomer(Item."No.", CustomerNo, CurrencyFilter);
                     if CostDec = 0 then
                         currXMLport.Skip();
-                    ListPriceDec := ItemExportMgt.FindSECPurchasePrice(Item."No.", CurrencyFilter);
-                    if ListPriceDec = 0 then
+                    CustomerPriceDec := ItemExportMgt.FindSECPurchasePrice(Item."No.", CurrencyFilter);
+                    if CustomerPriceDec = 0 then
                         currXMLport.Skip();
 
                     if ItemCategory.Get(Item."Item Category Code") then begin
@@ -273,7 +273,7 @@ xmlport 50001 "Price File Export CSV"
         PurchasePrice: record "Purchase Price";
         GLSetup: record "General Ledger Setup";
         CostDec: decimal;
-        ListPriceDec: Decimal;
+        CustomerPriceDec: Decimal;
 
     procedure SetCurrencyFilter(NewCurrencyFilter: Text)
     var
