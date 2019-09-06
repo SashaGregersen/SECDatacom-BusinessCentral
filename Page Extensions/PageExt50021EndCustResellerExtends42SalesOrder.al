@@ -326,6 +326,21 @@ pageextension 50021 "End Customer and Reseller" extends 42
                     page.RunModal(Page::"General Journal Provisions", GnlJnlLine);
                 end;
             }
+
+            action(ErrorLog)
+            {
+                image = ErrorLog;
+                trigger onaction()
+                var
+                    ErrorLog: record "Error Log";
+                begin
+                    ErrorLog.setrange("Source No.", Rec."No.");
+                    ErrorLog.setrange("Source Document Type", rec."Document Type");
+                    if ErrorLog.FindFirst() then begin
+                        page.RunModal(page::"Error Log", ErrorLog);
+                    end;
+                end;
+            }
         }
     }
     var
