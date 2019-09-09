@@ -155,7 +155,6 @@ codeunit 50057 "IC Event Handler"
     var
         Item: Record Item;
     begin
-        //if item.get(LocalSalesLine."No.") then;
         LocalSalesLine."IC SO No." := ICsalesLine."Document No.";
         LocalSalesLine."IC SO Line No." := ICsalesLine."Line No.";
         LocalSalesLine.Validate("Location Code", ICSalesline."Location Code");
@@ -172,6 +171,8 @@ codeunit 50057 "IC Event Handler"
         SalesShptHeader: Record "Sales Shipment Header";
         SalesShptLine: Record "Sales Shipment Line";
         POLineInOtherCompany: Record "Purchase Line";
+        POLineInOtherCompany2: Record "Purchase Line";
+        TempPOLineInOtherCompany: Record "Purchase Line" temporary;
     begin
         if not SalesShptHeader.Get(SalesShptHdrNo) then
             exit;
@@ -180,10 +181,10 @@ codeunit 50057 "IC Event Handler"
         if SalesShptLine.FindSet() then
             repeat
                 if POLineInOtherCompany.Get(POLineInOtherCompany."Document Type"::Order, SalesShptLine."IC PO No.", SalesShptLine."IC PO Line No.") then begin
-                    //if POLineInOtherCompany."Outstanding Quantity" <> 0 then begin
-                    POLineInOtherCompany."Qty. to Receive" := SalesShptLine.Quantity;
-                    POLineInOtherCompany."Qty. to Receive (Base)" := SalesShptLine.Quantity;
-                    //end;
+                    if POLineInOtherCompany."Outstanding Quantity" <> 0 then begin
+                        POLineInOtherCompany."Qty. to Receive" := SalesShptLine.Quantity;
+                        POLineInOtherCompany."Qty. to Receive (Base)" := SalesShptLine.Quantity;
+                    end;
                     POLineInOtherCompany."Qty. to Invoice" := 0;
                     POLineInOtherCompany."Qty. to Invoice (Base)" := 0;
                     POLineInOtherCompany.Modify(false);
@@ -227,6 +228,8 @@ codeunit 50057 "IC Event Handler"
         SalesShptLine: Record "Sales Shipment Line";
         SOLineInOtherCompany: Record "sales Line";
         SOHeaderInOtherCompany: record "Sales Header";
+        TempSOLineInOtherCompany: Record "sales Line" temporary;
+        SOLineInOtherCompany2: Record "sales Line";
     begin
         if not SalesShptHeader.Get(SalesShptHdrNo) then
             exit;
@@ -235,16 +238,33 @@ codeunit 50057 "IC Event Handler"
         if SalesShptLine.FindSet() then
             repeat
                 if SOLineInOtherCompany.Get(SOLineInOtherCompany."Document Type"::Order, SalesShptLine."IC SO No.", SalesShptLine."IC SO Line No.") then begin
-                    //if SOLineInOtherCompany."Outstanding Quantity" <> 0 then begin
-                    SOLineInOtherCompany."Qty. to Ship" := SalesShptLine.Quantity;
-                    SOLineInOtherCompany."Qty. to Ship (Base)" := SalesShptLine.Quantity;
-                    //end;
+                    if SOLineInOtherCompany."Outstanding Quantity" <> 0 then begin
+                        SOLineInOtherCompany."Qty. to Ship" := SalesShptLine.Quantity;
+                        SOLineInOtherCompany."Qty. to Ship (Base)" := SalesShptLine.Quantity;
+                    end;
                     SOLineInOtherCompany."Qty. to Invoice" := 0;
                     SOLineInOtherCompany."Qty. to Invoice (Base)" := 0;
                     SOLineInOtherCompany.Modify(false);
+
+                    TempSOLineInOtherCompany.init;
+                    TempSOLineInOtherCompany := SOLineInOtherCompany;
+                    if not TempSOLineInOtherCompany.insert(false) then;
                 end;
             until SalesShptLine.Next() = 0;
 
+        SOLineInOtherCompany2.ChangeCompany(OtherCompanyName);
+        SOLineInOtherCompany2.setrange("Document Type", SOLineInOtherCompany."Document Type"::Order);
+        SOLineInOtherCompany2.SetRange("Document No.", SOLineInOtherCompany."Document No.");
+        if SOLineInOtherCompany2.FindSet() then
+            repeat
+                if not TempSOLineInOtherCompany.get(SOLineInOtherCompany2."Document Type", SOLineInOtherCompany2."Document No.", SOLineInOtherCompany2."Line No.") then begin
+                    SOLineInOtherCompany2."Qty. to Ship" := 0;
+                    SOLineInOtherCompany2."Qty. to Ship (Base)" := 0;
+                    SOLineInOtherCompany2."Qty. to Invoice" := 0;
+                    SOLineInOtherCompany2."Qty. to Invoice (Base)" := 0;
+                    SOLineInOtherCompany2.Modify(false);
+                end;
+            until SOLineInOtherCompany2.next = 0;
 
         SOHeaderInOtherCompany.ChangeCompany(OtherCompanyName);
         if SOHeaderInOtherCompany.get(SOLineInOtherCompany."Document Type"::Order, SalesShptLine."IC SO No.") then begin
@@ -261,6 +281,8 @@ codeunit 50057 "IC Event Handler"
         SalesInvLine: Record "Sales Invoice Line";
         POInOtherCompany: Record "Purchase Header";
         POLineInOtherCompany: Record "Purchase Line";
+        TempPOLineInOtherCompany: Record "Purchase Line";
+        POLineInOtherCompany2: Record "Purchase Line";
     begin
         if not SalesInvHeader.Get(SalesInvHdrNo) then
             exit;
@@ -269,15 +291,15 @@ codeunit 50057 "IC Event Handler"
         if SalesInvLine.FindSet() then
             repeat
                 if POLineInOtherCompany.Get(POLineInOtherCompany."Document Type"::Order, SalesInvLine."IC PO No.", SalesInvLine."IC PO Line No.") then begin
-                    //if POLineInOtherCompany."Qty. Rcd. Not Invoiced" <> 0 then begin
-                    POLineInOtherCompany."Qty. to Invoice" := SalesInvLine.Quantity;
-                    POLineInOtherCompany."Qty. to Invoice (Base)" := SalesInvLine.Quantity;
-                    POLineInOtherCompany.Modify(false);
-                    if GetPurchaseHeaderFromOtherCompany(POLineInOtherCompany, POInOtherCompany, OtherCompanyName) then begin
-                        POInOtherCompany."Vendor Invoice No." := SalesInvHdrNo;
-                        POInOtherCompany.Modify(false);
+                    if (POLineInOtherCompany."Qty. Rcd. Not Invoiced" <> 0) or (POLineInOtherCompany."Qty. Invoiced (Base)" = 0) then begin
+                        POLineInOtherCompany."Qty. to Invoice" := SalesInvLine.Quantity;
+                        POLineInOtherCompany."Qty. to Invoice (Base)" := SalesInvLine.Quantity;
+                        POLineInOtherCompany.Modify(false);
+                        if GetPurchaseHeaderFromOtherCompany(POLineInOtherCompany, POInOtherCompany, OtherCompanyName) then begin
+                            POInOtherCompany."Vendor Invoice No." := SalesInvHdrNo;
+                            POInOtherCompany.Modify(false);
+                        end;
                     end;
-                    //end;
                 end;
             until SalesInvLine.Next() = 0;
     end;
@@ -288,6 +310,8 @@ codeunit 50057 "IC Event Handler"
         SalesInvLine: Record "Sales Invoice Line";
         SOLineInOtherCompany: Record "sales Line";
         SOHeaderInOtherCompany: record "Sales Header";
+        TempSOLineInOtherCompany: Record "sales Line" temporary;
+        SOLineInOtherCompany2: Record "sales Line";
     begin
         if not SalesInvHeader.Get(SalesInvHdrNo) then
             exit;
@@ -297,13 +321,31 @@ codeunit 50057 "IC Event Handler"
         if SalesInvLine.FindSet() then
             repeat
                 if SOLineInOtherCompany.Get(SOLineInOtherCompany."Document Type"::Order, SalesInvLine."IC SO No.", SalesInvLine."IC SO Line No.") then begin
-                    //if SOLineInOtherCompany."Qty. Shipped Not Invoiced" <> 0 then begin
-                    SOLineInOtherCompany."Qty. to Invoice" := SalesInvLine.Quantity;
-                    SOLineInOtherCompany."Qty. to Invoice (Base)" := SalesInvLine.Quantity;
-                    SOLineInOtherCompany.Modify(false);
-                    //end;
+                    if (SOLineInOtherCompany."Qty. Shipped Not Invoiced" <> 0) or (SOLineInOtherCompany."Qty. Invoiced (Base)" = 0) then begin
+                        SOLineInOtherCompany."Qty. to Invoice" := SalesInvLine.Quantity;
+                        SOLineInOtherCompany."Qty. to Invoice (Base)" := SalesInvLine.Quantity;
+                        SOLineInOtherCompany.Modify(false);
+
+                        TempSOLineInOtherCompany.init;
+                        TempSOLineInOtherCompany := SOLineInOtherCompany;
+                        if not TempSOLineInOtherCompany.insert(false) then;
+                    end;
                 end;
             until SalesInvLine.Next() = 0;
+
+        SOLineInOtherCompany2.ChangeCompany(OtherCompanyName);
+        SOLineInOtherCompany2.setrange("Document Type", SOLineInOtherCompany."Document Type");
+        SOLineInOtherCompany2.setrange("Document No.", SOLineInOtherCompany."Document No.");
+        if SOLineInOtherCompany2.FindSet() then
+            repeat
+                if not TempSOLineInOtherCompany.get(SOLineInOtherCompany2."Document Type", SOLineInOtherCompany2."Document No.", SOLineInOtherCompany2."Line No.") then begin
+                    SOLineInOtherCompany2."Qty. to Ship" := 0;
+                    SOLineInOtherCompany2."Qty. to Ship (Base)" := 0;
+                    SOLineInOtherCompany2."Qty. to Invoice" := 0;
+                    SOLineInOtherCompany2."Qty. to Invoice (Base)" := 0;
+                    SOLineInOtherCompany2.Modify(false);
+                end;
+            until SOLineInOtherCompany2.next = 0;
 
         if SOHeaderInOtherCompany.get(SOLineInOtherCompany."Document Type"::Order, SalesInvLine."IC SO No.") then begin
             SOHeaderInOtherCompany."Package Tracking No." := SalesInvHeader."Package Tracking No.";
@@ -500,11 +542,24 @@ codeunit 50057 "IC Event Handler"
     var
         ErrorLog: record "Error Log";
     begin
-        /* Commit();
+        Commit();
         ErrorLog.setrange("Source No.", SalesHeader."No.");
         ErrorLog.setrange("Source Document Type", SalesHeader."Document Type");
         ErrorLog.setrange("Source Table", 36);
         if ErrorLog.FindFirst() then
-            page.RunModal(page::"Error Log", ErrorLog); */
+            page.RunModal(page::"Error Log", ErrorLog);
     end;
+
+    /* [EventSubscriber(ObjectType::Page, page::"Sales Order", 'OnPostOnAfterSetDocumentIsPosted', '', true, true)]
+    local procedure OnPostOnAfterSetDocumentIsPostedEvent(SalesHeader: Record "Sales Header"; VAR IsScheduledPosting: Boolean; VAR DocumentIsPosted: Boolean)
+    var
+        ErrorLog: record "Error Log";
+    begin
+        //This code is not possible for return orders 
+        ErrorLog.setrange("Source No.", SalesHeader."No.");
+        ErrorLog.setrange("Source Document Type", SalesHeader."Document Type");
+        ErrorLog.setrange("Source Table", 36);
+        if ErrorLog.FindFirst() then
+            page.RunModal(page::"Error Log", ErrorLog);
+    end; */
 }
