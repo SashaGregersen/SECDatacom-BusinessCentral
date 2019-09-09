@@ -1344,6 +1344,9 @@
                                             </Paragraphs>
                                             <ZIndex>49</ZIndex>
                                             <Style>
+                                              <Border>
+                                                <Style>None</Style>
+                                              </Border>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
@@ -1396,7 +1399,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!No_SalesShptLine.Value</Value>
+                                                    <Value>=Fields!Vendor_Item_No.Value</Value>
                                                     <Style>
                                                       <FontStyle>Normal</FontStyle>
                                                       <FontFamily>Segoe UI</FontFamily>
@@ -1411,7 +1414,7 @@
                                             </Paragraphs>
                                             <ZIndex>33</ZIndex>
                                             <Visibility>
-                                              <Hidden>true</Hidden>
+                                              <Hidden>=iif(Fields!Vendor_Item_No.Value &lt;&gt; "",False,True)</Hidden>
                                             </Visibility>
                                             <DataElementOutput>NoOutput</DataElementOutput>
                                             <Style>
@@ -1498,7 +1501,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!Vendor_Item_No_Lbl.Value</Value>
+                                                    <Value />
                                                     <Style>
                                                       <FontStyle>Normal</FontStyle>
                                                       <FontFamily>Segoe UI</FontFamily>
@@ -1600,7 +1603,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!Vendor_Item_No.Value</Value>
+                                                    <Value />
                                                     <Style>
                                                       <FontStyle>Normal</FontStyle>
                                                       <FontFamily>Segoe UI</FontFamily>
@@ -1968,10 +1971,10 @@
                               <TablixBody>
                                 <TablixColumns>
                                   <TablixColumn>
-                                    <Width>10.35006cm</Width>
+                                    <Width>9.02714cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>8.1289cm</Width>
+                                    <Width>9.45182cm</Width>
                                   </TablixColumn>
                                 </TablixColumns>
                                 <TablixRows>
@@ -2028,7 +2031,6 @@
                                                       <FontStyle>Normal</FontStyle>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
-                                                      <FontWeight>Bold</FontWeight>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -2267,7 +2269,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!TrackingSpecBufferNo.Value</Value>
+                                                    <Value>=Fields!VendorItemNo1.Value</Value>
                                                     <Style>
                                                       <FontStyle>Normal</FontStyle>
                                                       <FontFamily>Segoe UI</FontFamily>
@@ -2279,11 +2281,11 @@
                                               </Paragraph>
                                             </Paragraphs>
                                             <ZIndex>14</ZIndex>
-                                            <Visibility>
-                                              <Hidden>=IIF(Fields!ShowGroup.Value = "False",False,True)</Hidden>
-                                            </Visibility>
                                             <DataElementOutput>NoOutput</DataElementOutput>
                                             <Style>
+                                              <Border>
+                                                <Style>None</Style>
+                                              </Border>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
@@ -2312,6 +2314,9 @@
                                               </Paragraph>
                                             </Paragraphs>
                                             <ZIndex>10</ZIndex>
+                                            <Visibility>
+                                              <Hidden>=IIF(Fields!ShowGroup.Value = "False",False,True)</Hidden>
+                                            </Visibility>
                                             <Style>
                                               <Border>
                                                 <Style>None</Style>
@@ -2329,13 +2334,14 @@
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="No">
+                                          <Textbox Name="Textbox17">
+                                            <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!TrackingSpecBufferNo.Value</Value>
+                                                    <Value>="Serial No." +" " + Fields!TrackingSpecBufferSerNo.Value</Value>
                                                     <Style>
                                                       <FontStyle>Normal</FontStyle>
                                                       <FontFamily>Segoe UI</FontFamily>
@@ -2346,11 +2352,7 @@
                                                 <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <ZIndex>9</ZIndex>
-                                            <Visibility>
-                                              <Hidden>true</Hidden>
-                                            </Visibility>
-                                            <DataElementOutput>NoOutput</DataElementOutput>
+                                            <rd:DefaultName>Textbox17</rd:DefaultName>
                                             <Style>
                                               <Border>
                                                 <Style>None</Style>
@@ -2359,6 +2361,7 @@
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
+                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell>
@@ -2383,6 +2386,9 @@
                                               </Paragraph>
                                             </Paragraphs>
                                             <ZIndex>5</ZIndex>
+                                            <Visibility>
+                                              <Hidden>=IIF(Fields!ShowGroup.Value = "True",False,True)</Hidden>
+                                            </Visibility>
                                             <Style>
                                               <Border>
                                                 <Style>None</Style>
@@ -2396,17 +2402,18 @@
                                     </TablixCells>
                                   </TablixRow>
                                   <TablixRow>
-                                    <Height>0.45859cm</Height>
+                                    <Height>0.35278cm</Height>
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="Textbox105">
+                                          <Textbox Name="Textbox11">
                                             <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!TrackingSpecBufferSerNo.Value</Value>
+                                                    <Value />
                                                     <Style>
                                                       <FontStyle>Normal</FontStyle>
                                                       <FontFamily>Segoe UI</FontFamily>
@@ -2417,8 +2424,11 @@
                                                 <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>Textbox105</rd:DefaultName>
+                                            <rd:DefaultName>Textbox11</rd:DefaultName>
                                             <Style>
+                                              <Border>
+                                                <Style>None</Style>
+                                              </Border>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
@@ -2438,7 +2448,6 @@
                                                       <FontStyle>Normal</FontStyle>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
-                                                      <FontWeight>Bold</FontWeight>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -2461,17 +2470,18 @@
                                     </TablixCells>
                                   </TablixRow>
                                   <TablixRow>
-                                    <Height>0.49388cm</Height>
+                                    <Height>0.35278cm</Height>
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="Textbox100">
+                                          <Textbox Name="Textbox16">
                                             <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!TrackingSpecBufferSerNo.Value</Value>
+                                                    <Value />
                                                     <Style>
                                                       <FontStyle>Normal</FontStyle>
                                                       <FontFamily>Segoe UI</FontFamily>
@@ -2482,10 +2492,7 @@
                                                 <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>Textbox100</rd:DefaultName>
-                                            <Visibility>
-                                              <Hidden>true</Hidden>
-                                            </Visibility>
+                                            <rd:DefaultName>Textbox16</rd:DefaultName>
                                             <Style>
                                               <Border>
                                                 <Style>None</Style>
@@ -2639,22 +2646,10 @@
                                           <DataElementName>Detail</DataElementName>
                                         </Group>
                                         <TablixMembers>
-                                          <TablixMember>
-                                            <Visibility>
-                                              <Hidden>=IIF(Fields!ShowGroup.Value = "False",False,True)</Hidden>
-                                            </Visibility>
-                                          </TablixMember>
-                                          <TablixMember>
-                                            <Visibility>
-                                              <Hidden>=IIF(Fields!ShowGroup.Value = "True",False,True)</Hidden>
-                                            </Visibility>
-                                          </TablixMember>
                                           <TablixMember />
-                                          <TablixMember>
-                                            <Visibility>
-                                              <Hidden>=IIF(Fields!ShowGroup.Value = "True",False,True)</Hidden>
-                                            </Visibility>
-                                          </TablixMember>
+                                          <TablixMember />
+                                          <TablixMember />
+                                          <TablixMember />
                                           <TablixMember>
                                             <Visibility>
                                               <Hidden>=IIF(Fields!ShowTotal.Value = "True",False,True)</Hidden>
@@ -2680,7 +2675,7 @@
                               </Filters>
                               <Top>9.4575cm</Top>
                               <Left>0.01375cm</Left>
-                              <Height>3.63358cm</Height>
+                              <Height>3.38667cm</Height>
                               <Width>18.47896cm</Width>
                               <ZIndex>36</ZIndex>
                               <Visibility>
@@ -2714,7 +2709,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!Vendor_Item_No.Value</Value>
+                                                    <Value />
                                                     <Style>
                                                       <FontStyle>Normal</FontStyle>
                                                       <FontFamily>Segoe UI</FontFamily>
@@ -2948,7 +2943,6 @@
                             </Border>
                           </Style>
                         </Rectangle>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -3626,6 +3620,12 @@ End Function
         </Field>
         <Field Name="Barcode_Lbl">
           <DataField>Barcode_Lbl</DataField>
+        </Field>
+        <Field Name="Vendor_Item_No_Lbl1">
+          <DataField>Vendor_Item_No_Lbl1</DataField>
+        </Field>
+        <Field Name="VendorItemNo1">
+          <DataField>VendorItemNo1</DataField>
         </Field>
         <Field Name="Quantity1">
           <DataField>Quantity1</DataField>
