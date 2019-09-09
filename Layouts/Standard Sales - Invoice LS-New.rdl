@@ -19,7 +19,7 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>27.3614cm</Width>
+                  <Width>27.08057cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -34,28 +34,28 @@
                               <TablixBody>
                                 <TablixColumns>
                                   <TablixColumn>
-                                    <Width>2.1869cm</Width>
+                                    <Width>2.14187cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>12.46844cm</Width>
+                                    <Width>12.22572cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>1.7869cm</Width>
+                                    <Width>1.74187cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>1.9869cm</Width>
+                                    <Width>1.94187cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>2.1869cm</Width>
+                                    <Width>2.14187cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>1.75943cm</Width>
+                                    <Width>1.7144cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>2.43508cm</Width>
+                                    <Width>2.39005cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>2.4869cm</Width>
+                                    <Width>2.56019cm</Width>
                                   </TablixColumn>
                                 </TablixColumns>
                                 <TablixRows>
@@ -1894,7 +1894,7 @@
                               <Top>7.01163cm</Top>
                               <Left>0.06395cm</Left>
                               <Height>2.90211cm</Height>
-                              <Width>27.29745cm</Width>
+                              <Width>26.85786cm</Width>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -2824,8 +2824,8 @@
                                   </FilterValues>
                                 </Filter>
                               </Filters>
-                              <Top>13.5885cm</Top>
-                              <Left>4.74576in</Left>
+                              <Top>13.38755cm</Top>
+                              <Left>4.61489in</Left>
                               <Height>1.76418cm</Height>
                               <Width>15.2cm</Width>
                               <ZIndex>1</ZIndex>
@@ -3561,8 +3561,8 @@
                               <RepeatRowHeaders>true</RepeatRowHeaders>
                               <KeepTogether>true</KeepTogether>
                               <DataSetName>DataSet_Result</DataSetName>
-                              <Top>10.5478cm</Top>
-                              <Left>19.68437cm</Left>
+                              <Top>10.34685cm</Top>
+                              <Left>19.35195cm</Left>
                               <Height>2.946cm</Height>
                               <Width>7.56985cm</Width>
                               <ZIndex>2</ZIndex>
@@ -3627,7 +3627,7 @@
                                   <TablixMember>
                                     <Group Name="Group1" />
                                     <TablixHeader>
-                                      <Size>14.76178cm</Size>
+                                      <Size>14.4032cm</Size>
                                       <CellContents>
                                         <Textbox Name="Group1">
                                           <CanGrow>true</CanGrow>
@@ -3676,10 +3676,10 @@
                                   </FilterValues>
                                 </Filter>
                               </Filters>
-                              <Top>16.73816cm</Top>
-                              <Left>12.49244cm</Left>
+                              <Top>16.40324cm</Top>
+                              <Left>12.59799cm</Left>
                               <Height>0.42333cm</Height>
-                              <Width>14.84116cm</Width>
+                              <Width>14.48258cm</Width>
                               <ZIndex>3</ZIndex>
                               <Style>
                                 <Border>
@@ -3706,8 +3706,8 @@
                                   </Style>
                                 </Paragraph>
                               </Paragraphs>
-                              <Top>16.73816cm</Top>
-                              <Left>0.0706in</Left>
+                              <Top>16.40324cm</Top>
+                              <Left>0.0331in</Left>
                               <Height>0.16656in</Height>
                               <Width>1.05cm</Width>
                               <ZIndex>4</ZIndex>
@@ -3740,8 +3740,8 @@
                                   </Style>
                                 </Paragraph>
                               </Paragraphs>
-                              <Top>16.73816cm</Top>
-                              <Left>1.20283cm</Left>
+                              <Top>16.40324cm</Top>
+                              <Left>1.10758cm</Left>
                               <Height>0.16656in</Height>
                               <Width>2.91547cm</Width>
                               <ZIndex>5</ZIndex>
@@ -3774,8 +3774,8 @@
                                   </Style>
                                 </Paragraph>
                               </Paragraphs>
-                              <Top>16.73816cm</Top>
-                              <Left>4.1183cm</Left>
+                              <Top>16.40324cm</Top>
+                              <Left>4.02305cm</Left>
                               <Height>0.16656in</Height>
                               <Width>3.57cm</Width>
                               <ZIndex>6</ZIndex>
@@ -3807,8 +3807,8 @@
                                 </Paragraph>
                               </Paragraphs>
                               <rd:DefaultName>PaymentMethodExtDescription</rd:DefaultName>
-                              <Top>15.67073cm</Top>
-                              <Left>0.1793cm</Left>
+                              <Top>15.33581cm</Top>
+                              <Left>0.08405cm</Left>
                               <Height>0.89104cm</Height>
                               <Width>13.35342cm</Width>
                               <ZIndex>7</ZIndex>
@@ -3826,25 +3826,25 @@
                               <TablixBody>
                                 <TablixColumns>
                                   <TablixColumn>
-                                    <Width>4.19605cm</Width>
+                                    <Width>4.14856cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>7.32864cm</Width>
+                                    <Width>7.28115cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>0.25341cm</Width>
+                                    <Width>0.20592cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>6.49934cm</Width>
+                                    <Width>6.45185cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>0.69579cm</Width>
+                                    <Width>0.6483cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>3.35632cm</Width>
+                                    <Width>3.30883cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>4.89687cm</Width>
+                                    <Width>4.84938cm</Width>
                                   </TablixColumn>
                                 </TablixColumns>
                                 <TablixRows>
@@ -3863,7 +3863,7 @@
                                                     <Value>=Fields!CustomerAddress1.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>9pt</FontSize>
+                                                      <FontSize>8pt</FontSize>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -3927,7 +3927,7 @@
                                                     <Value>=Fields!ShipToAddress_Lbl.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>9pt</FontSize>
+                                                      <FontSize>8pt</FontSize>
                                                       <FontWeight>Bold</FontWeight>
                                                     </Style>
                                                   </TextRun>
@@ -3992,7 +3992,7 @@
                                                     <Value>=Fields!Endcustomer_Lbl.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>9pt</FontSize>
+                                                      <FontSize>8pt</FontSize>
                                                       <FontWeight>Bold</FontWeight>
                                                     </Style>
                                                   </TextRun>
@@ -4033,7 +4033,7 @@
                                                     <Value>=Fields!CustomerAddress2.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>9pt</FontSize>
+                                                      <FontSize>8pt</FontSize>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -4097,7 +4097,7 @@
                                                     <Value>=Fields!ShipToAddress1.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>9pt</FontSize>
+                                                      <FontSize>8pt</FontSize>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -4161,7 +4161,7 @@
                                                     <Value>=Fields!EndCustArray1.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>9pt</FontSize>
+                                                      <FontSize>8pt</FontSize>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -4200,7 +4200,7 @@
                                                     <Value>=Fields!CustomerAddress3.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>9pt</FontSize>
+                                                      <FontSize>8pt</FontSize>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -4264,7 +4264,7 @@
                                                     <Value>=Fields!ShipToAddress2.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>9pt</FontSize>
+                                                      <FontSize>8pt</FontSize>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -4327,7 +4327,7 @@
                                                     <Value>=Fields!EndCustArray2.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>9pt</FontSize>
+                                                      <FontSize>8pt</FontSize>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -4366,7 +4366,7 @@
                                                     <Value>=Fields!CustomerAddress4.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>9pt</FontSize>
+                                                      <FontSize>8pt</FontSize>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -4430,7 +4430,7 @@
                                                     <Value>=Fields!ShipToAddress3.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>9pt</FontSize>
+                                                      <FontSize>8pt</FontSize>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -4494,14 +4494,14 @@
                                                     <Value xml:space="preserve"> </Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>9pt</FontSize>
+                                                      <FontSize>8pt</FontSize>
                                                     </Style>
                                                   </TextRun>
                                                   <TextRun>
                                                     <Value>=Fields!EndCustArray3.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>9pt</FontSize>
+                                                      <FontSize>8pt</FontSize>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -4541,7 +4541,7 @@
                                                     <Value>=Fields!CustomerAddress5.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>9pt</FontSize>
+                                                      <FontSize>8pt</FontSize>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -4605,7 +4605,7 @@
                                                     <Value>=Fields!ShipToAddress4.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>9pt</FontSize>
+                                                      <FontSize>8pt</FontSize>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -4669,7 +4669,7 @@
                                                     <Value>=Fields!EndCustArray4.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>9pt</FontSize>
+                                                      <FontSize>8pt</FontSize>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -4708,7 +4708,7 @@
                                                     <Value>=Fields!CustomerAddress6.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>9pt</FontSize>
+                                                      <FontSize>8pt</FontSize>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -4772,7 +4772,7 @@
                                                     <Value>=Fields!ShipToAddress5.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>9pt</FontSize>
+                                                      <FontSize>8pt</FontSize>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -4836,7 +4836,7 @@
                                                     <Value>=Fields!EndCustCityArray5.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>9pt</FontSize>
+                                                      <FontSize>8pt</FontSize>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -4876,7 +4876,7 @@
                                                     <Value>= "VAT No.: " + Fields!VATRegistrationNo.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>9pt</FontSize>
+                                                      <FontSize>8pt</FontSize>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -4939,7 +4939,7 @@
                                                     <Value>=Fields!ShipToAddress6.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>9pt</FontSize>
+                                                      <FontSize>8pt</FontSize>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -5167,7 +5167,7 @@
                                                     <Value>=Fields!ShipToAddress7.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>9pt</FontSize>
+                                                      <FontSize>8pt</FontSize>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -5395,7 +5395,7 @@
                                                   <TextRun>
                                                     <Value>=Fields!ShipToAddress8.Value</Value>
                                                     <Style>
-                                                      <FontSize>9pt</FontSize>
+                                                      <FontSize>8pt</FontSize>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -7058,7 +7058,7 @@
                               <Top>0.18521cm</Top>
                               <Left>0.0278cm</Left>
                               <Height>6.69793cm</Height>
-                              <Width>27.22642cm</Width>
+                              <Width>26.89401cm</Width>
                               <ZIndex>8</ZIndex>
                               <Style>
                                 <Border>
@@ -7107,7 +7107,7 @@
             <DataSetName>DataSet_Result</DataSetName>
             <Top>0.0882cm</Top>
             <Height>17.24334cm</Height>
-            <Width>27.3614cm</Width>
+            <Width>27.08057cm</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -7115,10 +7115,10 @@
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>17.38446cm</Height>
+        <Height>17.33154cm</Height>
         <Style />
       </Body>
-      <Width>27.3614cm</Width>
+      <Width>27.20471cm</Width>
       <Page>
         <PageHeader>
           <Height>2.04322cm</Height>
@@ -7268,9 +7268,9 @@
                 </Textbox>
               </ReportItems>
               <KeepTogether>true</KeepTogether>
-              <Left>18.08202cm</Left>
+              <Left>17.74961cm</Left>
               <Height>0.92917cm</Height>
-              <Width>9.25158cm</Width>
+              <Width>9.1722cm</Width>
               <ZIndex>1</ZIndex>
               <Style>
                 <Border>
@@ -7300,7 +7300,7 @@
               <Top>0.97578cm</Top>
               <Left>0.08405cm</Left>
               <Height>0.96161cm</Height>
-              <Width>22.30085cm</Width>
+              <Width>21.57018cm</Width>
               <ZIndex>2</ZIndex>
               <Visibility>
                 <Hidden>=Globals!PageNumber &lt;&gt; 1</Hidden>
@@ -7337,7 +7337,7 @@
               </Paragraphs>
               <rd:DefaultName>Textbox22</rd:DefaultName>
               <Top>1.01107cm</Top>
-              <Left>22.58598cm</Left>
+              <Left>22.25357cm</Left>
               <Height>0.92632cm</Height>
               <Width>4.66824cm</Width>
               <ZIndex>3</ZIndex>

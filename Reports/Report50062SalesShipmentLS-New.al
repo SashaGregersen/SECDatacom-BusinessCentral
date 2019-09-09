@@ -551,6 +551,12 @@ report 50062 "SEC Sales - Shipment LS-New"
                         column(Barcode_Lbl; BarcodeLbl)
                         {
                         }
+                        Column(Vendor_Item_No_Lbl1; VendorItemNoLbl)
+                        {
+                        }
+                        column(VendorItemNo1; VendorItemNo1)
+                        {
+                        }
                         dataitem(TotalItemTracking; "Integer")
                         {
                             DataItemTableView = SORTING (Number) WHERE (Number = CONST (1));
@@ -584,6 +590,11 @@ report 50062 "SEC Sales - Shipment LS-New"
                             end else
                                 ShowGroup := true;
                             TotalQty += TrackingSpecBuffer."Quantity (Base)";
+
+                            Clear(VendorItemNo1);
+                            if Item.Get(TrackingSpecBuffer."Item No.") then
+                                VendorItemNo1 := Item."Vendor-Item-No.";
+
                         end;
 
                         trigger OnPreDataItem()
