@@ -135,8 +135,23 @@ codeunit 50004 "Create Purchase Order"
         PurchHeader.Reseller := SalesHeader.Reseller;
         PurchHeader."End Customer Contact No." := SalesHeader."End Customer Contact";
         PurchHeader."Reseller Contact No." := SalesHeader."Sell-to Contact No.";
+        SetDefaultPurchaser(PurchHeader);
         PurchHeader.Modify(true);
         exit(StrSubstNo('Purchase Order %1 created', PurchHeader."No."));
+    end;
+
+    LOCAL procedure SetDefaultPurchaser(var PurchHeader: record "Purchase Header")
+    var
+        Usersetup: record "User Setup";
+        SalespersonPurchaser: record "Salesperson/Purchaser";
+    begin
+        IF NOT UserSetup.GET(USERID) THEN
+            EXIT;
+
+        IF UserSetup."Salespers./Purch. Code" <> '' THEN
+            IF SalespersonPurchaser.GET(UserSetup."Salespers./Purch. Code") THEN
+                IF NOT SalespersonPurchaser.VerifySalesPersonPurchaserPrivacyBlocked(SalespersonPurchaser) THEN
+                    PurchHeader.VALIDATE("Purchaser Code", UserSetup."Salespers./Purch. Code");
     end;
 
     procedure CreatePurchLine(PurchHeader: record "Purchase Header"; SalesHeader: record "sales header"; SalesLine: record "Sales Line"; PurchasePrice: Decimal; var PurchLine: Record "Purchase Line")
