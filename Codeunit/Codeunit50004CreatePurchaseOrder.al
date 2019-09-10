@@ -106,6 +106,7 @@ codeunit 50004 "Create Purchase Order"
     var
         Customer: record customer;
         CompanyInfo: record "Company Information";
+        Vendor: record vendor;
     begin
         PurchHeader.Init;
         PurchHeader."No." := '';
@@ -136,6 +137,8 @@ codeunit 50004 "Create Purchase Order"
         PurchHeader."End Customer Contact No." := SalesHeader."End Customer Contact";
         PurchHeader."Reseller Contact No." := SalesHeader."Sell-to Contact No.";
         SetDefaultPurchaser(PurchHeader);
+        if vendor.get(VendorNo) then
+            PurchHeader.Validate("Shipment Method Code", Vendor."Shipment Method Code");
         PurchHeader.Modify(true);
         exit(StrSubstNo('Purchase Order %1 created', PurchHeader."No."));
     end;
