@@ -40,7 +40,7 @@ table 50001 "Bid Item Price"
             begin
                 If Item.Get("item No.") then begin
                     "Currency Code" := Item."Vendor Currency";
-                    "Vendor Item No." := Item."Vendor Item No."; //NC
+                    "Vendor Item No." := Item."Vendor Item No.";
                 end;
                 UpdateListprice();
             end;
@@ -83,6 +83,8 @@ table 50001 "Bid Item Price"
         }
         field(13; "Vendor Item No."; Text[60])
         {
+            DataClassification = CustomerContent;
+            Editable = false;
         }
         field(50001; "Bid Unit Sales Price"; Decimal)
         {
