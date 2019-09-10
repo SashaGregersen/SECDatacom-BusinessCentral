@@ -468,6 +468,36 @@ report 50061 "SEC - Sales Invoice LS-New"
             column(EndCustCityArray5; EndCustomerArray[5])
             {
             }
+                        column(ShipToArray1; ShipToArray[1])
+            {
+            }
+            column(ShipToArray2; ShipToArray[2])
+            {
+            }
+            column(ShipToArray3; ShipToArray[3])
+            {
+
+            }
+            column(ShipToArray4; ShipToArray[4])
+            {
+
+            }
+            column(ShipToArray5; ShipToArray[5])
+            {
+
+            }
+            column(ShipToArray6; ShipToArray[6])
+            {
+
+            }
+            column(ShipToArray7; ShipToArray[7])
+            {
+
+            }
+            column(ShipToArray8; ShipToArray[8])
+            {
+
+            }
             //NC added array
             //<<Encustomer columns
             //>>Misc columns
@@ -1187,6 +1217,15 @@ report 50061 "SEC - Sales Invoice LS-New"
                 EndCustomerArray[4] := Endcustomer."Post Code" + ' ' + Endcustomer.City;
                 EndCustomerArray[5] := EndcustomerCountryRegion.Name;
                 CompressArray(EndCustomerArray);
+                
+                ShipToCountryRegion.Get("Ship-to Country/Region Code");
+                ShipToArray[1] := "Ship-to Name";
+                ShipToArray[2] := "Ship-to Address";
+                ShipToArray[3] := "Ship-to Address 2";
+                ShipToArray[4] := "Ship-to Post Code" + ' ' + "Ship-to City";
+                ShipToArray[5] := ShipToCountryRegion.Name;
+                ShipToarray[6] := "Ship-to Contact";
+                CompressArray(ShipToArray);
                 //<<NC Array
 
                 //>>NC - Getting Ship-to Country
@@ -1468,6 +1507,8 @@ report 50061 "SEC - Sales Invoice LS-New"
         CompanyAddr: array[8] of Text[90];
         //>>NC Added Array
         EndCustomerArray: array[5] of Text[90];
+        //<< NC added array
+        ShipToArray: array[8] of Text[90];
         //<< NC added array
         ItemTrackingDocMgt: Codeunit "Item Tracking Doc. Management"; //NC
         SalesPersonText: Text[30];
