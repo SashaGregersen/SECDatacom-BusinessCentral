@@ -314,6 +314,8 @@ report 50015 "SEC Sales - Credit Memo LS"
             column(Page_Lbl; PageLbl)
             {
             }
+            column(LineDiscountLbl; LineDiscountLbl)
+            { }
             column(SalesInvoiceLineDiscount_Lbl; SalesInvLineDiscLbl)
             {
             }
@@ -1020,6 +1022,7 @@ report 50015 "SEC Sales - Credit Memo LS"
         VATClausesLbl: Label 'VAT Clause';
         VATIdentifierLbl: Label 'VAT Identifier';
         VATPercentageLbl: Label 'VAT %';
+        LineDiscountLbl: Label 'Line Discount';
         GLSetup: Record "General Ledger Setup";
         ShipmentMethod: Record "Shipment Method";
         PaymentTerms: Record "Payment Terms";

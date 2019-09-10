@@ -3683,7 +3683,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!InvoiceDiscountAmount_Lbl.Value</Value>
+                                                    <Value>=Fields!LineDiscountLbl.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -7721,6 +7721,9 @@ End Function
         </Field>
         <Field Name="Page_Lbl">
           <DataField>Page_Lbl</DataField>
+        </Field>
+        <Field Name="LineDiscountLbl">
+          <DataField>LineDiscountLbl</DataField>
         </Field>
         <Field Name="SalesInvoiceLineDiscount_Lbl">
           <DataField>SalesInvoiceLineDiscount_Lbl</DataField>
