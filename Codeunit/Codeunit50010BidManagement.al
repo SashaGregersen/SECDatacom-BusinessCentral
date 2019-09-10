@@ -219,7 +219,7 @@ codeunit 50010 "Bid Management"
             if TempPurchHeader.FindSet() then
                 repeat
                     PurchHeader2.get(TempPurchHeader."Document Type", TempPurchHeader."No.");
-                    DCApprovalsMgt.ForceApproval(PurchHeader2, false);
+                    DCApprovalsMgt.ForceApproval(PurchHeader2, false); //DC approvals bridge?
                     ReleasePurchDoc.PerformManualRelease(PurchHeader2);
                     PurchHeader2."Posting Description" := TempPurchHeader."Posting Description";
                     PurchHeader2.Modify(false);
