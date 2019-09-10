@@ -468,7 +468,7 @@ report 50061 "SEC - Sales Invoice LS-New"
             column(EndCustCityArray5; EndCustomerArray[5])
             {
             }
-                        column(ShipToArray1; ShipToArray[1])
+            column(ShipToArray1; ShipToArray[1])
             {
             }
             column(ShipToArray2; ShipToArray[2])
@@ -670,6 +670,9 @@ report 50061 "SEC - Sales Invoice LS-New"
                 {
                 }
                 column(SerialNo; SerialNo) //NC (ACA)
+                {
+                }
+                column(LineDiscountLbl; LineDiscountLbl)
                 {
                 }
                 dataitem(ShipmentLine; "Sales Shipment Buffer")
@@ -1217,7 +1220,7 @@ report 50061 "SEC - Sales Invoice LS-New"
                 EndCustomerArray[4] := Endcustomer."Post Code" + ' ' + Endcustomer.City;
                 EndCustomerArray[5] := EndcustomerCountryRegion.Name;
                 CompressArray(EndCustomerArray);
-                
+
                 ShipToCountryRegion.Get("Ship-to Country/Region Code");
                 ShipToArray[1] := "Ship-to Name";
                 ShipToArray[2] := "Ship-to Address";
@@ -1600,6 +1603,7 @@ report 50061 "SEC - Sales Invoice LS-New"
         HighestLineNo: Integer;
         SpacePointer: Integer;
         SerialNo: Text;
+        LineDiscountLbl: Label 'Line Discount';
         //<<ACA
         //<<NC variables
         PricePerLbl: Label 'Price per';

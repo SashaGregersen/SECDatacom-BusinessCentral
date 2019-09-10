@@ -564,6 +564,7 @@ report 50062 "SEC Sales - Shipment LS-New"
                             {
                             }
                         }
+
                         trigger OnAfterGetRecord()
                         begin
                             if Number = 1 then
@@ -590,11 +591,14 @@ report 50062 "SEC Sales - Shipment LS-New"
                             end else
                                 ShowGroup := true;
                             TotalQty += TrackingSpecBuffer."Quantity (Base)";
-
+                            //>> NC - ACA
                             Clear(VendorItemNo1);
-                            if Item.Get(TrackingSpecBuffer."Item No.") then
-                                VendorItemNo1 := Item."Vendor-Item-No.";
-
+                            if Item.Get(TrackingSpecBuffer."Item No.") then begin
+                                If VendorItemNo2 <> item."Vendor-Item-No." then
+                                    VendorItemNo1 := Item."Vendor-Item-No.";
+                                VendorItemNo2 := item."Vendor-Item-No.";
+                            end;
+                            //<<NC - ACA
                         end;
 
                         trigger OnPreDataItem()
@@ -605,6 +609,7 @@ report 50062 "SEC Sales - Shipment LS-New"
                             SetRange(Number, 1, TrackingSpecCount);
                             TrackingSpecBuffer.SetCurrentKey("Source ID", "Source Type", "Source Subtype", "Source Batch Name",
                               "Source Prod. Order Line", "Source Ref. No.");
+                            VendorItemNo2 := ''; //NC
                         end;
                     }
 
@@ -857,6 +862,7 @@ report 50062 "SEC Sales - Shipment LS-New"
         Pagelbl: label 'Page';//NC
         SalesShipmentLbl: Label 'Sales Shipment'; //NC
         VendorItemNo1: Text[90];
+        VendorItemNo2: Text[90];
 
 
 
