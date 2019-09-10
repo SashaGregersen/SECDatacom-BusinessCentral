@@ -312,7 +312,9 @@ codeunit 50057 "IC Event Handler"
         SOHeaderInOtherCompany: record "Sales Header";
         TempSOLineInOtherCompany: Record "sales Line" temporary;
         SOLineInOtherCompany2: Record "sales Line";
+        Salesreceive: record "Sales & Receivables Setup";
     begin
+        if not Salesreceive.Get() then;
         if not SalesInvHeader.Get(SalesInvHdrNo) then
             exit;
         SalesInvLine.SetRange("Document No.", SalesInvHeader."No.");
@@ -336,6 +338,7 @@ codeunit 50057 "IC Event Handler"
         SOLineInOtherCompany2.ChangeCompany(OtherCompanyName);
         SOLineInOtherCompany2.setrange("Document Type", SOLineInOtherCompany."Document Type");
         SOLineInOtherCompany2.setrange("Document No.", SOLineInOtherCompany."Document No.");
+        SOLineInOtherCompany2.setfilter("No.", '<>%1', Salesreceive."Freight Item");
         if SOLineInOtherCompany2.FindSet() then
             repeat
                 if not TempSOLineInOtherCompany.get(SOLineInOtherCompany2."Document Type", SOLineInOtherCompany2."Document No.", SOLineInOtherCompany2."Line No.") then begin
